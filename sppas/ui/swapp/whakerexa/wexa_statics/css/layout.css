@@ -1,0 +1,468 @@
+@charset "UTF-8";
+/*
+:filename: wexa_statics.css.layout.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Layouts and size classes.
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://whakerexa.sf.net/
+
+Copyright (C) 2023-2024 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+/* =======================================================================
+                            VARIABLE DEFINITIONS
+  ======================================================================== */
+
+
+:root {
+    --card-max-width: 15rem;
+    --card-border-width: 2px;
+    --card-border-radius: 8px;
+    --card-box-shadow: -0.2rem 0.2rem 0.6rem 0.2rem var(--shadow-color);
+    --columns-sep-color: rgba(128, 128, 128, 128);
+}
+
+.contrast {
+    --card-max-width: 20rem;
+    --card-border-width: 4px;
+    --card-border-radius: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+/* =======================================================================
+                            CLASSES FOR SIZES
+  ======================================================================== */
+
+.width_10 {
+    min-width: 18%;
+}
+
+.width_20 {
+    min-width: 18%;
+}
+
+.width_30 {
+    min-width: 28%;
+}
+
+.width_40 {
+    width: 38%;
+}
+
+.width_50 {
+    width: 48%;
+}
+
+.width_60 {
+    width: 58%;
+}
+
+.width_70 {
+    width: 68%;
+}
+
+.width_80 {
+    width: 78%;
+}
+
+.width_90 {
+    width: 88%;
+}
+
+.width_95 {
+    width: 95%;
+}
+
+.width_full {
+    width: 100%;
+}
+
+/* =======================================================================
+                            CLASSES FOR CONTAINERS
+  ======================================================================== */
+
+/* ----------------------------------------------------------------------- */
+/* -------------------- A simple container and its items ----------------- */
+/* ----------------------------------------------------------------------- */
+
+.panel {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.panel:after, .panel:before {
+    content: "";
+    display: table;
+    clear: both
+}
+
+main.panel-item {
+    padding: 0;
+    margin: 0;
+}
+
+main > .panel-item:nth-child(odd) {
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+}
+
+main > .panel-item:nth-child(odd) * {
+    background-color: inherit;
+}
+
+main > .panel-item:nth-child(even) {
+    background-color: var(--bg-color-alt);
+    color: var(--fg-color-alt);
+}
+main > .panel-item:nth-child(even) * {
+    background-color: inherit;
+}
+
+/* ----------------------------------------------------------------------- */
+/* ------- A simple container with a flexible layout: responsive --------- */
+/* ----------------------------------------------------------------------- */
+
+.flex-panel {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: space-evenly;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+}
+
+.flex-panel > * {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+/* Properties of the items in a flex panel -- if declared as it. */
+.flex-item {
+    margin: 0;
+}
+
+/* Properties of the columns an item is depending on the screen */
+@media only screen and (min-width: 820px) {
+
+    .flex-panel {
+        flex-direction: row;
+    }
+
+    .flex-item {
+        margin-right: var(--typography-spacing-horizontal);
+        margin-bottom: 0;
+    }
+
+    .flex-border-left {
+        border-left-style: solid;
+        border-color: var(--columns-sep-color);
+    }
+
+}
+
+@media only screen and (max-width: 820px) {
+
+    .flex-panel {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body > footer > * > * > * > ul >li {
+        list-style: none;
+    }
+
+    nav.flex-panel {
+        flex-direction: row;
+    }
+
+    .flex-item {
+        margin-bottom: 0;
+    }
+
+    .flex-border-left {
+        border-top-style: solid;
+        border-color: var(--columns-sep-color);
+    }
+}
+
+/* ----------------------------------------------------------------------- */
+/* --------------------------- A grid container -------------------------- */
+/* ----------------------------------------------------------------------- */
+
+.grid-panel {
+    margin: auto;
+    display: grid;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/* Properties of the items in a grid panel -- if declared as it. */
+.grid-item {
+    margin-bottom: 0;
+}
+
+/* ----------------------------------------------------------------------- */
+/* -------------------------- A scrollable container --------------------- */
+/* ----------------------------------------------------------------------- */
+
+.scrolled-panel {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    overflow: scroll;
+}
+
+.scrolled-panel:after, .scrolled-panel:before {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.scrolled-panel[hidden] {
+    display: none;
+}
+
+/* ----------------------------------------------------------------------- */
+/* ------------------------- Cards container ----------------------------- */
+/* ----------------------------------------------------------------------- */
+
+
+/* Definition of panels to place cards into */
+/* ---------------------------------------- */
+
+.cards-panel {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--card-max-width), 1fr));
+    grid-column-gap: calc(0.1*var(--card-max-width));
+    grid-row-gap: calc(0.1*var(--card-max-width));
+}
+
+.full-cards-panel {
+    grid-template-columns: none;
+    /* if the cards are in a flexbox */
+    flex-direction: row;
+}
+
+
+/* Definition of a card */
+/* -------------------- */
+
+.card {
+    position: relative;
+    padding: 0;
+    margin: 0.4rem;
+    border: var(--card-border-width) solid var(--border-color-alt);
+    border-radius: var(--card-border-radius);
+    /* Display elements inside a card: */
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--card-box-shadow);
+    cursor: default;
+}
+
+.card-horiz {
+    flex-direction: row;
+}
+
+
+
+/* Change size and direction for mobile screens */
+
+@media only screen and (max-width: 768px) {
+    .card {
+        max-width: 75%;
+        max-height: calc(30rem * var(--size-divisor));
+    }
+    .full-card {
+        max-width: 100%;
+        max-height: none;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .card {
+        max-width: calc(20rem * var(--size-divisor));
+    }
+    .full-card {
+        max-width: 100%;
+    }
+}
+
+/* Content of a card */
+/* ----------------- */
+
+.card header {
+    text-align: center;
+    margin: auto;
+    min-height: calc(3rem * var(--size-divisor));
+    max-height: calc(8rem * var(--size-divisor));
+    width: 100%;
+    padding: 0.4rem;
+    /*clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 1rem));*/
+    border-top-right-radius: var(--card-border-radius);
+    border-top-left-radius: var(--card-border-radius);
+    color: var(--header-fg-color);
+    background: var(--header-bg-color);
+    /* Organize content: a box with centered elements */
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card header img {
+    border-top-right-radius: var(--card-border-radius);
+    border-top-left-radius: var(--card-border-radius);
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.card header * {
+    color: var(--header-fg-color);
+    background-color: transparent;
+}
+
+.card main {
+    padding: 0.4rem;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--card-border-radius);
+}
+
+.card > main > *
+{
+    border: none;
+}
+
+.card footer {
+    text-align: center;
+    margin: auto;
+    min-height: calc(2rem * var(--size-divisor));
+    max-height: calc(6rem * var(--size-divisor));
+    width: 100%;
+    border-bottom-right-radius: var(--card-border-radius);
+    border-bottom-left-radius: var(--card-border-radius);
+    /* Organize content: a box with centered elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.card footer *:not(img) {
+    font-size: 80%;
+    margin: 0.4rem;
+}
+
+.card footer *:not(button, [role=button]) {
+    color: var(--footer-fg-color);
+    background-color: transparent;
+}
+
+.card > * > a[role=button], .card > * > button {
+    border: calc(var(--border-width)/2) solid var(--a-color);
+}
+.card > * > a[role=button]:hover, .card > * > button:enabled:hover {
+    border: calc(var(--border-width)/2) dashed var(--a-color);
+}
+
+
+/* ----------------------------------------------------------------- */
+/* Enumerate cards */
+/* ----------------------------------------------------------------- */
+
+ol.enumerate-cards {
+    list-style: none;
+    padding: 0;
+}
+
+li.enumerate-cards-item + li {
+    margin-top: 1rem;
+}
+
+li.enumerate-cards-item {
+    background: var(--bg-color-alt);
+    font-weight: var(--font-weight-black);
+    font-size: calc(var(--font-size) * 1.25);
+    margin: auto;
+    max-width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: calc(100% - 2rem);
+    box-shadow: 0.25rem 0.25rem 0.75rem rgb(0 0 0 / 0.1);
+}
+
+li.enumerate-cards-item::before {
+    background: var(--header-bg-color);
+    counter-increment: list-item;
+    content: counter(list-item);
+    font-size: calc(var(--font-size) * 2);
+    font-weight: var(--font-weight-black);
+    width: 1.5em;
+    height: 1.5em;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    color: var(--header-fg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ----------------------------------------------------------------------- */
+
+/* Any action button in the summary */
+
+summary button.accordion-action, summary a[role=button].accordion-action {
+    flex: 1;
+    max-width: 2.5rem;
+    border: none;
+    position: relative;
+    margin: 0;
+    display: block;
+    height: 100%;
+}
+
+summary button.accordion-action img, summary a[role=button].accordion-action img{
+    max-height: 100%;
+}

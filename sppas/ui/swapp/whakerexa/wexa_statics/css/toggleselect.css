@@ -1,0 +1,27 @@
+
+.summary-choice {
+    border: none;
+    background: var(--bg-color);
+    color: var(--fg-color);
+    height: 2rem;
+}
+
+.summary-choice span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: "…";
+}
+
+.check-item:before  {
+    content: "";
+}
+
+.action-button {
+    padding: 0.5rem;
+    height: 3rem;
+    border: var(--border-width) solid var(--buttons-bg-color);
+}
+
+.accordion-action {
+    background: transparent;
+}

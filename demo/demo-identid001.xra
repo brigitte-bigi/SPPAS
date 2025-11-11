@@ -1,0 +1,3487 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.19 (C) Brigitte Bigi" date="2024-04-18T08:16:47+02:00" format="1.5" name="VideoCoordinates">
+	<Metadata>
+		<Entry key="id">f1e4e603-02fa-4a84-8c3d-02f5e0f7bda3</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.19</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU AGPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="7e2deb52-e8ff-4152-bb27-812bb23a03d0" tiername="VideoCoords">
+		<Annotation id="9eb7d713-ba4f-4075-83fd-f183940b20bd">
+			<Metadata>
+				<Entry key="frame_index">0</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.016666666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998025298118591" type="rect">(291,83,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="076a9f42-18a3-4839-a5f2-58b9c0851637">
+			<Metadata>
+				<Entry key="frame_index">1</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998084902763367" type="rect">(290,83,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b847b4e6-42ae-4dc7-992d-0d208ea1eea5">
+			<Metadata>
+				<Entry key="frame_index">2</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.08333333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997945427894592" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1ce9b051-62b2-4242-9db9-b3d6a0a3dac9">
+			<Metadata>
+				<Entry key="frame_index">3</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.11666666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997923970222473" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b01cc34b-1b4b-41ae-b92d-7ced0a9eb0e4">
+			<Metadata>
+				<Entry key="frame_index">4</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997797608375549" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a40259e3-3c8c-474f-87bd-ffa3fc60176e">
+			<Metadata>
+				<Entry key="frame_index">5</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.18333333333333332" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999777615070343" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b5b2a8eb-c8a4-4f02-9f8c-dbbb541f3c45">
+			<Metadata>
+				<Entry key="frame_index">6</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.21666666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997662901878357" type="rect">(290,85,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="068b419f-9041-4faa-82c8-ecd754a18efe">
+			<Metadata>
+				<Entry key="frame_index">7</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997575879096985" type="rect">(290,84,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c69c826d-169a-42c2-9757-f2f093c6ef63">
+			<Metadata>
+				<Entry key="frame_index">8</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.2833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999715268611908" type="rect">(290,84,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="180303a2-425e-49f4-b7ec-0e79fb8a6160">
+			<Metadata>
+				<Entry key="frame_index">9</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.31666666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996917247772217" type="rect">(290,84,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="dd828e37-d17d-435b-94fd-28f158edfe20">
+			<Metadata>
+				<Entry key="frame_index">10</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997307658195496" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5224c2d6-15bb-4b36-9d5a-a3156d03798e">
+			<Metadata>
+				<Entry key="frame_index">11</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.3833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997822642326355" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1a74e84d-d1fe-46ea-afbd-3f5783e4ca7d">
+			<Metadata>
+				<Entry key="frame_index">12</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.4166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998183846473694" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7bf03524-8949-4680-98c2-c4dfa0f362f8">
+			<Metadata>
+				<Entry key="frame_index">13</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.45" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998524188995361" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="83f94cbf-5385-4deb-8db4-2db0fb35930a">
+			<Metadata>
+				<Entry key="frame_index">14</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.48333333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998478889465332" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f6be9df7-76f1-4d7d-99ea-eb52f244716e">
+			<Metadata>
+				<Entry key="frame_index">15</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.5166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998216032981873" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e5c4a664-3cd1-43df-843d-6931f18e6eea">
+			<Metadata>
+				<Entry key="frame_index">16</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998071789741516" type="rect">(290,80,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="79be89f9-6134-4c28-a55f-4c1abb894392">
+			<Metadata>
+				<Entry key="frame_index">17</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.5833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998258948326111" type="rect">(290,80,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="68c3662a-6676-468a-9e05-04173bbd4ef2">
+			<Metadata>
+				<Entry key="frame_index">18</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.6166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998323917388916" type="rect">(290,80,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a0cdabe8-7aad-4dde-af60-a7b05601586b">
+			<Metadata>
+				<Entry key="frame_index">19</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999826967716217" type="rect">(290,80,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="865fdf60-709b-4d5c-bb2f-3102e7dfc74d">
+			<Metadata>
+				<Entry key="frame_index">20</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.6833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998314380645752" type="rect">(290,80,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8c952a85-6c63-45e7-90ca-6f4defb2d78e">
+			<Metadata>
+				<Entry key="frame_index">21</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.7166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997639060020447" type="rect">(290,80,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="23884a38-1e4e-491d-861f-3f3d95a04568">
+			<Metadata>
+				<Entry key="frame_index">22</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999768078327179" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0b5c7fcb-942a-4680-97c2-349b0982caf1">
+			<Metadata>
+				<Entry key="frame_index">23</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.7833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997186064720154" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0eced4e6-cf3b-4116-820b-abf07b8534ac">
+			<Metadata>
+				<Entry key="frame_index">24</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.8166666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998002648353577" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="feaf2a5c-c8ac-41ee-9b86-8766d5e20bde">
+			<Metadata>
+				<Entry key="frame_index">25</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.8500000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998146891593933" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b1dbd9ed-8827-47f1-8790-e840b6eaafe2">
+			<Metadata>
+				<Entry key="frame_index">26</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.8833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998455047607422" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="bc82c92e-69b2-4552-81ec-5060f99a9685">
+			<Metadata>
+				<Entry key="frame_index">27</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.9166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999868631362915" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cadeb4eb-a845-4224-8468-9bd0b7fad362">
+			<Metadata>
+				<Entry key="frame_index">28</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.9500000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998644590377808" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3ae0bb7b-905e-4ddf-aba6-dbe6f17cba0f">
+			<Metadata>
+				<Entry key="frame_index">29</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="0.9833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998493194580078" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="433a3f60-d613-46ab-831e-638c5e1adfbc">
+			<Metadata>
+				<Entry key="frame_index">30</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.0166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998377561569214" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b487b9d8-feac-42e2-89c6-e2b61febe4e3">
+			<Metadata>
+				<Entry key="frame_index">31</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998341798782349" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6fedbab2-9191-44d0-b1ae-846b58ccf8c0">
+			<Metadata>
+				<Entry key="frame_index">32</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.0833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998165965080261" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f8d66972-ad19-49c5-b63a-8db26ba536b0">
+			<Metadata>
+				<Entry key="frame_index">33</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.1166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998063445091248" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a8d98100-43f1-46f5-9401-9d8eb8c8a3a1">
+			<Metadata>
+				<Entry key="frame_index">34</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997270703315735" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2d92b5df-11f0-47dd-bb7f-d6adb5d0c758">
+			<Metadata>
+				<Entry key="frame_index">35</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.1833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997343420982361" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="422e9bd3-11ec-4815-bdd4-0ddd88d9252b">
+			<Metadata>
+				<Entry key="frame_index">36</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.2166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997270703315735" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4f8e5c95-61fe-4936-a193-8a0954610ec4">
+			<Metadata>
+				<Entry key="frame_index">37</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997057318687439" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="71012105-8816-42eb-9e3f-481ccd257986">
+			<Metadata>
+				<Entry key="frame_index">38</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.2833333333333332" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997492432594299" type="rect">(290,83,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c57bda51-88f0-473f-a6c2-d4ba24900c04">
+			<Metadata>
+				<Entry key="frame_index">39</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.3166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999834418296814" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b13ead0f-f56c-4ea8-9855-1509badb9e28">
+			<Metadata>
+				<Entry key="frame_index">40</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.3499999999999999" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998087286949158" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0a0e4296-ed89-488e-ba24-30d55ad4e8ee">
+			<Metadata>
+				<Entry key="frame_index">41</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.3833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998024106025696" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="edc9be50-8bc5-4ba3-b344-2730e4fbc0f9">
+			<Metadata>
+				<Entry key="frame_index">42</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.4166666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998049139976501" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3b9c1fb2-49b3-4247-9ce6-ea19786b0eed">
+			<Metadata>
+				<Entry key="frame_index">43</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.45" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997865557670593" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d3b46101-ee74-40c9-b20c-9b9e2c423004">
+			<Metadata>
+				<Entry key="frame_index">44</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.4833333333333332" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998300075531006" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b149dc60-5afe-4b9b-ac6e-a9851312458b">
+			<Metadata>
+				<Entry key="frame_index">45</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.5166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998668432235718" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1659a8de-8b5e-4c38-8a1d-206329121cb1">
+			<Metadata>
+				<Entry key="frame_index">46</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999090433120728" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fd2a71c5-972c-4fd1-bd46-1fb9f4ad00d0">
+			<Metadata>
+				<Entry key="frame_index">47</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.5833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999017715454102" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b5b336e3-4af1-45b5-98f4-62cf99689611">
+			<Metadata>
+				<Entry key="frame_index">48</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.6166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999107122421265" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7a0c3f94-d1ee-4a7b-ac3c-9581aacaf7d2">
+			<Metadata>
+				<Entry key="frame_index">49</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999233484268188" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="38b91c20-024b-49a9-a471-561d322cb4c9">
+			<Metadata>
+				<Entry key="frame_index">50</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.6833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999231100082397" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9b61e538-83d0-4a8f-a6a1-9e685b3632d8">
+			<Metadata>
+				<Entry key="frame_index">51</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.7166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999282360076904" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="04dc4328-8af2-4c36-8bd5-c12dda441def">
+			<Metadata>
+				<Entry key="frame_index">52</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999219179153442" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="901e8b3a-7183-4fa7-b442-d2ed1adef6f3">
+			<Metadata>
+				<Entry key="frame_index">53</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.7833333333333332" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998975992202759" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="09cd356b-c9f7-41d4-9f27-550dd5e45d52">
+			<Metadata>
+				<Entry key="frame_index">54</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.8166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998973608016968" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ea420e8a-3e05-4473-86b5-143b277c0653">
+			<Metadata>
+				<Entry key="frame_index">55</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.8499999999999999" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998629093170166" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="93d83767-d1bc-4f62-ae50-411f01d0f875">
+			<Metadata>
+				<Entry key="frame_index">56</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.8833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997401833534241" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="42dbc573-c0aa-4662-b0f9-5c9a7c866516">
+			<Metadata>
+				<Entry key="frame_index">57</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.9166666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996392726898193" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8dab723c-0dcd-45c2-a8e4-bb285998b90a">
+			<Metadata>
+				<Entry key="frame_index">58</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.95" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996432065963745" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f5e50593-f870-4162-bc5a-6b0796c20fe6">
+			<Metadata>
+				<Entry key="frame_index">59</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1.9833333333333332" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997400641441345" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9920fa4a-9ee6-4d5a-af6e-bb827806963c">
+			<Metadata>
+				<Entry key="frame_index">60</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.0166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997572302818298" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d20cda90-0a3d-43c5-ba1f-401775e11b26">
+			<Metadata>
+				<Entry key="frame_index">61</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997444748878479" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4b94be30-4f84-4aac-9636-14eab84e3810">
+			<Metadata>
+				<Entry key="frame_index">62</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.0833333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997099041938782" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f6b60625-d6db-4241-86a1-a0aa7a7f20e7">
+			<Metadata>
+				<Entry key="frame_index">63</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.1166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996476173400879" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="21ccbc8b-6792-4681-a8fa-fc58b2c52e45">
+			<Metadata>
+				<Entry key="frame_index">64</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9995904564857483" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="42d1de2a-1ea2-4051-9038-97f34dedb8fb">
+			<Metadata>
+				<Entry key="frame_index">65</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.183333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9994865655899048" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cb9dfc9d-78cb-48ad-bd09-18c001cbcbf9">
+			<Metadata>
+				<Entry key="frame_index">66</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9994851350784302" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f2e4b8f9-b1d7-40d6-a8ee-69293b9aad77">
+			<Metadata>
+				<Entry key="frame_index">67</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9995204210281372" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6984f19c-bcc1-4afa-954b-c41b6c97500b">
+			<Metadata>
+				<Entry key="frame_index">68</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.283333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996634721755981" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1b81a6c0-32e6-4e39-b131-e66ed0f75139">
+			<Metadata>
+				<Entry key="frame_index">69</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.3166666666666664" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996868371963501" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c01fa406-1bff-4fe7-8e23-4f2313087388">
+			<Metadata>
+				<Entry key="frame_index">70</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996740818023682" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d0e29080-4898-46a4-96f4-4fc87cf82f66">
+			<Metadata>
+				<Entry key="frame_index">71</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.3833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9995174407958984" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="eab56e7d-f29e-4140-83f8-778f99ee6d9a">
+			<Metadata>
+				<Entry key="frame_index">72</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.4166666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9993171691894531" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="97974aae-42fb-4082-9be8-68284f8aecea">
+			<Metadata>
+				<Entry key="frame_index">73</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.4499999999999997" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9991229176521301" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6a922ba7-4714-4509-8e22-106132687917">
+			<Metadata>
+				<Entry key="frame_index">74</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.4833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9990494847297668" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8daf34de-7334-486a-9640-ab021c265387">
+			<Metadata>
+				<Entry key="frame_index">75</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.5166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999077320098877" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0fd2b1ff-dd0a-4342-94dc-3b64ffc183e4">
+			<Metadata>
+				<Entry key="frame_index">76</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999230146408081" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d57a15b1-6251-4a9b-90eb-a0202ff048ba">
+			<Metadata>
+				<Entry key="frame_index">77</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.5833333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9994454979896545" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9ddf5522-a842-45bb-a9c5-a27f3bb0cd0a">
+			<Metadata>
+				<Entry key="frame_index">78</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.6166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996141195297241" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b8f6a376-9be2-4e29-921c-b3d145265340">
+			<Metadata>
+				<Entry key="frame_index">79</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997310042381287" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="13aba47d-d56f-4f12-ba68-9068c76123c8">
+			<Metadata>
+				<Entry key="frame_index">80</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.683333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997609257698059" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7cca336e-a864-4f05-8f99-e2020ae4d2fb">
+			<Metadata>
+				<Entry key="frame_index">81</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997718930244446" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d2c64446-0e4b-4dae-a411-a5a4e1f9232a">
+			<Metadata>
+				<Entry key="frame_index">82</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998370409011841" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2565e25b-5969-49ad-857d-8236227e9837">
+			<Metadata>
+				<Entry key="frame_index">83</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.783333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999097585678101" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="95c8d674-15e9-43a8-98cf-047998ff278d">
+			<Metadata>
+				<Entry key="frame_index">84</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.8166666666666664" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999113082885742" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c9c7e439-5130-4bf9-86cb-26a9bf3978ef">
+			<Metadata>
+				<Entry key="frame_index">85</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.85" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999916672706604" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2caf5f62-6afc-44c9-9170-e1695f1c298c">
+			<Metadata>
+				<Entry key="frame_index">86</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.8833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999192953109741" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ffa66ada-5fb9-4b18-94fc-d24a808c04c7">
+			<Metadata>
+				<Entry key="frame_index">87</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.9166666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999210834503174" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d072dbbd-3289-4b23-ae6b-09054750bee8">
+			<Metadata>
+				<Entry key="frame_index">88</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.9499999999999997" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999347925186157" type="rect">(290,81,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9ba08fc3-f580-4a5e-93fd-ba4f417ac5d8">
+			<Metadata>
+				<Entry key="frame_index">89</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="2.9833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999434947967529" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e8cb403d-f96f-4bae-aea4-5d8a4e96e1cd">
+			<Metadata>
+				<Entry key="frame_index">90</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.0166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999483823776245" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8968f2e8-f31e-4dbb-9a0b-c33476fdcff8">
+			<Metadata>
+				<Entry key="frame_index">91</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999494552612305" type="rect">(290,81,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7adc91fe-8327-4999-8259-a67e8b5f319c">
+			<Metadata>
+				<Entry key="frame_index">92</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.0833333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999463558197021" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cb7fbbf8-2dbe-4455-aa7c-17160fa3f117">
+			<Metadata>
+				<Entry key="frame_index">93</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.1166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999279975891113" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8c6d64ea-9e4d-4d10-b94c-1ef112b38694">
+			<Metadata>
+				<Entry key="frame_index">94</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999493360519409" type="rect">(290,82,122,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d5d110f5-aff0-4578-8be0-9e18327838b9">
+			<Metadata>
+				<Entry key="frame_index">95</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.183333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999489784240723" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="54dbc31c-c91a-491e-b0ca-54e23af473c2">
+			<Metadata>
+				<Entry key="frame_index">96</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999547004699707" type="rect">(290,82,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="303b6fad-3933-40de-b17a-5e51425512d4">
+			<Metadata>
+				<Entry key="frame_index">97</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999688863754272" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0f10ff46-7a0f-4fa1-93e4-967a197525ba">
+			<Metadata>
+				<Entry key="frame_index">98</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.283333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999630451202393" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1163019c-5c19-4a68-8765-472e4ff3e403">
+			<Metadata>
+				<Entry key="frame_index">99</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.3166666666666664" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999637603759766" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="36becfd0-37fb-46db-bac8-a19333bae1ba">
+			<Metadata>
+				<Entry key="frame_index">100</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999961256980896" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b8bd479a-f758-4cb0-af4d-ea2fbd3b237c">
+			<Metadata>
+				<Entry key="frame_index">101</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.3833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999574422836304" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4503720a-cdda-4824-bfaf-f84ddde04d42">
+			<Metadata>
+				<Entry key="frame_index">102</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.4166666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999955415725708" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="149f714b-36da-42af-822d-c6dca392c23c">
+			<Metadata>
+				<Entry key="frame_index">103</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.4499999999999997" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999563694000244" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7e3872ce-2954-47e9-8c23-fb9e9c69fad7">
+			<Metadata>
+				<Entry key="frame_index">104</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.4833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999961256980896" type="rect">(290,83,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1fb7e215-edb2-476c-a706-c74ef59026ab">
+			<Metadata>
+				<Entry key="frame_index">105</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.5166666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999591112136841" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ab671e5d-9ec1-4fcd-953c-444e5aacf1eb">
+			<Metadata>
+				<Entry key="frame_index">106</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999622106552124" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b14481f3-3c27-4ca9-8ddb-191db1c07d4d">
+			<Metadata>
+				<Entry key="frame_index">107</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.5833333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999593496322632" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f3483f30-97fd-4cf3-9fa5-ba29d2eb79dd">
+			<Metadata>
+				<Entry key="frame_index">108</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.6166666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999958872795105" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ebbcc50a-3463-4fe6-9b9e-3f16f6399dbc">
+			<Metadata>
+				<Entry key="frame_index">109</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999572038650513" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="83dd2be9-b028-4201-9286-f3b163ed6e0b">
+			<Metadata>
+				<Entry key="frame_index">110</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.683333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999953031539917" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4ec85670-59b3-4e81-9387-3ea1683037b3">
+			<Metadata>
+				<Entry key="frame_index">111</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999614953994751" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fd80778d-b5ff-4e3f-a409-d893600201c4">
+			<Metadata>
+				<Entry key="frame_index">112</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999600648880005" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d2d78abd-66c1-4e31-9b47-5f5e8a8ab427">
+			<Metadata>
+				<Entry key="frame_index">113</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.783333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999605417251587" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fab7744b-d5f8-477a-892e-d1749c50df67">
+			<Metadata>
+				<Entry key="frame_index">114</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.8166666666666664" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999581575393677" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="74223461-f912-45c9-b125-d4fa752a5a21">
+			<Metadata>
+				<Entry key="frame_index">115</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.85" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999957799911499" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7f2a40c4-31ef-421b-abbf-cd99ab2053a4">
+			<Metadata>
+				<Entry key="frame_index">116</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.8833333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999479055404663" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="85d6bcaa-efaf-4dce-a769-60a541d39e60">
+			<Metadata>
+				<Entry key="frame_index">117</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.9166666666666665" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999418258666992" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fa179f6d-601c-4975-8c02-14e36404ad07">
+			<Metadata>
+				<Entry key="frame_index">118</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.9499999999999997" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999350309371948" type="rect">(290,84,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9faf1dd9-3d7a-4e80-bb06-8531a2b2f629">
+			<Metadata>
+				<Entry key="frame_index">119</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="3.9833333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999247789382935" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6f014f49-89cf-4a71-a65b-a9b7feb1b8f2">
+			<Metadata>
+				<Entry key="frame_index">120</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999202489852905" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cd5e7e8c-f575-4ff5-9541-44de9e9499f9">
+			<Metadata>
+				<Entry key="frame_index">121</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999172687530518" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="09bb79db-4760-49db-a85b-dab41e96c0e3">
+			<Metadata>
+				<Entry key="frame_index">122</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.083333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999129772186279" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6c621e21-8166-4e63-8f8e-7097bb5e01e0">
+			<Metadata>
+				<Entry key="frame_index">123</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.116666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998927116394043" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8da974e5-2352-4fa7-a26f-191c76fa6c46">
+			<Metadata>
+				<Entry key="frame_index">124</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998791217803955" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="684520de-2cc2-46bf-a06d-0ee199c7c934">
+			<Metadata>
+				<Entry key="frame_index">125</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998693466186523" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f3298466-a08f-489f-a86e-850f649dd162">
+			<Metadata>
+				<Entry key="frame_index">126</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998643398284912" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ddc25017-29b5-4c70-aa2b-26ae98f332e7">
+			<Metadata>
+				<Entry key="frame_index">127</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999847412109375" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="928cc8e7-4d92-4e1a-a0ac-df3da51eac99">
+			<Metadata>
+				<Entry key="frame_index">128</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.283333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998594522476196" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="592ce767-f919-42c3-80ef-3fd8cae1380e">
+			<Metadata>
+				<Entry key="frame_index">129</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.316666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998825788497925" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a14a163e-3a5f-492b-9496-50e31d720150">
+			<Metadata>
+				<Entry key="frame_index">130</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998757839202881" type="rect">(290,85,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1da4ee5a-c661-4dcf-9fc3-13fee9715e46">
+			<Metadata>
+				<Entry key="frame_index">131</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.383333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998406171798706" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0487890b-fc69-4c9d-9f77-d7c62b69e5ba">
+			<Metadata>
+				<Entry key="frame_index">132</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.416666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999803364276886" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9c6e96e6-d979-430e-852e-76f8df04d966">
+			<Metadata>
+				<Entry key="frame_index">133</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.45" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997677206993103" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cad9a30d-1cd0-405b-8787-f1a21e4e7b3b">
+			<Metadata>
+				<Entry key="frame_index">134</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.483333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999782383441925" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6cce0512-121f-47be-b9a5-2fdf67bb1f73">
+			<Metadata>
+				<Entry key="frame_index">135</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.516666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997978806495667" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d7214fef-aeb8-4355-a1ff-2e6b237ed44a">
+			<Metadata>
+				<Entry key="frame_index">136</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998026490211487" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="45a0f4ce-f928-4a55-a741-32ce9a601a53">
+			<Metadata>
+				<Entry key="frame_index">137</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.583333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998602867126465" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7f823f09-895b-4031-bcd7-0e429b60e6a5">
+			<Metadata>
+				<Entry key="frame_index">138</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.616666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999051094055176" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="464293f6-d70f-42ad-9b69-3250f730dc89">
+			<Metadata>
+				<Entry key="frame_index">139</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999088048934937" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4c4d790b-8f7d-47bd-9b86-28a1737b3fbc">
+			<Metadata>
+				<Entry key="frame_index">140</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.683333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998983144760132" type="rect">(290,85,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3be29e46-bc47-48c0-9262-2efceadc85e4">
+			<Metadata>
+				<Entry key="frame_index">141</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998711347579956" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e7dca3e8-6a61-45c8-9e43-f751c1846bf2">
+			<Metadata>
+				<Entry key="frame_index">142</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998931884765625" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0196fb41-2fbd-4f73-9963-2a12e54ec9f2">
+			<Metadata>
+				<Entry key="frame_index">143</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.783333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999136924743652" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="658826f7-68fc-44fa-b80c-8fc584a89afd">
+			<Metadata>
+				<Entry key="frame_index">144</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.816666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999567270278931" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="76bc7549-b581-47e7-a020-71c7f1f31dbc">
+			<Metadata>
+				<Entry key="frame_index">145</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.85" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999661445617676" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="59c84f88-b486-48a1-8ecb-aeea0e2cafb8">
+			<Metadata>
+				<Entry key="frame_index">146</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.883333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999734163284302" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="86d0bb97-f10c-4507-a430-8bac02a50c48">
+			<Metadata>
+				<Entry key="frame_index">147</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.916666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999713897705078" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="227a9510-7e07-42e6-b7b0-9ef7aea20e49">
+			<Metadata>
+				<Entry key="frame_index">148</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.95" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999703168869019" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6f2f7dad-fc93-4469-80ad-17ec55ae9b25">
+			<Metadata>
+				<Entry key="frame_index">149</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="4.983333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999722242355347" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="13180fa9-953a-440a-97f1-a98d249138c9">
+			<Metadata>
+				<Entry key="frame_index">150</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999758005142212" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f5de9405-5278-47a2-b2e1-449402477d92">
+			<Metadata>
+				<Entry key="frame_index">151</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999980092048645" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7eb4ea59-a8f2-4b37-a635-b7d72a94f32f">
+			<Metadata>
+				<Entry key="frame_index">152</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.083333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999834299087524" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="34bf89a7-4c3c-41e4-8718-a8549c9b33ca">
+			<Metadata>
+				<Entry key="frame_index">153</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.116666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999854564666748" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ecd5db71-74ec-4f5d-b912-8f9e09aef08b">
+			<Metadata>
+				<Entry key="frame_index">154</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999983549118042" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5ee73501-5cb4-4a61-b6f7-72843fe05615">
+			<Metadata>
+				<Entry key="frame_index">155</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999822378158569" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9a20c912-da0f-44c1-9977-aaf22f7a8e41">
+			<Metadata>
+				<Entry key="frame_index">156</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999980092048645" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6fe80e47-f274-4d12-9deb-3b53588755e1">
+			<Metadata>
+				<Entry key="frame_index">157</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999788999557495" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e265eb2f-b425-4110-96a8-0e3d30548dc8">
+			<Metadata>
+				<Entry key="frame_index">158</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.283333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999710321426392" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7193b4d9-7063-4543-b08b-190f607019ba">
+			<Metadata>
+				<Entry key="frame_index">159</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.316666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999771118164062" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7d2294dc-ddd2-4fa3-8c7e-20f1ea1f2c50">
+			<Metadata>
+				<Entry key="frame_index">160</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999793767929077" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="84ced1e6-2b38-481d-9c2f-128cce00fe7b">
+			<Metadata>
+				<Entry key="frame_index">161</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.383333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999798536300659" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8ef7bc51-5682-41c9-bfd5-e47419f90f8f">
+			<Metadata>
+				<Entry key="frame_index">162</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.416666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999755620956421" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cc9b33c2-c4dc-46e9-b512-43d94dbd8fb7">
+			<Metadata>
+				<Entry key="frame_index">163</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.45" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999704360961914" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7459a5ec-9ed9-4039-bf0a-8bbb5d954cbf">
+			<Metadata>
+				<Entry key="frame_index">164</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.483333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999975323677063" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f5f1c3a8-e784-446f-b653-074234964eab">
+			<Metadata>
+				<Entry key="frame_index">165</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.516666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999792575836182" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="58fe25e3-9802-447e-8006-3ef4ddbed005">
+			<Metadata>
+				<Entry key="frame_index">166</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999785423278809" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c72c1526-2c5b-47a0-abeb-1c03510ed288">
+			<Metadata>
+				<Entry key="frame_index">167</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.583333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999823570251465" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="26f948f1-eb27-40cd-9a6a-34f38b004eca">
+			<Metadata>
+				<Entry key="frame_index">168</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.616666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999828338623047" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="261cb175-838b-4599-b0b3-c4906697591a">
+			<Metadata>
+				<Entry key="frame_index">169</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999976396560669" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d98c7889-5224-49c5-8e6f-8f1c468bcb85">
+			<Metadata>
+				<Entry key="frame_index">170</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.683333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999945878982544" type="rect">(291,86,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c311b983-79a4-4301-923b-9302c9db1062">
+			<Metadata>
+				<Entry key="frame_index">171</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999934196472168" type="rect">(291,86,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="963cb11a-bfb4-425e-adad-b017bf40797f">
+			<Metadata>
+				<Entry key="frame_index">172</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999111890792847" type="rect">(291,86,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="54face33-3e3a-4197-bf0f-921a95231c5e">
+			<Metadata>
+				<Entry key="frame_index">173</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.783333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999192953109741" type="rect">(291,86,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ae0d969f-b992-43e9-a1d2-f00e919741bc">
+			<Metadata>
+				<Entry key="frame_index">174</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.816666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999227523803711" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="dacbeeab-dad9-4c87-a77d-41c4c75fa266">
+			<Metadata>
+				<Entry key="frame_index">175</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.85" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999313354492188" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="eef13a97-ed3b-4b31-b6e0-2a3b6b108ad6">
+			<Metadata>
+				<Entry key="frame_index">176</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.883333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999381303787231" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="24c9a464-f25a-4dd5-80d6-a2db553ba151">
+			<Metadata>
+				<Entry key="frame_index">177</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.916666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999326467514038" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="269bba7a-b67a-4a03-9253-37ea8e5d22cd">
+			<Metadata>
+				<Entry key="frame_index">178</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.95" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999353885650635" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5b2d972d-3361-484d-b810-1e2d436b8c7e">
+			<Metadata>
+				<Entry key="frame_index">179</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="5.983333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999941349029541" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="18eaca09-4279-4def-99c2-385cc75ccf1f">
+			<Metadata>
+				<Entry key="frame_index">180</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999369382858276" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cabe00a0-f870-4aef-9cb3-72d6c9d347e6">
+			<Metadata>
+				<Entry key="frame_index">181</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999347925186157" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="232ed96a-e58d-4369-9ffd-beb0100322ba">
+			<Metadata>
+				<Entry key="frame_index">182</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.083333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999347925186157" type="rect">(290,87,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="adca4aa4-1a29-4986-9eeb-207369105b22">
+			<Metadata>
+				<Entry key="frame_index">183</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.116666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999338388442993" type="rect">(290,87,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8e1b17f1-e53e-43b8-954f-978ce4716a63">
+			<Metadata>
+				<Entry key="frame_index">184</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999408721923828" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d61ca7ef-d6f7-4407-a3c4-64887f58934d">
+			<Metadata>
+				<Entry key="frame_index">185</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999504089355469" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="be905bcc-baa4-4d7e-adaf-6332e66bd76d">
+			<Metadata>
+				<Entry key="frame_index">186</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999539852142334" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e0cf86ad-9111-4b86-8e8f-76eb2b13a191">
+			<Metadata>
+				<Entry key="frame_index">187</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999586343765259" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c11ba691-ba5d-40da-8c76-ed9209841b22">
+			<Metadata>
+				<Entry key="frame_index">188</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.283333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999632835388184" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8e48566c-b0d7-47de-9d09-3eaee4f096fb">
+			<Metadata>
+				<Entry key="frame_index">189</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.316666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999593496322632" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5d2b731f-62b2-42ed-b52b-ac8895dea345">
+			<Metadata>
+				<Entry key="frame_index">190</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999510049819946" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ef7ba8b9-fbd4-409a-b757-edb9deabdb64">
+			<Metadata>
+				<Entry key="frame_index">191</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.383333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999956488609314" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b05ea347-1c58-4e49-9000-10f9d65f8936">
+			<Metadata>
+				<Entry key="frame_index">192</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.416666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999704360961914" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="13331209-94e1-4b9e-90e8-49e29f3d9c4e">
+			<Metadata>
+				<Entry key="frame_index">193</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.45" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999698400497437" type="rect">(290,86,121,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9c1cf26a-06b2-42bb-adc0-6902a2a43f70">
+			<Metadata>
+				<Entry key="frame_index">194</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.483333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999668598175049" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cf233cda-403f-4021-a4e4-7c2691128ea0">
+			<Metadata>
+				<Entry key="frame_index">195</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.516666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999643564224243" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="087fbbb9-40e2-4e74-8856-df2bbdd7ebe3">
+			<Metadata>
+				<Entry key="frame_index">196</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999606609344482" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4a924a5a-0938-423e-8332-d612d91dba3f">
+			<Metadata>
+				<Entry key="frame_index">197</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.583333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999937891960144" type="rect">(290,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="646e4fe9-3b50-4347-92bc-4c70eb62176a">
+			<Metadata>
+				<Entry key="frame_index">198</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.616666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999264478683472" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="235554c0-8ac1-4287-934d-c3ae5bedff8d">
+			<Metadata>
+				<Entry key="frame_index">199</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999253749847412" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0e36b88a-7fb6-470d-8c2f-5b88f9443d81">
+			<Metadata>
+				<Entry key="frame_index">200</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.683333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999325275421143" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="69db4cc4-fb91-4feb-976e-0a35bdea4c26">
+			<Metadata>
+				<Entry key="frame_index">201</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999476671218872" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="358aaa84-ea2b-4618-b10e-bbd2308d3758">
+			<Metadata>
+				<Entry key="frame_index">202</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999728202819824" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="965187d6-1197-4c2d-add0-81fc58a531fc">
+			<Metadata>
+				<Entry key="frame_index">203</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.783333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999792575836182" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3c1f9249-46bb-4916-8643-befbf2d65ed4">
+			<Metadata>
+				<Entry key="frame_index">204</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.816666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999814033508301" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d2d9a736-08cb-4c0f-b381-7db42dd73ba4">
+			<Metadata>
+				<Entry key="frame_index">205</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.85" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999803304672241" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6fe5377c-563c-4703-aee1-6795496f7bf9">
+			<Metadata>
+				<Entry key="frame_index">206</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.883333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999812841415405" type="rect">(290,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="bb1ba264-5ab7-4ef1-869e-bbf94303376b">
+			<Metadata>
+				<Entry key="frame_index">207</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.916666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999812841415405" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3782fb6d-44fd-48b0-99b2-ba358a95a00e">
+			<Metadata>
+				<Entry key="frame_index">208</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.95" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999819993972778" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c25dfa6a-3ec8-4927-9ea4-899d3c1ba83c">
+			<Metadata>
+				<Entry key="frame_index">209</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="6.983333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999790191650391" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b9cf594b-ad73-4a5b-b0d0-e3fa62b7f61f">
+			<Metadata>
+				<Entry key="frame_index">210</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999762773513794" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d1b6f161-c124-494d-b560-daff71b42986">
+			<Metadata>
+				<Entry key="frame_index">211</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999738931655884" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="db2c033c-ad16-41c6-9f85-5c64fb8e131f">
+			<Metadata>
+				<Entry key="frame_index">212</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.083333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999680519104004" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="86033439-a18a-4671-a8d6-3c03b55a0235">
+			<Metadata>
+				<Entry key="frame_index">213</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.116666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999613761901855" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="59a69d52-5458-4571-bd42-cb12cc94231f">
+			<Metadata>
+				<Entry key="frame_index">214</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999537467956543" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="04adf936-d334-4165-b40b-ae57c4befc3b">
+			<Metadata>
+				<Entry key="frame_index">215</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999549388885498" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="423fc83e-83cd-4d47-8d2a-c9d73612a86f">
+			<Metadata>
+				<Entry key="frame_index">216</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999518394470215" type="rect">(291,87,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="45538e3c-9891-4a93-9b3c-88d48bfecc96">
+			<Metadata>
+				<Entry key="frame_index">217</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999457597732544" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="24fd66d4-6a87-4bd2-95f9-030c1cf9b052">
+			<Metadata>
+				<Entry key="frame_index">218</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.283333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999386072158813" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d1209b60-63b6-4425-b5f3-b72e834e3c57">
+			<Metadata>
+				<Entry key="frame_index">219</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.316666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999078512191772" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9bba7b0d-0d5b-44f3-a3e3-eccc8e675915">
+			<Metadata>
+				<Entry key="frame_index">220</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.35" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999098777770996" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a7513a2b-655a-4a4c-b2d8-61389230e202">
+			<Metadata>
+				<Entry key="frame_index">221</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.383333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.99991774559021" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f60f0f61-a79b-4fb7-bd30-9463bbcc1628">
+			<Metadata>
+				<Entry key="frame_index">222</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.416666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999957799911499" type="rect">(291,86,120,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3475fa43-e530-4157-b6fb-14beac15da42">
+			<Metadata>
+				<Entry key="frame_index">223</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.45" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999587535858154" type="rect">(291,86,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="25d958c1-1bf2-4c82-bf76-91cde088b5b6">
+			<Metadata>
+				<Entry key="frame_index">224</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.483333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999572038650513" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="af5b04d7-557e-4c06-b50f-3eb13f5c5cd5">
+			<Metadata>
+				<Entry key="frame_index">225</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.516666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999126195907593" type="rect">(291,85,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c3234123-b65b-44b5-bf95-4e614a5302e7">
+			<Metadata>
+				<Entry key="frame_index">226</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999223947525024" type="rect">(291,84,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c53e0b30-5bbe-47a0-8bb3-d02e17bb65b5">
+			<Metadata>
+				<Entry key="frame_index">227</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.583333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999387264251709" type="rect">(291,84,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1c602fdb-eba3-4d60-8179-5b395fe6af96">
+			<Metadata>
+				<Entry key="frame_index">228</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.616666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999891996383667" type="rect">(291,84,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="710879ae-c7fa-4bd7-9622-99547b8c46f3">
+			<Metadata>
+				<Entry key="frame_index">229</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998980760574341" type="rect">(291,84,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8d613f9f-8000-4a5c-8c3b-7ab6420f53bd">
+			<Metadata>
+				<Entry key="frame_index">230</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.683333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998987913131714" type="rect">(291,84,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="63d663bd-a884-4b57-8beb-46a6379cd34e">
+			<Metadata>
+				<Entry key="frame_index">231</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999915599822998" type="rect">(291,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d19f7750-dfc9-4cc6-97b5-66194640ce11">
+			<Metadata>
+				<Entry key="frame_index">232</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999933123588562" type="rect">(291,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="70286cef-10c1-4e70-9da3-569ed06215e3">
+			<Metadata>
+				<Entry key="frame_index">233</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.783333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999388456344604" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b75eb770-ce39-4a64-aa19-63304a426c56">
+			<Metadata>
+				<Entry key="frame_index">234</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.816666666666666" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999711513519287" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a4c62493-5123-4c51-84f6-db5e48797d73">
+			<Metadata>
+				<Entry key="frame_index">235</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.85" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999241828918457" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b6fa9329-5c14-4708-b272-5dea092dc7d0">
+			<Metadata>
+				<Entry key="frame_index">236</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.883333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999315738677979" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7b64450d-4dab-4b0f-a1f1-96016d745136">
+			<Metadata>
+				<Entry key="frame_index">237</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.916666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999430179595947" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0cba275c-f797-4f4b-9e28-038e5662f5b5">
+			<Metadata>
+				<Entry key="frame_index">238</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.95" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999593496322632" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7d02e74c-1c6c-4b79-842a-233ff82ff627">
+			<Metadata>
+				<Entry key="frame_index">239</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="7.983333333333333" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999957799911499" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7b81206b-229c-4632-94eb-8ec32d3692cf">
+			<Metadata>
+				<Entry key="frame_index">240</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999573230743408" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5d217e49-ee33-4994-953c-bd9ace753a4c">
+			<Metadata>
+				<Entry key="frame_index">241</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999455213546753" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6d1a0f04-86bc-4f82-8b16-b1edb7c80fbb">
+			<Metadata>
+				<Entry key="frame_index">242</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.083333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999252557754517" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fe54a0fb-757e-4045-86b1-0cd1a2823c92">
+			<Metadata>
+				<Entry key="frame_index">243</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.116666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999251365661621" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f9b01eff-9021-4eb8-89e3-1e1bd00a9c4c">
+			<Metadata>
+				<Entry key="frame_index">244</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999197721481323" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4b418f13-c85a-451c-97b5-70d9fdae9609">
+			<Metadata>
+				<Entry key="frame_index">245</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999473094940186" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ce358b01-10c8-4b68-829f-4fd010cf7d8c">
+			<Metadata>
+				<Entry key="frame_index">246</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999678134918213" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c6e6ba72-c6f4-4a20-abee-b72076fb7940">
+			<Metadata>
+				<Entry key="frame_index">247</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999703168869019" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e2f76988-ef00-4232-805c-f54463208606">
+			<Metadata>
+				<Entry key="frame_index">248</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.283333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999972939491272" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="647d7bed-2c27-4505-aba2-cc4959e122cb">
+			<Metadata>
+				<Entry key="frame_index">249</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.316666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999711513519287" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e6299636-aeb3-4bb8-a987-ed83e0293878">
+			<Metadata>
+				<Entry key="frame_index">250</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.350000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999698400497437" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4a3db1f8-bccc-430e-9a56-86cfd71b1543">
+			<Metadata>
+				<Entry key="frame_index">251</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.383333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999680519104004" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="834ae2bf-4e9f-4775-90de-70591a411b56">
+			<Metadata>
+				<Entry key="frame_index">252</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.416666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999656677246094" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="88c5807f-0f78-47c8-a603-f9d5b1998b14">
+			<Metadata>
+				<Entry key="frame_index">253</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.450000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999617338180542" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3089e6b9-6f7f-44e2-9e51-82c3f6be3cc1">
+			<Metadata>
+				<Entry key="frame_index">254</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.483333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999951958656311" type="rect">(292,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1bc0f1d0-1497-4c8e-8300-6a9393080b39">
+			<Metadata>
+				<Entry key="frame_index">255</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.516666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999544620513916" type="rect">(293,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a7098a35-8732-46a0-b0d5-292cf92fcf2c">
+			<Metadata>
+				<Entry key="frame_index">256</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999562501907349" type="rect">(293,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3b69818c-49bc-4a26-8904-05fd6fcb1dad">
+			<Metadata>
+				<Entry key="frame_index">257</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.583333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999562501907349" type="rect">(293,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3225be1b-1074-4bfe-b45a-785c3bd5d4e8">
+			<Metadata>
+				<Entry key="frame_index">258</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.616666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999525547027588" type="rect">(293,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="74e96b3b-0955-44e7-8107-c691c8dfa446">
+			<Metadata>
+				<Entry key="frame_index">259</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999475479125977" type="rect">(293,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b7d4e3b2-d3e7-4d68-841d-150431f5c192">
+			<Metadata>
+				<Entry key="frame_index">260</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.683333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999406337738037" type="rect">(294,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="12d7432b-d703-49de-8e7f-f9cf3a233792">
+			<Metadata>
+				<Entry key="frame_index">261</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999284744262695" type="rect">(294,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0045ce9b-885c-4eb3-83c5-5e3db37acc13">
+			<Metadata>
+				<Entry key="frame_index">262</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.99989914894104" type="rect">(294,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="bb56281d-be2b-4761-8860-4c6ec788731b">
+			<Metadata>
+				<Entry key="frame_index">263</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.783333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998724460601807" type="rect">(294,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8064378d-6af4-4ef5-92d3-7c6e8d6f16b2">
+			<Metadata>
+				<Entry key="frame_index">264</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.816666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998149275779724" type="rect">(294,82,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="780dd032-afaa-48c3-8119-4eb907db8595">
+			<Metadata>
+				<Entry key="frame_index">265</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.850000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999803364276886" type="rect">(294,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5ba6452d-fbb9-44f3-b71c-be15719619f9">
+			<Metadata>
+				<Entry key="frame_index">266</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.883333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997653365135193" type="rect">(294,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c9853b44-4802-4237-a8a7-203bb94ddbe4">
+			<Metadata>
+				<Entry key="frame_index">267</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.916666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996814727783203" type="rect">(294,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f9a5eb5e-e8f4-443c-9f11-b7f6fd969154">
+			<Metadata>
+				<Entry key="frame_index">268</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.950000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996347427368164" type="rect">(294,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="374e4c0a-874b-4e67-8d0c-f6435e0484d7">
+			<Metadata>
+				<Entry key="frame_index">269</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="8.983333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9994321465492249" type="rect">(294,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2698d06e-112e-480a-9d08-b7000f210e9a">
+			<Metadata>
+				<Entry key="frame_index">270</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9991055130958557" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c8cec60d-f7e3-4716-9bd0-1053509cb7ac">
+			<Metadata>
+				<Entry key="frame_index">271</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9992675185203552" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d81e5ac5-4a55-4d7f-9877-575ece35193a">
+			<Metadata>
+				<Entry key="frame_index">272</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.083333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9990285634994507" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="50786ef7-e23d-4363-8842-ade8ce3e9bc5">
+			<Metadata>
+				<Entry key="frame_index">273</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.116666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9985607266426086" type="rect">(291,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4d8ad633-3e5f-47af-a562-fe20d4624e80">
+			<Metadata>
+				<Entry key="frame_index">274</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9984739422798157" type="rect">(292,81,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="655f67cc-61fc-40be-abc6-bad76006c721">
+			<Metadata>
+				<Entry key="frame_index">275</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9974899291992188" type="rect">(293,81,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1be0f322-8215-4d98-a8f9-a44ed8fda91c">
+			<Metadata>
+				<Entry key="frame_index">276</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9971327781677246" type="rect">(293,81,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d22a2e06-0a91-4f0e-8bcb-5c6eea10f53a">
+			<Metadata>
+				<Entry key="frame_index">277</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.997255265712738" type="rect">(293,81,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d4c27b55-ad4c-4c65-adfd-73af8ebd8e88">
+			<Metadata>
+				<Entry key="frame_index">278</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.283333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.997666597366333" type="rect">(295,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="754d88d4-ba2d-46bf-a0d8-c0835a19e233">
+			<Metadata>
+				<Entry key="frame_index">279</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.316666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.997870683670044" type="rect">(295,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2e5fb213-650c-4a25-a5a3-a3361d65bf08">
+			<Metadata>
+				<Entry key="frame_index">280</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.350000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9979197382926941" type="rect">(296,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ab513c2b-13c9-4f05-af91-c9f0e49d635c">
+			<Metadata>
+				<Entry key="frame_index">281</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.383333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9976872205734253" type="rect">(296,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ff60b143-47fd-4e3b-9e12-aa66d098a13e">
+			<Metadata>
+				<Entry key="frame_index">282</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.416666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9971725940704346" type="rect">(297,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="67968787-ae45-4561-aad6-b90f5933bfa3">
+			<Metadata>
+				<Entry key="frame_index">283</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.450000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9975692629814148" type="rect">(297,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5bbff07b-ecd9-4488-b156-bdefdc11f2ea">
+			<Metadata>
+				<Entry key="frame_index">284</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.483333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.997901439666748" type="rect">(298,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="47af1c31-6271-42c2-957d-6b0bb12f9354">
+			<Metadata>
+				<Entry key="frame_index">285</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.516666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9982035160064697" type="rect">(298,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e766caad-4568-4c05-a9ff-80a53752aeb0">
+			<Metadata>
+				<Entry key="frame_index">286</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.55" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9978860020637512" type="rect">(298,80,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8f54dcc7-ec8c-4812-a8ab-b25b601e4f97">
+			<Metadata>
+				<Entry key="frame_index">287</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.583333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9981766939163208" type="rect">(299,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0f7328f0-067e-428f-a9c5-ce2bb56d6170">
+			<Metadata>
+				<Entry key="frame_index">288</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.616666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9980400204658508" type="rect">(299,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ae8ca1b0-16a0-4667-a1b5-16352b639a9b">
+			<Metadata>
+				<Entry key="frame_index">289</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.65" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9982014894485474" type="rect">(299,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="de902038-cfe5-4d6e-a2bf-0d1a9f549a37">
+			<Metadata>
+				<Entry key="frame_index">290</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.683333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9985939860343933" type="rect">(299,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3802b863-19b4-4dc4-9cb9-297dce3e693c">
+			<Metadata>
+				<Entry key="frame_index">291</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.716666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9990580677986145" type="rect">(299,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3d66ec74-573d-4f3f-a9bc-a7d9ce96febb">
+			<Metadata>
+				<Entry key="frame_index">292</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.75" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999212384223938" type="rect">(300,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="027ac976-b327-4042-9946-66144f017f1b">
+			<Metadata>
+				<Entry key="frame_index">293</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.783333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9993233680725098" type="rect">(300,80,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d1608357-1112-4671-8eeb-1cc0a75717c4">
+			<Metadata>
+				<Entry key="frame_index">294</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.816666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9994382262229919" type="rect">(300,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b2cfea57-5ac3-4b04-a7bd-dbda97aa2bcf">
+			<Metadata>
+				<Entry key="frame_index">295</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.850000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9995054006576538" type="rect">(300,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0189bb9f-f4ac-44fb-b860-8f0801a1c37a">
+			<Metadata>
+				<Entry key="frame_index">296</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.883333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996216297149658" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="37db9ddb-7e9a-46dd-9da8-82555e23f277">
+			<Metadata>
+				<Entry key="frame_index">297</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.916666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9996770620346069" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b2491d6d-d62c-48d2-b061-3160307477ae">
+			<Metadata>
+				<Entry key="frame_index">298</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.950000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997265934944153" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4af707dd-361f-4157-ac1e-d314085ca446">
+			<Metadata>
+				<Entry key="frame_index">299</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="9.983333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997751116752625" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b52d3e55-203e-4d72-bd6e-f7c6452f1928">
+			<Metadata>
+				<Entry key="frame_index">300</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.016666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997984766960144" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f96f8e0d-0ac0-4389-ba94-d7d928dcf25d">
+			<Metadata>
+				<Entry key="frame_index">301</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.05" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997738003730774" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="defefc32-af37-4af0-82b3-1b11ad57c054">
+			<Metadata>
+				<Entry key="frame_index">302</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.083333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9997983574867249" type="rect">(299,81,118,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2f03c72c-b489-4361-8e35-7956c52d0f31">
+			<Metadata>
+				<Entry key="frame_index">303</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.116666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998179078102112" type="rect">(298,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d55802e4-bb97-4ff4-9256-faada6ec5c61">
+			<Metadata>
+				<Entry key="frame_index">304</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.15" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998615980148315" type="rect">(298,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cf4bc3cc-b67c-4a92-9a1d-584cff31d6ab">
+			<Metadata>
+				<Entry key="frame_index">305</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.183333333333334" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998985528945923" type="rect">(298,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="61e1053a-44f1-4bf3-a546-80eafb12d247">
+			<Metadata>
+				<Entry key="frame_index">306</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.216666666666667" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9998892545700073" type="rect">(298,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="da516242-a238-4018-bfad-6885db0b66eb">
+			<Metadata>
+				<Entry key="frame_index">307</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.25" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999005794525146" type="rect">(298,82,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4a8708e1-8997-4413-b1f1-6e26f5f717a2">
+			<Metadata>
+				<Entry key="frame_index">308</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.283333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.999946117401123" type="rect">(298,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3a4742db-73bb-4e21-aa7e-76132cd10958">
+			<Metadata>
+				<Entry key="frame_index">309</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.316666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999693632125854" type="rect">(297,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4c210ec5-6210-47ef-a5d7-732fa65a489d">
+			<Metadata>
+				<Entry key="frame_index">310</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.350000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999802112579346" type="rect">(297,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6deeb74b-1626-4ae9-9d48-35df6d9a75a5">
+			<Metadata>
+				<Entry key="frame_index">311</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.383333333333335" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999805688858032" type="rect">(296,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9775e2ee-0577-460f-860e-6ab489c00f79">
+			<Metadata>
+				<Entry key="frame_index">312</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.416666666666668" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999769926071167" type="rect">(296,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="563883aa-3fcc-4e00-a714-dc8687d0cf56">
+			<Metadata>
+				<Entry key="frame_index">313</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="10.450000000000001" radius="0.016666666666666666" />
+			</Location>
+			<Label key="id001">
+				<Tag score="0.9999728202819824" type="rect">(296,83,119,176)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="080b0239-09b7-4250-8cf1-3bc8b96524b4" url="C:\Users\brigi\Desktop\sppas-code\demo\demo-identid001.xra" mimetype="video/xra">
+		<Tier id="7e2deb52-e8ff-4152-bb27-812bb23a03d0" />
+		<Metadata>
+			<Entry key="fps">30.0</Entry>
+			<Entry key="width">704</Entry>
+			<Entry key="height">528</Entry>
+		</Metadata>
+	</Media>
+
+	<Hierarchy />
+</Document>
+

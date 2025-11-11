@@ -1,0 +1,31 @@
+[BaseWhereModelPredictor|-model;-version|vowel_codes()]
+
+// Angle Class Diagram
+// -------------------
+
+// Chain elements
+[sppasWhereAnglesPredictor]++-1..1>[WhereAnglesPredictor]
+[WhereAnglesPredictor]++-1..1>[BaseAngle]
+[BaseAngle]^[WhereAnglePredictorCustoms]
+[BaseAngle]^[WhereAnglePredictorObserved]
+[BaseAngle]^[WhereAnglePredictorUnified]
+[WhereAnglesPredictor]^[BaseWhereModelPredictor]
+
+// Add more detail
+[sppasWhereAnglesPredictor|--predictor]
+[WhereAnglesPredictor|+use-face|predict_angle_values(vowels);get_angle(vowel,face_angle)]
+[BaseAngle|-description;-vowels;-radius|vowels_codes();get_radius();get_angle(vowel);predict_angles_values(vowels);check(vowels)]
+
+// Position Class Diagram
+// ----------------------
+
+[sppasWherePositionsPredictor]++-1..1>[WhereVowelsPositionsPredictor]
+[WhereVowelsPositionsPredictor]++-1..1>[BaseVowelPosition]
+[BaseVowelPosition]++-1..1>[FaceTwoDim]
+[WhereVowelsPositionsPredictor]^[BaseWhereModelPredictor]
+[BaseVowelPosition]^[RulesVowelPositionPredictor]
+
+// Add more detail
+[sppasWherePositionsPredictor|--predictor]
+[WhereVowelsPositionsPredictor|get_sights_dim();set_sights(s);predict_vowels_coords(vowels);get_vowel_coords(vowel);]
+[BaseVowelPosition|-description;--sights;--f2|vowel_codes();get_sights_dim();set_sights(sights);get_vowel_coords();predict_vowels_coords(vowels);check(vowels);]

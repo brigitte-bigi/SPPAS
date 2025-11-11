@@ -1,0 +1,349 @@
+/*
+:filename: main_swapp.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Shared style to be used for any SPPAS Web APPlication -- SWAPP.
+
+.. _This file is part of SPPAS: http://www.sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2025 Brigitte Bigi
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+*/
+
+
+/* ------------------------------------------------- */
+/* Override some wexa.css variable for a custom look */
+/* ------------------------------------------------- */
+
+:root {
+    /* HEADER/FOOTER */
+    --header-slidein: animDisabled;
+    --footer-slidein: animDisabled;
+    --header-height: calc(4rem + (4rem / var(--size-divisor)));
+    --footer-height: calc(8rem + (8rem / var(--size-divisor)));
+
+    /* CARDS */
+    --card-border-radius: 0.8rem;
+    --card-border-width: 0;
+
+    /* COLORS */
+    --logo-color: rgb(70, 100, 150);
+    --sppas-color1: rgb(100, 160, 220); /* soft blue */
+    --sppas-color2: rgb(20, 40, 70);    /* desaturated navy */
+
+    /* Custom styling */
+    --header-bg: linear-gradient(323deg,rgba(2, 0, 36, 1) 0%, rgba(4, 4, 69, 1) 70%, rgba(6, 8, 103, 1) 100%);
+}
+
+
+:root:not(.contrast) {
+    --border-radius: 0.4rem;
+    --dialog-border-radius: 0.4rem;
+}
+
+.contrast {
+    --border-radius: 0.6rem;
+    --dialog-border-radius: 0.6rem;
+}
+
+
+/* Light mode */
+/* ---------- */
+
+:root:not([data-theme=dark]), [data-theme=light] {
+    --header-bg-color: var(--sppas-color2);
+    --header-fg-color: var(--sppas-color1);
+    --footer-bg-color: linear-gradient(to bottom, var(--bg-color) 50%, var(--sppas-color1) 70%, var(--sppas-color2) 90%);
+    --nav-bg-color: rgba(20, 40, 70, 0.85);
+    --nav-fg-color: var(--sppas-color1);
+    --progress-bg-color: rgb(2, 0, 36);
+
+    --bg-color: #f9fafb;
+    --fg-color: #111;
+    --border-color: #ccd5e0;
+    --link-color: #2a6fbe;
+
+    --app-button-bg-color: linear-gradient(to right, #005C97 0%, #363795  51%, #005C97 100%);
+    --app-button-fg-color: rgb(255, 255, 255);
+    --cards-bg-color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Dark mode */
+/* ---------- */
+
+@media screen {
+    .dark {
+        --header-bg-color: var(--sppas-color2);
+        --header-fg-color: var(--sppas-color1);
+        --nav-bg-color: rgba(100, 160, 220, 0.85);
+        --buttons-bg-color: rgba(20, 40, 70, 0.7);
+        --buttons-fg-color: #f3f8fa;
+        --footer-bg-color: linear-gradient(to bottom, var(--bg-color) 50%, var(--sppas-color2) 70%, var(--sppas-color1) 90%);
+        --footer-fg-color: #f3f8fa;
+        --a-color: #55ccff;
+        --bg-color: rgba(0, 0, 30);
+        --fg-color: #e2e8f0;
+        --progress-bg-color: #F7E6BE;
+        --border-color: rgb(100, 120, 170);
+
+        --app-button-bg-color: rgba(88, 118, 177, 0.75);
+        --app-button-fg-color: rgb(250, 250, 250);
+        --cards-bg-color: rgba(0, 0, 45, 0.9);
+    }
+}
+
+/* For accessibility buttons in order to act like a toggle: */
+
+.dark #img-theme
+{
+    transform: rotate(-180deg) scale(1);
+    vertical-align: middle;
+}
+
+.contrast #img-contrast {
+    transform: rotate(180deg) scale(1);
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+/* Begin deprecated: */
+
+:root {
+    --splash-height: 180px;
+    --page-home-color: rgb(128, 128, 128);
+    --page-files-color: rgb(128, 128, 128);
+    --page-setup-color: rgb(128, 128, 128);
+}
+
+/* End deprecated */
+
+/*
+=================================  HEADER  ===================================
+*/
+
+body > header {
+    padding-top: 0;
+    width: 100%;
+    background: var(--header-bg);
+    text-align: left !important;
+    display: flex;
+    align-items: flex-start;
+}
+
+body > header > h1 {
+    text-align: left !important;
+    padding-left: var(--typography-spacing-horizontal);
+}
+
+body > header > nav {
+    position: absolute;
+    top: 0;
+}
+
+body > main > h2 {
+    padding-left: var(--card-border-radius);
+    padding-bottom: 0;
+    padding-top: 2rem;
+}
+
+#header-content > nav > button {
+    margin-top: 1rem;
+    background-color: transparent;
+    width: 8rem;
+    height: 4rem;
+    border-radius: var(--border-radius);
+}
+#header-content > nav > button:hover {
+   background-color: var(--nav-fg-color);
+}
+
+#img-contrast, #img-theme {
+    height: 3rem;
+    width: 3rem;
+}
+
+/*
+ ================================= BODY =================================
+ */
+
+body {
+    margin: 0 auto;
+    width: 100%;
+}
+
+body > main {
+    padding-left: calc((100% - var(--screen-width)) / 2);
+    padding-right: calc((100% - var(--screen-width)) / 2);
+}
+
+
+/*
+=================================  FOOTER  ===================================
+*/
+
+.footer-button {
+    padding: 0.7em 1.5em;
+    width: fit-content;
+    width: -moz-fit-content;
+    border-radius: calc(var(--card-border-radius) / 2);
+    color: var(--footer-fg-color);
+    border-color: var(--footer-fg-color);
+    background-color: rgba(255, 255, 255, 0.2);
+    align-items: center;
+    margin: 1rem;
+}
+
+.footer-button:hover {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.copyright {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 2rem;
+    line-height: 2;
+}
+
+
+/*
+=================================  BUTTONS  ===================================
+*/
+
+button, [role="button"] {
+    padding: 0.6rem 1.2rem;
+    border: var(--border-width) solid var(--border-color);
+    background: var(--buttons-bg-color);
+    color: var(--buttons-fg-color);
+    transition: background 0.2s ease-in-out;
+}
+
+button:hover, [role='button']:hover  {
+    background: var(--nav-fg-color);
+    color: var(--bg-color);
+}
+
+
+/* DEPRECATED
+ ------------------ A splash... of SPPAS ---------------- */
+
+.sppas-splash {
+    background-image: url('../images/splash-v5.png');
+    background-repeat: no-repeat;
+    background-size: 100% var(--splash-height);
+    /*height: var(--splash-height);    ... is replaced by: */
+    aspect-ratio: 5.5;
+    max-height: var(--splash-height);
+}
+
+.img-splash {
+    aspect-ratio: 5.5;
+    max-height: var(--splash-height);
+}
+
+#page_home_link_btn:hover {
+	border-bottom-color: var(--page-home-color);
+}
+
+#page_files_link_btn:hover {
+	border-bottom-color: var(--page-files-color);
+}
+
+/* DEPRECATED
+  ------------------- Spinner for the app video cued speech
+
+.spinner {
+    height: 4rem;
+    width: 4rem;
+
+    border: 4px solid #d1d5db;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+
+    animation: spinner 800ms linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+a[role=button].action-button, button.action-button {
+    background: var(--bg-color-alt);
+    border: var(--border-radius) solid var(--shadow-color);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: auto;
+    box-shadow: 0 0.3rem 0.4rem 0.2rem var(--shadow-color);
+    max-width: 33%;
+}
+
+--------------- */
+
+
+/* --------------------------------------- */
+
+.small-logo  {
+    max-height: 3.5rem;
+    width: auto;
+}
+
+.medium-logo {
+    max-height: 6.5rem;
+    width: auto;
+}
+
+.large-logo {
+    max-height: 10rem;
+    width: auto;
+}
+
+.extra-large-logo {
+    width: 40rem;
+    min-width: 15rem;
+}
+
+.noborder {
+    border: none
+}
+
+:where(table) .noborder {
+    border: none;
+}

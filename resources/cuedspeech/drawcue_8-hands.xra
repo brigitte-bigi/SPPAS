@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.5 (C) Brigitte Bigi" date="2022-06-09T08:19:26+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">be6b35d8-6333-49ad-83c1-bf793cc806fa</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.5</Entry>
+		<Entry key="software_url">http://www.sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2022 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="203c6dd4-3ace-4140-b606-2379750f0779" tiername="ImgSights0">
+		<Annotation id="bd336466-184b-4656-bc3a-e585960c422f">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\handcue_8-hands.jpg</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(651,1117)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(921,890)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(1195,898)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(1355,1026)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(1424,1172)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(1364,939)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(1688,873)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(1877,843)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(2031,828)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(1362,1135)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(1705,1233)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(1915,1307)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(2066,1374)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(1296,1301)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(1465,1289)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(1382,1215)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(1278,1174)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(1213,1428)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(1307,1369)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(1244,1311)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(1164,1297)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="3edc441d-5b38-44c1-b7e9-d02f40224aa2" url="C:\Users\brigi\Desktop\sppas-code\handcue_8-hands.png" mimetype="image/png">
+		<Tier id="203c6dd4-3ace-4140-b606-2379750f0779" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

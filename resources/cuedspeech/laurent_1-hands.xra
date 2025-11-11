@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.20 (C) Brigitte Bigi" date="2024-04-24T13:10:09+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">a37c5d0f-2e18-427a-a340-c8ea67814dc0</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.20</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="98516508-f0bb-44f8-8480-e27466f6f2b5" tiername="ImgSights0">
+		<Annotation id="7cc71f7e-ad1d-444b-a27c-fed4a64fe6ec">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\laurent_1-hands.jpg</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(544,1520)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(406,1422)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(360,1268)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(376,1161)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(439,1108)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(374,1155)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(387,950)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(402,846)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(416,761)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(481,1139)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(471,1048)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(454,1108)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(451,1160)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(584,1157)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(548,1077)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(526,1129)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(524,1185)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(667,1186)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(639,1100)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(611,1121)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(603,1169)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="4321e366-4593-484a-97c2-42887171559e" url="C:\Users\brigi\Desktop\sppas-code\laurent_1-hands.jpg" mimetype="image/jpeg">
+		<Tier id="98516508-f0bb-44f8-8480-e27466f6f2b5" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

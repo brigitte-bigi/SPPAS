@@ -1,0 +1,51 @@
+{
+  "id": "speechtotext",
+  "name": "Speech-To-Text",
+  "descr": "THIS ANNOTATION IS PROPOSED WITHOUT ANY WARRANTY: Speech-To-Text is performed by Whisper. It aims to transcribe speech and it mostly fails in this task. Its result HAS TO BE manually CORRECTED to match the SPPAS transcription convention. Requires IPUs. Produces an approx. ortho. transcription into IPUs.",
+  "api": "sppasSpeechToText",
+  "required": "searchipus",
+
+  "resources": [
+    {
+      "path": "stt",
+      "type": "directory",
+      "ext": "",
+      "name": "stt-"
+    }
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "-ipus",
+      "text": "Input pattern of the file with the IPUs."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-stt",
+      "text": "Output pattern of the file with the approx. transcription of Whisper."
+    },
+    {
+      "id": "modelname",
+      "type": "str",
+      "value": "base",
+      "text": "The Whisper model name (e.g., tiny, base, small, medium, large)."
+    },
+    {
+      "id": "lang",
+      "type": "str",
+      "value": "und",
+      "text": "The language code (iso639-3)."
+    }
+  ],
+
+  "refs": {
+  }
+
+}

@@ -1,0 +1,720 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.19 (C) Brigitte Bigi" date="2024-04-18T08:55:05+02:00" format="1.5" name="TimeGroupAnalyser">
+	<Metadata>
+		<Entry key="id">59677692-cef1-42a4-a9cd-5ce26e2fbc01</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.19</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU AGPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+		<Entry key="file_writer">sppasXRA</Entry>
+		<Entry key="file_name">demo-tga.xra</Entry>
+		<Entry key="file_path">C:\Users\brigi\Desktop\sppas-code\demo</Entry>
+		<Entry key="file_ext">.xra</Entry>
+		<Entry key="file_write_date">2024-04-18T08:55:05+02:00</Entry>
+		<Entry key="file_version">1</Entry>
+	</Metadata>
+
+	<Tier id="b3d3258a-7d6b-4b6d-afca-a2edc3178eea" tiername="TGA-TimeGroups">
+		<Metadata>
+			<Entry key="timegroups_of_tier">SyllAlign</Entry>
+		</Metadata>
+		<Annotation id="23f5c705-22a7-4521-8abb-be88c63c87c3">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>tg_1</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6d9dbd93-bed5-4f8f-a3de-1b5865d3e6e1">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>tg_2</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ec99726e-c9f0-4a08-9aa2-d72690a23761">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>tg_3</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cc962902-b6f8-4466-a6fc-04e8fa4cd31f">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>tg_4</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9ca21ad1-fb09-4d26-bc43-8169660fa3ea">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>tg_5</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f0028e51-7ebc-4ebc-bc79-fd855bf11a0c">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>tg_6</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="5512f9dd-96a0-4863-ad60-b10b4a8f4ba3" tiername="TGA-Segments">
+		<Annotation id="efc25428-eca9-4143-87bb-ac77151cd6b4">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>s-E-t v-i d-E O/</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fb494878-77ae-47e9-939d-e23858cabb00">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>e t-y n-@ d-E m-O~-s t-R-A/ s-j-O~ d-@ l-A/ Z-E n-E R-A/ s-j-O~</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="235aef36-cb21-4e62-b237-f85c8757738a">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>O/ t-O/ m-A/ t-i k-@</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="138590a8-00c2-4b5f-889d-7e3f971ff06c">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>d-e k-l-e z-E-l p-e s-e</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a305b444-51ba-4a47-a35b-d20fe5bb67ee">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>p-A/-R l-@ l-O/ Z-i s-j-E-l</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cd41739c-788a-4dba-9e75-d6bd591a8b76">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>s-p-A/-s</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="98e12cf5-428f-4416-a45a-8fb415f49e23" tiername="TGA-Occurrences">
+		<Annotation id="e70dc828-a2c6-4584-9e5a-a4185b773642">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">4</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5b091b2a-5e75-4e38-aa08-bc6ea7df86d9">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">13</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="504b104c-d715-47ea-a46c-43a03e22e341">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">5</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="fa9b32df-0e30-4b66-acc3-4d1f6d2fd806">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">5</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="43d3a50f-965c-428b-9079-8cee64016685">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">5</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6cbabcc5-fd2f-4fde-9c09-028a74e859e5">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">1</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="387a4f20-da9c-4459-80c6-a7204a0cb3a9" tiername="TGA-Total">
+		<Annotation id="533fc583-381a-4c72-8c5c-b2d70218c730">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">1.02089</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a9407ddf-2132-4d1f-a659-20d57bca4e57">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">2.44362</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6fdde029-d10f-437c-84c3-f84a3e7b3b1c">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.91449</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="caee00a7-98a2-42ca-a208-be3ac19d0144">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">1.45566</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b27e791c-5424-418d-bc6d-fc0226a21b57">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.98</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0978c474-e840-448f-9857-8744d4f0f541">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.74978</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="388bf089-9d06-4d5e-bb87-bd22bc2858b7" tiername="TGA-Mean">
+		<Annotation id="6d2d9ee3-082c-4d9c-acae-c302628b1f81">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.25522</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="416d6aa7-9d8c-4ffa-bac6-41de18534a76">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.18797</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="45a2ecbb-3ba7-4441-8b1b-6a61e5015289">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.1829</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0f11ad9d-6151-4d52-8918-e8aa79bad158">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.29113</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c9f353f8-ccde-4dd2-9ea9-7b91f625998f">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.196</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8b517d51-9649-42a8-93fc-7722dbcd7fe8">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.74978</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="35ec8a1b-b4a9-4b03-8e46-4777aa00018d" tiername="TGA-Median">
+		<Annotation id="e2d8283b-ea56-48ea-a61d-c6b79e5547f3">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.24545</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="14387c82-7fd3-4a4a-8f30-7855672338bd">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.28</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d9494b2c-43fc-404c-a8bb-80cb4aab6f29">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.16</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4b54b9eb-76e6-44c4-bd8a-2204d37a91f8">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.25</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="759e51f1-25be-4dc2-8e30-592f8322c560">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.1</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ebbfa2d0-113d-4aae-a8b8-a5f3734024fd">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.74978</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="bd05e3cc-98bd-4253-a293-f6d7f8480a99" tiername="TGA-StdDev">
+		<Annotation id="b61bad4c-ec1e-4e07-b56b-e486d7cef342">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.11021</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="256c8eaa-95b1-4127-a7ec-d23624eca2e1">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.0914</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b7f6d21c-7d2e-473e-a194-f3371d65f43f">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.06908</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="48d2fbb4-a355-4ce6-84b1-ebef3f6d385c">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.09708</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8e850535-80d2-46cc-9a51-b90db8ea61f3">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.12126</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7506278b-acae-4ec7-84e4-4101fb90ff69">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.0</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="f92971db-497a-48fb-a33f-315f767710f9" tiername="TGA-nPVI">
+		<Annotation id="b7b5f996-5075-43d7-b54a-46f5de55431b">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">66.59189</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a9d8531b-6756-42bf-9a60-66e9dddc29b2">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">53.87864</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="79b7e1b4-c491-42ee-a843-6a01f7165a22">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">38.68315</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c7fc6223-378b-465d-8135-1c1d3be9f498">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">49.10214</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="34b226ca-fa24-4de4-90db-e236f4fcef96">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">49.85222</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e2a3b4fb-1d7e-4009-a976-a7df4cdca4b2">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.0</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="95ce7c4e-7515-4c9d-ba52-83ab32fcf5c3" tiername="TGA-Intercept-timestamps">
+		<Annotation id="abaa6c31-fadd-4f6b-954e-1b5bda1b9d9f">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.34035</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2cdbba19-3002-49ae-a97d-ebe5fb4b9b8d">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.1397</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b8840bef-960c-4b3a-a23c-cc919b5c233e">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.13164</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="785c2867-4416-491b-a499-6e5d8779afb8">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.24322</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0650cd6b-4453-44fc-9da9-8e7fec02dd3f">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.08807</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b6a1d6e4-1a4e-4041-ac38-318fe09c6cb1">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.74978</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="8c1c7746-af8d-4a08-8ce0-f0466d80e551" tiername="TGA-Slope-timestamps">
+		<Annotation id="69fa8bb3-6052-469e-b9bb-f72064302eb9">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">-0.20513</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="1a70b6c8-6d94-4224-9364-0892e00a2abb">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.0488</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c1d6749f-107b-492b-9bea-9a4eb29e3051">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.17555</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d5543942-909c-40a8-9d8d-90945f63a2ae">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.09178</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ccedbc5d-3736-4be1-9428-f679e9154dad">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.785218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.37474</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e9c99a0a-db40-4f18-90f7-1b75ad9fa7e8">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.0</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Hierarchy />
+</Document>
+

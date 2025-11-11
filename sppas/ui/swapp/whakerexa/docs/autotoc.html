@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>book.css</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/book.css" type="text/css" media="all" />
+    <style>
+        :root {
+            --header-height: 30rem;
+            --toc-width: 18rem;
+        }
+    </style>
+
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/book.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        OnLoadManager.addLoadFunction(() => {
+            let book = new Book("main-content");
+
+            // method to add or remove html tags that the book detect
+            // By default html tags take in account by the book are : h1, h2, h3, h4
+            book.add_html_tags("h5", "h6")  // take infinite parameters, put all your tags
+            book.delete_html_tags("h5", "h6")  // take infinite parameters, put all your tags
+
+            book.fill_table();
+
+            // optional arguments to fill the table with only numerated headings by the "ssection" or not
+            // the parameter value is true by default
+            // book.fill_table(true);
+            // book.fill_table(false);
+        });
+    </script>
+    <script type="application/javascript" src="../wexa_statics/js/accessibility.js"></script>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+<header id="header-content">
+    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <nav>
+        <ul>
+            <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+            <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+            <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+        </ul>
+        <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme()">
+            <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+        </button>
+        <button role="menuitem" onclick="accessibility_manager.switch_color_scheme()">
+            <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+        </button>
+    </nav>
+    <h1>book.css with ToC</h1>
+    <h2>A CSS framework to make automatically the ToC of a book</h2>
+</header>
+
+<nav id="nav-content" class="side-nav">
+    <h1>Automatic ToC</h1>
+    <p><a class="external-link" href="https://whakerexa.sourceforge.io">Whakerexa</a></p>
+    <h2>Table of Content</h2>
+    <ul id="toc"></ul>
+</nav>
+
+<main id="main-content">
+
+    <section id="description" class="chapter">
+        <h1> Description </h1>
+
+        <section class="ssection"><h2>Overview</h2>
+            <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
+                accessible web content, and to minimize the use of CSS classes for enhancing the
+                readability of HTML code, like it should always be! <b>wexa.css</b> is the main
+                CSS framework of <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.</p>
+            <p><b>book.css</b> is a CSS framework designed to make HTML content resemble a book.
+                It includes features for implementing chapters, sections, and subsections, along
+                with an auto-numbering function.</p>
+            <p>This page includes an extended feature of book.css: the automatically generated
+                <b>Table of Content</b>.</p>
+        </section>
+        <section class="ssection"><h2>Let's do it</h2>
+            <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
+            <pre>&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
+    media="all" /&gt;
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/book.css?format=raw"
+    media="all" /&gt;
+&lt;style&gt;
+    :root { --toc-width: 18rem; }
+&lt;/style&gt;
+&lt;script src="../statics/js/purejs-tools/OnLoadManager.js" type="application/javascript">&lt;/script&gt;
+&lt;script src="../statics/js/book.js" type="application/javascript">&lt;/script&gt;
+&lt;script type="application/javascript"&gt;
+        OnLoadManager.addLoadFunction(() => {
+            let book = new Book("main-content");
+            book.fill_table();
+        });
+&lt;/script&gt;
+            </pre>
+            <p>And the following is added somewhere in the HTML document:</p>
+            <pre>&lt;nav&gt;&lt;ul id="toc"&gt;&lt;/ul&gt;&lt;/nav&gt;</pre>
+        </section>
+    </section>
+
+    <section id="demo" class="chapter">
+        <h1>Chapter two title</h1>
+
+        <!-- Should not be automatically added into the ToC -->
+        <section>
+            <h1>Non-numbered Heading 1, not in ToC</h1>
+            <h2>Non-numbered Heading 2, not in ToC</h2>
+            <h3>Non-numbered Heading 3, not in ToC</h3>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <section class="ssection"><h2>First numbered section of chapter two</h2>
+            <section class="subssection"><h3>First numbered subsection</h3>
+                <h4>Hello, I'm h4!</h4>
+                <h4>And me too</h4>
+            </section>
+            <section class="subssection"><h3>Second numbered subsection</h3>
+            </section>
+        </section>
+        <section class="ssection"><h2>Second numbered section of chapter two</h2>
+            <section class="subssection"><h3>First numbered subsection</h3>
+            </section>
+            <section class="subssection"><h3>Second numbered subsection</h3>
+            </section>
+        </section>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+</footer>
+
+</body>
+</html>

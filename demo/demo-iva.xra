@@ -1,0 +1,2008 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.5 (C) Brigitte Bigi" date="2022-05-12T14:47:35+02:00" format="1.5" name="IntervalValuesAnalysis">
+	<Metadata>
+		<Entry key="id">6c767d02-f260-46b5-8f1b-6f76d152d283</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.5</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2022 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU AGPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+		<Entry key="iva_result_of">C:\Users\brigi\Desktop\sppas-code\demo\demo.PitchTier</Entry>
+		<Entry key="file_writer">sppasXRA</Entry>
+		<Entry key="file_name">demo-iva.xra</Entry>
+		<Entry key="file_path">C:\Users\brigi\Desktop\sppas-code\demo</Entry>
+		<Entry key="file_ext">.xra</Entry>
+		<Entry key="file_write_date">2022-05-12T14:47:35+02:00</Entry>
+		<Entry key="file_version">1</Entry>
+	</Metadata>
+
+	<Tier id="e6494b6f-458b-4420-9d76-b88cc53c1225" tiername="IVA-Segments">
+		<Metadata>
+			<Entry key="segments_of_tier">TokensAlign</Entry>
+		</Metadata>
+		<Annotation id="d42c4ed0-210e-4451-b96e-a5f934a91eef">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>sgmt_1</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b9e8d4ad-ddd9-41dd-9792-308c825e0616">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>sgmt_2</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3357519b-48c5-4c6a-969d-d5c4501a1452">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>sgmt_3</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e1711f94-8661-4b6b-9f90-4b3c480b5607">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>sgmt_4</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="529c31f8-e0ab-4f01-81fe-f00fe6108a65">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>sgmt_5</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8364e0d5-3e9b-42e9-ba56-dd44dc52b256">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>sgmt_6</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="2fded8a2-c4f3-4123-9e6b-4ebc7aaa7866" tiername="IVA-Values">
+		<Metadata>
+			<Entry key="segments_of_tier">TokensAlign</Entry>
+		</Metadata>
+		<Annotation id="d42c4ed0-210e-4451-b96e-a5f934a91eef">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">229.0108358535347</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">222.6895119078613</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">217.3310354808127</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">213.35010702082846</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">211.20619739984454</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">209.51551795319514</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">207.57292140345456</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">204.16698166108048</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">193.60809947710143</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.47063820505434</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">186.89686042012534</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.09463420013947</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">182.34191990572214</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">182.15976107293892</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.86983904961602</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.28888297502834</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">195.51550043775</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">196.96917491726873</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">196.7942171057311</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">195.3656505604677</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">193.62513589466127</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.3293513407568</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.6002645278652</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">180.03141401976114</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.007902452181</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.017617894684</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">168.36807543319804</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">167.07688798111602</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.7718688898145</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.78921096523467</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">174.0163930581343</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.02880465736504</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">178.15942385828603</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">178.7069021801654</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">177.62602094131168</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.37897533194345</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.9836868652639</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.007522894806</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.1739748985839</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">167.4951401245297</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.35153271487405</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.6616597094587</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.97193592342512</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.6659196410553</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.0461328737926</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.3043555189837</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.52122561625282</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.3995762558143</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">167.87952494266486</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.60937293300825</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.19403902275343</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.3787781737139</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.374074250365</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">174.66311494910101</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.79612573565453</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">179.95642668781886</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.45902798187288</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.6187922597607</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">198.28618168405242</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">208.11708997327224</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">220.6076207619347</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">235.29795776331545</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">255.74265306645972</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">284.1351659597225</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">313.69038670857634</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">339.4779686583308</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">358.26961890824225</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">376.9386980770845</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">396.1585282710909</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">411.462842584388</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b9e8d4ad-ddd9-41dd-9792-308c825e0616">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">213.62242679916847</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">193.10483901309956</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.09203979124575</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.1809828412721</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">189.95416900983525</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">192.6293375455366</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.6639807993055</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">211.41858878792985</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">206.11602929140705</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">204.58506403489292</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">202.6549582271632</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">199.36302167718793</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">197.13402713545477</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">198.0906785784455</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">198.18095249507795</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">196.13331729440256</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">193.7472870320672</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.97043706071588</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.5539993771629</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.13796701248296</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.69359285620214</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">181.70744837865527</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">180.40260868546903</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">179.29816174520104</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">177.83712981813</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.41864144553966</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.6258068481545</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">168.27275570679026</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.18042834935505</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.7816191511755</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">162.59668653824494</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.17572097680252</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.5958758295827</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.38306656594457</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">222.01538156803701</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">223.36104271593868</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">226.61523480032275</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">231.45574467745368</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">236.20364760473163</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">240.3039822317165</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">244.29439687953837</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">247.90116262886815</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">251.7309304904211</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">256.1111413614068</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">258.8193594545421</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">260.4889270953388</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">262.02516566185074</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">262.95691214269766</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">264.31659744235503</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">267.6864108935442</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">270.95027992479197</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">273.5528969336888</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">275.6626865136556</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">277.4120114272731</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">278.5466881519995</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">277.59308396965156</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">274.3172414220417</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">269.5511160060611</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">264.1561620782804</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">260.0735830181483</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">257.5767792844976</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">251.3431963992449</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">248.75896383356138</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">246.13012649998484</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">242.24567122607027</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">237.77408776483333</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">234.4254100488829</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">231.6033432046154</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">228.36381471996395</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">223.9406160540261</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">216.001277374286</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">213.41748133320814</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">209.94925777067138</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">205.2153239585455</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">200.03283289907495</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">195.37777551429298</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.6489293412219</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">188.5345784159002</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.67825727287507</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.52340371809652</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.0766575414066</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">182.56839224559855</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">181.62248716263107</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">180.4323862746829</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">179.1867982935026</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">177.96207533276004</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.73112901838843</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">174.94365888913762</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.63538816818965</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.0815490307492</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.8534556513235</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.81012487302792</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.03477162954349</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.04578730645832</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.0586754479208</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.5518699657341</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">167.1454314191017</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">79.73313084357463</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">80.54675970428269</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">82.8843200656958</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">83.70456412838439</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">83.17371306953571</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.20726189468016</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.4007295483674</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.4382332814122</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.34652745894593</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.3591852015298</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.56774378637877</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.0853346534755</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.07311540585226</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.2295194381514</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.18759604855845</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.33783219786574</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.55986476103553</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.62048005336618</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.51727152392033</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">174.9761236596487</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.37824713878825</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.59226331295775</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.75700779040048</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.3151362213068</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">194.93569579281063</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">199.18345432306546</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">206.88009490265387</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">213.50106281594333</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">217.9319579421185</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">220.79277145560715</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">223.61884404703332</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">226.43864639279826</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">228.95812976586288</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">230.88135659545173</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">232.02841086942718</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">234.0295127876326</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">236.69229763365772</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">238.5818046780703</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">239.9926390727014</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">241.15706030513707</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">242.56211846166678</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">244.6380843999909</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">246.59520833069175</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">247.6621538661994</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">247.69286055547462</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">246.9791597054757</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">245.98826408749864</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">244.65740504614305</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">242.61237393754777</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">240.0483849520636</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">237.08549385849508</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">233.26825990273338</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">228.10404423792167</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">227.90513492804345</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">232.38464561987468</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">235.7917578884504</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">238.00376597707142</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">239.28822058948688</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">239.9466752462497</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">240.1693148438738</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">239.49433325473123</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">237.31797984384147</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">233.95728294491244</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">230.1994591931249</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">228.4258672198128</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">215.60095323676202</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">211.17562323578704</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">208.62195923550206</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">205.6431640636389</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">201.54209704506425</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">197.11009344152237</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">193.90523885671783</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.81926197543882</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.3832428473993</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">189.16606404214625</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.60673270969025</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.6962348534663</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.4528403864321</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">180.14117119466428</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.42237034711795</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.77731927676712</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.50825750441768</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.82275431273553</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3357519b-48c5-4c6a-969d-d5c4501a1452">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">211.1383458549108</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">209.51942029731072</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">210.7043834025956</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">216.43699573226692</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">228.76334049158683</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">238.4553201285907</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">241.18806246348407</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">240.2729578477821</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">235.61235625352916</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">261.5408217058894</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">257.12335011903514</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">253.13956963654672</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">249.33053615032657</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">245.12572879530546</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">240.07259569757312</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">234.20659829431213</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">229.82292579173756</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">225.9739265948789</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">221.40048612238675</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">217.17460747971936</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">213.95767888601824</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">208.54563089049188</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">202.53357263137303</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">197.9774719779667</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">194.46389801832078</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.85259521951704</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.2793615869772</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">189.27005746732812</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">188.53490203665305</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.44178986877702</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">186.23618053784972</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">186.11744293367897</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.6264970938723</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">168.2216774287798</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.396266634846</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.30197240464395</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.94864522548423</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">174.06245828761823</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">176.77578500871476</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.3080503356005</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">234.97857078397746</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">237.52356975111232</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">237.6088454646895</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">234.8328121545899</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">228.39480100382</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">219.63181321134206</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">212.22482251085057</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="e1711f94-8661-4b6b-9f90-4b3c480b5607">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">186.9525254204243</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.37403859160082</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.43986918621738</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">182.41761640469542</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">179.20938515308845</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.56857907938112</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.51053239551436</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.15231819025468</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">221.92895538478592</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">224.76875207475436</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">229.31303210047656</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">233.52771717602383</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">237.169782892627</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">240.44231071235208</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">243.68875169458494</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">244.93638482608856</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">242.37918402511508</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">235.51882940850209</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">205.90796325686983</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">204.55605954722415</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">202.61720985279777</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">200.01549031023814</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">198.308946868799</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">196.90628575662635</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">194.36781618929646</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.85794652286353</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.87644856425754</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.16650199972224</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">180.65264596626832</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.10596225640933</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.7241514687734</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.05358127614895</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">175.6694469060539</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">181.8871899775898</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.26484172316182</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">180.07737308859848</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">177.95710571483355</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">179.482093017324</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">181.8513343722344</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.06201089693653</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">186.11991240622223</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">186.3167893044988</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">186.6735764287383</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">188.98978337600505</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">194.32804701400042</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">199.5153020300477</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">203.78699043049872</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">206.62416531206597</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">206.76584183918067</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">204.075333802112</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">197.49033540808725</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">174.62148285030142</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.3792338511774</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.46960901890415</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">159.7803481641433</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">158.48927048017447</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">159.8790665957729</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.9937265471905</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.4915339876991</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">142.34946422239463</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">140.3282916458974</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">138.6433166969335</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">138.86662327028753</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">141.07354912491687</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">144.73355719679697</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">148.5806585015746</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">152.73489383049605</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">158.0874297835188</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.8511025158894</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.23693175218614</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.4278302263251</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">196.91799214689857</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">213.69812275407494</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">229.25550672521848</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">247.5148613298907</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">269.14570127632584</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">284.794327830007</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">296.49369738823356</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">308.35435672705</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="529c31f8-e0ab-4f01-81fe-f00fe6108a65">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">169.33270164934376</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.77898995005918</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.8916367950161</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.01870366314745</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">160.38548136962825</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">157.371217233509</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">155.23841808497355</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">154.90251927896117</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">156.25940919387273</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">158.78889706832615</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">160.64654731644745</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.5319007627886</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">162.07730426783627</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">162.6611814881721</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.7922199746092</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.84603688658362</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">167.21323290022494</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">167.21583463300624</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.09436620950325</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">164.51430500972523</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.05526668755547</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.4863415534641</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">159.81412264966352</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">158.47507932128337</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">157.26187023776745</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">156.72223009167092</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">158.34463639420045</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.02865739439616</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">163.5634944830388</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.0480794590832</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">168.33626361422918</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.94372016498968</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">170.96333372942516</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.82572093577954</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">172.81355280452863</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.16537070506044</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">171.67462529492445</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">166.5975286116008</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.3504533656185</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">159.491107785771</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">160.222245482879</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">159.83825993071162</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">157.89632400837309</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">158.33721874967728</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">160.45975491165862</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.48088575341134</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">165.20121360978317</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.62489976979955</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">161.10751463234723</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">156.7029808668835</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">156.49757151505008</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">154.71807901252424</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.29621495464127</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.75225659187043</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.3560244726282</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.10209935625164</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">182.72600826794766</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.18965834496322</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">185.9021585237189</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.24819525936113</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">188.39537940565305</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">189.35815717831193</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">189.53979231256824</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">188.66232798173368</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.06338222567516</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">183.87443488884418</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">181.07930261987153</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.0597328745733</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8364e0d5-3e9b-42e9-ba56-dd44dc52b256">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">200.88610041592173</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">199.95464902337392</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">198.32302872786508</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">196.56454955462632</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">195.09392950890592</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">193.43321673909458</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">191.6149386612656</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">190.00969903779784</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">187.78661660428858</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">184.23036873583587</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">179.08843828654443</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">173.39760889545212</Tag>
+			</Label>
+			<Label>
+				<Tag type="float">169.29305338378174</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="f703594b-b16b-49ff-a03a-c7197b194e51" tiername="IVA-Occurrences">
+		<Annotation id="75877f92-bd8f-4b9b-b940-0a5627dacfd2">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">70</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="195f63b2-1146-4549-90b1-62bd191729ca">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">180</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0310a91c-3ea6-49d9-b50c-7cbff13c180e">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">47</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4f9b0b36-3b5e-4c01-a3b2-96ce30b84a07">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">79</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="f30420fa-75dc-4cbd-925c-f86a8d40f3b6">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">68</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6fc7f03e-b334-4f41-9231-42d750b6cdd8">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">13</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="72f898da-8189-4046-bea5-9bfa1851ca9d" tiername="IVA-Total">
+		<Annotation id="842c7d0b-536a-47c8-a6cc-bc40b571b18c">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">14197.44919</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0e316ef3-02e2-45f0-9c1f-91b7a3fdd060">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">37064.45653</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5e1071bb-c00b-431b-91e2-30ec957c1f0e">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">9998.0495</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="bfd6c297-91de-4fa0-a596-f1a213ffac78">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">15241.54553</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="253be044-4576-4caf-a805-71afb4538d41">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">11437.21443</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="35f589fd-3938-4457-a4fb-284f5642925c">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">2459.6762</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="d1041ca3-9513-48af-809c-f01b1b6f3c2c" tiername="IVA-Mean">
+		<Annotation id="a2e6063b-13cc-4e69-8974-486396ed9d13">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">202.8207</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d2129558-6030-4de7-91e2-36ba1eaebad2">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">205.91365</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b237ff49-950d-44ca-8895-b1dd3031c933">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">212.72446</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="041be154-7892-47a2-96cb-f4a0aebff645">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">192.93096</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a41b28ad-0b33-4cf1-bf77-0085d7c14b3e">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">168.19433</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7f4ee83c-ef66-482e-bf9f-56d490d0aab1">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">189.20586</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="a3f84c43-5a83-476b-8a94-4df57d6010cf" tiername="IVA-Median">
+		<Annotation id="43233f33-ea20-4006-87bc-65f51764e98a">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">183.21828</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="81a7f4a0-992f-47c7-8100-1426e02716d8">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">199.69793</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="728a5061-1e1b-47dc-b1c7-365c7e9742ce">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">197.97747</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="497171b7-bdda-4828-ad84-a48a2d3f572f">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">184.06201</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="eaae110b-ca56-47f0-8fca-1837aca16a6e">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">164.70297</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3c9c620c-cf9e-4803-9524-b90caeac6285">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">191.61494</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="9a65d2d4-04fc-4fb2-9791-bd0d932573f0" tiername="IVA-StdDev">
+		<Annotation id="382075cf-bb88-4ba0-a76e-b4f51478d932">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">55.45035</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="83d2c689-c1ed-4b61-953f-3b9a642fc09a">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">38.62698</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="bce6c795-a4e5-4fbe-896e-2b299d71e588">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">26.48506</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0d5df623-fa4b-4448-a0bc-9e448985e16c">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">35.00053</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="01f3f44b-b7c2-4dbe-b714-a013ebaf5742">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">10.92472</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="4349748b-5ee4-4446-91e8-4200cbeecf46">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">9.70242</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="6cb349c5-a389-437d-8e9f-bea78e922319" tiername="IVA-Intercept">
+		<Annotation id="e3a8aa68-460d-4a53-b397-be5030b23812">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">164.20578</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="c0ecd958-a730-48df-b111-5d74610bfd37">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">206.01479</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9dd8f07f-8ffc-486b-9944-7bc22a654c59">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">232.97228</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="ad79e20e-33cb-4b05-bd27-19b3a68c2d8a">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">196.4014</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6f5754ea-db88-4699-8b40-d0f3ce87386a">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">155.79661</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3d951c69-44b2-4a08-adb9-86cc1af45594">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">204.18353</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="5725e1c4-7e0b-43cb-b8ec-70a54dbc0991" tiername="IVA-Slope">
+		<Annotation id="0b8fa954-e1b6-4003-9a77-be319e6c106b">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.520914" radius="0.005" />
+					<End midpoint="1.541808" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">1.11927</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2c704e9d-ca14-40e6-a500-b9dc3416c5d2">
+			<Location>
+				<Interval>
+					<Begin midpoint="1.914" radius="0.005" />
+					<End midpoint="4.357622" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">-0.00113</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0d755848-dfe9-43e1-8978-78935fc1c204">
+			<Location>
+				<Interval>
+					<Begin midpoint="4.58" radius="0.005" />
+					<End midpoint="5.494492" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">-0.88034</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="a937872e-a688-461a-bcb9-0217f20a5e05">
+			<Location>
+				<Interval>
+					<Begin midpoint="5.878027" radius="0.005" />
+					<End midpoint="7.333684" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">-0.08899</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="15594947-bb0b-4949-a806-69d13db863e7">
+			<Location>
+				<Interval>
+					<Begin midpoint="7.805218" radius="0.005" />
+					<End midpoint="8.745218" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">0.37008</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="cc28262d-e658-448f-a60b-b9b388326938">
+			<Location>
+				<Interval>
+					<Begin midpoint="8.835218" radius="0.005" />
+					<End midpoint="9.585" radius="0.005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">-2.49628</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Hierarchy />
+</Document>
+

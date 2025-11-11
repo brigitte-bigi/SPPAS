@@ -1,0 +1,297 @@
+# English translation for SPPAS
+# Copyright (c) 2011-2023 Brigitte Bigi
+# This file is distributed under the same license as the SPPAS package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brigitte Bigi <brigitte.bigi@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.7\n"
+
+msgid "Home"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Annotate"
+msgstr ""
+
+msgid "Analyze"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Plugins"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Save as"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Send feedback"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "View logs"
+msgstr ""
+
+msgid "Visit the website at "
+msgstr ""
+
+msgid "Add comments here..."
+msgstr ""
+
+msgid "Log Window..."
+msgstr ""
+
+msgid ":INFO 9000: "
+msgstr "Completed ({:d} files successfully over {:d} files)"
+
+msgid "Back"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Install"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Confirm exit?"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+# ---------------------------------------------------------------------------
+# Cued Tag SWAPP
+# ---------------------------------------------------------------------------
+# OPEN FILES FIELDSET
+msgid "Open files"
+msgstr ""
+
+msgid ":INFO 9900: "
+msgstr "Welcome on the Cued Speech Video Tagger"
+
+msgid ":INFO 9901: "
+msgstr "Under construction fieldset"
+
+msgid ":INFO 9902: "
+msgstr "Skip this fieldset: default files are already registered."
+
+# ---------------------------------------------------------------------------
+# ANNOTATION CONFIG FIELDSET
+msgid "Configuration of the annotation process"
+msgstr ""
+
+msgid "Choose the language of the video (mandatory)"
+msgstr ""
+
+msgid "Choose the output directory"
+msgstr ""
+
+msgid "Activate the option to display text information"
+msgstr ""
+
+msgid "Activate the option to display the vowels on the face"
+msgstr ""
+
+# ---------------------------------------------------------------------------
+# HAND OPTIONS FIELDSET
+msgid "Options"
+msgstr ""
+
+msgid "Virtual hands tag options"
+msgstr ""
+
+msgid "Choose the hands set to use"
+msgstr ""
+
+msgid "Choose the hands filter to apply"
+msgstr ""
+
+# ---------------------------------------------------------------------------
+# RUN ANNOTATION FIELDSET
+msgid "Run"
+msgstr ""
+
+msgid "Cued Speech Video Tagger running"
+msgstr ""
+
+msgid "The annotation is processing ..."
+msgstr ""
+
+msgid "The annotation is finished !"
+msgstr ""
+
+# ---------------------------------------------------------------------------
+# EDITOR PAGE
+# ---------------------------------------------------------------------------
+# Tooltips of the toolbar
+msgid ":INFO 9101: "
+msgstr "Open checked files of the workspace (ctrl+O)"
+
+msgid ":INFO 9111: "
+msgstr "Save all modified files (ctrl+s)"
+
+msgid ":INFO 9121: "
+msgstr "Close all files (ctrl+w)"
+
+msgid ":INFO 9131: "
+msgstr "Switch the timeline and the list"
+
+msgid ":INFO 9141: "
+msgstr "Switch the list and the selected annotation labels"
+
+msgid ":INFO 9151: "
+msgstr "Open the search dialog"
+
+# Dialogs
+msgid ":INFO 9050: "
+msgstr "At least a file contains not saved work that will be lost. Are you sure you want to close?"
+
+msgid ":INFO 9060: "
+msgstr "The file contains not saved work that will be lost. Close anyway?"
+
+# Search dialog
+msgid ":INFO 9200: "
+msgstr "Search for tags in given tiers"
+
+msgid "Hide"
+msgstr "Cacher"
+
+msgid ":INFO 9201: "
+msgstr "Close the search dialog window (ctrl+w)"
+
+msgid ":INFO 9211: "
+msgstr "Hide the search dialog window (ctrl+h)"
+
+msgid ":INFO 9221: "
+msgstr "Search forward (ctrl+g)"
+
+msgid ":INFO 9231: "
+msgstr "Search backward (ctrl+G)"
+
+# Timeline toolbar
+msgid ":INFO 9301: "
+msgstr "Scroll to the left (ctrl+←)"
+
+msgid ":INFO 9311: "
+msgstr "Zoom all (ctrl+a)"
+
+msgid ":INFO 9321: "
+msgstr "Zoom in (ctrl+i)"
+
+msgid ":INFO 9331: "
+msgstr "Zoom out (ctrl+o)"
+
+msgid ":INFO 9341: "
+msgstr "Scroll to selection"
+
+msgid ":INFO 9351: "
+msgstr "Zoom to selection"
+
+msgid ":INFO 9361: "
+msgstr "Scroll to the right (ctrl+→)"
+
+msgid ":INFO 9401: "
+msgstr "Sort opened files"
+
+msgid ":INFO 9411: "
+msgstr "Increase height"
+
+msgid ":INFO 9421: "
+msgstr "Decrease height"
+
+msgid ":INFO 9431: "
+msgstr "Show either annotations of tiers or transcription file information"
+
+msgid ":INFO 9441: "
+msgstr "Show either waveform of audio files or audio file information"
+
+msgid ":INFO 9451: "
+msgstr "Show either video file frames as rectangles or video file information"
+
+msgid ":INFO 9501: "
+msgstr "Play synchronously all expanded media"
+
+msgid ":INFO 9511: "
+msgstr "Pause playback"
+
+msgid ":INFO 9521: "
+msgstr "Stop playback"
+
+msgid ":INFO 9531: "
+msgstr "Medias rewind"
+
+msgid ":INFO 9541: "
+msgstr "Medias forward"
+
+msgid ":INFO 9551: "
+msgstr "Enable or disable loop playback"
+
+msgid ":INFO 9601: "
+msgstr "Display backward three successive video frames"
+
+msgid ":INFO 9611: "
+msgstr "Display forward three successive video frames"
+
+msgid ":INFO 9621: "
+msgstr "Number of video frames to skip for backward playback"
+
+msgid ":INFO 9631: "
+msgstr "Number of video frames to skip for forward playback"
+
+# Timeline panels
+msgid ":INFO 9701: "
+msgstr "Display the name of the file"
+
+# Text cued
+msgid ":INFO 9898: "
+msgstr ""
+"Sounds are represented with <a href='https://fr.wikipedia.org/wiki/X-SAMPA' class='external-link'>X-SAMPA</a> encoding system.  They "
+"must be in the given language set and separated with '-'."
+
+# ---------------------------------------------------------------------------
+# SWAPP
+# ---------------------------------------------------------------------------
+msgid "Session ended"
+msgstr "Session ended"
+
+msgid "You can close this tab. [...]"
+msgstr "You can close this tab.<br>For a new session, restart SPPAS from your file explorer."

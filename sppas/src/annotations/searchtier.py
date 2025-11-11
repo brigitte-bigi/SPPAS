@@ -1,0 +1,293 @@
+"""
+:filename: sppas.src.annotations.searchtier.py
+:author:   Brigitte Bigi
+:contact:  contact@sppas.org
+:summary:  Search for tier with various names.
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+
+"""
+
+
+class sppasFindTier:
+    """Search for tiers in a sppasTranscription.
+
+    """
+
+    @staticmethod
+    def ipus(trs):
+        """Return the tier with Inter-Pausal Units.
+
+        :param trs: (sppasTranscription)
+        :returns: (sppasTier or None)
+
+        """
+        # Search for a tier containing "ipu" in its name
+        for tier in trs:
+            tier_name = tier.get_name().lower()
+            if "ipu" in tier_name:
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def transcription(trs):
+        """Return the tier with orthographic transcription.
+
+        :param trs: (sppasTranscription)
+        :returns: (sppasTier or None)
+
+        """
+        # Search for a tier with exact name "transcription"
+        tier = trs.find('transcription', case_sensitive=False)
+        if tier is not None:
+            return tier
+
+        # Search for a tier containing "transcription" in its name
+        for tier in trs:
+            tier_name = tier.get_name().lower()
+            if "transcription" in tier_name:
+                return tier
+
+        # Search for a tier containing either
+        # "trans", "trs", "toe" or "ortho" in its name
+        for tier in trs:
+            tier_name = tier.get_name().lower()
+            if "trans" in tier_name:
+                return tier
+            elif "trs" in tier_name:
+                return tier
+            elif "toe" in tier_name:
+                return tier
+            elif "ortho" in tier_name:
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def tokenization(trs, pattern=""):
+        """Return the tier with tokenization.
+
+        In case of EOT, several tiers with tokens are available.
+        Priority is given to faked (i.e. without pattern).
+
+        :param trs: (sppasTranscription)
+        :param pattern: (str) Priority pattern
+        :returns: (sppasTier or None)
+
+        """
+        # Search with the pattern
+        if len(pattern) > 0:
+            pattern = pattern.lower()
+            for tier in trs:
+                tier_name = tier.get_name().lower()
+                if pattern in tier_name and "token" in tier_name:
+                    return tier
+
+        # Search with known patterns
+        if len(trs) == 1:
+            if "token" in trs[0].get_name().lower():
+                return trs[0]
+
+        else:
+            tok_tier = None  # generic tier with tokens
+            std_tier = None  # tier with standard tokens
+
+            for tier in trs:
+                tier_name = tier.get_name().lower()
+                if "align" in tier_name:
+                    continue
+                if tier_name == "tokens":
+                    return tier
+                elif "std" in tier_name and "token" in tier_name:
+                    std_tier = tier
+                elif "token" in tier_name:
+                    tok_tier = tier
+
+            if std_tier is not None:
+                return std_tier
+
+            if tok_tier is not None:
+                return tok_tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def phonetization(trs):
+        """Return the tier with phonetization.
+
+        :param trs: (sppasTranscription)
+        :returns: (sppasTier or None)
+
+        """
+        # Search for a tier with exact name "phones"
+        tier = trs.find('phones', case_sensitive=False)
+        if tier is not None:
+            return tier
+
+        # Search for a tier starting with "phon"
+        for tier in trs:
+            tier_name = tier.get_name().lower()
+            if "align" in tier_name:
+                continue
+            if tier_name.startswith("phon") is True:
+                return tier
+
+        # Search for a tier containing "phon"
+        for tier in trs:
+            tier_name = tier.get_name().lower()
+            if "align" in tier_name:
+                continue
+            if "phon" in tier_name:
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def aligned_phones(trs):
+        """Return the tier with time-aligned phonemes.
+
+        :param trs: (sppasTier or None)
+
+        """
+        for tier in trs:
+            if "align" in tier.get_name().lower() and \
+                    "phon" in tier.get_name().lower():
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def aligned_tokens(trs):
+        """Return the tier with time-aligned tokens.
+
+        :param trs: (sppasTier or None)
+
+        """
+        for tier in trs:
+            if "align" in tier.get_name().lower() and \
+                    "token" in tier.get_name().lower():
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def aligned_syllables(trs):
+        """Return the tier with time-aligned syllables.
+
+        :param trs: (sppasTier or None)
+
+        """
+        for tier in trs:
+            if "align" in tier.get_name().lower() and \
+                    "syll" in tier.get_name().lower():
+                return tier
+
+        # for compatibility for other king of syllables/other software:
+        for tier in trs:
+            if tier.get_name() == "Syllables":
+                return tier
+        for tier in trs:
+            if "Syll" in tier.get_name():
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def aligned_lemmas(trs):
+        """Return the tier with time-aligned lemmas.
+
+        :param trs: (sppasTier or None)
+
+        """
+        for tier in trs:
+            if "lemma" in tier.get_name().lower():
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def pitch(trs):
+        """Return the tier with pitch values.
+
+        :param trs: (sppasTranscription)
+        :returns: (sppasTier or None)
+
+        """
+        for tier in trs:
+            if tier.get_name() == "PitchHz":
+                return tier
+        for tier in trs:
+            if tier.get_name() == "PitchTier":
+                return tier
+        for tier in trs:
+            if "pitch" in tier.get_name().lower():
+                return tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def pitch_anchors(trs):
+        """Return the tier with pitch anchors, like momel result.
+
+        :param trs: (sppasTranscription)
+        :returns: (sppasTier or None)
+
+        """
+        for tier in trs:
+            if "momel" in tier.get_name().lower():
+                return tier
+
+        for tier in trs:
+            if "anchors" in tier.get_name().lower():
+                return tier
+
+        return None

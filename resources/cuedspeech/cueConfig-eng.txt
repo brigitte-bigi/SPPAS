@@ -1,0 +1,225 @@
+# ---------------------------------------------------------------------------
+# File: cueConfig-eng.txt
+# Version: 1.0
+# Last modified: 2025-05-29
+# ---------------------------------------------------------------------------
+# Copyright (C) 2019-2025 Brigitte Bigi, Laboratoire Parole et Langage
+#
+# This file is dual-licensed:
+# - under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License
+#   https://creativecommons.org/licenses/by-nc/4.0/
+# - and under the Etalab Open License 2.0
+#   https://www.etalab.gouv.fr/licence-ouverte-open-licence
+#
+# You may use, modify, and share this file under either license.
+#
+# ---------------------------------------------------------------------------
+#
+# This is the description file cueConfig-eng.txt, made by Brigitte Bigi
+# and validated by Michel François of ALPC <http://www.alpc-asso.fr/>
+#
+# This file defines the phonemes, their classes, and their keys of the
+# American Cued Speech coding scheme.
+#
+# ---------------------------------------------------------------------------
+#
+# A syllable is always coded with a C-V sequence. The vowel is represented
+# by a position on the face, and the consonant by a hand shape. In this file,
+# the position of a vowel is represented by a single character and the hand
+# shape of a consonant by a number.
+#
+# Example of result when using this file with SPPAS:
+# The word "saw" is phonetized //
+# It is key-segmented into /sO:/ then converted to the following keys:
+#    /sO:/ = 4-m
+# The first key always refers to a consonant and the second to a vowel.
+# The worg "house" is phonetized /h aU s/ results in: 3-s.5-t.3-s
+#
+# ---------------------------------------------------------------------------
+# By convention in this configuration file:
+#
+# - cnil substitutes a missing consonant. Must not be changed.
+#   It will be used when there's no consonant before the vowel.
+#
+# - vnil substitutes a missing vowel. Must not be changed.
+#   It will be used when there's no vowel after a consonant.
+# ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Here is the list of phonemes and the corresponding class: either C or V.
+# ---------------------------------------------------------------------------
+# A phoneme/class definition is made as 3 columns:
+# 	- first column is the key-word "PHONCLASS";
+#	- second column is the phoneme;
+#	- third column is the class-symbol.
+#
+# It is important to notice that:
+# 	- a vowel has to be mentioned with the character "V";
+# 	- a consonant has to be mentioned with the character "C";
+#	- the class-symbol for a break is "N".
+
+# The filled pause is not coded, it is considered a break.
+# PHONCLASS fp N
+
+# List of American vowels, use V symbol
+PHONCLASS E V
+PHONCLASS A: V
+PHONCLASS A V
+PHONCLASS O: V
+PHONCLASS V V
+PHONCLASS i V
+PHONCLASS i: V
+PHONCLASS u: V
+PHONCLASS @ V
+PHONCLASS I V
+PHONCLASS u V
+PHONCLASS U V
+PHONCLASS { V
+PHONCLASS 3:r V
+
+# List of American diphtongs, use W symbol
+PHONCLASS aI W
+PHONCLASS aU W
+PHONCLASS eI W
+PHONCLASS OI W
+PHONCLASS @U W
+
+# List of consonants
+PHONCLASS p C
+PHONCLASS d C
+PHONCLASS b C
+PHONCLASS d C
+PHONCLASS k C
+PHONCLASS t C
+PHONCLASS D C
+PHONCLASS f C
+PHONCLASS s C
+PHONCLASS S C
+PHONCLASS z C
+PHONCLASS Z C
+PHONCLASS T C
+PHONCLASS h C
+PHONCLASS m C
+PHONCLASS n C
+PHONCLASS N C
+PHONCLASS l C
+PHONCLASS 4 C
+PHONCLASS r\ C
+PHONCLASS dZ C
+PHONCLASS j C
+PHONCLASS w C
+
+
+# ---------------------------------------------------------------------------
+# Here is the list of key codes
+# ---------------------------------------------------------------------------
+# It is not allowed to use the value 0 for consonants: it's already used for 
+# the neutral shape. It is not allowed to use the char n for vowels: already 
+# used for the neutral position.
+# ---------------------------------------------------------------------------
+
+# Vowels monophtong
+PHONKEY E c
+PHONKEY O: c
+PHONKEY u c
+PHONKEY u: c
+PHONKEY i m
+PHONKEY i: m
+PHONKEY 3:r m
+PHONKEY { t
+PHONKEY I t
+PHONKEY U t
+PHONKEY @ sd
+PHONKEY V sd
+PHONKEY A: sf
+PHONKEY A sf
+PHONKEY @U sf
+
+# Vowels that are part of a diphtong
+PHONKEY a s
+PHONKEY e c
+PHONKEY O c
+
+# Consonants
+PHONKEY p 1
+PHONKEY d 1
+PHONKEY Z 1
+
+PHONKEY k 2
+PHONKEY D 2
+PHONKEY z 2
+PHONKEY v 2
+
+PHONKEY h 3
+PHONKEY s 3
+PHONKEY r\ 3
+
+PHONKEY b 4
+PHONKEY n 4
+PHONKEY n= 4
+# the sequence /h w/ must become /hw/
+PHONKEY hw 4
+
+PHONKEY m 5
+PHONKEY f 5
+PHONKEY 4 5
+PHONKEY t 5
+
+PHONKEY w 6
+PHONKEY l= 6
+PHONKEY S 6
+PHONKEY l 6
+
+PHONKEY dZ 7
+PHONKEY T 7
+PHONKEY g 7
+
+PHONKEY tS 8
+PHONKEY j 8
+PHONKEY N 8
+
+
+# ---------------------------------------------------------------------------
+# Coding a key without consonant or without vowel:
+# The PHONKEY can be changed, the PHONCLASS CAN'T be.
+# ---------------------------------------------------------------------------
+
+# When the key is "-V", "cnil" is used to represent the missing consonant
+# There's no sound for the consonant, so the class is set to neutral.
+# The PHONCLASS *** MUST NOT *** be changed.
+PHONCLASS cnil N
+# The PHONKEY may be changed (language dependent)
+PHONKEY cnil 5
+
+# When the key is "C-", "vnil" is used to represent the missing vowel
+# There's no sound for the vowel, so the class is set to neutral.
+# The PHONCLASS *** MUST NOT *** be changed.
+PHONCLASS vnil N
+# The PHONKEY may be changed (langugage dependent)
+PHONKEY vnil s
+
+# ---------------------------------------------------------------------------
+# Target of shapes
+# ---------------------------------------------------------------------------
+
+SHAPETARGET 0 5
+SHAPETARGET 1 8
+SHAPETARGET 2 12
+SHAPETARGET 3 12
+SHAPETARGET 4 12
+SHAPETARGET 5 12
+SHAPETARGET 6 8
+SHAPETARGET 7 12
+SHAPETARGET 8 12
+
+# ---------------------------------------------------------------------------
+# Neutral position and shape.
+# *** MUST NOT *** be changed.
+# ---------------------------------------------------------------------------
+
+# When there's no sound: neutral shape and neutral position
+PHONCLASS cnone N
+PHONKEY cnone 0
+PHONCLASS vnone N
+PHONKEY vnone n

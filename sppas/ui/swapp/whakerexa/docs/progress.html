@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>progress.js</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/accessibility.js" type="application/javascript"></script>
+
+    <script src="../wexa_statics/js/progress.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        OnLoadManager.addLoadFunction(() => {
+             let interval;
+             let advancement = 0;
+
+             interval = setInterval(() => {
+                 update_bar(advancement);
+
+                 advancement += 10;
+                 if (advancement > 100) {
+                     clearInterval(interval);
+
+                     let text = document.createElement("span");
+                     text.textContent = "Progress bar finished !";
+                     let main = document.getElementsByTagName("main")[0];
+                     main.appendChild(text);
+                 }
+             }, 2000);
+        });
+    </script>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+<header>
+    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <nav style="position: absolute; top: 0;">
+        <ul>
+            <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+            <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+            <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+        </ul>
+        <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme();">
+            <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+        </button>
+        <button role="menuitem" onclick="accessibility_manager.switch_color_scheme();">
+            <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+        </button>
+    </nav>
+    <h1>progress.js</h1>
+    <h2>A JS to deal with progress bars</h2>
+</header>
+
+<main id="main-content">
+
+        <h2>Description</h2>
+        <p>
+            The <code>update_bar</code> function dynamically updates the content and value of a progress bar component in an HTML document.
+            It updates three elements: the progress bar's percentage value, its associated descriptive text, and an optional header.
+        </p>
+
+        <h3>Parameters</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>percent</code></td>
+                <td><em>number</em></td>
+                <td>The percentage value to update the progress bar. This value is applied to the <code>value</code> attribute of an HTML <code>&lt;progress&gt;</code> element with the ID <code>percent</code>.</td>
+            </tr>
+            <tr>
+                <td><code>text</code></td>
+                <td><em>string</em> (optional)</td>
+                <td>The descriptive text to display alongside the progress bar. If provided, it updates the inner content of an HTML element with the ID <code>progress_text</code>. Default is an empty string (<code>""</code>).</td>
+            </tr>
+            <tr>
+                <td><code>header</code></td>
+                <td><em>string</em> (optional)</td>
+                <td>An optional header for the progress bar section. If provided, it updates the inner content of an HTML element with the ID <code>progress_header</code>. Default is an empty string (<code>""</code>).</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Behavior</h3>
+        <ol>
+            <li><strong>Update Progress Text</strong>:
+                If an element with the ID <code>progress_text</code> exists, its <code>innerHTML</code> is updated with the <code>text</code> parameter.
+            </li>
+            <li><strong>Update Progress Header</strong>:
+                If an element with the ID <code>progress_header</code> exists, its <code>innerHTML</code> is updated with the <code>header</code> parameter.
+            </li>
+            <li><strong>Update Progress Bar Value</strong>:
+                The function modifies the <code>value</code> attribute of the <code>&lt;progress&gt;</code> element with the ID <code>percent</code> to reflect the <code>percent</code> parameter.
+            </li>
+        </ol>
+
+        <h3>Example Usage</h3>
+        <pre>
+<code>// Update the progress bar to 50%, with a descriptive text and header
+update_bar(50, "Loading data...", "Data Upload Progress");
+
+// Update the progress bar to 75%, with only descriptive text
+update_bar(75, "Processing...");
+
+// Update the progress bar to 100%, without any text or header
+update_bar(100);</code>
+    </pre>
+
+        <h3>Requirements</h3>
+        <ul>
+            <li>The following HTML elements must exist in the document for the function to work as intended:
+                <ul>
+                    <li>A <code>&lt;progress&gt;</code> element with the ID <code>percent</code> for the progress bar.</li>
+                    <li>A text container (e.g., <code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>) with the ID <code>progress_text</code> for descriptive text.</li>
+                    <li>A header container (e.g., <code>&lt;h3&gt;</code>, <code>&lt;div&gt;</code>) with the ID <code>progress_header</code> for the header.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Notes</h3>
+        <p>
+            If the required elements (<code>progress_text</code>, <code>progress_header</code>, or <code>percent</code>) are not present in the DOM, the function skips their updates without throwing errors.
+            Use this function in combination with dynamic progress updates for a seamless user experience in tasks like file uploads, processing, or loading states.
+        </p>
+
+
+    <h2>Demo</h2>
+    <label for="percent">File progress:</label>
+    <progress id="percent" max="100" value="0"></progress>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+</footer>
+</body>
+</html>

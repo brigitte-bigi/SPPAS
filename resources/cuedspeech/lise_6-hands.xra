@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.20 (C) Brigitte Bigi" date="2024-04-24T09:42:42+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">0eaf05f3-d402-4a02-88db-b62ec2a17f30</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.20</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="de246870-adf2-4ba5-ae23-b06d0b08fff0" tiername="ImgSights0">
+		<Annotation id="1fefe1ae-f001-48b6-8ad5-c3c59661bdc3">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\lise_6-hands.jpg</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(568,620)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(629,463)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(748,353)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(851,254)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(894,165)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(939,441)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(1148,434)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(1275,431)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(1370,435)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(973,544)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(1004,585)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(930,582)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(861,570)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(950,654)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(945,663)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(886,662)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(828,653)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(918,755)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(916,758)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(859,747)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(808,730)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="1a7fb306-3b44-4b85-9ae8-6ca271a53b44" url="C:\Users\brigi\Desktop\sppas-code\lise_6-hands.jpg" mimetype="image/jpeg">
+		<Tier id="de246870-adf2-4ba5-ae23-b06d0b08fff0" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

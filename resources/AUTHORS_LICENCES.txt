@@ -1,0 +1,156 @@
+Brigitte Bigi
+contact@sppas.org
+
+
+Quick overview of copyrights and licenses of the resources.
+For a full description, see the documentation of SPPAS resources
+at https://www.ortolang.fr/.
+
+
+============================================================================
+lang
+============================================================================
+
+Linguistic resources to enable the support of a given language in several
+automatic annotations of SPPAS including but not limited to TextNormalization,
+Phonetization, Alignment and Syllabification.
+
+
+Pronunciation dictionaries:
+===========================
+
+cat.dict:
+    Part of the Ralf dictionaries for Simon ASR system (2014).
+    Converted (file format and phoneset) by Brigitte Bigi.
+    Copyright (C) 2011-2016 Brigitte Bigi, LPL, CNRS.
+    GNU General Public License.
+
+cmn.dict:
+    Authors: Zhi Na and Brigitte Bigi
+    Copyright (C) 2011-2014 Brigitte Bigi, LPL, CNRS
+    GNU General Public License
+
+deu.dict:
+    Downloaded in 2017 from the Ralf catalog of dictionaries for the Simon
+    ASR system at http://spirit.blau.in/simon/import-pls-dictionary/.
+    It was then converted (format and phoneset) and corrected by Brigitte
+    Bigi.
+    GNU General Public License
+
+dut.dict:
+	Created in 2024 by Alex Stasica <alex.stasica1@gmail.com>.
+	Modified for SPPAS integration by Brigitte Bigi (January 2025).
+	CC-By-NC-4.0
+
+eng.dict:
+    Downloaded from voxforge.org (CMU dictionary v0.6) in 2011 and
+    converted in SAMPA by Brigitte Bigi and Sophie Herment.
+    Copyright (C) 1993-2008 by Carnegie Mellon University
+    (re-distribution allowed).
+
+fra.dict:
+    Author: Brigitte Bigi
+    Copyright (C) 2011-2019 Brigitte Bigi, LPL, CNRS
+
+fre.dict:
+    Author: Brigitte Bigi
+    Copyright (C) 2022 Brigitte Bigi, LPL, CNRS
+
+frq:
+    Copyright (c) Marie-Hélène Côté, Université de Lausanne
+    Author: Marie-Hélène Côté
+    Converted (file format and phoneset) by Brigitte Bigi.
+
+ita.dict:
+    Downloaded from the festival project in 2011,
+    Modified automatically and manually by Brigitte Bigi.
+    GPL License.
+
+jpn.dict:
+    Part of the Julius CSR software. Open source license.
+
+nan.dict:
+    Constructed by Brigitte Bigi from the most frequent observed
+    pronunciations of a corpus created by S-F Wang.
+
+spa.dict:
+    Downloaded from the CMU web page in 2013:
+    http://www.speech.cs.cmu.edu/sphinx/models/hub4spanish_itesm/
+    Converted in SAMPA by Brigitte Bigi.
+    GNU General Public License.
+
+pcm.dict:
+    Created by Brigitte Bigi from the corpus of NaijaSynCor project
+    http://naijasyncor.huma-num.fr/
+
+pol.dict:
+    Downloaded in 2015 from the Ralf catalog of dictionaries for the
+    Simon ASR system at http://spirit.blau.in/simon/import-pls-dictionary/
+    Corrected by Brigitte Bigi and Katarzyna Klessa http://katarzyna.klessa.pl/
+    GNU General Public License.
+
+por.dict:
+    Downloaded in 2015 from the Ralf catalog of dictionaries for the Simon
+    ASR system at http://spirit.blau.in/simon/import-pls-dictionary/.
+    It was then converted (format and phoneset) and corrected by Brigitte
+    Bigi.
+    GNU General Public License
+
+yue.dict:
+    The character pronunciation comes from Jyutping phrase box from the
+    Linguistic Society of Hong Kong.
+    "The copyright of the Jyutping phrase box belongs to the Linguistic
+    Society of Hong Kong.  We would like to thank the Jyutping Group of the
+    Linguistic Society of Hong Kong for permission to use the electronic file
+    in our research and/or product development."
+
+
+Acoustic models:
+================
+
+Authors are indicated into the AUTHORS file of the model directory.
+The license is Creative Commons Attribution-NonCommercial-ShareAlike 4.0 
+International Public License, except for:
+
+1. the English model is under the terms of the GNU Public License;
+2. the Cantonese acoustic model is copyrighted: (C) DSP and Speech Technology
+Laboratory, Department of Electronic Engineering, the Chinese University
+of Hong Kong.
+
+
+Syllabification rules:
+======================
+
+All files are under the tems of the GNU General Public License.
+
+
+============================================================================
+annot
+============================================================================
+
+
+cuedspeech.zip:
+===============
+
+This resource contain the rules to generate the key codes of the French
+Cued Speech, LfPC - Langue française Parlée Complétée.
+It also contains a set of photos of hands to represent the consonants.
+All these resources are:
+    * Copyright (C) 2022 Brigitte Bigi, LPL, CNRS.
+    * GNU General Public License, version 3
+
+facedetect.zip:
+===============
+
+This resource contain a set of models for Haar Cascade Classifier and
+Artificial Neural Networks to perform Automatic FaceDetection.
+A copyright is mentioned inside each file.
+
+
+facemark.zip:
+===============
+
+This resource contain a set of models to perform Face Landmark.
+A copyright is mentioned inside files and the license in a readme
+file.
+

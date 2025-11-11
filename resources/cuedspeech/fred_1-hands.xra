@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.20 (C) Brigitte Bigi" date="2024-04-24T13:54:02+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">c369bb3a-8130-4c49-b16e-67f1c0acba1a</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.20</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="bcba9148-be9d-4f48-aca0-b7c7a4e4700a" tiername="ImgSights0">
+		<Annotation id="98c15e97-0cbf-4441-99a0-f13739e967d4">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\fred_1-hands.jpg</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(367,592)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(557,431)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(740,405)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(878,454)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(953,525)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(878,432)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(1125,451)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(1262,472)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(1369,496)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(868,560)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(1039,592)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(965,574)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(893,556)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(825,682)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(984,692)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(922,669)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(848,658)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(772,782)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(907,790)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(873,761)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(811,745)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="ac189474-8d1f-4bef-9c16-1bf760c5d3c2" url="C:\Users\brigi\Desktop\sppas-code\fred_1-hands.jpg" mimetype="image/jpeg">
+		<Tier id="bcba9148-be9d-4f48-aca0-b7c7a4e4700a" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

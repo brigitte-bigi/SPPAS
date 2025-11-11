@@ -1,0 +1,35 @@
+body {
+    color: #444444;
+    background-color: #FFFFFF;
+    width: 60%;
+    margin: 2rem auto;
+    padding: 1rem;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+header {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+main {
+    padding: 0.4rem 0 2rem 0;
+}
+
+footer {
+    color: #666666;
+    background: #f9f9f9;
+    padding: 1rem 2rem;
+    border-top: 0.4rem #efefef solid;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+footer a {
+    color: #999999;
+}
+
+.status2xx { background-color: #304000; color: #FFFFFF; }
+.status3xx { background-color: #475076; color: #FFFFFF; }
+.status4xx { background-color: #F2E81A; color: #000000; }
+.status5xx { background-color: #C55042; color: #FFFFFF; }

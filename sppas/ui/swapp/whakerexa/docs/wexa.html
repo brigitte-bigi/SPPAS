@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>wexa.css</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script type="application/javascript" src="../wexa_statics/js/accessibility.js"></script>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header>
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+        <nav>
+            <ul>
+                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+            </ul>
+            <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme()">
+                <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+            </button>
+            <button role="menuitem" onclick="accessibility_manager.switch_color_scheme()">
+                <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+            </button>
+        </nav>
+
+        <h1>wexa.css</h1>
+        <h2>A CSS framework to make the web easy and accessible</h2>
+        <img width="100rem" src="../wexa_statics/logos/whakerexa.png" alt=""/>
+    </header>
+
+    <nav>
+        <section>
+            <ul>
+                <li><a role="menuitem" class="external-link" href="https://whakerexa.sourceforge.io">Home</a></li>
+                <li><a role="menuitem" class="external-link" href="https://sppas.org/bigi/">Author</a></li>
+            </ul>
+        </section>
+        <ul>
+            <li><a role="menuitem" href="#description">Description</a></li>
+            <li><a role="menuitem" href="#demo">Demo</a></li>
+        </ul>
+    </nav>
+
+    <main id="main-content">
+
+        <blockquote>
+            "The Web is fundamentally designed to work for all people, whatever their hardware,
+            software, language, location, or ability."
+            <cite><a class="external-link" href="https://www.w3.org/mission/accessibility/">-- W3C</a></cite>
+        </blockquote>
+
+        <section id="description">
+            <h1>Description</h1>
+
+            <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
+            <pre>
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
+    media="all" /&gt;
+            </pre>
+
+            <h2>Overview</h2>
+
+            <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
+                accessible web content, and to minimize the use of CSS classes for enhancing the
+                readability of HTML code, like it should always be! <b>wexa.css</b> is the main
+                CSS framework of  <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.
+            </p>
+            <p>It was designed to be easily <mark>customizable</mark>, allowing users to adjust
+                properties such as fonts, colors, borders, etc., effortlessly. Most of the properties
+                are stored into variables which makes possible to re-define them, then to obtain a
+                custom different style. Fonts, colors, borders, etc., can be overridden by re-defining
+                the corresponding variables, enabling users to achieve a unique style.</p>
+            <p>Not convinced? Take a look at the source code of this page!</p>
+
+            <h2>The custom classes</h2>
+
+            <p>When using standard HTML5, accessibility is increased. Actually, only three significant
+                classes are introduced in <code>wexa.css</code>, specifically for accessibility:</p>
+            <ol>
+                <li><code>dark</code></li>
+                <li><code>contrast</code></li>
+                <li><code>external-link</code></li>
+            </ol>
+            <p>The other classes allows changing the font or the font-weight of any element:</p>
+            <ul>
+                <li><code>font-sans</code>, which is the default font family</li>
+                <li><code>font-serif</code></li>
+                <li><code>font-mono</code>, which is used by <code>code</code> element</li>
+                <li><code>font-pre</code>, which is used by <code>pre</code> element</li>
+                <li><code>font-weight-thin</code></li>
+                <li><code>font-weight-normal</code>, which is the default font weight</li>
+                <li><code>font-weight-semibold</code></li>
+                <li><code>font-weight-bold</code>, which is used by <code>b</code> element</li>
+                <li><code>font-weight-black</code>, which is used by <code>strong</code> element</li>
+            </ul>
+
+            <h3>The 'dark' class</h3>
+            <section class="dark">
+                <p >As said in its name, the <code>dark</code> class turns the content into dark colors.
+                    Only colors are changed.</p>
+                <blockquote><p>Dark blockquote example</p><cite>Made by me!</cite></blockquote>
+            </section>
+
+            <h3>The 'contrast' class</h3>
+            <section class="contrast">
+                <p>This is a high contrast section. Font, font weight, font size, spacing and a few other
+                   properties are changed to make it easier to read. A <a href="#">link</a> is slightly
+                    colored differently.</p>
+                <blockquote>Contrast blockquote example</blockquote>
+            </section>
+
+            <h3>The 'external-link' class</h3>
+            <p>When specified to <code>&lt;a&gt;</code> tag, <code>external-link</code> adds a small
+                picture to visibly indicate the link is redirecting to an external page. For example,
+                this text:
+                "You can find <a class="external-link" href="https://whakerexa.sf.net/">Whakerexa</a>,
+                a solution to create dynamic accessible HTML content, in which <code>wexa.css</code>
+                is developed."
+                is written:</p>
+            <pre>You can find &lt;a class="external-link" href="https://whakerexa.sf.net/"&gt;Whakerexa&lt;/a&gt;
+a solution to create dynamic accessible HTML content, in which &lt;code&gt;wexa.css&lt;/code&gt;
+is developed.</pre>
+
+
+            <h2>The variables</h2>
+
+            <h3>Examples of use:</h3>
+
+            <p>The following example shows how to re-set variables in your HTML file. You have to
+            create a <code>&lt;style&gt;</code> element in the <code>&lt;head&gt;</code>. It
+            must be placed after the link to <code>wexa.css</code> to ensure proper execution.</p>
+            <pre>&lt;style&gt;
+    :root {
+        /* if you like very large borders! */
+        --border-width: 10px;
+        --focus-border-width: 10px;
+        /* to control header animation: */
+        --header-slidein: slideInFromBottom;
+    }
+    .contrast {
+        --border-width: 20px;
+        --focus-border-width: 20px;
+        --header-slidein: animDisabled;
+    }
+&lt;/style&gt;</pre>
+
+            <p> A color change can be applied to either the default version, the dark version,
+                or both, as shown below:</p>
+            <pre>&lt;style&gt;
+    :root {
+        --bg-color: rgb(250, 250, 240);
+    }
+    .contrast {
+        --bg-color: rgb(40, 30, 52);
+    }
+&lt;/style&gt;</pre>
+
+            <h3>Animations</h3>
+
+            <p>A few ready-to-use animations are available:</p>
+            <ul>
+                <li>slideInDisabled</li>
+                <li>slideInFromBottom</li>
+                <li>slideInFromTop</li>
+                <li>slideInFromRight</li>
+                <li>slideInFromLeft</li>
+                <li>fadeIn</li>
+                <li>fadeOut</li>
+            </ul>
+
+            <h3>Full list of variables</h3>
+
+            <table role="grid">
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">size-divisor</th>
+                    <td>depends on screen width</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">fontsize-divisor</th>
+                    <td>depends on screen width</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">screen-width</th>
+                    <td>1024px / size-divisor</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">header-height</th>
+                    <td>60vh</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">footer-height</th>
+                    <td>20vh</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">header-slidein</th>
+                    <td>slideInFromBottom</td>
+                    <td>slideInDisabled</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">footer-slidein</th>
+                    <td>slideInDisabled</td>
+                    <td>slideInDisabled</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">transition</th>
+                    <td>0.4s ease-in-out</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Fonts and typography
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">font-weight-thin</th>
+                    <td>200</td>
+                    <td>300</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">font-weight-semithin</th>
+                    <td>300</td>
+                    <td>400</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">font-weight-normal</th>
+                    <td>400</td>
+                    <td>500</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">font-weight-semibold</th>
+                    <td>500</td>
+                    <td>600</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">font-weight-bold</th>
+                    <td>600</td>
+                    <td>750</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">font-weight-black</th>
+                    <td>750</td>
+                    <td>800</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">font-size</th>
+                    <td>14px / fontsize-divisor</td>
+                    <td>16px / fontsize-divisor</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">external-link-icon</th>
+                    <td>url()</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">input-search-icon</th>
+                    <td>url()</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">outline-focus-style</th>
+                    <td>outset</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">outline-hover-style</th>
+                    <td>inset</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">line-height</th>
+                    <td>1.2</td>
+                    <td>1.5</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">typography-spacing-vertical</th>
+                    <td>1.2rem</td>
+                    <td>2rem</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">typography-spacing-horizontal</th>
+                    <td>0.8rem</td>
+                    <td>1.6rem</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">letter-spacing</th>
+                    <td>0.04rem</td>
+                    <td>0.12rem</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">word-spacing</th>
+                    <td>0.06rem</td>
+                    <td>0.16rem</td>
+                    <td></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Borders
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">border-width</th>
+                    <td>1px</td>
+                    <td>3px</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">border-radius</th>
+                    <td>2px</td>
+                    <td>6px</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">table-border-width</th>
+                    <td>1px</td>
+                    <td>3px</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">outline-size</th>
+                    <td>2px</td>
+                    <td>3px</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Main colors
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">bg-color</th>
+                    <td>rgb(250, 250, 252)</td>
+                    <td></td>
+                    <td>rgb(24, 28, 38)</td>
+                </tr>
+                <tr>
+                    <th scope="row">bg-color-alt</th>
+                    <td>rgb(240, 240, 240)</td>
+                    <td></td>
+                    <td>rgba(38, 42, 54)</td>
+                </tr>
+                <tr>
+                    <th scope="row">fg-color</th>
+                    <td>rgb(0, 5, 10)</td>
+                    <td></td>
+                    <td>rgb(255, 255, 255)</td>
+                </tr>
+                <tr>
+                    <th scope="row">fg-color-alt</th>
+                    <td>rgb(28, 28, 28)</td>
+                    <td></td>
+                    <td>rgb(255, 255, 255)</td>
+                </tr>
+                <tr>
+                    <th scope="row">border-color</th>
+                    <td>rgb(60, 60, 90)</td>
+                    <td></td>
+                    <td>rgb(228, 228, 228)</td>
+                </tr>
+                <tr>
+                    <th scope="row">border-color-alt</th>
+                    <td>rgba(28, 28, 28, 0.5</td>
+                    <td></td>
+                    <td>rgba(228, 228, 228, 0.5)</td>
+                </tr>
+                <tr>
+                    <th scope="row">outline-color</th>
+                    <td>rgba(0, 191, 255, 0.8)</td>
+                    <td></td>
+                    <td>rgba(0, 191, 255, 0.8)</td>
+                </tr>
+                <tr>
+                    <th scope="row">hr-color</th>
+                    <td>rgba(128, 128, 128, 0.5)</td>
+                    <td></td>
+                    <td>rgba(128, 128, 128, 0.5)</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Background colors
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">header-bg-color</th>
+                    <td>radial-gradient(circle, rgba(14, 18, 48, 0.9), rgb(24, 28, 38))</td>
+                    <td></td>
+                    <td>rgb(167, 187, 207)</td>
+                </tr>
+                <tr>
+                    <th scope="row">nav-bg-color</th>
+                    <td>rgba(14, 18, 48, 0.7)</td>
+                    <td></td>
+                    <td>rgba(167, 187, 207, 0.7)</td>
+                </tr>
+                <tr>
+                    <th scope="row">footer-bg-color</th>
+                    <td>rgb(24, 28, 38)</td>
+                    <td></td>
+                    <td>rgb(167, 187, 207)</td>
+                </tr>
+                <tr>
+                    <th scope="row">buttons-bg-color</th>
+                    <td>rgb(225, 225, 220)</td>
+                    <td></td>
+                    <td>rgb(80, 80, 70)</td>
+                </tr>
+                <tr>
+                    <th scope="row">progress-bg-color</th>
+                    <td>rgb(49, 47, 85)</td>
+                    <td></td>
+                    <td>rgb(67, 77, 97)</td>
+                </tr>
+                <tr>
+                    <th scope="row">mark-bg-color</th>
+                    <td>rgba(255, 250, 100, 0.5)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">inputs-bg-color</th>
+                    <td>rgba(225, 225, 220, 0.5)</td>
+                    <td>rgba(80, 80, 70, 0.5)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">selection-bg-color</th>
+                    <td>rgb(174, 194, 255)</td>
+                    <td>rgb(114, 114, 205)</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Foreground colors
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">header-fg-color</th>
+                    <td>rgb(241, 241, 245)</td>
+                    <td></td>
+                    <td>rgb(41, 41, 45)</td>
+                </tr>
+                <tr>
+                    <th scope="row">nav-fg-color</th>
+                    <td>rgb(231, 231, 235)</td>
+                    <td></td>
+                    <td>rgb(31, 31, 35)</td>
+                </tr>
+                <tr>
+                    <th scope="row">footer-fg-color</th>
+                    <td>rgb(241, 241, 245)</td>
+                    <td></td>
+                    <td>rgb(41, 41, 45)</td>
+                </tr>
+                <tr>
+                    <th scope="row">progress-fg-color</th>
+                    <td>rgb(20, 25, 30)</td>
+                    <td></td>
+                    <td>rgb(226, 226, 248)</td>
+                </tr>
+                <tr>
+                    <th scope="row">buttons-fg-color</th>
+                    <td>rgb(20, 25, 30)</td>
+                    <td></td>
+                    <td>rgb(225, 225, 215)</td>
+                </tr>
+                <tr>
+                    <th scope="row">mark-fg-color</th>
+                    <td>rgb(20, 25, 30)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">h1-color</th>
+                    <td>rgb(20, 25, 30)</td>
+                    <td></td>
+                    <td>rgb(190, 204, 255)</td>
+                </tr>
+                <tr>
+                    <th scope="row">h2-color</th>
+                    <td>rgb(30, 35, 45)</td>
+                    <td></td>
+                    <td>rgb(190, 204, 223)</td>
+                </tr>
+                <tr>
+                    <th scope="row">h3-color</th>
+                    <td>rgb(40, 45, 60)</td>
+                    <td></td>
+                    <td>rgb(174, 190, 208)</td>
+                </tr>
+                <tr>
+                    <th scope="row">h4-color</th>
+                    <td>rgb(40, 45, 60)</td>
+                    <td></td>
+                    <td>rgb(174, 190, 208)</td>
+                </tr>
+                <tr>
+                    <th scope="row">h5-color</th>
+                    <td>rgb(50, 55, 75)</td>
+                    <td></td>
+                    <td>rgb(170, 180, 208)</td>
+                </tr>
+                <tr>
+                    <th scope="row">h6-color</th>
+                    <td>rgb(60, 65, 90)</td>
+                    <td></td>
+                    <td>rgb(180, 190, 218)</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Table colors
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">table-border-color</th>
+                    <td>rgba(110, 120, 140, 0.8)</td>
+                    <td></td>
+                    <td>rgb(184, 203, 208)</td>
+                </tr>
+                <tr>
+                    <th scope="row">table-row-stripped-bg-color</th>
+                    <td>rgba(210, 212, 222, 0.4)</td>
+                    <td></td>
+                    <td>rgba(184, 203, 208, 0.28)</td>
+                </tr>
+                <tr>
+                    <th scope="row">table-head-bg-color</th>
+                    <td>rgb(204, 202, 212)</td>
+                    <td></td>
+                    <td>rgb(12, 22, 14)</td>
+                </tr>
+                <tr>
+                    <th scope="row">table-head-fg-color</th>
+                    <td>rgb(14, 12, 22)</td>
+                    <td></td>
+                    <td>rgb(204, 202, 212)</td>
+                </tr>
+                <tr>
+                    <th scope="row">table-caption-bg-color</th>
+                    <td>rgb(24, 28, 38)</td>
+                    <td></td>
+                    <td>rgb(210, 221, 252)</td>
+                </tr>
+                <tr>
+                    <th scope="row">table-caption-fg-color</th>
+                    <td>rgb(210, 222, 252)</td>
+                    <td></td>
+                    <td>rgb(167, 187, 207)</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Other colors
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">a-color</th>
+                    <td>rgb(0, 150, 200)</td>
+                    <td>rgb(10, 80, 120) if not dark</td>
+                    <td>rgb(25, 195, 255)</td>
+                </tr>
+                <tr>
+                    <th scope="row">ins-color</th>
+                    <td>rgba(20, 200, 20, 0.8)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">del-color</th>
+                    <td>rgba(240, 40, 40, 0.8)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">s-color</th>
+                    <td>rgb(100, 100, 100)</td>
+                    <td></td>
+                    <td>rgb(180, 180, 180)</td>
+                </tr>
+                <tr>
+                    <th scope="row">blockquote-border-color</th>
+                    <td>rgb(80, 25, 40)</td>
+                    <td></td>
+                    <td>rgb(200, 180, 200)</td>
+                </tr>
+                <tr>
+                    <th scope="row">blockquote-footer-color</th>
+                    <td>rgb(80, 25, 40)</td>
+                    <td></td>
+                    <td>rgb(200, 180, 200)</td>
+                </tr>
+                <tr>
+                    <th scope="row">li-color</th>
+                    <td>rgb(140, 40, 40)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">shadow-color</th>
+                    <td>rgba(110, 120, 140, 0.8)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table role="grid">
+                <caption>
+                    Alert colors
+                </caption>
+                <thead>
+                <tr>
+                    <th scope="col" style="width:30%">Variable name</th>
+                    <th scope="col" style="width:30%">Default value</th>
+                    <th scope="col" style="width:20%">Value in contrast view</th>
+                    <th scope="col">Value in dark view</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">question-color</th>
+                    <td>rgba(180, 80, 220, 0.5)</td>
+                    <td></td>
+                    <td>rgb(180, 80, 220)</td>
+                </tr>
+                <tr>
+                    <th scope="row">question-bg-color</th>
+                    <td>rgba(180, 80, 220, 0.1)</td>
+                    <td></td>
+                    <td>rgba(180, 80, 220, 0.1)</td>
+                </tr>
+                <tr>
+                    <th scope="row">tips-color</th>
+                    <td>rgba(220, 180, 80, 0.5)</td>
+                    <td></td>
+                    <td>rgb(230, 200, 100)</td>
+                </tr>
+                <tr>
+                    <th scope="row">tips-bg-color</th>
+                    <td>rgba(180, 180, 80, 0.1)</td>
+                    <td></td>
+                    <td>rgba(230, 200, 70, 0.1)</td>
+                </tr>
+                <tr>
+                    <th scope="row">success-color</th>
+                    <td>rgba(0, 150, 0, 0.5)</td>
+                    <td></td>
+                    <td>rgb(140, 200, 150)</td>
+                </tr>
+                <tr>
+                    <th scope="row">success-bg-color</th>
+                    <td>rgba(0, 150, 0, 0.1)</td>
+                    <td></td>
+                    <td>rgba(100, 200, 150, 0.1)</td>
+                </tr>
+                <tr>
+                    <th scope="row">info-color</th>
+                    <td>rgba(0, 0, 255, 0.5)</td>
+                    <td></td>
+                    <td>rgb(100, 130, 200)</td>
+                </tr>
+                <tr>
+                    <th scope="row">info-bg-color</th>
+                    <td>rgba(0, 0, 255, 0.1)</td>
+                    <td></td>
+                    <td>rgba(70, 100, 200, 0.1)</td>
+                </tr>
+                <tr>
+                    <th scope="row">warning-color</th>
+                    <td>rgba(220, 80, 0, 0.5)</td>
+                    <td></td>
+                    <td>rgb(220, 80, 0)</td>
+                </tr>
+                <tr>
+                    <th scope="row">warning-bg-color</th>
+                    <td>rgba(220, 80, 0, 0.1)</td>
+                    <td></td>
+                    <td>rgba(220, 80, 0, 0.1)</td>
+                </tr>
+                <tr>
+                    <th scope="row">error-color</th>
+                    <td>rgba(225, 0, 0, 0.5)</td>
+                    <td></td>
+                    <td>rgb(225, 0, 0)</td>
+                </tr>
+                <tr>
+                    <th scope="row">error-bg-color</th>
+                    <td>rgba(225, 0, 0, 0.1)</td>
+                    <td></td>
+                    <td>rgba(225, 0, 0, 0.1)</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="demo">
+            <h1>Demo: what's possible with wexa.css?</h1>
+
+            <section>
+                <h1>Example of Heading 1</h1>
+                <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <h2>Example of Heading 2</h2>
+                <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <h3>Example of Heading 3</h3>
+                <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <h4>Example of Heading 4</h4>
+                <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <h5>Example of Heading 5</h5>
+                <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <h6>Example of Heading 6</h6>
+                <p>This is paragraph text. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                <h1>Example of Heading 1</h1>
+                <h2>Example of Heading 2</h2>
+                <h3>Example of Heading 3</h3>
+
+            </section>
+
+        <h2>Available fonts for a text</h2>
+
+        <h3>No specific class applied except the font choice</h3>
+        <h4>Sans</h4>
+        <p class="font-sans">
+            This is a short text embedded into a <code>p</code> tag with no specific class.
+            This is then the default font style, padding and margin, etc.
+            <b>This is then the bold default font style.</b>
+            <i>This is then the italic default font style.</i>
+            Anyone is free to copy, modify, publish, use, compile, sell, or
+            distribute this file, either in source code form or as a compiled
+            binary, for any purpose, commercial or non-commercial, and by any
+            means.
+        </p>
+        <h4>Serif</h4>
+        <p class="font-serif">
+            This is a short text embedded into a <code>p</code> tag with no serif class.
+            This is the serif font style, with default padding and margin, etc.
+            <b>This is the bold font style.</b>
+            <i>This is the italic font style.</i>
+            Anyone is free to copy, modify, publish, use, compile, sell, or
+            distribute this file, either in source code form or as a compiled
+            binary, for any purpose, commercial or non-commercial, and by any
+            means.
+        </p>
+        <h4>Mono</h4>
+        <p class="font-mono">
+            This is a short text embedded into a <code>p</code> tag with no serif class.
+            This is the mono font style, with default padding and margin, etc.
+            <b>This is the bold font style.</b>
+            <i>This is the italic font style.</i>
+            Anyone is free to copy, modify, publish, use, compile, sell, or
+            distribute this file, either in source code form or as a compiled
+            binary, for any purpose, commercial or non-commercial, and by any
+            means.
+        </p>
+        <h4>Pre</h4>
+        <p class="font-pre">
+            This is a short text embedded into a <code>p</code> tag with no serif class.
+            This is the pre font style, with default padding and margin, etc.
+            <b>This is the bold font style.</b>
+            <i>This is the italic font style.</i>
+            Anyone is free to copy, modify, publish, use, compile, sell, or
+            distribute this file, either in source code form or as a compiled
+            binary, for any purpose, commercial or non-commercial, and by any
+            means.
+        </p>
+
+        <h3>With contrast specific class applied and dark mode</h3>
+            <div class="dark">
+                <h4>Sans</h4>
+                <p class="font-sans contrast">
+                    This is a short text embedded into a <code>p</code> tag with no specific class.
+                    This is then the default font style, padding and margin, etc.
+                    <b>This is then the bold default font style.</b>
+                    <i>This is then the italic default font style.</i>
+                    Anyone is free to copy, modify, publish, use, compile, sell, or
+                    distribute this file, either in source code form or as a compiled
+                    binary, for any purpose, commercial or non-commercial, and by any
+                    means.
+                </p>
+                <h4>Serif</h4>
+                <p class="font-serif contrast">
+                    This is a short text embedded into a <code>p</code> tag with no serif class.
+                    This is the serif font style, with default padding and margin, etc.
+                    <b>This is the bold font style.</b>
+                    <i>This is the italic font style.</i>
+                    Anyone is free to copy, modify, publish, use, compile, sell, or
+                    distribute this file, either in source code form or as a compiled
+                    binary, for any purpose, commercial or non-commercial, and by any
+                    means.
+                </p>
+                <h4>Mono</h4>
+                <p class="font-mono contrast">
+                    This is a short text embedded into a <code>p</code> tag with no serif class.
+                    This is the mono font style, with default padding and margin, etc.
+                    <b>This is the bold font style.</b>
+                    <i>This is the italic font style.</i>
+                    Anyone is free to copy, modify, publish, use, compile, sell, or
+                    distribute this file, either in source code form or as a compiled
+                    binary, for any purpose, commercial or non-commercial, and by any
+                    means.
+                </p>
+                <h4>Pre</h4>
+                <p class="font-pre contrast">
+                    This is a short text embedded into a <code>p</code> tag with no serif class.
+                    This is the pre font style, with default padding and margin, etc.
+                    <b>This is the bold font style.</b>
+                    <i>This is the italic font style.</i>
+                    Anyone is free to copy, modify, publish, use, compile, sell, or
+                    distribute this file, either in source code form or as a compiled
+                    binary, for any purpose, commercial or non-commercial, and by any
+                    means.
+                </p>
+            </div>
+
+        <h3>With weight-specific classes applied</h3>
+
+        <h4>Sans Font Normal view</h4>
+        <p class="font-sans font-weight-thin">This is Sans Font with weight-thin.</p>
+        <p class="font-sans font-weight-normal">This is Sans Font with weight-normal.</p>
+        <p class="font-sans font-weight-bold">This is Sans Font with weight-bold.</p>
+        <p class="font-sans font-weight-black">This is Sans Font with weight-black.</p>
+
+        <h4>Sans Font Contrast view</h4>
+        <p class="contrast font-sans font-weight-thin">This is Sans Font with contrast weight-thin.</p>
+        <p class="contrast font-sans font-weight-normal">This is Sans Font with contrast weight-normal.</p>
+        <p class="contrast font-sans font-weight-bold">This is Sans Font with contrast weight-bold.</p>
+        <p class="contrast font-sans font-weight-black">This is Sans Font with contrast weight-black.</p>
+
+        <h4>Serif Font Normal view</h4>
+        <p class="font-serif font-weight-thin">This is Serif Font with weight-thin.</p>
+        <p class="font-serif font-weight-normal">This is Serif Font with weight-normal.</p>
+        <p class="font-serif font-weight-bold">This is Serif Font with weight-bold.</p>
+        <p class="font-serif font-weight-black">This is Serif Font with weight-black.</p>
+
+        <h4>Serif Font Contrast view</h4>
+        <p class="font-serif contrast font-weight-thin">This is Serif Font with contrast weight-thin.</p>
+        <p class="font-serif contrast font-weight-normal">This is Serif Font with contrast weight-normal.</p>
+        <p class="font-serif contrast font-weight-bold">This is Serif Font with contrast weight-bold.</p>
+        <p class="font-serif contrast font-weight-black">This is Serif Font with contrast weight-black.</p>
+
+        <!-- ------------------------------------------------------------- -->
+        <h2>Dialog</h2>
+        <!-- ------------------------------------------------------------- -->
+
+            <dialog open>
+                <p>Greetings, one and all!</p>
+                <p>I'm a dialog element with "open" attribute, I override some content when I'm opened...</p>
+                <form method="dialog">
+                    <button>Makes me disappear!</button>
+                </form>
+            </dialog>
+
+            <dialog role="alertdialog" open>
+                <p>This is an alert message!</p>
+                <form method="dialog">
+                    <button>ok!</button>
+                </form>
+            </dialog>
+
+            <dialog id="modaldialog">
+                <p>This modal dialog has a custom backdrop!</p>
+                <p>I'm a dialog element with "autofocus" attribute, I override some content when I'm opened...</p>
+                <p>Javascript is required to open and to close me. Add this after the dialog: </p>
+                <pre>
+     &lt;script&gt;
+        const dialog = document.querySelector("#dialog-autofocus");
+        const showButton = document.querySelector("#dialog-autofocus + button");
+        const closeButton = document.querySelector("#dialog-autofocus button");
+
+        // "Show the dialog" button opens the dialog modally
+        showButton.addEventListener("click", () => {
+            dialog.showModal();
+        });
+
+        // "Close" button closes the dialog
+        closeButton.addEventListener("click", () => {
+        dialog.close();
+        });
+    &lt;/script&gt;
+                </pre>
+                <button autofocus>Close</button>
+            </dialog>
+            <button>Try to open this other one dialog</button>
+
+            <script>
+                // Remaining problem: when the dialog is opened, it will scroll the page at top!
+                // See here for JS and or CSS solutions:
+                //      https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
+                //      https://frontendmasters.com/blog/scroll-locked-dialogs/
+                //      https://www.tutorialspoint.com/how-to-prevent-body-from-scrolling-when-a-modal-is-opened-using-jquery
+                const dialog = document.querySelector("#modaldialog");
+                const showButton = document.querySelector("#modaldialog + button");
+                const closeButton = document.querySelector("#modaldialog button");
+
+                // "Show the dialog" button opens the dialog modally
+                showButton.addEventListener("click", () => {
+                    dialog.showModal();
+                });
+
+                // "Close" button closes the dialog
+                closeButton.addEventListener("click", () => {
+                    dialog.close();
+                });
+            </script>
+
+        <!-- ------------------------------------------------------------- -->
+        <h2>HTML tags for embed text</h2>
+        <!-- ------------------------------------------------------------- -->
+
+        <p>
+            So, this is a text with a
+            <a href="#" onclick="event.preventDefault()">Primary link</a>
+            inside...
+        </p>
+        <p>
+            <strong>Bold</strong>
+            <em>Italic</em>
+            <u>Underline</u>
+            <del>Deleted</del>
+            <ins>Inserted</ins>
+            <s>Strikethrough</s>
+            <small>Small</small>
+            Text <sub>Sub</sub>
+            Text <sup>Sup</sup>
+            <abbr title="Abbreviation" data-tooltip="Abbreviation">Abbr.</abbr>
+            <kbd>Kbd+x</kbd>
+            <mark>Highlighted</mark>
+        </p>
+
+        <h4>Blockquote</h4>
+
+            <blockquote>
+              La règle d'or de la conduite est la tolérance mutuelle, car nous ne
+                penserons jamais tous de la même façon, nous ne verrons qu'une partie
+                de la vérité et sous des angles différents.
+                <cite>&mdash; Ghandi</cite>
+            </blockquote>
+
+        <h4>Lists</h4>
+            <p>Simply use the standard <code>ul</code>, <code>ol</code> or <code>dt</code> HTML elements.</p>
+            <h5>An ul list</h5>
+            <ul>
+                <li>This is the 1st item.</li>
+                <li>then the second one.</li>
+                <li>For 50 years, WWF has been protecting the future of nature. The world's leading conservation
+                    organization, WWF works in 100 countries and is supported by 1.2 million members in the United
+                    States and close to 5 million globally.
+                </li>
+                <li>And the last <code>li</code> tag.</li>
+            </ul>
+            <h5>An ol list</h5>
+            <ol>
+                <li>This is the 1st item.</li>
+                <li>then the second one.</li>
+                <li>For 50 years, WWF has been protecting the future of nature. The world's leading conservation
+                    organization, WWF works in 100 countries and is supported by 1.2 million members in the United
+                    States and close to 5 million globally.
+                </li>
+                <li>And the last <code>li</code> tag.</li>
+            </ol>
+            <h5>A dt list</h5>
+            <dl>
+                <dt>This is the 1st item</dt>
+                    <dd>Some item in a first line.</dd>
+                    <dd>And a second item.</dd>
+                <dt>Then the second one</dt>
+                    <dd>A item related to the second.</dd>
+                <dt>And the last <code>dt</code> tag.</dt>
+                    <dd>with the last <code>dd</code> tag.</dd>
+            </dl>
+
+        <!-- ------------------------------------------------------------- -->
+        <h2>Designed HTML elements:</h2>
+        <!-- ------------------------------------------------------------- -->
+
+        <h3>Buttons</h3>
+            <h4>Normal view</h4>
+                <button>a button</button>
+                <button disabled>a disabled button</button>
+                <button class="focused">focused button</button>
+                <p></p>
+            <h4>Contrast view</h4>
+                <div class="contrast">
+                    <button>a button</button>
+                    <button disabled>a disabled button</button>
+                    <button class="focused">focused button</button>
+                </div>
+                <p></p>
+
+        <h3>Tables</h3>
+            <h4>Normal view</h4>
+              <table role="grid">
+                <caption>
+                    <span>Table 1:</span> A caption of the table in this normal view.
+                  </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            <h4>Contrast view</h4>
+              <table role="grid" class="contrast">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                  </tr>
+                </tbody>
+                  <caption>
+                    <span>Table 2:</span> A caption of the table: with contrast view.
+                  </caption>
+              </table>
+
+            <div class="dark">
+            <h4>Dark theme</h4>
+
+            <table role="grid">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                    <th scope="col">Heading</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                </tr>
+                </tbody>
+                <caption>
+                    <span>Table 3:</span> A caption of the table in dark theme.
+                </caption>
+            </table>
+            </div>
+
+
+        <h3>Forms</h3>
+
+        <form method="get" action="#">
+            <fieldset>
+                <legend>Here is a form with <code>&lt;fieldset&gt;</code>:</legend>
+
+                <label for="email">An "input" of type "text":</label>
+                <input name="email" type="text" id="email" size="25" placeholder="must be unique"/>
+
+                <label for="sex">A "select" element with several "option" elements:</label>
+                <select name="sex" id="sex">
+                    <option value="none">don't want to say</option>
+                    <option value="female">female</option>
+                    <option value="male">male</option>
+                </select>
+
+                <label for="age">Radio "input" elements:</label>
+                <span id="age">
+                    <label><input type="radio" id="under" name="age" value="under"/> I'm under 18</label>
+                    <label><input type="radio" id="over" name="age" value="over"/> I'm over 18</label>
+                </span>
+                <label for="food">Below is a "select" element with "optgroup" used to group the "option" elements. It does not work on Safari:</label>
+                <select multiple="multiple" name="food" id="food">
+                    <optgroup label="Italian">
+                        <option value="1">Pizza</option>
+                        <option value="2">Spaghetti</option>
+                    </optgroup>
+                    <optgroup label="Asian">
+                        <option value="4">Sushi</option>
+                    </optgroup>
+                    <option value="3">Hamburger</option>
+                    <option value="5">Borsht</option>
+                </select>
+                <label for="address">A "textarea" element:</label>
+                <textarea name="address" id="address" placeholder="PO box is not allowed"></textarea>
+                <label><input type="checkbox" name="consent" id="consent" value="test"/>I agree with all possible terms and conditions</label>
+                <button type="submit">Subscribe</button>
+                <button type="reset">Reset</button>
+                <button disabled>Can't click</button>
+            </fieldset>
+        </form>
+        <p>This is a form without <code>&lt;fieldset&gt;</code>:</p>
+        <form>
+            <label for="price">Add funds:</label>
+            <input id="price" type="text" size="10" placeholder="e.g. $10"/>
+            <button type="submit">Pay</button>
+            <input type="text" id="id1-search" name="search" placeholder="Search 1..."/>
+            <input type="text" id="id2-search" name="search" placeholder="Search 2..."/>
+        </form>
+
+            <h3>Others...</h3>
+
+            <h4>Accordion</h4>
+
+            <details>
+                <summary>Who is Sarah Connor?</summary>
+                <p>Sarah Jeanette Connor is a fictional character and the main protagonist of the Terminator franchise.
+                    Sarah was portrayed by Linda Hamilton in The Terminator, Terminator 2: Judgment Day, T2-3D: Battle Across Time,
+                    and Terminator: Dark Fate</p>
+            </details>
+            <details>
+                <summary>I have keys but no doors. I have space but no room. You can enter but can’t leave. What am I?</summary>
+                <p>A keyboard</p>
+            </details>
+
+            <p>A more complex one... add buttons in the summary:</p>
+
+            <details>
+                <summary>
+                    A summary text.
+                    <button>button</button>
+                    <a role="button" href="#">link</a>
+                </summary>
+                <header>
+                    ...an header in details...
+                </header>
+                <main>
+                <p>Some text in the main part of the details element.</p>
+                <p>Some text in the main part of the details element.</p>
+                <p>Some text in the main part of the details element.</p>
+                </main>
+                <footer>
+                    ...a footer in details...
+                </footer>
+            </details>
+
+            <p>A more complex one... add buttons in the summary in contrast view:</p>
+            <div class="contrast">
+            <details>
+                <summary>
+                    A summary text.
+                    <button>button</button>
+                    <a role="button" href="#">link</a>
+                </summary>
+                <header>
+                    ...an header in details...
+                </header>
+                <main>
+                    <p>Some text in the main part of the details element.</p>
+                    <p>Some text in the main part of the details element.</p>
+                    <p>Some text in the main part of the details element.</p>
+                </main>
+                <footer>
+                    ...a footer in details...
+                </footer>
+            </details>
+            </div>
+
+            <h4>aside</h4>
+
+            <aside>
+                Emphasized content with the <code>aside</code> element.
+            </aside>
+            <p>This is the main content related to the side one.</p>
+
+            <h4>Progress bar</h4>
+
+            <label for="file">File progress:</label>
+            <progress id="file" max="100" value="70">70%</progress>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    </footer>
+
+    </body>
+</html>

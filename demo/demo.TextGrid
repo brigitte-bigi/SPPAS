@@ -1,0 +1,58 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 10.42756081388563
+tiers? <exists>
+size = 1
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "Transcription"
+		xmin = 0.0
+		xmax = 10.42756081388563
+		intervals: size = 11
+		intervals [1]:
+			xmin = 0.0
+			xmax = 0.5209135949020217
+			text = "#"
+		intervals [2]:
+			xmin = 0.5209135949020217
+			xmax = 1.5418080074863214
+			text = "ipu_1 cette vidéo"
+		intervals [3]:
+			xmin = 1.5418080074863214
+			xmax = 1.914
+			text = "#"
+		intervals [4]:
+			xmin = 1.914
+			xmax = 4.357621872253681
+			text = "ipu_2 est une démonstration de la génération"
+		intervals [5]:
+			xmin = 4.357621872253681
+			xmax = 4.58
+			text = "#"
+		intervals [6]:
+			xmin = 4.58
+			xmax = 5.4944923317085435
+			text = "ipu_3 automatique"
+		intervals [7]:
+			xmin = 5.4944923317085435
+			xmax = 5.878026678806222
+			text = "#"
+		intervals [8]:
+			xmin = 5.878026678806222
+			xmax = 7.333683718482873
+			text = "ipu_4 des clés LPC"
+		intervals [9]:
+			xmin = 7.333683718482873
+			xmax = 7.805217909048715
+			text = "#"
+		intervals [10]:
+			xmin = 7.805217909048715
+			xmax = 9.585
+			text = "ipu_5 par le logiciel + SPPAS"
+		intervals [11]:
+			xmin = 9.585
+			xmax = 10.42756081388563
+			text = "#"

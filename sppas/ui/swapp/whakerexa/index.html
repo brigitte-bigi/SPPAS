@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="framework, html, css, javascript" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Whakerexa</title>
+    <link rel="stylesheet" href="wexa_statics/css/wexa.css" type="text/css" />
+    <link rel="stylesheet" href="wexa_statics/css/dialog.css" type="text/css" />
+    <link rel="stylesheet" href="wexa_statics/css/layout.css" type="text/css" />
+    <link rel="stylesheet" href="wexa_statics/css/menu.css" type="text/css" />
+    <script type="application/javascript" src="wexa_statics/js/purejs-tools/OnLoadManager.js"></script>
+    <script type="application/javascript" src="wexa_statics/js/accessibility.js"></script>
+    <script type="application/javascript" src="wexa_statics/js/dialog.js"></script>
+
+    <style>
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-min-height: 4rem;
+            --header-height: 26rem;
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+    </style>
+
+</head>
+<body>
+
+<header id="header-content">
+    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <nav style="position: absolute; top: 0;">
+        <ul>
+            <li><a class="external-link" role="menuitem"
+                   href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+        </ul>
+        <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme();">
+            <img src="wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+        </button>
+        <button role="menuitem" onclick="accessibility_manager.switch_color_scheme();">
+            <img src="wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+        </button>
+    </nav>
+    <h1>Whakerexa</h1>
+    <h2>A minimalist and lightweight web kit for accessible contents</h2>
+</header>
+
+<main id="main-content" class="panel">
+
+
+    <h1> Overview </h1>
+
+    <p>
+        Whakerexa offers CSS frameworks and JavaScript for any HTML content.
+        It is intended to be as simple as possible to make <b>accessible web content</b>,
+        and to minimize the use of CSS classes for enhancing the readability of HTML code.
+    </p>
+    <p>
+        It was designed to be easily customizable, allowing users to adjust properties such as fonts,
+        colors, borders, etc., effortlessly. Most of the properties are stored into variables
+        which makes possible to re-define them, then to obtain a custom different style,
+        enabling users to achieve a unique style easily.
+    </p>
+    <p>
+        It can be combined with the use of `WhakerPy`, an open source library to create dynamic HTML content;
+        it's a light web application framework.
+    </p>
+
+    <h2>Get it</h2>
+
+    <p>Download Whakerexa:
+        <a href="https://sourceforge.net/projects/whakerexa/">https://sourceforge.net/projects/whakerexa/</a>
+    </p>
+
+    <h1>Whakerexa in action</h1>
+
+    <section class="cards-panel">
+
+        <article class="card">
+            <main>
+                <h2>wexa.css</h2>
+                <p>A CSS framework to make the web easy and accessible</p>
+            </main>
+            <footer>
+                <a href="docs/wexa.html">wexa</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>wexa.css & book.css</h2>
+                <p>Two CSS frameworks to make books easy and accessible</p>
+            </main>
+            <footer>
+                <a href="docs/book.html">book</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>book with ToC</h2>
+                <p>A CSS/JS framework to create automatically the ToC of a book</p>
+            </main>
+            <footer>
+                <a href="docs/autotoc.html">auto toc</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>layout.css</h2>
+                <p>A minimalistic CSS framework to organize HTML elements</p>
+            </main>
+            <footer>
+                <a href="docs/layout.html">layout</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>dialog css/js</h2>
+                <p>A framework to easily open a modal 'dialog'</p>
+            </main>
+            <footer>
+                <a href="docs/dialog.html">dialog</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>code.css</h2>
+                <p>Custom colors for pygments code</p>
+            </main>
+            <footer>
+                <a href="docs/code.html">code</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>progress.js</h2>
+                <p>A JS to deal with progress bars</p>
+            </main>
+            <footer>
+                <a href="docs/progress.html">progress</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>sortatable css/js</h2>
+                <p>Sort rows of a table by clicking its columns</p>
+            </main>
+            <footer>
+                <a href="docs/sortatable.html">sortatable</a>
+            </footer>
+        </article>
+
+        <article class="card">
+            <main>
+                <h2>button.css</h2>
+                <p>Customized buttons</p>
+            </main>
+            <footer>
+                <a href="docs/button.html">button</a>
+            </footer>
+        </article>
+    </section>
+
+</main>
+
+
+<footer id="footer-content">
+
+    <section>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <p class="right-bottom print-off">
+            <a role="button" href="#main-content">
+                <img src="docs/icons/up.png" alt="Scroll Up" style="width: 3rem; height: auto;">
+            </a>
+        </p>
+
+        <p class="copyright">
+        Copyright @ 2023-2025 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France
+        </p>
+
+    </section>
+
+</footer>
+
+<script>
+</script>
+
+</body>
+</html>

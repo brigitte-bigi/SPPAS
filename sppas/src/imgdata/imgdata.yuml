@@ -1,0 +1,26 @@
+// filename: sppas.src.imgdata.imgdata.yuml
+// author:   Brigitte Bigi
+// contact:  contact@sppas.org
+// summary:  UML class diagram for imgdata package of SPPAS.
+//
+// This file is part of SPPAS: https://sppas.org/
+//     Copyright (C) 2011-2023 Brigitte Bigi
+//     Laboratoire Parole et Langage, Aix-en-Provence, France
+//     Use of this software is governed by the GNU Public License, version 3.
+//
+// Copy/paste the following at:
+//   https://yuml.me/diagram/scruffy/class/draw
+// Or try with: https://github.com/jaime-olivares/yuml-diagram
+
+[numpy.ndarray]^[sppasImage|width();height();size();blank_image();ialpha();ishadow();icrop();itrim();iresize();izoom();...]
+
+[sppasImage]^[sppasExtendedImage|ioverlays();ifade_in();irotates()]
+
+[sppasCoords|--x:int;--y:int;--w:int;--h:int;--confidence:float|portrait();scale();scale_x();scale_y();shift();area();intersection_area();overlap();intermediate()]
+[sppasCoordsReader|+coords:list();+names:list()]
+[ImageCoordsWriterOptions|-outputs:dict();-width:int;-height:int]
+[sppasCoordsImageWriter|-options;-colors:list();-csv_sep:str;xra_tiername:str|write();write_csv_coords();write_xra_coords();write_tagged_img();tag_image();write_cropped_img();]
+[sppasCoordsReader]-*>[sppasCoords]
+[sppasCoordsImageWriter]-1>[ImageCoordsWriterOptions]
+
+[sppasSights|--nb:int;--x:list();--y:list();--z:list();--confidence:list()]

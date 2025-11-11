@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>dialog.css</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/dialog.css" type="text/css" media="all" />
+    <script src="../wexa_statics/js/dialog.js" type="application/javascript"></script>
+
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/accessibility.js" type="application/javascript"></script>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+<header>
+    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <nav style="position: absolute; top: 0;">
+        <ul>
+            <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+            <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+            <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+        </ul>
+        <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme();">
+            <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+        </button>
+        <button role="menuitem" onclick="accessibility_manager.switch_color_scheme();">
+            <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+        </button>
+    </nav>
+    <h1>dialog css/js</h1>
+    <h2>A framework to open a modal 'dialog'</h2>
+</header>
+
+<main id="main-content">
+
+    <h1>Messages</h1>
+
+    <h2>How do they look like?</h2>
+    <h3>Light color scheme</h3>
+    <table>
+        <tr>
+            <td>
+    <dialog id="info-demo" role="alertdialog" class="info">
+        <p>This is irrelevant information...</p>
+    </dialog>
+            </td>
+            <td>
+    <dialog id="warning-demo" role="alertdialog" class="warning">
+        <p>This is an irrelevant warning...</p>
+    </dialog>
+            </td>
+            <td>
+    <dialog id="error-demo" role="alertdialog" class="error">
+        <p>This is an irrelevant error...</p>
+    </dialog>
+            </td>
+            <td>
+    <dialog id="success-demo" role="alertdialog" class="success">
+        <p>This is a great success...</p>
+    </dialog>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <dialog role="alertdialog" class="tips">
+                    <p>This is a tip: a very useful one!</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog role="alertdialog" class="question">
+                    <main>
+                        <p>Is this a question?</p>
+                    </main>
+                    <footer>
+                        <form method="dialog">
+                            <button>yes</button>
+                            <button>no</button>
+                        </form>
+                    </footer>
+                </dialog>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="dark">
+    <h3>Dark color scheme</h3>
+    <table>
+        <tr>
+            <td>
+                <dialog role="alertdialog" class="info">
+                    <p>This is irrelevant information...</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog role="alertdialog" class="warning">
+                    <p>This is an irrelevant warning...</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog role="alertdialog" class="error">
+                    <p>This is an irrelevant error...</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog role="alertdialog" class="success">
+                    <p>This is a great success...</p>
+                </dialog>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <dialog role="alertdialog" class="tips">
+                <p>This is a tip: a very useful one!</p>
+            </dialog>
+            </td>
+            <td>
+                <dialog role="alertdialog" class="question">
+                    <main>
+                        <p>Is this a question?</p>
+                    </main>
+                    <footer>
+                        <button>yes</button>
+                        <button>no</button>
+                    </footer>
+                </dialog>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <p></p>
+    </div>
+
+    <h2>Use messages as modal...</h2>
+
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <dialog id="info-dlg" role="alertdialog" class="info hidden-alert">
+                    <p id="popup-video-msg">This is irrelevant information...</p>
+                </dialog>
+                <button name="info-btn" onclick="open_dialog('info-dlg')">Open info</button>
+                <button name="info-modal-btn" onclick="open_dialog('info-dlg', true)">Open info (modal version)</button>
+            </td>
+            <td>
+                <dialog id="warning-dlg" role="alertdialog" class="warning hidden-alert">
+                    <p>This is an irrelevant warning...</p>
+                </dialog>
+                <button name="warning-btn" onclick="open_dialog('warning-dlg')">Open warning</button>
+                <button name="warning-modal-btn" onclick="open_dialog('warning-dlg', true)">Open warning (modal version)</button>
+            </td>
+            <td>
+                <dialog id="error-dlg" role="alertdialog" class="error hidden-alert">
+                    <p>This is an irrelevant error...</p>
+                </dialog>
+                <button name="error-btn" onclick="open_dialog('error-dlg')">Open error</button>
+                <button name="error-modal-btn" onclick="open_dialog('error-dlg', true)">Open error (modal version)</button>
+            </td>
+            <td>
+                <dialog id="success-dlg" role="alertdialog" class="success hidden-alert">
+                    <p>This is a great success...</p>
+                </dialog>
+                <button name="success-btn" onclick="open_dialog('success-dlg')">Open success</button>
+                <button name="success-modal-btn" onclick="open_dialog('success-dlg', true)">Open success (modal version)</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <dialog id="tips-dlg" role="alertdialog" class="tips hidden-alert">
+                    <p>This alert is hidden when it isn't open!</p>
+                    <p>Add "hidden-alert" in the class attribute of the dialog element</p>
+                </dialog>
+                <button name="tips-btn" onclick="open_dialog('tips-dlg')">Open hidden tips</button>
+                <button name="tips-modal-btn" onclick="open_dialog('tips-dlg', true)">Open hidden tips (modal version)</button>
+            </td>
+        </tr>
+    </table>
+
+    <h1>Video</h1>
+
+    <!--
+        The dialog doesn't have to be necessary in the same place of the button to open it,
+        Furthermore, a popup video can be open by multiple buttons with its id not only one
+    -->
+    <dialog id="popup-demo" class="popup-video">
+        <video id="popup-video-demo" controls preload="none">
+            <source src="video/demo_video.webm" type="video/webm"/>
+        </video>
+    </dialog>
+
+    <h2>Popup video with image pre-visualisation</h2>
+    <figure class="img-video-visualization" style="width: 35vw; height: auto;">
+        <img src="images/demo_video.png" alt="Video preview"/>
+        <button name="play-btn" onclick="play_popup_video('demo')">&#9658;</button>
+    </figure>
+
+    <h2>Popup video with just a play button</h2>
+    <!-- use a container if you want to center the button (not necessary a 'figure', the figure is required only for image pre-visualization) -->
+    <button name="play-btn" onclick="play_popup_video('demo')">&#9658;</button>
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+</footer>
+</body>
+</html>

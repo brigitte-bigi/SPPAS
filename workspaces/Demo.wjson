@@ -1,0 +1,205 @@
+{
+    "wjson": "2.0",
+    "software": "SPPAS",
+    "version": "4.28",
+    "id": "384a95dc-b416-4271-82ba-d93b863a4850",
+    "paths": [
+        {
+            "id": "C:/Storage/Projects/sppas-code/demo",
+            "rel": "demo",
+            "roots": [
+                {
+                    "id": "demo",
+                    "files": [
+                        {
+                            "id": "demo-activity.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-anonym.TextGrid",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-anonym.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-anonym.wav",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-cuedsp.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-cuedsp.xra",
+                            "state": 1
+                        },
+                        {
+                            "id": "demo-cuedspid001.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-cuedspid001.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-face.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-face.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-hands.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-hands.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-ident.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-ident.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-identid001.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-identid001.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-intsint.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-iva.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-momel.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-palign.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-pclass.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-phon.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-rms.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-sights.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-sights.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-sightsid001.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-sightsid001.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-stops.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-syll.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-tga.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo-token.xra",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo.PitchTier",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo.TextGrid",
+                            "state": 1
+                        },
+                        {
+                            "id": "demo.mp4",
+                            "state": 0
+                        },
+                        {
+                            "id": "demo.wav",
+                            "state": 1
+                        }
+                    ],
+                    "refids": [
+                        "demo"
+                    ],
+                    "subjoin": {
+                        "expand": true
+                    }
+                }
+            ]
+        }
+    ],
+    "catalogue": [
+        {
+            "id": "demo",
+            "state": 1,
+            "type": "STANDALONE",
+            "subjoin": null,
+            "attributes": [
+                {
+                    "id": "author",
+                    "value": "Brigitte Bigi",
+                    "type": "str",
+                    "descr": ""
+                },
+                {
+                    "id": "date_recording",
+                    "value": "2021",
+                    "type": "int",
+                    "descr": ""
+                },
+                {
+                    "id": "date_annotating",
+                    "value": "2022",
+                    "type": "int",
+                    "descr": ""
+                },
+                {
+                    "id": "place_recording",
+                    "value": "France",
+                    "type": "str",
+                    "descr": ""
+                },
+                {
+                    "id": "language",
+                    "value": "fra",
+                    "type": "str",
+                    "descr": ""
+                }
+            ]
+        }
+    ]
+}

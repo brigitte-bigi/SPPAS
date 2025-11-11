@@ -1,0 +1,276 @@
+/*
+:filename: statics/css/menu.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: a CSS framework to make accessible nav.
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://whakerexa.sf.net/
+
+Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+/* =======================================================================
+                            VARIABLE DEFINITIONS
+  ======================================================================== */
+
+
+:root {
+    --app-submenu-position: left;
+    --app-submenu-align: left bottom;
+}
+
+
+/* =======================================================================
+                        Override wexa.css definitions
+  ======================================================================== */
+
+/* Applications must fill the full screen. No space left at left of right. */
+body {
+    margin: 0 auto;
+    width: 100%;
+}
+
+body > header {
+    width: 100%;
+}
+
+/* The main content left and right paddings -- very small ones. */
+body > main {
+    padding-left: calc((100% - var(--screen-width)) / 3);
+    padding-right: calc((100% - var(--screen-width)) / 3);
+}
+
+/* The main menu is fixed at the bottom and always visible. */
+body > nav#nav-content {
+    position: fixed;
+    bottom: 0 !important;
+    top: auto;
+    left: 0;
+    right: 0;
+    height: var(--nav-min-height);
+    background-color: var(--nav-bg-color);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: none;
+}
+
+
+/* =======================================================================
+                        Menu for mobile applications
+  ======================================================================== */
+
+/* A top menu is fixed at the top of the page and always visible */
+body > header > nav#header-nav-content {
+    position: fixed;
+    bottom: auto;
+    top: 1rem;
+    left: auto;
+    right: 2rem;
+}
+
+/* ----------------------------------------------------------------------- */
+/* ----------------  Sub-Menu for mobile applications  ------------------- */
+/* ----------------------------------------------------------------------- */
+
+aside.app-submenu {
+    position: fixed;
+    background-color: var(--nav-bg-color);
+    z-index: 150;
+    visibility: hidden;  /* Make it invisible by default */
+    width: 20rem;
+    height: 100%;
+}
+
+aside.app-submenu nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    width: 100%;
+}
+
+aside.app-submenu nav a {
+    padding: 0.8rem;
+    background-color: var(--bg-color);
+    margin: 0.5rem 0;
+    color: var(--nav-fg-color);
+    text-decoration: none;
+    border-radius: 0.5rem;
+}
+
+aside.app-submenu nav a:hover {
+    background-color: var(--buttons-bg-color);
+}
+
+/* --------------------- Sub-menu positioning, initially hidden off-screen,
+   with a smooth slide-in animation when opened. -------------------------- */
+
+aside.app-submenu[data-submenu-position="left"] {
+    top: 0;
+    left: -100%;
+    width: 20rem;
+    height: 100%;
+    transition: left var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
+    box-shadow: 0.2rem 0 0.4rem var(--shadow-color);
+}
+
+aside.app-submenu[data-submenu-position="right"] {
+    top: 0;
+    right: -100%;
+    width: 20rem;
+    height: 100%;
+    transition: right var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
+    box-shadow: 0 0.2rem 0.4rem var(--shadow-color);
+}
+
+aside.app-submenu[data-submenu-position="bottom"] {
+    top: auto;
+    bottom: -100%;  /* Initially off-screen at the bottom */
+    width: 100%;    /* Set the width for the bottom submenu */
+    height: auto;   /* Auto height to fit content */
+    transition: bottom var(--transition), visibility 0s 0.3s;
+}
+
+aside.app-submenu[data-submenu-position="top"] {
+    bottom: auto;
+    top: -100%;    /* Initially off-screen at the top */
+    width: 100%;   /* Set the width for the top submenu */
+    height: auto;  /* Auto height to fit content */
+    transition: top var(--transition), visibility 0s 0.3s;
+}
+
+/* -------------- Alignment of elements inside the submenu --------------- */
+
+aside.app-submenu[data-submenu-align-vertical="top"] nav {
+    position: absolute;
+    top: 0;
+}
+
+aside.app-submenu[data-submenu-align-vertical="bottom"] nav {
+    position: absolute;
+    bottom: 0;
+}
+
+/* Optional: Align horizontally based on left/right */
+aside.app-submenu[data-submenu-align-horizontal="left"] nav {
+    align-items: start;
+}
+
+aside.app-submenu[data-submenu-align-horizontal="right"] nav {
+    align-items: end;
+}
+
+aside.app-submenu[data-submenu-align-horizontal="center"] nav {
+    align-items: center;
+}
+
+/* ----------------- When submenu is open, slide it in ------------------- */
+
+aside.app-submenu.open {
+    visibility: visible;
+}
+
+aside.app-submenu.open[data-submenu-position="left"] {
+    left: 0;
+}
+
+aside.app-submenu.open[data-submenu-position="right"] {
+    right: 0;
+}
+
+aside.app-submenu.open[data-submenu-position="bottom"] {
+    bottom: 0;
+}
+
+aside.app-submenu.open[data-submenu-position="top"] {
+    top: 0;
+}
+
+/* ----------------- Submenu menuitem styling ------------------- */
+
+body > nav#nav-content [role=menuitem] span {
+    font-variant: small-caps;
+    font-size: 0.8rem;
+}
+
+body > nav#nav-content [role=menuitem] * {
+    color: var(--nav-fg-color);
+}
+
+/* Specific style for the main menu. */
+body > nav#nav-content [role=menuitem] {
+    opacity: 80%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-around;
+    text-decoration: none;
+    color: var(--nav-fg-color);
+    background-color: var(--nav-bg-color);
+}
+
+
+@media (min-width: 920px) {
+    body > nav#nav-content {
+        height: calc(var(--nav-min-height));
+    }
+
+    body > nav#nav-content [role=menuitem] {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+        width: auto;
+        flex-grow: 1;
+        max-width: 20%;
+    }
+}
+
+@media (max-width: 920px) {
+
+    body > nav#nav-content {
+        height: calc(var(--nav-min-height) * 2);
+    }
+
+    body > nav#nav-content [role=menuitem] {
+        flex-direction: column; /* Stack image and text vertically */
+        gap: 0.5rem;
+        width: 100%; /* Occupy the full width */
+        flex-grow: 1; /* Make buttons take all available space */
+        /*max-width: 20%; /* Ensure no button is wider than the container */
+        height: auto;
+    }
+}
+
+body > nav#nav-content [role="menuitem"]:hover,
+body > nav#nav-content [role="menuitem"]:focus-visible{
+    opacity: 100%;
+}
+
+body > nav#nav-content [role="menuitem"] svg {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 0.25em;
+}

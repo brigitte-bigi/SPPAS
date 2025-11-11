@@ -1,0 +1,58 @@
+// filename: sppas.src.annotations.CuedSpeech.videotagger.videotagger.yuml
+// author:   Florian Lopitaux
+// contact:  contact@sppas.org
+// summary:  UML class diagram for videotagger package of SPPAS.
+//
+// This file is part of SPPAS: https://sppas.org/
+//     Copyright (C) 2011-2023 Brigitte Bigi
+//     Laboratoire Parole et Langage, Aix-en-Provence, France
+//     Use of this software is governed by the GNU Public License, version 3.
+//
+// Copy/paste the following at:
+// https://yuml.me/diagram/scruffy/class/draw
+// Or try with: https://github.com/jaime-olivares/yuml-diagram
+
+// -------------------------
+// VideoTagger Class Diagram
+// -------------------------
+
+// -------------------------------------
+// Realtions between classes description
+// -------------------------------------
+[SppasHands]++->[SppasHandsProperties]
+// -------------------
+[SppasImageHandTagger]++->[SppasHands]
+[SppasImageHandTagger]<>->[SppasHandsProperties]
+// -------------------
+[CuedSpeechVideoTagger]++->[SppasImageVowelsTagger]
+[CuedSpeechVideoTagger]++->[SppasImageHandTagger]
+
+
+// --------------------------------------
+// SppasHandsProperties class description
+// --------------------------------------
+[SppasHandsProperties|__init__(image, sights, target_index)|euclidian_distance(p1, p2);pythagoras(side1, side2);beta_angle(side1, side2, side3)|distance();angle();nb_sights();image();image_size();target_coords()]
+
+
+// ----------------------------------------
+// SppasImageVowelsTagger class description
+// ----------------------------------------
+[SppasImageVowelsTagger|__init__(cue_rules)|set_cue_rules(cue_rules);get_vowel_text(vowel_index);get_vowel_color(color_index);enable_vowel_name(value);set_thickness(value);slap_on(image, fuzzy_points)]
+
+
+// ----------------------------
+// SppasHands class description
+// ----------------------------
+[SppasHands|__init__(cue_rules);__len__()|set_cue_rules(cue_rules);image(shape_code);target_coords(shape_code);angle(shape_code);distance(shape_code);load(prefix)]
+
+
+// --------------------------------------
+// SppasImageHandTagger class description
+// --------------------------------------
+[SppasImageHandTagger|__init__(cue_rules)|set_cue_rules(cue_rules);get_vowel_rank(vowel_code);load_hands(prefix);enable_hand_mode(value);slap_on(image, shapes, target_points, angle, vowel_pos)]
+
+
+// ---------------------------------------
+// CuedSpeechVideoTagger class description
+// ---------------------------------------
+[CuedSpeechVideoTagger|__init__(cue_rules);__del()__|get_annotation_index(tier, timepoint);get_annotation_index_starting_to(tier, timepoint, start_index)|set_cue_rules(cue_rules);load_hands(prefix);load(video_name);is_loaded();close();is_opened();set_option(opt_key, opt_value);tag_with_keys(transcription, output)]

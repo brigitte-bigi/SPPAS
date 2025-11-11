@@ -1,0 +1,33 @@
+// filename: sppas.src.annotations.CuedSpeech.whenhand.whenhand.yuml
+// author:   Brigitte Bigi
+// contact:  contact@sppas.org
+// summary:  UML class diagram for whenhand package of SPPAS.
+//
+// This file is part of SPPAS: https://sppas.org/
+//     Copyright (C) 2011-2023 Brigitte Bigi
+//     Laboratoire Parole et Langage, Aix-en-Provence, France
+//     Use of this software is governed by the GNU Public License, version 3.
+//
+// Copy/paste the following at:
+//   https://yuml.me/diagram/scruffy/class/draw
+// Or try with: https://github.com/jaime-olivares/yuml-diagram
+
+// Definitions
+[BaseWhenTransitionPredictor|-a1:float;-a3:float;-description:str|get_description();predict_shape();predict_position()]
+[WhenTransitionPredictorDuchnowski1998]
+[WhenTransitionPredictorDuchnowski2000]
+[WhenTransitionPredictorAttina]
+[WhenTransitionPredictorRules]
+
+[WhenTransitionPredictor|--version:int;--predictor:BaseWhenTransitionPredictor|set_a();predict_m();predict_d()]
+[sppasWhenHandTransitionPredictor|--cued:CuedSpeechCueingRules;--transition:WhenTransitionPredictor|get_whenpredictor_versions();get_whenpredictor_version();set_whenpredictor_versions();keys_to_hand_shapes();keys_to_hand_positions()]
+
+// Relations
+[sppasWhenHandTransitionPredictor]-1>[WhenTransitionPredictor]
+[WhenTransitionPredictor]-1>[BaseWhenTransitionPredictor]
+
+// Inheritance
+[BaseWhenTransitionPredictor]^[WhenTransitionPredictorDuchnowski1998]
+[BaseWhenTransitionPredictor]^[WhenTransitionPredictorDuchnowski2000]
+[BaseWhenTransitionPredictor]^[WhenTransitionPredictorAttina]
+[BaseWhenTransitionPredictor]^[WhenTransitionPredictorRules]

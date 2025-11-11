@@ -1,0 +1,127 @@
+{
+  "id": "faceident",
+  "name": "Person Face Identity",
+  "descr": "Assign a person identity to detected faces of a video. This annotation need to be evaluated. Requires a video and an XRA or CSV file with coordinates of the detected faces. Produces a video and an XRA file with coordinates of each identified person.",
+  "required": "facedetection",
+  "api": "sppasFaceIdentifier",
+  "devel": 55,
+
+  "resources": [
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern1",
+      "type": "str",
+      "value": "",
+      "text": "Input pattern of the video file."
+    },
+    {
+      "id": "inputpattern2",
+      "type": "str",
+      "value": "-face",
+      "text": "Input pattern of the CSV or XRA file with detected faces."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-ident",
+      "text": "Output file pattern with identified persons."
+    },
+    {
+      "id": "fdmin",
+      "type": "float",
+      "value": "0.9",
+      "text": "Minimum score of face detection to consider a face as an identity candidate."
+    },
+    {
+      "id": "mincoords",
+      "type": "float",
+      "value": "0.4",
+      "text": "Minimum comparison score to consider a face as new identity candidate."
+    },
+    {
+      "id": "minrefcoords",
+      "type": "float",
+      "value": "0.6",
+      "text": "Minimum comparison score to add a face in the identity images."
+    },
+    {
+      "id": "mindistcoords",
+      "type": "float",
+      "value": "0.1",
+      "text": "Minimum distance of coordinates between 2 identities to consider them identical."
+    },
+    {
+      "id": "mindistimgs",
+      "type": "float",
+      "value": "0.8",
+      "text": "Minimum distance of images between 2 identities to consider them identical."
+    },
+    {
+      "id": "nbfrimg",
+      "type": "int",
+      "value": "20",
+      "text": "Number of images to store to train an identity recognizer."
+    },
+    {
+      "id": "ident",
+      "type": "bool",
+      "value": true,
+      "text": "Save a video of the portrait of each identified person."
+    },
+    {
+      "id": "selfi",
+      "type": "bool",
+      "value": false,
+      "text": "Save the selfie (larger) instead of the portrait."
+    },
+    {
+      "id": "shift",
+      "type": "int",
+      "value": 0,
+      "text": "Percentage to shift the portrait or selfie."
+    },
+    {
+      "id": "csv",
+      "type": "bool",
+      "value": false,
+      "text": "Save coordinates of identified faces in a CSV file instead of XRA"
+    },
+    {
+      "id": "tag",
+      "type": "bool",
+      "value": true,
+      "text": "Surround the identified faces in the images and video outputs"
+    },
+    {
+      "id": "folder",
+      "type": "bool",
+      "value": false,
+      "text": "Save the identified faces in a folder with tagged and/or cropped images"
+    },
+    {
+      "id": "crop",
+      "type": "bool",
+      "value": false,
+      "text": "Save the face of identified persons in cropped images"
+    },
+    {
+      "id": "width",
+      "type": "int",
+      "value": 0,
+      "text": "Resize all the cropped images to a fixed width (0=no)"
+    },
+    {
+      "id": "height",
+      "type": "int",
+      "value": 0,
+      "text": "Resize all the cropped images to a fixed height (0=no)"
+    }
+  ]
+}
+

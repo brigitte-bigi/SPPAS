@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.29 (C) Brigitte Bigi" date="2025-09-18T13:03:30+02:00" format="1.5" name="Text Normalization">
+	<Metadata>
+		<Entry key="id">60081c43-f61b-4f45-867d-f44380a176c0</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.29</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2025 Brigitte Bigi, CNRS</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">fra</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/fra</Entry>
+		<Entry key="file_license_text_0">GNU AGPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+		<Entry key="text_normalization_result_of">C:\Storage\Projects\sppas-code\resources\samples\samples-fra\AG_éàç_0460.TextGrid</Entry>
+		<Entry key="file_writer">sppasXRA</Entry>
+		<Entry key="file_name">AG_éàç_0460-token.xra</Entry>
+		<Entry key="file_path">C:\Storage\Projects\sppas-code\resources\samples\samples-fra</Entry>
+		<Entry key="file_ext">.xra</Entry>
+		<Entry key="file_write_date">2025-09-18T13:03:30+02:00</Entry>
+		<Entry key="file_version">1</Entry>
+	</Metadata>
+
+	<Tier id="8397fed0-71a1-4d1e-a88f-8e6ec6cf84f8" tiername="Tokens">
+		<Metadata>
+			<Entry key="linguistic_resource_vocab">resources\vocab\fra.vocab</Entry>
+			<Entry key="language">0</Entry>
+			<Entry key="text_normalization_enable_action_replace">true</Entry>
+			<Entry key="text_normalization_enable_action_tokenize">true</Entry>
+			<Entry key="text_normalization_enable_action_numbers">true</Entry>
+			<Entry key="text_normalization_enable_action_lower">true</Entry>
+			<Entry key="text_normalization_enable_action_punct">true</Entry>
+		</Metadata>
+		<Annotation id="fbd88568-75c8-4c31-9018-fad0a6528a57">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.0" radius="0.0" />
+					<End midpoint="3.51" radius="0.0005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>oui</Tag>
+			</Label>
+			<Label>
+				<Tag>bè</Tag>
+			</Label>
+			<Label>
+				<Tag>oui</Tag>
+			</Label>
+			<Label>
+				<Tag>puisque</Tag>
+			</Label>
+			<Label>
+				<Tag>dtfaçon</Tag>
+			</Label>
+			<Label>
+				<Tag>i</Tag>
+			</Label>
+			<Label>
+				<Tag>m'</Tag>
+			</Label>
+			<Label>
+				<Tag>a</Tag>
+			</Label>
+			<Label>
+				<Tag>dit</Tag>
+			</Label>
+			<Label>
+				<Tag>il</Tag>
+			</Label>
+			<Label>
+				<Tag>a</Tag>
+			</Label>
+			<Label>
+				<Tag>trouvé</Tag>
+			</Label>
+			<Label>
+				<Tag>un</Tag>
+			</Label>
+			<Label>
+				<Tag>appart</Tag>
+			</Label>
+			<Label>
+				<Tag>et</Tag>
+			</Label>
+			<Label>
+				<Tag>tout</Tag>
+			</Label>
+			<Label>
+				<Tag>là-haut</Tag>
+			</Label>
+			<Label>
+				<Tag>donc</Tag>
+			</Label>
+			<Label>
+				<Tag>c'est</Tag>
+			</Label>
+			<Label>
+				<Tag>que</Tag>
+			</Label>
+			<Label>
+				<Tag>euh</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="5c1d66ae-8ff0-4b85-973c-06acf2712151" tiername="OccTokens">
+		<Annotation id="bc9731e3-35e6-43d0-81ac-8ea263de2408">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.0" radius="0.0" />
+					<End midpoint="3.51" radius="0.0005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">21</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="693c8806-0500-409d-9e7f-82dd2735d8a1" tiername="DurTokens">
+		<Annotation id="1d060280-377b-46f8-bb69-92be5d88eb13">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.0" radius="0.0" />
+					<End midpoint="3.51" radius="0.0005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">3.51</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Hierarchy />
+</Document>
+

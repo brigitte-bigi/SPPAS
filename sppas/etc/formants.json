@@ -1,0 +1,84 @@
+{
+  "id": "formants",
+  "name": "Formants",
+"descr": "Estimate the F1/F2 formant values of an audio file over phoneme intervals. Several methods can be enabled independently, including in-house implementations and ones derived from Praat (via Parselmouth).",  "required": "alignment",
+  "api": "sppasFormants",
+  "devel": 50,
+
+  "resources": [
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern1",
+      "type": "str",
+      "value": "",
+      "text": "Pattern of the audio file."
+    },
+    {
+      "id": "inputpattern2",
+      "type": "str",
+      "value": "-palign",
+      "text": "Pattern of the input file with phonemes."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-formants",
+      "text": "Pattern of the output file with F1 and F2 values."
+    },
+    {
+      "id": "threshold",
+      "type": "int",
+      "value": 0,
+      "text": "Threshold of the RMS value for the detection of silences, 0=automatic."
+    },
+    {
+      "id": "win_length",
+      "type": "float",
+      "value": 0.030,
+      "text": "Hamming window duration for self-implemented LPC methods (in seconds)."
+    },
+    {
+      "id": "order",
+      "type": "int",
+      "value": 12,
+      "text": "Order for self-implemented LPC methods. Usually ranging 6-20."
+    },
+    {
+      "id": "floor_freq",
+      "type": "int",
+      "value": 90,
+      "text": "Minimum frequency to consider for formants for self_implemented methods."
+    },
+    {
+      "id": "output_type",
+      "type": "str",
+      "value": "mean",
+      "text": "Output type among 'mean', 'center' or 'all'."
+    },
+    {
+      "id": "burg",
+      "type": "bool",
+      "value": false,
+      "text": "Enable the Burg method (self-implemented)."
+    },
+    {
+      "id": "praat_burg",
+      "type": "bool",
+      "value": false,
+      "text": "Enable the Burg method estimated by Praat (via Parselmouth)."
+    },
+    {
+      "id": "autocorrelation",
+      "type": "bool",
+      "value": false,
+      "text": "Enable the Autocorrelation method (self-implemented)."
+    }
+  ]
+}
+

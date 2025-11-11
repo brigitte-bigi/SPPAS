@@ -1,0 +1,50 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 21.3471 
+tiers? <exists> 
+size = 1 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "transcription" 
+        xmin = 0 
+        xmax = 21.3471 
+        intervals: size = 9 
+        intervals [1]:
+            xmin = 0 
+            xmax = 2.4971007546 
+            text = "sil" 
+        intervals [2]:
+            xmin = 2.4971007546 
+            xmax = 5.6838880379 
+            text = "ipu_1 hier soir, j'ai ouvert la porte d'entrée pour laisser chort- sortir le chat" 
+        intervals [3]:
+            xmin = 5.6838880379 
+            xmax = 8.4605955438 
+            text = "<cut unit=""ms"" from=""5680"" to=""5740"" reason=""pause""/> la nuit était si belle que je suis descendu dans la rue prendre le frais" 
+        intervals [4]:
+            xmin = 8.4605955438 
+            xmax = 9.1450000312 
+            text = "" 
+        intervals [5]:
+            xmin = 9.1450000312 
+            xmax = 11.9485310906 
+            text = "ipu_3 j'avais à peine fait quelque pas que j'ai entendu la porte claquer derrière moi" 
+        intervals [6]:
+            xmin = 11.9485310906 
+            xmax = 12.494 
+            text = "#" 
+        intervals [7]:
+            xmin = 12.494 
+            xmax = 16.602 
+            text = "ipu_4 j'ai réalisé tout d'un coup <cut from=""13.644"" to=""13.815"" comment=""pause""/> que j'étais enfermé dehors ! <cut from=""00:00:15.036"" to=""00:00:16.602"" comment=""silence""/>" 
+        intervals [8]:
+            xmin = 16.602 
+            xmax = 20.01 
+            text = "gpd_5 le comble c'est que je me suis fait arrêter alors que j'essayais de forcer ma propre porte" 
+        intervals [9]:
+            xmin = 20.01 
+            xmax = 21.3471 
+            text = "#" 

@@ -1,0 +1,126 @@
+# English translation for SPPAS
+# Copyright (c) 2011-2018 Brigitte Bigi
+# This file is distributed under the same license as the SPPAS package.
+# Brigitte Bigi <contact@sppas.org>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SPPAS\n"
+"Report-Msgid-Bugs-To: contact@sppas.org\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brigitte Bigi <brigitte.bigi@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid ":ERROR 9999: "
+msgstr "Deprecated Python: SPPAS requires 3.7+. "
+
+msgid ":ERROR 9990: "
+msgstr "Deprecated Python: the features {} of SPPAS requires {}."
+
+msgid ":ERROR 0001: "
+msgstr "The following error occurred: {message}."
+
+msgid ":ERROR 0100: "
+msgstr "{!s:s} is not of the expected type '{}'."
+
+msgid ":ERROR 0200: "
+msgstr "Invalid index value {:d}."
+
+msgid ":ERROR 0300: "
+msgstr "Invalid value '{!s:s}' for '{!s:s}'."
+
+msgid ":ERROR 0310: "
+msgstr "Expected a positive value. Got {value}."
+
+msgid ":ERROR 0320: "
+msgstr "Min value {min_value} is bigger than max value {max_value}."
+
+msgid ":ERROR 0330: "
+msgstr "Value {value} out of range [{min_value},{max_value}]."
+
+msgid ":ERROR 0340: "
+msgstr "List index {value} out of range [{min_value},{max_value}]."
+
+msgid ":ERROR 0350: "
+msgstr "Language code '{code}' not found."
+
+msgid ":ERROR 0400: "
+msgstr "Invalid key '{!s:s}' for data '{!s:s}'."
+
+msgid ":ERROR 0500: "
+msgstr "Operating System error: {error}"
+
+msgid ":ERROR 0505: "
+msgstr "The operating system {:s} is not supported yet. No automatic installer found."
+
+msgid ":ERROR 0510: "
+msgstr "Installation procedure reported error(s) and/or warnings: {error}"
+
+msgid ":ERROR 0513: "
+msgstr "Permission error: access to {place} is denied."
+
+msgid ":ERROR 0520: "
+msgstr "Feature {name} is not enabled; its installation should be processed first."
+
+msgid ":ERROR 0530: "
+msgstr "The package {package} can't be imported. The installation of the feature {name} should be processed first."
+
+msgid ":ERROR 0540: "
+msgstr "The package {package} is not up-to-date. The re-installation of the feature {name} should be processed first."
+
+msgid ":ERROR 0600: "
+msgstr "No such file or directory: {name}"
+
+msgid ":ERROR 0610: "
+msgstr "Unknown extension for filename {:s}."
+
+msgid ":ERROR 0620: "
+msgstr "The directory {dirname} does not exist."
+
+msgid ":ERROR 0650: "
+msgstr "File '{:s}' can't be open or read."
+
+msgid ":ERROR 0655: "
+msgstr "Failed to read file {name}: {msg}"
+
+msgid ":ERROR 0660: "
+msgstr "File '{:s}' can't be saved."
+
+msgid ":ERROR 0670: "
+msgstr "Files with extension '{:s}' are not supported for reading."
+
+msgid ":ERROR 0680: "
+msgstr "Files with extension '{:s}' are not supported for writing."
+
+msgid ":INFO 0510: "
+msgstr "Installation of '{name}'."
+
+msgid ":INFO 0520: "
+msgstr "'{name}' not available on your OS."
+
+msgid ":INFO 0530: "
+msgstr "Install of '{name}' is disabled."
+
+msgid ":INFO 0540: "
+msgstr "'{name}' is installed."
+
+msgid ":INFO 0550: "
+msgstr "Installation of '{name}' failed."
+
+msgid ":INFO 0560: "
+msgstr "Installation finished."
+
+msgid ":INFO 0570: "
+msgstr "'{name}' does not match any valid package."
+
+msgid ":INFO 0580: "
+msgstr "No system command is processed."
+
+msgid ":ERROR 0977: "
+msgstr "The input field '{}' is not completed."

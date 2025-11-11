@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="framework, html, css, javascript" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Whakerexa</title>
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/sortatable.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../wexa_statics/css/toggleselect.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="screen" />
+
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/accessibility.js" type="application/javascript"></script>
+
+    <script src="../wexa_statics/js/sortatable.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/toggleselect.js" type="application/javascript"></script>
+    <style>
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-min-height: 4rem;
+            --header-height: 26rem;
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+    </style>
+
+</head>
+<body>
+
+<header>
+    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <nav style="position: absolute; top: 0;">
+        <ul>
+            <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+            <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+            <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+        </ul>
+        <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme();">
+            <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+        </button>
+        <button role="menuitem" onclick="accessibility_manager.switch_color_scheme();">
+            <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+        </button>
+    </nav>
+    <h1>SortaTable js/css</h1>
+    <h2>Sort rows of a table by clicking its columns</h2>
+</header>
+
+<nav>
+    <section>
+        <ul>
+            <li><a role="menuitem" class="external-link" href="https://whakerexa.sourceforge.io">Home</a></li>
+            <li><a role="menuitem" class="external-link" href="https://sppas.org/bigi/">Author</a></li>
+        </ul>
+    </section>
+    <ul>
+        <li><a role="menuitem" href="#description">Description</a></li>
+        <li><a role="menuitem" href="#demo">Demo</a></li>
+    </ul>
+</nav>
+
+
+<main id="main-content">
+    <section id="description">
+        <h1>Description</h1>
+        <p><strong>SortaTable</strong> is a lightweight CSS/JS utility designed for sorting table
+            rows effortlessly. It enables users to sort rows in both ascending and descending order
+            by simply clicking on the header of a specific column. This utility is particularly
+            useful for enhancing the user experience in data-rich web applications, allowing for
+            quick and intuitive navigation through large datasets.
+        </p>
+        <p>With <strong>SortaTable</strong>,
+        developers can easily integrate sortable tables into their web projects, requiring minimal
+        configuration. The library supports flexible configurations, allowing for various types of
+        data to be sorted, including strings, numbers, and dates. Additionally, developers can
+        customize the appearance of the sort buttons and indicators through CSS, making it adaptable
+        to any design.</p>
+        <p>Whether you're building a simple contact list or a comprehensive data dashboard,
+            <strong>SortaTable</strong> provides a robust and user-friendly solution for dynamic
+            data management.</p>
+
+        <h2>JavaScript</h2>
+        <p>The <code>SortaTable</code> class provides functionality to make HTML table columns sortable.
+            It attaches event listeners to the table's header buttons, allowing users to sort rows
+            based on the content of a specific column in either ascending or descending order. Additionally,
+            users can directly sort a specified column programmatically without clicking the header.</p>
+
+        <p><strong>Usage example:</strong></p>
+        <pre>
+&lt;script&gt;
+    // Create a new SortaTable instance and attach event listeners after the page loads
+    const sortatable = new SortaTable("a-table-name");
+    sortatable.attachSortListeners();
+
+    // Un-comment the next line to sort a column in ascending order when the page is loaded
+    // sortatable.sort("a-column", true); // Ascending order
+    // Un-comment the next line to sort a column in descending order
+    // sortatable.sort("a-column", false); // Descending order
+&lt;/script&gt;
+</pre>
+
+        <p>You can also extend the class to customize its behavior:</p>
+        <pre>
+class AdvancedSortaTable extends SortaTable {
+    constructor(tableId) {
+        super(tableId);
+    }
+
+    // Override methods or add new features
+}
+    </pre>
+
+        <h2>HTML</h2>
+
+        <p>The table must have an <code>id</code> attribute, which is passed as a parameter to the
+            <code>SortaTable</code> class.</p>
+
+        <pre>
+&lt;table id="a-table-name"&gt;&lt;/table&gt;
+    </pre>
+
+        <p>The script should be included at the end of the <code>&lt;body&gt;</code> section to ensure
+            the DOM is fully loaded before attaching event listeners.</p>
+
+        <p>The table headers must contain a <code>&lt;button&gt;</code> element. Each button must have a
+            <code>data-sort</code> attribute to specify a unique identifier for the column to be sorted.
+            No other buttons on the table should use the same <code>data-sort</code> identifier.</p>
+
+        <pre>
+&lt;thead&gt;
+    &lt;tr&gt;
+        &lt;th&gt;
+            &lt;button class="sortatable" data-sort="firstname"&gt;
+                First Name
+            &lt;/button&gt;
+        &lt;/th&gt;
+    &lt;/tr&gt;
+&lt;/thead&gt;
+    </pre>
+
+        <h2>CSS</h2>
+
+        <p>The <code>sortatable</code> class is used to style the buttons in the table headers and adds
+            up/down arrows to indicate a sorting direction. <em>This class must be added to the buttons in
+                the header.</em></p>
+        <p>The <code>sortatable</code> class ensures that the buttons are fully responsive, occupying the
+            available space in their respective header cells. The class also sets a uniform height and
+            padding to create a consistent look across all sortable columns. Additionally, it includes
+            a bold font weight to enhance visibility and accessibility.
+            The arrows are created using CSS borders, which allows for lightweight and scalable icons
+            without the need for additional image files.
+        </p>
+
+        <p>The <code>sort-asc</code> and <code>sort-desc</code> classes refine the appearance of the
+            arrows for ascending and descending sort order, respectively.</p>
+        <p>These classes provide flexibility in design, allowing developers to customize arrow colors
+            and sizes through CSS variables such as <code>var(--a-color)</code>. This ensures that
+            the sorting indicators integrate seamlessly with the overall theme of the web application.</p>
+    </section>
+
+    <section id="demo">
+        <h1>Demo</h1>
+
+        <h2>Example 1</h2>
+
+        <p>Below is an example of a table that showcases the date of birth of very famous artists.
+            The table includes first name, last name, and their respective dates.
+            This serves as a demonstration of how to implement sortable tables using the
+            <code>SortaTable</code> class.
+            The second column is sorted in ascending order by last name, while each column
+            remains sortable.</p>
+
+        <table id="music-legends-table" role="grid">
+            <thead>
+            <tr>
+                <th>
+                    <button class="sortatable" data-sort="firstname">
+                        First Name
+                    </button>
+                </th>
+                <th>
+                    <button class="sortatable" data-sort="lastname">
+                        Last Name
+                    </button>
+                </th>
+                <th>
+                    <button class="sortatable" data-sort="date">
+                        Date of Birth
+                    </button>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Elvis</td>
+                <td>Presley</td>
+                <td>1935-01-08</td>
+            </tr>
+            <tr>
+                <td>Aretha</td>
+                <td>Franklin</td>
+                <td>1942-03-25</td>
+            </tr>
+            <tr>
+                <td>Freddie</td>
+                <td>Mercury</td>
+                <td>1946-09-05</td>
+            </tr>
+            <tr>
+                <td>Michael</td>
+                <td>Jackson</td>
+                <td>1958-08-29</td>
+            </tr>
+            <tr>
+                <td>Bob</td>
+                <td>Dylan</td>
+                <td>1941-05-24</td>
+            </tr>
+            <tr>
+                <td>Jimi</td>
+                <td>Hendrix</td>
+                <td>1942-11-27</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>Example 2</h2>
+        <p>
+        Below is an example of a table that showcases significant dates and
+            events from the Terminator franchise. The table includes key
+            characters, the events they are associated with, and their respective dates.
+            No initial sorting is performed; the table is presented as defined in the HTML.
+            Notably, the last column, which contains descriptions, is not sortable,
+            demonstrating that not all columns need to support sorting.
+        </p>
+
+        <table id="terminator-dates-table">
+            <thead>
+            <tr>
+                <th>
+                    <button class="sortatable" data-sort="name">
+                        Name
+                    </button>
+                </th>
+                <th>
+                    <button class="sortatable" data-sort="event">
+                        Event
+                    </button>
+                </th>
+                <th>
+                    <button class="sortatable" data-sort="date">
+                        Date
+                    </button>
+                </th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Sarah</td>
+                <td>Connor</td>
+                <td>1984-05-12</td>
+                <td>Terminator's target</td>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>Connor</td>
+                <td>2029-07-11</td>
+                <td>Leader of the human resistance</td>
+            </tr>
+            <tr>
+                <td>Kyle</td>
+                <td>Reese</td>
+                <td>1984-05-12</td>
+                <td>Sent back to protect Sarah Connor</td>
+            </tr>
+            <tr>
+                <td>Skynet</td>
+                <td>Activation</td>
+                <td>1997-08-29</td>
+                <td>Skynet becomes self-aware</td>
+            </tr>
+            <tr>
+                <td>Judgment Day</td>
+                <td>Event</td>
+                <td>1997-08-29</td>
+                <td>Skynet launches a nuclear attack</td>
+            </tr>
+            <tr>
+                <td>T-800</td>
+                <td>Arrival</td>
+                <td>1984-05-12</td>
+                <td>Sent to kill Sarah Connor</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>Example 3</h2>
+
+        <p>
+            This example demonstrates the use of checkboxes to dynamically control
+            the visibility of columns in a table. Each checkbox corresponds to a
+            column, and when checked, it makes the associated column visible.
+            Unchecking a checkbox hides the respective column. Both sortable columns,
+            marked with buttons in the table headers, and non-sortable columns, such
+            as the "Description" column, can be toggled. The "Apply" button applies
+            the selected visibility changes, ensuring a flexible and customizable
+            table view based on user preference.
+        </p>
+
+        <div class="flex-panel" style="justify-content: start; margin-bottom: 1rem;">
+            <details class="flex-item width_30" id="toggable-details">
+                <summary class="summary-choice">
+                    <span>Columns visibility:</span>
+                    <button class="accordion-action" data-toggle
+                            onclick="toggleSelector.toggleSelection(event);"
+                            onkeydown="toggleSelector.toggleSelection(event);">
+                        <img src="" alt="" />
+                    </button>
+                </summary>
+                <main>
+                    <ul>
+                        <li class="check-item">
+                            <input id="event_input" type="checkbox" aria-labelledby="event_label" checked="checked" data-toggle="event"/>
+                            <label for="event_input" id="event_label">
+                                Show/Hide event
+                            </label>
+                        </li>
+                        <li class="check-item">
+                            <input id="date_input" type="checkbox" aria-labelledby="date_label" data-toggle="date"/>
+                            <label for="date_input" id="date_label">
+                                Show/Hide date
+                            </label>
+                        </li>
+                        <li class="check-item">
+                            <input id="descr_input" type="checkbox" aria-labelledby="descr_label" checked="checked" data-toggle="description"/>
+                            <label for="descr_input" id="descr_label">
+                                Show/Hide description
+                            </label>
+                        </li>
+                    </ul>
+                </main>
+            </details>
+            <button class="flex-item"
+                    onclick="sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());">
+                Apply
+            </button>
+        </div>
+
+        <table id="toggable-table">
+            <thead>
+            <tr>
+                <th>
+                    <button class="sortatable" data-sort="name">
+                        Name
+                    </button>
+                </th>
+                <th>
+                    <button class="sortatable" data-sort="event">
+                        Event
+                    </button>
+                </th>
+                <th>
+                    <button class="sortatable" data-sort="date">
+                        Date
+                    </button>
+                </th>
+                <th data-sort="description">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Sarah</td>
+                <td>Connor</td>
+                <td>1984-05-12</td>
+                <td>The primary target of the Terminator, a relentless cyborg sent from the future to eliminate her and prevent the birth of humanity's future resistance leader.</td>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>Connor</td>
+                <td>2029-07-11</td>
+                <td>Leader of the human resistance</td>
+            </tr>
+            <tr>
+                <td>Kyle</td>
+                <td>Reese</td>
+                <td>1984-05-12</td>
+                <td>Sent back to protect Sarah Connor</td>
+            </tr>
+            <tr>
+                <td>Skynet</td>
+                <td>Activation</td>
+                <td>1997-08-29</td>
+                <td>Skynet becomes self-aware</td>
+            </tr>
+            <tr>
+                <td>Judgment Day</td>
+                <td>Event</td>
+                <td>1997-08-29</td>
+                <td>Skynet launches a nuclear attack</td>
+            </tr>
+            <tr>
+                <td>T-800</td>
+                <td>Arrival</td>
+                <td>1984-05-12</td>
+                <td>Sent to kill Sarah Connor</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer id="footer-content">
+    <section>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    </section>
+</footer>
+
+<script type="application/javascript">
+    sortatable1 = new SortaTable("terminator-dates-table");
+    sortatable1.attachSortListeners();
+
+    sortatable2 = new SortaTable("music-legends-table");
+    sortatable2.attachSortListeners();
+    // Ascendant sort on lastname
+    sortatable2.sort("lastname", true);
+
+    sortatable3 = new SortaTable("toggable-table");
+    sortatable3.attachSortListeners();
+
+    toggleSelector = new ToggleSelector("../wexa_statics/icons/", "toggable-details");
+    toggleSelector.handleInputsOnLoad();
+    sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());
+
+</script>
+
+</body>
+</html>

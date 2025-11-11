@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Book.css</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/book.css" type="text/css" media="all" />
+
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/accessibility.js" type="application/javascript"></script>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header>
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+        <nav style="position: absolute; top: 0;">
+            <ul>
+                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+            </ul>
+            <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme();">
+                <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+            </button>
+            <button role="menuitem" onclick="accessibility_manager.switch_color_scheme();">
+                <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+            </button>
+        </nav>
+        <h1>Wexa.css & Book.css</h1>
+        <h2>Two CSS frameworks to make books easy and accessible</h2>
+    </header>
+
+    <main id="main-content">
+
+        <section id="description" class="chapter">
+            <h1> Description </h1>
+
+            <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
+            <pre>
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
+    media="all" /&gt;
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/book.css?format=raw"
+    media="all" /&gt;
+            </pre>
+
+            <section class="ssection"><h2>Overview</h2>
+                <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
+                    accessible web content, and to minimize the use of CSS classes for enhancing the
+                    readability of HTML code, like it should always be! <b>wexa.css</b> is the main
+                    CSS framework of <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.
+                    See the <a href="wexa.html">wexa.css documentation</a> for details.
+                </p>
+                <p><b>book.css</b> is a CSS framework designed to make HTML content resemble a book.
+                    It includes features for implementing chapters, sections, and subsections, along
+                    with an auto-numbering function.
+                </p>
+
+                <p>Not convinced? Take a look at the source code of this page!</p>
+            </section>
+
+            <section class="ssection"><h2>The custom classes</h2>
+
+                <p><b>book.css</b> has a built-in feature that automatically assigns numbers to chapters,
+                    sections, or subsections without manual intervention. Let's show how to do it! </p>
+
+                <p>Add the following classes into your document, and book.css does the rest: </p>
+                <ol>
+                    <li><code>chapter</code></li>
+                    <li><code>ssection</code></li>
+                    <li><code>subssection</code></li>
+                </ol>
+
+                <p>Example of use:</p>
+                <pre>&lt;section class="chapter"&gt;
+&lt;h1&gt; Chapter title &lt;/h1&gt;
+    &lt;section class="ssection"&gt;
+    &lt;h2&gt; Section title &lt;/h2&gt;
+        &lt;section class="subssection"&gt;
+        &lt;h3&gt; Sub-Section title &lt;/h3&gt;
+        &lt;section&gt;
+    &lt;section&gt;
+&lt;section&gt;
+                </pre>
+                <p>The <code>&lt;section&gt;</code> element is used here instead of the nonsensical
+                    <code>&lt;div&gt;</code>. Both will be displayed the same way, but screen readers interpret
+                    a <code>section</code> in a more appropriate manner, unlike a <code>div</code>!</p>
+                <p>The &lt;section&gt; element in HTML is semantic and indicates a thematic grouping of content,
+                    making it useful for screen readers to understand the structure and context of the content.
+                    This can assist users who rely on screen readers to navigate and understand web pages more
+                    effectively. It is then perfectly suitable to indicate the chapters and sections. Fot the
+                    <code>h3</code> level, the <code>section</code> can effectively be replaced by <code>article</code>.
+                </p>
+                <p>Notice that a proper semantic markup, including correct usage of "section", "article",
+                    "header", "footer", etc., can significantly enhance accessibility for users of assistive
+                    technologies like screen readers.</p>
+            </section>
+
+            <section class="ssection"><h2>The variables</h2>
+
+                <p>Only one variable is introduced. It allows to fix the color of the numbering.</p>
+            <pre>&lt;style&gt;
+    :root {
+        /* if you like gray */
+        --numbers-color: rgb(60, 60, 60);
+    }
+    .dark {
+        --numbers-color: rgb(180, 180, 180);
+    }
+&lt;/style&gt;</pre>
+
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="demo" class="chapter">
+            <h1>Demonstration: what's possible with both wexa.css and book.css?</h1>
+
+            <section>
+                <h1>Example of non-numbered Heading 1</h1>
+                <h2>Example of non-numbered Heading 2</h2>
+                <h3>Example of non-numbered Heading 3</h3>
+            </section>
+
+            <!-- ------------------------------------------------------------- -->
+            <section class="dark ssection"><h2>Dark mode applied</h2>
+
+                <article class="subssection">
+                <h3>No specific class applied except the font choice</h3>
+                    <h4>Sans</h4>
+                    <p class="font-sans">
+                        This is a short text embedded into a <code>p</code> tag with no specific class.
+                        This is then the default font style, padding and margin, etc.
+                        <b>This is then the bold default font style.</b>
+                        <i>This is then the italic default font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                    <h4>Serif</h4>
+                    <p class="font-serif">
+                        This is a short text embedded into a <code>p</code> tag with no serif class.
+                        This is the serif font style, with default padding and margin, etc.
+                        <b>This is the bold font style.</b>
+                        <i>This is the italic font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                    <h4>Mono</h4>
+                    <p class="font-mono">
+                        This is a short text embedded into a <code>p</code> tag with no serif class.
+                        This is the mono font style, with default padding and margin, etc.
+                        <b>This is the bold font style.</b>
+                        <i>This is the italic font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                    <h4>Pre</h4>
+                    <p class="font-pre">
+                        This is a short text embedded into a <code>p</code> tag with no serif class.
+                        This is the pre font style, with default padding and margin, etc.
+                        <b>This is the bold font style.</b>
+                        <i>This is the italic font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                </article>
+
+                <article class="contrast subssection">
+                <h3>With high contrast inside dark mode</h3>
+
+                    <h4>Sans</h4>
+                    <p class="font-sans">
+                        This is a short text embedded into a <code>p</code> tag with no specific class.
+                        This is then the default font style, padding and margin, etc.
+                        <b>This is then the bold default font style.</b>
+                        <i>This is then the italic default font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                    <h4>Serif</h4>
+                    <p class="font-serif">
+                        This is a short text embedded into a <code>p</code> tag with no serif class.
+                        This is the serif font style, with default padding and margin, etc.
+                        <b>This is the bold font style.</b>
+                        <i>This is the italic font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                    <h4>Mono</h4>
+                    <p class="font-mono">
+                        This is a short text embedded into a <code>p</code> tag with no serif class.
+                        This is the mono font style, with default padding and margin, etc.
+                        <b>This is the bold font style.</b>
+                        <i>This is the italic font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                    <h4>Pre</h4>
+                    <p class="font-pre">
+                        This is a short text embedded into a <code>p</code> tag with no serif class.
+                        This is the pre font style, with default padding and margin, etc.
+                        <b>This is the bold font style.</b>
+                        <i>This is the italic font style.</i>
+                        Anyone is free to copy, modify, publish, use, compile, sell, or
+                        distribute this file, either in source code form or as a compiled
+                        binary, for any purpose, commercial or non-commercial, and by any
+                        means.
+                    </p>
+                </article>
+
+                <article class="subssection">
+                <h3>With weight-specific classes applied</h3>
+
+                    <h4>Sans Font Normal view</h4>
+                    <p class="font-sans font-weight-thin">This is Sans Font with weight-thin.</p>
+                    <p class="font-sans font-weight-normal">This is Sans Font with weight-normal.</p>
+                    <p class="font-sans font-weight-bold">This is Sans Font with weight-bold.</p>
+                    <p class="font-sans font-weight-black">This is Sans Font with weight-black.</p>
+
+                    <h4>Sans Font Contrast view</h4>
+                    <p class="contrast font-sans font-weight-thin">This is Sans Font with contrast weight-thin.</p>
+                    <p class="contrast font-sans font-weight-normal">This is Sans Font with contrast weight-normal.</p>
+                    <p class="contrast font-sans font-weight-bold">This is Sans Font with contrast weight-bold.</p>
+                    <p class="contrast font-sans font-weight-black">This is Sans Font with contrast weight-black.</p>
+
+                    <h4>Serif Font Normal view</h4>
+                    <p class="font-serif font-weight-thin">This is Serif Font with weight-thin.</p>
+                    <p class="font-serif font-weight-normal">This is Serif Font with weight-normal.</p>
+                    <p class="font-serif font-weight-bold">This is Serif Font with weight-bold.</p>
+                    <p class="font-serif font-weight-black">This is Serif Font with weight-black.</p>
+
+                    <h4>Serif Font Contrast view</h4>
+                    <p class="font-serif contrast font-weight-thin">This is Serif Font with contrast weight-thin.</p>
+                    <p class="font-serif contrast font-weight-normal">This is Serif Font with contrast weight-normal.</p>
+                    <p class="font-serif contrast font-weight-bold">This is Serif Font with contrast weight-bold.</p>
+                    <p class="font-serif contrast font-weight-black">This is Serif Font with contrast weight-black.</p>
+                </article>
+            </section>
+
+            <!-- ------------------------------------------------------------- -->
+            <section class="ssection"><h2>HTML tags for embed text</h2>
+
+                <p>
+                    So, this is a text with a
+                    <a href="#" onclick="event.preventDefault()">Primary link</a>
+                    inside...
+                </p>
+                <p>
+                    <strong>Bold</strong>
+                    <em>Italic</em>
+                    <u>Underline</u>
+                    <del>Deleted</del>
+                    <ins>Inserted</ins>
+                    <s>Strikethrough</s>
+                    <small>Small</small>
+                    Text <sub>Sub</sub>
+                    Text <sup>Sup</sup>
+                    <abbr title="Abbreviation" data-tooltip="Abbreviation">Abbr.</abbr>
+                    <kbd>Kbd</kbd>
+                    <mark>Highlighted</mark>
+                </p>
+
+                <h4>Blockquote</h4>
+
+                    <blockquote>
+                      La règle d'or de la conduite est la tolérance mutuelle, car nous ne
+                        penserons jamais tous de la même façon, nous ne verrons qu'une partie
+                        de la vérité et sous des angles différents.
+                        <cite>&mdash; Ghandi</cite>
+                    </blockquote>
+
+                <h4>Lists</h4>
+                    <p>Simply use the standard <code>ul</code>, <code>ol</code> or <code>dt</code> HTML elements.</p>
+                    <h5>An ul list</h5>
+                    <ul>
+                        <li>This is the 1st item.</li>
+                        <li>then the second one.</li>
+                        <li>For 50 years, WWF has been protecting the future of nature. The world's leading conservation
+                            organization, WWF works in 100 countries and is supported by 1.2 million members in the United
+                            States and close to 5 million globally.
+                        </li>
+                        <li>And the last <code>li</code> tag.</li>
+                    </ul>
+                    <h5>An ol list</h5>
+                    <ol>
+                        <li>This is the 1st item.</li>
+                        <li>then the second one.</li>
+                        <li>For 50 years, WWF has been protecting the future of nature. The world's leading conservation
+                            organization, WWF works in 100 countries and is supported by 1.2 million members in the United
+                            States and close to 5 million globally.
+                        </li>
+                        <li>And the last <code>li</code> tag.</li>
+                    </ol>
+                    <h5>A dt list</h5>
+                    <dl>
+                        <dt>This is the 1st item</dt>
+                            <dd>Some item in a first line.</dd>
+                            <dd>And a second item.</dd>
+                        <dt>Then the second one</dt>
+                            <dd>A item related to the second.</dd>
+                        <dt>And the last <code>dt</code> tag.</dt>
+                            <dd>with the last <code>dd</code> tag.</dd>
+                    </dl>
+            </section>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    </footer>
+
+    </body>
+</html>

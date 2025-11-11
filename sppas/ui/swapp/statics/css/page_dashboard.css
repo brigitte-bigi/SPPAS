@@ -1,0 +1,389 @@
+/*
+:filename: page_hub.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Style to be used for the hub
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+*/
+
+/*
+=================================  BUTTONS  ===================================
+*/
+
+/* AGREEMENT */
+#agreement_dlg {
+    border: none;
+}
+
+#agree_btn {
+    padding: 1em 2em;
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: 1rem;
+    font-variant: small-caps;
+    font-weight: bold;
+    border-radius: var(--card-border-radius);
+    text-transform: uppercase;
+    color: var(--app-button-fg-color);
+    border-color: var(--info-color);
+    background-image: var(--app-button-bg-color);
+    box-shadow: 0 0 1.5rem var(--shadow-color);
+    opacity: 1;
+}
+
+#agree_btn:hover {
+    background-position: right center; /* change the direction of the change here */
+    text-decoration: none;
+    background-image: var(--nav-fg-color);
+}
+
+/*
+=================================  APPLICATIONS  ===================================
+*/
+
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+.apps-panel {
+    padding: 2rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(16 * var(--font-size)), 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    place-items: center;
+    border-radius: 1rem;
+
+    background: #165e7a;
+    background: linear-gradient(120deg,rgba(22, 94, 122, 1) 0%, rgba(167, 87, 199, 1) 60%, rgba(245, 235, 162, 1) 100%);
+}
+
+.app {
+    display: grid;
+    place-items: center;
+    max-width: calc(16 * var(--font-size));
+    height: calc(20 * var(--font-size));
+    overflow: hidden;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-box-shadow);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.app:not(.dark) {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+}
+.dark .app {
+   background: linear-gradient(0deg, rgba(0, 0, 45, 0.9) 0%, rgba(0, 0, 45, 0.7) 100%);
+}
+
+.app > * {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.app-background-img {
+    background-color: inherit;
+    object-fit: cover;
+    max-width: calc(14 * var(--font-size));
+    max-height: calc(14 * var(--font-size));
+    margin: 0;
+    margin-bottom: calc(5 * var(--font-size));
+    padding: 0;
+}
+
+.app-content {
+    --flow-space: 0.9375rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: flex-end;
+    height: calc(14 * var(--font-size));
+    padding: 1.25rem;
+}
+
+.app-content {
+    background-color: inherit;
+}
+
+.app-content * {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.app-container {
+  --flow-space: 1.25rem;
+}
+
+.app-title {
+    position: relative;
+    width: fit-content;
+    width: -moz-fit-content;
+    line-height: 1em;
+}
+
+.app-title::after {
+    content: "";
+    position: absolute;
+    height: 0.3125rem;
+    width: calc(100% + 2rem);
+    bottom: -1rem;
+    left: -1.25rem;
+    /*background-color: var(--app-button-bg-color);*/
+}
+
+#textcueing_title::after {
+    background-color: rgba(88, 126, 105, 0.75);
+}
+
+.app-description {
+    padding-top: 1.25rem;
+    overflow: hidden;
+}
+
+.app-description:not(.contrast) {
+    max-height: calc(6.5 * var(--font-size));
+}
+
+.contrast .app-description {
+    max-height: calc(9 * var(--font-size));
+}
+
+.app-button {
+    background-image: var(--app-button-bg-color);
+    padding: 1em 2em;
+    width: fit-content;
+    width: -moz-fit-content;
+    font-variant: small-caps;
+    font-weight: bold;
+    border-radius: var(--card-border-radius);
+    text-transform: uppercase;
+    box-shadow: 0 0 20px #eee;
+    color: var(--app-button-fg-color);
+    font-size: 1.125rem;
+}
+
+.app-button:hover {
+    background-position: right center; /* change the direction of the change here */
+    text-decoration: none;
+}
+
+
+#textcueing_button {
+    background-color: rgba(88, 126, 105, 0.75);
+}
+
+@media (any-hover: hover) and (any-pointer: fine) {
+    .app-content {
+        transition: transform 400ms ease-out;
+        transition-delay: 200ms;
+        transform: translateY(60%);
+    }
+
+    .app-title::after {
+        opacity: 0;
+        transform: scaleX(0);
+        transition: opacity 600ms ease-in, transform 300ms ease-out;
+        transition-delay: 200ms;
+        transform-origin: right;
+    }
+
+    .app-background-img {
+        transition: transform 300ms ease-in;
+    }
+
+    .app-container > :not(.app-title),
+    .app-button {
+        opacity: 0;
+        transition: transform 300ms ease-out, opacity 300ms ease-out;
+    }
+
+    .app:hover,
+    .app:focus-within {
+        transform: scale(1.05);
+        transition: transform 300ms ease-in;
+    }
+
+    .app:hover .app-content,
+    .app:focus-within .app-content {
+        transform: translateY(0);
+        transition: transform 300ms ease-in;
+    }
+
+    .contrast .app:hover .app-content,
+    .contrast .app:focus-within .app-content {
+        transform: translateY(-10%);
+        transition: transform 300ms ease-in;
+    }
+
+
+    .app:focus-within .app-content {
+        transition-duration: 0ms;
+    }
+
+    .app:hover .app-background-img,
+    .app:focus-within .app-background-img {
+        transform: scale(0.4) translateY(calc(-10 * var(--font-size)));
+    }
+
+    .contrast .app:hover .app-background-img,
+    .contrast .app:focus-within .app-background-img {
+        transform: scale(0.2) translateY(calc(-24 * var(--font-size)));
+    }
+
+    .app:hover .app-container > :not(.app-title),
+    .app:hover .app-button:not(:disabled),
+    .app:focus-within .app-container > :not(.app-title),
+    .app:focus-within .app-button:not(:disabled) {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+        transition-delay: 200ms;
+    }
+
+    .app:hover .app-button[disabled],
+    .app:focus-within .app-button[disabled] {
+        opacity: 0.33;
+        outline: none;
+    }
+/*
+    .app:hover .app-title::after,
+    .app:focus-within .app-title::after {
+        opacity: 1;
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: opacity 300ms ease-in, transform 300ms ease-in;
+        transition-delay: 400ms;
+    }*/
+}
+
+
+/*
+=================================  LINKS  ===================================
+*/
+
+.links-panel {
+    padding: 2rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(12 * var(--font-size)), 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    border-radius: var(--card-border-radius);
+
+    background: linear-gradient(90deg,rgba(197, 208, 222, 1) 0%, rgba(133, 199, 137, 1) 60%, rgba(148, 132, 184, 1) 100%);
+}
+
+.link-button {
+    background-color: var(--cards-bg-color);
+    color: inherit;
+    cursor: pointer;
+    margin: 0.4rem;
+    padding: 0;
+    border: var(--card-border-width) solid var(--border-color-alt);
+    border-radius: var(--card-border-radius);
+    /* Display elements inside the button: */
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--card-box-shadow);
+}
+
+
+.link-button:hover {
+    box-shadow: none;
+    background-color: var(--bg-color-alt);
+}
+
+.link-button-icon {
+    display: inline-block;
+    width: 80%;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+}
+
+.link-button-text {
+    display: inline-block;
+    margin: auto;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    vertical-align: middle;
+    font-size: 1.125rem;
+    color: var(--fg-color);
+}
+
+#web_btn {
+    border: var(--border-width) solid rgba(87, 109, 159, 0.5);
+}
+#web_text {
+    background-color: rgba(87, 109, 159, 0.5);
+}
+
+#docu_btn {
+    border: var(--border-width) solid rgba(241, 211, 79, 0.5);
+}
+#docu_text {
+    background-color: rgba(241, 211, 79, 0.5);
+}
+
+#tuto_btn {
+    border: var(--border-width) solid rgba(0, 160, 40, 0.5);
+}
+#tuto_text {
+    background-color: rgba(0, 160, 40, 0.5);
+}
+
+#faq_btn {
+    border: var(--border-width) solid rgba(220, 120, 40, 0.5);
+}
+#faq_text {
+    background-color: rgba(220, 120, 40, 0.5);
+}
+
+#src_btn {
+    border: var(--border-width) solid rgba(50, 150, 150, 0.5);
+}
+#src_text {
+    background-color: rgba(50, 150, 150, 0.5);
+}
+
+#author_btn {
+    border: var(--border-width) solid rgba(50, 50, 150, 0.5);
+}
+#author_text {
+    background-color: rgba(50, 50, 150, 0.5);
+}

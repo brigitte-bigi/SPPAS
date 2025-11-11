@@ -1,0 +1,191 @@
+
+.sp-panel {
+    border-top: 2px solid var(--page-files-color);
+}
+
+/*
+=============================  COLUMNS  ================================
+*/
+
+.cols_files {
+    display: grid;
+    grid-template-columns: 14% auto 4% 30%;
+    grid-template-rows: auto;
+    grid-column-gap: 4px;
+    grid-row-gap: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.cols_files > div {
+    background-color: var(--bg-color);
+}
+
+.column_files_wkps {
+    grid-column: 1;
+    border-right: 4px solid var(--fg-color);
+
+}
+
+.column_files_files {
+    grid-column: 2;
+        border-right: 4px solid var(--fg-color);
+
+}
+
+.column_files_links {
+    grid-column: 3;
+        border-right: 4px solid var(--fg-color);
+
+    justify-self: center;
+}
+
+.column_files_refs {
+    grid-column: 4;
+}
+
+/*
+======================= COLUMN 1:  WORKSPACES  ===============================
+*/
+
+.wkps_title {
+    color: forestgreen;
+}
+
+.filestitle {
+    color: salmon;
+}
+
+.refstitle {
+    color: darkslateblue;
+}
+
+.wkps_wkpbar {
+	width: 100%;
+    border-bottom: 1px dashed;
+    border-bottom-color: forestgreen;
+    margin-bottom: 5%;
+}
+
+/* Turn off the input button: make it invisible */
+
+.wkps_wkpbar_item input[type="file"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+/* Look of the toolbar */
+
+.wkps_wkpbar_item {
+    text-align: left;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 4px solid;
+	border-bottom-color: var(--buttons-bg-color);
+    background-color: var(--buttons-bg-color);
+}
+
+.wkps_wkpbar_item:hover:enabled {
+	border-bottom-color: forestgreen;
+    background-color: var(--buttons-bg-color);
+}
+
+.wkps_wkpbar_item img {
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 10px;
+	width: 20%;
+    vertical-align: center;
+}
+
+.wkps_wkpbar_item span {
+	font-family: inherit;
+    font-size: 100%;
+	font-weight: normal;
+	font-style: normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.wkps_wkpbar_item:hover:enabled span {
+    font-weight: bold;
+    font-size: 95%;
+    /* When bolding, the font is bigger than usual.
+    So it is reduced of 5% to both bold it and to remain the same size aspect.
+     */
+}
+
+/* Look of the list of workspaces */
+
+.wkps_wkplist {
+	width: 100%;
+    border: none;
+    margin-bottom: 5%;
+}
+
+.wkps_listitem input[type="radio"] {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-right: 10px;
+	width: 20%;
+    vertical-align: center;
+}
+
+.wkps_listitem {
+    background-color: var(--bg-color);
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    padding-top: 10px;
+	padding-bottom: 10px;
+    border-radius: 2px;
+    border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 2px dashed;
+	border-bottom-color: var(--buttons-bg-color);
+    font-size: 100%;
+    font-weight: normal;
+}
+
+.wkps_listitem:hover {
+    background-color: var(--buttons-bg-color);
+    border-bottom-color: forestgreen;
+}
+
+/*
+   When checked, the "button" looks different and
+   it is not responding to mouse hover
+*/
+
+.wkps_listitem.checked, .wkps_listitem.checked:hover {
+    cursor: default;
+    background-color: var(--bg-color);
+    border-bottom: 2px solid var(--buttons-bg-color);
+    font-weight: bold;
+    font-size: 95%;
+}
+
+/*
+======================= COLUMN 2: FILES  ====================================
+*/
+

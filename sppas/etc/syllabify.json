@@ -1,0 +1,72 @@
+{
+  "id": "syllabify",
+  "name": "Syllabification",
+  "descr": "Applies rules to group time-aligned phonemes into syllables. Requires time-aligned phonemes. Produces time-aligned syllables and syllable classes.",
+  "required": "alignment",
+  "api": "sppasSyll",
+
+  "resources": [
+    {
+      "path": "syll",
+      "type": "file",
+      "ext": ".txt",
+      "name": "syllConfig-",
+      "lang": true
+    }
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "-palign",
+      "text": "Pattern of the input file with time-aligned phonemes."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-syll",
+      "text": "Pattern of the output file with time-aligned syllables."
+    },
+    {
+      "id": "usesphons",
+      "type": "bool",
+      "value": true,
+      "text": "Syllabify inside the IPU intervals"
+    },
+    {
+      "id": "usesintervals",
+      "type": "bool",
+      "value": false,
+      "text": "Syllabify inside an interval tier"
+    },
+    {
+      "id": "tiername",
+      "type": "string",
+      "value": "TokensAlign",
+      "text": "Tier name for such interval tier:"
+    },
+    {
+      "id": "createclasses",
+      "type": "bool",
+      "value": true,
+      "text": "Create a tier with syllable classes"
+    },
+    {
+      "id": "createstructs",
+      "type": "bool",
+      "value": false,
+      "text": "Create a tier with syllable structures"
+    }
+  ],
+    "refs": {
+    "bigi2010lrec": "https://hal.archives-ouvertes.fr/hal-01393609/document",
+    "bigi2014clic": "https://hal.archives-ouvertes.fr/hal-01507643/document",
+    "bigi2015ltc": "https://hal.archives-ouvertes.fr/hal-01455313/document"
+  }
+
+}

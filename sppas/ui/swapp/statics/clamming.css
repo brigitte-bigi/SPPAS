@@ -1,0 +1,168 @@
+/*
+:filename: statics/clamming.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Style to be used for ClammingPy documentations.
+
+.. _This file is part of ClammingPy: https://clamming.sf.net
+..
+    -------------------------------------------------------------------------
+
+    Copyright (C) 2023-2024 Brigitte Bigi
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    Use of this software is governed by the GNU Public License, version 3.
+
+    ClammingPy is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ClammingPy is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with ClammingPy. If not, see <http://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+
+*/
+
+/* =======================================================================
+                           VARIABLE RE-DEFINITIONS
+  ======================================================================== */
+
+:root {
+    --toc-width: 18rem;
+    --header-height: 33vh;
+    --header-slidein: animDisabled;
+}
+
+html {
+    margin-left: calc(var(--toc-width) + 1rem);
+}
+
+.light {
+    --nav-bg-color: rgb(30, 30, 60);
+    --nav-fg-color: rgb(230, 230, 230);
+    --footer-bg-color: rgb(30, 30, 60);
+}
+
+/* too small titles ... make them bigger */
+h4 {
+    font-size: calc(1.3 * var(--font-size));
+    letter-spacing: calc(1.4*var(--letter-spacing));
+    color: var(--h4-color);
+    font-weight: var(--font-weight-semibold);
+}
+
+h5 {
+    font-size: calc(1.1 * var(--font-size));
+    letter-spacing: calc(1.2*var(--letter-spacing));
+    color: var(--h5-color);
+}
+
+/* functions */
+h4 {
+    margin-top: calc(2 * var(--typography-spacing-vertical));
+    color: #0066BB;  /* Name.function in code.css */
+}
+
+article, details {
+    margin: 0;
+    margin-left: 1.5rem;
+}
+
+
+/* =======================================================================
+                              OTHER DEFINITIONS
+  ======================================================================== */
+
+.small-logo  {
+    max-height: 3.5rem;
+    width: auto;
+}
+
+
+.card header span {
+    font-size: 250%;
+    position: relative;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: auto;
+    text-align: center;
+}
+
+/* =======================================================================
+                              BOOK NAVIGATION
+  ======================================================================== */
+
+/* nav buttons used to browse throw modules/classes */
+
+nav.side-nav > ul, nav.side-nav > hr, nav.side-nav > h1, nav.side-nav > h2 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+nav.side-nav h1 {
+    font-size: 130%;
+    font-weight: var(--font-weight-black);
+}
+
+nav.side-nav h2 {
+    font-size: 120%;
+    font-weight: var(--font-weight-bold);
+}
+
+nav.side-nav a[role=button], nav.side-nav button {
+    width: calc(0.75*var(--toc-width));
+    height: calc(3*var(--font-size));
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+
+/* =======================================================================
+                              PRINTING
+  ======================================================================== */
+
+@media print {
+    html {
+        margin-left: unset;
+    }
+
+    body > header {
+        display: none;
+    }
+    body > nav {
+        display: none;
+    }
+    body > footer {
+        display: none;
+    }
+
+    nav.side-nav {
+        display: none;
+        /* Migrate to a top nav for printing or small screens
+        color: inherit;
+        width: 100%;
+        position: absolute;
+        padding-top: 1rem;
+        padding-bottom: 0.3rem;
+        margin: 0 auto;
+        font-size: 90%;
+        overflow: unset; */
+    }
+
+    #toc-content {
+        margin-left: 1rem;
+    }
+}

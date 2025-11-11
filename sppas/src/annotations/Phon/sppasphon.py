@@ -1,0 +1,372 @@
+# -*- coding: UTF-8 -*-
+"""
+:filename: sppas.src.annotations.Phon.sppasphon.py
+:author:   Brigitte Bigi
+:contact:  contact@sppas.org
+:summary:  SPPAS integration of Phonetization automatic annotation.
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+
+"""
+
+import os
+import logging
+
+from sppas.core.config import symbols
+from sppas.core.config import separators
+from sppas.core.config import annots
+from sppas.core.coreutils import info
+
+from sppas.src.anndata import sppasTrsRW
+from sppas.src.anndata import sppasTranscription
+from sppas.src.anndata import sppasTier
+from sppas.src.anndata import sppasLabel
+from sppas.src.anndata import sppasTag
+
+from sppas.src.resources import sppasDictPron
+from sppas.src.resources import sppasMapping
+
+from ..annotationsexc import AnnotationOptionError
+from ..annotationsexc import EmptyInputError
+from ..annotationsexc import EmptyOutputError
+from ..annotationsexc import NoTierInputError
+from ..baseannot import sppasBaseAnnotation
+from ..searchtier import sppasFindTier
+
+from .phonetize import sppasDictPhonetizer
+
+# ---------------------------------------------------------------------------
+
+MSG_TRACK = (info(1220, "annotations"))
+SIL = list(symbols.phone.keys())[list(symbols.phone.values()).index("silence")]
+SIL_ORTHO = list(symbols.ortho.keys())[list(symbols.ortho.values()).index("silence")]
+
+# ---------------------------------------------------------------------------
+
+
+class sppasPhon(sppasBaseAnnotation):
+    """SPPAS integration of the Phonetization automatic annotation.
+
+    """
+
+    def __init__(self, log=None):
+        """Create a sppasPhon instance without any linguistic resources.
+
+        Log is used for a better communication of the annotation process and its
+        results. If None, logs are redirected to the default logging system.
+
+        :param log: (sppasLog) Human-readable logs.
+
+        """
+        super(sppasPhon, self).__init__("phonetize.json", log)
+        self.__phonetizer = None
+        self.maptable = sppasMapping()
+        self.load_resources()
+        self.__lang = "und"
+
+    # -----------------------------------------------------------------------
+    # Methods to fix options
+    # -----------------------------------------------------------------------
+
+    def fix_options(self, options):
+        """Fix all options.
+
+        Available options are:
+
+            - phonunk
+            - usesstdtokens
+
+        :param options: (sppasOption)
+
+        """
+        for opt in options:
+
+            key = opt.get_key()
+
+            if key == "phonunk":
+                self.set_unk(opt.get_value())
+
+            elif key == "usestdtokens":
+                self.set_usestdtokens(opt.get_value())
+
+            elif "pattern" in key:
+                self._options[key] = opt.get_value()
+
+            else:
+                raise AnnotationOptionError(key)
+
+    # -----------------------------------------------------------------------
+
+    def set_unk(self, unk):
+        """Fix the unk option value.
+
+        :param unk: (bool) If unk is set to True, the system attempts
+        to phonetize unknown entries (i.e. tokens missing in the dictionary).
+        Otherwise, the phonetization of an unknown entry unit is set to the
+        default stamp.
+
+        """
+        self._options['phonunk'] = unk
+
+    # -----------------------------------------------------------------------
+
+    def set_usestdtokens(self, stdtokens):
+        """Fix the stdtokens option.
+
+        :param stdtokens: (bool) If it is set to True, the phonetization
+        uses the standard transcription as input, instead of the faked
+        transcription. This option does make sense only for an Enriched
+        Orthographic Transcription.
+
+        """
+        self._options['usestdtokens'] = stdtokens
+
+    # -----------------------------------------------------------------------
+    # Methods to phonetize series of data
+    # -----------------------------------------------------------------------
+
+    def load_resources(self, dict_filename=None, map_filename=None, lang="und", **kwargs):
+        """Set the pronunciation dictionary and the mapping table.
+
+        :param dict_filename: (str) The pronunciation dictionary in HTK-ASCII
+        format with UTF-8 encoding.
+
+        :param map_filename: (str) is the filename of a mapping table. It is \
+        used to generate new pronunciations by mapping phonemes of the dict.
+
+        :param lang: (str) Iso639-3 of the language or "und" if unknown.
+
+        """
+        self.__lang = lang
+        if map_filename is not None:
+            self.maptable = sppasMapping(map_filename)
+            self.logfile.print_message(
+                (info(1160, "annotations")).format(len(self.maptable)),
+                indent=0)
+        else:
+            self.maptable = sppasMapping()
+
+        pdict = sppasDictPron(dict_filename, nodump=False)
+        if dict_filename is not None:
+            self.__phonetizer = sppasDictPhonetizer(pdict, self.maptable)
+            self.logfile.print_message(
+                (info(1162, "annotations")).format(len(pdict)),
+                indent=0)
+        else:
+            self.__phonetizer = sppasDictPhonetizer(pdict)
+
+    # -----------------------------------------------------------------------
+
+    def _phonetize(self, entry, track_nb=0):
+        """Phonetize a text.
+
+        Because we absolutely need to match with the number of tokens, this
+        method will always return a string: either the automatic phonetization
+        (from dict or from phonunk) or the unk stamp.
+
+        :param entry: (str) The string to be phonetized.
+        :returns: phonetization of the given entry
+
+        """
+        unk = symbols.unk
+        tab = self.__phonetizer.get_phon_tokens(entry.split(), phonunk=self._options['phonunk'])
+        tab_phones = list()
+        for tex, p, s in tab:
+            message = None
+            if s == annots.error:
+                message = (info(1110, "annotations")).format(tex) + \
+                          info(1114, "annotations")
+                self.logfile.print_message(message, indent=2, status=s)
+                return [unk]
+            else:
+                if s == annots.warning:
+                    message = (info(1110, "annotations")).format(tex)
+                    if len(p) > 0:
+                        message = message + (info(1112, "annotations")).format(p)
+                    else:
+                        message = message + info(1114, "annotations")
+                        p = unk
+                tab_phones.append(p)
+
+            if message:
+                self.logfile.print_message(MSG_TRACK.format(number=track_nb), indent=1)
+                self.logfile.print_message(message, indent=2, status=s)
+
+        return tab_phones
+
+    # -----------------------------------------------------------------------
+
+    def convert(self, tier):
+        """Phonetize annotations of a tokenized tier.
+
+        :param tier: (Tier) the ortho transcription previously tokenized.
+        :returns: (Tier) phonetized tier with name "Phones"
+
+        """
+        if tier is None:
+            raise IOError('No given tier.')
+        if tier.is_empty() is True:
+            raise EmptyInputError(name=tier.get_name())
+
+        phones_tier = sppasTier("Phones")
+        phones_tier.set_meta("linguistic_resource_dict", self.__phonetizer.get_dict_filename())
+        tier.set_meta("language", "0")
+
+        for i, ann in enumerate(tier):
+
+            logging.info((info(1220, "annotations")).format(number=i + 1))
+            location = ann.get_location().copy()
+            labels = list()
+
+            # Some labels can contain a whitespace and it's a token separator.
+            # (when transcription was read, the \n was used as separator but
+            # some file formats don't support it and are using whitespace)
+            normalized = list()
+            for label in ann.get_labels():
+                if " " in label:
+                    normalized.extend(label.split())
+                else:
+                    normalized.append(label)
+
+            # Phonetize all labels of the normalized transcription
+            for label in normalized:
+
+                phonetizations = list()
+                for text, score in label:
+                    if text.is_pause() or text.is_silence():
+                        # It's in case the pronunciation dictionary
+                        # were not properly fixed.
+                        phonetizations.append(SIL)
+
+                    elif text.is_empty() is False:
+                        phones = self._phonetize(text.get_content(), track_nb=i+1)
+                        for p in phones:
+                            phonetizations.extend(p.split(separators.variants))
+
+                #  - The result is a sequence of labels.
+                #  - Variants are alternative tags.
+                tags = [sppasTag(p) for p in set(phonetizations)]
+                labels.append(sppasLabel(tags))
+
+            phones_tier.create_annotation(location, labels)
+
+        return phones_tier
+
+    # ------------------------------------------------------------------------
+    # Apply the annotation on one given file
+    # -----------------------------------------------------------------------
+
+    def get_inputs(self, input_files):
+        """Return the the tier with aligned tokens.
+
+        :param input_files: (list)
+        :raise: NoTierInputError
+        :return: (sppasTier)
+
+        """
+        tier = None
+        annot_ext = self.get_input_extensions()
+        tier_pattern = ""
+        if self._options['usestdtokens'] is True:
+            tier_pattern = "std"
+
+        for filename in input_files:
+            if filename is None:
+                continue
+            fn, fe = os.path.splitext(filename)
+            if tier is None and fe in annot_ext[0]:
+                parser = sppasTrsRW(filename)
+                trs_input = parser.read()
+                tier = sppasFindTier.tokenization(trs_input, tier_pattern)
+                if tier is not None:
+                    if self.logfile:
+                        self.logfile.print_message("Input tier to be phonetized: "
+                                                   "{}".format(tier.get_name()), indent=1)
+                    return tier
+
+        # Check input tier
+        logging.error("A tier with a normalized text was not found.")
+        raise NoTierInputError
+
+    # -----------------------------------------------------------------------
+
+    def run(self, input_files, output=None):
+        """Run the automatic annotation process on an input.
+
+        :param input_files: (list of str) Normalized text
+        :param output: (str) the output name
+        :returns: (sppasTranscription)
+
+        """
+        # Get the tier to be phonetized.
+        tier_input = self.get_inputs(input_files)
+
+        # Phonetize the tier
+        tier_phon = self.convert(tier_input)
+
+        # Create the transcription result
+        trs_output = sppasTranscription(self.name)
+        trs_output.set_meta('annotation_result_of', input_files[0])
+        trs_output.set_meta('language_iso', "iso639-3")
+        trs_output.set_meta('language_name_0', "Undetermined")
+        if len(self.__lang) == 3:
+            trs_output.set_meta('language_code_0', self.__lang)
+            trs_output.set_meta('language_url_0', "https://iso639-3.sil.org/code/"+self.__lang)
+        else:
+            trs_output.set_meta('language_code_0', "und")
+            trs_output.set_meta('language_url_0', "https://iso639-3.sil.org/code/und")
+
+        if tier_phon is not None:
+            trs_output.append(tier_phon)
+
+        # Save in a file
+        if output is not None:
+            if len(trs_output) > 0:
+                output_file = self.fix_out_file_ext(output)
+                parser = sppasTrsRW(output_file)
+                parser.write(trs_output)
+                return [output_file]
+            else:
+                raise EmptyOutputError
+
+        return trs_output
+
+    # -----------------------------------------------------------------------
+
+    def get_output_pattern(self):
+        """Pattern this annotation uses in an output filename."""
+        return self._options.get("outputpattern", "-phon")
+
+    def get_input_patterns(self):
+        """Pattern this annotation expects for its input filename."""
+        return [self._options.get("inputpattern", "-token")]

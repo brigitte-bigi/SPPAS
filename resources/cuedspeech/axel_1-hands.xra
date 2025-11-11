@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.20 (C) Brigitte Bigi" date="2024-04-24T08:12:29+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">0b03bd80-4f2e-4cf6-94b7-47d73127b565</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.20</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="0b2257ad-d5de-4450-8b59-8360b0526568" tiername="ImgSights0">
+		<Annotation id="ff8366e2-bb8e-4156-91a3-675977388936">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\axel_1-hands.png</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(720,664)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(832,471)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(1015,403)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(1176,407)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(1286,431)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(1172,453)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(1442,455)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(1588,459)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(1707,462)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(1193,610)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(1336,584)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(1258,550)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(1170,535)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(1156,740)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(1227,682)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(1149,658)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(1071,657)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(1113,848)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(1151,791)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(1086,759)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(1025,750)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="90557ce4-2f31-4b14-ab1e-ab05d62c670e" url="C:\Users\brigi\Desktop\sppas-code\axel_1-hands.png" mimetype="image/png">
+		<Tier id="0b2257ad-d5de-4450-8b59-8360b0526568" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

@@ -1,0 +1,175 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brigitte Bigi <brigitte.bigi@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.7\n"
+
+msgid ":INFO 0510: "
+msgstr "Installation of '{name}'"
+
+msgid ":INFO 0520: "
+msgstr "'{name}' not available on your OS."
+
+msgid ":INFO 0530: "
+msgstr "Install of '{name}' is disabled."
+
+msgid ":INFO 0540: "
+msgstr "'{name}' is installed."
+
+msgid ":INFO 0550: "
+msgstr "Installation of '{name}' failed"
+
+msgid ":INFO 0560: "
+msgstr "Installation finished"
+
+msgid ":INFO 0570: "
+msgstr "'{name}' does not match any valid package."
+
+msgid ":INFO 0580: "
+msgstr "No system command is processed."
+
+msgid "InstallWizard of {soft} {version}."
+msgstr "InstallWizard of {soft} {version}."
+
+msgid "Page ({page}/{total})"
+msgstr "Page ({page}/{total})"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "Install"
+msgstr "Install"
+
+msgid "Installation"
+msgstr "Installation"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Exit"
+msgstr "Exit"
+
+msgid "View logs"
+msgstr "View logs"
+
+msgid "Confirm exit?"
+msgstr "Confirm exit?"
+
+msgid "Feature"
+msgstr "Feature"
+
+msgid "Features"
+msgstr "Features"
+
+msgid "Description"
+msgstr "Description"
+
+msgid ":INFO 0500: "
+msgstr ""
+"SPPAS is a research software package developed by Brigitte Bigi, CNRS researcher at 'Laboratoire Parole et Langage', Aix-en-Provence, "
+"France.\n"
+"\n"
+"The InstallWizard will install on your computer other programs SPPAS is requiring."
+
+msgid ":INFO 0502: "
+msgstr "Please read the following license agreement. Click 'Next' to accept."
+
+msgid ":INFO 0504: "
+msgstr "Check the boxes in the list below to enable a feature:"
+
+msgid ":INFO 0514: "
+msgstr "Installation of external programs"
+
+msgid ":INFO 0515: "
+msgstr "Installation of language resources"
+
+msgid ":INFO 0516: "
+msgstr "Installation of annotation resources"
+
+msgid ":INFO 0517: "
+msgstr "Installation of spin-off programs"
+
+msgid ":INFO 0524: "
+msgstr "Download linguistic resources for language-dependent annotations."
+
+msgid ":INFO 0534: "
+msgstr "Download resources to enable the annotations."
+
+msgid ":INFO 0536: "
+msgstr "Download spin-off resources."
+
+msgid ":INFO 0544: "
+msgstr "All installations and downloads."
+
+msgid ":INFO 0506: "
+msgstr ""
+"Click Install button to start the installation.\n"
+"\n"
+"If you want to review or change any of your installation settings, click 'Back'. Click 'Cancel' to exit the wizard without installing."
+
+msgid ":INFO 0508: "
+msgstr ""
+"Before clicking 'Exit' button, share your experience of this installer with the author:\n"
+"Click on the 'Send feedback' button of the 'Log window'."
+
+msgid ":INFO 0512: "
+msgstr "See the log file for details."
+
+msgid ":INFO 0551: "
+msgstr "Welcome"
+
+msgid ":INFO 0552: "
+msgstr "Welcome to the SetupWizard proposed by SPPAS"
+
+msgid ":INFO 0554: "
+msgstr "SPPAS offers open source cross-platform, customizable automatic annotation and analysis solutions for audio and video media. "
+
+msgid ":INFO 0555: "
+msgstr "The SetupWizard will install on your computer other components SPPAS is using for some of its features."
+
+msgid ":INFO 0556: "
+msgstr ""
+"SPPAS is a Research Software package developed by Brigitte Bigi. She is a researcher at CNRS, 'Laboratoire Parole et Langage', Aix-en-"
+"Provence, France."
+
+msgid ":INFO 0558: "
+msgstr "I hereby undertake to cite a reference to SPPAS in my publications."
+
+msgid ":INFO 0559: "
+msgstr "I hereby undertake to acknowledge SPPAS in my commercial products."
+
+msgid ":INFO 0561: "
+msgstr "License terms"
+
+msgid ":INFO 0562: "
+msgstr "Accept license terms of SPPAS source code"
+
+msgid ":INFO 0563: "
+msgstr "this software is governed by GNU AGPL version 3 or any later version;"
+
+msgid ":INFO 0564: "
+msgstr "the documentations of this software package are governed by GNU Free Documentation License, version 1.3;"
+
+msgid ":INFO 0565: "
+msgstr ""
+"the samples of this software package are under the terms of the CC-By-NC-4.0 - Creative Commons Attribution-NonCommercial-ShareAlike "
+"4.0 International Public License;"
+
+msgid ":INFO 0566: "
+msgstr "both the plugins and resources of this software package have individual licenses. Please, read their documentation."
+
+msgid ":INFO 0568: "
+msgstr "I accept the terms of the license"
+
+msgid ":INFO 0573: "
+msgstr "Installation procedure of external programs"

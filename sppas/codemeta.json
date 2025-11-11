@@ -1,0 +1,44 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "codeRepository": "https://sourceforge.net/p/sppas/code/ci/master/tree/",
+    "contIntegration": "",
+    "dateCreated": "2011-03-09",
+    "datePublished": "2012-06-14",
+    "dateModified": "2025-09-15",
+    "downloadUrl": "https://sourceforge.net/projects/sppas/files/latest/download",
+    "name": "SPPAS",
+    "version": "4.29",
+    "description": "SPPAS can automatically create annotations from videos and/or recorded speech audio, as long as you give it the written words (orthographic transcription). It's also really helpful for analyzing and working with annotated data: estimating statistical distributions, making queries, managing files, editing annotations, and lots more. Plus, SPPAS has a file converter that can handle many different file types, like XRA, TextGrid, EAF, TRS, and others.",
+    "applicationCategory": "Computer Science",
+    "releaseNotes": "https://sppas.org/book_08_changes.html#latest\n",
+    "referencePublication": "https://hal.science/hal-01417876",
+    "keywords": [
+        "artificial intelligence",
+        "computational linguistics",
+        "corpus linguistics",
+        "information analysis",
+        "speech"
+    ],
+    "programmingLanguage": [
+        "Python"
+    ],
+    "operatingSystem": [
+        "Windows",
+        "MacOS",
+        "Linux"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0003-1834-6918",
+            "givenName": "Brigitte",
+            "familyName": "Bigi",
+            "email": "contact@sppas.org",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "CNRS, Laboratoire Parole et Langage"
+            }
+        }
+    ]
+}

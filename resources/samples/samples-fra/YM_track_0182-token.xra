@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.29 (C) Brigitte Bigi" date="2025-09-18T13:03:30+02:00" format="1.5" name="Text Normalization">
+	<Metadata>
+		<Entry key="id">9fd7d5df-c946-404d-bd7f-66c04bed6075</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.29</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2025 Brigitte Bigi, CNRS</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">fra</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/fra</Entry>
+		<Entry key="file_license_text_0">GNU AGPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+		<Entry key="text_normalization_result_of">C:\Storage\Projects\sppas-code\resources\samples\samples-fra\YM_track_0182.TextGrid</Entry>
+		<Entry key="file_writer">sppasXRA</Entry>
+		<Entry key="file_name">YM_track_0182-token.xra</Entry>
+		<Entry key="file_path">C:\Storage\Projects\sppas-code\resources\samples\samples-fra</Entry>
+		<Entry key="file_ext">.xra</Entry>
+		<Entry key="file_write_date">2025-09-18T13:03:30+02:00</Entry>
+		<Entry key="file_version">1</Entry>
+	</Metadata>
+
+	<Tier id="de4c7201-64f4-40e7-a1e8-486557da4839" tiername="Tokens">
+		<Metadata>
+			<Entry key="linguistic_resource_vocab">resources\vocab\fra.vocab</Entry>
+			<Entry key="language">0</Entry>
+			<Entry key="text_normalization_enable_action_replace">true</Entry>
+			<Entry key="text_normalization_enable_action_tokenize">true</Entry>
+			<Entry key="text_normalization_enable_action_numbers">true</Entry>
+			<Entry key="text_normalization_enable_action_lower">true</Entry>
+			<Entry key="text_normalization_enable_action_punct">true</Entry>
+		</Metadata>
+		<Annotation id="6b2161cf-4bb7-486e-85e7-4c4391660ce9">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.0" radius="0.0" />
+					<End midpoint="7.4605" radius="0.0005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag>et</Tag>
+			</Label>
+			<Label>
+				<Tag>euh</Tag>
+			</Label>
+			<Label>
+				<Tag>donc</Tag>
+			</Label>
+			<Label>
+				<Tag>donc</Tag>
+			</Label>
+			<Label>
+				<Tag>du_coup</Tag>
+			</Label>
+			<Label>
+				<Tag>c'est</Tag>
+			</Label>
+			<Label>
+				<Tag>toi</Tag>
+			</Label>
+			<Label>
+				<Tag>c'est</Tag>
+			</Label>
+			<Label>
+				<Tag>un</Tag>
+			</Label>
+			<Label>
+				<Tag>peu</Tag>
+			</Label>
+			<Label>
+				<Tag>toi</Tag>
+			</Label>
+			<Label>
+				<Tag>qui</Tag>
+			</Label>
+			<Label>
+				<Tag>a</Tag>
+			</Label>
+			<Label>
+				<Tag>les</Tag>
+			</Label>
+			<Label>
+				<Tag>premiers</Tag>
+			</Label>
+			<Label>
+				<Tag>contacts</Tag>
+			</Label>
+			<Label>
+				<Tag>avec</Tag>
+			</Label>
+			<Label>
+				<Tag>le</Tag>
+			</Label>
+			<Label>
+				<Tag>avec</Tag>
+			</Label>
+			<Label>
+				<Tag>le</Tag>
+			</Label>
+			<Label>
+				<Tag>gosse</Tag>
+			</Label>
+			<Label>
+				<Tag>quoi</Tag>
+			</Label>
+			<Label>
+				<Tag>+</Tag>
+			</Label>
+			<Label>
+				<Tag>et</Tag>
+			</Label>
+			<Label>
+				<Tag>puis</Tag>
+			</Label>
+			<Label>
+				<Tag>là</Tag>
+			</Label>
+			<Label>
+				<Tag>ils</Tag>
+			</Label>
+			<Label>
+				<Tag>te</Tag>
+			</Label>
+			<Label>
+				<Tag>demandent</Tag>
+			</Label>
+			<Label>
+				<Tag>le</Tag>
+			</Label>
+			<Label>
+				<Tag>prénom</Tag>
+			</Label>
+			<Label>
+				<Tag>donc</Tag>
+			</Label>
+			<Label>
+				<Tag>faut</Tag>
+			</Label>
+			<Label>
+				<Tag>ce</Tag>
+			</Label>
+			<Label>
+				<Tag>soit</Tag>
+			</Label>
+			<Label>
+				<Tag>prêt</Tag>
+			</Label>
+			<Label>
+				<Tag>à</Tag>
+				<Tag>là</Tag>
+			</Label>
+			<Label>
+				<Tag>@</Tag>
+			</Label>
+			<Label>
+				<Tag>parce_que</Tag>
+			</Label>
+			<Label>
+				<Tag>putain</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="b6c035a9-f108-4e1d-a124-13ec1a8f85f9" tiername="OccTokens">
+		<Annotation id="d5abcbe0-11cd-4207-90c1-6bd1a16343a3">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.0" radius="0.0" />
+					<End midpoint="7.4605" radius="0.0005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="int">38</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Tier id="f0db2fa4-3298-4c65-b1e1-e15c12844679" tiername="DurTokens">
+		<Annotation id="6d8b129e-1e2d-43f1-a2db-42f9097d0dc3">
+			<Location>
+				<Interval>
+					<Begin midpoint="0.0" radius="0.0" />
+					<End midpoint="7.4605" radius="0.0005" />
+				</Interval>
+			</Location>
+			<Label>
+				<Tag type="float">7.4605</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Hierarchy />
+</Document>
+

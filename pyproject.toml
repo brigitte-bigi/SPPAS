@@ -1,0 +1,165 @@
+# Tom's Obvious Minimal Language - for SPPAS program
+# https://toml.io/en/
+# Allows to create the SPPAS distribution with: python -m build
+# ---------------------------------------------------------------------------
+# Guide (user-friendly):
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+#
+# Specification (technical, formal):
+# https://packaging.python.org/en/latest/specifications/pyproject-toml/
+#
+# Choosing a build backend:
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/#choosing-a-build-backend
+[build-system]
+    requires = ["setuptools"]
+    build-backend = "setuptools.build_meta"
+
+[project]
+    # Project name: https://packaging.python.org/en/latest/specifications/name-normalization/#name-format
+    name = "SPPAS"
+    # The version must be PEP 440 compliant
+    version = "4.28"
+    authors = [
+        {name="Brigitte Bigi", email="contact@sppas.org"},
+    ]
+    maintainers = [
+        {name="Brigitte Bigi", email="contact@sppas.org"},
+    ]
+    # This is a one-line description or tagline of what SPPAS does.
+    description = "SPPAS implements solutions for the automatic annotation and analysis of audio/video speech recordings."
+    readme = "sppas/README.md"
+    requires-python = ">=3.7,<=3.13"
+    license = {file = "sppas/LICENSE"}
+    keywords = ["python", "annotation", "artificial intelligence", "computational linguistics", "corpus linguistics", "information analysis"]
+    classifiers = [
+        "Programming Language :: Python",
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "Operating System :: OS Independent",
+        "Development Status :: 5 - Production/Stable"
+    ]
+    # See features.ini for the full liste of dependencies
+    dependencies = [
+        "AudiooPy == 0.5",
+        "WhakerPy == 1.3",
+        "Whakerkit == 1.3",
+    ]
+
+[project.urls]
+    "Homepage" = "https://sppas.org/"
+    "Forge" = "https://sppas.sourceforge.net/"
+
+[project.optional-dependencies]
+    docs = [
+        "pygments",
+        "markdown2",
+        "ClammingPy >= 1.8"]
+    tests = [
+        "coverage ~=7.3.0",
+        "selenium ~=4.18.0",
+        "python-dotenv ~=1.0.0"]
+
+# --------------------------------
+# Building package with setuptools
+# --------------------------------
+# https://setuptools.pypa.io/en/latest/userguide/datafiles.html
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sppas*"]
+exclude = ["sppas.dist*", "sppas.docs*", "sppas.tests*", "sppas.plugins*"]
+
+[tool.setuptools.package-data]
+"sppas" = ["../resources/*"]
+
+[tool.setuptools.package-data]
+    # Data files included in the package that need to be installed
+    # etc = ["*.json", "*.ini"]
+    "*" = ["*"]
+
+[tool.setuptools.exclude-package-data]
+    etc = ["*.png"]
+
+# -------------------
+# Code tests
+# -------------------
+# Can check this config file with:
+# import coverage
+# x = coverage.config.HandyConfigParser(False)
+# x.read("pyproject.toml")
+
+[tool.pytest.ini_options]
+    minversion = "7.3"
+    addopts = "-ra -q"
+    testpaths = ["tests"]
+
+[tool.coverage.report]
+    fail_under = 5
+    exclude_also = [
+        "def __repr__",
+        "raise AssertionError",
+        "raise NotImplementedError",
+        "if __name__ == .__main__.:",
+        "@(abc\\.)?abstractmethod"]
+
+[tool.coverage.run]
+    source_pkgs = ["src"]
+    command_line = "-m unittest"
+    omit = [
+        "*/test*",
+        "**/__init__.py"]
+
+[tool.coverage.xml]
+    output = "tests/coverage.xml"
+
+# -------------------
+# Static code analyser
+# --------------------
+
+[tool.pylint]
+    # See documentation here: https://pylint.pycqa.org/en/latest/user_guide/messages/index.html
+    # Nomenclature: F=Fatal, E=Error, W=Warning, C=Convention, R=Refacto, I=Information
+    disable = [
+        "C0114", # (missing-module-docstring)
+        "C0115", # (missing-class-docstring)
+        "C0116", # (missing-function-docstring)
+        "C0209", #
+        "R0903", # (too-few-public-methods)
+        "R0904", # (too-many-public-methods)
+        "R0913", # (too-many-arguments)
+        "R1716", # (chained-comparison)
+        "R1734", # (use-list-literal)
+        "R1735", # (use-dict-literal)
+        "W0107", # (unnecessary-pass)
+        "W0105", # (pointless-string-statement)
+        "W0702", # (bare-except)
+        "W0718", # (broad-exception-caught)
+        "W0719", # (broad-exception-raised)
+        "W1401"] # (anomalous-backslash-in-string)
+
+[tool.pylint.basic]
+    # Allow shorter and longer variable names than the default.
+    argument-rgx = "[a-z_][a-z0-9_]*$"
+    attr-rgx = "[a-z_][a-z0-9_]*$"
+    variable-rgx = "[a-z_][a-z0-9_]*$"
+
+[tool.pylint.logging]
+    # The type of string formatting that logging methods do. `old` means using %
+    # formatting, `new` is for `{}` formatting.
+    logging-format-style = "new"
+    logging-modules = ["logging"]
+
+[tool.pylint.format]
+    # Maximum number of characters on a single line.
+    max-line-length = 120    # default is 80!
+    max-module-lines = 1500  # default is 1000
+
+[tool.pylint.main]
+    # Naming style matching correct class names.
+    class-naming-style = "PascalCase"
+    # Regular expression matching correct class names. Overrides class-naming-style.
+    # If left empty, class names will be checked with the set naming style.
+    class-rgx = "[a-zA-Z][a-zA-Z]+"    # default is "[A-Z][a-z]+"
+
+[tool.pylint.design]
+    # Maximum number of arguments for function / method.
+    max-args = 8   # default is 5

@@ -1,0 +1,248 @@
+# ---------------------------------------------------------------------------
+# File: cueConfig-fra.txt
+# Version: 1.6
+# Last modified: 2025-05-29
+# ---------------------------------------------------------------------------
+# Copyright (C) 2019-2025 Brigitte Bigi, CNRS, Laboratoire Parole et Langage
+#
+# This file is dual-licensed:
+# - under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License
+#   https://creativecommons.org/licenses/by-nc/4.0/
+# - and under the Etalab Open License 2.0
+#   https://www.etalab.gouv.fr/licence-ouverte-open-licence
+#
+# You may use, modify, and share this file under either license.
+#
+# ---------------------------------------------------------------------------
+#
+# This file defines the phonemes, their classes, and their keys of the
+# French Cued Speech coding scheme. From version 1.6 it also defines the
+# target shape hand point.
+#
+# ---------------------------------------------------------------------------
+#
+# A syllable is always coded with a C-V sequence. The vowel is represented
+# by a position on the face, and the consonant by a hand shape. In this file,
+# the position of a vowel is represented by a single character and the hand
+# shape of a consonant by a number.
+#
+# Example of result when using this file with SPPAS:
+# The word "Bonjour" is phonetized /b-O~-Z-u-R/
+# It is syllabified /b-O~.Z-u.R/ then converted to the following keys:
+#    /b-O~/ = 4-m
+#    /Z-u/ = 1-c
+#    /R/ = 3-s
+# The first key always refers to a consonant and the second to a vowel.
+#
+# ---------------------------------------------------------------------------
+# By convention in this configuration file:
+#
+# - cnil substitutes a missing consonant. Must not be changed.
+#   It will be used when there's no consonant before the vowel.
+#
+# - vnil substitutes a missing vowel. Must not be changed.
+#   It will be used when there's no vowel after a consonant.
+# ---------------------------------------------------------------------------
+#
+# Hand configuration to define the target point of a shape:
+# 0 : WRIST
+# 1 : THUMB_CMC
+# 2 : THUMB_MCP
+# 3 : THUMB_IP
+# 4 : THUMB_TIP
+# 5 : INDEX_FINGER_MCP -- used for neutral
+# 6 : INDEX_FINGER_PIP
+# 7 : INDEX_FINGER_DIP
+# 8 : INDEX_FINGER_TIP -- used by some shapes
+# 9 : MIDDLE_FINGER_MCP
+# 10 : MIDDLE_FINGER_PIP
+# 11 : MIDDLE_FINGER_DIP
+# 12 : MIDDLE_FINGER_TIP -- used by most shapes
+# 13 : RING_FINGER_MCP
+# 14 : RING_FINGER_PIP
+# 15 : RING_FINGER_DIP
+# 16 : RING_FINGER_TIP
+# 17 : PINKY_MCP
+# 18 : PINKY_PIP
+# 19 : PINKY_DIP
+# 20 : PINKY_TIP
+# ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Here is the list of phonemes and the corresponding class: either C or V.
+# ---------------------------------------------------------------------------
+# A phoneme/class definition is made as 3 columns:
+# 	- first column is the key-word "PHONCLASS";
+#	- second column is the phoneme;
+#	- third column is the class-symbol.
+#
+# It is important to notice that:
+# 	- a vowel has to be mentioned with the character "V";
+# 	- a consonant has to be mentioned with the character "C";
+#	- the class-symbol for a break is "N".
+
+# The filled pause is not coded, it is considered a break.
+# PHONCLASS fp N
+
+# List of French vowels, use V symbol
+PHONCLASS i V
+PHONCLASS e V
+PHONCLASS E V
+PHONCLASS a V
+PHONCLASS A V
+PHONCLASS O V
+PHONCLASS o V
+PHONCLASS u V
+PHONCLASS y V
+PHONCLASS 2 V
+PHONCLASS 9 V
+PHONCLASS @ V
+PHONCLASS e~ V
+PHONCLASS E~ V
+PHONCLASS a~ V
+PHONCLASS o~ V
+PHONCLASS O~ V
+PHONCLASS 9~ V
+PHONCLASS U~ V
+PHONCLASS EU V
+PHONCLASS eu V
+PHONCLASS oe V
+PHONCLASS U~/ V
+PHONCLASS A/ V
+PHONCLASS O/ V
+
+# Vowels for Quebec French -- what are the corresponding keys?
+# PHONCLASS 3 V
+# PHONCLASS A~ V
+# PHONCLASS I V
+# PHONCLASS U V
+# PHONCLASS Y V
+
+# List of French and Quebec French consonants
+PHONCLASS j C
+PHONCLASS H C
+PHONCLASS w C
+PHONCLASS l C
+PHONCLASS R C
+PHONCLASS r C
+PHONCLASS p C
+PHONCLASS t C
+PHONCLASS k C
+PHONCLASS b C
+PHONCLASS d C
+PHONCLASS g C
+PHONCLASS ? C
+PHONCLASS n C
+PHONCLASS m C
+PHONCLASS N C
+PHONCLASS J C
+PHONCLASS s C
+PHONCLASS S C
+PHONCLASS z C
+PHONCLASS Z C
+PHONCLASS v C
+PHONCLASS f C
+
+# ---------------------------------------------------------------------------
+# Here is the list of key codes
+# ---------------------------------------------------------------------------
+# It is forbidden to use the value 0 for consonants: already used for the
+# neutral shape.
+# It is forbidden to use the char n for vowels: already used for the neutral
+# position.
+# ---------------------------------------------------------------------------
+
+PHONKEY A/ s
+PHONKEY a s
+PHONKEY A s
+PHONKEY @ s
+PHONKEY 9 s
+PHONKEY oe s
+PHONKEY o s
+PHONKEY a~ m
+PHONKEY A~ m
+PHONKEY i m
+PHONKEY O~ m
+PHONKEY o~ m
+PHONKEY 2 b
+PHONKEY eu b
+PHONKEY EU b
+PHONKEY U~ b
+PHONKEY U~/ b
+PHONKEY E~ b
+PHONKEY e~ b
+PHONKEY E c
+PHONKEY O c
+PHONKEY O/ c
+PHONKEY u c
+PHONKEY y t
+PHONKEY e t
+PHONKEY 9~ t
+
+PHONKEY p 1
+PHONKEY d 1
+PHONKEY Z 1
+PHONKEY k 2
+PHONKEY v 2
+PHONKEY z 2
+PHONKEY R 3
+PHONKEY r 3
+PHONKEY s 3
+PHONKEY b 4
+PHONKEY n 4
+PHONKEY H 4
+PHONKEY m 5
+PHONKEY t 5
+PHONKEY f 5
+PHONKEY l 6
+PHONKEY S 6
+PHONKEY w 6
+PHONKEY J 6
+PHONKEY g 7
+PHONKEY j 8
+PHONKEY N 8
+
+# ---------------------------------------------------------------------------
+# Coding a key without consonant or without vowel:
+# The PHONKEY can be changed, the PHONCLASS CAN'T be.
+# ---------------------------------------------------------------------------
+
+# When the key is "-V", "cnil" is used to represent the missing consonant
+# There's no sound for the consonant, so the class is set to neutral.
+# The PHONCLASS *** MUST NOT *** be changed.
+PHONCLASS cnil N
+# The PHONKEY may be changed (language dependent)
+PHONKEY cnil 5
+
+# When the key is "C-", "vnil" is used to represent the missing vowel
+# There's no sound for the vowel, so the class is set to neutral.
+# The PHONCLASS *** MUST NOT *** be changed.
+PHONCLASS vnil N
+# The PHONKEY may be changed (langugage dependent)
+PHONKEY vnil s
+
+# ---------------------------------------------------------------------------
+# Target of shapes
+# ---------------------------------------------------------------------------
+
+SHAPETARGET 0 5
+SHAPETARGET 1 8
+SHAPETARGET 2 12
+SHAPETARGET 3 12
+SHAPETARGET 4 12
+SHAPETARGET 5 12
+SHAPETARGET 6 8
+SHAPETARGET 7 12
+SHAPETARGET 8 12
+
+# ---------------------------------------------------------------------------
+# Neutral position and shape.
+# *** MUST NOT *** be changed.
+# ---------------------------------------------------------------------------
+
+# When there's no sound: neutral shape and neutral position
+PHONCLASS cnone N
+PHONKEY cnone 0
+PHONCLASS vnone N
+PHONKEY vnone n

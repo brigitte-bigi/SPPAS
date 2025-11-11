@@ -1,0 +1,105 @@
+# -*- coding: UTF-8 -*-
+"""
+    ..
+        ---------------------------------------------------------------------
+         ######   ########   ########      ###      ######
+        ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+        ##        ##     ##  ##     ##   ##   ##   ##            annotation
+         ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+        ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+        https://sppas.org/
+
+        Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+        Laboratoire Parole et Langage, Aix-en-Provence, France
+
+        Use of this software is governed by the GNU Public License, version 3.
+
+        SPPAS is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        SPPAS is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with SPPAS. If not, see <https://www.gnu.org/licenses/>.
+
+        This banner notice must not be removed.
+        ---------------------------------------------------------------------
+
+    src.videodata.videodataexc.py
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Exceptions for videodata package.
+
+"""
+
+from sppas.core.coreutils import sppasIOError
+from sppas.core.coreutils import error
+
+# -----------------------------------------------------------------------
+
+
+class VideoOpenError(sppasIOError):
+    """:ERROR 3610:.
+
+    Video of file {filename} can't be opened by opencv library.
+
+    """
+
+    def __init__(self, name):
+        self._status = 3610
+        self.parameter = error(self._status) + \
+                         (error(self._status, "data")).format(filename=name)
+
+# -----------------------------------------------------------------------
+
+
+class VideoWriteError(sppasIOError):
+    """:ERROR 3620:.
+
+    Video of file {filename} can't be written by opencv library.
+
+    """
+
+    def __init__(self, name):
+        self._status = 3620
+        self.parameter = error(self._status) + \
+                         (error(self._status, "data")).format(filename=name)
+
+# -----------------------------------------------------------------------
+
+
+class VideoBrowseError(sppasIOError):
+    """:ERROR 3630:.
+
+    Video of file {filename} can't be read by OpenCV library.
+
+    """
+
+    def __init__(self, name):
+        self._status = 3630
+        self.parameter = error(self._status) + \
+                         (error(self._status, "data")).format(filename=name)
+
+
+# -----------------------------------------------------------------------
+
+
+class VideoLockError(sppasIOError):
+    """:ERROR 3640:.
+
+    A video has already locked the video stream.
+
+    """
+
+    def __init__(self):
+        self._status = 3640
+        self.parameter = error(self._status) + \
+                         (error(self._status, "data"))

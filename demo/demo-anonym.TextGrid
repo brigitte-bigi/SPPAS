@@ -1,0 +1,538 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 10.427561
+tiers? <exists>
+size = 3
+item []:
+	item [1]:
+		class = "IntervalTier"
+		name = "PhonAlign-buzz"
+		xmin = 0.0
+		xmax = 10.427561
+		intervals: size = 82
+		intervals [1]:
+			xmin = 0.0
+			xmax = 0.520914
+			text = "#"
+		intervals [2]:
+			xmin = 0.520914
+			xmax = 0.720914
+			text = "s"
+		intervals [3]:
+			xmin = 0.720914
+			xmax = 0.780914
+			text = "E"
+		intervals [4]:
+			xmin = 0.780914
+			xmax = 0.930914
+			text = "t"
+		intervals [5]:
+			xmin = 0.930914
+			xmax = 0.9809140000000001
+			text = "buzz"
+		intervals [6]:
+			xmin = 0.9809140000000001
+			xmax = 1.0509140000000001
+			text = "buzz"
+		intervals [7]:
+			xmin = 1.0509140000000001
+			xmax = 1.140914
+			text = "buzz"
+		intervals [8]:
+			xmin = 1.140914
+			xmax = 1.240914
+			text = "buzz"
+		intervals [9]:
+			xmin = 1.240914
+			xmax = 1.541808
+			text = "buzz"
+		intervals [10]:
+			xmin = 1.541808
+			xmax = 1.914
+			text = "#"
+		intervals [11]:
+			xmin = 1.914
+			xmax = 1.974
+			text = "E"
+		intervals [12]:
+			xmin = 1.974
+			xmax = 2.124
+			text = "t"
+		intervals [13]:
+			xmin = 2.124
+			xmax = 2.174
+			text = "y"
+		intervals [14]:
+			xmin = 2.174
+			xmax = 2.234
+			text = "n"
+		intervals [15]:
+			xmin = 2.234
+			xmax = 2.294
+			text = "@"
+		intervals [16]:
+			xmin = 2.294
+			xmax = 2.4139999999999997
+			text = "buzz"
+		intervals [17]:
+			xmin = 2.4139999999999997
+			xmax = 2.484
+			text = "buzz"
+		intervals [18]:
+			xmin = 2.484
+			xmax = 2.564
+			text = "buzz"
+		intervals [19]:
+			xmin = 2.564
+			xmax = 2.654
+			text = "buzz"
+		intervals [20]:
+			xmin = 2.654
+			xmax = 2.734
+			text = "buzz"
+		intervals [21]:
+			xmin = 2.734
+			xmax = 2.774
+			text = "buzz"
+		intervals [22]:
+			xmin = 2.774
+			xmax = 2.834
+			text = "buzz"
+		intervals [23]:
+			xmin = 2.834
+			xmax = 2.894
+			text = "buzz"
+		intervals [24]:
+			xmin = 2.894
+			xmax = 3.0439999999999996
+			text = "buzz"
+		intervals [25]:
+			xmin = 3.0439999999999996
+			xmax = 3.074
+			text = "buzz"
+		intervals [26]:
+			xmin = 3.074
+			xmax = 3.194
+			text = "buzz"
+		intervals [27]:
+			xmin = 3.194
+			xmax = 3.234
+			text = "d"
+		intervals [28]:
+			xmin = 3.234
+			xmax = 3.304
+			text = "@"
+		intervals [29]:
+			xmin = 3.304
+			xmax = 3.344
+			text = "l"
+		intervals [30]:
+			xmin = 3.344
+			xmax = 3.4139999999999997
+			text = "A/"
+		intervals [31]:
+			xmin = 3.4139999999999997
+			xmax = 3.574
+			text = "buzz"
+		intervals [32]:
+			xmin = 3.574
+			xmax = 3.644
+			text = "buzz"
+		intervals [33]:
+			xmin = 3.644
+			xmax = 3.714
+			text = "buzz"
+		intervals [34]:
+			xmin = 3.714
+			xmax = 3.804
+			text = "buzz"
+		intervals [35]:
+			xmin = 3.804
+			xmax = 3.8339999999999996
+			text = "buzz"
+		intervals [36]:
+			xmin = 3.8339999999999996
+			xmax = 3.9239999999999995
+			text = "buzz"
+		intervals [37]:
+			xmin = 3.9239999999999995
+			xmax = 4.124
+			text = "buzz"
+		intervals [38]:
+			xmin = 4.124
+			xmax = 4.164
+			text = "buzz"
+		intervals [39]:
+			xmin = 4.164
+			xmax = 4.357622
+			text = "buzz"
+		intervals [40]:
+			xmin = 4.357622
+			xmax = 4.58
+			text = "#"
+		intervals [41]:
+			xmin = 4.58
+			xmax = 4.67
+			text = "o"
+		intervals [42]:
+			xmin = 4.67
+			xmax = 4.79
+			text = "t"
+		intervals [43]:
+			xmin = 4.79
+			xmax = 4.83
+			text = "O"
+		intervals [44]:
+			xmin = 4.83
+			xmax = 4.89
+			text = "m"
+		intervals [45]:
+			xmin = 4.89
+			xmax = 4.99
+			text = "A/"
+		intervals [46]:
+			xmin = 4.99
+			xmax = 5.2
+			text = "t"
+		intervals [47]:
+			xmin = 5.2
+			xmax = 5.29
+			text = "i"
+		intervals [48]:
+			xmin = 5.29
+			xmax = 5.43
+			text = "k"
+		intervals [49]:
+			xmin = 5.43
+			xmax = 5.494492
+			text = "@"
+		intervals [50]:
+			xmin = 5.494492
+			xmax = 5.878027
+			text = "#"
+		intervals [51]:
+			xmin = 5.878027
+			xmax = 5.998027
+			text = "d"
+		intervals [52]:
+			xmin = 5.998027
+			xmax = 6.088027
+			text = "e"
+		intervals [53]:
+			xmin = 6.088027
+			xmax = 6.248027
+			text = "buzz"
+		intervals [54]:
+			xmin = 6.248027
+			xmax = 6.278027000000001
+			text = "buzz"
+		intervals [55]:
+			xmin = 6.278027000000001
+			xmax = 6.448027000000001
+			text = "buzz"
+		intervals [56]:
+			xmin = 6.448027000000001
+			xmax = 6.528027000000001
+			text = "buzz"
+		intervals [57]:
+			xmin = 6.528027000000001
+			xmax = 6.648027000000001
+			text = "E"
+		intervals [58]:
+			xmin = 6.648027000000001
+			xmax = 6.698027000000001
+			text = "l"
+		intervals [59]:
+			xmin = 6.698027000000001
+			xmax = 6.8280270000000005
+			text = "p"
+		intervals [60]:
+			xmin = 6.8280270000000005
+			xmax = 6.888027
+			text = "e"
+		intervals [61]:
+			xmin = 6.888027
+			xmax = 7.128027
+			text = "s"
+		intervals [62]:
+			xmin = 7.128027
+			xmax = 7.333684
+			text = "e"
+		intervals [63]:
+			xmin = 7.333684
+			xmax = 7.805218
+			text = "#"
+		intervals [64]:
+			xmin = 7.805218
+			xmax = 7.845218
+			text = "p"
+		intervals [65]:
+			xmin = 7.845218
+			xmax = 7.915218
+			text = "A/"
+		intervals [66]:
+			xmin = 7.915218
+			xmax = 7.995218
+			text = "R"
+		intervals [67]:
+			xmin = 7.995218
+			xmax = 8.025218
+			text = "l"
+		intervals [68]:
+			xmin = 8.025218
+			xmax = 8.105218
+			text = "@"
+		intervals [69]:
+			xmin = 8.105218
+			xmax = 8.135218
+			text = "l"
+		intervals [70]:
+			xmin = 8.135218
+			xmax = 8.215218
+			text = "o"
+		intervals [71]:
+			xmin = 8.215218
+			xmax = 8.315218
+			text = "Z"
+		intervals [72]:
+			xmin = 8.315218
+			xmax = 8.355218
+			text = "i"
+		intervals [73]:
+			xmin = 8.355218
+			xmax = 8.545218
+			text = "s"
+		intervals [74]:
+			xmin = 8.545218
+			xmax = 8.585218
+			text = "j"
+		intervals [75]:
+			xmin = 8.585218
+			xmax = 8.685218
+			text = "E"
+		intervals [76]:
+			xmin = 8.685218
+			xmax = 8.745218
+			text = "l"
+		intervals [77]:
+			xmin = 8.745218
+			xmax = 8.835218
+			text = "#"
+		intervals [78]:
+			xmin = 8.835218
+			xmax = 8.935217999999999
+			text = "s"
+		intervals [79]:
+			xmin = 8.935217999999999
+			xmax = 9.075218
+			text = "p"
+		intervals [80]:
+			xmin = 9.075218
+			xmax = 9.195218
+			text = "A/"
+		intervals [81]:
+			xmin = 9.195218
+			xmax = 9.585
+			text = "s"
+		intervals [82]:
+			xmin = 9.585
+			xmax = 10.427561
+			text = "#"
+	item [2]:
+		class = "IntervalTier"
+		name = "TokensAlign-buzz"
+		xmin = 0.0
+		xmax = 10.427561
+		intervals: size = 23
+		intervals [1]:
+			xmin = 0.0
+			xmax = 0.520914
+			text = "#"
+		intervals [2]:
+			xmin = 0.520914
+			xmax = 0.930914
+			text = "cette"
+		intervals [3]:
+			xmin = 0.930914
+			xmax = 1.541808
+			text = "buzz"
+		intervals [4]:
+			xmin = 1.541808
+			xmax = 1.914
+			text = "#"
+		intervals [5]:
+			xmin = 1.914
+			xmax = 2.124
+			text = "est"
+		intervals [6]:
+			xmin = 2.124
+			xmax = 2.294
+			text = "une"
+		intervals [7]:
+			xmin = 2.294
+			xmax = 3.194
+			text = "buzz"
+		intervals [8]:
+			xmin = 3.194
+			xmax = 3.304
+			text = "de"
+		intervals [9]:
+			xmin = 3.304
+			xmax = 3.4139999999999997
+			text = "la"
+		intervals [10]:
+			xmin = 3.4139999999999997
+			xmax = 4.357622
+			text = "buzz"
+		intervals [11]:
+			xmin = 4.357622
+			xmax = 4.58
+			text = "#"
+		intervals [12]:
+			xmin = 4.58
+			xmax = 5.494492
+			text = "automatique"
+		intervals [13]:
+			xmin = 5.494492
+			xmax = 5.878027
+			text = "#"
+		intervals [14]:
+			xmin = 5.878027
+			xmax = 6.088027
+			text = "des"
+		intervals [15]:
+			xmin = 6.088027
+			xmax = 6.528027000000001
+			text = "buzz"
+		intervals [16]:
+			xmin = 6.528027000000001
+			xmax = 7.333684
+			text = "lpc"
+		intervals [17]:
+			xmin = 7.333684
+			xmax = 7.805218
+			text = "#"
+		intervals [18]:
+			xmin = 7.805218
+			xmax = 7.995218
+			text = "par"
+		intervals [19]:
+			xmin = 7.995218
+			xmax = 8.105218
+			text = "le"
+		intervals [20]:
+			xmin = 8.105218
+			xmax = 8.745218
+			text = "logiciel"
+		intervals [21]:
+			xmin = 8.745218
+			xmax = 8.835218
+			text = "+"
+		intervals [22]:
+			xmin = 8.835218
+			xmax = 9.585
+			text = "sppas"
+		intervals [23]:
+			xmin = 9.585
+			xmax = 10.427561
+			text = "#"
+	item [3]:
+		class = "IntervalTier"
+		name = "PronTokAlign-buzz"
+		xmin = 0.0
+		xmax = 10.427561
+		intervals: size = 23
+		intervals [1]:
+			xmin = 0.0
+			xmax = 0.520914
+			text = "#=0.0"
+		intervals [2]:
+			xmin = 0.520914
+			xmax = 0.930914
+			text = "s-E-t=0.68"
+		intervals [3]:
+			xmin = 0.930914
+			xmax = 1.541808
+			text = "buzz"
+		intervals [4]:
+			xmin = 1.541808
+			xmax = 1.914
+			text = "#=0.0"
+		intervals [5]:
+			xmin = 1.914
+			xmax = 2.124
+			text = "E-t=0.967"
+		intervals [6]:
+			xmin = 2.124
+			xmax = 2.294
+			text = "y-n-@=0.699"
+		intervals [7]:
+			xmin = 2.294
+			xmax = 3.194
+			text = "buzz"
+		intervals [8]:
+			xmin = 3.194
+			xmax = 3.304
+			text = "d-@=0.671"
+		intervals [9]:
+			xmin = 3.304
+			xmax = 3.4139999999999997
+			text = "l-A/"
+		intervals [10]:
+			xmin = 3.4139999999999997
+			xmax = 4.357622
+			text = "buzz"
+		intervals [11]:
+			xmin = 4.357622
+			xmax = 4.58
+			text = "#=0.0"
+		intervals [12]:
+			xmin = 4.58
+			xmax = 5.494492
+			text = "o-t-O-m-A/-t-i-k-@=0.678"
+		intervals [13]:
+			xmin = 5.494492
+			xmax = 5.878027
+			text = "#=0.0"
+		intervals [14]:
+			xmin = 5.878027
+			xmax = 6.088027
+			text = "d-e=0.524"
+		intervals [15]:
+			xmin = 6.088027
+			xmax = 6.528027000000001
+			text = "buzz"
+		intervals [16]:
+			xmin = 6.528027000000001
+			xmax = 7.333684
+			text = "E-l-p-e-s-e"
+		intervals [17]:
+			xmin = 7.333684
+			xmax = 7.805218
+			text = "#=0.0"
+		intervals [18]:
+			xmin = 7.805218
+			xmax = 7.995218
+			text = "p-A/-R"
+		intervals [19]:
+			xmin = 7.995218
+			xmax = 8.105218
+			text = "l-@=0.651"
+		intervals [20]:
+			xmin = 8.105218
+			xmax = 8.745218
+			text = "l-o-Z-i-s-j-E-l=0.666"
+		intervals [21]:
+			xmin = 8.745218
+			xmax = 8.835218
+			text = "#"
+		intervals [22]:
+			xmin = 8.835218
+			xmax = 9.585
+			text = "s-p-A/-s"
+		intervals [23]:
+			xmin = 9.585
+			xmax = 10.427561
+			text = "#=0.0"

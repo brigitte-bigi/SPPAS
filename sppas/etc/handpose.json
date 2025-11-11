@@ -1,0 +1,61 @@
+{
+  "id": "handpose",
+  "name": "Hands and Pose detection",
+  "descr": "Set the 21 sights on detected hands of an image or a video. This annotation is based on MediaPipe: https://google.github.io/mediapipe/solutions/hands. Requires an image/a video. Produces a video and a CSV/XRA file with the sights of the detected hands.",
+  "required": "facedetect",
+  "api": "sppasHandPose",
+  "devel": 95,
+
+  "resources": [
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern1",
+      "type": "str",
+      "value": "",
+      "text": "Input pattern of the image, or video file."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-hands",
+      "text": "Output file pattern with the sights."
+    },
+    {
+      "id": "hand",
+      "type": "bool",
+      "value": true,
+      "text": "Enable hands detection."
+    },
+    {
+      "id": "pose",
+      "type": "bool",
+      "value": true,
+      "text": "Enable pose detection -- for only one human body."
+    },
+    {
+      "id": "csv",
+      "type": "bool",
+      "value": false,
+      "text": "Save points in a CSV file instead of XRA"
+    },
+    {
+      "id": "tag",
+      "type": "bool",
+      "value": true,
+      "text": "Draw points on the image, or the video"
+    },
+    {
+      "id": "folder",
+      "type": "bool",
+      "value": false,
+      "text": "Save result in a folder with image files -- if video input only"
+    }
+  ]
+}
+

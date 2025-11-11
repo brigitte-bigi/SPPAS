@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en'">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="menu, app, mobile, web, css, html5, framework, accessibility, disability"/>
+
+    <title>app.css</title>
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/app.css" type="text/css" />
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/accessibility.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/app.js" type="application/javascript"></script>
+
+    <style>
+        :root {
+            --header-height: 20vh;
+            --header-slidein: none;
+            --nav-min-height: 4rem;
+            --border-radius: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section for the mobile menu -->
+    <header>
+        <h2>Menu for web and mobile applications</h2>
+
+        <nav id="header-nav-content" aria-label="Accessibility navigation">
+            <button role="menuitem" class="print-off" onclick="accessibility_manager.switch_contrast_scheme()" aria-label="Contrast switcher">
+                <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast" aria-label="Changement du contraste des pages"/>
+            </button>
+            <button role="menuitem" class="print-off" onclick="accessibility_manager.switch_color_scheme()" aria-label="Color switcher">
+                <img src="../wexa_statics/icons/theme_switcher.png" alt="Color" id="img-theme"/>
+            </button>
+            <a role="menuitem" class="print-off" href="https://whakerexa.sourceforge.io">
+                <img src="../wexa_statics/logos/whakerexa.png" alt="Whakerexa home page" />
+            </a>
+            <button id="submenu-toggle-profile" role="menuitem" class="print-off">
+                Profile
+            </button>
+        </nav>
+
+        <!-- Submenu for the Profile button -->
+        <aside class="app-submenu" id="app-submenu-profile"
+               style="--app-submenu-position: top; --app-submenu-align: right top" aria-label="Submenu">
+            <nav>
+                <a role="menuitem" href="#">Setting 1</a>
+                <a role="menuitem" href="#">Setting 2</a>
+            </nav>
+        </aside>
+
+    </header>
+
+    <!-- Mobile Menu at the bottom -->
+    <nav id="nav-content" aria-label="Main navigation">
+        <button id="submenu-toggle-menu" role="menuitem" aria-label="Menu">
+            ☰
+            <span>Menu</span>
+        </button>
+        <button aria-label="Applications" role="menuitem">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="6" height="16" rx="1"/>
+                <rect x="14" y="4" width="6" height="6" rx="1"/>
+                <rect x="14" y="14" width="6" height="6" rx="1"/>
+            </svg>
+            <span>Apps</span>
+        </button>
+        <button aria-label="Help" role="menuitem">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4" />
+                <circle cx="12" cy="17" r="1"/>
+            </svg>
+            <span>Help</span>
+        </button>
+    </nav>
+
+    <!-- Submenu for the Menu button -->
+    <aside class="app-submenu" id="app-submenu-menu" aria-label="Submenu">
+        <nav>
+            <a role="menuitem" href="#">Option 1</a>
+            <a role="menuitem" href="#">Option 2</a>
+            <a role="menuitem" href="#">Option 3</a>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main id="main-content">
+        <h1>Welcome to Whakerexa</h1>
+        <p>Testing mobile application menu functionality</p>
+
+        <p>
+            The International Conference on Speech and Computer (SPECOM) has become a regular event since the first SPECOM that was held in St. Petersburg, Russian Federation, in October 1996. 25 years ago, SPECOM was established by the St. Petersburg Institute for Informatics and Automation of the Russian Academy of Sciences (SPIIRAS). SPECOM is a conference with a long tradition that attracts researchers in the area of computer speech processing, including recognition, synthesis, understanding etc. and related domains like signal processing, language and text processing, computational paralinguistics, multi--modal speech processing or human–computer interaction. The SPECOM International Conference is an ideal platform for know-how exchange - especially for experts working on Slavic or other highly inflectional languages - including both, under-resourced and regular well-resourced languages.
+
+            SPECOM Proceedings are published by the Springer Nature publisher as a book in the Lecture Notes in Computer Science (subseries Lecture Notes in Artificial Intelligence) LNCS/LNAI series listed in all major citation databases such as Scopus, Web of Science, DBLP, etc.
+
+            SPECOM is included in the "Best Conferences in Computer Science" list of the Research.com portal.
+        </p>
+
+        <p>
+            The International Conference on Speech and Computer (SPECOM) has become a regular event since the first SPECOM that was held in St. Petersburg, Russian Federation, in October 1996. 25 years ago, SPECOM was established by the St. Petersburg Institute for Informatics and Automation of the Russian Academy of Sciences (SPIIRAS). SPECOM is a conference with a long tradition that attracts researchers in the area of computer speech processing, including recognition, synthesis, understanding etc. and related domains like signal processing, language and text processing, computational paralinguistics, multi--modal speech processing or human–computer interaction. The SPECOM International Conference is an ideal platform for know-how exchange - especially for experts working on Slavic or other highly inflectional languages - including both, under-resourced and regular well-resourced languages.
+
+            SPECOM Proceedings are published by the Springer Nature publisher as a book in the Lecture Notes in Computer Science (subseries Lecture Notes in Artificial Intelligence) LNCS/LNAI series listed in all major citation databases such as Scopus, Web of Science, DBLP, etc.
+
+            SPECOM is included in the "Best Conferences in Computer Science" list of the Research.com portal.
+        </p>
+
+        <p>
+            The International Conference on Speech and Computer (SPECOM) has become a regular event since the first SPECOM that was held in St. Petersburg, Russian Federation, in October 1996. 25 years ago, SPECOM was established by the St. Petersburg Institute for Informatics and Automation of the Russian Academy of Sciences (SPIIRAS). SPECOM is a conference with a long tradition that attracts researchers in the area of computer speech processing, including recognition, synthesis, understanding etc. and related domains like signal processing, language and text processing, computational paralinguistics, multi--modal speech processing or human–computer interaction. The SPECOM International Conference is an ideal platform for know-how exchange - especially for experts working on Slavic or other highly inflectional languages - including both, under-resourced and regular well-resourced languages.
+
+            SPECOM Proceedings are published by the Springer Nature publisher as a book in the Lecture Notes in Computer Science (subseries Lecture Notes in Artificial Intelligence) LNCS/LNAI series listed in all major citation databases such as Scopus, Web of Science, DBLP, etc.
+
+            SPECOM is included in the "Best Conferences in Computer Science" list of the Research.com portal.
+        </p>
+
+        <p>
+            The International Conference on Speech and Computer (SPECOM) has become a regular event since the first SPECOM that was held in St. Petersburg, Russian Federation, in October 1996. 25 years ago, SPECOM was established by the St. Petersburg Institute for Informatics and Automation of the Russian Academy of Sciences (SPIIRAS). SPECOM is a conference with a long tradition that attracts researchers in the area of computer speech processing, including recognition, synthesis, understanding etc. and related domains like signal processing, language and text processing, computational paralinguistics, multi--modal speech processing or human–computer interaction. The SPECOM International Conference is an ideal platform for know-how exchange - especially for experts working on Slavic or other highly inflectional languages - including both, under-resourced and regular well-resourced languages.
+
+            SPECOM Proceedings are published by the Springer Nature publisher as a book in the Lecture Notes in Computer Science (subseries Lecture Notes in Artificial Intelligence) LNCS/LNAI series listed in all major citation databases such as Scopus, Web of Science, DBLP, etc.
+
+            SPECOM is included in the "Best Conferences in Computer Science" list of the Research.com portal.
+        </p>
+
+    </main>
+    <script type="application/javascript">
+        window.profilemenu = new SubmenuManager('app-submenu-profile', 'submenu-toggle-profile');
+        window.profilemenu.handleSubmenuManagerOnLoad();
+
+        window.mainmenu = new SubmenuManager('app-submenu-menu', 'submenu-toggle-menu');
+        window.mainmenu.handleSubmenuManagerOnLoad();
+
+        console.log("... C'est chargé !")
+    </script>
+
+</body>
+</html>

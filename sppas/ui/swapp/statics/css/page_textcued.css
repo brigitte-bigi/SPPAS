@@ -1,0 +1,166 @@
+.annotate-fieldset {
+    border: var(--border-width) solid var(--shadow-color);
+    border-radius: 1rem;
+    padding-left: 2.5rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    margin: 1rem 0;
+    box-shadow: 0 0.1rem 0.2rem 0.05rem var(--shadow-color);
+}
+
+/* Styling last fieldset */
+
+section.fieldset {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+}
+
+section.box-images {
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    color: var(--fg-color-alt);
+}
+section.box-images > * {
+    background-color: inherit;
+}
+
+
+section.box-images img {
+    width: auto;
+    height: 90%;
+}
+
+section.box-images img.hand-img {
+    width: 25vh;
+    height: auto;
+    transform: rotate(-90deg);
+}
+
+
+/* FIELDSET BAR CSS */
+/* Indicate progress of annotations **and** their results */
+
+.tilesWrap {
+    padding: 0;
+    margin: auto;
+    list-style: none;
+    text-align: center;
+    width: 80%;
+}
+
+.tilesWrap li {
+    display: inline-block;
+    width: 22%;
+    height: calc(18 * var(--font-size));
+    padding: 4rem 0.5rem 0.5rem;
+    position: relative;
+    vertical-align: top;
+    margin: 0.5rem;
+    color: var(--progress-fg-color);
+    background: var(--progress-bg-color);
+    border: var(--border-width) solid var(--shadow-color);
+    border-radius: var(--border-radius);
+    text-align: left;
+}
+
+.tilesWrap li h2 {
+    font-size: 5.5rem;
+    margin: 0;
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    transition: all 0.3s ease-in-out;
+    background: inherit;
+    color: var(--header-bg-color);
+}
+
+.tilesWrap li h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--header-bg-color);
+    background: inherit;
+}
+
+.tilesWrap li p {
+    margin-top: 0.5rem;
+    color: var(--header-bg-color);
+    background: inherit;
+
+    text-wrap: wrap;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical
+}
+
+/* remove the automatically added '.' */
+.tilesWrap li:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    transform: skew(2deg, 2deg);
+}
+
+.tilesWrap li.active, .tilesWrap li.active * {
+    background: var(--bg-color-alt);
+    color: var(--fg-color);
+}
+
+.tilesWrap li.visited, .tilesWrap li.visited * {
+    background: var(--bg-color-alt);
+    color: var(--fg-color);
+    opacity: 0.75;
+}
+
+.tilesWrap p:hover {
+    text-wrap: wrap;
+    overflow-wrap: break-word;
+    overflow: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical
+}
+
+
+.cuedsp-form {
+}
+
+table[role=grid] tbody tr:nth-child(even) *, table[role=grid] tbody tr:nth-child(odd) * {
+    background-color: var(--bg-color);
+}
+
+/* Custom style for phonemes choices */
+/* The button with the chosen phonetization is disabled. */
+/* It has to look like a pressed button */
+/* The normal state has to look like a non-pressed button */
+button.phon_not_chosen {
+    font-weight: var(--font-weight-semithin);
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+    border: var(--border-width) solid var(--shadow-color);
+    opacity: 85%;
+}
+
+button.phon_chosen:disabled {
+    font-weight: var(--font-weight-semibold);
+    background-color: var(--bg-color-alt);
+    color: var(--fg-color-alt);
+    border: var(--border-width) solid var(--border-color);
+    opacity: 100%;
+    cursor: pointer;
+
+    -webkit-box-shadow: inset 0 0 0.8rem var(--shadow-color);
+    -moz-box-shadow: inset 0 0 0.8rem var(--shadow-color);
+    box-shadow: inset 0 0 0.8rem var(--shadow-color);
+}

@@ -1,0 +1,52 @@
+{
+  "id": "audioseg",
+  "name": "AudioSegmenter",
+  "descr": "AudioSegmenter is a tool to segment audio files into several tracks. Bounds of the tracks are indicated in an annotated file of any format supported by SPPAS (xra, TextGrid, eaf, ...). New in version 3: A video can also be segmented.",
+  "icon": "audioseg.png",
+  "version": "3.2",
+
+  "commands": {
+    "windows": "PLUGIN_PATH\\\\..\\\\..\\\\..\\\\.sppaspyenv~\\\\Scripts\\\\python.exe PLUGIN_PATH\\\\audioseg.py",
+    "macos": "PLUGIN_PATH/../../../.sppaspyenv~/bin/python3 PLUGIN_PATH/audioseg.py",
+    "linux": "PLUGIN_PATH/../../../.sppaspyenv~/bin/python3 PLUGIN_PATH/audioseg.py"
+  },
+
+  "options": [
+
+    {
+      "id": "-i",
+      "type": "file",
+      "value": "input"
+    },
+
+    {
+      "id": "-t",
+      "type": "string",
+      "value": "IPUs",
+      "text": "Name of the tier indicating the tracks:"
+    },
+
+    {
+      "id": "-p",
+      "type": "string",
+      "value": "-ipus",
+      "text": "Pattern of the annotated file with the given tier:"
+    },
+
+    {
+      "id": "-e",
+      "type": "string",
+      "value": ".xra",
+      "text": "File extension for the tracks (including the a dot):"
+    },
+
+    {
+      "id": "--video",
+      "type": "bool",
+      "value": "False",
+      "text": "Add video tracks."
+    }
+
+  ]
+
+}

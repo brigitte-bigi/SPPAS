@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>layout.css</title>
+    <link rel="icon" href="../wexa_statics/icons/flav32_cs.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css">
+
+    <script src="../wexa_statics/js/purejs-tools/OnLoadManager.js" type="application/javascript"></script>
+    <script src="../wexa_statics/js/accessibility.js" type="application/javascript"></script>
+
+</head>
+<body>
+
+    <header>
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+        <nav style="position: absolute; top: 0;">
+            <ul>
+                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+            </ul>
+            <button role="menuitem" onclick="accessibility_manager.switch_contrast_scheme();">
+                <img src="../wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+            </button>
+            <button role="menuitem" onclick="accessibility_manager.switch_color_scheme();">
+                <img src="../wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+            </button>
+        </nav>
+        <h1>layout.css</h1>
+        <h2>A CSS framework to organize HTML elements</h2>
+    </header>
+
+    <main id="main-content">
+
+        <section id="description">
+            <h1>Description</h1>
+
+            <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
+            <pre>
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
+    media="all" /&gt;
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/layout.css?format=raw"
+    media="all" /&gt;
+            </pre>
+
+            <h2>Overview</h2>
+
+            <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
+                accessible web content, and to minimize the use of CSS classes for enhancing the
+                readability of HTML code, like it should always be! <b>wexa.css</b> is the main
+                CSS framework of  <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.
+            </p>
+            <p><b>layout.css</b> is a CSS framework based on wexa.css, allowing you to manage
+                layouts of HTML elements. It includes the possibility to add
+                content that looks like a card. At this time, it is provided as-is, offering
+                a streamlined selection of customization solutions.</p>
+            <p>Not convinced? Take a look at the source code of this page!</p>
+
+            <h2>The containers</h2>
+
+            <h3>Simple panel</h3>
+            <h3>Scrolled panel</h3>
+            <h3>Flex panel</h3>
+            <h3>Grid panel</h3>
+            <h3>Collapsible panel</h3>
+
+            <h3>Cards panel</h3>
+            <p>layout.css provides a container allowing to organize cards:
+                <code>cards-panel</code>. See the demos for details. </p>
+
+            <h4>A card</h4>
+            <p>The class <code>card</code> can be added to any HTML element which can be used
+                as a container. Preferably, you should use either <code>&lt;section&gt;</code> or
+                <code>&lt;article&gt;</code> element, instead of the nonsensical <code>&lt;div&gt;</code>.
+                Any of then will be displayed the same way, but screen readers interpret
+                a <code>section</code> or an <code>article</code>in a more appropriate manner,
+                unlike a <code>div</code>!</p>
+
+            <table role="presentation">
+                <thead>
+                <tr>
+                    <td>Example</td>
+                    <td>Result</td>
+                </tr>
+                <tbody>
+                <tr>
+                    <td>
+                        <pre>&lt;article class="card"&gt;
+    &lt;main&gt;
+        &lt;h2&gt;card title&lt;/h2&gt;
+        &lt;p&gt;multi-line card content... the text wraps when needed!&lt;/p&gt;
+        &lt;a href="#somewhere"&gt;Convinced!&lt;/a&gt;
+    &lt;/main&gt;
+&lt;/article&gt;
+            </pre>
+                    </td>
+                    <td>
+                        <article class="card" id="somewhere1">
+                            <main>
+                                <h2>card title</h2>
+                                <p>multi-line card content... the text wraps when needed!</p>
+                                <a href="#">Convinced!</a>
+                            </main>
+                        </article>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Classically, the card can be divided into: a header, a main and a footer:</p>
+                        <pre>&lt;article class="card"&gt;
+    &lt;header&gt;
+        &lt;h2&gt;card title&lt;/h2&gt;
+    &lt;/header&gt;
+    &lt;main&gt;
+        &lt;p&gt;multi-line card content... the text wraps when needed!&lt;/p&gt;
+    &lt;/main&gt;
+    &lt;footer&gt;
+        &lt;a role="button" href="#somewhere"&gt;Footer link!&lt;/a&gt;
+    &lt;/footer&gt;
+&lt;/article&gt;
+            </pre>
+                    </td>
+                    <td>
+                        <article class="card" id="somewhere2">
+                            <header><h2>card title</h2></header>
+                            <main>
+                                <p>multi-line card content into 'main'... the text wraps when needed!</p>
+                            </main>
+                            <footer>
+                                <a role="button" href="#">Footer link!</a>
+                            </footer>
+                        </article>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2>The variables</h2>
+            <p>cards.css is allowing to set the following four variables:</p>
+            <ol>
+                <li><code>card-max-width</code>, not efficient if full-cards-panel</li>
+                <li><code>card-border-width</code> is '2px' by default</li>
+                <li><code>card-border-radius</code> is '8px' by default</li>
+                <li><code>card-box-shadow</code></li>
+            </ol>
+            <p>In the following example, the max width and the border width of a card are both
+                increased, and the border radius and shadow are canceled:</p>
+            <pre>&lt;style&gt;
+    :root {
+        --card-max-width: 15rem;
+        --card-border-width: 4px;
+        --card-border-radius: 0;
+        --card-box-shadow: none;
+    }
+            </pre>
+        </section>
+
+        <section id="demo">
+            <h1>Demos</h1>
+
+            <h2>Cards</h2>
+
+            <h3>Create cards in a section with article elements</h3>
+            <section class="cards-panel">
+
+                <article class="card">
+                    <header>
+                        <img src="https://sppas.org/whakerkit/icons/flav64.png" alt="">
+                    </header>
+                    <main>
+                        <h2>SPPAS card instance</h2>
+                        <p>An amazing software tool.</p>
+                    </main>
+                    <footer>
+                        <a href="https://sppas.org/">SPPAS web site</a>
+                    </footer>
+                </article>
+
+                <article class="card" id="somewhere3">
+                    <header>
+                        <img src="images/cards.png" alt="">
+                    </header>
+                    <main>
+                        <h2> A card </h2>
+                        <p>Le read more ci-dessous est un lien avec role button.</p>
+                        <a role="button" aria-hidden="true" id="desc-a-card" href="#somewhere3">Read more →</a>
+                    </main>
+                    <footer>
+                        <p>This is a text inside the footer of the card.</p>
+                    </footer>
+                </article>
+
+                <article class="card">
+                    <header>
+                        <h2>Header</h2>
+                    </header>
+                    <main>
+                        <h2>Another card instance</h2>
+                        <p>Cupidatat tempor sint mollit in tempor ut fugiat excepteur laborum labore.</p>
+                        <button aria-hidden="true" id="desc-third-card-instance">Read more →</button>
+                    </main>
+                    <footer>
+                        <p>This is a text inside the footer of the card.</p>
+                    </footer>
+                </article>
+
+            </section>
+
+            <p>Not implemented yet: horizontal card -- any help is welcome!</p>
+            <article class="card card-horiz">
+                <header>
+                    <img src="https://sppas.org/whakerkit/icons/flav64.png" alt="">
+                </header>
+                <main>
+                    <h2>Horizontal card</h2>
+                    <p>with dark and high contrast</p>
+                </main>
+                <footer>
+                    <a href="https://sppas.org/">Some footer</a>
+                </footer>
+            </article>
+
+            <h3>Create cards in a full-cards-panel</h3>
+
+            <section class="full-cards-panel">
+                <article class="card full-card">
+                    <header>
+                        <img src="https://sppas.org/etc/images/background-header.png" alt="">
+                    </header>
+                    <main>
+                        <p>SPPAS offers open source cross-platform, customizable automatic annotation
+                            and analysis solutions for audio and video media.</p>
+                        <p>SPPAS was awarded by the French Ministry of Higher Education, Research and
+                            Innovation at the 2022 Open Source Research Software Competition.</p>
+                    </main>
+                    <footer>
+                        <a role="button" href="https://sppas.org/">More about SPPAS</a>
+                        <a role="button" href="https://sppas.sf.net/">Get it!</a>
+                    </footer>
+                </article>
+            </section>
+
+        </section>
+    </main>
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2024 Brigitte Bigi - Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.21 (C) Brigitte Bigi" date="2024-05-29T10:19:07+02:00" format="1.5" name="Momel">
+	<Metadata>
+		<Entry key="id">a36193b8-6a2d-467e-8609-a54730d7c56e</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.21</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU AGPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+		<Entry key="annotation_result_of">C:\Users\brigi\Desktop\sppas-code\demo\demo.PitchTier</Entry>
+		<Entry key="file_writer">sppasXRA</Entry>
+		<Entry key="file_name">demo-momel.xra</Entry>
+		<Entry key="file_path">C:\Users\brigi\Desktop\sppas-code\demo</Entry>
+		<Entry key="file_ext">.xra</Entry>
+		<Entry key="file_write_date">2024-05-29T10:19:07+02:00</Entry>
+		<Entry key="file_version">1</Entry>
+	</Metadata>
+
+	<Tier id="a4cf24e4-1b15-4773-bc2b-218d220cda5c" tiername="Momel">
+		<Annotation id="8df4770e-772d-4684-9ffc-a505a88c2b83">
+			<Location>
+				<Point midpoint="0.9097602595159956" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">195.0153323626209</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8096eb8a-cf71-4a8e-98f9-07549d5d6428">
+			<Location>
+				<Point midpoint="1.274988007369586" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">164.4882295265299</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2b143db1-25d6-48dd-be1e-a53e488b475b">
+			<Location>
+				<Point midpoint="1.5511020388104022" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">398.86590077468924</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="6ce26373-ac33-4e81-81f3-6ed98457bc29">
+			<Location>
+				<Point midpoint="2.061933124298288" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">201.72340607425576</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="07c62401-22ea-492a-a8fd-df25391f2ee2">
+			<Location>
+				<Point midpoint="2.272938933430144" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">181.12821853001813</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="0d2d7e28-26cd-44de-bcbb-97fabf1dac9a">
+			<Location>
+				<Point midpoint="2.621751035406626" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">268.8551332927282</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="9068769c-4fcc-4cdb-a9b2-98ceda2bc8c4">
+			<Location>
+				<Point midpoint="3.089149967538677" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">207.93474118685836</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="135ad087-818f-43f9-b53b-154482546f7b">
+			<Location>
+				<Point midpoint="3.341520032626204" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">166.84837854737955</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="2106451a-7ef7-4774-8e00-541c44db0204">
+			<Location>
+				<Point midpoint="3.7617920847964195" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">243.0513243447224</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5817034f-e66a-438a-a2b3-6c911decaac9">
+			<Location>
+				<Point midpoint="4.316642485344688" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">180.93208332849704</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b63ba65b-56ee-4568-b1dd-aa66a34603e5">
+			<Location>
+				<Point midpoint="4.759735874575944" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">252.99605571914753</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="977a606b-aa3c-4842-a1ba-5264a9fda058">
+			<Location>
+				<Point midpoint="5.077211485922805" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">179.2261464196911</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="165d0e12-00cc-43f3-8008-4a6791f09329">
+			<Location>
+				<Point midpoint="5.176882911680541" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">171.55878179622357</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="7242b1f3-e524-4532-8076-9d9350cfb5f9">
+			<Location>
+				<Point midpoint="5.454007353976817" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">232.3452125066989</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b6f67b31-0b22-493f-8423-5953f5de764a">
+			<Location>
+				<Point midpoint="5.676128578041916" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">200.3190030835226</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="abca0c1e-5594-484e-ba34-bc4e91516b90">
+			<Location>
+				<Point midpoint="5.858350645563153" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">188.0438913575863</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d0b1ed0c-b701-4b64-a6d3-4c6d0e14af8f">
+			<Location>
+				<Point midpoint="6.0949067186390975" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">237.09805750278576</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="b90f6e42-dc92-449e-8179-04bffbd63ae0">
+			<Location>
+				<Point midpoint="6.487702502760924" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">181.11777778679124</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="66fb438d-1008-42e5-be60-4f4243ed1946">
+			<Location>
+				<Point midpoint="6.7007558909626885" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">197.15518594529325</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="8f859364-c6a6-4d34-8451-89db716942ee">
+			<Location>
+				<Point midpoint="7.1184266529985365" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">145.4791557704939</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="d0c3ee5d-563e-4552-810b-aa18f9f70692">
+			<Location>
+				<Point midpoint="7.966629780524214" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">159.8233620632058</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="5704fc68-5162-46ac-b82d-414e8bb93110">
+			<Location>
+				<Point midpoint="8.313595360642172" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">160.4101198932315</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="35d38e3b-52cc-4cfc-8337-401aa5325d37">
+			<Location>
+				<Point midpoint="8.661543171740366" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">186.7395211300815</Tag>
+			</Label>
+		</Annotation>
+		<Annotation id="3551e958-5324-409e-88a9-fd5bd277b37c">
+			<Location>
+				<Point midpoint="9.066037714644136" radius="0.005" />
+			</Location>
+			<Label>
+				<Tag type="float">200.75931967451672</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Hierarchy />
+</Document>
+

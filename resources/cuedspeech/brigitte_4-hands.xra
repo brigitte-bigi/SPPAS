@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.20 (C) Brigitte Bigi" date="2024-04-24T09:52:03+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">c99ab2b9-fbf9-4afe-855c-ea3a3e2aa717</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.20</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="66565717-147e-4736-ac1c-c6a788f594aa" tiername="ImgSights0">
+		<Annotation id="385d38fa-8fa7-4f51-a42b-77435a2df8a1">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\brigitte_4-hands.jpg</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(448,528)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(532,424)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(649,394)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(750,424)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(815,464)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(694,412)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(856,410)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(953,413)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(1028,417)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(697,492)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(876,487)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(990,488)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(1075,490)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(684,571)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(853,564)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(958,560)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(1036,555)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(660,644)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(789,641)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(867,632)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(933,624)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="a7817fcf-4069-4027-8379-2fbc3e59d1da" url="C:\Users\brigi\Desktop\sppas-code\brigitte_4-hands.jpg" mimetype="image/jpeg">
+		<Tier id="66565717-147e-4736-ac1c-c6a788f594aa" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

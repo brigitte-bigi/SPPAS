@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document author="SPPAS 4.20 (C) Brigitte Bigi" date="2024-04-24T08:12:31+02:00" format="1.5" name="ImageCoordinates">
+	<Metadata>
+		<Entry key="id">2052a5b5-7d6b-4a7f-ada0-0a8b705490e8</Entry>
+		<Entry key="software_name">SPPAS</Entry>
+		<Entry key="software_version">4.20</Entry>
+		<Entry key="software_url">https://sppas.org/</Entry>
+		<Entry key="software_author">Brigitte Bigi</Entry>
+		<Entry key="software_contact">contact@sppas.org</Entry>
+		<Entry key="software_copyright">Copyright (C) 2011-2024 Brigitte Bigi</Entry>
+		<Entry key="language_iso">iso639-3</Entry>
+		<Entry key="language_code_0">und</Entry>
+		<Entry key="language_name_0">Undetermined</Entry>
+		<Entry key="language_url_0">https://iso639-3.sil.org/code/und</Entry>
+		<Entry key="file_license_text_0">GNU GPL V3</Entry>
+		<Entry key="file_license_url_0">https://www.gnu.org/licenses/gpl-3.0.en.html</Entry>
+	</Metadata>
+
+	<Tier id="d5123fc2-aa57-4dd3-bbe2-59c5d432bf94" tiername="ImgSights0">
+		<Annotation id="3e5cdca9-ad9d-49b8-a185-ef2478e3e148">
+			<Metadata>
+				<Entry key="image_name">C:\Users\brigi\Desktop\sppas-code\fidelia_5-hands.png</Entry>
+			</Metadata>
+			<Location>
+				<Point midpoint="1" />
+			</Location>
+			<Label key="0_sight00">
+				<Tag type="point">(507,676)</Tag>
+			</Label>
+			<Label key="0_sight01">
+				<Tag type="point">(626,454)</Tag>
+			</Label>
+			<Label key="0_sight02">
+				<Tag type="point">(764,351)</Tag>
+			</Label>
+			<Label key="0_sight03">
+				<Tag type="point">(881,272)</Tag>
+			</Label>
+			<Label key="0_sight04">
+				<Tag type="point">(934,151)</Tag>
+			</Label>
+			<Label key="0_sight05">
+				<Tag type="point">(954,470)</Tag>
+			</Label>
+			<Label key="0_sight06">
+				<Tag type="point">(1189,473)</Tag>
+			</Label>
+			<Label key="0_sight07">
+				<Tag type="point">(1331,483)</Tag>
+			</Label>
+			<Label key="0_sight08">
+				<Tag type="point">(1442,493)</Tag>
+			</Label>
+			<Label key="0_sight09">
+				<Tag type="point">(962,601)</Tag>
+			</Label>
+			<Label key="0_sight10">
+				<Tag type="point">(1239,588)</Tag>
+			</Label>
+			<Label key="0_sight11">
+				<Tag type="point">(1400,594)</Tag>
+			</Label>
+			<Label key="0_sight12">
+				<Tag type="point">(1518,597)</Tag>
+			</Label>
+			<Label key="0_sight13">
+				<Tag type="point">(945,722)</Tag>
+			</Label>
+			<Label key="0_sight14">
+				<Tag type="point">(1195,705)</Tag>
+			</Label>
+			<Label key="0_sight15">
+				<Tag type="point">(1345,696)</Tag>
+			</Label>
+			<Label key="0_sight16">
+				<Tag type="point">(1459,692)</Tag>
+			</Label>
+			<Label key="0_sight17">
+				<Tag type="point">(917,829)</Tag>
+			</Label>
+			<Label key="0_sight18">
+				<Tag type="point">(1110,810)</Tag>
+			</Label>
+			<Label key="0_sight19">
+				<Tag type="point">(1224,807)</Tag>
+			</Label>
+			<Label key="0_sight20">
+				<Tag type="point">(1331,802)</Tag>
+			</Label>
+		</Annotation>
+	</Tier>
+
+	<Media id="2d5c9a7f-b8f4-4de8-820e-511da5b297f3" url="C:\Users\brigi\Desktop\sppas-code\fidelia_5-hands.png" mimetype="image/png">
+		<Tier id="d5123fc2-aa57-4dd3-bbe2-59c5d432bf94" />
+	</Media>
+
+	<Hierarchy />
+</Document>
+

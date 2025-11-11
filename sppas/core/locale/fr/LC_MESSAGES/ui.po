@@ -1,0 +1,598 @@
+# French translation for SPPAS
+# Copyright (c) 2011-2023 Brigitte Bigi
+# This file is distributed under the same license as the SPPAS package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brigitte Bigi <brigitte.bigi@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.7\n"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Files"
+msgstr "Fichiers"
+
+msgid "Annotate"
+msgstr "Annoter"
+
+msgid "Analyze"
+msgstr "Analyser"
+
+msgid "Edit"
+msgstr "Éditer"
+
+msgid "Convert"
+msgstr "Convertir"
+
+msgid "Plugins"
+msgstr "Plugins"
+
+msgid "Exit"
+msgstr "Quitter"
+
+msgid "About"
+msgstr "À propos"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "Okay"
+msgstr "Valider"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Done"
+msgstr "Terminé"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Save as"
+msgstr "Enregistrer sous"
+
+msgid "Save all"
+msgstr "Tout enregistrer"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Close all"
+msgstr "Tout fermer"
+
+msgid "Remove"
+msgstr "Retirer"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Hide"
+msgstr "Cacher"
+
+msgid "Copy"
+msgstr "Copier"
+
+msgid "Export"
+msgstr "Exporter"
+
+msgid "Send"
+msgstr "Envoyer"
+
+msgid "Send feedback"
+msgstr "Envoyer"
+
+msgid "Settings"
+msgstr "Préférences"
+
+msgid "Configure"
+msgstr "Configurer"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Install"
+msgstr "Installer"
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Warning"
+msgstr "Attention"
+
+msgid "Question"
+msgstr "Question"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Font"
+msgstr "Police de caractères"
+
+msgid "Background color"
+msgstr "Couleur d’arrière-plan"
+
+msgid "Foreground color"
+msgstr "Couleur de premier plan"
+
+msgid "Fonts and Colors"
+msgstr "Typographies et couleurs"
+
+msgid "Top panel"
+msgstr "Panneau haut"
+
+msgid "Main panel"
+msgstr "Panneau central"
+
+msgid "Bottom panel"
+msgstr "Panneau bas"
+
+msgid "View logs"
+msgstr "Voir les logs"
+
+msgid "Visit the website at "
+msgstr "Visiter le site web "
+
+msgid "Add comments here."
+msgstr "Ajouter des commentaires ici."
+
+msgid "Log Window"
+msgstr "Fenêtre de log"
+
+msgid "Send e-mail"
+msgstr "Envoyer un courrier"
+
+msgid "Write your message here"
+msgstr "Ecrivez un message ici"
+
+msgid "To: "
+msgstr "À : "
+
+msgid "Subject: "
+msgstr "Sujet : "
+
+msgid "Body: "
+msgstr "Corps de texte : "
+
+msgid "Send with: "
+msgstr "Envoyer avec : "
+
+msgid "Other"
+msgstr "Autre"
+
+msgid "Confirm exit?"
+msgstr "Voulez-vous vraiment quitter ?"
+
+msgid "Perform annotations"
+msgstr "Effectuer les annotations"
+
+msgid "Automatically annotate selected files"
+msgstr "Annoter automatiquement les fichier sélectionnés"
+
+msgid "Add comments here"
+msgstr "Ajouter vos commentaires ici"
+
+msgid "Add files"
+msgstr "Ajouter fichier"
+
+msgid "Add dir"
+msgstr "Ajouter dossier"
+
+msgid ":INFO 9000: "
+msgstr "Terminé. ({:d} / {:d} fichiers ont été traités avec succès)"
+
+msgid "Total duration: "
+msgstr "Durée totale : "
+
+msgid "Visible part: "
+msgstr "Partie visible : "
+
+msgid "seconds"
+msgstr "secondes"
+
+# ---------------------------------------------------------------------------
+# Cued Tag SWAPP
+# ---------------------------------------------------------------------------
+# OPEN FILES FIELDSET
+msgid "Open files"
+msgstr "Ouvrir les fichiers"
+
+msgid ":INFO 9900: "
+msgstr "Bienvenue sur le Cued Speech Video Tagger"
+
+msgid ":INFO 9901: "
+msgstr "Interface en cours de développement"
+
+msgid ":INFO 9902: "
+msgstr "Passer directement au 'fieldset' suivant : des fichiers par défault sont déjà enregistrés."
+
+# ---------------------------------------------------------------------------
+# ANNOTATION CONFIG FIELDSET
+msgid "Configuration of the annotation process"
+msgstr "Configuration du processus de l'annotation"
+
+msgid "Choose the language of the video (obligatory)"
+msgstr "Choisir la langue parlée dans la vidéo (obligatoire)"
+
+msgid "Choose the output directory"
+msgstr "Choisir le dossier de sortie des fichiers"
+
+msgid "Activate the option to display text information"
+msgstr "Activer l'option pour afficher les informations textuelles"
+
+msgid "Activate the option to display the vowels on the face"
+msgstr "Activer l'option pour afficher les voyelles sur le visage"
+
+# ---------------------------------------------------------------------------
+# HAND OPTIONS FIELDSET
+msgid "Virtual hands tag options"
+msgstr "Options des mains codeuses virtuelles"
+
+msgid "Choose the hands set to use"
+msgstr "Choisissez votre jeu de main à utiliser"
+
+msgid "Choose the hands filter to apply"
+msgstr "Choisissez un filtre pour les mains à appliquer"
+
+# ---------------------------------------------------------------------------
+# RUN ANNOTATION FIELDSET
+msgid "Run"
+msgstr "Execution"
+
+msgid "Cued Speech Video Tagger running"
+msgstr "Execution du Cued Speech Video Tagger"
+
+msgid "The annotation is processing ..."
+msgstr "L'annotation est en cours d'exécution ..."
+
+msgid "The annotation is finished !"
+msgstr "L'annotation est finie !"
+
+# ---------------------------------------------------------------------------
+# VISTA PANELS
+msgid "{fps:.3f}fps, {seconds:.3f}s, {width:d}×{height:d}px"
+msgstr "{fps:.3f} im / s, {seconds:.3f} s, {width:d} × {height:d} px"
+
+msgid "{bits:d} bits, {hz:d}Hz, {seconds:.3f}s, {channels:d} channel(s)"
+msgstr "{bits:d} bits, {hz:d} Hz, {seconds:.3f} s, {channels:d} canal(canaux)"
+
+msgid "No audio available. The {:s} feature is not enabled"
+msgstr "Aucun audio disponible. La fonctionnalité {:s} n'est pas activée"
+
+msgid "No audio available. Is the file format not supported?"
+msgstr "Aucun audio disponible. Le format du fichier est-il non supporté ?"
+
+msgid "No video available"
+msgstr "Aucune vidéo disponible"
+
+msgid "The file {:s} can't be displayed by this view."
+msgstr "Le fichier {:s} ne peut pas être affiché par cette vue."
+
+msgid "Unknown error."
+msgstr "Erreur inconnue."
+
+msgid "Unknown file format"
+msgstr "Format de fichier inconnu"
+
+# ---------------------------------------------------------------------------
+# EDITOR
+# Tooltips of the toolbar
+msgid ":INFO 9101: "
+msgstr "Ouvrir les fichiers cochés de l'espace de travail"
+
+msgid ":INFO 9111: "
+msgstr "Enregistrer les fichiers modifiés (ctrl+s)"
+
+msgid ":INFO 9121: "
+msgstr "Fermer tous les fichiers (ctrl+w)"
+
+msgid ":INFO 9131: "
+msgstr "Permutter l'affichage de la timeline avec celui de la liste"
+
+msgid ":INFO 9141: "
+msgstr "Permutter l'affichage de la liste des annotations avec celui des labels de l'annotation sélectionnée"
+
+msgid ":INFO 9151: "
+msgstr "Ouvrir la fenêtre de recherche"
+
+# Dialogs
+msgid ":INFO 9050: "
+msgstr "Au moins l'un des fichiers contient du travail non sauvegardé. Etes-vous sûr de vouloir fermer?"
+
+msgid ":INFO 9060: "
+msgstr "Le fichier contient du travail non sauvegardé. Fermer tout de même?"
+
+# Search dialog
+msgid ":INFO 9200: "
+msgstr "Recherche des étiquettes dans les tiers"
+
+msgid ":INFO 9201: "
+msgstr "Fermer la fenêtre de recherche (ctrl+w)"
+
+msgid ":INFO 9211: "
+msgstr "Cacher la fenêtre de recherche (ctrl+h)"
+
+msgid ":INFO 9221: "
+msgstr "Rechercher vers l'avant (ctrl+g)"
+
+msgid ":INFO 9231: "
+msgstr "Recherche vers l'arrière (ctrl+G)"
+
+# Tooltip of the timeline toolbar
+msgid ":INFO 9301: "
+msgstr "Défiler vers la gauche (ctrl+←)"
+
+msgid ":INFO 9311: "
+msgstr "Tout afficher (ctrl+a)"
+
+msgid ":INFO 9321: "
+msgstr "Zoomer (ctrl+i)"
+
+msgid ":INFO 9331: "
+msgstr "Dézoomer (ctrl+o)"
+
+msgid ":INFO 9341: "
+msgstr "Défiler jusqu'à la sélection"
+
+msgid ":INFO 9351: "
+msgstr "Zoomer sur la sélection"
+
+msgid ":INFO 9361: "
+msgstr "Défiler vers la droite (ctrl+→)"
+
+msgid ":INFO 9401: "
+msgstr "Trier les fichiers ouverts"
+
+msgid ":INFO 9411: "
+msgstr "Augmenter la taille"
+
+msgid ":INFO 9421: "
+msgstr "Diminuer la taille"
+
+msgid ":INFO 9431: "
+msgstr "Afficher soit les annotations des tiers soit les informations"
+
+msgid ":INFO 9441: "
+msgstr "Afficher soit la forme d'onde des fichiers audio soit les informations"
+
+msgid ":INFO 9451: "
+msgstr "Afficher soit les images des fichiers vidéo sous forme de rectangles soit les informations"
+
+msgid ":INFO 9501: "
+msgstr "Lire de manière synchronisée tous les médias étendus"
+
+msgid ":INFO 9511: "
+msgstr "Mettre en pause"
+
+msgid ":INFO 9521: "
+msgstr "Arrêter la lecture"
+
+msgid ":INFO 9531: "
+msgstr "Retour rapide"
+
+msgid ":INFO 9541: "
+msgstr "Avance rapide"
+
+msgid ":INFO 9551: "
+msgstr "Activer ou désactiver la lecture en boucle"
+
+msgid ":INFO 9601: "
+msgstr "Afficher trois images vidéo vers l'arrière"
+
+msgid ":INFO 9611: "
+msgstr "Afficher trois images vidéo vers l'avant"
+
+msgid ":INFO 9621: "
+msgstr "Nombre d'images à ignorer en lecture vers l'arrière"
+
+msgid ":INFO 9631: "
+msgstr "Nombre d'images à ignorer en lecture vers l'avant"
+
+# Video frame
+msgid "Frame no. {:s}"
+msgstr "Image n° {:s}"
+
+msgid "unknown"
+msgstr "inconnue"
+
+msgid "Previous frame"
+msgstr "Image précédente"
+
+msgid "Current frame"
+msgstr "Image courante"
+
+msgid "Next frame"
+msgstr "Image suivante"
+
+msgid "Video file absolute path: {:s}"
+msgstr "Chemin du fichier vidéo : {:s}"
+
+msgid "Frame rate (number of frames per second)"
+msgstr "Taux d'images (nombre d'images par seconde)"
+
+msgid "Duration (HH:MM:SS.ms)"
+msgstr "Durée (HH:MM:SS.ms)"
+
+msgid "Resolution (in pixels)"
+msgstr "Résolution (en pixels)"
+
+msgid "Decrease height of time ruler and annotations"
+msgstr "Diminuer la taille de la règle temporelle et des annotations"
+
+msgid "Increase height of time ruler and annotations"
+msgstr "Augmenter la taille de la règle temporelle et des annotations"
+
+msgid "Move the point to current frame's start and use no radius"
+msgstr "Déplacer le point au début de l'image courante et n'utiliser aucun rayon"
+
+msgid "Move the point to current frame's start and use the duration of a frame as radius"
+msgstr "Déplacer le point au début de l'image courante et utiliser la durée d'une image comme rayon"
+
+msgid "Move the point to current frame's middle and use the duration of half a frame as radius"
+msgstr "Déplacer le point au milieu de l'image courante et utiliser la durée de la moitié d'une image comme rayon"
+
+msgid "Move the point to current frame's middle and use the duration of one and a half frames as radius"
+msgstr "Déplacer le point au milieu de l'image courante et utiliser la durée d'une image et demi comme rayon"
+
+msgid "Move the point to current frame's end and use no radius"
+msgstr "Déplacer le point à la fin de l'image courante et n'utiliser aucun rayon"
+
+msgid "Move the point to current frame's end and use the duration of a frame as radius"
+msgstr "Déplacer le point à la fin de l'image courante et utiliser la durée d'une image comme rayon"
+
+# Timeline panels
+msgid ":INFO 9701: "
+msgstr "Afficher le nom complet du fichier"
+
+# ---------------------------------------------------------------------------
+# SWAPP
+# ---------------------------------------------------------------------------
+msgid "Session ended"
+msgstr "Session terminée"
+
+msgid "You can close this tab. [...]"
+msgstr "Vous pouvez désormais fermer cet onglet.<br>Pour relancer une session, redémarrez SPPAS à partir de votre explorateur de fichiers."
+
+msgid "Skip to content"
+msgstr "Aller au contenu principal"
+
+# ---------------------------------------------------------------------------
+# Setup
+# ---------------------------------------------------------------------------
+msgid "Setup"
+msgstr "Setup"
+
+msgid "Install third-party programs to enable additional features in SPPAS."
+msgstr "Installe des composantes afin d'activer des fonctionnalités supplémentaires dans SPPAS"
+
+# ---------------------------------------------------------------------------
+# Dashboard
+# ---------------------------------------------------------------------------
+msgid "Choose the application to launch: "
+msgstr "Choix de l'application à utiliser : "
+
+msgid "Launch the app"
+msgstr "Lancer l'appli"
+
+msgid "SPPAS Dashboard"
+msgstr "Tableau de bord SPPAS"
+
+msgid "Helpful links"
+msgstr "Liens utiles"
+
+# ---------------------------------------------------------------------------
+# Text Cued
+# ---------------------------------------------------------------------------
+msgid "Choose language resource: "
+msgstr "Choisissez la resource linguistique : "
+
+msgid "Enter or verify the text to be annotated automatically: "
+msgstr "Saisissez ou corrigez le texte à annoter automatiquement : "
+
+msgid "Enter or paste your text here"
+msgstr "Saisissez ou coller votre texte ici"
+
+msgid "Sequence of phonemes to be cued"
+msgstr "Séquence de phonèmes à coder"
+
+msgid "Phonetized text"
+msgstr "Texte phonétisé"
+
+msgid "Convert phonemes into CS keys"
+msgstr "Coder les phonèmes en LfPC"
+
+msgid "See the text previously normalized"
+msgstr "Voir le texte précédemment normalisé"
+
+msgid "Choose or add the pronunciation of each word to be automatically coded: "
+msgstr "Choisissez ou saisissez la prononciation de chaque mot à coder automatiquement :"
+
+msgid ":INFO 9898: "
+msgstr ""
+"Les sons sont indiqués avec la représentation <a href='https://fr.wikipedia.org/wiki/X-SAMPA' class='external-link'>X-SAMPA</a>.  Ils "
+"doivent faire parti de la liste des sons de la langue choisie et être séparés par un tiret."
+
+msgid "Hit text to be normalized"
+msgstr "Saisie du texte à normaliser"
+
+msgid "Input text"
+msgstr "Texte saisi"
+
+msgid "Normalize text"
+msgstr "Normaliser le texte"
+
+msgid "Sequence of words to be phonetized"
+msgstr "Séquence de mots à phonétiser"
+
+msgid "Normalized text"
+msgstr "Texte normalisé"
+
+msgid "See the text previously entered"
+msgstr "Voir le texte précédemment saisi"
+
+msgid "Phonetize text"
+msgstr "Phonétiser le texte"
+
+msgid "Bibliographical reference"
+msgstr "Référence bibliographique"
+
+msgid "Bibliographical references"
+msgstr "Références bibliographiques"
+
+msgid "Cued text"
+msgstr "Texte codé"
+
+msgid "Cued Speech keys of the text"
+msgstr "Texte codé en LfPC"
+
+msgid "Sequence of keys of the phonetized text: "
+msgstr "Séquence de clés qui correspond au texte phonétisé : "
+
+msgid "See the text previously phonetized"
+msgstr "Voir le texte précédemment phonétisé"
+
+msgid "The system did not generated a result."
+msgstr "Le système n'a produit aucun résultat."
+
+msgid "Start again"
+msgstr "Recommencer"
+
+msgid "Text Cueing"
+msgstr "Texte vers LfPC"
+
+msgid "Allows to generate automatically the sequence of keys to be cued from a written text"
+msgstr "Permet de générer automatiquement une séquence de clés LfPC à partir d'un texte saisi"
+
+msgid "Cueing from a written text"
+msgstr "Codage LfPC d'un texte écrit"

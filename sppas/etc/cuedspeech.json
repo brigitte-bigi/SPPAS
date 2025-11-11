@@ -1,0 +1,103 @@
+{
+  "id": "cuedspeech",
+  "name": "Cued Speech coding",
+  "descr": "Generates cued speech key codes from phonemes and optionally tags a video. This automatic annotation is currently under development. It mustn't be used for any final application except to test it in order to contribute. Requires time-aligned phonemes.",
+  "required": "alignment",
+  "api": "sppasCuedSpeech",
+  "devel": 50,
+
+  "resources": [
+    {
+      "path": "cuedspeech",
+      "type": "file",
+      "ext": ".txt",
+      "name": "cueConfig-",
+      "lang": true
+    }
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern1",
+      "type": "str",
+      "value": "-palign",
+      "text": "Pattern of the file with time-aligned phonemes"
+    },
+    {
+      "id": "inputpattern2",
+      "type": "str",
+      "value": "",
+      "text": "Pattern of the video file"
+    },
+    {
+      "id": "inputpattern3",
+      "type": "str",
+      "value": "-sights",
+      "text": "Pattern of the file with sights of the face of the person"
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-cuedsp",
+      "text": "Pattern of the output files"
+    },
+    {
+      "id": "handtrans",
+      "type": "int",
+      "value": 5,
+      "text": "Version of the system to estimate hand transition moments (0-5)."
+    },
+    {
+      "id": "handangle",
+      "type": "int",
+      "value": 3,
+      "text": "Version of the system to estimate hand angle (0-3)."
+    },
+    {
+      "id": "handpos",
+      "type": "int",
+      "value": 3,
+      "text": "Version of the system to estimate vowel positions around the face (0-3)."
+    },
+    {
+      "id": "createvideo",
+      "type": "bool",
+      "value": false,
+      "text": "Tag a video with keys. Requires a video and sights."
+    },
+    {
+      "id": "handsset",
+      "type": "str",
+      "value": "",
+      "text": "A hands set to tag the video (default: none). One of: drawcue, drawccue, brigitte, fred, laurent, axel, lise, fidelia."
+    },
+    {
+      "id": "handsfilter",
+      "type": "str",
+      "value": "",
+      "text": "A filter to apply on hands. One of: cartoon, sights, skeleton, tgtline or sticks."
+    },
+    {
+      "id": "angleface",
+      "type": "bool",
+      "value": false,
+      "text": "The angle of the hand is corrected by the one of the face."
+    },
+    {
+      "id": "infotext",
+      "type": "bool",
+      "value": false,
+      "text": "Add textual information at the top left corner on the video."
+    },
+    {
+      "id": "vowelspos",
+      "type": "bool",
+      "value": false,
+      "text": "Draw circle at the vowel' positions on the video."
+    }
+  ],
+
+  "refs": {
+    "bigi2023lts": "https://hal.science/hal-04081282v1/document"
+  }
+}

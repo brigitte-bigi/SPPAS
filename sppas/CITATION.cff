@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: SPPAS - the automatic annotation and analyses of speech
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Brigitte
+    family-names: Bigi
+    email: contact@sppas.org
+    affiliation: CNRS
+    orcid: 'https://orcid.org/0000-0003-1834-6918'
+identifiers:
+  - type: url
+    value: 'https://hal.science/hal-04392175'
+    description: 'HAL open science '
+repository-code: 'https://sppas.sourceforge.io'
+url: 'https://sppas.org/'
+keywords:
+  - annotation
+  - analysis
+  - file conversion
+  - speech
+  - corpus
+license: AGPL-3.0-or-later
