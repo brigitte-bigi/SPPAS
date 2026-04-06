@@ -1,16 +1,6 @@
 ```
 -------------------------------------------------------------------------
-    
-               ██████╗  ██████╗   ██████╗    █████╗    ██████╗
-              ██╔════╝  ██╔══██╗  ██╔══██╗  ██╔══██╗  ██╔════╝
-              ██████═╗  ██████╔╝  ██████╔╝  ███████║  ██████═╗
-              ╚════██║  ██╔═══╝   ██╔═══╝   ██╔══██║  ╚════██║
-              ██████ ║  ██║       ██║       ██║  ██║  ██████ ║
-              ╚══════╝  ╚═╝       ╚═╝       ╚═╝  ╚═╝  ╚══════╝
-                                                    
-            the automatic annotation and analysis of speech
-        
-               Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+            Copyright (C) 2011-2026  Brigitte Bigi, CNRS
         Laboratoire Parole et Langage, Aix-en-Provence, France
 -------------------------------------------------------------------------
 ```
@@ -43,9 +33,8 @@ of contributing authors.
 * April 2015-June 2015: Nicolas Chazeau (audio support)
 * April 2015-June 2015: Jibril Saffi (3rd annotated data version)
 * April 2019-June 2019: Barthélémy Drabczuk (workspaces and num2letter)
-* April 2020-June 2020: Laurent Vouriot (workspaces and SPEAKER annotations)
+* April 2020-June 2020: Laurent Vouriot (SPEAKER annotation)
 * April 2020-June 2020: Florian Hocquet (installer and video support)
 * April 2023-June 2023: Mathias Cazals (4th website)
 * April 2023-July 2023: Audric Vachet (video player)
 * April 2023-June 2023 and February 2024-June 2024: Florian Lopitaux (cued speech tagger)
-

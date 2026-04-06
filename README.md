@@ -1,6 +1,6 @@
 ![SPPAS](https://sppas.org/SPPAS5/sppas/ui/swapp/statics/images/sppas-splash-v5.png)
 
-# sppas
+# sppas 
 
 **The automatic annotation and analysis of speech.**
 
@@ -8,10 +8,9 @@
 It provides an API for annotating, segmenting, and analyzing audio and video
 speech recordings, as well as tools for working with annotated data.
 
-- Homepage: <https://sppas.org/>
+- Main Repository: <https://github.com/brigitte-bigi/sppas/>
 - Documentation: <https://brigittebigi.github.io/sppas/>
-- Main Repository: <https://github.com/brigitte-bigi/SPPAS>
-- Development Repository: <https://sourceforge.net/projects/sppas>
+- SPPAS software: <https://sppas.org/>
 - License: AGPL-3.0-or-later
 - Copyright (C) 2011-2026 Brigitte Bigi, CNRS, Laboratoire Parole et Langage, Aix-en-Provence, France
 

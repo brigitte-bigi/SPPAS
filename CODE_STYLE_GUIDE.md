@@ -162,7 +162,7 @@ visual clarity, for example:
   reducing unnecessary line breaks while still maintaining readability on 
   modern wide-screen displays.
 
-These adaptations are essential for maintaining efficient and **accessible**
+These adaptations are essential for maintaining efficient and accessible
 coding practices while adhering to the general spirit of Python's style 
 guidelines. They ensure that the code remains functional and clean, while 
 also addressing the specific needs of developers with visual impairments.
