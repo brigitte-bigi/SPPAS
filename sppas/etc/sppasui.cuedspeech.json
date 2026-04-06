@@ -1,0 +1,9 @@
+{
+  "annotate": [
+    {
+      "id": "cuedspeech",
+      "config": "cuedspeech.json",
+      "cli": "cuedspeech.py"
+    }
+  ]
+}

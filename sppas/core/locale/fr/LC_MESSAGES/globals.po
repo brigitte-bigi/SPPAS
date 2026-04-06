@@ -1,0 +1,234 @@
+# French translation for SPPAS
+# Copyright (c) 2011-2018 Brigitte Bigi
+# This file is distributed under the same license as the SPPAS package.
+# Brigitte Bigi <contact@sppas.org>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SPPAS\n"
+"Report-Msgid-Bugs-To: contact@sppas.org\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brigitte Bigi <brigitte.bigi@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+# ---------------------------------------------------------------------------
+# Features
+# ---------------------------------------------------------------------------
+msgid "Updates the internal 'sppas' Python package"
+msgstr "Met à jour le package Python interne 'sppas' utilisé par SPPAS. Présélectionné lorsqu'une mise à jour est disponible."
+
+msgid "Installs Julius, FFmpeg and Praat executables inside the SPPAS package"
+msgstr "Installe les exécutables Julius, FFmpeg et Praat dans le répertoire du package SPPAS (sans installation dans l'OS). Requis pour les annotations Alignement, Speech-To-Text et Formants. En installant, vous acceptez leurs licences respectives BSD-3 et GPL-3 (voir les fichiers LICENSE inclus)."
+
+msgid "Installs Homebrew, then Julius, FFmpeg and Praat system-wide via Homebrew"
+msgstr "Installe Homebrew, puis Julius, FFmpeg et Praat dans l'OS via Homebrew (droits administrateur requis). Requis pour les annotations Alignement, Speech-To-Text et Formants. En installant, vous acceptez leurs licences respectives BSD-3 et GPL-3."
+
+msgid "Enables graphical interaction with SPPAS using its GUI"
+msgstr "Active l'interface graphique de SPPAS. Cela installe wxPython, une boîte à outils Python open source et multiplateforme."
+
+msgid "Enables the estimation of F1 and F2 formants"
+msgstr "Active l’estimation des formants F1 et F2 avec des méthodes implémentées en interne et/ou avec les estimateurs de Praat."
+
+msgid "Enables Whisper speech to text transcription"
+msgstr "Active la transcription parole-vers-texte par Whisper, à l’intérieur des unités inter-pausales."
+
+msgid "Adds audio playback support in the SPPAS Edit page"
+msgstr "Ajoute la prise en charge de la lecture audio dans la page d’éditeur de l'interface graphique."
+
+msgid "Enables image and video processing"
+msgstr "Active le traitement des images et des vidéos. Requis pour les annotations de détection de visage, points faciaux, identité de visage de personne et anonymisation."
+
+msgid "Integrates Google Mediapipe for advanced video processing"
+msgstr "Intègre Google Mediapipe pour le traitement vidéo avancé, y compris la détection des mains et de la posture. IMPORTANT : activer cette fonctionnalité rendra SPPAS beaucoup plus lent et sans messages de journalisation."
+
+msgid "Models for automatic face detection in images"
+msgstr "Modèles pour la détection automatique de visages dans les images. (Téléchargement : 5,3 Mo). Nécessite la fonctionnalité 'video'."
+
+msgid "Models for automatic detection of 68 facial landmarks in images"
+msgstr "Modèles pour la détection automatique de 68 points faciaux dans les images. (Téléchargement : 106 Mo). Nécessite la fonctionnalité 'video'."
+
+msgid "Automatic generation of Cued Speech"
+msgstr "Génération automatique du Cued Speech, de la LfPC."
+
+msgid "Support of American English Language"
+msgstr "Prise en charge de l’anglais américain. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of French Language"
+msgstr "Prise en charge du français. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique, des règles de syllabification, etc."
+
+msgid "Support of Quebec French Language"
+msgstr "Prise en charge du français québécois. Inclut un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Bengali Language"
+msgstr "Prise en charge du bengali. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Catalan Language"
+msgstr "Prise en charge du catalan. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Mandarin Chinese Language"
+msgstr "Prise en charge du chinois mandarin. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of German Language"
+msgstr "Prise en charge de l’allemand. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Dutch Language"
+msgstr "Prise en charge du néerlandais. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Hungarian Language"
+msgstr "Prise en charge du hongrois. Inclut un vocabulaire."
+
+msgid "Support of Italian Language"
+msgstr "Prise en charge de l’italien. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique et des règles de syllabification."
+
+msgid "Support of Japanese Language"
+msgstr "Prise en charge du japonais. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Korean Language"
+msgstr "Prise en charge du coréen [en développement]. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Min Nan Language"
+msgstr "Prise en charge du min nan. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Naija Language"
+msgstr "Prise en charge du naija (pidgin nigérian). Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
+
+msgid "Support of Persian Language"
+msgstr "Prise en charge du persan (iranien). Inclut un vocabulaire, un dictionnaire et un modèle acoustique."
+
+msgid "Support of Polish Language"
+msgstr "Prise en charge du polonais. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique et des règles de syllabification. (Téléchargement : 4,6 Mo)"
+
+msgid "Support of Portuguese Language"
+msgstr "Prise en charge du portugais [en développement]. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique."
+
+msgid "Support of Spanish Language"
+msgstr "Prise en charge de l’espagnol. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique."
+
+msgid "Support of Vietnamese Language"
+msgstr "Prise en charge du vietnamien. Inclut un vocabulaire."
+
+msgid "Support of Cantonese Language"
+msgstr "Prise en charge du cantonais. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique."
+
+# ---------------------------------------------------------------------------
+# Errors
+# ---------------------------------------------------------------------------
+msgid ":ERROR 9999: "
+msgstr "Version dépréciée de Python: SPPAS requiert au moins la version 3.7+. "
+
+msgid ":ERROR 9990: "
+msgstr "Version dépréciée de Python: la fonctionnalité {} de SPPAS requiert au moins la version {}."
+
+msgid ":ERROR 0001: "
+msgstr "L'erreur suivante a été relevée: {message}."
+
+msgid ":ERROR 0100: "
+msgstr "{!s:s} n'est pas du type attendu: '{}'."
+
+msgid ":ERROR 0200: "
+msgstr "Valeur d'index invalide: {:d}."
+
+msgid ":ERROR 0300: "
+msgstr "La valeur '{!s:s}' est incorrecte pour '{!s:s}'."
+
+msgid ":ERROR 0310: "
+msgstr "Une valeur positive était attendue, alors que {value} a été donnée."
+
+msgid ":ERROR 0320: "
+msgstr "La valeur minimale donnée {min_value} est supérieur à la valeur maximale donnée {max_value}."
+
+msgid ":ERROR 0330: "
+msgstr "La valeur {value} est en dehors de l'intervalle [{min_value},{max_value}]."
+
+msgid ":ERROR 0340: "
+msgstr "L'index {value} est en dehors de l'intervalle [{min_value},{max_value}]."
+
+msgid ":ERROR 0350: "
+msgstr "Code de langue '{code}' invalide."
+
+msgid ":ERROR 0400: "
+msgstr "Clé inconnue '{!s:s}' pour les données '{!s:s}'"
+
+msgid ":ERROR 0500: "
+msgstr "Erreur système: {error}"
+
+msgid ":ERROR 0505: "
+msgstr "Le système {} n'est pas supporté actuellement. Aucun installeur automatique n'a pu être trouvé."
+
+msgid ":ERROR 0510: "
+msgstr "L'installation a induit des erreurs et/ou warnings: {error}."
+
+msgid ":ERROR 0513: "
+msgstr "Erreur de permission: l'accès à '{place}' a été refusé."
+
+msgid ":ERROR 0520: "
+msgstr "La fonctionnalité {name} n'est pas activée; son installation est requise avant de pouvoir l'utiliser."
+
+msgid ":ERROR 0530: "
+msgstr "Le package {package} n'a pas pu être importé. L'installation de la fonctionnalité {name} est requise pour pouvoir l'utiliser."
+
+msgid ":ERROR 0540: "
+msgstr "Le package {package} nécessite une mise à jour. Une ré-installation de la fonctionnalité {name} est requise pour pouvoir l'utiliser."
+
+msgid ":ERROR 0610: "
+msgstr "L'extension du fichier {:s} est inconnue"
+
+msgid ":ERROR 0620: "
+msgstr "Le dossier {dirname} n'existe pas."
+
+msgid ":ERROR 0650: "
+msgstr "Echec lors de l'ouverture ou de la lecture du fichier '{:s}'."
+
+msgid ":ERROR 0655: "
+msgstr "Echec lors de la lecture du fichier {name}: {msg}"
+
+msgid ":ERROR 0660: "
+msgstr "Echec lors de la sauvegarde du fichier '{:s}'."
+
+msgid ":ERROR 0670: "
+msgstr "Les fichiers avec l'extension '{:s}' ne peuvent pas être ouverts."
+
+msgid ":ERROR 0680: "
+msgstr "Les fichiers avec l'extension '{:s}' ne peuvent pas être enregistrés."
+
+msgid ":ERROR 0977: "
+msgstr "Une donnée requise '{:s}' n'a pas été saisie."
+
+# ---------------------------------------------------------------------------
+# Infos
+# ---------------------------------------------------------------------------
+msgid ":INFO 0510: "
+msgstr "Installation de '{name}'"
+
+msgid ":INFO 0520: "
+msgstr "'{name}' n'est pas disponible pour votre système d'exploitation."
+
+msgid ":INFO 0530: "
+msgstr "L'installation de '{name}' est désactivée."
+
+msgid ":INFO 0540: "
+msgstr "'{name}' est installé."
+
+msgid ":INFO 0550: "
+msgstr "L'installation de '{name}' a échouée."
+
+msgid ":INFO 0560: "
+msgstr "Installation terminée"
+
+msgid ":INFO 570: "
+msgstr "'{name}' ne correspond à aucun package valide."
+
+msgid ":INFO 0580: "
+msgstr "Aucune commande système n'est nécessaire."
+
+msgid ":INFO 0590: "
+msgstr "No summary."
+
+msgid ":INFO 0592: "
+msgstr "No description is available for this feature."

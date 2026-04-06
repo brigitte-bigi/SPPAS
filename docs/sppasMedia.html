@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasMedia. Generic representation of a media file." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.structs.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasCtrlVocab.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasHierarchy.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.anndata">    <h1>Module sppas.src.anndata</h1>
+<section id="#sppasMedia">
+<h2>Class sppasMedia</h2>
+
+<section>
+<h3 id="#description_sppasMedia">Description</h3>
+    <article class="docstring">
+<p><em>Generic representation of a media file.</em></p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasMedia">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasMedia instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) File name of the media</li>
+<li><strong>media_id</strong>: (<em>str</em>) Identifier of the media</li>
+<li><strong>mime_type</strong>: (<em>str</em>) Mime type of the media</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">media_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mime_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasMedia instance.</span>
+
+<span class="sd">    :param filename: (str) File name of the media</span>
+<span class="sd">    :param media_id: (str) Identifier of the media</span>
+<span class="sd">    :param mime_type: (str) Mime type of the media</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasMedia</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__url</span> <span class="o">=</span> <span class="n">filename</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">media_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">media_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="s1">&#39;audio/basic&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span> <span class="o">=</span> <span class="n">mime_type</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasMedia">Public functions</h3>
+<h4>get_filename</h4>
+
+    <article class="docstring">
+<p><em>Return the URL of the media.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the URL of the media.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_mime_type</h4>
+
+    <article class="docstring">
+<p><em>Return the mime type of the media.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_mime_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the mime type of the media.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_content</h4>
+
+    <article class="docstring">
+<p><em>Return the content of the media.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the content of the media.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__content</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_content</h4>
+
+    <article class="docstring">
+<p><em>Set the content of the media.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>content</strong>: (<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the content of the media.</span>
+
+<span class="sd">        :param content: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__content</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasMedia">Overloads</h3>
+<h4>__format__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__repr__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;Media: id=</span><span class="si">{:s}</span><span class="s1"> url=</span><span class="si">{:s}</span><span class="s1"> mime=</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__eq__</h4>
+
+    <article class="docstring">
+<p><em>Return True if other is strictly identical to self (even id).</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if other is strictly identical to self (even id).&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasMedia</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__url</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_filename</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mime</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_mime_type</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">meta_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">meta_key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">meta_key</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">meta_key</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">meta_key</span><span class="p">)</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">meta_key</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__ne__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

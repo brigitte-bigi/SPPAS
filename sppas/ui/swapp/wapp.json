@@ -1,0 +1,22 @@
+{
+  "WhakerPy": {
+    "pagespath": "./statics/html/",
+    "legalnotices.html": {
+      "title": "Whakerkit Legal Notice",
+      "main": "legal_notices.htm",
+      "header": true,
+      "footer": true
+    }
+  },
+  "WhakerKit": {
+    "name": "SPPAS Hub",
+    "whakerexa": "sppas/ui/swapp/whakerexa/wexa_statics/",
+    "uploads": "sppas/uploads/",
+    "lang": "en",
+    "domain": "ldap.dom",
+    "secret_key": "aaawwa3adt%aGfa5yiEabB%5aag7gAcaaagpW54VJauvaaa^5fd6V%a@m9aiaaaE&aataq^HaSac$VaGau2#ta*ah5",
+    "jwt_validity": 60,
+    "addons": {
+      }
+    }
+}

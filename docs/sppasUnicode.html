@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasUnicode. Make a string as unicode and operates on it." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.core.config.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasExtensionWriteError.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="ISO639.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.core.preinstall.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.core.coreutils">    <h1>Module sppas.core.coreutils</h1>
+<section id="#sppasUnicode">
+<h2>Class sppasUnicode</h2>
+
+<section>
+<h3 id="#description_sppasUnicode">Description</h3>
+    <article class="docstring">
+<p><em>Make a string as unicode and operates on it.</em></p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasUnicode">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasUnicode instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>entry</strong>: (<em>str</em> or unicode or <em>bytes</em> in python 2)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasUnicode instance.</span>
+
+<span class="sd">    :param entry: (str or unicode or bytes in python 2)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="p">(</span><span class="n">binary_type</span><span class="p">,</span> <span class="n">text_type</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">entry</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasUnicode">Public functions</h3>
+<h4>unicode</h4>
+
+    <article class="docstring">
+<p><em>Return the unicode string of the given entry.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>unicode</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">unicode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the unicode string of the given entry.</span>
+
+<span class="sd">        :returns: unicode</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">,</span> <span class="n">binary_type</span><span class="p">):</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">u</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">e</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>to_lower</h4>
+
+    <article class="docstring">
+<p><em>Return the unicode string with lower case.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>unicode</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_lower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the unicode string with lower case.</span>
+
+<span class="sd">        :returns: unicode</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>to_strip</h4>
+
+    <article class="docstring">
+<p><em>Strip the string.</em></p>
+
+<p>Remove also multiple whitespace, tab and CR/LF inside the string.</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>unicode</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_strip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Strip the string.</span>
+
+<span class="sd">        Remove also multiple whitespace, tab and CR/LF inside the string.</span>
+
+<span class="sd">        :returns: unicode</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[</span><span class="se">\\</span><span class="s1">s]+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;^[ ]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[ ]+$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;</span><span class="se">\ufeff</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\ufeff</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>clear_whitespace</h4>
+
+    <article class="docstring">
+<p><em>Replace the whitespace by underscores.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>unicode</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clear_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace the whitespace by underscores.</span>
+
+<span class="sd">        :returns: unicode</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">e</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>to_ascii</h4>
+
+    <article class="docstring">
+<p><em>Replace the non-ASCII characters by underscores.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>unicode</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace the non-ASCII characters by underscores.</span>
+
+<span class="sd">        :returns: unicode</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unicode</span><span class="p">()</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^</span><span class="se">\\</span><span class="s1">x00-</span><span class="se">\\</span><span class="s1">x7F]&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">=</span> <span class="n">e</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_restricted_ascii</h4>
+
+    <article class="docstring">
+<p><em>Check if the entry key is using only a-Z_ characters.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>bool</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_restricted_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if the entry key is using only a-Z_ characters.</span>
+
+<span class="sd">        :returns: (bool)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">ra</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^a-zA-Z0-9_]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entry</span> <span class="o">==</span> <span class="n">ra</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

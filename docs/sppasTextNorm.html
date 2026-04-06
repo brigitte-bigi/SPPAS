@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasTextNorm. Text normalization automatic annotation." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasSearchIPUs.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasPhon.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+<section id="#sppasTextNorm">
+<h2>Class sppasTextNorm</h2>
+
+<section>
+<h3 id="#description_sppasTextNorm">Description</h3>
+    <article class="docstring">
+<p><em>Text normalization automatic annotation.</em></p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasTextNorm">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasTextNorm instance without any linguistic resources.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasTextNorm instance without any linguistic resources.</span>
+
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasTextNorm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;textnorm.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span> <span class="o">=</span> <span class="n">TierNormalizer</span><span class="p">(</span><span class="n">logfile</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasTextNorm">Public functions</h3>
+<h4>load_resources</h4>
+
+    <article class="docstring">
+<p><em>Fix the list of words of a given language.</em></p>
+
+<p>It allows a better tokenization, and enables the language-dependent
+modules like num2letters.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>vocab_filename</strong>: (<em>str</em>) File with the orthographic transcription</li>
+<li><strong>lang</strong>: (<em>str</em>) the language code</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_filename</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;und&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the list of words of a given language.</span>
+
+<span class="sd">        It allows a better tokenization, and enables the language-dependent</span>
+<span class="sd">        modules like num2letters.</span>
+
+<span class="sd">        :param vocab_filename: (str) File with the orthographic transcription</span>
+<span class="sd">        :param lang: (str) the language code</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">vocab_filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">voc</span> <span class="o">=</span> <span class="n">sppasVocabulary</span><span class="p">(</span><span class="n">vocab_filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">voc</span> <span class="o">=</span> <span class="n">sppasVocabulary</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Vocabulary file </span><span class="si">{:s}</span><span class="s1"> for language </span><span class="si">{:s}</span><span class="s1"> not found.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vocab_filename</span><span class="p">,</span> <span class="n">lang</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span> <span class="o">=</span> <span class="n">TierNormalizer</span><span class="p">(</span><span class="n">voc</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">logfile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1164</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">voc</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">replace_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;repl&#39;</span><span class="p">,</span> <span class="n">lang</span> <span class="o">+</span> <span class="s1">&#39;.repl&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">replace_filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">dict_replace</span> <span class="o">=</span> <span class="n">sppasDictRepl</span><span class="p">(</span><span class="n">replace_filename</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dict_replace</span> <span class="o">=</span> <span class="n">sppasDictRepl</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Replacement vocabulary not found.&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">set_repl</span><span class="p">(</span><span class="n">dict_replace</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1166</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dict_replace</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">punct_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;vocab&#39;</span><span class="p">,</span> <span class="s1">&#39;Punctuations.txt&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">punct_filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">vocab_punct</span> <span class="o">=</span> <span class="n">sppasVocabulary</span><span class="p">(</span><span class="n">punct_filename</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vocab_punct</span> <span class="o">=</span> <span class="n">sppasVocabulary</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">set_punct</span><span class="p">(</span><span class="n">vocab_punct</span><span class="p">)</span>
+    <span class="n">number_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;_num.repl&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">number_filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="n">sppasDictRepl</span><span class="p">(</span><span class="n">number_filename</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="n">sppasDictRepl</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Dictionary of numbers not found.&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">set_num</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p>Fix all options. Available options are:</p>
+
+<ul>
+<li>faked</li>
+<li>std</li>
+<li>custom</li>
+</ul>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: (sppasOption)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options. Available options are:</span>
+
+<span class="sd">            - faked</span>
+<span class="sd">            - std</span>
+<span class="sd">            - custom</span>
+
+<span class="sd">        :param options: (sppasOption)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;faked&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_faked</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_std</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;custom&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_custom</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;occ_dur&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_occ_dur</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;tok_speech&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tok_not_sil</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_faked</h4>
+
+    <article class="docstring">
+<p><em>Fix the faked option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Create a faked tokenization</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_faked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the faked option.</span>
+
+<span class="sd">        :param value: (bool) Create a faked tokenization</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;faked&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_std</h4>
+
+    <article class="docstring">
+<p><em>Fix the std option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Create a standard tokenization</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the std option.</span>
+
+<span class="sd">        :param value: (bool) Create a standard tokenization</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_custom</h4>
+
+    <article class="docstring">
+<p><em>Fix the custom option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Create a customized tokenization</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the custom option.</span>
+
+<span class="sd">        :param value: (bool) Create a customized tokenization</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_occ_dur</h4>
+
+    <article class="docstring">
+<p><em>Fix the occurrences and duration tiers generation option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Create a tier with nb of tokens and duration</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_occ_dur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the occurrences and duration tiers generation option.</span>
+
+<span class="sd">        :param value: (bool) Create a tier with nb of tokens and duration</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;occ_dur&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_tok_not_sil</h4>
+
+    <article class="docstring">
+<p><em>Fix the token is speech tiers generation option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) nb of tokens estimated without not-events ones</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tok_not_sil</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the token is speech tiers generation option.</span>
+
+<span class="sd">        :param value: (bool) nb of tokens estimated without not-events ones</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tok_speech&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>convert</h4>
+
+    <article class="docstring">
+<p><em>Text normalization of all labels of a tier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (sppasTier) the orthographic transcription (standard or EOT)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li><strong>A tuple with 3 tiers named</strong> - "Tokens-Faked", - "Tokens-Std", - "Tokens-Custom"</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Text normalization of all labels of a tier.</span>
+
+<span class="sd">        :param tier: (sppasTier) the orthographic transcription (standard or EOT)</span>
+<span class="sd">        :returns: A tuple with 3 tiers named:</span>
+<span class="sd">            - &quot;Tokens-Faked&quot;,</span>
+<span class="sd">            - &quot;Tokens-Std&quot;,</span>
+<span class="sd">            - &quot;Tokens-Custom&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;No tier found.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">EmptyInputError</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">tokens_faked</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;faked&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;replace&#39;</span><span class="p">,</span> <span class="s1">&#39;tokenize&#39;</span><span class="p">,</span> <span class="s1">&#39;numbers&#39;</span><span class="p">,</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="s1">&#39;punct&#39;</span><span class="p">]</span>
+        <span class="n">tokens_faked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">normalize_tier</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span>
+        <span class="n">tokens_faked</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;Tokens&#39;</span><span class="p">)</span>
+    <span class="n">tokens_std</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">,</span> <span class="s1">&#39;tokenize&#39;</span><span class="p">,</span> <span class="s1">&#39;numbers&#39;</span><span class="p">,</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="s1">&#39;punct&#39;</span><span class="p">]</span>
+        <span class="n">tokens_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">normalize_tier</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span>
+        <span class="n">tokens_std</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;Tokens-Std&#39;</span><span class="p">)</span>
+    <span class="n">tokens_custom</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;tokenize&#39;</span><span class="p">]</span>
+        <span class="n">tokens_custom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">normalize_tier</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span>
+        <span class="n">tokens_custom</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s1">&#39;Tokens-Custom&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tokens_faked</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tokens_std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__force_align_tiers</span><span class="p">(</span><span class="n">tokens_std</span><span class="p">,</span> <span class="n">tokens_faked</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">tokens_faked</span><span class="p">,</span> <span class="n">tokens_std</span><span class="p">,</span> <span class="n">tokens_custom</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>occ_dur</h4>
+
+    <article class="docstring">
+<p><em>Create a tier with labels and duration of each annotation.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">occ_dur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier with labels and duration of each annotation.</span>
+
+<span class="sd">        :param tier:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">occ</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;Occ</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="n">dur</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;Dur</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()</span>
+        <span class="n">nb_occ</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tok_speech&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">nb_occ</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">get_best</span><span class="p">()</span><span class="o">.</span><span class="n">is_speech</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">nb_occ</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">get_best</span><span class="p">()</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="n">occ</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">nb_occ</span><span class="p">,</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)))</span>
+        <span class="n">dur</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">occ</span><span class="p">,</span> <span class="n">dur</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return the the tier with aligned tokens.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>NoTierInputError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the the tier with aligned tokens.</span>
+
+<span class="sd">        :param input_files: (list)</span>
+<span class="sd">        :raise: NoTierInputError</span>
+<span class="sd">        :return: (sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">annot_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">annot_ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">transcription</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Input tier to be normalized: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">tier</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;No tier with an orthographic transcription was found.&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">NoTierInputError</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on an input.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) orthographic transcription</li>
+<li><strong>output</strong>: (<em>str</em>) the output file name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTranscription)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+
+<span class="sd">        :param input_files: (list of str) orthographic transcription</span>
+<span class="sd">        :param output: (str) the output file name</span>
+<span class="sd">        :returns: (sppasTranscription)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">tier_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+    <span class="n">tier_faked_tokens</span><span class="p">,</span> <span class="n">tier_std_tokens</span><span class="p">,</span> <span class="n">tier_custom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tier_input</span><span class="p">)</span>
+    <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_faked_tokens</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_faked_tokens</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_std_tokens</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_std_tokens</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_custom</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_custom</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;occ_dur&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">tier_occ</span><span class="p">,</span> <span class="n">tier_dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">occ_dur</span><span class="p">(</span><span class="n">trs_output</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_occ</span><span class="p">)</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_dur</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;text_normalization_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_iso&#39;</span><span class="p">,</span> <span class="s1">&#39;iso639-3&#39;</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_name_0&#39;</span><span class="p">,</span> <span class="s1">&#39;Undetermined&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="s1">&#39;und&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/und&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">output_file</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EmptyOutputError</span>
+    <span class="k">return</span> <span class="n">trs_output</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation uses in an output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-token&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasTextNorm">Protected functions</h3>
+<h4>__force_align_tiers</h4>
+
+    <article class="docstring">
+<p>Force standard spelling and faked spelling to share the same
+number of tokens.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>std_tier</strong>: (sppasTier)</li>
+<li><strong>faked_tier</strong>: (sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__force_align_tiers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std_tier</span><span class="p">,</span> <span class="n">faked_tier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Force standard spelling and faked spelling to share the same</span>
+<span class="sd">        number of tokens.</span>
+
+<span class="sd">        :param std_tier: (sppasTier)</span>
+<span class="sd">        :param faked_tier: (sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ann_std</span><span class="p">,</span> <span class="n">ann_faked</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">std_tier</span><span class="p">,</span> <span class="n">faked_tier</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">label_std</span><span class="p">,</span> <span class="n">label_faked</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ann_std</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(),</span> <span class="n">ann_faked</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">text_std</span><span class="p">,</span> <span class="n">s1</span><span class="p">),</span> <span class="p">(</span><span class="n">text_faked</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">label_std</span><span class="p">,</span> <span class="n">label_faked</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">texts</span><span class="p">,</span> <span class="n">textf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__align_tiers</span><span class="p">(</span><span class="n">text_std</span><span class="o">.</span><span class="n">get_content</span><span class="p">(),</span> <span class="n">text_faked</span><span class="o">.</span><span class="n">get_content</span><span class="p">())</span>
+                    <span class="n">text_std</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+                    <span class="n">text_faked</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">textf</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Standard/Faked tokens matching error, at interval </span><span class="si">{:d}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">text_std</span><span class="o">.</span><span class="n">get_content</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">text_faked</span><span class="o">.</span><span class="n">get_content</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Fall back on faked.&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                    <span class="n">text_std</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">text_faked</span><span class="o">.</span><span class="n">get_content</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__align_tiers</h4>
+
+    <article class="docstring">
+<p><em>Align standard spelling tokens with faked spelling tokens.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>std</strong>: (<em>str</em>)</li>
+<li><strong>faked</strong>: (<em>str</em>)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>a tuple of std and faked</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__align_tiers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">faked</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Align standard spelling tokens with faked spelling tokens.</span>
+
+<span class="sd">        :param std: (str)</span>
+<span class="sd">        :param faked: (str)</span>
+<span class="sd">        :returns: a tuple of std and faked</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">stds</span> <span class="o">=</span> <span class="n">std</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">fakeds</span> <span class="o">=</span> <span class="n">faked</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">fakeds</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="n">faked</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fakeds</span><span class="p">:</span>
+        <span class="n">toks</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">toks</span><span class="p">:</span>
+            <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">fakeds</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[:]</span>
+    <span class="n">num_tokens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">stds</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;&#39;&quot;</span> <span class="ow">in</span> <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
+                <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">num_underscores</span> <span class="o">=</span> <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_underscores</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__normalizer</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">is_unk</span><span class="p">(</span><span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">num_underscores</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fakeds</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">])</span>
+                <span class="k">del</span> <span class="n">fakeds</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stds</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fakeds</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fakeds</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

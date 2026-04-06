@@ -1,0 +1,75 @@
+/*
+:filename: wexa_statics/css/sortable.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: style for a table with buttons to sort rows
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://whakerexa.sf.net/
+
+Copyright (C) 2023-2024 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+
+/* Sort buttons of a table */
+
+.sortatable {
+    margin: 0;
+    padding: 0.5rem;
+    width: 100%;
+    height: 100%;
+    min-height: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--a-color);
+    border: none;
+}
+
+.sortatable::after {
+    content: '';
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.6rem;
+    margin-left: 1rem;
+    vertical-align: middle;
+    border-style: solid;
+    border-color: var(--a-color);
+}
+
+/* No sorted: a square */
+.sortatable:not(.sort-asc):not(.sort-desc)::after {
+    width: 0.8rem;
+    height: 0;
+    border-top: 0.1rem solid var(--a-color);
+}
+
+/* Sorted: an arrow */
+.sort-asc::after {
+    border-width: 0 0.4rem 0.4rem 0.4rem;
+    border-color: transparent transparent var(--a-color) transparent;
+}
+
+.sort-desc::after {
+    border-width: 0.4rem 0.4rem 0 0.4rem;
+    border-color: var(--a-color) transparent transparent transparent;
+}
+

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasDumpFile. Class to manage dump files." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasVocabulary.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasHandResource.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.resources">    <h1>Module sppas.src.resources</h1>
+<section id="#sppasDumpFile">
+<h2>Class sppasDumpFile</h2>
+
+<section>
+<h3 id="#description_sppasDumpFile">Description</h3>
+    <article class="docstring">
+<p><em>Class to manage dump files.</em></p>
+
+<p>A dump file is a binary version of an ASCII file. Its size is greater
+than the original ASCII one but the time to load it is divided by two
+or three.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasDumpFile">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasDumpFile instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the ASCII file.</li>
+<li><strong>dump_extension</strong>: (<em>str</em>) Extension of the dump file.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">dump_extension</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasDumpFile instance.</span>
+
+<span class="sd">    :param filename: (str) Name of the ASCII file.</span>
+<span class="sd">    :param dump_extension: (str) Extension of the dump file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_dump_ext</span> <span class="o">=</span> <span class="n">sppasDumpFile</span><span class="o">.</span><span class="n">DUMP_FILENAME_EXT</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_dump_extension</span><span class="p">(</span><span class="n">dump_extension</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasDumpFile">Public functions</h3>
+<h4>set_filename</h4>
+
+    <article class="docstring">
+<p><em>Fix the name of the ASCII file.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the ASCII file.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the name of the ASCII file.</span>
+
+<span class="sd">        :param filename: (str) Name of the ASCII file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_dump_extension</h4>
+
+    <article class="docstring">
+<p><em>Fix the extension of the dump file.</em></p>
+
+<p>Set to the default extension if the given extension is an empty
+string.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>extension</strong>: (<em>str</em>) Extension of the dump file         (starting with or without the dot).</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>DumpExtensionError if extension of the dump file is         the same as the ASCII file.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_dump_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the extension of the dump file.</span>
+
+<span class="sd">        Set to the default extension if the given extension is an empty</span>
+<span class="sd">        string.</span>
+
+<span class="sd">        :param extension: (str) Extension of the dump file         (starting with or without the dot).</span>
+<span class="sd">        :raises: DumpExtensionError if extension of the dump file is         the same as the ASCII file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">extension</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">sppasDumpFile</span><span class="o">.</span><span class="n">DUMP_FILENAME_EXT</span>
+    <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">file_ext</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">DumpExtensionError</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_dump_ext</span> <span class="o">=</span> <span class="n">extension</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_dump_extension</h4>
+
+    <article class="docstring">
+<p><em>Return the extension of the dump version of filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_dump_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the extension of the dump version of filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dump_ext</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_dump_filename</h4>
+
+    <article class="docstring">
+<p><em>Return the file name of the dump version of filename.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>name of the dump file</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_dump_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the file name of the dump version of filename.</span>
+
+<span class="sd">        :returns: name of the dump file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">file_name</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dump_ext</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>has_dump</h4>
+
+    <article class="docstring">
+<p><em>Test if a dump file exists for filename and if it is up-to-date.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>bool</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">has_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test if a dump file exists for filename and if it is up-to-date.</span>
+
+<span class="sd">        :returns: (bool)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">dump_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dump_filename</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dump_filename</span><span class="p">):</span>
+        <span class="n">tascii</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">)</span>
+        <span class="n">tdump</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">dump_filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tascii</span> <span class="o">&lt;</span> <span class="n">tdump</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>load_from_dump</h4>
+
+    <article class="docstring">
+<p><em>Load the file from a dumped file.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>loaded data or None</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_from_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the file from a dumped file.</span>
+
+<span class="sd">        :returns: loaded data or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_dump</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">dump_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dump_filename</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dump_filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Save a dumped data failed: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dump_filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>save_as_dump</h4>
+
+    <article class="docstring">
+<p><em>Save the data as a dumped file.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>data</strong>: The data to save</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>bool</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save_as_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the data as a dumped file.</span>
+
+<span class="sd">        :param data: The data to save</span>
+<span class="sd">        :returns: (bool)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">dump_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dump_filename</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dump_filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Save a dumped data failed: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

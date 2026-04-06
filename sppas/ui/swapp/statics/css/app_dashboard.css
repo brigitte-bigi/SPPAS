@@ -1,0 +1,362 @@
+/*
+:filename: sppas.ui.swapp.statics.css.app_dashboard.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Style to be used for the SPPAS Dashboard
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+*/
+
+/*
+=================================  BUTTONS  ===================================
+*/
+
+/* AGREEMENT */
+#agreement_dlg {
+    border: none;
+}
+
+#agree_button {
+    padding: 1em 2em;
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: 1rem;
+    font-variant: small-caps;
+    font-weight: bold;
+    border-radius: var(--card-border-radius);
+    text-transform: uppercase;
+    color: var(--app-button-fg-color);
+    border-color: var(--info-color);
+    background-image: var(--app-button-bg-color);
+    box-shadow: 0 0 1.5rem var(--shadow-color);
+    opacity: 1;
+}
+
+#agree_button:hover {
+    background-position: right center; /* change the direction of the change here */
+    text-decoration: none;
+    background-image: var(--buttons-bg-color);
+    color: var(--buttons-fg-color);
+}
+
+
+/*
+=================================  LINKS  ===================================
+*/
+
+.links-panel {
+    padding: 2rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(12 * var(--font-size)), 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+
+    border-radius: var(--card-border-radius);
+    background: linear-gradient(90deg, rgb(197, 208, 222) 0%, rgb(133, 199, 137) 60%, rgb(148, 132, 184) 100%);
+}
+
+.link-button {
+    background-color: var(--card-bg-color);
+    color: inherit;
+    cursor: pointer;
+    margin: 0.4rem;
+    padding: 0;
+
+    /* Display elements inside the button: */
+    flex-direction: column;
+    box-shadow: var(--card-box-shadow);
+
+    border: calc(var(--border-width)*1.5) solid var(--border-color);
+}
+
+.link-button:hover {
+    box-shadow: none;
+    background-color: var(--bg-color-alt);
+}
+
+.link-button-icon {
+    display: inline-block;
+    width: 80%;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    filter: brightness(0.9);
+}
+
+.dark .link-button-icon {
+    filter: brightness(1.4);
+}
+
+.link-button-text {
+    display: inline-block;
+    margin: auto;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    vertical-align: middle;
+    font-size: 1.125rem;
+    color: var(--fg-color);
+}
+
+#web_btn {
+    border: var(--border-width) solid rgb(87, 109, 159);
+}
+
+#docu_btn {
+    border: var(--border-width) solid rgb(241, 211, 79);
+}
+
+#tuto_btn {
+    border: var(--border-width) solid rgb(0, 160, 40);
+}
+
+#faq_btn {
+    border: var(--border-width) solid rgb(220, 120, 40);
+}
+
+#src_btn {
+    border: var(--border-width) solid rgb(50, 150, 150);
+}
+
+#res_btn {
+    border: var(--border-width) solid rgb(40, 60, 150);
+}
+
+#award_btn {
+    border: var(--border-width) solid rgb(60, 40, 150);
+}
+
+
+:not(.dark) {
+    #web_text {
+        background-color: rgb(120, 140, 190);
+    }
+
+    #docu_text {
+        background-color: rgb(241, 211, 79);
+    }
+
+    #tuto_text {
+        background-color: rgb(100, 180, 100);
+    }
+
+    #faq_text {
+        background-color: rgb(240, 150, 60);
+    }
+
+    #src_text {
+        background-color: rgb(50, 150, 150);
+    }
+
+    #res_text {
+        background-color: rgb(110, 130, 230);
+    }
+
+    #award_text {
+        background-color: rgb(130, 110, 230);
+    }
+
+}
+
+.dark {
+    #web_text {
+        background-color: rgb(47, 69, 119);
+    }
+
+    #docu_text {
+        background-color: rgb(110, 70, 10);
+    }
+
+    #tuto_text {
+        background-color: rgb(0, 90, 20);
+    }
+
+    #faq_text {
+        background-color: rgb(120, 20, 0);
+    }
+
+    #src_text {
+        background-color: rgb(0, 90, 90);
+    }
+
+    #res_text {
+        background-color: rgb(30, 50, 120);
+    }
+
+    #award_text {
+        background-color: rgb(50, 30, 120);
+    }
+}
+
+
+/*
+=================================  ABOUT  ===================================
+*/
+
+dialog[role=alertdialog].about-dialog {
+    width: min(800px, calc(100vw - 2rem));
+    max-width: 800px;
+	border-radius: var(--card-border-radius);
+	border: calc(var(--border-width)*2) solid var(--border-color);
+	background: var(--bg-color);
+	color: var(--fg-color);
+	margin: auto;
+	padding: 0;
+    overflow: hidden;
+}
+
+dialog[role=alertdialog].about-dialog::before {
+    all: unset;
+}
+
+.about-dialog a {
+	color: inherit;
+}
+
+dialog[role=alertdialog].about-dialog > header {
+	background: var(--header-bg-color);
+	color: var(--header-fg-color);
+	height: 3rem;
+	margin: 0;
+	padding-top: 1rem;
+	padding-left: 0.5rem;
+}
+
+.dark dialog[role=alertdialog].about-dialog > header {
+	background: rgb(10, 10, 55);;
+	color: #ebf4fb;
+}
+
+.about-dialog > main {
+    display: grid;
+    grid-template-columns: minmax(140px, 22%) 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+}
+
+.about-dialog > main > img {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.about-dialog > main > section {
+    min-width: 0;
+}
+
+.about-dialog > main h1 {
+    margin: 0 0 1rem 0;
+	font-size: calc(var(--font-size) * 3);
+	color: inherit;
+}
+
+
+.about-dialog .version-block {
+    margin: 1rem 0;
+}
+
+.about-dialog .version-block .status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.about-dialog .version-block .details {
+    margin-left: 1.6rem;
+}
+
+.about-dialog .version-block .details p {
+    margin: 0.25rem 0 0 0;
+}
+
+.about-dialog > footer {
+    background: var(--bg-color-alt);
+    color: var(--fg-color-alt);
+    text-align: center;
+	padding-top: 1rem;
+}
+
+.about-dialog > footer > p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem 1rem;
+}
+
+.about-dialog > footer > p a {
+    display: inline-block;
+	color: var(--fg-color-alt);
+}
+
+.about-dialog > footer > .copyright {
+	margin: 0;
+	color: inherit;
+	font-size: 80%;
+}
+
+@media (max-width: 640px) {
+    .about-dialog > main {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .about-dialog > main > img {
+        max-width: 160px;
+    }
+}
+
+/* disable the generic rule for a transparent background in wexa.css */
+dialog[role="alertdialog"] blockquote {
+    background: var(--header-bg-color);
+    color: var(--header-fg-color);
+}
+
+dialog[role="alertdialog"] blockquote * {
+    background: none;
+    color: var(--header-fg-color);
+}
+
+.green {
+	color: rgb(10, 200, 10);
+}
+
+.red {
+	color: rgb(200, 10, 10);
+}

@@ -1,0 +1,76 @@
+{
+  "id": "anonym",
+  "name": "Anonymization",
+  "descr": "Anonymization allows to modify segments of an annotation, of an audio file and/or of a video file in order to make their content un-understandable and un-identifiable. Requires a tier with intervals.",
+  "required": "",
+  "api": "sppasAnonym",
+  "devel": 90,
+
+  "resources": [],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "-palign",
+      "text": "Pattern of the annotated file with the intervals to be buzzed"
+    },
+    {
+      "id": "inputpattern2",
+      "type": "str",
+      "value": "",
+      "text": "Pattern of the video file"
+    },
+    {
+      "id": "inputpattern3",
+      "type": "str",
+      "value": "",
+      "text": "Pattern of the audio file"
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-anonym",
+      "text": "Pattern of the output files"
+    },
+    {
+      "id": "buzztier",
+      "type": "str",
+      "value": "TokensAlign",
+      "text": "Name of the tier with intervals to be anonymized"
+    },
+    {
+      "id": "buzzedtierpattern",
+      "type": "str",
+      "value": "-buzz",
+      "text": "Pattern to append to the name of the anonymized tier"
+    },
+    {
+      "id": "buzzname",
+      "type": "str",
+      "value": "$",
+      "text": "Pattern to find intervals to be anonymized"
+    },
+    {
+      "id": "buzzfilter",
+      "type": "str",
+      "value": "contains",
+      "text": "Rule to be applied to select intervals: equal, contains, ..."
+    },
+    {
+      "id": "buzzvideo",
+      "type": "str",
+      "value": "face",
+      "text": "Anonymization of the video file: none, face or mouth"
+    },
+    {
+      "id": "buzzaudio",
+      "type": "bool",
+      "value": true,
+      "text": "Anonymization of the audio file"
+    }
+  ],
+
+  "refs": {
+  }
+}

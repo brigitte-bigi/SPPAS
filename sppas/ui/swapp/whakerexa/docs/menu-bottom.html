@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Menu at bottom</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="menu, app, mobile, web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
+    <style>
+        :root {
+            --header-height: 26vh;
+            --header-slidein: none;
+            --nav-min-height: 4rem;
+            --border-radius: 1rem;
+        }
+
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-fg-color: rgba(240, 230, 240);
+            --nav-min-height: 4rem;
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+
+        .mini-top {
+            --nav-min-height: 2rem;
+            --nav-item-min-height: 1.8rem;
+            --nav-item-height: 1.8rem;
+            --nav-item-max-height: 1.9rem;
+        }
+
+        .mini-top [role='menuitem'] {
+            font-size: 0.8rem;
+            gap: 0;
+        }
+
+        .mini-top img {
+            height: 1rem;
+            width: 1rem;
+        }
+
+        /* Example of user customization for a specific submenu */
+        #appmenu-profile {
+            --appmenu-position: top;
+            --appmenu-align: right top;
+            background: linear-gradient(90deg, #002244, #88ccff);
+        }
+
+        #appmenu-profile nav {
+            flex-direction: row;        /* horizontal layout */
+            justify-content: flex-end;  /* align items to the right */
+            gap: 1rem;                  /* spacing between buttons */
+            padding: 0.4rem 1rem;
+        }
+
+        #appmenu-profile [role='menuitem'] {
+            background-color: #445577;
+            color: white;
+            border-radius: 0.25rem;
+            padding: 0.3rem 0.8rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #appmenu-profile [role='menuitem']:hover {
+            background-color: #6688aa;
+        }
+
+    </style>
+
+    <script src="../wexa_statics/js/wexa.js" type="module"></script>
+    <script>
+  (function () {
+    function initMenus() {
+      const MenuManager = window.Wexa && window.Wexa.MenuManager;
+      if (!MenuManager) {
+        console.warn('[menu-bottom] MenuManager is not available.');
+        return;
+      }
+      window.menu = new MenuManager();
+      // Bottom demo still uses the same side-menu wiring for submenus
+      window.menu.initSideMenu();
+      window.menu.registerSubmenu('appmenu-profile', 'submenu-toggle-profile');
+      window.menu.registerSubmenu('appmenu-menu', 'submenu-toggle-menu');
+    }
+
+    // If library already present, init now; otherwise wait a bit (bundle) or DOMContentLoaded (modules)
+    if (window.Wexa) {
+      initMenus();
+      return;
+    }
+
+    // Fallback: wait for injected loader to populate window.Wexa
+    const t = setInterval(function () {
+      if (window.Wexa) {
+        clearInterval(t);
+        initMenus();
+      }
+    }, 20);
+  })();
+</script>
+
+</head>
+
+<body>
+
+    <!-- Header Section for the mobile menu -->
+    <header>
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+
+        <h1>Bottom Application Menu</h1>
+        <h2>by Whakerexa</h2>
+
+        <nav class="nav-wexa top mini-top" aria-label="Accessibility navigation">
+            <button id="btn-contrast" class="accessibility print-off" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()" aria-label="Switch contrast scheme"></button>
+            <button id="btn-theme" class="accessibility print-off" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()" aria-label="Switch color scheme"></button>
+            <a role="menuitem" class="print-off" href="https://whakerexa.sourceforge.io">
+                <img src="../wexa_statics/logos/whakerexa.png" alt="Whakerexa home page" />
+            </a>
+            <button id="submenu-toggle-profile" role="menuitem" class="print-off">
+                Profile
+            </button>
+        </nav>
+
+        <!-- Submenu for the Profile button -->
+        <aside class="appmenu" id="appmenu-profile"
+               style="--appmenu-position: top; --appmenu-align: right top" aria-label="Submenu">
+            <nav>
+                <a role="menuitem" href="#">Setting 1</a>
+                <a role="menuitem" href="#">Setting 2</a>
+            </nav>
+        </aside>
+
+    </header>
+
+    <!-- Mobile Menu at the bottom -->
+    <nav id="nav-content" class="nav-wexa bottom" aria-label="Main navigation">
+        <button id="submenu-toggle-menu" role="menuitem" aria-label="Menu">
+            ☰
+            <span>Menu</span>
+        </button>
+        <button aria-label="Applications" role="menuitem">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="6" height="16" rx="1"/>
+                <rect x="14" y="4" width="6" height="6" rx="1"/>
+                <rect x="14" y="14" width="6" height="6" rx="1"/>
+            </svg>
+            <span>Apps</span>
+        </button>
+        <button aria-label="Help" role="menuitem">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4" />
+                <circle cx="12" cy="17" r="1"/>
+            </svg>
+            <span>Help</span>
+        </button>
+    </nav>
+
+    <!-- Submenu for the 'Options' button -->
+    <aside class="appmenu"  id="appmenu-menu"
+           style="--appmenu-position: left; --appmenu-align: left bottom; " aria-label="Submenu">
+        <nav>
+            <a role="menuitem" href="#">Option 1</a>
+            <a role="menuitem" href="#">Option 2</a>
+            <a role="menuitem" href="#">Option 3</a>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <!-- Main content -->
+    <main id="main-content">
+        <h1>Description</h1>
+
+        <p>
+            This page demonstrates a “mobile app” layout: a bottom navigation bar and slide-in menus.
+            The HTML on this page is the reference (doc + demo).
+        </p>
+
+        <h2>What this example shows</h2>
+        <ul>
+            <li>A bottom bar: <code>nav#nav-content.nav-wexa.bottom</code></li>
+            <li>Two app menus: <code>aside.appmenu#appmenu-menu</code> and <code>aside.appmenu#appmenu-profile</code></li>
+            <li>Submenu toggles: <code>#submenu-toggle-menu</code> and <code>#submenu-toggle-profile</code></li>
+        </ul>
+
+        <h2>JavaScript</h2>
+        <p>
+            The visual layout is CSS. JavaScript is only used to open/close the menus
+            (see <code>MenuManager</code>: <code>initMobileToggle()</code> and <code>registerSubmenu(...)</code>).
+        </p>
+
+        <h2>Customization</h2>
+        <p>
+            App menus can be positioned using CSS variables (see inline styles on the
+            <code>aside.appmenu</code> blocks, e.g. <code>--appmenu-position</code> and <code>--appmenu-align</code>).
+        </p>
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+</body>
+</html>

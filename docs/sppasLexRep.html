@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasLexRep. SPPAS integration of the speaker lexical variation annotation." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasAnnotationsManager.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasHandPose.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+<section id="#sppasLexRep">
+<h2>Class sppasLexRep</h2>
+
+<section>
+<h3 id="#description_sppasLexRep">Description</h3>
+    <article class="docstring">
+<p><em>SPPAS integration of the speaker lexical variation annotation.</em></p>
+
+<p>Main differences compared to repetitions:
+The span option is used to fix the max number of continuous tokens to analyze.
+The span window has a duration limit.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasLexRep">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasLexVar instance.</em></p>
+
+<p>Log is used for a better communication of the annotation process and its
+results. If None, logs are redirected to the default logging system.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasLexVar instance.</span>
+
+<span class="sd">    Log is used for a better communication of the annotation process and its</span>
+<span class="sd">    results. If None, logs are redirected to the default logging system.</span>
+
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasLexRep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;lexrep.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__rules</span> <span class="o">=</span> <span class="n">OtherRules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stop_words</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasLexRep">Public functions</h3>
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p><em>Fix all options.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: list of sppasOption instances</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+
+<span class="sd">        :param options: list of sppasOption instances</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;spandur&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_span_duration</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;span&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_span</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;stopwords&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_stopwords</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;alpha&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_span</h4>
+
+    <article class="docstring">
+<p><em>Set the max span, in number of words.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>int</em>) Max nb of tokens in a span window.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_span</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the max span, in number of words.</span>
+
+<span class="sd">        :param value: (int) Max nb of tokens in a span window.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid span value&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_span_duration</h4>
+
+    <article class="docstring">
+<p><em>Set the spandur option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>, <em>int</em>) Max duration of a span window.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_span_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the spandur option.</span>
+
+<span class="sd">        :param value: (float, int) Max duration of a span window.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;spandur&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_stopwords</h4>
+
+    <article class="docstring">
+<p><em>Set the stopwords option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Enable the fact to add estimated stopwords</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_stopwords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the stopwords option.</span>
+
+<span class="sd">        :param value: (bool) Enable the fact to add estimated stopwords</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_alpha</h4>
+
+    <article class="docstring">
+<p><em>Set the alpha option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) Coefficient to estimated stopwords</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the alpha option.</span>
+
+<span class="sd">        :param value: (float) Coefficient to estimated stopwords</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.1</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">2.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid alpha value&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>tier_to_list</h4>
+
+    <article class="docstring">
+<p><em>Create a list with the tokens contained in a tier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (sppasTier)</li>
+<li><strong>loc</strong>: (<em>bool</em>) if true create the corresponding list of sppasLocation()</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em>, <em>list</em>) list of unicode content and list of location</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tier_to_list</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a list with the tokens contained in a tier.</span>
+
+<span class="sd">        :param tier: (sppasTier)</span>
+<span class="sd">        :param loc: (bool) if true create the corresponding list of sppasLocation()</span>
+<span class="sd">        :returns:  (list, list) list of unicode content and list of location</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">localiz</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">is_speech</span><span class="p">():</span>
+                    <span class="n">content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="n">loc</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">localiz</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">localiz</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_longest</h4>
+
+    <article class="docstring">
+<p><em>Return the index of the last token of the longest repeated sequence.</em></p>
+
+<p>No matter if a non-speech event occurs in the middle of the repeated
+sequence and no matter if a non-speech event occurs in the middle of
+the source sequence.
+No matter if tokens are not repeated in the same order.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>speaker1</strong>: (DataSpeaker) Entries of speaker 1</li>
+<li><strong>speaker2</strong>: (DataSpeaker) Entries of speaker 2</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>) Index or -1</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_longest</span><span class="p">(</span><span class="n">speaker1</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the last token of the longest repeated sequence.</span>
+
+<span class="sd">        No matter if a non-speech event occurs in the middle of the repeated</span>
+<span class="sd">        sequence and no matter if a non-speech event occurs in the middle of</span>
+<span class="sd">        the source sequence.</span>
+<span class="sd">        No matter if tokens are not repeated in the same order.</span>
+
+<span class="sd">        :param speaker1: (DataSpeaker) Entries of speaker 1</span>
+<span class="sd">        :param speaker2: (DataSpeaker) Entries of speaker 2</span>
+<span class="sd">        :returns: (int) Index or -1</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">last_token</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">index1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">speaker1</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">speaker1</span><span class="o">.</span><span class="n">is_word</span><span class="p">(</span><span class="n">index1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">param2</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">repet_idx</span> <span class="o">=</span> <span class="n">speaker1</span><span class="o">.</span><span class="n">is_word_repeated</span><span class="p">(</span><span class="n">index1</span><span class="p">,</span> <span class="n">param2</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">repet_idx</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">last_token</span> <span class="o">=</span> <span class="n">index1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+    <span class="k">return</span> <span class="n">last_token</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>select</h4>
+
+    <article class="docstring">
+<p><em>Append (or not) a repetition.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index1</strong>: (<em>int</em>) end index of the entry of the source (speaker1)</li>
+<li><strong>speaker1</strong>: (DataSpeaker) Entries of speaker 1</li>
+<li><strong>speaker2</strong>: (DataSpeaker) Entries of speaker 2</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>bool</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index1</span><span class="p">,</span> <span class="n">speaker1</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append (or not) a repetition.</span>
+
+<span class="sd">        :param index1: (int) end index of the entry of the source (speaker1)</span>
+<span class="sd">        :param speaker1: (DataSpeaker) Entries of speaker 1</span>
+<span class="sd">        :param speaker2: (DataSpeaker) Entries of speaker 2</span>
+<span class="sd">        :returns: (bool)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">keep_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rules</span><span class="o">.</span><span class="n">rule_syntagme</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index1</span><span class="p">,</span> <span class="n">speaker1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">keep_me</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">keep_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rules</span><span class="o">.</span><span class="n">rule_strict</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index1</span><span class="p">,</span> <span class="n">speaker1</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">keep_me</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>create_tier</h4>
+
+    <article class="docstring">
+<p><em>Create a tier from content end localization lists.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>sources</strong>: (<em>dict</em>) dict of sources -- in fact, the indexes.</li>
+<li><strong>locations</strong>: (<em>list</em>) list of location corresponding to the tokens</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_tier</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">locations</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tier from content end localization lists.</span>
+
+<span class="sd">        :param sources: (dict) dict of sources -- in fact, the indexes.</span>
+<span class="sd">        :param locations: (list) list of location corresponding to the tokens</span>
+<span class="sd">        :returns: (sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">tier_content</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;LexRepContent&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">lexreprise</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+        <span class="n">start_idx</span> <span class="o">=</span> <span class="n">lexreprise</span><span class="o">.</span><span class="n">get_start</span><span class="p">()</span>
+        <span class="n">end_idx</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="n">lexreprise</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
+        <span class="n">loc_begin</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="n">start_idx</span><span class="p">]</span>
+        <span class="n">loc_end</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="n">end_idx</span><span class="p">]</span>
+        <span class="n">begin_point</span> <span class="o">=</span> <span class="n">loc_begin</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
+        <span class="n">end_point</span> <span class="o">=</span> <span class="n">loc_end</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">sppasLocation</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">(</span><span class="n">begin_point</span><span class="p">,</span> <span class="n">end_point</span><span class="p">))</span>
+        <span class="n">tier_content</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">lexreprise</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">tier_content</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>windowing</h4>
+
+    <article class="docstring">
+<p><em>Return the list of DataSpeaker matching the given content.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>content</strong>: (<em>list</em>) List of entries</li>
+<li><strong>location</strong>: (<em>list</em>) List of locations of the entries</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>list of DataSpeaker</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">windowing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of DataSpeaker matching the given content.</span>
+
+<span class="sd">        :param content: (list) List of entries</span>
+<span class="sd">        :param location: (list) List of locations of the entries</span>
+<span class="sd">        :returns: list of DataSpeaker</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">span_tok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]</span>
+    <span class="n">span_dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;spandur&#39;</span><span class="p">]</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)):</span>
+        <span class="n">end_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">span_tok</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end_size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">win_loc</span> <span class="o">=</span> <span class="n">location</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">end_size</span><span class="p">]</span>
+            <span class="n">start_point</span> <span class="o">=</span> <span class="n">win_loc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
+            <span class="n">end_point</span> <span class="o">=</span> <span class="n">win_loc</span><span class="p">[</span><span class="n">end_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
+            <span class="n">win_dur</span> <span class="o">=</span> <span class="n">end_point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">win_dur</span> <span class="o">&gt;</span> <span class="n">span_dur</span> <span class="ow">and</span> <span class="n">end_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">end_point</span> <span class="o">=</span> <span class="n">win_loc</span><span class="p">[</span><span class="n">end_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
+                <span class="n">win_dur</span> <span class="o">=</span> <span class="n">end_point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_point</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">win_dur</span> <span class="o">&lt;=</span> <span class="n">span_dur</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">end_size</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">end_size</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">span_tok</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; ... window was reduced to </span><span class="si">{}</span><span class="s1"> tokens.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">win_tok</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">end_size</span><span class="p">]</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DataSpeaker</span><span class="p">(</span><span class="n">win_tok</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">windows</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>lexical_variation_detect</h4>
+
+    <article class="docstring">
+<p><em>Detect the lexical variations between 2 tiers.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier1</strong>: (sppasTier)</li>
+<li><strong>tier2</strong>: (sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lexical_variation_detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier1</span><span class="p">,</span> <span class="n">tier2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect the lexical variations between 2 tiers.</span>
+
+<span class="sd">        :param tier1: (sppasTier)</span>
+<span class="sd">        :param tier2: (sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">content_tier1</span><span class="p">,</span> <span class="n">loc_tier1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_list</span><span class="p">(</span><span class="n">tier1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">content_tier2</span><span class="p">,</span> <span class="n">loc_tier2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier_to_list</span><span class="p">(</span><span class="n">tier2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">window_list1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">windowing</span><span class="p">(</span><span class="n">content_tier1</span><span class="p">,</span> <span class="n">loc_tier1</span><span class="p">)</span>
+    <span class="n">window_list2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">windowing</span><span class="p">(</span><span class="n">content_tier2</span><span class="p">,</span> <span class="n">loc_tier2</span><span class="p">)</span>
+    <span class="n">sources1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_all_sources</span><span class="p">(</span><span class="n">window_list1</span><span class="p">,</span> <span class="n">window_list2</span><span class="p">)</span>
+    <span class="n">sources2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_all_sources</span><span class="p">(</span><span class="n">window_list2</span><span class="p">,</span> <span class="n">window_list1</span><span class="p">)</span>
+    <span class="n">tier1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="n">sources1</span><span class="p">,</span> <span class="n">loc_tier1</span><span class="p">)</span>
+    <span class="n">tier2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_tier</span><span class="p">(</span><span class="n">sources2</span><span class="p">,</span> <span class="n">loc_tier2</span><span class="p">)</span>
+    <span class="n">tier1</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier1</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+    <span class="n">tier2</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier2</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-2&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">tier1</span><span class="p">,</span> <span class="n">tier2</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return 2 tiers with aligned tokens.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>NoTierInputError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return 2 tiers with aligned tokens.</span>
+
+<span class="sd">        :param input_files: (list)</span>
+<span class="sd">        :raise: NoTierInputError</span>
+<span class="sd">        :return: (sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid format of input files.&#39;</span><span class="p">)</span>
+    <span class="n">tier_src</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tier_src</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_tokens</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A source tier with time-aligned tokens was expected but not found.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">NoTierInputError</span>
+    <span class="n">tier_echo</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tier_echo</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_tokens</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_echo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;An echo tier with time-aligned tokens was expected but not found.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">NoTierInputError</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">tier_src</span><span class="p">,</span> <span class="n">tier_echo</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on an input.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>list</em> of <em>str</em>) time-aligned tokens of 2 files</li>
+<li><strong>output</strong>: (<em>str</em>) the output file name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTranscription)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+
+<span class="sd">        :param input_files: (list of list of str) time-aligned tokens of 2 files</span>
+<span class="sd">        :param output: (str) the output file name</span>
+<span class="sd">        :returns: (sppasTranscription)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">tier_tokens_src</span><span class="p">,</span> <span class="n">tier_tokens_echo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+    <span class="n">tier1</span><span class="p">,</span> <span class="n">tier2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexical_variation_detect</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="p">,</span> <span class="n">tier_tokens_echo</span><span class="p">)</span>
+    <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word_strain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">tier_tokens_src</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">stopwords1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_stop_words</span><span class="p">(</span><span class="n">tier_tokens_src</span><span class="p">)</span>
+        <span class="n">stopwords1</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">stopwords1</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-1&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stopwords1</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word_strain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">tier_tokens_echo</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-2&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;stopwords&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">stopwords2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_stop_words</span><span class="p">(</span><span class="n">tier_tokens_echo</span><span class="p">)</span>
+        <span class="n">stopwords2</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">stopwords2</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-2&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stopwords2</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">output_file</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EmptyOutputError</span>
+    <span class="k">return</span> <span class="n">trs_output</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation uses in an output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-rms&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_sppasLexRep">Private functions</h3>
+<h4>_get_longest_selected</h4>
+
+    <article class="docstring">
+<p><em>Return the end-index of the longest selected sequence.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>data_spk1</strong></li>
+<li><strong>data_spk2</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_get_longest_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the end-index of the longest selected sequence.&quot;&quot;&quot;</span>
+    <span class="n">spk2_echo_idx</span> <span class="o">=</span> <span class="n">sppasLexRep</span><span class="o">.</span><span class="n">get_longest</span><span class="p">(</span><span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">spk2_echo_idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">spk2_echo_idx</span><span class="p">,</span> <span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">spk2_echo_idx</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>_add_source</h4>
+
+    <article class="docstring">
+<p><em>Add the source in the list of sources.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>sources</strong></li>
+<li><strong>win_idx</strong></li>
+<li><strong>end</strong></li>
+<li><strong>dataspk</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_add_source</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dataspk</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the source in the list of sources.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">win_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+        <span class="n">lex_reprise</span> <span class="o">=</span> <span class="n">LexReprise</span><span class="p">(</span><span class="n">win_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">lex_reprise</span><span class="o">.</span><span class="n">set_content</span><span class="p">(</span><span class="n">dataspk</span><span class="p">)</span>
+        <span class="n">sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lex_reprise</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>_detect_all_sources</h4>
+
+    <article class="docstring">
+<p><em>Return all reprises of speaker1 in speaker2.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li><p>(<em>dict</em>) dict of sources</p></li>
+<li><p>key: (index<em>start, index</em>end)</p></li>
+<li>value: the number of time the source is repeated</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>win_spk1</strong></li>
+<li><strong>win_spk2</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detect_all_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win_spk1</span><span class="p">,</span> <span class="n">win_spk2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all reprises of speaker1 in speaker2.</span>
+
+<span class="sd">        :return: (dict) dict of sources</span>
+
+<span class="sd">        - key: (index_start, index_end)</span>
+<span class="sd">        - value: the number of time the source is repeated</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">sources</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">prev_max_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">spk1_widx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">spk1_widx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_spk1</span><span class="p">):</span>
+        <span class="n">data_spk1</span> <span class="o">=</span> <span class="n">win_spk1</span><span class="p">[</span><span class="n">spk1_widx</span><span class="p">]</span>
+        <span class="n">max_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">spk2_widx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">spk2_widx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_spk2</span><span class="p">):</span>
+            <span class="n">data_spk2</span> <span class="o">=</span> <span class="n">win_spk2</span><span class="p">[</span><span class="n">spk2_widx</span><span class="p">]</span>
+            <span class="n">spk2_echo_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_longest_selected</span><span class="p">(</span><span class="n">data_spk1</span><span class="p">,</span> <span class="n">data_spk2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">spk2_echo_idx</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">spk1_widx</span> <span class="o">+</span> <span class="n">spk2_echo_idx</span> <span class="o">&gt;</span> <span class="n">prev_max_index</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">spk2_echo_idx</span> <span class="o">&gt;</span> <span class="n">max_index</span><span class="p">:</span>
+                    <span class="n">max_index</span> <span class="o">=</span> <span class="n">spk2_echo_idx</span>
+                    <span class="k">if</span> <span class="n">max_index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;span&#39;</span><span class="p">]:</span>
+                        <span class="k">break</span>
+            <span class="n">spk2_widx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">max_index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">sppasLexRep</span><span class="o">.</span><span class="n">_add_source</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">win_idx</span><span class="o">=</span><span class="n">spk1_widx</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">max_index</span><span class="p">,</span> <span class="n">dataspk</span><span class="o">=</span><span class="n">data_spk1</span><span class="p">)</span>
+            <span class="n">prev_max_index</span> <span class="o">=</span> <span class="n">spk1_widx</span> <span class="o">+</span> <span class="n">max_index</span>
+        <span class="n">spk1_widx</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">sources</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>_merge_sources</h4>
+
+    <article class="docstring">
+<p><em>Merge sources if content is the same.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>sources</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_merge_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sources</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge sources if content is the same.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sources</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

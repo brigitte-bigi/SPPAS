@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasTierFilters. This class implements the  SPPAS tier filter system ." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.resources.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasTierStats.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="SingleFilterTier.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.annotations.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.analysis">    <h1>Module sppas.src.analysis</h1>
+<section id="#sppasTierFilters">
+<h2>Class sppasTierFilters</h2>
+
+<section>
+<h3 id="#description_sppasTierFilters">Description</h3>
+    <article class="docstring">
+<p><em>This class implements the 'SPPAS tier filter system'.</em></p>
+
+<p>Search in tiers. The class sppasTierFilters() allows to apply several types
+of filter (tag, duration, ...), and the class sppasAnnSet() is a data set
+manager, i.e. it contains the annotations selected by a filter and a
+string representing the filter.</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="c1"># Create a filter:</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
+</code></pre></div>
+
+<p>then, apply a filter with some pattern like in the following examples.
+sppasAnnSet() can be combined with operators &amp; and |, like for any other
+'set' in Python, 'an unordered collection of distinct hashable objects'.</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="c1"># extract silences:</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">exact</span><span class="o">=</span><span class="n">u</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)))</span>
+</code></pre></div>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="c1"># extract silences more than 200ms</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">exact</span><span class="o">=</span><span class="n">u</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">))</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">dur</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="c1"># find the annotations with at least a label with a tag</span>
+ <span class="o">&gt;</span> <span class="c1"># starting by &quot;pa&quot; and ending by &quot;a&quot; like &quot;pa&quot;, &quot;papa&quot;, &quot;pasta&quot;, etc:</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;pa&quot;</span><span class="p">,</span> <span class="n">endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+ <span class="o">&gt;</span> <span class="c1"># It&#39;s equivalent to write:</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;pa&quot;</span><span class="p">,</span> <span class="n">endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The classical "and" and "or" logical boolean predicates are accepted;
+"and" is the default one. It defines whether all the functions must
+be True ("and") or any of them ("or").</p>
+
+<p>The result of the two previous lines of code is the same, but two
+times faster, compared to use this one.</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;pa&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>In the first case, for each tag, the method applies the logical boolean
+between two predicates and creates the data set matching the combined
+condition. In the second case, each call to the method creates a data
+set matching each individual condition, then the data sets are
+combined.</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;</span> <span class="c1"># find annotations with more than 1 label</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">nlab</span><span class="p">(</span><span class="n">lge</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasTierFilters">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasTierFilters instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>obj</strong>: (sppasTier) The tier to be filtered.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasTierFilters instance.</span>
+
+<span class="sd">    :param obj: (sppasTier) The tier to be filtered.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">sppasTier</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;sppasTier&#39;</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasTierFilters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasTierFilters">Public functions</h3>
+<h4>tag</h4>
+
+    <article class="docstring">
+<p><em>Apply functions on all tags of all labels of annotations.</em></p>
+
+<p>Each argument is made of a function name and its expected value.
+Each function can be prefixed with 'not_', like in the next example.</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;pa&quot;</span><span class="p">,</span> <span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;pa&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">not_endswith</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;pa&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">startswith</span><span class="o">=</span><span class="s2">&quot;ta&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kwargs</strong>: logic_bool/any sppasTagCompare() method.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasAnnSet)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on all tags of all labels of annotations.</span>
+
+<span class="sd">        Each argument is made of a function name and its expected value.</span>
+<span class="sd">        Each function can be prefixed with &#39;not_&#39;, like in the next example.</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; f.tag(startswith=&quot;pa&quot;, not_endswith=&#39;a&#39;, logic_bool=&quot;and&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; f.tag(startswith=&quot;pa&quot;) &amp; f.tag(not_endswith=&#39;a&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; f.tag(startswith=&quot;pa&quot;) | f.tag(startswith=&quot;ta&quot;)</span>
+
+<span class="sd">        :param kwargs: logic_bool/any sppasTagCompare() method.</span>
+<span class="sd">        :returns: (sppasAnnSet)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasTagCompare</span><span class="p">()</span>
+    <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">tag_logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">label_logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool_label</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">tag_fct_values</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_function_values</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">tag_functions</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_functions</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">:</span>
+        <span class="n">is_matching</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_labels</span><span class="p">():</span>
+            <span class="n">is_matching</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">tag_functions</span><span class="p">,</span> <span class="n">tag_logic_bool</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_matching</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">label_logic_bool</span> <span class="o">==</span> <span class="s1">&#39;any&#39;</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">is_matching</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">label_logic_bool</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">is_matching</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">tag_fct_values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>dur</h4>
+
+    <article class="docstring">
+<p><em>Apply functions on durations of the location of annotations.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kwargs</strong>: logic_bool/any sppasDurationCompare() method.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasAnnSet)</li>
+</ul>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">dur</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">dur</span><span class="p">(</span><span class="n">le</span><span class="o">=</span><span class="mf">0.07</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">dur</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mf">0.07</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">dur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on durations of the location of annotations.</span>
+
+<span class="sd">        :param kwargs: logic_bool/any sppasDurationCompare() method.</span>
+<span class="sd">        :return: (sppasAnnSet)</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; f.dur(ge=0.03) &amp; f.dur(le=0.07)</span>
+<span class="sd">        &gt;&gt;&gt; f.dur(ge=0.03, le=0.07, logic_bool=&quot;and&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasDurationCompare</span><span class="p">()</span>
+    <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">dur_fct_values</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_function_values</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">dur_functions</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_functions</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
+        <span class="n">is_matching</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">match_duration</span><span class="p">(</span><span class="n">dur_functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_matching</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">dur_fct_values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>loc</h4>
+
+    <article class="docstring">
+<p><em>Apply functions on localizations of annotations.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kwargs</strong>: logic_bool/any sppasLocalizationCompare() method.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasAnnSet)</li>
+</ul>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">rangefrom</span><span class="o">=</span><span class="mf">3.01</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">rangeto</span><span class="o">=</span><span class="mf">10.07</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">rangefrom</span><span class="o">=</span><span class="mf">3.01</span><span class="p">,</span> <span class="n">rangeto</span><span class="o">=</span><span class="mf">10.07</span><span class="p">,</span> <span class="n">logic_bool</span><span class="o">=</span><span class="s2">&quot;and&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on localizations of annotations.</span>
+
+<span class="sd">        :param kwargs: logic_bool/any sppasLocalizationCompare() method.</span>
+<span class="sd">        :returns: (sppasAnnSet)</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; f.loc(rangefrom=3.01) &amp; f.loc(rangeto=10.07)</span>
+<span class="sd">        &gt;&gt;&gt; f.loc(rangefrom=3.01, rangeto=10.07, logic_bool=&quot;and&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasLocalizationCompare</span><span class="p">()</span>
+    <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">loc_fct_values</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_function_values</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">loc_functions</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_functions</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
+        <span class="n">is_matching</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">match_localization</span><span class="p">(</span><span class="n">loc_functions</span><span class="p">,</span> <span class="n">logic_bool</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_matching</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">loc_fct_values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>nlab</h4>
+
+    <article class="docstring">
+<p><em>Apply functions on number of labels in annotations.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kwargs</strong>: logic_bool/any sppasListCompare() method.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasAnnSet)</li>
+</ul>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">nlab</span><span class="p">(</span><span class="n">leq</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">nlab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions on number of labels in annotations.</span>
+
+<span class="sd">        :param kwargs: logic_bool/any sppasListCompare() method.</span>
+<span class="sd">        :returns: (sppasAnnSet)</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; f.nlab(leq=1)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasListCompare</span><span class="p">()</span>
+    <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">test_args</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">logic_bool</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_logic_bool</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">nlab_fct_values</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_function_values</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">nlab_functions</span> <span class="o">=</span> <span class="n">sppasBaseFilters</span><span class="o">.</span><span class="n">fix_functions</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">func</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">logical_not</span> <span class="ow">in</span> <span class="n">nlab_functions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">logical_not</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">logic_bool</span> <span class="o">==</span> <span class="s1">&#39;and&#39;</span><span class="p">:</span>
+            <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_matching</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_matching</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">nlab_fct_values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>rel</h4>
+
+    <article class="docstring">
+<p><em>Apply functions of relations between localizations of annotations.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other_tier</strong>: the tier to be in relation with.</li>
+<li><strong>args</strong>: any sppasIntervalCompare() method.</li>
+<li><strong>kwargs</strong>: any option of the methods.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasAnnSet)</li>
+</ul>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">rel</span><span class="p">(</span><span class="n">other_tier</span><span class="p">,</span> <span class="s2">&quot;equals&quot;</span><span class="p">,</span> <span class="s2">&quot;overlaps&quot;</span><span class="p">,</span> <span class="s2">&quot;overlappedby&quot;</span><span class="p">,</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">overlap_min</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span> <span class="n">overlapped_min</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+</code></pre></div>
+
+<p>kwargs can be:</p>
+
+<ul>
+<li>max_delay=value, used by before, after</li>
+<li>overlap_min=value, used by overlap,</li>
+<li>overlapped_min=value, used by overlappedby</li>
+<li>percent=boolean, used by overlap, overlapped<em>by to define the overlap</em>min is a percentage</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_tier</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply functions of relations between localizations of annotations.</span>
+
+<span class="sd">        :param other_tier: the tier to be in relation with.</span>
+<span class="sd">        :param args: any sppasIntervalCompare() method.</span>
+<span class="sd">        :param kwargs: any option of the methods.</span>
+<span class="sd">        :returns: (sppasAnnSet)</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; f.rel(other_tier, &quot;equals&quot;, &quot;overlaps&quot;, &quot;overlappedby&quot;,</span>
+<span class="sd">        &gt;&gt;&gt;       overlap_min=0.04, overlapped_min=0.02)</span>
+
+<span class="sd">        kwargs can be:</span>
+
+<span class="sd">        - max_delay=value, used by before, after</span>
+<span class="sd">        - overlap_min=value, used by overlap,</span>
+<span class="sd">        - overlapped_min=value, used by overlappedby</span>
+<span class="sd">        - percent=boolean, used by overlap, overlapped_by to define the overlap_min is a percentage</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">comparator</span> <span class="o">=</span> <span class="n">sppasIntervalCompare</span><span class="p">()</span>
+    <span class="n">rel_functions</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="o">.</span><span class="n">__fix_relation_functions</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sppasAnnSet</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">annotation</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span>
+        <span class="n">match_values</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="o">.</span><span class="n">__connect</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">other_tier</span><span class="p">,</span> <span class="n">rel_functions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">match_values</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>cast_data</h4>
+
+    <article class="docstring">
+<p><em>Return an entry into the appropriate type.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (sppasTier)</li>
+<li><strong>sfilter</strong>: (<em>str</em>) Name of the filter (tag, loc, ...)</li>
+<li><strong>entry</strong>: (<em>str</em>) The entry to cast</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>typed entry</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cast_data</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">sfilter</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return an entry into the appropriate type.</span>
+
+<span class="sd">        :param tier: (sppasTier)</span>
+<span class="sd">        :param sfilter: (str) Name of the filter (tag, loc, ...)</span>
+<span class="sd">        :param entry: (str) The entry to cast</span>
+<span class="sd">        :return: typed entry</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sfilter</span> <span class="o">==</span> <span class="s1">&#39;tag&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_float</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_int</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_bool</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sfilter</span> <span class="o">==</span> <span class="s1">&#39;loc&#39;</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_first_point</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">(),</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sfilter</span> <span class="o">==</span> <span class="s1">&#39;dur&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasTierFilters">Protected functions</h3>
+<h4>__fix_relation_functions</h4>
+
+    <article class="docstring">
+<p><em>Parse the arguments to get the list of function/complement.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>comparator</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">__fix_relation_functions</span><span class="p">(</span><span class="n">comparator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse the arguments to get the list of function/complement.&quot;&quot;&quot;</span>
+    <span class="n">f_functions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">logical_not</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">func_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;not_&#39;</span><span class="p">):</span>
+            <span class="n">logical_not</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">func_name</span> <span class="o">=</span> <span class="n">func_name</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">comparator</span><span class="o">.</span><span class="n">get_function_names</span><span class="p">():</span>
+            <span class="n">f_functions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">comparator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">func_name</span><span class="p">),</span> <span class="n">logical_not</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="s1">&#39;rel filter args function name&#39;</span><span class="p">,</span> <span class="n">func_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f_functions</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__connect</h4>
+
+    <article class="docstring">
+<p><em>Find connections between location and the other tier.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>location</strong></li>
+<li><strong>other_tier</strong></li>
+<li><strong>rel_functions</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">__connect</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">other_tier</span><span class="p">,</span> <span class="n">rel_functions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find connections between location and the other tier.&quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">other_ann</span> <span class="ow">in</span> <span class="n">other_tier</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">localization</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">location</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">other_loc</span><span class="p">,</span> <span class="n">other_score</span> <span class="ow">in</span> <span class="n">other_ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">complement</span> <span class="ow">in</span> <span class="n">rel_functions</span><span class="p">:</span>
+                    <span class="n">is_connected</span> <span class="o">=</span> <span class="n">func_name</span><span class="p">(</span><span class="n">localization</span><span class="p">,</span> <span class="n">other_loc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">is_connected</span><span class="p">:</span>
+                        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func_name</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">values</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

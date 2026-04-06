@@ -1,0 +1,35 @@
+// filename: sppas.src.videodata.videodata.yuml
+// author:   Brigitte Bigi
+// contact:  contact@sppas.org
+// summary:  UML class diagram for videodata package of SPPAS.
+//
+// This file is part of SPPAS: https://sppas.org/
+//     Copyright (C) 2011-2023 Brigitte Bigi
+//     Laboratoire Parole et Langage, Aix-en-Provence, France
+//     Use of this software is governed by the GNU Public License, version 3.
+//
+// Copy/paste the following at:
+//   https://yuml.me/diagram/scruffy/class/draw
+// Or try with: https://github.com/jaime-olivares/yuml-diagram
+
+[sppasVideoReader|--video:cv2.VideoCapture;--lock:bool;--rotate:float;--gray:bool| open();close();read();read_frame();tell();seek();...]
+[sppasVideoWriter|--video:cv2.VideoWriter;-fps:float;-size:tuple;-aspect:str;--lock:bool;--nframes:int|open();close();write();...]
+
+[sppasVideoReaderBuffer|--nb_img:int;--images:list()|next();append();pop();...]
+[sppasBufferVideoWriter|--video_writer;-video_ext:str;-img_ext:str|write();write_video();write_folder();create_video_writer()]
+
+[sppasCoordsVideoBuffer|--coords:list()|append_coordinate();pop_coordinate()]
+[sppasCoordsVideoReader|+coords:list()]
+[sppasCoordsVideoWriter|-img_writer|write();write_csv_coords();write_coords();write_xra_coords();write_video();write_folder()]
+
+[sppasSightsVideoBuffer|--sights:list()|append_sight()]
+
+[sppasVideoReader]^[sppasVideoReaderBuffer]
+[sppasVideoReaderBuffer]^[sppasCoordsVideoBuffer]
+[sppasVideoReaderBuffer]-*>[sppasImage]
+[sppasBufferVideoWriter]-1>[sppasVideoWriter]
+[sppasCoordsVideoBuffer]-*>[sppasCoords]
+[sppasBufferVideoWriter]^[sppasCoordsVideoWriter]
+[sppasCoordsVideoWriter]-1>[sppasCoordsImageWriter]
+[sppasVideoReaderBuffer]^[sppasSightsVideoBuffer]
+[sppasSightsVideoBuffer]-*>[sppasSights]

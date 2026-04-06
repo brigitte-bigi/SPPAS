@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Status 410</title>
+    <style>
+        :root {
+            --sppas-blue-dark: #071b66;
+            --sppas-blue: #4b5ba8;
+            --sppas-panel: #f0ebf8;
+            --sppas-text: #1f2440;
+            --sppas-muted: #6c7390;
+            --sppas-border: rgba(45, 79, 163, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--sppas-text);
+            background: linear-gradient(to bottom, var(--sppas-blue-dark) 0 12rem, #f5f7fc 12rem 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            width: min(64rem, calc(100% - 2rem));
+            margin: 0 auto;
+            padding: 2rem 0 1rem 0;
+            flex: 1;
+        }
+
+        .page-title {
+            margin: 0 0 2rem 0;
+            color: white;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+        }
+
+        .panel {
+            background: var(--sppas-panel);
+            border: 1px solid var(--sppas-border);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .panel-title {
+            display: inline-block;
+            margin: -3rem 0 1.5rem 0;
+            padding: 0.8rem 1.25rem;
+            border-radius: 0.75rem;
+            background: var(--sppas-blue);
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .status-code {
+            margin: 0 0 0.5rem 0;
+            color: var(--sppas-blue);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .status-text {
+            margin: 0;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        footer {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .copyright {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--sppas-muted);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1 class="page-title">SPPAS 5.0 » Setup</h1>
+
+        <section class="panel">
+            <div class="panel-title">Application ended.</div>
+            <h2 class="status-code">410 Gone</h2>
+            <p class="status-text">
+                SPPAS Setup finished. Restart the application for changes to take effect.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p class="copyright">Copyright 2011-2026 Brigitte Bigi, CNRS</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,300 @@
+/*
+:filename: statics/css/button.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: a CSS framework to create custom buttons
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://whakerexa.sf.net/
+
+Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+/* -----------------------------------------------------------------------
+ Toggle switch -- with or without text; squared or rounded.
+ ----------------------------------------------------------------------- */
+
+:root {
+    --switch-width: calc(var(--font-size) * 5);
+    --switch-height: calc(var(--font-size) * 2.8);
+    --switch-bg-color: var(--inputs-bg-color);
+    --switch-fg-color: var(--bg-color-alt);
+    --switch-slider-off-color: var(--fg-color-alt);
+    --switch-slider-on-color: var(--fg-color);
+    --switch-slider-unselected-opacity: 0;
+    --action-height: calc(var(--font-size) * 2.8);
+    --apply-height: calc(var(--font-size) * 2.1);
+    --text-reveal-height: calc(var(--font-size) * 1.6);
+    --text-reveal-width: calc(var(--font-size) * 1.6);
+}
+
+/* The switch container. Usually it's a label element. */
+/* --------------------------------------------------- */
+/* Override the switch width specifically for label, which is defined to
+'fit-content' in wexa.css */
+label.switch {
+    width: var(--switch-width);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    font-family: var(--font-family-serif);
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The designed switch. Usually in a span element. */
+/* ----------------------------------------------- */
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--switch-bg-color);
+    transition: background-color 0.4s ease, transform 0.4s ease;
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--border-color-alt);
+}
+
+.switch-slider:before {
+    border-radius: var(--border-radius);
+}
+
+/* Rounded switch. */
+.switch-slider.round {
+    border-radius: calc(var(--switch-height) / 2); /* Adjusted to match height */
+}
+
+/* The switch indicator, with or without text */
+/* ------------------------------------------ */
+
+.switch-slider .switch-off-text,
+.switch-slider .switch-on-text
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(var(--font-size) * 0.75);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    min-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+    max-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+    width: fit-content;
+    width: -moz-fit-content;
+    height: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+    line-height: normal; /* Important to prevent line-height issues */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.switch-slider .switch-off-text {
+    background-color: var(--switch-slider-off-color);
+    left: calc(var(--font-size) * 0.4);
+    opacity: 1;
+}
+
+.switch-slider .switch-on-text {
+    background-color: var(--switch-slider-on-color);
+    right: calc(var(--font-size) * 0.4);
+    opacity: var(--switch-slider-unselected-opacity);
+}
+
+.switch-slider.switch-no-text:before {
+    content: "";
+    width: calc(var(--switch-height) - var(--font-size) * 0.4);
+    background-color: var(--switch-slider-off-color);
+    left: calc(var(--font-size) * 0.4); /* Add consistent left margin */
+}
+
+.switch-slider .switch-off-text,
+.switch-slider .switch-on-text,
+.switch-slider.switch-no-text:before {
+    position: absolute;
+    padding: 0 calc(var(--font-size) * 0.4);
+    height: calc(var(--switch-height) - var(--font-size) * 0.4);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    color: var(--switch-fg-color);
+    border-radius: var(--border-radius);
+    line-height: calc(var(--font-size) * 2.4);
+    top: 50%;
+    transform: translateY(-50%); /* Center the slider vertically */
+}
+
+.switch-slider.round .switch-off-text,
+.switch-slider.round .switch-on-text,
+.switch-slider.round:before {
+    border-radius: 50%;
+}
+
+/* Adjust slider position when checked */
+/* ----------------------------------- */
+
+input:checked + .switch-slider {
+  background-color: var(--switch-bg-color);
+}
+
+input:checked + .switch-slider:before {
+  transform: translateX(calc(var(--switch-width) - calc(var(--font-size) * 2.4 + (2 * calc(var(--font-size) / 4)))));
+}
+
+input:checked + .switch-slider.switch-no-text:before {
+  background-color: var(--switch-slider-on-color);  /* Change color for "on" state */
+  transform: translateY(-50%) translateX(calc(var(--switch-width) - calc(var(--font-size) * 2.8 + (2 * calc(var(--font-size) / 4)))));
+}
+
+input:checked + .switch-slider .switch-off-text {
+  opacity: var(--switch-slider-unselected-opacity);
+  transform: translateY(-50%) translateX(0);
+}
+
+input:checked + .switch-slider .switch-on-text {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Switch focus */
+/* ------------ */
+
+input[type="checkbox"]:focus + .switch-slider {
+  outline: var(--outline-size) solid var(--outline-color);
+  box-shadow: 0 0 calc(var(--font-size) / 3) var(--shadow-color);
+}
+
+/* -----------------------------------------------------------------------
+ Gradient buttons: left/right gradient and shadow for a better contrast.
+ - action-button: img + span
+ - apply-button: text only
+ ----------------------------------------------------------------------- */
+
+.action-button {
+    height: var(--action-height);
+    min-height: 2rem;
+}
+
+.apply-button {
+    height: var(--apply-height);
+    min-height: 1.4rem;
+    padding: 0.2rem;
+}
+
+.action-button,
+.apply-button {
+    box-shadow: 0 0 var(--border-width) var(--border-width) var(--border-color);
+    border-radius: var(--border-radius);
+    background: linear-gradient(to right, var(--bg-color-alt), var(--buttons-bg-color));
+    color: var(--fg-color-alt);
+    transform: all 0.3s ease;
+    margin-left: 0.5rem
+}
+
+.action-button:hover, .action-button:focus,
+.apply-button:hover, .apply-button:focus {
+    background: linear-gradient(to right, var(--buttons-bg-color), var(--bg-color-alt));
+}
+
+.action-button > img {
+    object-fit: contain;
+    flex-shrink: 0;
+    max-height: calc(var(--action-height) * 0.9);
+    padding: 0.2rem;
+    background: none;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))
+            drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
+            drop-shadow(0 0 16px rgba(255, 255, 255, 0.4))
+            drop-shadow(0 0 32px rgba(255, 255, 255, 0.2));
+}
+
+.action-button > span {
+    background: none;
+    padding: 0.2rem;
+}
+
+/* -----------------------------------------------------------------------
+ Text-reveal button: img + a span text displayed on hover.
+ No transition is defined because of "width: auto".
+ ----------------------------------------------------------------------- */
+
+.text-reveal-button {
+    border: var(--border-width) solid var(--buttons-fg-color);
+    height: var(--text-reveal-height);
+    width: var(--text-reveal-width);
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+    position: relative;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+}
+
+.text-reveal-button > img {
+    object-fit: contain; /*cover;*/
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0.2rem;
+    margin: 0;
+}
+
+.text-reveal-button > span {
+    font-size: 0.8rem;
+    display: none;
+    opacity: 0;
+    padding: 0.2rem;
+    margin: 0;
+}
+
+.text-reveal-button:hover,
+.text-reveal-button:focus {
+    width: auto;
+}
+
+/* Reveal text when hovered */
+.text-reveal-button:hover > span,
+.text-reveal-button:focus:hover > span {
+    opacity: 1;
+    display: inline;
+}
+
+/* When the button is clicked */
+.text-reveal-button[data-clicked="true"] > span {
+    opacity: 0;
+    display: none;
+}
+
+/* Hide text after a click (when focus is lost) */
+.text-reveal-button:not(:focus):not(:hover) > span {
+    opacity: 0;
+    display: none;
+}

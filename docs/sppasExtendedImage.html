@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasExtendedImage. Manipulate images represented by a numpy.ndarray of BGR colors." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.anndata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasImage.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasImageCompare.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.videodata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.imgdata">    <h1>Module sppas.src.imgdata</h1>
+<section id="#sppasExtendedImage">
+<h2>Class sppasExtendedImage</h2>
+
+<section>
+<h3 id="#description_sppasExtendedImage">Description</h3>
+    <article class="docstring">
+<p><em>Manipulate images represented by a numpy.ndarray of BGR colors.</em></p>
+
+<p>Extend sppasImage with methods returning a sequence of images.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#public_fct_sppasExtendedImage">Public functions</h3>
+<h4>ioverlays</h4>
+
+    <article class="docstring">
+<p><em>Return a list of the image with other overlaid between coords.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasImage) Image to overlay</li>
+<li><strong>coord1</strong>: (sppasCoords) Position and optionally size to overlay - src</li>
+<li><strong>coord2</strong>: (sppasCoords) Position and optionally size to overlay - dest</li>
+<li><strong>nb_img</strong>: (<em>int</em>) Total number of images</li>
+<li><strong>blur</strong>: (<em>bool</em>)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasImage)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ioverlays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">coord1</span><span class="p">,</span> <span class="n">coord2</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the image with other overlaid between coords.</span>
+
+<span class="sd">        :param other: (sppasImage) Image to overlay</span>
+<span class="sd">        :param coord1: (sppasCoords) Position and optionally size to overlay - src</span>
+<span class="sd">        :param coord2: (sppasCoords) Position and optionally size to overlay - dest</span>
+<span class="sd">        :param nb_img: (int) Total number of images</span>
+<span class="sd">        :param blur: (bool)</span>
+<span class="sd">        :return: (list of sppasImage)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">coord1</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord1</span><span class="p">)</span>
+    <span class="n">coord2</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="o">.</span><span class="n">to_coords</span><span class="p">(</span><span class="n">coord2</span><span class="p">)</span>
+    <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">coord1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">nb_img</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">slope_intercept</span><span class="p">((</span><span class="n">coord1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">coord1</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">coord2</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">coord2</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+        <span class="n">step_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">coord2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">coord1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nb_img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">step_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">coord2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">coord1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nb_img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">step_w</span> <span class="o">=</span> <span class="p">(</span><span class="n">coord2</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="n">coord1</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nb_img</span><span class="p">)</span>
+        <span class="n">step_h</span> <span class="o">=</span> <span class="p">(</span><span class="n">coord2</span><span class="o">.</span><span class="n">h</span> <span class="o">-</span> <span class="n">coord1</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nb_img</span><span class="p">)</span>
+        <span class="n">prev_c</span> <span class="o">=</span> <span class="n">coord1</span>
+        <span class="k">if</span> <span class="n">blur</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">blur_other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">iblur</span><span class="p">()</span>
+            <span class="n">tr_other</span> <span class="o">=</span> <span class="n">blur_other</span><span class="o">.</span><span class="n">ialpha</span><span class="p">(</span><span class="mi">196</span><span class="p">,</span> <span class="n">direction</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">pimg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">coord1</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">step_x</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">coord1</span><span class="o">.</span><span class="n">x</span> <span class="o">!=</span> <span class="n">coord2</span><span class="o">.</span><span class="n">x</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linear_fct</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">coord1</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">step_y</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">coord1</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">step_w</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">coord1</span><span class="o">.</span><span class="n">h</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">step_h</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">blur</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">x</span> <span class="o">!=</span> <span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="p">(</span><span class="n">prev_c</span><span class="o">.</span><span class="n">y</span> <span class="o">!=</span> <span class="n">c</span><span class="o">.</span><span class="n">y</span><span class="p">):</span>
+                <span class="n">tr_step_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">//</span> <span class="mi">3</span>
+                <span class="n">tr_step_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">//</span> <span class="mi">3</span>
+                <span class="n">pimg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">tr_other</span><span class="p">,</span> <span class="p">(</span><span class="n">prev_c</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">tr_step_x</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">tr_step_y</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">h</span><span class="p">))</span>
+                <span class="n">pimg</span> <span class="o">=</span> <span class="n">pimg</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">tr_other</span><span class="p">,</span> <span class="p">(</span><span class="n">prev_c</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tr_step_x</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tr_step_y</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">h</span><span class="p">))</span>
+                <span class="n">pimg</span> <span class="o">=</span> <span class="n">pimg</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">tr_other</span><span class="p">,</span> <span class="p">(</span><span class="n">prev_c</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">tr_step_x</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">tr_step_y</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">prev_c</span><span class="o">.</span><span class="n">h</span><span class="p">))</span>
+            <span class="n">pimg</span> <span class="o">=</span> <span class="n">pimg</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pimg</span><span class="p">)</span>
+            <span class="n">prev_c</span> <span class="o">=</span> <span class="n">c</span>
+    <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">coord2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">images</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>irotates</h4>
+
+    <article class="docstring">
+<p><em>Return a list of the image rotated ranging the given angles.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>angle1</strong>: (<em>float</em>) Angle start</li>
+<li><strong>angle2</strong>: (<em>float</em>) Angle end</li>
+<li><strong>center</strong>: (<em>tuple</em>) (x,y) position of the rotating center</li>
+<li><strong>scale</strong>: (<em>float</em>) Scale value</li>
+<li><strong>nb_img</strong>: (<em>int</em>) Total number of images</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasImage)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">irotates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle1</span><span class="p">,</span> <span class="n">angle2</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the image rotated ranging the given angles.</span>
+
+<span class="sd">        :param angle1: (float) Angle start</span>
+<span class="sd">        :param angle2: (float) Angle end</span>
+<span class="sd">        :param center: (tuple) (x,y) position of the rotating center</span>
+<span class="sd">        :param scale: (float) Scale value</span>
+<span class="sd">        :param nb_img: (int) Total number of images</span>
+<span class="sd">        :return: (list of sppasImage)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irotate</span><span class="p">(</span><span class="n">angle1</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">nb_img</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="mf">0.99</span> <span class="o">&lt;</span> <span class="n">scale</span> <span class="o">&lt;</span> <span class="mf">1.01</span><span class="p">:</span>
+            <span class="n">step_scale</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">step_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">scale</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nb_img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">step_angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">angle2</span> <span class="o">-</span> <span class="n">angle1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nb_img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nb_img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">step_scale</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">angle1</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">step_angle</span>
+            <span class="n">pimg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irotate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pimg</span><span class="p">)</span>
+    <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irotate</span><span class="p">(</span><span class="n">angle2</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">images</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>iscales</h4>
+
+    <article class="docstring">
+<p><em>Return a list of the image scaled ranging from 1 to the value.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>scale</strong>: (<em>float</em>) Scale value</li>
+<li><strong>nb_img</strong>: (<em>int</em>) Total number of images</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasImage)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iscales</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the image scaled ranging from 1 to the value.</span>
+
+<span class="sd">        :param scale: (float) Scale value</span>
+<span class="sd">        :param nb_img: (int) Total number of images</span>
+<span class="sd">        :return: (list of sppasImage)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irotates</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">nb_img</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>ifade_in</h4>
+
+    <article class="docstring">
+<p><em>Fade in the image in nb times from the given color.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>nb_img</strong>: (<em>int</em>) Total number of images of the sequence</li>
+<li><strong>color</strong>: BGR of the color</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasImage)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ifade_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fade in the image in nb times from the given color.</span>
+
+<span class="sd">        :param nb_img: (int) Total number of images of the sequence</span>
+<span class="sd">        :param color: BGR of the color</span>
+<span class="sd">        :return: (list of sppasImage)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__back</span><span class="o">.</span><span class="n">ialpha</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">direction</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="n">colored_img</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">blank_image</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">white</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">colored_img</span> <span class="o">=</span> <span class="n">colored_img</span><span class="o">.</span><span class="n">iblue</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">colored_img</span> <span class="o">=</span> <span class="n">colored_img</span><span class="o">.</span><span class="n">igreen</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">colored_img</span> <span class="o">=</span> <span class="n">colored_img</span><span class="o">.</span><span class="n">ired</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_img</span><span class="p">):</span>
+        <span class="n">alpha_color</span> <span class="o">=</span> <span class="n">colored_img</span><span class="o">.</span><span class="n">ialpha</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">255</span> <span class="o">//</span> <span class="n">nb_img</span><span class="p">))</span>
+        <span class="n">trimg</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">ioverlay</span><span class="p">(</span><span class="n">alpha_color</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trimg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">images</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

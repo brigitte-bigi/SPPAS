@@ -1,0 +1,4 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <ns0:path d="M4 16L16 5l12 11" />
+  <ns0:path d="M7 16v9a1 1 0 0 0 1 1h5v-7h5v7h5a1 1 0 0 0 1-1v-9" />
+</ns0:svg>

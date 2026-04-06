@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+	viewBox="0 0 32 32" stroke-width="2" stroke-linecap="round">
+  <path d="M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z"/>
+  <!-- text x="16" y="20" font-size="13" text-anchor="middle" fill="currentColor" font-family="Commissioner, sans-serif">A</text -->
+  <!-- Letter A drawn with three lines -->
+  <line x1="13" y1="20" x2="16" y2="12"/>
+  <line x1="19" y1="20" x2="16" y2="12"/>
+  <line x1="14" y1="18" x2="18" y2="18"/>
+
+  <!-- Plus sign (top-left) -->
+  <line x1="5.5" y1="5.5" x2="5.5" y2="8.5"/>
+  <line x1="4" y1="7" x2="7" y2="7"/>
+
+  <!-- Minus sign (bottom-right) -->
+  <line x1="25" y1="25" x2="28" y2="25"/>
+</svg>

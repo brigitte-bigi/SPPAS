@@ -1,0 +1,40 @@
+// Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+// Laboratoire Parole et Langage, Aix-en-Provence, France
+// This file is part of SPPAS: https://sppas.org/
+// Use of this software is governed by the GNU Public License, version 3.
+//
+// Description of the package dependencies.
+// Copy/Paste the following lines in: <https://yuml.me/diagram/scruffy/class/draw>
+//
+// Legend:
+//   [package]
+//   '>' means 'requires'
+
+[calculus]>[config]
+[utils]>[config]
+[structs]>[config]
+[structs]>[utils]
+[wkps]>[config]
+[wkps]>[structs]
+[resources]>[config]
+[anndata]>[config]
+[anndata]>[utils]
+[imgdata]>[config]
+[imgdata]>[calculus]
+[imgdata]>[anndata]
+[videodata]>[config]
+[videodata]>[imgdata]
+[videodata]>[utils]
+[annotations]>[config]
+[annotations]>[utils]
+[annotations]>[resources]
+[annotations]>[anndata]
+[plugins]>[config]
+[plugins]>[utils]
+[plugins]>[structs]
+[annotations]>[imgdata]
+[annotations]>[videodata]
+[analysis]>[config]
+[analysis]>[structs]
+[analysis]>[anndata]
+[analysis]>[calculus]

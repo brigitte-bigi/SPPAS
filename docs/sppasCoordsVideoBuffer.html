@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasCoordsVideoBuffer. A video buffer of images with a list of coordinates." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasBufferVideoWriter.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasCoordsVideoWriter.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.videodata">    <h1>Module sppas.src.videodata</h1>
+<section id="#sppasCoordsVideoBuffer">
+<h2>Class sppasCoordsVideoBuffer</h2>
+
+<section>
+<h3 id="#description_sppasCoordsVideoBuffer">Description</h3>
+    <article class="docstring">
+<p><em>A video buffer of images with a list of coordinates.</em></p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasCoordsVideoBuffer">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video</strong>: (<em>str</em>) The video filename to browse</li>
+<li><strong>size</strong>: (<em>int</em>) Number of images of the buffer or -1 for auto</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new instance.</span>
+
+<span class="sd">    :param video: (str) The video filename to browse</span>
+<span class="sd">    :param size: (int) Number of images of the buffer or -1 for auto</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasCoordsVideoBuffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()]</span> <span class="o">*</span> <span class="n">size</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasCoordsVideoBuffer">Public functions</h3>
+<h4>reset</h4>
+
+    <article class="docstring">
+<p><em>Override. Reset all the info related to the buffer content.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Reset all the info related to the buffer content.&quot;&quot;&quot;</span>
+    <span class="n">sppasVideoReaderBuffer</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>next</h4>
+
+    <article class="docstring">
+<p><em>Override. Fill in the buffer with the next images &amp; reset coords.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override. Fill in the buffer with the next images &amp; reset coords.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">sppasVideoReaderBuffer</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">()]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ret</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_coordinates</h4>
+
+    <article class="docstring">
+<p><em>Return the coordinates of a given image.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasCoords) Coordinates</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the coordinates of a given image.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :return: (list of sppasCoords) Coordinates</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">buffer_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__len__</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Coordinates were not properly associated to images of the buffer&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_coordinates</h4>
+
+    <article class="docstring">
+<p><em>Set the coordinates to a given image index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+<li><strong>coords</strong>: (<em>list</em> of sppasCoords) Set the list of coords</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the coordinates to a given image index.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :param coords: (list of sppasCoords) Set the list of coords</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)),</span> <span class="s1">&#39;sppasCoords&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">coords</span><span class="p">)),</span> <span class="s1">&#39;list/tuple&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>index_coordinate</h4>
+
+    <article class="docstring">
+<p><em>Index of the given coordinate.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong></li>
+<li><strong>coord</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Index of the given coordinate.&quot;&quot;&quot;</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_coordinate</h4>
+
+    <article class="docstring">
+<p><em>Return a coordinate of a given image.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+<li><strong>coord_index</strong>: (<em>int</em>) Index of the coord</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasCoords) Coordinates</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord_index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a coordinate of a given image.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :param coord_index: (int) Index of the coord</span>
+<span class="sd">        :return: (sppasCoords) Coordinates</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No coordinate at buffer index </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">))</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">coord_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">][</span><span class="n">coord_index</span><span class="p">]</span>
+    <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Invalid coordinate index value </span><span class="si">{:d}</span><span class="s1">. Should range [0; </span><span class="si">{:d}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coord_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">])))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_coordinate</h4>
+
+    <article class="docstring">
+<p><em>Assign the coordinate to a given image index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+<li><strong>coord_index</strong>: (<em>int</em>) Index of the coord</li>
+<li><strong>coord</strong>: (sppasCoords) Append the given coord</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Assign the coordinate to a given image index.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :param coord_index: (int) Index of the coord</span>
+<span class="sd">        :param coord: (sppasCoords) Append the given coord</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">coord_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">][</span><span class="n">coord_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">coord</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid coordinate index value.&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>append_coordinate</h4>
+
+    <article class="docstring">
+<p><em>Append the coordinates to a given image index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+<li><strong>coord</strong>: (sppasCoords) Append the given coord</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">append_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append the coordinates to a given image index.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :param coord: (sppasCoords) Append the given coord</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">sppasCoords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>remove_coordinate</h4>
+
+    <article class="docstring">
+<p><em>Remove the coordinates to a given image index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+<li><strong>coord</strong>: (sppasCoords) Remove the given coord</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the coordinates to a given image index.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :param coord: (sppasCoords) Remove the given coord</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>pop_coordinate</h4>
+
+    <article class="docstring">
+<p><em>Remove the coordinates to a given image index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>buffer_index</strong>: (<em>int</em>) Index of the image in the buffer</li>
+<li><strong>coord_index</strong>: (<em>int</em>) Pop the given coord</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_index</span><span class="p">,</span> <span class="n">coord_index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove the coordinates to a given image index.</span>
+
+<span class="sd">        :param buffer_index: (int) Index of the image in the buffer</span>
+<span class="sd">        :param coord_index: (int) Pop the given coord</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">buffer_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_buffer_index</span><span class="p">(</span><span class="n">buffer_index</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">[</span><span class="n">buffer_index</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">coord_index</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasAlign. SPPAS integration of the Alignment automatic annotation." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasPhon.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasSyll.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+<section id="#sppasAlign">
+<h2>Class sppasAlign</h2>
+
+<section>
+<h3 id="#description_sppasAlign">Description</h3>
+    <article class="docstring">
+<p><em>SPPAS integration of the Alignment automatic annotation.</em></p>
+
+<ul>
+<li><strong>author</strong>: Brigitte Bigi</li>
+<li><strong>contact</strong>: contact@sppas.org</li>
+</ul>
+
+<p>This class can produce 1 up to 5 tiers with names:</p>
+
+<ul>
+<li>PhonAlign</li>
+<li>TokensAlign (if tokens are given in the input)</li>
+<li>PhnTokAlign - option (if tokens are given in the input)</li>
+</ul>
+
+<p>How to use sppasAlign?</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">sppasAlign</span><span class="p">()</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">set_aligner</span><span class="p">(</span><span class="s1">&#39;julius&#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">load_resources</span><span class="p">(</span><span class="n">model_dirname</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">phones</span><span class="p">],</span> <span class="p">[</span><span class="n">audio</span><span class="p">,</span> <span class="n">tokens</span><span class="p">],</span> <span class="n">output</span><span class="p">)</span>
+</code></pre></div>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasAlign">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasAlign instance.</em></p>
+
+<p>Log is used for a better communication of the annotation process and
+its results.
+If None, logs are redirected to the default logging system.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasAlign instance.</span>
+
+<span class="sd">    Log is used for a better communication of the annotation process and</span>
+<span class="sd">    its results.</span>
+<span class="sd">    If None, logs are redirected to the default logging system.</span>
+
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sppasBaseAnnotation</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;alignment.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mapping</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span> <span class="o">=</span> <span class="n">TrackSegmenter</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">aligner_name</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span> <span class="o">=</span> <span class="n">TracksReaderWriter</span><span class="p">(</span><span class="n">sppasMapping</span><span class="p">())</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span> <span class="o">=</span> <span class="s1">&#39;und&#39;</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasAlign">Public functions</h3>
+<h4>load_resources</h4>
+
+    <article class="docstring">
+<p><em>Fix the acoustic model directory.</em></p>
+
+<p>Create a SpeechSegmenter and AlignerIO.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>model</strong>: (<em>str</em>) Directory of the acoustic model of the language of the text</li>
+<li><strong>model_L1</strong>: (<em>str</em>) Directory of the acoustic model of the mother language of the speaker</li>
+<li><strong>lang</strong>: (<em>str</em>) Language code</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_L1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;und&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the acoustic model directory.</span>
+
+<span class="sd">        Create a SpeechSegmenter and AlignerIO.</span>
+
+<span class="sd">        :param model: (str) Directory of the acoustic model of the language</span>
+<span class="sd">        of the text</span>
+<span class="sd">        :param model_L1: (str) Directory of the acoustic model of</span>
+<span class="sd">        the mother language of the speaker</span>
+<span class="sd">        :param lang: (str) Language code</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span> <span class="o">=</span> <span class="n">lang</span>
+    <span class="k">if</span> <span class="n">model_L1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model_mixer</span> <span class="o">=</span> <span class="n">sppasModelMixer</span><span class="p">()</span>
+            <span class="n">model_mixer</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_L1</span><span class="p">)</span>
+            <span class="n">output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;models-mix&#39;</span><span class="p">)</span>
+            <span class="n">model_mixer</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">output_dir</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_MODEL_L1_FAILED</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+    <span class="n">mapping_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;monophones.repl&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">mapping_filename</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">(</span><span class="n">mapping_filename</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">()</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;No mapping file was found in model </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="n">sppasMapping</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span> <span class="o">=</span> <span class="n">TracksReaderWriter</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p><em>Fix all options.</em></p>
+
+<p>Available options are:</p>
+
+<ul>
+<li>clean</li>
+<li>basic</li>
+<li>aligner</li>
+</ul>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: (sppasOption)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+
+<span class="sd">        Available options are:</span>
+
+<span class="sd">            - clean</span>
+<span class="sd">            - basic</span>
+<span class="sd">            - aligner</span>
+
+<span class="sd">        :param options: (sppasOption)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;clean&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_clean</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;basic&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_basic</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;aligner&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_aligner</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_clean</h4>
+
+    <article class="docstring">
+<p><em>Fix the clean option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>clean</strong>: (<em>bool</em>) If clean is set to True then temporary files will be removed.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the clean option.</span>
+
+<span class="sd">        :param clean: (bool) If clean is set to True then temporary files</span>
+<span class="sd">        will be removed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;clean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clean</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_aligner</h4>
+
+    <article class="docstring">
+<p><em>Fix the name of the aligner.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>aligner_name</strong>: (<em>str</em>) Case-insensitive name of the aligner.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_aligner</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aligner_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the name of the aligner.</span>
+
+<span class="sd">        :param aligner_name: (str) Case-insensitive name of the aligner.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;aligner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aligner_name</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_basic</h4>
+
+    <article class="docstring">
+<p><em>Fix the basic option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>basic</strong>: (<em>bool</em>) If basic is set to True, a basic segmentation will be performed if the main aligner fails.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_basic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basic</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the basic option.</span>
+
+<span class="sd">        :param basic: (bool) If basic is set to True, a basic segmentation</span>
+<span class="sd">        will be performed if the main aligner fails.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;basic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">basic</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>convert</h4>
+
+    <article class="docstring">
+<p><em>Perform speech segmentation of data.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>phon_tier</strong>: (Tier) phonetization.</li>
+<li><strong>tok_tier</strong>: (Tier) tokenization, or None.</li>
+<li><strong>tok<em>faked</em>tier</strong>: (Tier) rescue tokenization, or None.</li>
+<li><strong>input_audio</strong>: (<em>str</em>) Audio file name.</li>
+<li><strong>workdir</strong>: (<em>str</em>) The working directory</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>tier<em>phn, tier</em>tok</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phon_tier</span><span class="p">,</span> <span class="n">tok_tier</span><span class="p">,</span> <span class="n">tok_faked_tier</span><span class="p">,</span> <span class="n">input_audio</span><span class="p">,</span> <span class="n">workdir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform speech segmentation of data.</span>
+
+<span class="sd">        :param phon_tier: (Tier) phonetization.</span>
+<span class="sd">        :param tok_tier: (Tier) tokenization, or None.</span>
+<span class="sd">        :param tok_faked_tier: (Tier) rescue tokenization, or None.</span>
+<span class="sd">        :param input_audio: (str) Audio file name.</span>
+<span class="sd">        :param workdir: (str) The working directory</span>
+
+<span class="sd">        :returns: tier_phn, tier_tok</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">set_aligner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;aligner&#39;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;aligner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">get_aligner_name</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">NoDirectoryError</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_ACTION_SPLIT_INTERVALS</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">phon_tier</span><span class="o">.</span><span class="n">is_point</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="mf">0.005</span><span class="p">)</span>
+    <span class="n">errmsg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span><span class="o">.</span><span class="n">split_into_tracks</span><span class="p">(</span><span class="n">input_audio</span><span class="p">,</span> <span class="n">phon_tier</span><span class="p">,</span> <span class="n">tok_tier</span><span class="p">,</span> <span class="n">tok_faked_tier</span><span class="p">,</span> <span class="n">workdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errmsg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">errmsg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_segment_tracks</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_ACTION_MERGE_INTERVALS</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">tier_phn</span><span class="p">,</span> <span class="n">tier_tok</span><span class="p">,</span> <span class="n">tier_pron</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span><span class="o">.</span><span class="n">read_aligned_tracks</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__add_meta_in_tier</span><span class="p">(</span><span class="n">tier_phn</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__add_meta_in_tier</span><span class="p">(</span><span class="n">tier_tok</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__add_meta_in_tier</span><span class="p">(</span><span class="n">tier_pron</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">tier_phn</span><span class="p">,</span> <span class="n">tier_tok</span><span class="p">,</span> <span class="n">tier_pron</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>fix_workingdir</h4>
+
+    <article class="docstring">
+<p><em>Fix the working directory to store temporarily the data.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>inputaudio</strong>: (<em>str</em>) Audio file name</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fix_workingdir</span><span class="p">(</span><span class="n">inputaudio</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the working directory to store temporarily the data.</span>
+
+<span class="sd">        :param inputaudio: (str) Audio file name</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">sf</span> <span class="o">=</span> <span class="n">sppasFileUtils</span><span class="p">()</span>
+    <span class="n">workdir</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">set_random</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">workdir</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">set_random</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">inputaudio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">audio_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">inputaudio</span><span class="p">)</span>
+        <span class="n">sf</span> <span class="o">=</span> <span class="n">sppasFileUtils</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
+        <span class="n">formatted_audio_file</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">inputaudio</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workdir</span><span class="p">,</span> <span class="n">formatted_audio_file</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">workdir</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return the audio file name and the tiers.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>NoTierInputError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(audio filename, sppasTier, sppasTier, sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the audio file name and the tiers.</span>
+
+<span class="sd">        :param input_files: (list)</span>
+<span class="sd">        :raises: NoTierInputError</span>
+<span class="sd">        :return: (audio filename, sppasTier, sppasTier, sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
+    <span class="n">audio_ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tier_phon</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tier_tok_faked</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tier_tok_std</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">audio_filename</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">audio_filename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">audio_ext</span><span class="p">:</span>
+            <span class="n">audio_filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">if</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">ext</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">tier_phon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tier_phon</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">phonetization</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tier_tok_std</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tier_tok_std</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">tokenization</span><span class="p">(</span><span class="n">trs_input</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tier_tok_faked</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tier_tok_faked</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">tokenization</span><span class="p">(</span><span class="n">trs_input</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_tok_std</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tier_tok_faked</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_TOKENS_DISABLED</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier_phon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;A tier with a phonetization is required but was not found&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">NoTierInputError</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">audio_filename</span><span class="p">,</span> <span class="n">tier_phon</span><span class="p">,</span> <span class="n">tier_tok_std</span><span class="p">,</span> <span class="n">tier_tok_faked</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on an input.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) Phonemes, and optionally tokens, audio</li>
+<li><strong>output</strong>: (<em>str</em>) the output name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTranscription)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+
+<span class="sd">        :param input_files: (list of str) Phonemes, and optionally tokens, audio</span>
+<span class="sd">        :param output: (str) the output name</span>
+<span class="sd">        :return: (sppasTranscription)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">audio_filename</span><span class="p">,</span> <span class="n">phon_tier</span><span class="p">,</span> <span class="n">tok_tier</span><span class="p">,</span> <span class="n">tok_faked_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+    <span class="n">framerate</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">audio_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">audio_speech</span> <span class="o">=</span> <span class="n">audioopy</span><span class="o">.</span><span class="n">aio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_nchannels</span><span class="p">()</span>
+        <span class="n">framerate</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">audio_speech</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">AudioChannelError</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">audio_speech</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Either the audio file or &#39;AudiooPy&#39; library is unavailable. The automatic aligner is set to &#39;basic&#39; and no extra option is available.&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;aligner&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;basic&#39;</span>
+    <span class="n">workdir</span> <span class="o">=</span> <span class="n">sppasAlign</span><span class="o">.</span><span class="n">fix_workingdir</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;clean&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_WORKDIR</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="n">workdir</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">audio_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">extm</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">,</span> <span class="n">mime_type</span><span class="o">=</span><span class="s1">&#39;audio/&#39;</span> <span class="o">+</span> <span class="n">extm</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Alignment of </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tier_phn</span><span class="p">,</span> <span class="n">tier_tok</span><span class="p">,</span> <span class="n">tier_pron</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">phon_tier</span><span class="p">,</span> <span class="n">tok_tier</span><span class="p">,</span> <span class="n">tok_faked_tier</span><span class="p">,</span> <span class="n">audio_filename</span><span class="p">,</span> <span class="n">workdir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">media</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tier_phn</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+            <span class="n">tier_tok</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+            <span class="n">tier_pron</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+        <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;aligner_name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">get_aligner_name</span><span class="p">())</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_iso&#39;</span><span class="p">,</span> <span class="s1">&#39;iso639-3&#39;</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_name_0&#39;</span><span class="p">,</span> <span class="s1">&#39;Undetermined&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lang</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="s1">&#39;und&#39;</span><span class="p">)</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/und&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">framerate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;media_sample_rate&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">framerate</span><span class="p">))</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_phn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tier_tok</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tier_tok</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_tok</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tier_pron</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tier_pron</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier_pron</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;clean&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+        <span class="k">raise</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">e</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;clean&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">error</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">output_file</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">trs_output</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation uses in an output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-palign&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_patterns</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern2&#39;</span><span class="p">,</span> <span class="s1">&#39;-phon&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern3&#39;</span><span class="p">,</span> <span class="s1">&#39;-token&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_extensions</h4>
+
+    <article class="docstring">
+<p><em>Extensions that the annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;AUDIO&#39;</span><span class="p">),</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">),</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_sppasAlign">Private functions</h3>
+<h4>_segment_track_with_basic</h4>
+
+    <article class="docstring">
+<p><em>Segmentation of a track with the basic alignment system.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>audio</strong></li>
+<li><strong>phn</strong></li>
+<li><strong>token</strong></li>
+<li><strong>align</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_segment_track_with_basic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Segmentation of a track with the basic alignment system.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_BASIC</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">aligner_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">get_aligner_name</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">set_aligner</span><span class="p">(</span><span class="s1">&#39;basic&#39;</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">set_aligner</span><span class="p">(</span><span class="n">aligner_id</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>_segment_tracks</h4>
+
+    <article class="docstring">
+<p><em>Call the Aligner to align each unit of a directory.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>workdir</strong>: (<em>str</em>) directory to get units and put alignments.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_segment_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workdir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Call the Aligner to align each unit of a directory.</span>
+
+<span class="sd">        :param workdir: (str) directory to get units and put alignments.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">nb_tracks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span><span class="o">.</span><span class="n">get_units</span><span class="p">(</span><span class="n">workdir</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">nb_tracks</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">EmptyDirectoryError</span><span class="p">(</span><span class="n">workdir</span><span class="p">)</span>
+    <span class="n">durations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">workdir</span><span class="p">,</span> <span class="s1">&#39;tracks.list&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">v1</span><span class="p">))</span>
+    <span class="n">track_number</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">track_number</span> <span class="o">&lt;</span> <span class="n">nb_tracks</span><span class="p">:</span>
+        <span class="n">track_number</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">MSG_ALIGN_TRACK</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">track_number</span><span class="p">))</span>
+        <span class="n">audio</span><span class="p">,</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tracksrw</span><span class="o">.</span><span class="n">get_filenames</span><span class="p">(</span><span class="n">workdir</span><span class="p">,</span> <span class="n">track_number</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">track_number</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">):</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">durations</span><span class="p">[</span><span class="n">track_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_ALIGN_TRACK</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">track_number</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_ALIGN_TRACK</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">track_number</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">MSG_ALIGN_FAILED</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">get_aligner_name</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;basic&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Segment is rescued by assigning the same duration to each phoneme.&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_segment_track_with_basic</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">phn</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">align</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasAlign">Protected functions</h3>
+<h4>__add_meta_in_tier</h4>
+
+    <article class="docstring">
+<p><em>Add metadata into a normalized tier.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__add_meta_in_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata into a normalized tier.&quot;&quot;&quot;</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;linguistic_resource_model&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">get_model_dirname</span><span class="p">())</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;aligner_name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segmenter</span><span class="o">.</span><span class="n">get_aligner_name</span><span class="p">())</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

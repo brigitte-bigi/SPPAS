@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasInstallerDeps. Main class to manage the installation of external features." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.core.coreutils.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="Installer.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="DepsFeatureChecker.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.utils.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.core.preinstall">    <h1>Module sppas.core.preinstall</h1>
+<section id="#sppasInstallerDeps">
+<h2>Class sppasInstallerDeps</h2>
+
+<section>
+<h3 id="#description_sppasInstallerDeps">Description</h3>
+    <article class="docstring">
+<p><em>Main class to manage the installation of external features.</em></p>
+
+<p>sppasInstallerDeps is a wrapper of an Installer Object.</p>
+
+<p>It allows to:</p>
+
+<ul>
+<li>launch the installation process</li>
+<li>get information, which are important for the users, about the pre-installation</li>
+<li>configure parameters to get a personalized installation</li>
+</ul>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span> <span class="o">=</span> <span class="n">sppasInstallerDeps</span><span class="p">()</span>
+</code></pre></div>
+
+<p>See if a feature is available or not:</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="kc">True</span>
+</code></pre></div>
+
+<p>Customize what is enabled or not:</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="kc">False</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="kc">True</span>
+</code></pre></div>
+
+<p>Launch the installation process:</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">installer</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="n">installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="s2">&quot;feature_id&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasInstallerDeps">Constructor</h3>
+    <article class="docstring">
+<p><em>Instantiate the appropriate installer depending on the OS.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>progress</strong>: (ProcessProgressTerminal|None) The installation progress</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>OSError</em>: Not supported OS for the automatic installer</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instantiate the appropriate installer depending on the OS.</span>
+
+<span class="sd">    :param progress: (ProcessProgressTerminal|None) The installation progress</span>
+<span class="sd">    :raises: OSError: Not supported OS for the automatic installer</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Operating system: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
+    <span class="n">system_installer</span> <span class="o">=</span> <span class="n">sppasGuessInstaller</span><span class="o">.</span><span class="n">guess</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">system_installer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasSystemOSError</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span> <span class="o">=</span> <span class="n">system_installer</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;System installer: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">progress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">set_progress</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasInstallerDeps">Public functions</h3>
+<h4>set_progress</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">set_progress</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>features_ids</h4>
+
+    <article class="docstring">
+<p><em>Return the list of feature identifiers.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>feat_type</strong>: (<em>str</em>) Only return features of the given type.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">features_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of feature identifiers.</span>
+
+<span class="sd">        :param feat_type: (str) Only return features of the given type.</span>
+<span class="sd">        :return: (list)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">get_fids</span><span class="p">(</span><span class="n">feat_type</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>feature_type</h4>
+
+    <article class="docstring">
+<p><em>Return the feature type: deps, lang, annot.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>feat_id</strong>: (<em>str</em>) Identifier of a feature</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) or None</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">feature_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the feature type: deps, lang, annot.</span>
+
+<span class="sd">        :param feat_id: (str) Identifier of a feature</span>
+<span class="sd">        :return: (str) or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">feature_type</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>brief</h4>
+
+    <article class="docstring">
+<p><em>Return the brief description of the feature.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>feat_id</strong>: (<em>str</em>) Identifier of a feature</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">brief</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the brief description of the feature.</span>
+
+<span class="sd">        :param feat_id: (str) Identifier of a feature</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">brief</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>description</h4>
+
+    <article class="docstring">
+<p><em>Return the description of the feature.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>feat_id</strong>: (<em>str</em>) Identifier of a feature</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the description of the feature.</span>
+
+<span class="sd">        :param feat_id: (str) Identifier of a feature</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">description</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>available</h4>
+
+    <article class="docstring">
+<p><em>Return True if the feature is available.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>feat_id</strong>: (<em>str</em>) Identifier of a feature</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is available.</span>
+
+<span class="sd">        :param feat_id: (str) Identifier of a feature</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">available</span><span class="p">(</span><span class="n">feat_id</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>enable</h4>
+
+    <article class="docstring">
+<p><em>Return True if the feature is enabled and/or set it.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>fid</strong>: (<em>str</em>) Identifier of a feature</li>
+<li><strong>value</strong>: (<em>bool</em> | None) Enable of disable the feature.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the feature is enabled and/or set it.</span>
+
+<span class="sd">        :param fid: (str) Identifier of a feature</span>
+<span class="sd">        :param value: (bool | None) Enable of disable the feature.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>install</h4>
+
+    <article class="docstring">
+<p><em>Launch the installation process.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li><strong>errors</strong>: (<em>str</em>) errors happening during installation.</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>feat_type</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">install</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Launch the installation process.</span>
+
+<span class="sd">        :return: errors: (str) errors happening during installation.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__installer</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">feat_type</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">errors</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

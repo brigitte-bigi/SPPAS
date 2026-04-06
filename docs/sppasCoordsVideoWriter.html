@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasCoordsVideoWriter. Write a video, a set of images and/or coordinates into files." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasCoordsVideoBuffer.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasCoordsVideoReader.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.videodata">    <h1>Module sppas.src.videodata</h1>
+<section id="#sppasCoordsVideoWriter">
+<h2>Class sppasCoordsVideoWriter</h2>
+
+<section>
+<h3 id="#description_sppasCoordsVideoWriter">Description</h3>
+    <article class="docstring">
+<p><em>Write a video, a set of images and/or coordinates into files.</em></p>
+
+<p>There are 4 main solutions to write the result (images+coords):</p>
+
+<ol>
+<li>CSV: coordinates into a spreadsheet</li>
+<li>XRA: coordinates into an XML annotation file</li>
+<li>video</li>
+<li>folder with images</li>
+</ol>
+
+<p>For 3 and 4, there are 2 options - at least one has to be selected:</p>
+
+<ol>
+<li>tag: draw a square for each coord in the original image</li>
+<li>crop: create one image for each coord</li>
+</ol>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasCoordsVideoWriter">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new instance.</em></p>
+
+<p>Parts of each image can be extracted in separate image files and/or
+surrounded on the given image.
+Output video and images can be resized.</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image_writer</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_writer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new instance.</span>
+
+<span class="sd">    Parts of each image can be extracted in separate image files and/or</span>
+<span class="sd">    surrounded on the given image.</span>
+<span class="sd">    Output video and images can be resized.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sppasBufferVideoWriter</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span> <span class="o">=</span> <span class="n">sppasCoordsImageWriter</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">image_writer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image_writer</span><span class="p">,</span> <span class="n">sppasCoordsImageWriter</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span> <span class="o">=</span> <span class="n">image_writer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_xra</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span> <span class="o">=</span> <span class="s1">&#39;VideoCoords&#39;</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasCoordsVideoWriter">Public functions</h3>
+<h4>get_csv_output</h4>
+
+    <article class="docstring">
+<p><em>Return True if coordinates will be saved in a CSV file.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_csv_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if coordinates will be saved in a CSV file.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_csv_output</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_xra_output</h4>
+
+    <article class="docstring">
+<p><em>Return True if coordinates will be saved in an XRA file.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_xra_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if coordinates will be saved in an XRA file.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_xra_output</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_tag_output</h4>
+
+    <article class="docstring">
+<p><em>Return True if faces of the images will be surrounded.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tag_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if faces of the images will be surrounded.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_tag_output</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_crop_output</h4>
+
+    <article class="docstring">
+<p><em>Return True if the option to crop faces is enabled.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_crop_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the option to crop faces is enabled.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_crop_output</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_width</h4>
+
+    <article class="docstring">
+<p><em>Return the width of the output image files.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the width of the output image files.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_height</h4>
+
+    <article class="docstring">
+<p><em>Return the height of the outputs files.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the height of the outputs files.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_options</h4>
+
+    <article class="docstring">
+<p><em>Set any/some/all of the options.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>csv</strong></li>
+<li><strong>xra</strong></li>
+<li><strong>tag</strong></li>
+<li><strong>crop</strong></li>
+<li><strong>width</strong></li>
+<li><strong>height</strong></li>
+<li><strong>folder</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set any/some/all of the options.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">csv</span><span class="o">=</span><span class="n">csv</span><span class="p">,</span> <span class="n">xra</span><span class="o">=</span><span class="n">xra</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">crop</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">folder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_xra_tiername</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_xra_tiername</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_image_size</h4>
+
+    <article class="docstring">
+<p><em>Return the size of the image depending on the image and options.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_image_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the size of the image depending on the image and options.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">get_proportional_size</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>close</h4>
+
+    <article class="docstring">
+<p><em>Close all currently used sppasVideoWriter().</em></p>
+
+<p>It has to be invoked when writing buffers is finished in order to
+release the video writers.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Close all currently used sppasVideoWriter().</span>
+
+<span class="sd">        It has to be invoked when writing buffers is finished in order to</span>
+<span class="sd">        release the video writers.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xra</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">out_xra_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing file </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">))</span>
+            <span class="n">trs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra</span><span class="p">[</span><span class="n">out_xra_name</span><span class="p">]</span>
+            <span class="n">trs</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write</h4>
+
+    <article class="docstring">
+<p><em>Save the result into file(s) depending on the options.</em></p>
+
+<p>The out_name is a base name, its extension is ignored and replaced by
+the one(s) defined in this class.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasCoordsVideoBuffer) The images and results to write</li>
+<li><strong>out_name</strong>: (<em>str</em>) The output name for the folder and/or the video</li>
+<li><strong>opt_pattern</strong>: (<em>str</em>) Optional pattern to add to filename(s)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>list of newly created file names</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">opt_pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the result into file(s) depending on the options.</span>
+
+<span class="sd">        The out_name is a base name, its extension is ignored and replaced by</span>
+<span class="sd">        the one(s) defined in this class.</span>
+
+<span class="sd">        :param video_buffer: (sppasCoordsVideoBuffer) The images and results to write</span>
+<span class="sd">        :param out_name: (str) The output name for the folder and/or the video</span>
+<span class="sd">        :param opt_pattern: (str) Optional pattern to add to filename(s)</span>
+<span class="sd">        :return: list of newly created file names</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_name</span><span class="p">)</span>
+    <span class="n">out_name</span> <span class="o">=</span> <span class="n">fn</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">csv</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">out_csv_name</span> <span class="o">=</span> <span class="n">out_name</span> <span class="o">+</span> <span class="n">opt_pattern</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_csv_coords</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_csv_name</span><span class="p">)</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">xra</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">out_xra_name</span> <span class="o">=</span> <span class="n">out_name</span> <span class="o">+</span> <span class="n">opt_pattern</span> <span class="o">+</span> <span class="s1">&#39;.xra&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_xra_coords</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_xra_name</span><span class="p">)</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_video_output</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get_tag_output</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">new_video_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_video</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">opt_pattern</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_video_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> video files created&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_video_files</span><span class="p">)))</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_video_files</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">new_image_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_folder</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">opt_pattern</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_image_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> image files created&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_image_files</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_csv_coords</h4>
+
+    <article class="docstring">
+<p><em>Write or append a list of coordinates in a CSV file.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasFacesVideoBuffer) The images and results to write</li>
+<li><strong>out<em>csv</em>name</strong>: (<em>str</em>) The filename of the CSV file to write</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_csv_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_csv_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write or append a list of coordinates in a CSV file.</span>
+
+<span class="sd">        :param video_buffer: (sppasFacesVideoBuffer) The images and results to write</span>
+<span class="sd">        :param out_csv_name: (str) The filename of the CSV file to write</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">begin_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_range</span><span class="p">()</span>
+    <span class="n">buffer_nb</span> <span class="o">=</span> <span class="n">end_idx</span> <span class="o">//</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">buffer_nb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">trash_name</span> <span class="o">=</span> <span class="n">sppasTrash</span><span class="p">()</span><span class="o">.</span><span class="n">put_file_into</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;A file with name </span><span class="si">{:s}</span><span class="s1"> is already existing.</span><span class="se">\n</span><span class="s1">This file is moved into the Trash of SPPAS with name: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">,</span> <span class="n">trash_name</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;a+&#39;</span>
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">out_csv_name</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">video_buffer</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_coords</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">buffer_nb</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_coords</h4>
+
+    <article class="docstring">
+<p><em>Write the coords into the given stream.</em></p>
+
+<ul>
+<li>frame number</li>
+<li>the index of the coords</li>
+<li>timestamp</li>
+<li>confidence</li>
+<li>success</li>
+<li>x, y, w, h,</li>
+<li>buffer number</li>
+<li>index in the buffer</li>
+</ul>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>fd</strong>: (Stream) File descriptor, String descriptor, stdout, etc</li>
+<li><strong>video_buffer</strong>: (sppasCoordsVideoBuffer)</li>
+<li><strong>buffer_idx</strong>: (<em>int</em>) Buffer number</li>
+<li><strong>idx</strong>: (<em>int</em>) An integer to write</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">buffer_idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write the coords into the given stream.</span>
+
+<span class="sd">        - frame number</span>
+<span class="sd">        - the index of the coords</span>
+<span class="sd">        - timestamp</span>
+<span class="sd">        - confidence</span>
+<span class="sd">        - success</span>
+<span class="sd">        - x, y, w, h,</span>
+<span class="sd">        - buffer number</span>
+<span class="sd">        - index in the buffer</span>
+
+<span class="sd">        :param fd: (Stream) File descriptor, String descriptor, stdout, etc</span>
+<span class="sd">        :param video_buffer: (sppasCoordsVideoBuffer)</span>
+<span class="sd">        :param buffer_idx: (int) Buffer number</span>
+<span class="sd">        :param idx: (int) An integer to write</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">get_csv_sep</span><span class="p">()</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">frame_idx</span> <span class="o">=</span> <span class="n">buffer_idx</span> <span class="o">*</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span> <span class="o">+</span> <span class="n">idx</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frame_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;0</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.3f}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">frame_idx</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;none</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;0</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;0</span><span class="si">{:s}</span><span class="s1">0</span><span class="si">{:s}</span><span class="s1">0</span><span class="si">{:s}</span><span class="s1">0</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buffer_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span>
+        <span class="n">mid_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_idx</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span> <span class="o">+</span> <span class="n">radius</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)):</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frame_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.3f}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mid_time</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:f}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">(),</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;1</span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">buffer_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">sep</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_xra_coords</h4>
+
+    <article class="docstring">
+<p><em>Append a list of coordinates in an XRA object.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasFacesVideoBuffer) The images and results to write</li>
+<li><strong>out<em>xra</em>name</strong>: (<em>str</em>) The filename of the XRA file to write</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_xra_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_xra_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a list of coordinates in an XRA object.</span>
+
+<span class="sd">        :param video_buffer: (sppasFacesVideoBuffer) The images and results to write</span>
+<span class="sd">        :param out_xra_name: (str) The filename of the XRA file to write</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">out_xra_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">)</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="s1">&#39;video/&#39;</span> <span class="o">+</span> <span class="n">fe</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">out_xra_name</span><span class="p">,</span> <span class="n">mime_type</span><span class="o">=</span><span class="n">mime_type</span><span class="p">)</span>
+        <span class="n">media</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;fps&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">))</span>
+        <span class="n">media</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">get_width</span><span class="p">()))</span>
+        <span class="n">media</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">get_height</span><span class="p">()))</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span><span class="p">)</span>
+        <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+        <span class="n">trs</span> <span class="o">=</span> <span class="n">sppasXRA</span><span class="p">(</span><span class="s1">&#39;VideoCoordinates&#39;</span><span class="p">)</span>
+        <span class="n">trs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xra</span><span class="p">[</span><span class="n">out_xra_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">trs</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">trs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xra</span><span class="p">[</span><span class="n">out_xra_name</span><span class="p">]</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xra_tiername</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid tier in XRA. Can&#39;t add coordinates.&quot;</span><span class="p">)</span>
+    <span class="n">begin_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_range</span><span class="p">()</span>
+    <span class="n">buffer_nb</span> <span class="o">=</span> <span class="n">end_idx</span> <span class="o">//</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">video_buffer</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_xra_ann</span><span class="p">(</span><span class="n">tier</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">buffer_nb</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_xra_ann</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_xra_ann</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">buffer_idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">frame_idx</span> <span class="o">=</span> <span class="n">buffer_idx</span> <span class="o">*</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_size</span><span class="p">()</span> <span class="o">+</span> <span class="n">idx</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">((</span><span class="n">c</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">h</span><span class="p">),</span> <span class="n">tag_type</span><span class="o">=</span><span class="s1">&#39;rect&#39;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">())</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span>
+    <span class="n">mid_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_idx</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span> <span class="o">+</span> <span class="n">radius</span>
+    <span class="n">frame_point</span> <span class="o">=</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">mid_time</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span>
+    <span class="n">ann</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">sppasLocation</span><span class="p">(</span><span class="n">frame_point</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">ann</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;frame_index&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">frame_idx</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ann</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_video</h4>
+
+    <article class="docstring">
+<p><em>Save the result in video format.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasFacesVideoBuffer) The buffer with images to write</li>
+<li><strong>out_name</strong>: (<em>str</em>) The filename of the output video file</li>
+<li><strong>pattern</strong>: (<em>str</em>) Pattern to add to cropped video filename(s)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>list of newly created video file names</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_video</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the result in video format.</span>
+
+<span class="sd">        :param video_buffer: (sppasFacesVideoBuffer) The buffer with images to write</span>
+<span class="sd">        :param out_name: (str) The filename of the output video file</span>
+<span class="sd">        :param pattern: (str) Pattern to add to cropped video filename(s)</span>
+<span class="sd">        :return: list of newly created video file names</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;-tag&#39;</span>
+    <span class="n">iter_images</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">video_buffer</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_images</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_video_writer</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_video_writer</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+                    <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">tag_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_tag_video_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_folder</h4>
+
+    <article class="docstring">
+<p><em>Save the result in image format into a folder.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasImage) The image to write</li>
+<li><strong>out_name</strong>: (<em>str</em>) The folder name of the output image files</li>
+<li><strong>pattern</strong>: (<em>str</em>) Pattern to add to a cropped image filename</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the result in image format into a folder.</span>
+
+<span class="sd">        :param video_buffer: (sppasImage) The image to write</span>
+<span class="sd">        :param out_name: (str) The folder name of the output image files</span>
+<span class="sd">        :param pattern: (str) Pattern to add to a cropped image filename</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">out_name</span><span class="p">)</span>
+    <span class="n">begin_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_range</span><span class="p">()</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin_idx</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="n">iter_images</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">video_buffer</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_images</span><span class="p">)</span>
+        <span class="n">img_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_name</span><span class="p">(</span><span class="n">begin_idx</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">nf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_and_crop</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">img_name</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">nf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_sppasCoordsVideoWriter">Private functions</h3>
+<h4>_tag_and_crop</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_tag_and_crop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img_name</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">tag_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="n">out_iname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">img_name</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_ext</span><span class="p">)</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out_iname</span><span class="p">)</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_iname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">crop</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+            <span class="n">iname</span> <span class="o">=</span> <span class="n">img_name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_ext</span>
+            <span class="n">out_iname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">iname</span><span class="p">)</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_writer</span><span class="o">.</span><span class="n">crop_and_size_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out_iname</span><span class="p">)</span>
+            <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_iname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

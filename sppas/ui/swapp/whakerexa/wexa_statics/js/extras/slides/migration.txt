@@ -1,0 +1,133 @@
+
+
+2. NETTOYAGE
+
+2.1 les modes de vue
+
+- ajouter une sorte de "dataclass" SlidesModeViewContainers => une classe qui connait tous les noms de containers
+possibles et qui permet de leur associer true/false
+
+- utiliser un SlidesModeViewContainers dans chaque mode de vue (presentation, overview), et supprimer les
+utilisations directes des controleurs de containers
+
+- SlidesViewModeManager : ajouter l'ajout/la suppression des containers selon la vue à chaque changement de vue, en
+utilisant la donnée membre instanciée de SlidesModeViewContainers
+
+==> les modes de vues n'auront plus aucun besoin des controlleurs.
+
+
+2.2 keyboard & controls
+
+- Ne prennent plus le manager en paramètre.
+
+- Ils capturent les événements => ils créent un événement "Custom" => ils envoient l'événement
+(donc pour une même action, ils envoient la même chose !)
+
+- le SlidesManager connait tous les contrôleurs, il écoute des événements "Custom" et agit en conséquence
+
+
+2.3 Ajout
+
+SlidesVisibilityManager pour la progress bar, pour l'affichage du conteneur.
+SlidesVisibilityManager pour la licence, pour l'affichage du conteneur.
+
+
+
+
+3. MIGRATION : SCHÉMA GLOBAL — DONNÉES / TRAITEMENTS
+
+Données (1 seule classe)
+
+	SlidesData
+	curIndex
+	curMode
+
+	<<== chaque vue dispose de sa liste ===>>
+	états booléens (fullscreen, controlsVisible, etc.)
+	slides[]
+
+Traitements (modules indépendants)
+
+	NavigationLogic
+	ViewModeLogic
+	VisibilityLogic
+	IncrementalLogic
+
+Vues
+	SlidesView
+	OverviewView
+
+Contrôleurs
+	KeyboardController
+	ButtonsController
+	TouchController
+
+Assembleur
+	SlidesApp (renommé SlidesAssembler)
+
+
+
+
+2. LISTE DES CLASSES À CRÉER / DÉPLACER
+
+Créer :
+
+	SlidesData
+	NavigationLogic
+	ViewModeLogic
+	VisibilityLogic
+	IncrementalLogic
+
+Modifier :
+
+	SlidesManager → disparaît (remplacé par les logics)
+	SlidesApp → devient uniquement un assembleur
+
+Garder :
+
+	SlidesView
+	OverviewView
+	Tous les contrôleurs (mais sans logique interne, ils appellent les logics)
+
+
+3. ORGANIGRAMME MERISE (niveau conceptuel)
+
+Données :
+	→ SlidesData
+
+Traitements :
+	→ NavigationLogic : gère index
+	→ ViewModeLogic : gère mode
+	→ VisibilityLogic : gère visible/invisible
+	→ IncrementalLogic : gère steps
+
+Vues :
+	→ Affichent SlidesData via API
+	→ Ne contiennent aucun traitement
+
+Contrôleurs :
+	→ Capturent événements
+	→ Appellent TRAITEMENTS
+	→ Vues se mettent à jour via Data
+
+Aucune dépendance croisée.
+
+
+4. ARCHITECTURE MINIMALE (logique)
+
+SlidesApp crée :
+
+	data
+	logics (navigation, mode, visibility, step)
+	views
+	controllers
+
+SlidesApp connecte :
+
+	controllers → logics
+	logics → data
+	views → data
+	logics → vues (callbacks propres)
+
+SlidesApp ne contient AUCUNE logique métier.
+

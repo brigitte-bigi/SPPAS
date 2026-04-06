@@ -1,0 +1,155 @@
+"""
+:filename: sppas.ui.swapp.app_dashboard.links_node.py
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: The links section of the SPPAS Dashboard Application.
+
+.. _This file is part of SPPAS: https://sppas.org/
+..
+    -------------------------------------------------------------------------
+
+     ######   ########   ########      ###      ######
+    ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+    ##        ##     ##  ##     ##   ##   ##   ##            annotation
+     ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+    ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+
+"""
+
+from __future__ import annotations
+from whakerpy.htmlmaker import HTMLNode
+
+from sppas.ui import _
+from sppas.ui.swapp.htmltags import sppasHTMLButton
+
+# ---------------------------------------------------------------------------
+
+
+MSG_HOME = _("Website")
+MSG_DOC = _("Book")
+MSG_RSC = _("Resources")
+MSG_TUTOS = _("Tutorials")
+MSG_FAQ = "F.A.Q."
+MSG_SRC = _("Source code")
+MSG_AUTH = _("The author")
+MSG_AWARD = _("Award")
+MSG_CITE = _("How to cite")
+MSG_ABOUT = _("About")
+
+# ---------------------------------------------------------------------------
+
+
+class BaseLinksNode(HTMLNode):
+
+    def __init__(self, parent_id, identifier: str):
+        super(BaseLinksNode, self).__init__(parent_id, identifier, "section")
+        self.add_attribute("id", self.identifier)
+        self.add_attribute("class", "links-panel")
+
+    # ----------------------------------------------------------------------
+
+    def link_button(self, ident, icon_name, text, link):
+        """A specific button on which the ident is on the span text.
+
+        :return: (sppasHTMLButton)
+
+        """
+        button_node = sppasHTMLButton(self.identifier, identifier=ident+"_button")
+
+        # - design
+        button_node.remove_attribute("class")  # just in case...
+        button_node.add_attribute("class", "link-button")
+        # - accessibility
+        button_node.add_attribute("role", "link")
+        # - link, managed by the JS class LinkController() of Whakerexa
+        button_node.add_attribute("data-href", link)
+        button_node.add_attribute("title", link)
+        # - content
+        button_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
+        button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
+
+        self.append_child(button_node)
+        return button_node
+
+    # ----------------------------------------------------------------------
+
+    def dialog_button(self, ident, icon_name, text, dialog_name):
+        """A specific button which is used to open a modal dialog.
+
+		<button name="about-button" onclick="Wexa.dialog.open('about_dialog', true)">Open About</button>
+
+        :return: (sppasHTMLButton)
+
+        """
+        button_node = sppasHTMLButton(self.identifier, identifier=ident+"_button")
+        button_node.add_attribute("onclick", f"Wexa.dialog.open('{dialog_name}', true)")
+
+        # - design
+        button_node.remove_attribute("class")  # just in case...
+        button_node.add_attribute("class", "link-button")
+
+        # content
+        button_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
+        button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
+
+        self.append_child(button_node)
+        return button_node
+
+# ---------------------------------------------------------------------------
+
+
+class LinksNode(BaseLinksNode):
+    """The section with external links of the dashboard application.
+
+    """
+
+    ID = "links_section"
+
+    def __init__(self, parent_id):
+        super(LinksNode, self).__init__(parent_id, LinksNode.ID)
+
+        self.link_button("web", "sppas-logo-v5", MSG_HOME, link="https://sppas.org/")
+        self.link_button("docu", "link_docweb", MSG_DOC, link="https://sppas.org/book.html")
+        self.link_button("res", "link_resources", MSG_RSC, link="https://sppas.org/resources.html")
+        self.link_button("tuto", "link_tutovideo", MSG_TUTOS, link="https://sppas.org/tutorials.html")
+        self.link_button("faq", "link_question", MSG_FAQ, link="https://sppas.org/faq.html")
+
+# ---------------------------------------------------------------------------
+
+
+class AboutsNode(BaseLinksNode):
+    """The section with external links or dialogs of the dashboard application.
+
+    """
+
+    ID = "about_section"
+
+    def __init__(self, parent_id):
+        super(AboutsNode, self).__init__(parent_id, AboutsNode.ID)
+
+        self.dialog_button("about", "link_about", MSG_ABOUT, dialog_name="about_dialog")
+        self.dialog_button("cite", "link_publis", MSG_CITE, dialog_name="publis_dialog")
+        self.link_button("award", "link_sppas_award", MSG_AWARD, link='https://www.ouvrirlascience.fr/sppas-2/')
+        self.link_button("src", "badge-sourceforge", MSG_SRC, link="https://sourceforge.net/p/sppas/code/ci/master/tree/")

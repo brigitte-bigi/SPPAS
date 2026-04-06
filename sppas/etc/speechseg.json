@@ -1,0 +1,48 @@
+{
+  "id": "speechseg",
+  "name": "Speech Segmentation",
+  "descr": "Perform full process of speech segmentation: text normalization, phonetization, alignment and RMS. Requires audio and orthographic transcription.",
+  "required": "alignment",
+  "api": "sppasSpeechSeg",
+  "devel": 100,
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "resources": [],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "",
+      "text": "Input file pattern with time-aligned tokens."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-sppasseg",
+      "text": "Output file pattern with time-aligned phonemes and RMS."
+    },
+    {
+      "id": "predictsil",
+      "type": "bool",
+      "value": false,
+      "text": "Attempt to predict short pauses after each word (Experimental)."
+    },
+    {
+      "id": "intensity",
+      "type": "bool",
+      "value": true,
+      "text": "Predict phoneme intensity, in scale 0-3 (Experimental)."
+    },
+    {
+      "id": "json",
+      "type": "bool",
+      "value": false,
+      "text": "Output is a simplified JSON file instead of an annotated file."
+    }
+
+  ]
+}

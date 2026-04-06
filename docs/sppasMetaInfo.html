@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasMetaInfo. Meta information manager." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.utils.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasLangResource.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasTips.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.anndata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.structs">    <h1>Module sppas.src.structs</h1>
+<section id="#sppasMetaInfo">
+<h2>Class sppasMetaInfo</h2>
+
+<section>
+<h3 id="#description_sppasMetaInfo">Description</h3>
+    <article class="docstring">
+<p><em>Meta information manager.</em></p>
+
+<ul>
+<li><strong>author</strong>: Brigitte Bigi</li>
+<li><strong>organization</strong>: Laboratoire Parole et Langage, Aix-en-Provence, France</li>
+<li><strong>contact</strong>: contact@sppas.org</li>
+<li><strong>license</strong>: GPL, v3</li>
+<li><strong>copyright</strong>: Copyright (C) 2011-2019  Brigitte Bigi, CNRS</li>
+</ul>
+
+<p>Meta-information is a sorted collection of pairs (key, value) where
+value is a tuple with first argument of type boolean to indicate the
+state of the key: enabled/disabled.</p>
+
+<p>Manage meta information of type (key,value). Allows to enable/disable
+each one. Keys are unicode strings, and values can be of any type.</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">sppasMetaInfo</span><span class="p">()</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">add_metainfo</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;Brigitte Bigi&#39;</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">add_metainfo</span><span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasMetaInfo">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasMetaInfo instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasMetaInfo instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasMetaInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasMetaInfo">Public functions</h3>
+<h4>is_enable_metainfo</h4>
+
+    <article class="docstring">
+<p><em>Return the status of a given key.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) The key of the meta-information</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>MetaKeyError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_enable_metainfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the status of a given key.</span>
+
+<span class="sd">        :param key: (str) The key of the meta-information</span>
+<span class="sd">        :raises: MetaKeyError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MetaKeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">[</span><span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_metainfo</h4>
+
+    <article class="docstring">
+<p><em>Return the value of a given key.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) The key of the meta-information</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>MetaKeyError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_metainfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the value of a given key.</span>
+
+<span class="sd">        :param key: (str) The key of the meta-information</span>
+<span class="sd">        :raises: MetaKeyError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">MetaKeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">[</span><span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>enable_metainfo</h4>
+
+    <article class="docstring">
+<p><em>Enable/Disable a meta information.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) The key of the meta-information</li>
+<li><strong>value</strong>: (<em>bool</em>) Status of the meta-information</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>MetaKeyError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_metainfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable/Disable a meta information.</span>
+
+<span class="sd">        :param key: (str) The key of the meta-information</span>
+<span class="sd">        :param value: (bool) Status of the meta-information</span>
+<span class="sd">        :raises: MetaKeyError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">MetaKeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">[</span><span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_metainfo</h4>
+
+    <article class="docstring">
+<p><em>Fix a meta information or update it.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) The key of the meta-information</li>
+<li><strong>strv</strong>: (<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_metainfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">strv</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix a meta information or update it.</span>
+
+<span class="sd">        :param key: (str) The key of the meta-information</span>
+<span class="sd">        :param strv: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">[</span><span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="n">strv</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>pop_metainfo</h4>
+
+    <article class="docstring">
+<p><em>Pop a meta information.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) The key of the meta-information</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>MetaKeyError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop_metainfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pop a meta information.</span>
+
+<span class="sd">        :param key: (str) The key of the meta-information</span>
+<span class="sd">        :raises: MetaKeyError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">MetaKeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">[</span><span class="n">u</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>keys_enabled</h4>
+
+    <article class="docstring">
+<p><em>Return a list of the keys of enabled meta information.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>list of unicode strings</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">keys_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of the keys of enabled meta information.</span>
+
+<span class="sd">        :returns: list of unicode strings</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasMetaInfo">Overloads</h3>
+<h4>__len__</h4>
+
+    <article class="docstring">
+<p><em>Return the number of meta info (enabled+disabled).</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of meta info (enabled+disabled).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_metainfo</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasDuration. Representation of a duration with vagueness." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.structs.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasLocation.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasDurationCompare.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.anndata">    <h1>Module sppas.src.anndata</h1>
+<section id="#sppasDuration">
+<h2>Class sppasDuration</h2>
+
+<section>
+<h3 id="#description_sppasDuration">Description</h3>
+    <article class="docstring">
+<p><em>Representation of a duration with vagueness.</em></p>
+
+<p>Represents a duration identified by 2 float values:</p>
+
+<ul>
+<li>the duration value;</li>
+<li>the duration margin.</li>
+</ul>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasDuration">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasDuration instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) value of the duration.</li>
+<li><strong>vagueness</strong>: (<em>float</em>) represents the vagueness of the value.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">vagueness</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasDuration instance.</span>
+
+<span class="sd">    :param value: (float) value of the duration.</span>
+<span class="sd">    :param vagueness: (float) represents the vagueness of the value.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_margin</span><span class="p">(</span><span class="n">vagueness</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasDuration">Public functions</h3>
+<h4>get</h4>
+
+    <article class="docstring">
+<p><em>Return myself.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return myself.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set</h4>
+
+    <article class="docstring">
+<p><em>Set the value/vagueness of another sppasDuration instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasDuration)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the value/vagueness of another sppasDuration instance.</span>
+
+<span class="sd">        :param other: (sppasDuration)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasDuration&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_value</h4>
+
+    <article class="docstring">
+<p><em>Return the duration value (float).</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the duration value (float).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_value</h4>
+
+    <article class="docstring">
+<p><em>Set the duration to a new value.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) the new duration value.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the duration to a new value.</span>
+
+<span class="sd">        :param value: (float) the new duration value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_margin</h4>
+
+    <article class="docstring">
+<p><em>Return the vagueness of the duration (float).</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the vagueness of the duration (float).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_margin</h4>
+
+    <article class="docstring">
+<p><em>Fix the vagueness margin of the duration.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>vagueness</strong>: (<em>float</em>) the duration margin.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_margin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vagueness</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the vagueness margin of the duration.</span>
+
+<span class="sd">        :param vagueness: (float) the duration margin.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vagueness</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">raise</span> <span class="n">AnnDataNegValueError</span><span class="p">(</span><span class="n">vagueness</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">vagueness</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>copy</h4>
+
+    <article class="docstring">
+<p><em>Return a deep copy of self.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span>
+    <span class="k">return</span> <span class="n">sppasDuration</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasDuration">Overloads</h3>
+<h4>__format__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__repr__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;Duration: </span><span class="si">{:f}</span><span class="s1">, </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__str__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{:f}</span><span class="s1">, </span><span class="si">{:f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__hash__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__eq__</h4>
+
+    <article class="docstring">
+<p>Equal is required to use '==' between 2 sppasDuration instances or
+between a sppasDuration and an other object representing time.
+This relationship takes into account the vagueness.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (Duration, <em>float</em>, <em>int</em>) is the other duration to compare with.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equal is required to use &#39;==&#39; between 2 sppasDuration instances or</span>
+<span class="sd">        between a sppasDuration and an other object representing time.</span>
+<span class="sd">        This relationship takes into account the vagueness.</span>
+
+<span class="sd">        :param other: (Duration, float, int) is the other duration to compare with.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">delta</span> <span class="o">&lt;=</span> <span class="n">radius</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">-</span> <span class="n">other</span><span class="p">)</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__margin</span>
+        <span class="k">return</span> <span class="n">delta</span> <span class="o">&lt;=</span> <span class="n">radius</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__lt__</h4>
+
+    <article class="docstring">
+<p>LowerThan is required to use '&lt;' between 2 sppasDuration instances
+or between a sppasDuration and an other time object.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (Duration, <em>float</em>, <em>int</em>) is the other duration to compare with.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LowerThan is required to use &#39;&lt;&#39; between 2 sppasDuration instances</span>
+<span class="sd">        or between a sppasDuration and an other time object.</span>
+
+<span class="sd">        :param other: (Duration, float, int) is the other duration to compare with.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&lt;</span> <span class="n">other</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__gt__</h4>
+
+    <article class="docstring">
+<p>GreaterThan is required to use '>' between 2 Duration instances
+or between a Duration and an other time object.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (Duration, <em>float</em>, <em>int</em>) is the other duration to compare with.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GreaterThan is required to use &#39;&gt;&#39; between 2 Duration instances</span>
+<span class="sd">        or between a Duration and an other time object.</span>
+
+<span class="sd">        :param other: (Duration, float, int) is the other duration to compare with.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasDuration</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span> <span class="o">!=</span> <span class="n">other</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">&gt;</span> <span class="n">other</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__ne__</h4>
+
+    <article class="docstring">
+<p><em>Not equals.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Not equals.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__le__</h4>
+
+    <article class="docstring">
+<p><em>Lesser or equal.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lesser or equal.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__ge__</h4>
+
+    <article class="docstring">
+<p><em>Greater or equal.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Greater or equal.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

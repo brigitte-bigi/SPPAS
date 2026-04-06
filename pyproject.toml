@@ -1,0 +1,198 @@
+# ---------------------------------------------------------------------------
+# Tom's Obvious Minimal Language - for SPPAS program - https://toml.io/en/
+# ---------------------------------------------------------------------------
+#
+# Filename: pyproject.toml
+# Copyright: Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+# License: AGPL, v3
+# Summary: Tom's Obvious Minimal Language - for sppas library
+#
+# This file allows to create the 'sppas' distribution with:
+# > python -m build
+# and to install dependencies with:
+# > python -m pip install .
+#
+# ---------------------------------------------------------------------------
+
+[project]
+    name = "sppas"
+    # The version must be PEP 440 compliant
+    version = "5.0.0"
+    authors = [
+        {name="Brigitte Bigi", email="contact@sppas.org"},
+    ]
+    maintainers = [
+        {name="Brigitte Bigi", email="contact@sppas.org"},
+    ]
+    # This is a one-line description or tagline of what SPPAS does.
+    description = "Automatic annotation and analysis of audio/video speech recordings."
+    readme = "README.md"
+    requires-python = ">=3.9,<=3.13"
+    license = "AGPL-3.0-or-later"
+    license-files = ["LICENSE"]
+    keywords = ["python", "annotation", "artificial intelligence", "computational linguistics", "corpus linguistics", "information analysis"]
+    classifiers = [
+        "Programming Language :: Python",
+        "Operating System :: OS Independent",
+        "Intended Audience :: Developers",
+        "Development Status :: 5 - Production/Stable"
+    ]
+    # These are the required dependencies.
+    # See 'sppas/etc/features.ini' for the list of features dependencies.
+    dependencies = [
+        "certifi",
+        "AudiooPy == 0.6",
+        "WhakerPy == 2.1"
+    ]
+
+[project.urls]
+    Homepage = "https://sppas.org/"
+    Documentation = "https://brigittebigi.github.io/sppas/"
+    Repository = "https://sppas.sourceforge.net/"
+
+[project.scripts]
+    # See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#console-scripts
+    sppasseg = "sppas.scripts.sppasseg:sppasseg"
+    sppassetup = "sppas.bin.sppassetup:sppassetup"
+
+[project.optional-dependencies]
+    docs = [
+        "pygments",
+        "markdown2",
+        "ClammingPy >= 2.2"]
+    tests = [
+        "coverage ~=7.3.0",
+        "python-dotenv ~=1.0.0"]
+
+# --------------------------------
+# Building package with setuptools
+# --------------------------------
+
+[build-system]
+    requires = ["setuptools"]
+    build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+    # Python files included in the package = all in "sppas"
+    where = ["."]
+    include = ["sppas*"]
+    exclude = [
+        "tests*",
+        "sppas.tests*",
+        "sppas.*.tests*",
+        "dist*",
+        "docs*",
+        "etc*",
+        "logs*",
+        "trash*"
+    ]
+
+[tool.setuptools.package-data]
+    # Data files included in the package = all in "sppas" (except .exe files below)
+    # "*" = ["*"]
+    sppas = [
+        "etc/**/*",
+        "ui/**/*",
+        "plugins/**/*",
+        "core/locale/**/*"
+    ]
+
+[tool.setuptools.exclude-package-data]
+    "*" = [
+        "*.exe",
+        "**/*.exe",
+        "**/*.po",
+        "**/tests/**",
+        "*.pyc",
+        "**/*.pyc",
+        "__pycache__/*",
+        "**/__pycache__/*",
+        "**/__pycache__/**"
+    ]
+
+# -------------------
+# Code tests
+# -------------------
+# Can check this config file with:
+# import coverage
+# x = coverage.config.HandyConfigParser(False)
+# x.read("pyproject.toml")
+
+[tool.pytest.ini_options]
+    minversion = "7.3"
+    addopts = "-ra -q"
+    testpaths = ["tests"]
+
+[tool.coverage.report]
+    fail_under = 5
+    exclude_also = [
+        "def __repr__",
+        "raise AssertionError",
+        "raise NotImplementedError",
+        "if __name__ == .__main__.:",
+        "@(abc\\.)?abstractmethod"]
+
+[tool.coverage.run]
+    source_pkgs = ["sppas"]
+    command_line = "-m unittest discover"
+    omit = [
+        "*/test*",
+        "**/__init__.py",
+        "sppas/scripts/*"
+    ]
+
+[tool.coverage.xml]
+    output = "tests/coverage.xml"
+
+# -------------------
+# Static code analyser
+# --------------------
+
+[tool.pylint]
+    # See documentation here: https://pylint.pycqa.org/en/latest/user_guide/messages/index.html
+    # Nomenclature: F=Fatal, E=Error, W=Warning, C=Convention, R=Refacto, I=Information
+    disable = [
+        "C0114", # (missing-module-docstring)
+        "C0115", # (missing-class-docstring)
+        "C0116", # (missing-function-docstring)
+        "C0209", #
+        "R0903", # (too-few-public-methods)
+        "R0904", # (too-many-public-methods)
+        "R0913", # (too-many-arguments)
+        "R1716", # (chained-comparison)
+        "R1734", # (use-list-literal)
+        "R1735", # (use-dict-literal)
+        "W0107", # (unnecessary-pass)
+        "W0105", # (pointless-string-statement)
+        "W0702", # (bare-except)
+        "W0718", # (broad-exception-caught)
+        "W0719", # (broad-exception-raised)
+        "W1401"] # (anomalous-backslash-in-string)
+
+[tool.pylint.basic]
+    # Allow shorter and longer variable names than the default.
+    argument-rgx = "[a-z_][a-z0-9_]*$"
+    attr-rgx = "[a-z_][a-z0-9_]*$"
+    variable-rgx = "[a-z_][a-z0-9_]*$"
+
+[tool.pylint.logging]
+    # The type of string formatting that logging methods do. `old` means using %
+    # formatting, `new` is for `{}` formatting.
+    logging-format-style = "new"
+    logging-modules = ["logging"]
+
+[tool.pylint.format]
+    # Maximum number of characters on a single line.
+    max-line-length = 120    # default is 80!
+    max-module-lines = 1500  # default is 1000
+
+[tool.pylint.main]
+    # Naming style matching correct class names.
+    class-naming-style = "PascalCase"
+    # Regular expression matching correct class names. Overrides class-naming-style.
+    # If left empty, class names will be checked with the set naming style.
+    class-rgx = "[a-zA-Z][a-zA-Z]+"    # default is "[A-Z][a-z]+"
+
+[tool.pylint.design]
+    # Maximum number of arguments for function / method.
+    max-args = 8   # default is 5

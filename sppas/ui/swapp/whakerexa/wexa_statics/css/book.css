@@ -1,0 +1,336 @@
+/*
+:filename: statics/css/wexa.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: a CSS framework to make reports from web content
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://whakerexa.sf.net/
+
+Copyright (C) 2023-2024 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+:root {
+    --toc-width: 0;
+    --numbers-color: rgb(140, 40, 40);
+}
+.dark {
+    --numbers-color: rgb(240, 180, 180);
+}
+
+html {
+    /* nav-width + its left- right- margins */
+    margin-left: var(--toc-width); /* + 2 * var(--typography-spacing-horizontal));*/
+}
+
+body {
+    width: 100%;
+    counter-reset: chapter;
+}
+
+/* ----------------------------------------------------------------------- */
+/* ------------------------------- Titles  ------------------------------- */
+/* ----------------------------------------------------------------------- */
+
+/* A new numbered chapter in the document */
+.chapter {
+    counter-increment: chapter;
+    counter-reset: ssection;
+    text-align: left;
+}
+
+.chapter > h1 {
+    width: 100%;
+    border-top: var(--border-width) solid var(--h1-color);
+    border-bottom: var(--border-width) solid var(--h1-color);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 4rem;
+    line-height: calc(5 * var(--font-size));
+    font-size: calc(4 * var(--font-size));
+
+    /* a chapter title is a box for 2 items: number + title */
+    display: inline-flex;
+    /* horizontal:
+    flex-direction: row;
+    justify-content: left;
+    align-items: center; */
+    /* vertical */
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    text-align: left;
+}
+
+.chapter > h1::before {
+    background-color: var(--numbers-color);
+    color: var(--bg-color);
+    content: counter(chapter) ".";
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: calc(4 * var(--font-size));
+    margin-top: 0;
+    margin-right: 1rem;
+    margin-bottom: 4rem;
+    text-align: right;
+    width: 10rem;
+}
+
+/* A new numbered section in the chapter */
+.ssection {
+    counter-increment: ssection;
+}
+
+.ssection h2 {
+    border-bottom: var(--border-width) solid var(--h2-color);
+}
+
+.ssection h2::before {
+    content: counter(chapter) "." counter(ssection) " ";
+    color: var(--numbers-color);
+}
+
+/* A new numbered sub-section in the section */
+.subssection {
+    counter-increment: subssection;
+}
+
+.subssection h3::before {
+    content: counter(chapter) "." counter(ssection) "." counter(subssection) " ";
+    color: var(--numbers-color);
+}
+
+/* ----------------------------------------------------------------------- */
+/* ---------------------- BOOK NAVIGATION: Table of Content -------------- */
+/* ----------------------------------------------------------------------- */
+
+/* The nav element is used to create the book ToC. */
+
+nav.side-nav {
+    z-index: 9;
+    width: var(--toc-width);
+    height: 100%;
+    position: fixed;
+    top: var(--typography-spacing-vertical);
+    left: 0;
+    padding-bottom: 3rem;
+    margin-top: calc(var(--typography-spacing-vertical) - (2*var(--typography-spacing-vertical)));
+    font-size: 90%;
+    overflow: unset;
+    overflow-x: hidden;
+    display: block;
+}
+
+/* Reset any previous nav margin/padding */
+nav.side-nav * {
+    margin: auto;
+    padding: 0;
+    font-size: calc(0.8*var(--font-size));
+}
+nav.side-nav *:not([role=button]) {
+    color: var(--nav-fg-color);
+}
+
+nav.side-nav > ul, nav.side-nav > hr, nav.side-nav > h1, nav.side-nav > h2 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+nav.side-nav h1 {
+    font-size: calc(1.5*var(--font-size));
+    font-weight: var(--font-weight-black);
+}
+
+nav.side-nav h2 {
+    font-size: calc(1.5*var(--font-size));
+    font-weight: var(--font-weight-bold);
+}
+
+nav.side-nav a[role=button], nav.side-nav button {
+    width: calc(0.75*var(--toc-width));
+    height: calc(3*var(--font-size));
+    border-radius: calc(3*(var(--border-width)));
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+/* Table of content automatically generated from <h*> of the document. */
+/* The element tags in the HTML document became automatically a class name
+   into the toc thanks to a script. */
+
+nav.side-nav ul {
+    display: initial;
+}
+
+nav.side-nav a:not([role=button],[role=menuitem]) {
+    display: initial;
+}
+
+nav.side-nav li.h1,
+nav.side-nav li.h2,
+nav.side-nav li.h3,
+nav.side-nav li.h4,
+nav.side-nav li.h5,
+nav.side-nav li.h6 {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+nav.side-nav li.h1 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 0;
+}
+nav.side-nav li.h2 {
+    margin-top: 1rem;
+    padding-left: 0.5rem;
+}
+nav.side-nav li.h3 {
+    padding-left: 1.5rem;
+}
+nav.side-nav li.h4 {
+    padding-left: 2rem;
+}
+nav.side-nav li.h5 {
+    padding-left: 3rem;
+}
+nav.side-nav li.h6 {
+    padding-left: 4rem;
+}
+
+nav.side-nav li.h2::before {
+    content: "■";
+    padding-right: calc(0.4*var(--typography-spacing-horizontal));
+    padding-bottom: calc(0.4*var(--typography-spacing-vertical));
+}
+nav.side-nav li.h3::before {
+    content: "◇";
+    padding-right: calc(0.4*var(--typography-spacing-horizontal));
+    padding-bottom: calc(0.4*var(--typography-spacing-vertical));
+}
+nav.side-nav li.h4::before {
+    content: "-";
+    padding-right: calc(0.4*var(--typography-spacing-horizontal));
+    padding-bottom: calc(0.4*var(--typography-spacing-vertical));
+}
+nav.side-nav li.h5::before {
+    content: "□";
+    padding-right: calc(0.4*var(--typography-spacing-horizontal));
+    padding-bottom: calc(0.4*var(--typography-spacing-vertical));
+}
+
+nav.side-nav li.h1 a {
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    font-weight: var(--font-weight-bold);
+    font-size: calc(1.2*var(--font-size));
+}
+nav.side-nav li.h2 a {
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    text-overflow: ellipsis;
+    font-size: var(--font-size);
+}
+nav.side-nav li.h3 a {
+    text-decoration: none;
+    font-weight: var(--font-weight-normal);
+    text-overflow: ellipsis;
+    font-size: calc(0.9*var(--font-size));
+}
+nav.side-nav li.h4 a {
+    text-decoration: none;
+    font-weight: var(--font-weight-semithin);
+    text-wrap: none;
+    text-overflow: ellipsis;
+}
+nav.side-nav li.h5 a {
+    text-decoration: none;
+    font-weight: var(--font-weight-thin);
+    text-wrap: none;
+    text-overflow: ellipsis;
+    font-size: calc(0.75*var(--font-size));
+}
+nav.side-nav li.h6 a {
+    text-decoration: none;
+    font-weight: var(--font-weight-thin);
+    text-wrap: none;
+    text-overflow: ellipsis;
+    font-size: calc(0.7*var(--font-size));
+}
+
+/* ----------------------------------------------------------------------- */
+/* ------------------ For printing the chapter's book -------------------- */
+/* ----------------------------------------------------------------------- */
+
+@media print {
+    html {
+        margin-left: 0;
+    }
+
+    .dark {
+        /* TODO: do we should force switching to light colors? */
+    }
+
+    nav.side-nav {
+        /* Migrate to a top nav for printing */
+        z-index: 9;
+        width: 100%;
+        position: relative;
+        top: 0;
+        padding-top: 1rem;
+        padding-bottom: 0.3rem;
+        margin: 0;
+        font-size: 90%;
+        overflow: unset;
+        background-color: white;
+        color: var(--a-color);
+        box-shadow: none;
+        border-top: var(--border-width) solid var(--border-color);
+        border-bottom: var(--border-width) solid var(--border-color);
+        text-align: left;
+        page-break-after: always;
+    }
+
+    nav.side-nav *:not([role=button]) {
+        color: var(--a-color);
+    }
+
+    #toc-content {
+        margin-left: 1rem;
+    }
+
+    body > header {
+        display: none;
+    }
+    body > nav {
+        display: none;
+    }
+    body > footer {
+        display: none;
+    }
+}

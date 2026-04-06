@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasBaseAnnotation. Base class for any automatic annotation integrated into SPPAS." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasFiles.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasDiagnosis.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+<section id="#sppasBaseAnnotation">
+<h2>Class sppasBaseAnnotation</h2>
+
+<section>
+<h3 id="#description_sppasBaseAnnotation">Description</h3>
+    <article class="docstring">
+<p><em>Base class for any automatic annotation integrated into SPPAS.</em></p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasBaseAnnotation">Constructor</h3>
+    <article class="docstring">
+<p><em>Base class for any SPPAS automatic annotation.</em></p>
+
+<p>Load default options/member values from a configuration file.
+This file must be in paths.etc</p>
+
+<p>Log is used for a better communication of the annotation process and its
+results. If None, logs are redirected to the default logging system.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>config</strong>: (<em>str</em>) Name of the configuration file (json) with or without its path.</li>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for any SPPAS automatic annotation.</span>
+
+<span class="sd">    Load default options/member values from a configuration file.</span>
+<span class="sd">    This file must be in paths.etc</span>
+
+<span class="sd">    Log is used for a better communication of the annotation process and its</span>
+<span class="sd">    results. If None, logs are redirected to the default logging system.</span>
+
+<span class="sd">    :param config: (str) Name of the configuration file (json) with or without its path.</span>
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">log</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span> <span class="o">=</span> <span class="n">sppasAnnReport</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span> <span class="o">=</span> <span class="n">log</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_default_out_extensions</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__load</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasBaseAnnotation">Public functions</h3>
+<h4>set_default_out_extensions</h4>
+
+    <article class="docstring">
+<p><em>Return the default output extension of each format.</em></p>
+
+<p>The default extension of each format is defined in the config.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_default_out_extensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the default output extension of each format.</span>
+
+<span class="sd">        The default extension of each format is defined in the config.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">filetype</span> <span class="ow">in</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">OUT_FORMATS</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">filetype</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">DEFAULT_EXTENSIONS</span><span class="p">[</span><span class="n">filetype</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_out_extension</h4>
+
+    <article class="docstring">
+<p><em>Set the extension for a specific out format.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>extension</strong>: (<em>str</em>) File extension for created files</li>
+<li><strong>out_format</strong>: (<em>str</em>) One of ANNOT, IMAGE, VIDEO</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">&#39;ANNOT&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the extension for a specific out format.</span>
+
+<span class="sd">        :param extension: (str) File extension for created files</span>
+<span class="sd">        :param out_format: (str) One of ANNOT, IMAGE, VIDEO</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">all_ext</span> <span class="o">=</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_outformat_extensions</span><span class="p">(</span><span class="n">out_format</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">extension</span>
+    <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_ext</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_ext</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Extension </span><span class="si">{}</span><span class="s1"> is not in the </span><span class="si">{}</span><span class="s1"> list.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="n">out_format</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">sppasExtensionWriteError</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">out_format</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>fix_out_file_ext</h4>
+
+    <article class="docstring">
+<p><em>Return the output with an appropriate file extension.</em></p>
+
+<p>If the output has already an extension, it is not changed.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>output</strong>: (<em>str</em>) Base name or filename</li>
+<li><strong>out_format</strong>: (<em>str</em>) One of ANNOT, IMAGE, VIDEO</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) filename</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_out_file_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">&#39;ANNOT&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output with an appropriate file extension.</span>
+
+<span class="sd">        If the output has already an extension, it is not changed.</span>
+
+<span class="sd">        :param output: (str) Base name or filename</span>
+<span class="sd">        :param out_format: (str) One of ANNOT, IMAGE, VIDEO</span>
+<span class="sd">        :return: (str) filename</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fe</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="n">out_format</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1300</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern that the annotation uses for its output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern that the annotation uses for its output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_patterns</h4>
+
+    <article class="docstring">
+<p><em>List of patterns that the annotation expects for the input filenames.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of <em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List of patterns that the annotation expects for the input filenames.</span>
+
+<span class="sd">        :return: (list of str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;inputpattern&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">opt</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">p</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_extensions</h4>
+
+    <article class="docstring">
+<p><em>Extensions that the annotation expects for its input filename.</em></p>
+
+<p>By default, the extensions are the annotated files. Can be overridden
+to change the list of supported extensions: they must contain the dot.</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of <em>list</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.</span>
+
+<span class="sd">        By default, the extensions are the annotated files. Can be overridden</span>
+<span class="sd">        to change the list of supported extensions: they must contain the dot.</span>
+
+<span class="sd">        :return: (list of list)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_opt_input_extensions</h4>
+
+    <article class="docstring">
+<p><em>Extensions that the annotation expects for its optional input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_opt_input_extensions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its optional input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_out_name</h4>
+
+    <article class="docstring">
+<p><em>Return the output filename from the input one.</em></p>
+
+<p>Output filename is created from the given filename, the annotation
+output pattern and the given output format (if any).</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the input file</li>
+<li><strong>output_format</strong>: (<em>str</em>) Extension of the output file with the dot</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_out_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output filename from the input one.</span>
+
+<span class="sd">        Output filename is created from the given filename, the annotation</span>
+<span class="sd">        output pattern and the given output format (if any).</span>
+
+<span class="sd">        :param filename: (str) Name of the input file</span>
+<span class="sd">        :param output_format: (str) Extension of the output file with the dot</span>
+<span class="sd">        :returns: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_patterns</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span><span class="p">[:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">fn</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_output_pattern</span><span class="p">()</span> <span class="o">+</span> <span class="n">output_format</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_out_name_old</h4>
+
+    <article class="docstring">
+<p><em>Return the output filename from the input one.</em></p>
+
+<p>Output filename is created from the given filename, the annotation
+output pattern and the given output format (if any).</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the input file</li>
+<li><strong>output_format</strong>: (<em>str</em>) Extension of the output file with the dot</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_out_name_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the output filename from the input one.</span>
+
+<span class="sd">        Output filename is created from the given filename, the annotation</span>
+<span class="sd">        output pattern and the given output format (if any).</span>
+
+<span class="sd">        :param filename: (str) Name of the input file</span>
+<span class="sd">        :param output_format: (str) Extension of the output file with the dot</span>
+<span class="sd">        :returns: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">patterns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_patterns</span><span class="p">()</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span><span class="p">[:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">fn</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_output_pattern</span><span class="p">()</span> <span class="o">+</span> <span class="n">output_format</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_config_filename</h4>
+
+    <article class="docstring">
+<p><em>Return the name of the JSON configuration file.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_config_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the JSON configuration file.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_option</h4>
+
+    <article class="docstring">
+<p><em>Return the option value of a given key or raise KeyError.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) Return the value of an option, or None.</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>KeyError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the option value of a given key or raise KeyError.</span>
+
+<span class="sd">        :param key: (str) Return the value of an option, or None.</span>
+<span class="sd">        :raises: KeyError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1"> is not a valid option for the automatic annotation.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p><em>Fix all options of the annotation from a list of sppasOption().</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: (<em>list</em> of sppasOption)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options of the annotation from a list of sppasOption().</span>
+
+<span class="sd">        :param options: (list of sppasOption)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_types</h4>
+
+    <article class="docstring">
+<p><em>Return the list of types this annotation can perform.</em></p>
+
+<p>If this annotation is expecting another file, the type allow to
+find it by using the references of the workspace (if any).</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of types this annotation can perform.</span>
+
+<span class="sd">        If this annotation is expecting another file, the type allow to</span>
+<span class="sd">        find it by using the references of the workspace (if any).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__types</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>load_resources</h4>
+
+    <article class="docstring">
+<p><em>Load the linguistic resources.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the linguistic resources.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on a given input.</em></p>
+
+<p>The input is a list of files the annotation needs: audio, video,
+transcription, pitch, etc.</p>
+
+<p>Either returns the list of created files if the given output is not
+none, or the created object (often a sppasTranscription) if no
+output was given.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) The required and optional input(s)</li>
+<li><strong>output</strong>: (<em>str</em>) The output name with or without extension</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTranscription OR <em>list</em> of created file names)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on a given input.</span>
+
+<span class="sd">        The input is a list of files the annotation needs: audio, video,</span>
+<span class="sd">        transcription, pitch, etc.</span>
+
+<span class="sd">        Either returns the list of created files if the given output is not</span>
+<span class="sd">        none, or the created object (often a sppasTranscription) if no</span>
+<span class="sd">        output was given.</span>
+
+<span class="sd">        :param input_files: (list of str) The required and optional input(s)</span>
+<span class="sd">        :param output: (str) The output name with or without extension</span>
+<span class="sd">        :returns: (sppasTranscription OR list of created file names)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run_for_batch_processing</h4>
+
+    <article class="docstring">
+<p><em>Perform the annotation on a file.</em></p>
+
+<p>This method is called by 'batch_processing'. It fixes the name of the
+output file, and call the run method.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) the required input(s) for a run</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>created output file name or None</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_for_batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a file.</span>
+
+<span class="sd">        This method is called by &#39;batch_processing&#39;. It fixes the name of the</span>
+<span class="sd">        output file, and call the run method.</span>
+
+<span class="sd">        :param input_files: (list of str) the required input(s) for a run</span>
+<span class="sd">        :returns: created output file name or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">out_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_out_name</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">out_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_out_name</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="n">out_name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="n">opt</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>batch_processing</h4>
+
+    <article class="docstring">
+<p><em>Perform the annotation on a bunch of files.</em></p>
+
+<p>Can be used by an annotation manager to launch all the annotations on
+all checked files of a workspace in a single process.</p>
+
+<p>The given list of inputs can then be either:
+- a list of file names: [file1, file2, ...], or
+- a list of lists of file names: [(file1<em>a, file1</em>b), (file2_a,)], or
+- a list of mixed files/list of files: [file1, (file2a, file2b), ...].</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>file_names</strong>: (<em>list</em>) List of inputs</li>
+<li><strong>progress</strong>: ProcessProgressTerminal() or ProcessProgressDialog()</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of <em>str</em>) List of created files</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a bunch of files.</span>
+
+<span class="sd">        Can be used by an annotation manager to launch all the annotations on</span>
+<span class="sd">        all checked files of a workspace in a single process.</span>
+
+<span class="sd">        The given list of inputs can then be either:</span>
+<span class="sd">            - a list of file names: [file1, file2, ...], or</span>
+<span class="sd">            - a list of lists of file names: [(file1_a, file1_b), (file2_a,)], or</span>
+<span class="sd">            - a list of mixed files/list of files: [file1, (file2a, file2b), ...].</span>
+
+<span class="sd">        :param file_names: (list) List of inputs</span>
+<span class="sd">        :param progress: ProcessProgressTerminal() or ProcessProgressDialog()</span>
+<span class="sd">        :return: (list of str) List of created files</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_options</span><span class="p">()</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">files_processed_success</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">input_files</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file_names</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fix_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_diagnosis</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+                <span class="n">progress</span><span class="o">.</span><span class="n">set_fraction</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">total</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+                <span class="n">progress</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">))</span>
+            <span class="n">out_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_for_batch_processing</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">out_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">out_names</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1306</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">files_processed_success</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">out_names</span> <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">out_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">ok</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">info</span><span class="p">(</span><span class="mi">9000</span><span class="p">,</span> <span class="s1">&#39;ui&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files_processed_success</span><span class="p">),</span> <span class="n">total</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">files_processed_success</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>transfer_metadata</h4>
+
+    <article class="docstring">
+<p><em>Transfer the metadata from a sppasTranscription to another one.</em></p>
+
+<p>The identifier is not copied and any already existing metadata is
+not copied.</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>from_trs</strong></li>
+<li><strong>to_trs</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">transfer_metadata</span><span class="p">(</span><span class="n">from_trs</span><span class="p">,</span> <span class="n">to_trs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transfer the metadata from a sppasTranscription to another one.</span>
+
+<span class="sd">        The identifier is not copied and any already existing metadata is</span>
+<span class="sd">        not copied.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">from_trs</span><span class="o">.</span><span class="n">get_meta_keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">to_trs</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">to_trs</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">from_trs</span><span class="o">.</span><span class="n">get_meta</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>print_filename</h4>
+
+    <article class="docstring">
+<p><em>Print the annotation name applied on a filename in the user log.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the file to annotate.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the annotation name applied on a filename in the user log.</span>
+
+<span class="sd">        :param filename: (str) Name of the file to annotate.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>print_options</h4>
+
+    <article class="docstring">
+<p><em>Print the list of options in the user log.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the list of options in the user log.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39; ... </span><span class="si">{!s:s}</span><span class="s1">: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>print_diagnosis</h4>
+
+    <article class="docstring">
+<p><em>Print the diagnosis of a list of files in the user report.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filenames</strong>: (<em>list</em>) List of files.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_diagnosis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">filenames</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the diagnosis of a list of files in the user report.</span>
+
+<span class="sd">        :param filenames: (list) List of files.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">print_diagnosis</span><span class="p">(</span><span class="o">*</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">s</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">sppasDiagnosis</span><span class="o">.</span><span class="n">check_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">info</span><span class="p">(</span><span class="mi">1056</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: </span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_sppasBaseAnnotation">Private functions</h3>
+<h4>_fix_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return a list of input files.</em></p>
+
+<p>The given input files can be:</p>
+
+<ul>
+<li>a single input: file1</li>
+<li>several inputs: (file1<em>a, file1</em>b)</li>
+</ul>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>str</em>, <em>list</em> of <em>str</em>)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>a list of files</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_fix_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of input files.</span>
+
+<span class="sd">        The given input files can be:</span>
+
+<span class="sd">            - a single input: file1</span>
+<span class="sd">            - several inputs: (file1_a, file1_b)</span>
+
+<span class="sd">        :param input_files: (str, list of str)</span>
+<span class="sd">        :returns: a list of files</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39; ******* A non-empty list of input files was expected.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">input_files</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">input_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>_get_filename</h4>
+
+    <article class="docstring">
+<p><em>Return a filename corresponding to one of the extensions.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: input file name</li>
+<li><strong>extensions</strong>: the list of expected extension</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>a file name of the first existing file with an expected extension or None</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">extensions</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a filename corresponding to one of the extensions.</span>
+
+<span class="sd">        :param filename: input file name</span>
+<span class="sd">        :param extensions: the list of expected extension</span>
+<span class="sd">        :returns: a file name of the first existing file with an expected extension or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
+        <span class="n">ext_filename</span> <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">new_filename</span> <span class="o">=</span> <span class="n">sppasFileUtils</span><span class="p">(</span><span class="n">ext_filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">new_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">new_filename</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">new_filename</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasBaseAnnotation">Protected functions</h3>
+<h4>__load</h4>
+
+    <article class="docstring">
+<p><em>Fix members from a configuration file.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix members from a configuration file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">etc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Installation error: the file </span><span class="si">{:s}</span><span class="s1"> to configure the automatic annotations does not exist.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+        <span class="n">dict_cfg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">new_option</span> <span class="ow">in</span> <span class="n">dict_cfg</span><span class="p">[</span><span class="s1">&#39;options&#39;</span><span class="p">]:</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="n">sppasOption</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">new_option</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__types</span> <span class="o">=</span> <span class="n">dict_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;anntype&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">annots</span><span class="o">.</span><span class="n">types</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

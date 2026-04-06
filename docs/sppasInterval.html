@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasInterval. Localization of an interval between two sppasPoint instances." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.structs.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasDisjoint.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasPoint.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.anndata">    <h1>Module sppas.src.anndata</h1>
+<section id="#sppasInterval">
+<h2>Class sppasInterval</h2>
+
+<section>
+<h3 id="#description_sppasInterval">Description</h3>
+    <article class="docstring">
+<p><em>Localization of an interval between two sppasPoint instances.</em></p>
+
+<p>An interval is identified by two sppasPoint objects:</p>
+
+<ul>
+<li>one is representing the beginning of the interval;</li>
+<li>the other is representing the end of the interval.</li>
+</ul>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasInterval">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasInterval instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>begin</strong>: (sppasPo<em>int</em>)</li>
+<li><strong>end</strong>: (sppasPo<em>int</em>)</li>
+</ul>
+
+<p>Degenerated interval is forbidden, i.e. begin &gt; end.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasInterval instance.</span>
+
+<span class="sd">    :param begin: (sppasPoint)</span>
+<span class="sd">    :param end: (sppasPoint)</span>
+
+<span class="sd">    Degenerated interval is forbidden, i.e. begin &gt; end.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasInterval</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataEqTypeError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_interval_bounds</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalBoundsError</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">begin</span> <span class="o">&gt;=</span> <span class="n">end</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;begin (</span><span class="si">{!s:s}</span><span class="s1"> &gt;= end </span><span class="si">{!s:s}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">=</span> <span class="n">begin</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">end</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasInterval">Public functions</h3>
+<h4>set</h4>
+
+    <article class="docstring">
+<p><em>Set self members from another sppasInterval instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set self members from another sppasInterval instance.</span>
+
+<span class="sd">        :param other: (sppasInterval)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_interval</h4>
+
+    <article class="docstring">
+<p><em>Overrides. Return True, because self represents an interval.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overrides. Return True, because self represents an interval.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>copy</h4>
+
+    <article class="docstring">
+<p><em>Return a deep copy of self.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deep copy of self.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_begin</h4>
+
+    <article class="docstring">
+<p><em>Return the begin sppasPoint instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the begin sppasPoint instance.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_begin</h4>
+
+    <article class="docstring">
+<p><em>Set the begin of the interval to a new sppasPoint.</em></p>
+
+<p>Attention: it is a reference assignment.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tp</strong>: (sppasPo<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the begin of the interval to a new sppasPoint.</span>
+
+<span class="sd">        Attention: it is a reference assignment.</span>
+
+<span class="sd">        :param tp: (sppasPoint)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataEqTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_interval_bounds</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalBoundsError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">=</span> <span class="n">tp</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_end</h4>
+
+    <article class="docstring">
+<p><em>Return the end sppasPoint instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the end sppasPoint instance.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_end</h4>
+
+    <article class="docstring">
+<p><em>Set the end of the interval to a new sppasPoint.</em></p>
+
+<p>Attention: it is a reference assignment.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tp</strong>: (sppasPo<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the end of the interval to a new sppasPoint.</span>
+
+<span class="sd">        Attention: it is a reference assignment.</span>
+
+<span class="sd">        :param tp: (sppasPoint)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="s1">&#39;sppasPoint&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataEqTypeError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sppasInterval</span><span class="o">.</span><span class="n">check_interval_bounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalBoundsError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">tp</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_bound</h4>
+
+    <article class="docstring">
+<p><em>Return True if point is the begin or the end of the interval.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>point</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if point is the begin or the end of the interval.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">==</span> <span class="n">point</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">==</span> <span class="n">point</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>combine</h4>
+
+    <article class="docstring">
+<p><em>Return a sppasInterval, the combination of two intervals.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval) the other interval to combine with.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasInterval, the combination of two intervals.</span>
+
+<span class="sd">        :param other: (sppasInterval) the other interval to combine with.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span><span class="p">:</span>
+        <span class="n">other</span><span class="p">,</span> <span class="bp">self</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">&lt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>union</h4>
+
+    <article class="docstring">
+<p><em>Return a sppasInterval representing the union of two intervals.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval) the other interval to merge with.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasInterval representing the union of two intervals.</span>
+
+<span class="sd">        :param other: (sppasInterval) the other interval to merge with.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span><span class="p">:</span>
+        <span class="n">other</span><span class="p">,</span> <span class="bp">self</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sppasInterval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>duration</h4>
+
+    <article class="docstring">
+<p><em>Overridden. Return the duration of the time interval.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasDuration) Duration and its vagueness.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overridden. Return the duration of the time interval.</span>
+
+<span class="sd">        :returns: (sppasDuration) Duration and its vagueness.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+    <span class="n">vagueness</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vagueness</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vagueness</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sppasDuration</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">vagueness</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>middle</h4>
+
+    <article class="docstring">
+<p><em>Return a sppasPoint() at the middle of the time interval.</em></p>
+
+<p>To be tested.</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasPo<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">middle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a sppasPoint() at the middle of the time interval.</span>
+
+<span class="sd">        To be tested.</span>
+
+<span class="sd">        :returns: (sppasPoint)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">get_margin</span><span class="p">())</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_float</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sppasPoint</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>middle_value</h4>
+
+    <article class="docstring">
+<p><em>Return the middle value of the time interval.</em></p>
+
+<p>Return a float value even if points are integers.</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>float</em>) value.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">middle_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the middle value of the time interval.</span>
+
+<span class="sd">        Return a float value even if points are integers.</span>
+
+<span class="sd">        :returns: (float) value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_radius</h4>
+
+    <article class="docstring">
+<p><em>Set a radius value to begin and end points.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>radius</strong>: (<em>int</em> or <em>float</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>ValueError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a radius value to begin and end points.</span>
+
+<span class="sd">        :param radius: (int or float)</span>
+<span class="sd">        :raise: ValueError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The radius value </span><span class="si">{r}</span><span class="s2"> can&#39;t be more than half-duration of the interval [</span><span class="si">{b}</span><span class="s2">;</span><span class="si">{e}</span><span class="s2">].&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">(),</span> <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>shift</h4>
+
+    <article class="docstring">
+<p><em>Shift the interval to a given delay.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>delay</strong>: (<em>int</em>, <em>float</em>) delay to shift bounds</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>AnnDataTypeError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shift the interval to a given delay.</span>
+
+<span class="sd">        :param delay: (int, float) delay to shift bounds</span>
+<span class="sd">        :raise: AnnDataTypeError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_int</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">is_int</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_float</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span><span class="o">.</span><span class="n">is_float</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>check_interval_bounds</h4>
+
+    <article class="docstring">
+<p><em>Check bounds of a virtual interval.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>begin</strong>: (sppasPo<em>int</em>)</li>
+<li><strong>end</strong>: (sppasPo<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_interval_bounds</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check bounds of a virtual interval.</span>
+
+<span class="sd">        :param begin: (sppasPoint)</span>
+<span class="sd">        :param end: (sppasPoint)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">begin</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="n">begin</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span> <span class="o">-</span> <span class="n">end</span><span class="o">.</span><span class="n">get_radius</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>check_types</h4>
+
+    <article class="docstring">
+<p><em>True only if begin and end are both the same types of sppasPoint.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>begin</strong>: any kind of data</li>
+<li><strong>end</strong>: any kind of data</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>Boolean</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_types</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;True only if begin and end are both the same types of sppasPoint.</span>
+
+<span class="sd">        :param begin: any kind of data</span>
+<span class="sd">        :param end: any kind of data</span>
+<span class="sd">        :returns: Boolean</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+        <span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">(),</span> <span class="nb">type</span><span class="p">(</span><span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">()))</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasInterval">Overloads</h3>
+<h4>__format__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__repr__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;sppasInterval: [</span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__str__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;[</span><span class="si">{!s:s}</span><span class="s1">,</span><span class="si">{!s:s}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_begin</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_end</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__contains__</h4>
+
+    <article class="docstring">
+<p><em>Return True if the given data is contained in the interval.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval, sppasPo<em>int</em>, <em>int</em>, <em>float</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if the given data is contained in the interval.</span>
+
+<span class="sd">        :param other: (sppasInterval, sppasPoint, int, float)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasInterval</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s1">&#39;sppasInterval, sppasPoint, float, int&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&lt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&lt;=</span> <span class="n">other</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__eq__</h4>
+
+    <article class="docstring">
+<p><em>Equal.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval) the other interval to compare with.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equal.</span>
+
+<span class="sd">        :param other: (sppasInterval) the other interval to compare with.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get_end</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__lt__</h4>
+
+    <article class="docstring">
+<p><em>LowerThan.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval, sppasPo<em>int</em>, <em>float</em>, <em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LowerThan.</span>
+
+<span class="sd">        :param other: (sppasInterval, sppasPoint, float, int)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="n">sppasPoint</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">&lt;</span> <span class="n">other</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__gt__</h4>
+
+    <article class="docstring">
+<p><em>GreaterThan.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>other</strong>: (sppasInterval, sppasPo<em>int</em>, <em>float</em>, <em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GreaterThan.</span>
+
+<span class="sd">        :param other: (sppasInterval, sppasPoint, float, int)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sppasPoint</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&gt;</span> <span class="n">other</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">sppasInterval</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__begin</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">get_begin</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

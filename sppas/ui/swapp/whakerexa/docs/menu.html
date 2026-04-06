@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Menus</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
+
+    <style>
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-fg-color: rgba(240, 230, 240);
+            --nav-min-height: 4rem;
+            --header-height: 26rem;
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header id="header-content">
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+        <nav class="nav-wexa top" aria-label="External Links">
+            <ul>
+                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+            </ul>
+        </nav>
+
+        <h1>Menus</h1>
+        <h2>by Whakerexa</h2>
+    </header>
+
+    <nav id="nav-content">
+        <!-- this default menu is sticky, horizontal, not responsive -->
+
+        <a class="nav-current external-link" role="menuitem" href="https://whakerexa.sourceforge.io">Home</a>
+
+        <ul>
+            <li><a class="expand" role="menuitem" href="#">Item 1</a>
+                <ul class="submenu submenu-gray">
+                    <li><a role="menuitem" href="#">SubItem 1.1</a></li>
+                    <li><a role="menuitem" href="#">SubItem 1.2</a></li>
+                    <li><a role="menuitem" href="#">SubItem 1.3</a></li>
+                </ul>
+            </li>
+            <li><a class="expand" role="menuitem" href="#">MenuItem 2</a>
+                <ul class="submenu submenu-red">
+                    <li><a role="menuitem" href="#">SubItem 2.1</a></li>
+                    <li><a role="menuitem" href="#">SubItem 2.2</a></li>
+                </ul>
+            </li>
+            <li><a role="menuitem" href="#">MenuItem 3</a></li>
+            <li><a role="menuitem" href="#">Item 4</a></li>
+        </ul>
+
+        <section>
+            <button id="btn-contrast" class="accessibility print-off" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()" aria-label="Switch contrast scheme"></button>
+            <button id="btn-theme" class="accessibility print-off" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()" aria-label="Switch color scheme"></button>
+        </section>
+    </nav>
+
+
+    <main id="main-content" class="panel">
+
+        <section id="description">
+            <h1>Description</h1>
+
+            <h2>Overview</h2>
+
+            <p><b>menu.css/js</b> is an extension of the <b>wexa.css</b> framework dedicated to
+                navigation menus. It provides both the styling and the interactive behavior to
+                create accessible and responsive navigation bars.</p>
+            <p>With <b>menu.css</b> you can design menus at the top, bottom or left-side of the page,
+                including collapsible and pinnable side menus. The companion <b>menu.js</b>
+                adds the necessary JavaScript to manage interactivity such as opening and
+                closing submenus, pinning/unpinning the side menu, and maintaining keyboard
+                accessibility.</p>
+            <p>The framework is designed to be lightweight, accessible by default, and to
+                require a minimum of additional HTML classes, keeping source code clear and
+                readable.</p>
+            <p>Not convinced? Take a look at the source code of this page!</p>
+
+            <p>This page shows how a page looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
+            <pre>
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
+    media="all" /&gt;
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/menu.css?format=raw"/&gt;
+            </pre>
+
+
+            <h2>Usage</h2>
+
+            <p>By default, <b>menu.css</b> creates a horizontal navigation bar that is
+                sticky at the top of the page. This is the most common layout, suitable for
+                desktop websites. This solution is not responsive.</p>
+
+            <p>Other layouts are available:</p>
+            <ul>
+                <li><b>Top</b>: horizontal bar fixed at the top of the page.</li>
+                <li><b>Bottom</b>: horizontal bar fixed at the bottom of the page. Useful
+                    for mobile apps where bottom navigation is preferred.
+                    <a href="menu-bottom.html">See this example.</a></li>
+                <li><b>Side</b>: vertical navigation bar attached to the left side. It can
+                    be collapsible and pinnable, allowing more space for the main content
+                    while keeping quick access to menu items.
+                    <a href="menu-side.html">See this example.</a></li>
+            </ul>
+            <p>Each layout reuses the same HTML structure, but applies different CSS
+                rules depending on the <code>class</code> of the <code>&lt;nav&gt;</code>
+                element (<code>top</code>, <code>bottom</code>, or <code>side</code>).
+                Customization is achieved with the variables defined above, so developers
+                can easily adapt height, width, or expanded/collapsed behavior.</p>
+            <p>The companion <b>menu.js</b> ensures interactivity: it manages toggle
+                buttons, pin/unpin actions for side menus, submenu open/close states, and
+                ARIA attributes for accessibility. Keyboard navigation (Tab, Shift+Tab,
+                Escape) is fully supported by default.</p>
+            <p>The class <code>.focus-visible-only</code> defines a visual behavior for
+                interactive elements that stay hidden until they receive keyboard focus.
+                It can be applied to skip links or other accessibility controls to ensure
+                they become visible only when navigated by keyboard.
+            </p>
+
+
+            <h2>Menu buttons</h2>
+
+            <p>The navigation framework defines three dedicated buttons, each one designed for a specific type of menu and screen size:</p>
+
+            <ul>
+                <li><strong>Menu button (<code>#menu-button</code>)</strong> — Used exclusively with the <code>.side</code> (collapsible) menu.
+                    It appears automatically on screens narrower than 896 px and toggles the visibility of the side navigation.
+                    Fully keyboard accessible; manages <code>aria-expanded</code> consistently with the menu state.</li>
+                <li><strong>Pin button (<code>#pin-menu</code>)</strong> — Optional control for the <code>.side.collapsible</code> menu on wide screens.
+                    When activated, it keeps the side navigation permanently expanded (<code>aria-pinned="true"</code>).
+                    Hidden on screens below 896 px and updates <code>aria-pressed</code> / <code>aria-label</code> dynamically.</li>
+            </ul>
+
+
+            <h2>The variables</h2>
+
+            <p>Menus can be fully customized through CSS variables. These variables allow
+                you to adapt the size, width, or alignment of menu items without modifying
+                the CSS code directly. They make it easy to create consistent designs across
+                different types of menus (top, bottom, side) while keeping flexibility for
+                application-specific needs.</p>
+
+            <table role="grid">
+                <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Default value</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>--nav-min-height</td>
+                    <td>max(calc(6rem / var(--size-divisor)), 4rem);</td>
+                    <td>Minimum height of the main nav bar (top/bottom).</td>
+                </tr>
+                <tr>
+                    <td>--nav-min-width</td>
+                    <td>0</td>
+                    <td>Minimum width of the nav (set &gt;0 for side menus).</td>
+                </tr>
+
+                <tr>
+                    <td>--nav-item-min-height</td>
+                    <td>max(calc(2rem / var(--size-divisor)), 2rem)</td>
+                    <td>Minimum height of any menu item.</td>
+                </tr>
+                <tr>
+                    <td>--nav-item-height</td>
+                    <td>max(calc(2.5rem / var(--size-divisor)), 2.5rem)</td>
+                    <td>Default height of any menu item.</td>
+                </tr>
+                <tr>
+                    <td>--nav-item-max-height</td>
+                    <td>max(calc(3rem / var(--size-divisor)), 3rem)</td>
+                    <td>Maximum height of any menu item.</td>
+                </tr>
+
+                <tr>
+                    <td>--nav-item-min-width-h</td>
+                    <td>max(calc(6rem / var(--size-divisor)), 4rem)</td>
+                    <td>Min width of horizontal items (top/bottom).</td>
+                </tr>
+                <tr>
+                    <td>--nav-item-width-h</td>
+                    <td>max(calc(8rem / var(--size-divisor)), 6rem)</td>
+                    <td>Default width of horizontal items.</td>
+                </tr>
+                <tr>
+                    <td>--nav-item-max-width-h</td>
+                    <td>max(calc(15rem / var(--size-divisor)), 12rem)</td>
+                    <td>Max width of horizontal items.</td>
+                </tr>
+
+                <tr>
+                    <td>--nav-expanded-width</td>
+                    <td>max(calc(16rem / var(--size-divisor)), 14rem);</td>
+                    <td>Width of the side menu when expanded/pinned.</td>
+                </tr>
+                <tr>
+                    <td>--nav-item-width-v-collapsed</td>
+                    <td>var(--nav-min-width)</td>
+                    <td>Item width in side menu (collapsed).</td>
+                </tr>
+                <tr>
+                    <td>--nav-item-width-v-expanded</td>
+                    <td>var(--nav-expanded-width)</td>
+                    <td>Item width in side menu (expanded).</td>
+                </tr>
+
+                <tr>
+                    <td>--appmenu-position</td>
+                    <td>left</td>
+                    <td>Default off-canvas edge for app submenus (left/right/top/bottom).</td>
+                </tr>
+                <tr>
+                    <td>--appmenu-align</td>
+                    <td>left bottom</td>
+                    <td>Submenu inner alignment (horizontal vertical).</td>
+                </tr>
+                <tr>
+                    <td>--menu-button-size</td>
+                    <td>max(calc(4rem / var(--size-divisor)), 3rem)</td>
+                    <td>Size of the hamburger menu button</td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </section>
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+            } else {
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+
+</body>
+</html>

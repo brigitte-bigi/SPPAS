@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of RelationFilterTier. This class applies predefined filters on a tier." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.resources.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="SingleFilterTier.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.annotations.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.analysis">    <h1>Module sppas.src.analysis</h1>
+<section id="#RelationFilterTier">
+<h2>Class RelationFilterTier</h2>
+
+<section>
+<h3 id="#description_RelationFilterTier">Description</h3>
+    <article class="docstring">
+<p><em>This class applies predefined filters on a tier.</em></p>
+
+<p>Example:</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">ft</span> <span class="o">=</span> <span class="n">RelationFilterTier</span><span class="p">(([</span><span class="s2">&quot;overlaps&quot;</span><span class="p">,</span> <span class="s2">&quot;overlappedby&quot;</span><span class="p">],</span> <span class="p">[(</span><span class="s2">&quot;overlap_min&quot;</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">)]),</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">res_tier</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">filter_tier</span><span class="p">(</span><span class="n">tier_x</span><span class="p">,</span> <span class="n">tier_y</span><span class="p">)</span>
+</code></pre></div>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_RelationFilterTier">Constructor</h3>
+    <article class="docstring">
+<p><em>Filter process of a tier.</em></p>
+
+<p>"annot_format" has an impact on the labels of the ann results but
+"fit" has an impact on their localizations.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filters</strong>: (<em>tuple</em>) ([list of functions], [list of options]) each option is a tuple with (name, value)</li>
+<li><strong>annot_format</strong>: (<em>bool</em>) The annotation result contains the name of the filter (if True) or the original label (if False)</li>
+<li><strong>fit</strong>: (<em>bool</em>) The annotation result fits the other tier.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">annot_format</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter process of a tier.</span>
+
+<span class="sd">    &quot;annot_format&quot; has an impact on the labels of the ann results but</span>
+<span class="sd">    &quot;fit&quot; has an impact on their localizations.</span>
+
+<span class="sd">    :param filters: (tuple) ([list of functions], [list of options])</span>
+<span class="sd">    each option is a tuple with (name, value)</span>
+<span class="sd">    :param annot_format: (bool) The annotation result contains the</span>
+<span class="sd">    name of the filter (if True) or the original label (if False)</span>
+<span class="sd">    :param fit: (bool) The annotation result fits the other tier.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span> <span class="o">=</span> <span class="n">filters</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__annot_format</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">annot_format</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__fit</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_RelationFilterTier">Public functions</h3>
+<h4>filter_tier</h4>
+
+    <article class="docstring">
+<p><em>Apply the filters on the given tier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (sppasTier) The tier to filter annotations</li>
+<li><strong>tier_y</strong>: (sppasTier) The tier to be in relation with</li>
+<li><strong>out_tiername</strong>: (<em>str</em>) Name or the filtered tier</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">,</span> <span class="n">tier_y</span><span class="p">,</span> <span class="n">out_tiername</span><span class="o">=</span><span class="s1">&#39;Filtered&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply the filters on the given tier.</span>
+
+<span class="sd">        :param tier: (sppasTier) The tier to filter annotations</span>
+<span class="sd">        :param tier_y: (sppasTier) The tier to be in relation with</span>
+<span class="sd">        :param out_tiername: (str) Name or the filtered tier</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply sppasTiersFilter() on tier: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()))</span>
+    <span class="n">sfilter</span> <span class="o">=</span> <span class="n">sppasTierFilters</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
+    <span class="n">ann_set</span> <span class="o">=</span> <span class="n">sfilter</span><span class="o">.</span><span class="n">rel</span><span class="p">(</span><span class="n">tier_y</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">[</span><span class="mi">1</span><span class="p">]))})</span>
+    <span class="n">ft</span> <span class="o">=</span> <span class="n">ann_set</span><span class="o">.</span><span class="n">to_tier</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">out_tiername</span><span class="p">,</span> <span class="n">annot_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__annot_format</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fit</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tier_y</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">out_tiername</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">ft</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

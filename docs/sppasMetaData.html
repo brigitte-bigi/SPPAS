@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasMetaData. Dictionary of meta data including a required  id ." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.structs.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasTrsRW.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.anndata">    <h1>Module sppas.src.anndata</h1>
+<section id="#sppasMetaData">
+<h2>Class sppasMetaData</h2>
+
+<section>
+<h3 id="#description_sppasMetaData">Description</h3>
+    <article class="docstring">
+<p><em>Dictionary of meta data including a required 'id'.</em></p>
+
+<p>Meta data keys and values are unicode strings.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasMetaData">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasMetaData instance.</em></p>
+
+<p>Add a GUID-like in the dictionary of metadata, with key "id".</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasMetaData instance.</span>
+
+<span class="sd">    Add a GUID-like in the dictionary of metadata, with key &quot;id&quot;.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gen_id</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasMetaData">Public functions</h3>
+<h4>get_id</h4>
+
+    <article class="docstring">
+<p><em>Return the identifier of this object.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the identifier of this object.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>gen_id</h4>
+
+    <article class="docstring">
+<p><em>Re-generate an 'id'.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">gen_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Re-generate an &#39;id&#39;.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_meta_key</h4>
+
+    <article class="docstring">
+<p><em>Check if an entry is a key in the list of metadata.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>entry</strong>: (<em>str</em>) Entry to check</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(Boolean)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_meta_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if an entry is a key in the list of metadata.</span>
+
+<span class="sd">        :param entry: (str) Entry to check</span>
+<span class="sd">        :returns: (Boolean)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_meta</h4>
+
+    <article class="docstring">
+<p><em>Return the value of the given key.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>entry</strong>: (<em>str</em>) Entry to be checked as a key.</li>
+<li><strong>default</strong>: (<em>str</em>) Default value to return if entry is not a key.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) meta data value or default value</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the value of the given key.</span>
+
+<span class="sd">        :param entry: (str) Entry to be checked as a key.</span>
+<span class="sd">        :param default: (str) Default value to return if entry is not a key.</span>
+<span class="sd">        :returns: (str) meta data value or default value</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_meta_keys</h4>
+
+    <article class="docstring">
+<p><em>Return the list of metadata keys.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_meta_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of metadata keys.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_meta</h4>
+
+    <article class="docstring">
+<p><em>Set or update a metadata.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>) The key of the metadata.</li>
+<li><strong>value</strong>: (<em>str</em>) The value assigned to the key.</li>
+</ul>
+
+<p>key, and value are formatted and stored in unicode.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set or update a metadata.</span>
+
+<span class="sd">        :param key: (str) The key of the metadata.</span>
+<span class="sd">        :param value: (str) The value assigned to the key.</span>
+
+<span class="sd">        key, and value are formatted and stored in unicode.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+    <span class="n">su</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>pop_meta</h4>
+
+    <article class="docstring">
+<p><em>Remove a metadata from its key.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>key</strong>: (<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pop_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a metadata from its key.</span>
+
+<span class="sd">        :param key: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Identifier key can&#39;t be removed of the metadata.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_license_metadata</h4>
+
+    <article class="docstring">
+<p><em>Add metadata about the license applied to the object (GPLv3).</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>idx</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_license_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about the license applied to the object (GPLv3).&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_license_text_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;GNU AGPL V3&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;file_license_url_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;https://www.gnu.org/licenses/gpl-3.0.en.html&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_software_metadata</h4>
+
+    <article class="docstring">
+<p><em>Add metadata about this software.</em></p>
+
+<p>TODO: CHECK IF KEYS NOT ALREADY EXISTING.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_software_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about this software.</span>
+
+<span class="sd">        TODO: CHECK IF KEYS NOT ALREADY EXISTING.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_name&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_version&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_url&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__url__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_author&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__author__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_contact&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__contact__</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;software_copyright&#39;</span><span class="p">,</span> <span class="n">sg</span><span class="o">.</span><span class="n">__copyright__</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_language_metadata</h4>
+
+    <article class="docstring">
+<p><em>Add metadata about the language (und).</em></p>
+
+<p>TODO: CHECK IF KEYS NOT ALREADY EXISTING.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_language_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about the language (und).</span>
+
+<span class="sd">        TODO: CHECK IF KEYS NOT ALREADY EXISTING.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_iso&#39;</span><span class="p">,</span> <span class="s1">&#39;iso639-3&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_code_0&#39;</span><span class="p">,</span> <span class="s1">&#39;und&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_name_0&#39;</span><span class="p">,</span> <span class="s1">&#39;Undetermined&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;language_url_0&#39;</span><span class="p">,</span> <span class="s1">&#39;https://iso639-3.sil.org/code/und&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_project_metadata</h4>
+
+    <article class="docstring">
+<p><em>Add metadata about the project this object is included-in.</em></p>
+
+<p>Currently do not assign any value.
+TODO: CHECK IF KEYS NOT ALREADY EXISTING.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_project_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about the project this object is included-in.</span>
+
+<span class="sd">        Currently do not assign any value.</span>
+<span class="sd">        TODO: CHECK IF KEYS NOT ALREADY EXISTING.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_description&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_corpus_owner&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_corpus_type&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_license&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_environment&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_collection&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_title&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;project_noises&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_annotator_metadata</h4>
+
+    <article class="docstring">
+<p><em>Add metadata about an annotator.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>name</strong>: (<em>str</em>)</li>
+<li><strong>version</strong>: (<em>str</em>)</li>
+<li><strong>version_date</strong>: (<em>str</em>)</li>
+</ul>
+
+<p>TODO: CHECK IF KEYS ARE NOT ALREADY EXISTING.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_annotator_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">version_date</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add metadata about an annotator.</span>
+
+<span class="sd">        :param name: (str)</span>
+<span class="sd">        :param version: (str)</span>
+<span class="sd">        :param version_date: (str)</span>
+
+<span class="sd">        TODO: CHECK IF KEYS ARE NOT ALREADY EXISTING.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotator_name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotator_version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotator_version_date&#39;</span><span class="p">,</span> <span class="n">version_date</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasMetaData">Overloads</h3>
+<h4>__len__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__metadata</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

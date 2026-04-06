@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasWkps. Manage the set of workspaces." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.videodata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasFileDataFilters.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasWkpRW.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.resources.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.wkps">    <h1>Module sppas.src.wkps</h1>
+<section id="#sppasWkps">
+<h2>Class sppasWkps</h2>
+
+<section>
+<h3 id="#description_sppasWkps">Description</h3>
+    <article class="docstring">
+<p><em>Manage the set of workspaces.</em></p>
+
+<p>A workspace is made of:</p>
+
+<ul>
+<li>a file in which data are saved and loaded when needed;</li>
+<li>a name, matching the filename without path nor extension.</li>
+</ul>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasWkps">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasWkps instance.</em></p>
+
+<p>Load the list of existing wjson file names of the workspaces folder
+of the software.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasWkps instance.</span>
+
+<span class="sd">    Load the list of existing wjson file names of the workspaces folder</span>
+<span class="sd">    of the software.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">wkp_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">wkps</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">wkp_dir</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">wkp_dir</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Blank&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">default_extension</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_workspaces</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasWkps">Public functions</h3>
+<h4>set_workspaces</h4>
+
+    <article class="docstring">
+<p><em>Fix the list of existing workspaces in the software.</em></p>
+
+<p>Reset the current list of workspaces.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_workspaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the list of existing workspaces in the software.</span>
+
+<span class="sd">        Reset the current list of workspaces.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">):</span>
+        <span class="n">fn_observed</span><span class="p">,</span> <span class="n">ext_observed</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ext_observed</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">:</span>
+            <span class="n">wkp_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fn_observed</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Workspace added: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wkp_name</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>import_from_file</h4>
+
+    <article class="docstring">
+<p><em>Import and append an external workspace.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>The real name used to save the workspace</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">import_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import and append an external workspace.</span>
+
+<span class="sd">        :param filename: (str)</span>
+<span class="sd">        :returns: The real name used to save the workspace</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FileTypeError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sppasWkpRW</span><span class="o">.</span><span class="n">extensions</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">WkpExtensionError</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_existing</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">sppasWkpRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="k">raise</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u_name</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>new</h4>
+
+    <article class="docstring">
+<p><em>Create and append a new empty workspace.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>name</strong>: (<em>str</em>) Name of the workspace to create.</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>The real name used to save the workspace</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IOError, ValueError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and append a new empty workspace.</span>
+
+<span class="sd">        :param name: (str) Name of the workspace to create.</span>
+<span class="sd">        :returns: The real name used to save the workspace</span>
+<span class="sd">        :raises: IOError, ValueError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_existing</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u_name</span><span class="p">)</span>
+    <span class="n">wkp</span> <span class="o">=</span> <span class="n">sppasWorkspace</span><span class="p">(</span><span class="n">u_name</span><span class="p">)</span>
+    <span class="n">sppasWkpRW</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">wkp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u_name</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>export_to_file</h4>
+
+    <article class="docstring">
+<p><em>Save an existing workspace into an external file.</em></p>
+
+<p>Override filename if the file already exists.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace to save data in</li>
+<li><strong>filename</strong>: (<em>str</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IOError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">export_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save an existing workspace into an external file.</span>
+
+<span class="sd">        Override filename if the file already exists.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace to save data in</span>
+<span class="sd">        :param filename: (str)</span>
+<span class="sd">        :raises: IOError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpExportBlankError</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
+    <span class="k">if</span> <span class="n">fn</span> <span class="o">==</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpExportValueError</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>delete</h4>
+
+    <article class="docstring">
+<p><em>Delete the workspace with the given index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IndexError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete the workspace with the given index.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace</span>
+<span class="sd">        :raises: IndexError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpDeleteBlankError</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_filename</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>index</h4>
+
+    <article class="docstring">
+<p><em>Return the index of the workspace with the given name.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>name</strong>: (<em>str</em>)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>ValueError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the workspace with the given name.</span>
+
+<span class="sd">        :param name: (str)</span>
+<span class="sd">        :returns: (int)</span>
+<span class="sd">        :raises: ValueError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_not_existing</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">u_name</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">i</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>rename</h4>
+
+    <article class="docstring">
+<p><em>Set a new name to the workspace at the given index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace</li>
+<li><strong>new_name</strong>: (<em>str</em>) New name of the workspace</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IndexError, OSError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new name to the workspace at the given index.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace</span>
+<span class="sd">        :param new_name: (str) New name of the workspace</span>
+<span class="sd">        :returns: (str)</span>
+<span class="sd">        :raises: IndexError, OSError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpRenameBlankError</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raises_existing</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+    <span class="n">cur_name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">cur_name</span> <span class="o">==</span> <span class="n">new_name</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">src</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_filename</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">dest</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">u_name</span>
+    <span class="k">return</span> <span class="n">u_name</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>check_filename</h4>
+
+    <article class="docstring">
+<p><em>Get the filename of the workspace at the given index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) name of the file</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IndexError, OSError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the filename of the workspace at the given index.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace</span>
+<span class="sd">        :returns: (str) name of the file</span>
+<span class="sd">        :raises: IndexError, OSError</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpFileError</span><span class="p">(</span><span class="n">fn</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">fn</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>load_data</h4>
+
+    <article class="docstring">
+<p><em>Return the data of the workspace at the given index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) sppasWorkspace()</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IndexError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the data of the workspace at the given index.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace</span>
+<span class="sd">        :returns: (str) sppasWorkspace()</span>
+<span class="sd">        :raises: IndexError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sppasWorkspace</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_filename</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Workspace can&#39;t be loaded: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">sppasWorkspace</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sppasWkpRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>save_data</h4>
+
+    <article class="docstring">
+<p><em>Save data into a workspace.</em></p>
+
+<p>The data can already match an existing workspace or a new workspace
+is created. Raises indexerror if is attempted to save the 'Blank'
+workspace.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>data</strong>: (sppasWorkspace) Data of a workspace to save</li>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace to save data in</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>The real name used to save the workspace</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IOError, IndexError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save data into a workspace.</span>
+
+<span class="sd">        The data can already match an existing workspace or a new workspace</span>
+<span class="sd">        is created. Raises indexerror if is attempted to save the &#39;Blank&#39;</span>
+<span class="sd">        workspace.</span>
+
+<span class="sd">        :param data: (sppasWorkspace) Data of a workspace to save</span>
+<span class="sd">        :param index: (int) Index of the workspace to save data in</span>
+<span class="sd">        :returns: The real name used to save the workspace</span>
+<span class="sd">        :raises: IOError, IndexError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpSaveBlankError</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;New workspace&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">wkps</span><span class="p">,</span> <span class="n">u_name</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasWkpRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u_name</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasWkps">Protected functions</h3>
+<h4>__raises_not_existing</h4>
+
+    <article class="docstring">
+<p><em>Raises WkpNameError if name is not already in self.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>name</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__raises_not_existing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises WkpNameError if name is not already in self.&quot;&quot;&quot;</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+    <span class="n">contains</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">u_name</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">contains</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+    <span class="k">if</span> <span class="n">contains</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpNameError</span><span class="p">(</span><span class="n">u_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u_name</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__raises_existing</h4>
+
+    <article class="docstring">
+<p><em>Raises WkpIdValueError if name is already in self.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>name</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__raises_existing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises WkpIdValueError if name is already in self.&quot;&quot;&quot;</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+    <span class="n">contains</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">u_name</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">contains</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+    <span class="k">if</span> <span class="n">contains</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">WkpIdValueError</span><span class="p">(</span><span class="n">u_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u_name</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasWkps">Overloads</h3>
+<h4>__len__</h4>
+
+    <article class="docstring">
+<p><em>Return the number of workspaces.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of workspaces.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__iter__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">a</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__getitem__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasIndexError</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">item</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__contains__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="n">sp</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">u_name</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

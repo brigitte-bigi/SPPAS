@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasWkpsManager. Manager of the data of the currently enabled workspace." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.videodata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasWkpRW.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.resources.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.wkps">    <h1>Module sppas.src.wkps</h1>
+<section id="#sppasWkpsManager">
+<h2>Class sppasWkpsManager</h2>
+
+<section>
+<h3 id="#description_sppasWkpsManager">Description</h3>
+    <article class="docstring">
+<p><em>Manager of the data of the currently enabled workspace.</em></p>
+
+<p>Among the list of available workspaces in the software, this class allows
+to manage this list and to enable any of them.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasWkpsManager">Constructor</h3>
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wkp_index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span> <span class="o">=</span> <span class="n">sppasWkps</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;Blank&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">wkp_index</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasWkpsManager">Public functions</h3>
+<h4>load_data</h4>
+
+    <article class="docstring">
+<p><em>Set the data saved of the current workspace.</em></p>
+
+<p>If the file of the workspace does not exist, return an empty
+instance of sppasWorkspace.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace to get data</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>) Index of the loaded workspace</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IndexError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the data saved of the current workspace.</span>
+
+<span class="sd">        If the file of the workspace does not exist, return an empty</span>
+<span class="sd">        instance of sppasWorkspace.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace to get data</span>
+<span class="sd">        :returns: (int) Index of the loaded workspace</span>
+<span class="sd">        :raises: IndexError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">index</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_size</h4>
+
+    <article class="docstring">
+<p><em>Return the number of workspaces.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of workspaces.</span>
+
+<span class="sd">        :returns: (int)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_wkp_name</h4>
+
+    <article class="docstring">
+<p><em>Return the name of the current workspace.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace to get name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_wkp_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the current workspace.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace to get name</span>
+<span class="sd">        :returns: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_wkp_index</h4>
+
+    <article class="docstring">
+<p><em>Return the index of the given workspace name.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>name</strong>: (<em>str</em>) Workspace name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>(ValueError)</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_wkp_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the given workspace name.</span>
+
+<span class="sd">        :param name: (str) Workspace name</span>
+<span class="sd">        :returns: (int)</span>
+<span class="sd">        :raises: (ValueError)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_wkp_current_index</h4>
+
+    <article class="docstring">
+<p><em>Return the index of the current workspace.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_wkp_current_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the current workspace.</span>
+
+<span class="sd">        :returns: (int)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>switch_to</h4>
+
+    <article class="docstring">
+<p><em>Set the current workspace at the given index.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>) Index of the workspace to switch on</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">switch_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the current workspace at the given index.</span>
+
+<span class="sd">        :param index: (int) Index of the workspace to switch on</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">wkp_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__current</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>pin</h4>
+
+    <article class="docstring">
+<p><em>Append a new empty workspace and set it the current one.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>new_name</strong>: (<em>str</em>) Name of the new workspace.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a new empty workspace and set it the current one.</span>
+
+<span class="sd">        :param new_name: (str) Name of the new workspace.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">switch_to</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>import_from</h4>
+
+    <article class="docstring">
+<p><em>Append a new imported workspace.</em></p>
+
+<p>A ".wjson" extension is expected.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the file to import.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">import_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a new imported workspace.</span>
+
+<span class="sd">        A &quot;.wjson&quot; extension is expected.</span>
+
+<span class="sd">        :param filename: (str) Name of the file to import.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">):</span>
+            <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="k">raise</span>
+    <span class="n">wkp_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">import_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>export_to</h4>
+
+    <article class="docstring">
+<p><em>Save the current workspace into an external file.</em></p>
+
+<p>A ".wjson" extension is expected but not verified.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) Name of the exported file.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">export_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the current workspace into an external file.</span>
+
+<span class="sd">        A &quot;.wjson&quot; extension is expected but not verified.</span>
+
+<span class="sd">        :param filename: (str) Name of the exported file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">export_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__current</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>rename</h4>
+
+    <article class="docstring">
+<p><em>Set a new name to the current workspace.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>new_name</strong>: (<em>str</em>) New name to assign to the workspace.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new name to the current workspace.</span>
+
+<span class="sd">        :param new_name: (str) New name to assign to the workspace.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">u_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__current</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>save</h4>
+
+    <article class="docstring">
+<p><em>Save the given data to the active workspace or to the given one.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>data</strong>: (sppasWorkspace)</li>
+<li><strong>index</strong>: (<em>int</em>) Save data to the workspace with this index</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IndexError, IOError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the given data to the active workspace or to the given one.</span>
+
+<span class="sd">        :param data: (sppasWorkspace)</span>
+<span class="sd">        :param index: (int) Save data to the workspace with this index</span>
+<span class="sd">        :raises: IndexError, IOError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>remove</h4>
+
+    <article class="docstring">
+<p><em>Remove a workspace of the list and delete the corresponding file.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>index</strong>: (<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove a workspace of the list and delete the corresponding file.</span>
+
+<span class="sd">        :param index: (int)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;The currently displayed workspace can&#39;t be removed&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;The &#39;Blank&#39; workspace can&#39;t be removed&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__wkps</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

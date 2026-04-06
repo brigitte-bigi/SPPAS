@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasVideoReader. Class to wrap a VideoCapture with OpenCV." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasVideoWriter.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.videodata">    <h1>Module sppas.src.videodata</h1>
+<section id="#sppasVideoReader">
+<h2>Class sppasVideoReader</h2>
+
+<section>
+<h3 id="#description_sppasVideoReader">Description</h3>
+    <article class="docstring">
+<p><em>Class to wrap a VideoCapture with OpenCV.</em></p>
+
+<p>This class is embedding a VideoCapture() object and define some
+getters and setters to manage such video easily.
+It was tested only to open/read videos from files, not to capture a
+video stream from a camera, etc.</p>
+
+<h5>Example</h5>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Create the instance and open the video</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">vid</span> <span class="o">=</span> <span class="n">sppasVideoReader</span><span class="p">()</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">vid</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;my_video_file.xxx&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Read one frame from the current position</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">image</span> <span class="o">=</span> <span class="n">vid</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Set the current position</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">vid</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">frame_pos</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Get the current position</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">vid</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</code></pre></div>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Release the video stream</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">vid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasVideoReader">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a sppasVideoReader.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasVideoReader. &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__gray</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__alpha</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__rgb</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasVideoReader">Public functions</h3>
+<h4>set_rotate</h4>
+
+    <article class="docstring">
+<p><em>Force to rotate the read image of given angle.</em></p>
+
+<h5>Parameters</h5>
+
+<p>angle(<em>int</em>) Value in range [-360,360]</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Force to rotate the read image of given angle.</span>
+
+<span class="sd">        :param angle (int) Value in range [-360,360]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">==</span> <span class="mi">360</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">360</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="o">-</span><span class="mi">360</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span> <span class="o">=</span> <span class="n">angle</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="o">-</span><span class="mi">360</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_rotate</h4>
+
+    <article class="docstring">
+<p><em>Return the angle to rotate read images.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the angle to rotate read images.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_gray</h4>
+
+    <article class="docstring">
+<p><em>Turn the read image into gray color.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) make the image gray</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_gray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Turn the read image into gray color.</span>
+
+<span class="sd">        :param value: (bool) make the image gray</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__gray</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_gray</h4>
+
+    <article class="docstring">
+<p><em>Return True if read images should be turned gray.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_gray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if read images should be turned gray.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gray</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_rgb</h4>
+
+    <article class="docstring">
+<p><em>Turn the read image into RGB instead of BGR.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) make the image RGB</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Turn the read image into RGB instead of BGR.</span>
+
+<span class="sd">        :param value: (bool) make the image RGB</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__rgb</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_rgb</h4>
+
+    <article class="docstring">
+<p><em>Return True if read images should be turned into RGB.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if read images should be turned into RGB.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rgb</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_alpha</h4>
+
+    <article class="docstring">
+<p><em>Add or remove alpha channel of the read image.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) force to add alpha or to remove it</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add or remove alpha channel of the read image.</span>
+
+<span class="sd">        :param value: (bool) force to add alpha or to remove it</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__alpha</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_alpha</h4>
+
+    <article class="docstring">
+<p><em>Return True if read images should contain alpha channel.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if read images should contain alpha channel.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__alpha</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>open</h4>
+
+    <article class="docstring">
+<p><em>Initialize a VideoCapture.</em></p>
+
+<p>The angle value to rotate the image is overridden considering OpenCV
+VideoCapture properties extracted from the video file's metadata
+(applicable for FFmpeg back-end only).</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video</strong>: (name of video file, image sequence, url or video stream, GStreamer pipeline, IP camera) The video to browse.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize a VideoCapture.</span>
+
+<span class="sd">        The angle value to rotate the image is overridden considering OpenCV</span>
+<span class="sd">        VideoCapture properties extracted from the video file&#39;s metadata</span>
+<span class="sd">        (applicable for FFmpeg back-end only).</span>
+
+<span class="sd">        :param video: (name of video file, image sequence, url or video stream,</span>
+<span class="sd">        GStreamer pipeline, IP camera) The video to browse.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The video can&#39;t be opened because another video stream is already opened.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">VideoLockError</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__open_video</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">test_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()</span> <span class="o">-</span> <span class="mi">10</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; ... Video opened successfully. Test to browse into the </span><span class="si">{}</span><span class="s1"> frames.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()))</span>
+    <span class="k">if</span> <span class="n">test_pos</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">,</span> <span class="n">test_pos</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">real_pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">real_pos</span> <span class="o">!=</span> <span class="n">test_pos</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Video failed in setting pos: </span><span class="si">{}</span><span class="s1"> != </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">real_pos</span><span class="p">,</span> <span class="n">test_pos</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="n">VideoBrowseError</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_opened</h4>
+
+    <article class="docstring">
+<p><em>Return True if a video is already opened and ready to write.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a video is already opened and ready to write.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>close</h4>
+
+    <article class="docstring">
+<p><em>Release the flow taken by the reading of the video.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Release the flow taken by the reading of the video.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>read_frame</h4>
+
+    <article class="docstring">
+<p><em>Read a frame of the video.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasImage, None)</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>process_image</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">process_image</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read a frame of the video.</span>
+
+<span class="sd">        :return: (sppasImage, None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">img</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">process_image</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_image_options</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>read</h4>
+
+    <article class="docstring">
+<p><em>Browse a sequence of a video.</em></p>
+
+<p>If both from<em>pos and to</em>pos are -1, only one frame is read.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>from_pos</strong>: (<em>int</em>) frameID value to start reading. -1 means the current position.</li>
+<li><strong>to_pos</strong>: (<em>int</em>) frameID value to stop reading. -1 means the last frame of the video.</li>
+<li><strong>process_image</strong>: (<em>bool</em>) convert the image to sppasImage and apply options</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>None, an image or a list of images(numpy.ndarray).</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_pos</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">to_pos</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">process_image</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browse a sequence of a video.</span>
+
+<span class="sd">        If both from_pos and to_pos are -1, only one frame is read.</span>
+
+<span class="sd">        :param from_pos: (int) frameID value to start reading. -1 means the current position.</span>
+<span class="sd">        :param to_pos: (int) frameID value to stop reading. -1 means the last frame of the video.</span>
+<span class="sd">        :param process_image: (bool) convert the image to sppasImage and apply options</span>
+<span class="sd">        :returns: None, an image or a list of images(numpy.ndarray).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">from_pos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">to_pos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_frame</span><span class="p">(</span><span class="n">process_image</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_pos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">to_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">to_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_frame</span><span class="p">(</span><span class="n">to_pos</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">from_pos</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">from_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">from_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_frame</span><span class="p">(</span><span class="n">from_pos</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">from_pos</span> <span class="o">&gt;=</span> <span class="n">to_pos</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">RangeBoundsException</span><span class="p">(</span><span class="n">from_pos</span><span class="p">,</span> <span class="n">to_pos</span><span class="p">)</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">from_pos</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">to_pos</span> <span class="o">-</span> <span class="n">from_pos</span><span class="p">):</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_frame</span><span class="p">(</span><span class="n">process_image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">images</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>tell</h4>
+
+    <article class="docstring">
+<p><em>Return the index of the current frame position.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">tell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the index of the current frame position.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>seek</h4>
+
+    <article class="docstring">
+<p><em>Set a new frame position in the video.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>int</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>IOError</em>
+IntervalRangeException</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>bool</em>) Success condition</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">seek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new frame position in the video.</span>
+
+<span class="sd">        :param value: (int)</span>
+<span class="sd">        :raises: IOError:</span>
+<span class="sd">        :raises: IntervalRangeException</span>
+<span class="sd">        :return: (bool) Success condition</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;No video is opened: seek is not possible.&#39;</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_frame</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">nb_frames_diff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">nb_frames_diff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">nb_frames_diff</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">nb_frames_diff</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Seek is not supported by your platform for this video.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_frames_diff</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">grab</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>check_frame</h4>
+
+    <article class="docstring">
+<p><em>Raise an exception if the given value is an invalid frameID.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>int</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>ValueError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>) -1 if no video is opened</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raise an exception if the given value is an invalid frameID.</span>
+
+<span class="sd">        :param value: (int)</span>
+<span class="sd">        :raise: ValueError</span>
+<span class="sd">        :return: (int) -1 if no video is opened</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">NegativeValueError</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_opened</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_duration</h4>
+
+    <article class="docstring">
+<p><em>Return the duration of the video in seconds (float).</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the duration of the video in seconds (float).&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_nframes</span><span class="p">())</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_framerate</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_framerate</h4>
+
+    <article class="docstring">
+<p><em>Return the FPS of the current video (float).</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_framerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the FPS of the current video (float).&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FPS</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_width</h4>
+
+    <article class="docstring">
+<p><em>Return the width of the frames in the video.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the width of the frames in the video.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_WIDTH</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_height</h4>
+
+    <article class="docstring">
+<p><em>Return the height of the frames in the video.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the height of the frames in the video.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_HEIGHT</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_size</h4>
+
+    <article class="docstring">
+<p><em>Return the (w,h) of the frames in the video.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the (w,h) of the frames in the video.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_WIDTH</span><span class="p">))</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_HEIGHT</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_nframes</h4>
+
+    <article class="docstring">
+<p><em>Return the number of frames in the video.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nframes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of frames in the video.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_COUNT</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_sppasVideoReader">Private functions</h3>
+<h4>_preprocess_image_options</h4>
+
+    <article class="docstring">
+<p><em>Process the image to apply options.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (np.array)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasImage)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_preprocess_image_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process the image to apply options.</span>
+
+<span class="sd">        :param image: (np.array)</span>
+<span class="sd">        :return: (sppasImage)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gray</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">avg</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.114</span><span class="p">,</span> <span class="mf">0.587</span><span class="p">,</span> <span class="mf">0.2989</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.114</span><span class="p">,</span> <span class="mf">0.587</span><span class="p">,</span> <span class="mf">0.2989</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">avg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg</span>
+            <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg</span>
+            <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rgb</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__alpha</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2RGBA</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__alpha</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGRA2BGR</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">irotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasVideoReader">Protected functions</h3>
+<h4>__open_video</h4>
+
+    <article class="docstring">
+<p><em>Return a VideoCapture object or raise an Exception.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>device</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__open_video</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a VideoCapture object or raise an Exception.&quot;&quot;&quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_FFMPEG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span> <span class="o">=</span> <span class="n">video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_ORIENTATION_META</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__rotate</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_ANY</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">()</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">isOpened</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">video</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Video </span><span class="si">{}</span><span class="s2"> can&#39;t be opened. CV2 library message: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="k">raise</span> <span class="n">VideoOpenError</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasRMS. SPPAS integration of the automatic RMS estimator on intervals." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasActivity.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasFormants.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+<section id="#sppasRMS">
+<h2>Class sppasRMS</h2>
+
+<section>
+<h3 id="#description_sppasRMS">Description</h3>
+    <article class="docstring">
+<p><em>SPPAS integration of the automatic RMS estimator on intervals.</em></p>
+
+<p>Estimate the root-mean-square of segments, i.e. sqrt(sum(S_i^2)/n).
+This is a measure of the power in an audio signal.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasRMS">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasRMS instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasRMS instance.</span>
+
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasRMS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;rms.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__rms</span> <span class="o">=</span> <span class="n">IntervalsRMS</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasRMS">Public functions</h3>
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p><em>Fix all options.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: (sppasOption)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+
+<span class="sd">        :param options: (sppasOption)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;tiername&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tiername</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;minmax&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_minmax</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_tiername</h4>
+
+    <article class="docstring">
+<p><em>Fix the tiername option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier_name</strong>: (<em>str</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_tiername</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the tiername option.</span>
+
+<span class="sd">        :param tier_name: (str)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sppasUnicode</span><span class="p">(</span><span class="n">tier_name</span><span class="p">)</span><span class="o">.</span><span class="n">to_strip</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_minmax</h4>
+
+    <article class="docstring">
+<p><em>Fix the minmax option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Add 2 more tiers in the result with min and max</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_minmax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the minmax option.</span>
+
+<span class="sd">        :param value: (bool) Add 2 more tiers in the result with min and max</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;minmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>convert</h4>
+
+    <article class="docstring">
+<p><em>Estimate RMS on all non-empty intervals.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate RMS on all non-empty intervals.</span>
+
+<span class="sd">        :param tier: (sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">rms_avg</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;RMS&#39;</span><span class="p">)</span>
+    <span class="n">rms_values</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;RMS-values&#39;</span><span class="p">)</span>
+    <span class="n">rms_mean</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;RMS-mean&#39;</span><span class="p">)</span>
+    <span class="n">rms_min</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;RMS-min&#39;</span><span class="p">)</span>
+    <span class="n">rms_max</span> <span class="o">=</span> <span class="n">sppasTier</span><span class="p">(</span><span class="s1">&#39;RMS-max&#39;</span><span class="p">)</span>
+    <span class="n">rms_avg</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">())</span>
+    <span class="n">rms_values</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">())</span>
+    <span class="n">rms_mean</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">())</span>
+    <span class="n">rms_min</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">())</span>
+    <span class="n">rms_max</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_media</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">serialize_labels</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">begin</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_lowest_localization</span><span class="p">()</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_highest_localization</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">begin</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">(),</span> <span class="n">end</span><span class="o">.</span><span class="n">get_midpoint</span><span class="p">())</span>
+        <span class="n">rms_tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">get_rms</span><span class="p">(),</span> <span class="s1">&#39;int&#39;</span><span class="p">)</span>
+        <span class="n">rms_avg</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">rms_tag</span><span class="p">))</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">get_values</span><span class="p">():</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sppasLabel</span><span class="p">(</span><span class="n">sppasTag</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">)))</span>
+        <span class="n">rms_values</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">rms_mean_tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">get_mean</span><span class="p">(),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="n">rms_mean</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">rms_mean_tag</span><span class="p">))</span>
+        <span class="n">rms_min_tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">get_min</span><span class="p">(),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="n">rms_min</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">rms_min_tag</span><span class="p">))</span>
+        <span class="n">rms_max_tag</span> <span class="o">=</span> <span class="n">sppasTag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">get_max</span><span class="p">(),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+        <span class="n">rms_max</span><span class="o">.</span><span class="n">create_annotation</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">sppasLabel</span><span class="p">(</span><span class="n">rms_max_tag</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">rms_avg</span><span class="p">,</span> <span class="n">rms_values</span><span class="p">,</span> <span class="n">rms_mean</span><span class="p">,</span> <span class="n">rms_min</span><span class="p">,</span> <span class="n">rms_max</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return the channel and the tier with ipus.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>NoTierInputError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(Channel, sppasTier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the channel and the tier with ipus.</span>
+
+<span class="sd">        :param input_files: (list)</span>
+<span class="sd">        :raise: NoTierInputError</span>
+<span class="sd">        :return: (Channel, sppasTier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
+    <span class="n">audio_ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">annot_ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">tier</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">audio_filename</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
+        <span class="n">fn</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">audio_ext</span><span class="p">:</span>
+            <span class="n">audio_speech</span> <span class="o">=</span> <span class="n">audioopy</span><span class="o">.</span><span class="n">aio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_nchannels</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">extract_channel</span><span class="p">()</span>
+                <span class="n">channel</span> <span class="o">=</span> <span class="n">audio_speech</span><span class="o">.</span><span class="n">get_channel</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+                <span class="n">audio_filename</span> <span class="o">=</span> <span class="n">filename</span>
+            <span class="n">audio_speech</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">annot_ext</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">trs_input</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">tier</span> <span class="o">=</span> <span class="n">trs_input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Tier with name &#39;</span><span class="si">{:s}</span><span class="s2">&#39; not found.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">]))</span>
+        <span class="k">raise</span> <span class="n">NoTierInputError</span>
+    <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_interval</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The tier should be of type: Interval.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">AnnDataTypeError</span><span class="p">(</span><span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="s1">&#39;IntervalTier&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tier</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">EmptyInputError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tiername&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">channel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;No audio file found or invalid one. An audio file with only one channel was expected.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">NoChannelInputError</span>
+    <span class="n">extm</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="n">sppasMedia</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">audio_filename</span><span class="p">),</span> <span class="n">mime_type</span><span class="o">=</span><span class="s1">&#39;audio/&#39;</span> <span class="o">+</span> <span class="n">extm</span><span class="p">)</span>
+    <span class="n">tier</span><span class="o">.</span><span class="n">set_media</span><span class="p">(</span><span class="n">media</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">tier</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on an input.</em></p>
+
+<p>Input file is a tuple with 2 files:
+the audio file and the annotation file</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) (audio, time-aligned items)</li>
+<li><strong>output</strong>: (<em>str</em>) the output name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTranscription)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+
+<span class="sd">        Input file is a tuple with 2 files:</span>
+<span class="sd">        the audio file and the annotation file</span>
+
+<span class="sd">        :param input_files: (list of str) (audio, time-aligned items)</span>
+<span class="sd">        :param output: (str) the output name</span>
+<span class="sd">        :return: (sppasTranscription)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">channel</span><span class="p">,</span> <span class="n">tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__rms</span><span class="o">.</span><span class="n">set_channel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">rms_avg</span><span class="p">,</span> <span class="n">rms_values</span><span class="p">,</span> <span class="n">rms_mean</span><span class="p">,</span> <span class="n">rms_min</span><span class="p">,</span> <span class="n">rms_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
+    <span class="n">trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms_avg</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms_values</span><span class="p">)</span>
+    <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms_mean</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;minmax&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms_min</span><span class="p">)</span>
+        <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rms_max</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">trs_output</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">output_file</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EmptyOutputError</span>
+    <span class="k">return</span> <span class="n">trs_output</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation uses in an output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-rms&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_patterns</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern2&#39;</span><span class="p">,</span> <span class="s1">&#39;-palign&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_extensions</h4>
+
+    <article class="docstring">
+<p><em>Extensions that the annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;AUDIO&#39;</span><span class="p">),</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

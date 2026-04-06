@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of ImageFaceLandmark. Estimate the 68 sights on one face of an image with several detectors." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasFaceSights.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+<section id="#ImageFaceLandmark">
+<h2>Class ImageFaceLandmark</h2>
+
+<section>
+<h3 id="#description_ImageFaceLandmark">Description</h3>
+    <article class="docstring">
+<p><em>Estimate the 68 sights on one face of an image with several detectors.</em></p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_ImageFaceLandmark">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new ImageFaceLandmark instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new ImageFaceLandmark instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">ImageFaceLandmark</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__mediapipe</span> <span class="o">=</span> <span class="n">MediaPipeFaceMesh</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__markers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_ImageFaceLandmark">Public functions</h3>
+<h4>get_nb_recognizers</h4>
+
+    <article class="docstring">
+<p><em>Return the number of initialized landmark recognizers.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_recognizers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of initialized landmark recognizers.&quot;&quot;&quot;</span>
+    <span class="n">nb</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nb</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">nb</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__markers</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_model</h4>
+
+    <article class="docstring">
+<p><em>Append an OpenCV recognizer into the list and load the model.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>filename</strong>: (<em>str</em>) A recognizer model (Kazemi, LBF, AAM).</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IOError, IOExtensionError, Exception</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append an OpenCV recognizer into the list and load the model.</span>
+
+<span class="sd">        :param filename: (str) A recognizer model (Kazemi, LBF, AAM).</span>
+<span class="sd">        :raise: IOError, IOExtensionError, Exception</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">predictor</span> <span class="o">=</span> <span class="n">OpenCVFaceMark</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictor</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>enable_empirical_predictor</h4>
+
+    <article class="docstring">
+<p><em>Enable the basic predictor with empirically fixed sights.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) True to enable</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_empirical_predictor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable the basic predictor with empirically fixed sights.</span>
+
+<span class="sd">        :param value: (bool) True to enable</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="o">=</span> <span class="n">BasicFaceMark</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_ImageFaceLandmark">Private functions</h3>
+<h4>_detect</h4>
+
+    <article class="docstring">
+<p><em>Detect sights on an image with the coords of the face.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (sppasImage or numpy.ndarray) The image to be processed.</li>
+<li><strong>coords</strong>: (sppasCoords) Coordinates of the face in the image or None for the full image</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect sights on an image with the coords of the face.</span>
+
+<span class="sd">        :param image: (sppasImage or numpy.ndarray) The image to be processed.</span>
+<span class="sd">        :param coords: (sppasCoords) Coordinates of the face in the image or None for the full image</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">all_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__detect_with_markers</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sights</span><span class="p">)):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__points_to_coords</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">all_points</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sights</span><span class="o">.</span><span class="n">set_sight</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">success</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_ImageFaceLandmark">Protected functions</h3>
+<h4>__points_to_coords</h4>
+
+    <article class="docstring">
+<p><em>Convert a list of estimated points into coordinates of a sight.</em></p>
+
+<p>The confidence score of each sight depends on the area covered by the
+points. The image and the coords are used only to estimate the score.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (numpy.ndarray) The image.</li>
+<li><strong>coords</strong>: (sppasCoords) Coordinates of the face in the image.</li>
+<li><strong>points</strong>: (<em>list</em> of (x,y) values) A sight detected by each method</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>Estimated(x,y,c) values</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__points_to_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a list of estimated points into coordinates of a sight.</span>
+
+<span class="sd">        The confidence score of each sight depends on the area covered by the</span>
+<span class="sd">        points. The image and the coords are used only to estimate the score.</span>
+
+<span class="sd">        :param image: (numpy.ndarray) The image.</span>
+<span class="sd">        :param coords: (sppasCoords) Coordinates of the face in the image.</span>
+<span class="sd">        :param points: (list of (x,y) values) A sight detected by each method</span>
+<span class="sd">        :return: Estimated (x,y,c) values</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">icrop</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">face_area</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">w</span>
+    <span class="n">min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
+    <span class="n">min_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
+    <span class="n">max_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
+    <span class="n">max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
+    <span class="n">points_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">face_area</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">points_area</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">face_area</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">))</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">coeff</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">))</span>
+    <span class="n">avg_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">avg_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">sum_x</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">avg_points</span><span class="p">))</span>
+    <span class="n">sum_y</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">avg_points</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sum_x</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">avg_points</span><span class="p">)))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sum_y</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">avg_points</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__detect_with_markers</h4>
+
+    <article class="docstring">
+<p><em>Estimate all the 68 points by each instantiated face-marker.</em></p>
+
+<p>The returned result is a list of 68 lists of tuples with (x,y) values
+because it's the data structure OpenCV is returning when invoking
+the method 'fit()' of each recognizer.</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong></li>
+<li><strong>coords</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__detect_with_markers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate all the 68 points by each instantiated face-marker.</span>
+
+<span class="sd">        The returned result is a list of 68 lists of tuples with (x,y) values</span>
+<span class="sd">        because it&#39;s the data structure OpenCV is returning when invoking</span>
+<span class="sd">        the method &#39;fit()&#39; of each recognizer.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">all_points</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">list</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sights</span><span class="p">))}</span>
+    <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">portrait</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">sppasCoords</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mediapipe</span><span class="o">.</span><span class="n">detect_sights</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">icrop</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sight</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__mediapipe</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sight</span>
+            <span class="n">all_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">cv_marker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__markers</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">cv_marker</span><span class="o">.</span><span class="n">detect_sights</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sight</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv_marker</span><span class="p">):</span>
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sight</span>
+                <span class="n">all_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__basic</span><span class="o">.</span><span class="n">detect_sights</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sight</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__basic</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sight</span>
+            <span class="n">all_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="n">all_points</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

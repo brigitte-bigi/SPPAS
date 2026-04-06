@@ -1,0 +1,53 @@
+{
+  "id": "stopwords",
+  "name": "Stop Tags",
+  "descr": "Estimates if tags of annotations are relevant or not.",
+  "required": "",
+  "api": "sppasStopWords",
+
+  "resources": [
+    {
+      "path": "vocab",
+      "type": "file",
+      "ext": ".stp",
+      "name": ""
+    }
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "-palign",
+      "text": "Pattern of the file to be analyzed."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-stops",
+      "text": "Pattern of the file with identified stop words."
+    },
+    {
+      "id": "tiername",
+      "type": "str",
+      "value": "TokensAlign",
+      "text": "Name of the tier to estimate if tags are either relevant or stop-words."
+    },
+    {
+      "id": "alpha",
+      "type": "float",
+      "value": 0.5,
+      "text": "Coefficient to evaluate stop-tags of the tier"
+    }
+  ],
+
+  "refs": {
+    "bigi2014lrecor": "http://www.lrec-conf.org/proceedings/lrec2014/pdf/71_Paper.pdf"
+  }
+
+}
+

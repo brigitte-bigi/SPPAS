@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasMapping. Class to manage mapping tables." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasDictRepl.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.resources">    <h1>Module sppas.src.resources</h1>
+<section id="#sppasMapping">
+<h2>Class sppasMapping</h2>
+
+<section>
+<h3 id="#description_sppasMapping">Description</h3>
+    <article class="docstring">
+<p><em>Class to manage mapping tables.</em></p>
+
+<p>A mapping is an extended replacement dictionary.
+sppasMapping is used for the management of a mapping table of any set
+of strings.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasMapping">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new sppasMapping instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>dict_name</strong>: (<em>str</em>) file name with the mapping data (2 columns)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasMapping instance.</span>
+
+<span class="sd">    :param dict_name: (str) file name with the mapping data (2 columns)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasMapping</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dict_name</span><span class="p">,</span> <span class="n">nodump</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasMapping">Public functions</h3>
+<h4>get_reverse</h4>
+
+    <article class="docstring">
+<p><em>Return the boolean value of reverse member.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the boolean value of reverse member.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_miss_symbol</h4>
+
+    <article class="docstring">
+<p><em>Return the boolean value of reverse member.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_miss_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the boolean value of reverse member.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_keep_miss</h4>
+
+    <article class="docstring">
+<p><em>Fix the keep_miss option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>keep_miss</strong>: (<em>bool</em>) If keep_miss is set to True, each missing entry is kept without change; instead each missing entry is replaced by a specific symbol.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_keep_miss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keep_miss</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the keep_miss option.</span>
+
+<span class="sd">        :param keep_miss: (bool) If keep_miss is set to True, each missing</span>
+<span class="sd">        entry is kept without change; instead each missing entry is replaced</span>
+<span class="sd">        by a specific symbol.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="n">keep_miss</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_reverse</h4>
+
+    <article class="docstring">
+<p><em>Fix the reverse option.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>reverse</strong>: (<em>bool</em>) If replace is set to True, the mapping will replace value by key instead of replacing key by value.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reverse</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the reverse option.</span>
+
+<span class="sd">        :param reverse: (bool) If replace is set to True, the mapping will</span>
+<span class="sd">        replace value by key instead of replacing key by value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span> <span class="o">=</span> <span class="n">reverse</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_miss_symbol</h4>
+
+    <article class="docstring">
+<p><em>Fix the symbol to be used if keep_miss is False.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>symbol</strong>: (<em>str</em>) US-ASCII symbol to be used in case of a symbol is missing of the mapping table.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_miss_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the symbol to be used if keep_miss is False.</span>
+
+<span class="sd">        :param symbol: (str) US-ASCII symbol to be used in case of a symbol</span>
+<span class="sd">        is missing of the mapping table.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>map_entry</h4>
+
+    <article class="docstring">
+<p><em>Map an entry (a key or a value).</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>entry</strong>: (<em>str</em>) input string to map</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>mapped entry is a string</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">map_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map an entry (a key or a value).</span>
+
+<span class="sd">        :param entry: (str) input string to map</span>
+<span class="sd">        :returns: mapped entry is a string</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">entry</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reverse</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_key</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_reversed</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">s</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span>
+    <span class="k">return</span> <span class="n">entry</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>map</h4>
+
+    <article class="docstring">
+<p><em>Run the Mapping process on an input string.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>mstr</strong>: input string to map</li>
+<li><strong>delimiters</strong>: (<em>list</em>) list of character delimiters. Default is:               [';', ',', ' ', '.', '|', '+', '-']</li>
+<li><strong>separator</strong>: (char) used to separate parts of the mapped result (when longest matching algorithm was used to map a string)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>a string</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mstr</span><span class="p">,</span> <span class="n">delimiters</span><span class="o">=</span><span class="n">DEFAULT_SEP</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the Mapping process on an input string.</span>
+
+<span class="sd">        :param mstr: input string to map</span>
+<span class="sd">        :param delimiters: (list) list of character delimiters. Default is:               [&#39;;&#39;, &#39;,&#39;, &#39; &#39;, &#39;.&#39;, &#39;|&#39;, &#39;+&#39;, &#39;-&#39;]</span>
+<span class="sd">        :param separator: (char) used to separate parts of the mapped result</span>
+<span class="sd">        (when longest matching algorithm was used to map a string)</span>
+<span class="sd">        :returns: a string</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mstr</span>
+    <span class="n">tab</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">delimiters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">,</span> <span class="n">delimiters</span><span class="p">))</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="s1">&#39;)</span><span class="se">\\</span><span class="s1">s*&#39;</span>
+        <span class="n">tab</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">mstr</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="s1">&#39;UNKNOWN&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">maxi</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mstr</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">maxi</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">maxi</span>
+            <span class="n">mapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_entry</span><span class="p">(</span><span class="n">mstr</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">while</span> <span class="n">mapped</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">mapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_entry</span><span class="p">(</span><span class="n">mstr</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mstr</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keep_miss</span> <span class="o">=</span> <span class="n">k</span>
+    <span class="n">map_tab</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tab</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">delimiters</span><span class="p">:</span>
+            <span class="n">map_tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_entry</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mapped</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_miss_symbol</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;In </span><span class="si">{:s}</span><span class="s1">, missing symbol </span><span class="si">{:s}</span><span class="s1">. Mapped into </span><span class="si">{:s}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mstr</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mapped</span><span class="p">))</span>
+            <span class="n">map_tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapped</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">map_tab</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

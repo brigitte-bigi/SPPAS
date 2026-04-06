@@ -1,0 +1,200 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brigitte Bigi <brigitte.bigi@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.7\n"
+
+msgid ":INFO 0510: "
+msgstr "Installation de '{name}'"
+
+msgid ":INFO 0520: "
+msgstr "'{name}' n’est pas disponible pour votre OS."
+
+msgid ":INFO 0530: "
+msgstr "L’installation de '{name}' est désactivée."
+
+msgid ":INFO 0540: "
+msgstr "'{name}' est installé."
+
+msgid ":INFO 0550: "
+msgstr "L’installation de '{name}' a échouée."
+
+msgid ":INFO 0560: "
+msgstr "Installation terminée"
+
+msgid ":INFO 0570: "
+msgstr "'{name}' ne correspond à aucun nom connu de package."
+
+msgid ":INFO 0580: "
+msgstr "Aucune commande système ne doit être exécutée."
+
+msgid "InstallWizard of {soft} {version}."
+msgstr "InstallWizard de {soft} {version}."
+
+msgid "Page ({page}/{total})"
+msgstr "Page ({page}/{total})"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Install"
+msgstr "Installer"
+
+msgid "Installation"
+msgstr "Installation"
+
+msgid ":INFO 0573: "
+msgstr "Procédure d'installation des programmes tiers"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Exit"
+msgstr "Quitter"
+
+msgid "View logs"
+msgstr "Voir les logs"
+
+msgid "Confirm exit?"
+msgstr "Confirmer la sortie ?"
+
+msgid "Features"
+msgstr "Fonctionnalités"
+
+msgid "Feature"
+msgstr "Fonctionnalité"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Tools"
+msgstr "Outils"
+
+msgid "Langs"
+msgstr "Langues"
+
+msgid "Models"
+msgstr "Modèles"
+
+msgid "Extras"
+msgstr "Extras"
+
+msgid ":INFO 0500: "
+msgstr ""
+"SPPAS est un logiciel à des fins de recherche scientifique developpé par Brigitte Bigi, chargée de recherche "
+"CNRS au ’Laboratoire Parole et Langage', à Aix-en-Provence, France.\n"
+"\n"
+"Cet InstallWizard installera sur votre ordinateur des programmes dont SPPAS a besoin pour activer certaines "
+"de ses fonctionnalités."
+
+msgid ":INFO 0502: "
+msgstr "En cliquant sur ‘Suivant’, vous acceptez les termes de la licence ci-dessous."
+
+msgid ":INFO 0504: "
+msgstr "Cochez les cases pour activer les fonctionnalités :"
+
+msgid ":INFO 0514: "
+msgstr "Installation de programmes tiers"
+
+msgid ":INFO 0515: "
+msgstr "Installation des ressources pour les langues"
+
+msgid ":INFO 0516: "
+msgstr "Installation des ressources pour les annotations"
+
+msgid ":INFO 0517: "
+msgstr "Installation des programmes spin-offs"
+
+msgid ":INFO 0524: "
+msgstr "Téléchargement de resources linguistiques pour les annotations dépendentes de la langue."
+
+msgid ":INFO 0534: "
+msgstr "Téléchargement de resources requises par certaines annotations."
+
+msgid ":INFO 0536: "
+msgstr "Téléchargement des programmes spin-offs."
+
+msgid ":INFO 0544: "
+msgstr "Toutes les installations et les téléchargements."
+
+msgid ":INFO 0506: "
+msgstr ""
+"Cliquez sur le bouton ‘Installer’ pour lancer la procédure d’installation.\n"
+"\n"
+"Si vous souhaitez vérifier ou changer la configuration de l’installation, vous pouvez revenir en arrière en "
+"cliquant sur ‘Retour’. Cliquer sur ‘Annuler' pour quitter l’InstallWizard sans installer les programmes."
+
+msgid ":INFO 0508: "
+msgstr ""
+"Avant de cliquer sur le bouton ‘Quitter’, partagez votre expérience de cet InstallWizard avec l’auteur :\n"
+"cliquez sur le bouton d’envoie dans la fenêtre de logs."
+
+msgid ":INFO 0512: "
+msgstr "Consultez le fichier de logs pour plus d’informations sur l'installation."
+
+msgid ":INFO 0551: "
+msgstr "Bienvenue"
+
+msgid ":INFO 0552: "
+msgstr "Bienvenue sur l'installeur proposé par SPPAS"
+
+msgid ":INFO 0554: "
+msgstr ""
+"SPPAS est un logiciel multi-plateforme open-source qui offre des solutions personnalisables pour l'annotation "
+"et l'analyse d'enregistrements audio et vidéo. "
+
+msgid ":INFO 0555: "
+msgstr ""
+"Cet outil procèdera à l'installation de programmes tiers qui permettront d'activer certaines fonctionnalités "
+"de SPPAS."
+
+msgid ":INFO 0556: "
+msgstr ""
+"SPPAS est un \"research software\" developpé par Brigitte Bigi, chargée de recherche au CNRS, 'Laboratoire "
+"Parole et Langage', Aix-en-Provence, France."
+
+msgid ":INFO 0558: "
+msgstr "Je m'engage à citer au moins une référence de SPPAS dans mes publications."
+
+msgid ":INFO 0559: "
+msgstr "Je m'engage à remercier SPPAS dans mes produits commerciaux."
+
+msgid ":INFO 0561: "
+msgstr "Licences"
+
+msgid ":INFO 0562: "
+msgstr "Licences des composantes du package de SPPAS"
+
+msgid ":INFO 0563: "
+msgstr "le code source de ce logiciel est déposé sous les termes de la GNU AGPL version 3 et version suivantes,"
+
+msgid ":INFO 0564: "
+msgstr ""
+"les documentations contenues dans le package de ce logiciel sont déposées sous les termes de la GNU Free "
+"Documentation License, version 1.3,"
+
+msgid ":INFO 0565: "
+msgstr ""
+"les exemples contenus dans le package de ce logiciel sont déposés sous les termes de la licence CC-By-NC-4.0 "
+"- Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License,"
+
+msgid ":INFO 0566: "
+msgstr ""
+"les plugins ainsi que les ressources contenus dans le package de ce logiciel sont soumis aux termes de "
+"licences propres. Consultez leur documentation."
+
+msgid ":INFO 0568: "
+msgstr "J'accepte sans retenue les termes de toutes ces licences"
+
+msgid "Check the SPPAS optional features and install programs"
+msgstr "Installation de programmes tiers pour les fonctionalités optionnelles de SPPAS"

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasTierStats. Estimate descriptive statistics of annotations of a tier." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.resources.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" aria-disabled="true"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasTierFilters.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.annotations.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.analysis">    <h1>Module sppas.src.analysis</h1>
+<section id="#sppasTierStats">
+<h2>Class sppasTierStats</h2>
+
+<section>
+<h3 id="#description_sppasTierStats">Description</h3>
+    <article class="docstring">
+<p><em>Estimate descriptive statistics of annotations of a tier.</em></p>
+
+<p>Map a tier into a dictionary where:</p>
+
+<ul>
+<li>key is a tag</li>
+<li>value is the list of observed durations of this tag in annotations</li>
+</ul>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasTierStats">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new TierStats instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (either sppasTier or <em>list</em> of them)</li>
+<li><strong>n</strong>: (<em>int</em>) n-gram value</li>
+<li><strong>with_radius</strong>: (<em>int</em>) 0 to use Midpoint, negative value to use R-, positive value to use R+</li>
+<li><strong>with_alt</strong>: (<em>bool</em>) Use or not use of alternative labels</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">with_radius</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">with_alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new TierStats instance.</span>
+
+<span class="sd">    :param tier: (either sppasTier or list of them)</span>
+<span class="sd">    :param n: (int) n-gram value</span>
+<span class="sd">    :param with_radius: (int) 0 to use Midpoint, negative value</span>
+<span class="sd">    to use R-, positive value to use R+</span>
+<span class="sd">    :param with_alt: (bool) Use or not use of alternative labels</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tier</span> <span class="o">=</span> <span class="n">tier</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span> <span class="o">=</span> <span class="n">with_radius</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span> <span class="o">=</span> <span class="n">with_alt</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_ngram</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasTierStats">Public functions</h3>
+<h4>get_ngram</h4>
+
+    <article class="docstring">
+<p><em>Returns the n-gram value.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the n-gram value.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_with_radius</h4>
+
+    <article class="docstring">
+<p><em>Returns how to use the radius in duration estimations.</em></p>
+
+<p>0 means to use Midpoint, negative value means to use R-, and
+positive value means to use R+.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_with_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns how to use the radius in duration estimations.</span>
+
+<span class="sd">        0 means to use Midpoint, negative value means to use R-, and </span>
+<span class="sd">        positive value means to use R+.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_with_alt</h4>
+
+    <article class="docstring">
+<p><em>Return if alternative labels will be used or not.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_with_alt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return if alternative labels will be used or not.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_tier</h4>
+
+    <article class="docstring">
+<p><em>Return the tier to estimate stats.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier to estimate stats.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_with_radius</h4>
+
+    <article class="docstring">
+<p><em>Set the with_radius option, used to estimate the duration.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>with_radius</strong>: (<em>int</em>) Fix the with_radius option</li>
+</ul>
+
+<p>with_radius can take the following values:</p>
+
+<ul>
+<li>0 means to use midpoint;</li>
+<li>negative value means to use (midpoint-radius);</li>
+<li>positive radius means to use (midpoint+radius).</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_with_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_radius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the with_radius option, used to estimate the duration.</span>
+
+<span class="sd">        :param with_radius: (int) Fix the with_radius option</span>
+
+<span class="sd">        with_radius can take the following values:</span>
+
+<span class="sd">            - 0 means to use midpoint;</span>
+<span class="sd">            - negative value means to use (midpoint-radius);</span>
+<span class="sd">            - positive radius means to use (midpoint+radius).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">with_radius</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_withalt</h4>
+
+    <article class="docstring">
+<p><em>Set the withalt option, used to select the labels.</em></p>
+
+<ul>
+<li>False means to use only the label with the higher score
+of each annotation</li>
+<li>True means to use all labels of each annotation</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>withalt</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_withalt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">withalt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the withalt option, used to select the labels.</span>
+
+
+<span class="sd">            - False means to use only the label with the higher score</span>
+<span class="sd">            of each annotation</span>
+<span class="sd">            - True means to use all labels of each annotation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span> <span class="o">=</span> <span class="n">withalt</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_ngram</h4>
+
+    <article class="docstring">
+<p><em>Set the n value of the n-grams.</em></p>
+
+<p>It is used to fix the history size (at least =1).</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>n</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the n value of the n-grams.</span>
+
+<span class="sd">        It is used to fix the history size (at least =1).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">MAX_NGRAM</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">=</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InsideIntervalError</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">MAX_NGRAM</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>ds</h4>
+
+    <article class="docstring">
+<p><em>Create a DescriptiveStatistic object for the given tier.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(DescriptiveStatistic)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a DescriptiveStatistic object for the given tier. </span>
+
+<span class="sd">        :returns: (DescriptiveStatistic)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">ltup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tiers_to_tuple</span><span class="p">()</span>
+    <span class="n">ngrams</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ltup</span><span class="p">:</span>
+        <span class="n">ngrams</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ngrams</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">sppasTierStats</span><span class="o">.</span><span class="n">tuple_to_dict</span><span class="p">(</span><span class="n">ngrams</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sppasDescriptiveStatistics</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>tuple_to_dict</h4>
+
+    <article class="docstring">
+<p><em>Convert into a dictionary.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>items</strong>: (<em>tuple</em>) the ngram items</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>dictionary key=text, value=list of durations.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tuple_to_dict</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert into a dictionary.</span>
+
+<span class="sd">        :param items: (tuple) the ngram items</span>
+<span class="sd">        :returns: dictionary key=text, value=list of durations.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="n">dur</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">text</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">text</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dur</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasTierStats">Protected functions</h3>
+<h4>__tiers_to_tuple</h4>
+
+    <article class="docstring">
+<p><em>Return a list of tuples of label/duration pairs.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__tiers_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of tuples of label/duration pairs.&quot;&quot;&quot;</span>
+    <span class="n">tiers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tier</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tier</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">tiers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tier</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__tier_to_tuple</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span> <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">tiers</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__tier_to_tuple</h4>
+
+    <article class="docstring">
+<p><em>Return a tuple of label/duration pairs for a given tier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier</strong>: (Tier)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>tuple</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__tier_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a tuple of label/duration pairs for a given tier.</span>
+
+<span class="sd">        :param tier: (Tier)</span>
+<span class="sd">        :returns: tuple</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">tier</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_labels</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_alt</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">get_best</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">label</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">dur</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">get_location</span><span class="p">()</span><span class="o">.</span><span class="n">get_best</span><span class="p">()</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+            <span class="n">dur</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dur</span> <span class="o">+=</span> <span class="n">duration</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_radius</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dur</span> <span class="o">-=</span> <span class="n">duration</span><span class="o">.</span><span class="n">get_margin</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">contents</span><span class="p">:</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tag</span><span class="o">.</span><span class="n">get_content</span><span class="p">(),</span> <span class="n">dur</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__ngrams</h4>
+
+    <article class="docstring">
+<p><em>Yield a sequences of ngrams.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>items</strong>: (<em>tuple</em>) the ngram items</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__ngrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yield a sequences of ngrams. </span>
+
+<span class="sd">        :param items: (tuple) the ngram items</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ngram</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">l</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

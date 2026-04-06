@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of BaseObjectsDetector. Abstract class to detect objects in an image." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.anndata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasCoordsReader.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="HaarCascadeDetector.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.videodata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.imgdata">    <h1>Module sppas.src.imgdata</h1>
+<section id="#BaseObjectsDetector">
+<h2>Class BaseObjectsDetector</h2>
+
+<section>
+<h3 id="#description_BaseObjectsDetector">Description</h3>
+    <article class="docstring">
+<p><em>Abstract class to detect objects in an image.</em></p>
+
+<p>This class allows to analyze an image in order to detect objects. It
+stores a list of sppasCoords() for each detected object. The detected
+object corresponds to the one of the trained model (human face, human
+profile, cat face, car...).</p>
+
+<h5>Example</h5>
+
+<div class="highlight"><pre><span></span><code> <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="p">()</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_filename</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Detect all the objects in an image</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;image path&quot;</span><span class="p">))</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Get number of detected objects</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Browse through the detected object coordinates:</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre></div>
+
+<p>An object detector is instantiated from a model. It will be used to
+detect the objects matching the model in an image. Detected objects are
+stored in a list of coordinates. The confidence score of each detected
+object is expected to range [0., 1.].</p>
+
+<p>Two filters are used to filter detected objects:
+- a min confidence score;
+- a min ratio between the object (w,h) related to the ones of the image.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_BaseObjectsDetector">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new detector instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new detector instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__min_ratio</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">DEFAULT_MIN_RATIO</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__min_score</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">DEFAULT_MIN_SCORE</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_BaseObjectsDetector">Public functions</h3>
+<h4>invalidate</h4>
+
+    <article class="docstring">
+<p><em>Invalidate current list of detected object coordinates.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Invalidate current list of detected object coordinates.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_extension</h4>
+
+    <article class="docstring">
+<p><em>Return the expected extension of the model filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the expected extension of the model filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extension</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_min_ratio</h4>
+
+    <article class="docstring">
+<p><em>Return the minimum ratio of an object compared to the image.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum ratio of an object compared to the image.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__min_ratio</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_min_ratio</h4>
+
+    <article class="docstring">
+<p><em>Set the minimum ratio of an object compared to the image.</em></p>
+
+<p>It means that width and height of a detected object must be at
+least 'value' percent of the image width and height respectively</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) Value ranging [0., 1.]</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>ValueError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the minimum ratio of an object compared to the image.</span>
+
+<span class="sd">        It means that width and height of a detected object must be at</span>
+<span class="sd">        least &#39;value&#39; percent of the image width and height respectively</span>
+
+<span class="sd">        :param value: (float) Value ranging [0., 1.]</span>
+<span class="sd">        :raise: ValueError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__min_ratio</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_min_score</h4>
+
+    <article class="docstring">
+<p><em>Return the minimum score of a detected object to consider it.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum score of a detected object to consider it.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__min_score</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_min_score</h4>
+
+    <article class="docstring">
+<p><em>Set the minimum score of a detected object to consider it.</em></p>
+
+<p>It means that any detected object with a score lesser than the given
+one will be ignored. The score of detected objects are supposed to
+range between 0. and 1.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) Value ranging [0., 1.]</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>ValueError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the minimum score of a detected object to consider it.</span>
+
+<span class="sd">        It means that any detected object with a score lesser than the given</span>
+<span class="sd">        one will be ignored. The score of detected objects are supposed to</span>
+<span class="sd">        range between 0. and 1.</span>
+
+<span class="sd">        :param value: (float) Value ranging [0., 1.]</span>
+<span class="sd">        :raise: ValueError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__min_score</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_best</h4>
+
+    <article class="docstring">
+<p><em>Return a copy of the coordinates with the n-best scores.</em></p>
+
+<p>Add "None" if more objects are requested than those detected.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>nb</strong>: (<em>int</em>) number of coordinates to return</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasCoords or sppasCoords or None)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the coordinates with the n-best scores.</span>
+
+<span class="sd">        Add &quot;None&quot; if more objects are requested than those detected.</span>
+
+<span class="sd">        :param nb: (int) number of coordinates to return</span>
+<span class="sd">        :return: (list of sppasCoords or sppasCoords or None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">nb</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">nb</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nb</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nbest</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">[:</span><span class="n">nb</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">nb</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nbest</span><span class="p">):</span>
+        <span class="n">nbest</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nb</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">nbest</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">nbest</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_confidence</h4>
+
+    <article class="docstring">
+<p><em>Return a copy of the coordinate objects with the better scores.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>confidence</strong>: (<em>float</em>) Minimum confidence score ranging [0., 1.]</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of sppasCoords or sppasCoords or None)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a copy of the coordinate objects with the better scores.</span>
+
+<span class="sd">        :param confidence: (float) Minimum confidence score ranging [0., 1.]</span>
+<span class="sd">        :return: (list of sppasCoords or sppasCoords or None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">BaseObjectsDetector</span><span class="o">.</span><span class="n">to_dtype</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">score</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>load_model</h4>
+
+    <article class="docstring">
+<p><em>Load at least a model to instantiate a detector.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>model</strong>: Filename of a model(DNN, HaarCascade, ...)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>IOError if model is not loaded.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load at least a model to instantiate a detector.</span>
+
+<span class="sd">        :param model: Filename of a model (DNN, HaarCascade, ...)</span>
+<span class="sd">        :raise: IOError if model is not loaded.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extension</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IOExtensionError</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasIOError</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_set_detector</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>detect</h4>
+
+    <article class="docstring">
+<p><em>Determine the coordinates of all the detected objects.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (sppasImage or numpy.ndarray)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>sppasTypeError</em>: Given parameter is not an image.</li>
+<li><em>sppasError</em>: No model was instantiated.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the coordinates of all the detected objects.</span>
+
+<span class="sd">        :param image: (sppasImage or numpy.ndarray)</span>
+<span class="sd">        :raises: sppasTypeError: Given parameter is not an image.</span>
+<span class="sd">        :raises: sppasError: No model was instantiated.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">invalidate</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">input_array</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sppasImage</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Object detection requires a sppasImage. Got </span><span class="si">{}</span><span class="s1"> instead.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">))))</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)),</span> <span class="n">expected</span><span class="o">=</span><span class="s1">&#39;sppasImage&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">ibgra_to_bgr</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasError</span><span class="p">(</span><span class="n">ERR_MODEL_MISS</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_detection</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">filter_confidence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_min_score</span><span class="p">())</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sort_by_score</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_overlapped</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort_by_score</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+        <span class="k">pass</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>sort_by_score</h4>
+
+    <article class="docstring">
+<p><em>Sort the detected objects by their confidence score.</em></p>
+
+<p>The highest the better.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sort_by_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sort the detected objects by their confidence score.</span>
+
+<span class="sd">        The highest the better.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">detected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">()</span>
+        <span class="n">detected</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">c</span><span class="p">,</span> <span class="n">score</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">coord</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">detected</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>filter_best</h4>
+
+    <article class="docstring">
+<p><em>Filter the coordinates to select only the n-best scores.</em></p>
+
+<p>If there are less coordinates than those requested, nothing is
+changed.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>nb</strong>: (<em>int</em>) number of coordinates to keep</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the coordinates to select only the n-best scores.</span>
+
+<span class="sd">        If there are less coordinates than those requested, nothing is</span>
+<span class="sd">        changed.</span>
+
+<span class="sd">        :param nb: (int) number of coordinates to keep</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_best</span><span class="p">(</span><span class="n">nb</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nb</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="p">[</span><span class="n">best</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">nb</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="n">best</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>filter_confidence</h4>
+
+    <article class="docstring">
+<p><em>Filter the coordinates to select only the highest scores.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>confidence</strong>: (<em>float</em>) Minimum confidence score</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_confidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the coordinates to select only the highest scores.</span>
+
+<span class="sd">        :param confidence: (float) Minimum confidence score</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_confidence</span><span class="p">(</span><span class="n">confidence</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="n">best</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>to_dtype</h4>
+
+    <article class="docstring">
+<p><em>Convert a value to dtype or raise the appropriate exception.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (any <em>type</em>)</li>
+<li><strong>dtype</strong>: (<em>type</em>) Expected type of the value</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>Value of the given type</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>TypeError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_dtype</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a value to dtype or raise the appropriate exception.</span>
+
+<span class="sd">        :param value: (any type)</span>
+<span class="sd">        :param dtype: (type) Expected type of the value</span>
+<span class="sd">        :returns: Value of the given type</span>
+<span class="sd">        :raises: TypeError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasTypeError</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>filter_overlapped</h4>
+
+    <article class="docstring">
+<p><em>Remove overlapping detected objects.</em></p>
+
+<p>To be overridden.</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>overlap</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_overlapped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">50.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove overlapping detected objects.</span>
+
+<span class="sd">        To be overridden.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_BaseObjectsDetector">Private functions</h3>
+<h4>_set_detector</h4>
+
+    <article class="docstring">
+<p><em>Really load the model and instantiate the detector.</em></p>
+
+<p>To be overridden.</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>model</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_set_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Really load the model and instantiate the detector.</span>
+
+<span class="sd">        To be overridden.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>_detection</h4>
+
+    <article class="docstring">
+<p><em>Determine the coordinates of the detected objects.</em></p>
+
+<p>To be overridden.</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_detection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the coordinates of the detected objects.</span>
+
+<span class="sd">        To be overridden.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_BaseObjectsDetector">Overloads</h3>
+<h4>__len__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__iter__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">coordinates</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">coordinates</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__getitem__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__contains__</h4>
+
+    <article class="docstring">
+<p><em>Return true if value in self.__coordinates.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return true if value in self.__coordinates.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__str__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">])</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__repr__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__format__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

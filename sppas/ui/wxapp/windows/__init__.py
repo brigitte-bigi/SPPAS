@@ -1,0 +1,169 @@
+# -*- coding: UTF-8 -*-
+"""
+    ..
+        ---------------------------------------------------------------------
+         ######   ########   ########      ###      ######
+        ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
+        ##        ##     ##  ##     ##   ##   ##   ##            annotation
+         ######   ########   ########   ##     ##   ######        and
+          ##  ##         ##         #########        ##        analysis
+        ##    ##  ##         ##         ##     ##  ##    ##         of speech
+     ######   ##         ##         ##     ##   ######
+
+        https://sppas.org/
+
+        Use of this software is governed by the GNU Public License, version 3.
+
+        SPPAS is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        SPPAS is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with SPPAS. If not, see <https://www.gnu.org/licenses/>.
+
+        This banner notice must not be removed.
+
+        ---------------------------------------------------------------------
+
+    src.ui.wxapp.windows.__init__.py
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+"""
+
+from .splitter import sppasSplitterWindow
+from .splitter import sppasMultiSplitterPanel
+
+from .listctrl import CheckListCtrl
+from .listctrl import SortListCtrl
+from .listctrl import LineListCtrl
+from .listctrl import sppasListCtrl
+
+from .image import sppasStaticBitmap
+
+from .text import sppasStaticText
+from .text import sppasSimpleText
+from .text import sppasMessageText
+from .text import sppasTitleText
+from .text import sppasTextCtrl
+from .text import NotEmptyTextValidator
+
+from .basedcwindow import sppasDCWindow
+from .basedcwindow import sppasImageDCWindow
+
+# basewindow requires sppasImageDCWindow
+from .basewindow import WindowState
+from .basewindow import sppasWindow
+
+# line/slider requires sppasDCWindow
+from .line import sppasStaticLine
+from .slider import sppasSlider
+
+# frame requires sppasStaticLine
+from .frame import sppasTopFrame
+from .frame import sppasFrame
+
+# buttons package requires sppasWindow/WindowState
+from .buttons import BaseButton
+from .buttons import TextButton
+from .buttons import BitmapButton
+from .buttons import BitmapTextButton
+from .buttons import ToggleButton
+from .buttons import ToggleTextButton
+from .buttons import CheckButton
+from .buttons import RadioButton
+
+# panels package requires buttons
+from .panels import sppasPanel
+from .panels import sppasTransparentPanel
+from .panels import sppasImagePanel
+from .panels import sppasImageRatioPanel
+from .panels import sppasScrolledPanel
+from .panels import sppasCollapsiblePanel
+
+# dialogs package requires panels and buttons
+from .dialogs import sppasDialog
+from .dialogs import sppasChoiceDialog
+from .dialogs import sppasFileDialog
+from .dialogs import sppasTextEntryDialog
+from .dialogs import Information
+from .dialogs import Confirm
+from .dialogs import Warn
+from .dialogs import Error
+from .dialogs import YesNoQuestion
+from .dialogs import sppasProgressDialog
+
+# buttonbox package requires panels and buttons
+from .buttonbox import sppasRadioBoxPanel
+from .buttonbox import sppasCheckBoxPanel
+from .buttonbox import sppasToggleBoxPanel
+
+# we can popup several of the previous windows
+from .popup import PopupLabel
+from .popup import PopupToggleBox
+
+# toolbar requires panels, buttons and text
+from .toolbar import sppasToolbar
+
+# combobox requires panels, buttons and buttonbox
+from .combobox import sppasComboBox
+
+__all__ = (
+    "sppasDCWindow",
+    "sppasImageDCWindow",
+    "sppasWindow",
+    "sppasSlider",
+    "sppasDialog",
+    "sppasChoiceDialog",
+    "sppasFileDialog",
+    "sppasTextEntryDialog",
+    "Information",
+    "Confirm",
+    "Warn",
+    "Error",
+    "YesNoQuestion",
+    "sppasStaticLine",
+    "WindowState",
+    "BaseButton",
+    'TextButton',
+    'BitmapTextButton',
+    "BitmapButton",
+    "sppasRadioBoxPanel",
+    "sppasCheckBoxPanel",
+    "sppasToggleBoxPanel",
+    "CheckButton",
+    "RadioButton",
+    "ToggleButton",
+    "PopupLabel",
+    "PopupToggleBox",
+    "sppasSplitterWindow",
+    "sppasMultiSplitterPanel",
+    "sppasStaticText",
+    "sppasTitleText",
+    "sppasMessageText",
+    "sppasSimpleText",
+    "sppasTextCtrl",
+    "NotEmptyTextValidator",
+    "sppasStaticBitmap",
+    "sppasProgressDialog",
+    "sppasPanel",
+    "sppasTransparentPanel",
+    "sppasImagePanel",
+    "sppasImageRatioPanel",
+    "sppasScrolledPanel",
+    "sppasCollapsiblePanel",
+    "sppasDialog",
+    "sppasTopFrame",
+    "sppasFrame",
+    "sppasToolbar",
+    "sppasComboBox",
+    "sppasListCtrl",
+    "LineListCtrl",
+    "CheckListCtrl",
+    "SortListCtrl"
+)

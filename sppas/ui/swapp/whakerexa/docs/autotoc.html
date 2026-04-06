@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Auto ToC in Book</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --nav-min-height: 4rem;
+            --header-height: 26rem;
+        }
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-fg-color: rgba(240, 230, 240);
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+    </style>
+
+    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+  (function () {
+    const usingFile = (window.location.protocol === 'file:');
+    const s = document.createElement('script');
+
+    if (usingFile) {
+      s.src = '../wexa_statics/js/wexa.bundle.js';
+    } else {
+      s.type = 'module';
+      s.src = '../wexa_statics/js/wexa.js';
+    }
+
+    s.onload = function () {
+      if (!window.Wexa || !window.Wexa.onload) {
+        console.warn('[autotoc] Whakerexa is not available.');
+        return;
+      }
+
+      window.Wexa.onload.addLoadFunction(function () {
+        const book = new window.Wexa.Book("main-content");
+
+        // method to add or remove html tags that the book detect
+        // By default html tags take in account by the book are : h1, h2, h3, h4
+        book.add_html_tags("h5", "h6");      // take infinite parameters, put all your tags
+        book.delete_html_tags("h5", "h6");   // take infinite parameters, put all your tags
+
+        book.fill_table();
+
+        // optional argument: fill the table with only numerated headings by the "ssection" or not
+        // the parameter value is true by default
+        // book.fill_table(true);
+        // book.fill_table(false);
+      });
+    };
+
+    document.head.appendChild(s);
+  })();
+</script>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+        <nav>
+            <ul>
+                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+            </ul>
+            <button id="btn-contrast" class="accessibility" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()" aria-label="Switch contrast scheme"></button>
+            <button id="btn-theme" class="accessibility" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()" aria-label="Switch color scheme"></button>
+        </nav>
+        <h1>Automatic Table of Content in Book</h1>
+        <h2>by Whakerexa</h2>
+    </header>
+
+    <nav id="nav-content" class="side-nav">
+        <h1>Automatic ToC</h1>
+        <p><a class="external-link" href="https://whakerexa.sourceforge.io">Whakerexa</a></p>
+        <h2>Table of Content</h2>
+        <ul id="toc"></ul>
+    </nav>
+
+    <main id="main-content">
+
+    <section id="description" class="chapter">
+        <h1> Description </h1>
+
+        <section class="ssection"><h2>Overview</h2>
+            <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
+                accessible web content, and to minimize the use of CSS classes for enhancing the
+                readability of HTML code, like it should always be! <b>wexa.css</b> is the main
+                CSS framework of <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.</p>
+            <p><b>book.css</b> is a CSS framework designed to make HTML content resemble a book.
+                It includes features for implementing chapters, sections, and subsections, along
+                with an auto-numbering function.</p>
+            <p>This page includes an extended feature of book.css: the automatically generated
+                <b>Table of Content</b>.</p>
+        </section>
+        <section class="ssection"><h2>Let's do it</h2>
+            <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
+            <pre>&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
+    media="all" /&gt;
+&lt;link
+    rel="stylesheet"
+    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/book.css?format=raw"
+    media="all" /&gt;
+&lt;style&gt;
+    :root { --toc-width: 18rem; }
+&lt;/style&gt;
+&lt;script src="../wexa_statics/js/wexa.js" type="module">&lt;/script&gt;
+&lt;script type="module"&gt;
+        Wexa.onload.addLoadFunction(() => {
+            let book = new Wexa.Book("main-content");
+            book.fill_table();
+        });
+&lt;/script&gt;
+            </pre>
+            <p>And the following is added somewhere in the HTML document:</p>
+            <pre>&lt;nav&gt;&lt;ul id="toc"&gt;&lt;/ul&gt;&lt;/nav&gt;</pre>
+        </section>
+    </section>
+
+    <section id="demo" class="chapter">
+        <h1>Chapter two title</h1>
+
+        <!-- Should not be automatically added into the ToC -->
+        <section>
+            <h1>Non-numbered Heading 1, not in ToC</h1>
+            <h2>Non-numbered Heading 2, not in ToC</h2>
+            <h3>Non-numbered Heading 3, not in ToC</h3>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <section class="ssection"><h2>First numbered section of chapter two</h2>
+            <section class="subssection"><h3>First numbered subsection</h3>
+                <h4>Hello, I'm h4!</h4>
+                <h4>And me too</h4>
+            </section>
+            <section class="subssection"><h3>Second numbered subsection</h3>
+            </section>
+        </section>
+        <section class="ssection"><h2>Second numbered section of chapter two</h2>
+            <section class="subssection"><h3>First numbered subsection</h3>
+            </section>
+            <section class="subssection"><h3>Second numbered subsection</h3>
+            </section>
+        </section>
+
+    </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+</body>
+</html>

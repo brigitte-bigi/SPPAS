@@ -1,0 +1,475 @@
+/*
+:filename: statics/css/slides.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Style to be used with the slides module.
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://whakerexa.sf.net/
+
+Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+/* =======================================================================
+                           WEXA VARIABLE OVERRIDES
+   ======================================================================== */
+
+:root:not(.contrast),
+:root .contrast {
+    --font-size: 32px;
+    --line-height: 1.4;
+}
+
+:root:not(.contrast) .slide-overview {
+    --font-size: 16px;
+    --line-height: 1.2;
+}
+
+:root.contrast .slide-overview {
+    --font-size: 18px;
+    --line-height: 1.4;
+}
+
+
+/* =======================================================================
+                          NEW VARIABLE DEFINITIONS
+   ======================================================================== */
+
+:root {
+    --footer-text: "";
+    --footer-margin-left: calc((var(--screen-width) / 2) - 1rem);
+    --custom-color1: rgb(41, 35, 92);
+    --custom-color2: rgb(29, 113, 184);
+}
+
+
+/* =======================================================================
+                             RULES FOR ALL VIEWS
+   ======================================================================== */
+
+body > header,
+body > footer {
+    display: none;
+}
+
+/* Add page number at footer */
+.slide:before {
+    z-index: 1;
+    counter-increment: slides;
+    font-family: var(--font-family-pre), cursive;
+    font-size: 40%;
+    color: var(--custom-color1);
+    content: var(--footer-text) counter(slides);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    line-height: 1rem;
+}
+
+/* No footer on the first slide, it's the presentation title */
+.slide[aria-selected="true"]:first-of-type:before {
+    content: "";
+}
+
+/* Main title of a section: only the title at the center of the slide */
+
+.slide h1,
+.slide > h2,
+.slide > h3,
+.slide > h4,
+.slide > h5,
+.slide > h6 {
+    font-family: var(--font-family-sans), sans-serif;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 0;
+    padding-left: 0.5rem;
+}
+
+.slide h1 {
+    font-weight: bold;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 125%;
+    text-align: left;
+    letter-spacing: 2px;
+    margin-top: calc((var(--height) * 0.35));
+    border-bottom: 0.35rem solid transparent;
+    border-image: linear-gradient(0.25turn, var(--custom-color2), rgb(210, 210, 210), var(--custom-color1));
+    border-image-slice: 1;
+    width: 100%;
+}
+
+.slide h1.title {
+    line-height: calc(var(--font-size) * 1.5);
+    margin: auto;
+    text-align: center;
+    border-bottom: none;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--custom-color1);
+    background: var(--custom-color2);
+}
+
+.slide h1.sub-title {
+    line-height: calc(var(--font-size) * 1.5);
+    margin: auto;
+    text-align: center;
+    border-bottom: none;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: var(--custom-color2);
+    background: var(--custom-color2);
+}
+
+
+/* Title at the top of each slide */
+.slide > h2 {
+    margin-top: 0;
+    background: linear-gradient(0deg, var(--bg-color-alt) 0%, var(--custom-color2) 100%);;
+    font-weight: var(--font-weight-bold);
+    font-style: normal;
+    font-variant: normal;
+    font-size: calc(var(--font-size) * 1.2);
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+/* Sub-Title at the top of the slide */
+.slide > h3 {
+    font-weight: var(--font-weight-semibold);
+    font-style: normal;
+    font-variant: normal;
+    font-size: calc(var(--font-size) * 1.1);
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.slide table,
+.slide details {
+    margin: auto;
+}
+
+.slide table *,
+.sortatable,
+.slide details {
+    font-size: calc(var(--font-size) * 0.8);
+}
+
+.slide ul,
+.slide ol,
+.slide p,
+.slide blockquote,
+.slide article,
+.slide details,
+.slide table,
+.slide .cards-panel {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    margin-left: 2rem;
+}
+
+li, li p { font-size: 100%; }
+
+li li, li li p { font-size: 90%; }
+
+li li li, li li li p { font-size: 85%; }
+
+q { quotes: "“" "”" "‘" "’"; }
+
+/* Ensure that links containing media do not expand to the full line width.
+Because <a> is inline and inherits text-align:center from its parent,
+it normally stretches across the entire line box, causing the hover and
+focus outlines to trigger outside the actual image area. Switching <a>
+to inline-block makes it shrink to its content size, so the outline
+matches the media element exactly. */
+.slide a {
+    display: inline-block;
+}
+
+.slide details > *:not(summary) {
+    max-height: 60vh;
+    overflow: auto;
+    display: block;
+}
+
+/* Figures are displayed full-page, with the caption on bottom of the image. */
+/* Full-page figure only when it is a direct child of .slide */
+.slide > figure {
+    display: block;
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* For nested figures: use normal document flow */
+.slide figure {
+    text-align: initial;   /* reset alignment */
+    max-width: initial;
+    max-height: initial;
+}
+
+.slide figcaption {
+    position:       relative;
+    font-size:      60%;
+    padding-bottom: 10px;
+    color: var(--custom-color1);
+    background-color: transparent;
+}
+
+.slide > img,
+.slide > video,
+.slide > audio {
+    background-color: transparent;
+    border-width:     0;
+    border-style:     none;
+    margin:           0 auto;
+    max-width:        90%;
+    max-height:       90%;
+    position:         relative;
+}
+
+.slide [role="note"] {
+    display: none;
+}
+
+/* =======================================================================
+                          THE PRESENTATION VIEW
+
+    The presentation-view class is automatically added by the JS class 
+    SlidesView, to the <body> element whenever the presentation mode is
+    requested. It's the default mode. 
+
+   ======================================================================== */
+
+body.presentation-view {
+    --screen-width: calc(1024px / var(--size-divisor));
+    --height: calc(var(--screen-width) * 9 / 16);
+
+    box-sizing: border-box;
+    height: var(--height);
+    margin-top: calc(var(--height)/-2);
+    position: absolute;
+    top: 50%;
+
+    /* To look like a "screen" and clearly see the un-used part when the ratio is not 16:9 */
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 var(--border-width) var(--border-width) var(--border-color);
+    counter-reset: slides;
+
+    /* to center horizontally */
+    left: 50%;
+    right: auto;
+    margin-left: calc(var(--screen-width)/-2);
+    margin-right: auto;
+}
+
+/* ========================= Presentation Slides ======================= */
+
+.presentation-view .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.presentation-view .slide[aria-selected] {
+    pointer-events: auto;
+}
+
+/* Transition effect when changing slide */
+.presentation-view .slide {
+    -moz-transition:    left 250ms linear 0s;
+    -webkit-transition: left 250ms linear 0s;
+    -ms-transition:     left 250ms linear 0s;
+    transition:         left 250ms linear 0s;
+}
+
+
+/* =======================================================================
+                          THE OVERVIEW VIEW
+
+    The overview-view class is automatically added by the JS class
+    SlidesView, to the <body> element whenever the presentation mode is
+    requested.
+
+   ======================================================================== */
+
+body.overview-view {
+    --font-size: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+.overview-view .slide {
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--border-color);
+    width: calc(var(--screen-width) * 0.45)  !important;
+    height: calc(var(--screen-width) * 9 / 16)  !important;
+    margin: 0;
+    padding: 0;
+    background-color: red;
+}
+
+
+/* =======================================================================
+
+                            CONTAINERS
+                     Optionally added on each slide
+
+   ======================================================================== */
+
+
+/* ============================== Progress Bar ============================ */
+
+/* Container of the slide progress bar */
+#progress-container {
+    position: absolute;          /* or 'fixed' if it must remain visible */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--progress-height);
+    background-color: var(--progress-bg-color);
+}
+
+/* Inner bar (current progress value) */
+#progress-bar {
+    height: 100%;
+    width: 0;      /* updated by JS (percentage) */
+    background-color: var(--progress-fg-color);
+}
+
+/* WebKit */
+#progress-bar::-webkit-progress-bar {
+    background: var(--progress-bg-color);
+    border-radius: var(--border-radius);
+}
+
+#progress-bar::-webkit-progress-value {
+    background: var(--progress-fg-color);
+    border-radius: var(--border-radius);
+}
+
+/* Firefox */
+#progress-bar::-moz-progress-bar {
+    background: var(--progress-fg-color);
+    border-radius: var(--border-radius);
+}
+
+/* =============================== Logo Image ============================= */
+
+#logo-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+}
+#logo-container .img-logo {
+    width: calc(var(--font-size) * 2);
+    height: auto;
+}
+
+#logo-container.top    { top: 0; bottom: auto}
+#logo-container.bottom { bottom: 0; top: auto}
+#logo-container.left   { left: var(--typography-spacing-horizontal); right: auto}
+#logo-container.right  { right: var(--typography-spacing-horizontal); left: auto}
+
+
+/* =======================================================================
+                       HTML ELEMENTS STYLING
+  ======================================================================== */
+
+/* Before */
+.slide {
+    left: -150%;
+}
+
+/* Now */
+.slide[aria-selected] { left: 0; }
+
+/* After */
+.slide[aria-selected] ~ .slide { left: +150%; }
+
+
+/* Incremental elements */
+/* -------------------- */
+
+.incremental {
+    opacity: 0.15;
+}
+
+.incremental[active] {
+    opacity: 1;
+}
+
+.incremental > * {
+    opacity: 1;
+}
+
+/* The current item */
+.incremental > *[aria-selected] {
+    color: var(--fg-color);
+    opacity: 1;
+}
+
+/* The items to-be-selected */
+.incremental > *[aria-selected] ~ * {
+    opacity: 0.2;
+}
+
+/* An invisible incremental */
+.incremental-invisible {
+    opacity: 0.05;
+}
+.incremental-invisible > *[aria-selected] ~ * {
+    opacity: 0.05;
+}
+
+
+/* ========== CONTROLS FOR SLIDES ========== */
+
+#slides-controls {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2000;
+}
+
+#slides-controls-view {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#slides-controls.controls-hidden,
+#slides-controls-view.controls-hidden {
+    display: none;
+}
+
+

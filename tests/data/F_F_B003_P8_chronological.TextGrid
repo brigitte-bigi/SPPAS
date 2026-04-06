@@ -1,0 +1,93 @@
+"Praat chronological TextGrid text file"
+0 21.3471   ! Time domain.
+2   ! Number of tiers.
+"IntervalTier" "transcription" 0 21.3471
+"IntervalTier" "IPUs" 0 21.3471
+
+! transcription:
+1 0 2.4971007546
+"sil"
+
+! IPUs:
+2 0 2.4971007546
+"sil"
+
+! transcription:
+1 2.4971007546 5.6838880379
+"ipu_1 hier soir j'ai ouvert la porte d'entrée pour laisser chort- sortir le chat"
+
+! IPUs:
+2 2.4971007546 5.6838880379
+"ipu_1"
+
+! transcription:
+1 5.6838880379 5.7436026532
+"#"
+
+! IPUs:
+2 5.6838880379 5.7436026532
+"#"
+
+! transcription:
+1 5.7436026532 8.4605955438
+"ipu_2 la nuit était si belle que je suis descendu dans la rue prendre le frais"
+
+! IPUs:
+2 5.7436026532 8.4605955438
+"ipu_2"
+
+! transcription:
+1 8.4605955438 9.1450000312
+""
+
+! IPUs:
+2 8.4605955438 9.1450000312
+""
+
+! transcription:
+1 9.1450000312 11.9485310906
+"ipu_3 j'avais à peine fait quelque pas que j'ai entendu la porte claquer derrière moi"
+
+! IPUs:
+2 9.1450000312 11.9485310906
+"ipu_3"
+
+! transcription:
+1 11.9485310906 12.494
+"#"
+
+! IPUs:
+2 11.9485310906 12.494
+"#"
+
+! transcription:
+1 12.494 15.036
+"ipu_4 j'ai réalisé tout d'un coup + que j'étais enfermé dehors !"
+
+! IPUs:
+2 12.494 15.036
+"ipu_4 "
+
+! transcription:
+1 15.036 16.602
+"#"
+
+! IPUs:
+2 15.036 16.602
+"#"
+
+! transcription:
+1 16.602 20.01
+"gpd_5 le comble c'est que je me suis fait arrêter alors que j'essayais de forcer ma propre porte"
+
+! IPUs:
+2 16.602 20.01
+"gpd_5"
+
+! transcription:
+1 20.01 21.3471
+"#"
+
+! IPUs:
+2 20.01 21.3471
+"#"

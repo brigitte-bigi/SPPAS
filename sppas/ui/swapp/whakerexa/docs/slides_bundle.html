@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+	<title>Wexa Slides</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="logo icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon">
+	<link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" />
+	<link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" />
+	<link rel="stylesheet" href="../wexa_statics/css/dialog.css" type="text/css" />
+	<link rel="stylesheet" href="../wexa_statics/css/sortatable.css" type="text/css" />
+	<link rel="stylesheet" href="../wexa_statics/css/slides.css">
+
+    <style>
+        :root {
+            --footer-text: "Brigitte Bigi - Whakerexa Slides - page ";
+        }
+
+        /* **** Overrides wexa.css variables for a custom look **** */
+        :root:not([data-theme=dark]), [data-theme=light], .light {
+            --progress-bg-color: var(--custom-color1);
+            --progress-fg-color: var(--custom-color2);
+            --progress-height: 0.2rem;
+            --blockquote-border-color: var(--custom-color1);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================================================================ -->
+    <!-- Pop-ups -->
+    <!-- ================================================================ -->
+
+    <dialog id="popup-extract" class="popup-video">
+        <video id="popup-video-extract" controls preload="metadata">
+            <source src="./video/demo_video.webm" type="video/webm"/>
+        </video>
+    </dialog>
+
+    <!-- ================================================================ -->
+    <!-- Title -->
+    <!-- ================================================================ -->
+
+	<section class="slide" style="text-align: center; margin: auto;">
+		<h1 class="title">
+            Whakerexa in action: <br><br>
+            Make easily slides with the ES6 Slides package
+		</h1>
+
+        <h2 class="title" style="text-align: center;">
+            Brigitte Bigi
+        </h2>
+
+        <a href="https://whakerexa.sourceforge.io" target="_blank">
+            <img style="height: 30vh;" src="../wexa_statics/logos/whakerexa.webp" alt="https://whakerexa.sourceforge.io"/>
+        </a>
+
+    </section>
+
+	<!-- ================================================================ -->
+	<!-- Basics -->
+	<!-- ================================================================ -->
+
+    <section class="slide">
+        <h1>Introduction to Slides</h1>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Accessibility</h2>
+
+        <p>
+            The Whakerexa Slides package is designed so that accessibility is not an
+            add-on, but a built-in principle. Every component, interaction and visual
+            element aims to be usable by as many people as possible.
+        </p>
+
+        <blockquote>
+            The Web is fundamentally designed to work for all people, whatever their
+            hardware, software, language, location, or ability. When the Web meets
+            this goal, it is accessible to people with a diverse range of hearing,
+            movement, sight, and cognitive ability.
+            <cite>
+                World Wide Web Consortium (W3C), Web Accessibility Initiative (WAI) —
+                “Introduction to Web Accessibility”.
+            </cite>
+        </blockquote>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Lists in action</h2>
+        <h3>A simple list</h3>
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3
+                <ol>
+                    <li> Item 3.1
+                    <li> Item 3.2
+                </ol>
+            </li>
+        </ul>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h3>Incremental lists</h3>
+        <ul class="incremental">
+            <li>Item incremental 1</li>
+            <li>Item incremental 2</li>
+            <li>Item 3
+                <ul>
+                    <li> Item 3.1</li>
+                    <li> Item 3.2</li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="incremental incremental-invisible">
+            <li>Item incremental invisible 1</li>
+            <li>Item incremental invisible 2</li>
+        </ul>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2 class="title">Main figure example</h2>
+
+        <!-- Direct child of .slide → centered, large -->
+        <figure style="width: 40%;">
+            <img src="../wexa_statics/logos/whakerexa.webp" alt="Full-page example" />
+            <figcaption>Full-page figure with centered caption</figcaption>
+        </figure>
+    </section>
+
+    <section class="slide">
+
+        <h3 class="title">Nested figure example</h3>
+
+        <p>
+            This slide contains a nested figure inside a paragraph.
+            It must follow normal document flow (not the full-page layout).
+        </p>
+
+        <ul>
+            <li>
+                Text before the figure.
+                <figure style="width: 10%;">
+                    <img src="../wexa_statics/logos/whakerexa.webp" alt="Nested figure" />
+                    <figcaption>Nested figure with normal flow</figcaption>
+                </figure>
+                Text after the figure.
+            </li>
+        </ul>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <blockquote>
+            These slides are powered by the Whakerexa ES6 Slides module.
+        </blockquote>
+        <details>
+            <summary>And you can see details here:</summary>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Nulla ac dui eu est feugiat lacinia sit amet nec leo.
+                Mauris eu ipsum leo. Nulla mi odio, cursus sed sollicitudin non,
+                fringilla id magna. Suspendisse sit amet posuere elit. Maecenas
+                iaculis, turpis a placerat imperdiet, libero lorem feugiat nisi,
+                nec tincidunt diam nibh sit amet massa. Vestibulum quis adipiscing
+                tellus. Maecenas sollicitudin sodales pulvinar. Donec dui ipsum,
+                bibendum facilisis consequat interdum, tempus ut mauris. Aliquam
+                ut dolor nec odio scelerisque bibendum quis in neque. Aliquam dui
+                dui, pulvinar quis fermentum quis, gravida eu augue. Nunc tristique
+                dolor a urna pulvinar bibendum. Curabitur mollis cursus neque, in
+                scelerisque metus porta non. Donec tempor enim in nibh vestibulum
+                et convallis nisi malesuada. Duis ut lectus sed metus venenatis porttitor id pharetra quam. Suspendisse sapien turpis, ornare in molestie et, gravida eget turpis.
+            </p>
+        </details>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Focus</h2>
+
+        <section>
+            <label for="f-input">Basic input:</label>
+            <input id="f-input" type="text" placeholder="Type here">
+
+            <label for="f-btn">Button (Enter activates it):</label>
+            <button id="f-btn" type="button">Press Enter</button>
+            <p id="enter-test-result"></p>
+
+            <label for="f-link">Link:</label>
+            <a id="f-link" href="#">Test link</a>
+
+            <label for="f-select">Select menu:</label>
+            <select id="f-select">
+                <option>Option A</option>
+                <option>Option B</option>
+                <option>Option C</option>
+            </select>
+        </section>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Media</h2>
+
+        <p>A documentation here...</p>
+
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h3>Image Example</h3>
+        <figure>
+            <img class="width_50" src="./images/demo_video.png" alt="demo image"/>
+            <figcaption>An image embedded into a figure</figcaption>
+        </figure>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h3>Video Example</h3>
+        <figure class="img-video-visualization" style="width: 320px; height: auto;">
+            <img src="./images/demo_video.png" alt="Video preview"/>
+            <button name="play-btn" onclick="Wexa.dialog.playVideo('extract')">&#9658;</button>
+            <figcaption>A video with a preview image, with a fixed width</figcaption>
+        </figure>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Table with sortable columns</h2>
+        <table id="terminator-dates-table" role="table">
+            <thead>
+            <tr>
+                <th role="gridcell" data-col="1">
+                    <button class="sortatable" data-sort="name">Name</button>
+                </th>
+                <th role="gridcell" data-col="2">
+                    <button class="sortatable" data-sort="event">Event</button>
+                </th>
+                <th role="gridcell" data-col="3">
+                    <button class="sortatable" data-sort="date">Date</button>
+                </th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Sarah</td>
+                <td>Connor</td>
+                <td>1984-05-12</td>
+                <td>Terminator's target</td>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>Connor</td>
+                <td>2029-07-11</td>
+                <td>Leader of the human resistance</td>
+            </tr>
+            <tr>
+                <td>Kyle</td>
+                <td>Reese</td>
+                <td>1984-05-12</td>
+                <td>Sent back to protect Sarah Connor</td>
+            </tr>
+            <tr>
+                <td>Skynet</td>
+                <td>Activation</td>
+                <td>1997-08-29</td>
+                <td>Skynet becomes self-aware</td>
+            </tr>
+            <tr>
+                <td>Judgment Day</td>
+                <td>Event</td>
+                <td>1997-08-29</td>
+                <td>Skynet launches a nuclear attack</td>
+            </tr>
+            <tr>
+                <td>T-800</td>
+                <td>Arrival</td>
+                <td>1984-05-12</td>
+                <td>Sent to kill Sarah Connor</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- for tests in slides -->
+    <!-- ================================================================ -->
+
+    <script>
+        document.getElementById('f-btn')
+            .addEventListener('click', () => {
+                document.getElementById('enter-test-result').textContent = 'ENTER OK';
+            });
+    </script>
+
+    <!-- ================================================================ -->
+    <!-- Features -->
+    <!-- ================================================================ -->
+
+    <section class="slide">
+        <h1>Features overview</h1>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Keyboard shortcuts</h2>
+
+        <ul>
+            <li>Toggle fullscreen with <kbd>&nbsp;f&nbsp;</kbd></li>
+
+        </ul>
+
+        <button onclick="app.fullscreen.toggle()">Toggle fullscreen</button>
+        <p>Check that fullscreen mode works correctly.</p>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Overflow tests</h2>
+        <h3>Overflow test 1</h3>
+        <p>Very large and tall image:</p>
+        <img src="./images/demo_video.png" style="width:200%;" alt="too big image"/>
+    </section>
+
+    <section class="slide">
+        <h3>Overflow test 2</h3>
+        <p>Very tall block:</p>
+            <div style="height:150vh; background:indianred;">Tall block text content</div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Hash navigation</h2>
+        <ul class="incremental">
+            <li>Go to <code>#3.1</code> in the URL bar.</li>
+            <li>The slide and incremental must sync correctly.</li>
+        </ul>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Robustness tests</h2>
+
+        <h3>Empty incremental</h3>
+        <div class="incremental"></div>
+        <p>This block should not crash the slide engine.</p>
+
+        <h3>Incremental with missing items</h3>
+        <div class="incremental"><!-- intentionally empty --></div>
+        <p>The slide should remain stable even without list items.</p>
+
+        <h3>Slide with minimal content</h3>
+        <p>This slide contains almost nothing. It must still display correctly.</p>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>Overview mode</h2>
+        <p>Press keyboard character: <kbd>&nbsp;o&nbsp;</kbd> to toggle overview mode.</p>
+        <p>Press keyboard character <kbd>&nbsp;o&nbsp;</kbd> again to switch back to the
+            slides view.</p>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- Legal notices -->
+    <!-- ================================================================ -->
+
+    <section class="slide">
+        <h1>Legal notices</h1>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>About</h2>
+        <ul>
+            <li>Document author: Brigitte Bigi</li>
+            <li>Last modification: 2025-11-19</li>
+            <li><a href="https://whakerexa.sourceforge.io" class="external-link">https://whakerexa.sourceforge.io</a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h2>License</h2>
+        <table role="presentation">
+            <tr>
+                <td style="width: 15%; text-align: center;">
+                    <img class="width_90" src="./images/cc-by-nc-nd.png"
+                         alt="CC-by-NC-ND">
+                </td>
+                <td style="font-size: 80%;">
+                    <p>This document is a creative work, the exclusive property of CNRS,
+                        protected by French and international intellectual property law,
+                        and licensed under CC BY-NC-ND
+                        (Attribution / Non-Commercial / No Derivatives).</p>
+                    <p>This license permits any distribution (sharing, copying, reproducing,
+                        distributing, communicating), <i>except for commercial purposes</i>,
+                        by any means and in any format, provided that the work is distributed
+                        <mark>without modification and in its entirety</mark>.</p>
+                    <p>You are free to copy, distribute, and transmit this document, provided that
+                        <mark>you credit the Whakerexa project</mark>.</p>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+
+    <!-- ---------------------------------------------------------------- -->
+    <!-- Do not modify....                                                -->
+    <!-- ---------------------------------------------------------------- -->
+
+    <!-- Add the license icon at the top-right of the page. -->
+    <div id="logo-container" class="top right">
+        <img src="./images/cc-by-nc-nd.png" alt="CC-by-NC-ND" class="img-logo"/>
+    </div>
+
+    <!-- Add the progress bar at the bottom of the slides. -->
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- Add an overview of the slides, visible with 'o' key. -->
+    <div id="overview-container">
+    </div>
+
+    <!-- Add controls of the slides, visible with 'n' key. -->
+    <!-- IMPORTANT: NO CSS IS ASSOCIATED TO THIS CONTAINER -->
+    <div id="slides-controls" class="controls-hidden">
+        <button id="btn-prev">Prev</button>
+        <button id="btn-next">Next</button>
+        <button id="btn-back">First</button>
+        <button id="btn-last">Last</button>
+        <button id="btn-goto">Go to</button>
+        <button id="btn-fullscreen">Fullscreen</button>
+        <div id="slides-controls-view">
+            <button id="btn-overview">Overview</button>
+            <button id="btn-presentation">Slides View</button>
+        </div>
+    </div>
+
+    <script type="module">
+        const usingFile = (window.location.protocol === 'file:');
+
+        if (usingFile === true) {
+
+            const script = document.createElement('script');
+            script.src = '../wexa_statics/js/wexa.bundle.js';
+            script.onload = () => {
+
+                const slides = Array.from(document.querySelectorAll('section.slide'));
+
+                const app = new window.Wexa.SlidesApp({
+                    slides: slides,
+                    progressBar: document.getElementById('progress-bar'),
+                    controls: document.getElementById('slides-controls'),
+                    controlsView: document.getElementById('slides-controls-view'),
+                    overviewContainer: document.getElementById('overview-container'),
+                    mode: 'presentation'
+                });
+                app.init();
+                window.app = app;
+
+                window.Wexa.dialog = new window.Wexa.DialogManager();
+                window.Wexa.links  = new window.Wexa.LinkController();
+
+                const sorter = new window.Wexa.SortaTable('terminator-dates-table');
+                sorter.attachSortListeners();
+            };
+
+            document.head.appendChild(script);
+        }
+
+        else {
+
+            const { SortaTable } = await import('../wexa_statics/js/wexa.js');
+            const Slides = (await import('../wexa_statics/js/extras/slides/slides.js')).default;
+
+            const app = new Slides({
+                slides: document.querySelectorAll('section.slide'),
+                progressBar: document.getElementById('progress-bar'),
+                controls: document.getElementById('slides-controls'),
+                controlsView: document.getElementById('slides-controls-view'),
+                overviewContainer: document.getElementById('overview-container')
+            });
+            app.init();
+            window.app = app;
+
+            const sorter = new SortaTable('terminator-dates-table');
+            sorter.attachSortListeners();
+        }
+    </script>
+
+    <!--
+        <script src="../wexa_statics/js/wexa.bundle.js"></script>
+        <script>
+            window.addEventListener('load', () => {
+
+                const slidesNodeList = document.querySelectorAll('.slide');
+                const slides = Array.from(slidesNodeList);
+
+                const app = new Wexa.SlidesApp({
+                    slides: slides,
+                    progressBar: document.getElementById('progress-bar'),
+                    controls: document.getElementById('slides-controls'),
+                    controlsView: document.getElementById('slides-controls-view'),
+                    overviewContainer: document.getElementById('overview-container'),
+                    mode: 'presentation'
+                });
+
+                app.init();
+
+            });
+            window.Wexa.dialog = new Wexa.DialogManager();
+            window.Wexa.links  = new Wexa.LinkController();
+
+            const tableSorter = new Wexa.SortaTable('terminator-dates-table');
+            tableSorter.attachSortListeners();
+        </script>
+        -->
+
+</body>
+</html>

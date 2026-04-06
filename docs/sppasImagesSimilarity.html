@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasImagesSimilarity. Estimate similarity between images to identify objects." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.anndata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasImageCompare.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasCoordsCompare.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.videodata.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.imgdata">    <h1>Module sppas.src.imgdata</h1>
+<section id="#sppasImagesSimilarity">
+<h2>Class sppasImagesSimilarity</h2>
+
+<section>
+<h3 id="#description_sppasImagesSimilarity">Description</h3>
+    <article class="docstring">
+<p><em>Estimate similarity between images to identify objects.</em></p>
+
+<p>This class store several sets of images and estimates similarity
+measures to identify which, among the known sets, is represented
+in a new image.</p>
+
+<p>Various solutions are implemented to estimate similarity:
+- the faster is to compare coordinates;
+- the slower is to compare image contents (colors, size, ...)
+- the most generic is to use the OpenCV recognition system.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasImagesSimilarity">Constructor</h3>
+    <article class="docstring">
+<p><em>Create an instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__score_level</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__fr</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__recognizer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__id_idx</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasImagesSimilarity">Public functions</h3>
+<h4>get_known_identifiers</h4>
+
+    <article class="docstring">
+<p><em>Return the list of known identifiers.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_known_identifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the list of known identifiers.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>create_identifier</h4>
+
+    <article class="docstring">
+<p><em>Create a new identifier and add it in the list of known ones.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) new identifier name</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>nb_img</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_img</span><span class="o">=</span><span class="n">ImagesFIFO</span><span class="o">.</span><span class="n">DEFAULT_QUEUE_SIZE</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new identifier and add it in the list of known ones.</span>
+
+<span class="sd">        :return: (str) new identifier name</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="s1">&#39;id</span><span class="si">{:03d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id_idx</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="n">ImagesFIFO</span><span class="p">(</span><span class="n">nb_img</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__id_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">pid</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>remove_identifier</h4>
+
+    <article class="docstring">
+<p><em>Remove an identifier of the list of known ones.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove an identifier of the list of known ones.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>add_image</h4>
+
+    <article class="docstring">
+<p><em>Add an image to the known ones of the given identifier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+<li><strong>image</strong>: (sppasImage)</li>
+<li><strong>reference</strong>: (<em>bool</em>) This is the reference image for this kid</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>KeyError, TypeError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add an image to the known ones of the given identifier.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :param image: (sppasImage)</span>
+<span class="sd">        :param reference: (bool) This is the reference image for this kid</span>
+<span class="sd">        :raise: KeyError, TypeError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_nb_images</h4>
+
+    <article class="docstring">
+<p><em>Return the number of known images of the given identifier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>int</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_nb_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of known images of the given identifier.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :return: (int)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">])</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_ref_image</h4>
+
+    <article class="docstring">
+<p><em>Return the reference image of the given identifier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasImage or None)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ref_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the reference image of the given identifier.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :return: (sppasImage or None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_image</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_cur_coords</h4>
+
+    <article class="docstring">
+<p><em>Return the current coordinates of an identifier or None if unknown.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>KeyError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasCoords or None)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_cur_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current coordinates of an identifier or None if unknown.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :raise: KeyError</span>
+
+<span class="sd">        :return: (sppasCoords or None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">get_cur_coords</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_cur_coords</h4>
+
+    <article class="docstring">
+<p><em>Set the current coordinates for an identifier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+<li><strong>coords</strong>: (sppasCoords)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>KeyError, TypeError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_cur_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the current coordinates for an identifier.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :param coords: (sppasCoords)</span>
+<span class="sd">        :raise: KeyError, TypeError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">set_cur_coords</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_ref_coords</h4>
+
+    <article class="docstring">
+<p><em>Return the reference coordinates of an identifier or None if unknown.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>KeyError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ref_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the reference coordinates of an identifier or None if unknown.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :raise: KeyError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_coords</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_ref_coords</h4>
+
+    <article class="docstring">
+<p><em>Set the reference coordinates of an identifier.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid</strong>: (<em>str</em>) An identifier</li>
+<li><strong>coords</strong>: (sppasCoords)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>KeyError, TypeError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_ref_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the reference coordinates of an identifier.</span>
+
+<span class="sd">        :param kid: (str) An identifier</span>
+<span class="sd">        :param coords: (sppasCoords)</span>
+<span class="sd">        :raise: KeyError, TypeError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">set_ref_coords</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>enable_face_recognition</h4>
+
+    <article class="docstring">
+<p><em>Enable or disable the automatic recognizer.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_face_recognition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable or disable the automatic recognizer.</span>
+
+<span class="sd">        :param value: (bool)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__fr</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_score_level</h4>
+
+    <article class="docstring">
+<p><em>Fix threshold score for the identification measure.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) Value in range [0., 1.]</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_score_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix threshold score for the identification measure.</span>
+
+<span class="sd">        :param value: (float) Value in range [0., 1.]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">IntervalRangeException</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__score_level</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>compare_kids_coords</h4>
+
+    <article class="docstring">
+<p><em>Return a similarity score between two known identifiers.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>float</em>) Return 0. if no similarity or if eval not done</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid1</strong></li>
+<li><strong>kid2</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_kids_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid1</span><span class="p">,</span> <span class="n">kid2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a similarity score between two known identifiers.</span>
+
+<span class="sd">        :return: (float) Return 0. if no similarity or if eval not done</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid1</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_coords</span><span class="p">()</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid2</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_coords</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">r2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cc</span> <span class="o">=</span> <span class="n">sppasCoordsCompare</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+        <span class="n">ccr</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">compare_coords</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ccr</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid1</span><span class="p">]</span><span class="o">.</span><span class="n">get_cur_coords</span><span class="p">()</span>
+    <span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid2</span><span class="p">]</span><span class="o">.</span><span class="n">get_cur_coords</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">l1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">l2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cc</span> <span class="o">=</span> <span class="n">sppasCoordsCompare</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span>
+        <span class="n">ccl</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">compare_coords</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ccl</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ccr</span> <span class="o">+</span> <span class="n">ccl</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>compare_kids_images</h4>
+
+    <article class="docstring">
+<p><em>Return a similarity score between two known identifiers.</em></p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>float</em>) Return 0. if no similarity or if eval not done</li>
+</ul>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>kid1</strong></li>
+<li><strong>kid2</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compare_kids_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kid1</span><span class="p">,</span> <span class="n">kid2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a similarity score between two known identifiers.</span>
+
+<span class="sd">        :return: (float) Return 0. if no similarity or if eval not done</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid1</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_image</span><span class="p">()</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid2</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_image</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">r2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ic</span> <span class="o">=</span> <span class="n">sppasImageCompare</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ic</span><span class="o">.</span><span class="n">score</span><span class="p">()</span>
+    <span class="k">return</span> <span class="mf">0.0</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>identify</h4>
+
+    <article class="docstring">
+<p><em>Among the known identifiers, who matches the given image/coords.</em></p>
+
+<p>Should return None if none of the known ids is recognized.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (sppasImage)</li>
+<li><strong>coords</strong>: (sppasCoords)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(kid, score) or (None, 0.)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">identify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Among the known identifiers, who matches the given image/coords.</span>
+
+<span class="sd">        Should return None if none of the known ids is recognized.</span>
+
+<span class="sd">        :param image: (sppasImage)</span>
+<span class="sd">        :param coords: (sppasCoords)</span>
+<span class="sd">        :return: (kid, score) or (None, 0.)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">kid</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__recognizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">kid</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_recognizer</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">kid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">kid</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_compare_images</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_compare_coords</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">kid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">kid</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">s</span>
+            <span class="k">elif</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">kid</span> <span class="o">==</span> <span class="n">p</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">=</span> <span class="n">score</span> <span class="o">/</span> <span class="mf">2.0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">kid</span> <span class="o">=</span> <span class="n">p</span>
+                    <span class="n">score</span> <span class="o">=</span> <span class="n">s</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>predict_compare_images</h4>
+
+    <article class="docstring">
+<p><em>Compare the given image to the existing ones.</em></p>
+
+<p>Evaluate similarity of image contents (very very low).</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (sppasImage) The image to compare with</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>tuple(kid, score) or (None, 0.)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict_compare_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare the given image to the existing ones.</span>
+
+<span class="sd">        Evaluate similarity of image contents (very very low).</span>
+
+<span class="sd">        :param image: (sppasImage) The image to compare with</span>
+<span class="sd">        :return: tuple(kid, score) or (None, 0.)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">sc</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">ref_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="n">ref_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">ref_name</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_image</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ref_img</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cmp</span> <span class="o">=</span> <span class="n">sppasImageCompare</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">ref_img</span><span class="p">)</span>
+            <span class="n">areas</span> <span class="o">=</span> <span class="n">cmp</span><span class="o">.</span><span class="n">compare_areas</span><span class="p">()</span>
+            <span class="n">sizes</span> <span class="o">=</span> <span class="n">cmp</span><span class="o">.</span><span class="n">compare_sizes</span><span class="p">()</span>
+            <span class="n">mse</span> <span class="o">=</span> <span class="n">cmp</span><span class="o">.</span><span class="n">compare_with_mse</span><span class="p">()</span>
+            <span class="n">kld</span> <span class="o">=</span> <span class="n">cmp</span><span class="o">.</span><span class="n">compare_with_kld</span><span class="p">()</span>
+            <span class="n">scx</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">mse</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">kld</span> <span class="o">+</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">areas</span> <span class="o">+</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">sizes</span>
+            <span class="k">if</span> <span class="n">sc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sc</span> <span class="o">=</span> <span class="p">(</span><span class="n">sc</span> <span class="o">+</span> <span class="n">scx</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sc</span> <span class="o">=</span> <span class="n">scx</span>
+        <span class="k">if</span> <span class="n">sc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sc</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">scores</span><span class="p">[</span><span class="n">ref_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">sc</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+    <span class="n">sorted_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sorted_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__score_level</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sorted_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>predict_compare_coords</h4>
+
+    <article class="docstring">
+<p><em>Compare the given coords to the existing ones.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>coords</strong>: (sppasCoords) The coords to compare with</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>tuple(kid, score) or (None, 0.)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict_compare_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare the given coords to the existing ones.</span>
+
+<span class="sd">        :param coords: (sppasCoords) The coords to compare with</span>
+<span class="sd">        :return: tuple(kid, score) or (None, 0.)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ref_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="n">ref_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">ref_name</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_coords</span><span class="p">()</span>
+        <span class="n">cur_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">ref_name</span><span class="p">]</span><span class="o">.</span><span class="n">get_cur_coords</span><span class="p">()</span>
+        <span class="n">sc1</span> <span class="o">=</span> <span class="n">sc2</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">ref_coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ccr</span> <span class="o">=</span> <span class="n">sppasCoordsCompare</span><span class="p">(</span><span class="n">ref_coords</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+            <span class="n">sc1</span> <span class="o">=</span> <span class="n">ccr</span><span class="o">.</span><span class="n">compare_coords</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">cur_coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ccr</span> <span class="o">=</span> <span class="n">sppasCoordsCompare</span><span class="p">(</span><span class="n">cur_coords</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+            <span class="n">sc2</span> <span class="o">=</span> <span class="n">ccr</span><span class="o">.</span><span class="n">compare_coords</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">sc1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sc2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sc1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sc</span> <span class="o">=</span> <span class="n">sc2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sc</span> <span class="o">=</span> <span class="n">sc1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sc</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">sc1</span> <span class="o">+</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="n">sc2</span>
+        <span class="k">if</span> <span class="n">sc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sc</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">scores</span><span class="p">[</span><span class="n">ref_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">sc</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+    <span class="n">sorted_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sorted_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__score_level</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sorted_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>train_recognizer</h4>
+
+    <article class="docstring">
+<p><em>Train the recognizer from the current set of images of known ids.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train_recognizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Train the recognizer from the current set of images of known ids.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">kid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]:</span>
+            <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gray</span><span class="p">)</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_image</span><span class="p">()</span>
+        <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">160</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gray</span><span class="p">)</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__recognizer</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">face</span><span class="o">.</span><span class="n">LBPHFaceRecognizer_create</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error with OpenCV. You probably need to uninstall opencv-python, and/or to re-install opencv-contrib-python: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__recognizer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>predict_recognizer</h4>
+
+    <article class="docstring">
+<p><em>Compare the given image to the existing ones.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image</strong>: (sppasImage)</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>tuple(kid, score) or (None, 0.)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict_recognizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare the given image to the existing ones.</span>
+
+<span class="sd">        :param image: (sppasImage)</span>
+<span class="sd">        :return: tuple(kid, score) or (None, 0.)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">()</span> <span class="ow">or</span> <span class="n">image</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="n">image</span><span class="o">.</span><span class="n">height</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Invalid image to predict a face with the recognizer.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__recognizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">resized</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">iresize</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">160</span><span class="p">)</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">resized</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+        <span class="n">kidx</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__recognizer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">kid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">kidx</span><span class="p">:</span>
+                <span class="n">confidence</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span>
+                <span class="k">if</span> <span class="n">confidence</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__score_level</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="n">confidence</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write</h4>
+
+    <article class="docstring">
+<p><em>Save the images of the known identities to the given folder.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>folder</strong>: Place to save images</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the images of the known identities to the given folder.</span>
+
+<span class="sd">        :param folder: Place to save images</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Folder </span><span class="si">{:s}</span><span class="s1"> is already existing. It is moved into the Trash of SPPAS.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">folder</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sppasTrash</span><span class="p">()</span><span class="o">.</span><span class="n">put_folder_into</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Access denied. The folder can&#39;t be deleted.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">kid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">image</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]):</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">_</span><span class="si">{:02d}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kid</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">kid</span><span class="p">]</span><span class="o">.</span><span class="n">get_ref_image</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">_ref.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kid</span><span class="p">)</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#overloads_sppasImagesSimilarity">Overloads</h3>
+<h4>__str__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__repr__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__format__</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__len__</h4>
+
+    <article class="docstring">
+<p><em>Return the number of kids.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the number of kids.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__iter__</h4>
+
+    <article class="docstring">
+<p><em>Browse the current kids.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Browse the current kids.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">kid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">kid</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__getitem__</h4>
+
+    <article class="docstring">
+<p><em>Return the ImagesFIFO() of a given kid.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>item</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the ImagesFIFO() of a given kid. &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasKeyError</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;dict(ImagesFIFO)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__contains__</h4>
+
+    <article class="docstring">
+<p><em>Return true if item in kids.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>item</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return true if item in kids. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__kids</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

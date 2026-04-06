@@ -1,0 +1,36 @@
+{
+  "id": "activity",
+  "name": "Activity",
+  "descr": "Create a tier with the speech activities and their duration. The current version is limited to annotate with a pre-defined list of activities (silence, pause, laughter, speech, ...).  Requires time-aligned tokens.",
+  "required": "alignment",
+  "api": "sppasActivity",
+  "devel": 85,
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "resources": [],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "-palign",
+      "text": "Input file pattern with time-aligned tokens."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-activity",
+      "text": "Output file pattern with activities."
+    },
+    {
+      "id": "duration",
+      "type": "bool",
+      "value": true,
+      "text": "Create a tier with the duration of each activity."
+    }
+
+  ]
+}

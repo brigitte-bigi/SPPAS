@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+
+        <head>
+            
+            <title>SPPAS doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasBufferVideoWriter. Write a video and/or a set of images into files." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              const s = document.createElement('script');
+            
+              if (usingFile) {
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+              } else {
+                s.type = 'module';
+                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              }
+            
+              s.onload = function () {
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+            
+              document.head.appendChild(s);
+            })();
+            </script>
+
+       </head>
+       
+       <body class="light">
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
+                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        
+    <h1>SPPAS 5.0</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <nav id="nav-book" class="side-nav">
+    <h1>SPPAS 5.0</h1>
+    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <ul>
+<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" href="sppasVideoReaderBuffer.html"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" href="sppasCoordsVideoBuffer.html"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &rdsh; Next Module</a></li>
+    </ul>
+    <h2>Table of Contents</h2>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
+</nav>
+    <main id="main-content">
+    <section id="#sppas.src.videodata">    <h1>Module sppas.src.videodata</h1>
+<section id="#sppasBufferVideoWriter">
+<h2>Class sppasBufferVideoWriter</h2>
+
+<section>
+<h3 id="#description_sppasBufferVideoWriter">Description</h3>
+    <article class="docstring">
+<p><em>Write a video and/or a set of images into files.</em></p>
+
+<p>There are 2 main solutions to write the result (video+images):</p>
+
+<ol>
+<li>video</li>
+<li>folder with images</li>
+</ol>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasBufferVideoWriter">Constructor</h3>
+    <article class="docstring">
+<p><em>Create a new instance.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="mf">25.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_video_ext</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">video_extension</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_image_ext</span> <span class="o">=</span> <span class="n">annots</span><span class="o">.</span><span class="n">image_extension</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasBufferVideoWriter">Public functions</h3>
+<h4>get_video_extension</h4>
+
+    <article class="docstring">
+<p><em>Return the extension for video files.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_video_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the extension for video files.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_ext</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_video_extension</h4>
+
+    <article class="docstring">
+<p><em>Set the extension of video files.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>ext</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_video_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the extension of video files.&quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">ext</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">video_extensions</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasExtensionWriteError</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_video_ext</span> <span class="o">=</span> <span class="n">ext</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_image_extension</h4>
+
+    <article class="docstring">
+<p><em>Return the extension for image files.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_image_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the extension for image files.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_ext</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_image_extension</h4>
+
+    <article class="docstring">
+<p><em>Set the extension of image files.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>ext</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_image_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the extension of image files.&quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">ext</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">image_extensions</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">sppasExtensionWriteError</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_image_ext</span> <span class="o">=</span> <span class="n">ext</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_fps</h4>
+
+    <article class="docstring">
+<p><em>Return the defined fps value to write video files (float).</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_fps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the defined fps value to write video files (float).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_fps</h4>
+
+    <article class="docstring">
+<p><em>Fix the framerate of the output video.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) Number of frames per seconds</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>NegativeValueError, IntervalRangeError</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_fps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the framerate of the output video.</span>
+
+<span class="sd">        :param value: (float) Number of frames per seconds</span>
+<span class="sd">        :raise: NegativeValueError, IntervalRangeError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">set_fps</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_video_output</h4>
+
+    <article class="docstring">
+<p><em>Return True if images will be saved into a video, as it.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_video_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if images will be saved into a video, as it.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_folder_output</h4>
+
+    <article class="docstring">
+<p><em>Return True if results will be saved in a folder of image files.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_folder_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if results will be saved in a folder of image files.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_video_output</h4>
+
+    <article class="docstring">
+<p><em>Set true to enable the output of the video.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_video_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set true to enable the output of the video.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_folder_output</h4>
+
+    <article class="docstring">
+<p><em>Set true to enable the output of the folder of images.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_folder_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set true to enable the output of the folder of images.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>is_opened</h4>
+
+    <article class="docstring">
+<p><em>Return True of the video writer opened a video stream.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True of the video writer opened a video stream.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>close</h4>
+
+    <article class="docstring">
+<p><em>Close the sppasVideoWriter().</em></p>
+
+<p>It has to be invoked when writing buffers is finished in order to
+release the video writer.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Close the sppasVideoWriter().</span>
+
+<span class="sd">        It has to be invoked when writing buffers is finished in order to</span>
+<span class="sd">        release the video writer.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write</h4>
+
+    <article class="docstring">
+<p><em>Save the result into file(s) depending on the options.</em></p>
+
+<p>The out_name is a base name, its extension is ignored and replaced by
+the one(s) defined in this class.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasCoordsVideoBuffer) The images and results to write</li>
+<li><strong>out_name</strong>: (<em>str</em>) The output name for the folder and/or the video</li>
+<li><strong>opt_pattern</strong>: (<em>str</em>) Un-used</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>list of newly created file names</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">opt_pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the result into file(s) depending on the options.</span>
+
+<span class="sd">        The out_name is a base name, its extension is ignored and replaced by</span>
+<span class="sd">        the one(s) defined in this class.</span>
+
+<span class="sd">        :param video_buffer: (sppasCoordsVideoBuffer) The images and results to write</span>
+<span class="sd">        :param out_name: (str) The output name for the folder and/or the video</span>
+<span class="sd">        :param opt_pattern: (str) Un-used</span>
+<span class="sd">        :return: list of newly created file names</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_name</span><span class="p">)</span>
+    <span class="n">out_name</span> <span class="o">=</span> <span class="n">fn</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">new_video_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_video</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">opt_pattern</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_video_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> video files created&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_video_files</span><span class="p">)))</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_video_files</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">new_image_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_folder</span><span class="p">(</span><span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">opt_pattern</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_image_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> image files created&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_image_files</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_video</h4>
+
+    <article class="docstring">
+<p><em>Save the result in video format.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasImage) The image to write</li>
+<li><strong>out_name</strong>: (<em>str</em>) The filename of the output video file</li>
+<li><strong>pattern</strong>: (<em>str</em>) Pattern to add to video filename</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>list of newly created video file names</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_video</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the result in video format.</span>
+
+<span class="sd">        :param video_buffer: (sppasImage) The image to write</span>
+<span class="sd">        :param out_name: (str) The filename of the output video file</span>
+<span class="sd">        :param pattern: (str) Pattern to add to video filename</span>
+<span class="sd">        :return: list of newly created video file names</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">iter_images</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">video_buffer</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_images</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_video_writer</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+            <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_video_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>write_folder</h4>
+
+    <article class="docstring">
+<p><em>Save the result in image format into a folder.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_buffer</strong>: (sppasImage) The image to write</li>
+<li><strong>out_name</strong>: (<em>str</em>) The folder name of the output image files</li>
+<li><strong>pattern</strong>: (<em>str</em>) Pattern to add to folder name(s)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">write_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_buffer</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save the result in image format into a folder.</span>
+
+<span class="sd">        :param video_buffer: (sppasImage) The image to write</span>
+<span class="sd">        :param out_name: (str) The folder name of the output image files</span>
+<span class="sd">        :param pattern: (str) Pattern to add to folder name(s)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">folder_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
+    <span class="n">begin_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="n">get_buffer_range</span><span class="p">()</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_name</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">begin_idx</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="n">iter_images</span> <span class="o">=</span> <span class="n">video_buffer</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">video_buffer</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_images</span><span class="p">)</span>
+        <span class="n">img_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_name</span><span class="p">(</span><span class="n">begin_idx</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_ext</span>
+        <span class="n">image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">img_name</span><span class="p">))</span>
+        <span class="n">new_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">img_name</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">new_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>create_video_writer</h4>
+
+    <article class="docstring">
+<p><em>Create a sppasVideoWriter().</em></p>
+
+<h5>Raises</h5>
+
+<p>PermissionError</p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>out_name</strong></li>
+<li><strong>image</strong></li>
+<li><strong>pattern</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_video_writer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sppasVideoWriter().</span>
+
+<span class="sd">        :raise: PermissionError</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:s}{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_ext</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Create a video writer </span><span class="si">{:s}</span><span class="s1">. Size </span><span class="si">{:d}</span><span class="s1">, </span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;A file with name </span><span class="si">{:s}</span><span class="s1"> is already existing.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">trash_filename</span> <span class="o">=</span> <span class="n">sppasTrash</span><span class="p">()</span><span class="o">.</span><span class="n">put_file_into</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;The file was moved into the Trash of SPPAS with name: </span><span class="si">{:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trash_filename</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">sppasVideoWriter</span><span class="p">()</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">set_fps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;extend&#39;</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39; ... Video writer opened successfully for </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;OpenCV failed to open the VideoWriter for file </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#private_fct_sppasBufferVideoWriter">Private functions</h3>
+<h4>_image_name</h4>
+
+    <article class="docstring">
+<p><em>Return an image name from its index.</em></p>
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>idx</strong></li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_image_name</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return an image name from its index.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;img_</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

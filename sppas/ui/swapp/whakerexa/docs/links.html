@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Link Controller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css"/>
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css"/>
+
+    <style>
+        :root {
+            --header-height: 32vh;
+            --header-slidein: none;
+
+            --nav-min-height: 0;
+            --nav-min-width: max(calc(6 * var(--font-size) / var(--size-divisor)), 4rem);
+
+            --nav-item-min-width-h: max(calc(6rem / var(--size-divisor)), 4rem);
+            --nav-item-width-h:    calc(8rem / var(--size-divisor));
+            --nav-item-max-width-h: calc(15rem / var(--size-divisor));
+
+            --nav-expanded-width: calc(12rem / var(--size-divisor));
+            --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
+            --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
+            --border-radius: 1rem;
+
+            --appmenu-position: left;
+            --appmenu-align: left top;
+
+        }
+
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-bg-color: rgba(100, 55, 128, 0.5);
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+
+        .dark {
+            --nav-bg-color: rgba(50, 5, 0, 0.5);
+        }
+
+        header > nav {
+            border-radius: 0.8rem;
+            padding: 0.5rem;
+            margin: 0.2rem;
+        }
+        header > nav [role="menuitem"] {
+            border-radius: 0.4rem;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        body {
+            font-family: system-ui, Arial, sans-serif;
+            margin: 2rem;
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        a[role="button"], button {
+            padding: .5rem 1rem;
+            border-radius: .5rem;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        iframe {
+            width: 100%;
+            height: 260px;
+            border: 1px solid #ddd;
+            border-radius: .5rem;
+        }
+    </style>
+    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+  (function () {
+    const usingFile = (window.location.protocol === 'file:');
+    const s = document.createElement('script');
+
+    function initLinks() {
+      if (!window.Wexa || typeof window.Wexa.LinkController !== 'function') {
+        console.error('[links] Wexa.LinkController is not available.');
+        return;
+      }
+      if (!window.Wexa.links) {
+        window.Wexa.links = new window.Wexa.LinkController();
+      }
+      window.Wexa.links.handleLinks(['doc_link', 'self_link', 'video_btn']);
+    }
+
+    if (usingFile) {
+      s.src = '../wexa_statics/js/wexa.bundle.js';
+      s.onload = initLinks;
+      document.head.appendChild(s);
+      return;
+    }
+
+    s.type = 'module';
+    s.src = '../wexa_statics/js/wexa.js';
+    s.onload = initLinks;
+    document.head.appendChild(s);
+  })();
+</script>
+
+</head>
+
+<body>
+
+    <header>
+        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+            Skip to main content
+        </a>
+        <nav style="position: absolute; top: 0;">
+            <ul>
+                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+            </ul>
+            <button id="btn-contrast" class="accessibility" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()" aria-label="Switch contrast scheme"></button>
+            <button id="btn-theme" class="accessibility" role="menuitem"
+                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()" aria-label="Switch color scheme"></button>
+        </nav>
+        <h1>Link Controller</h1>
+        <h2>by Whakerexa</h2>
+    </header>
+
+    <main id="main-content">
+
+        <h1>Description</h1>
+
+        <blockquote>Manage user interactions on clickable elements that open URLs.</blockquote>
+
+        <section id="description">
+            <h2>What it is for</h2>
+            <p>
+                <code>LinkController</code> standardizes how clickable elements open URLs.
+                It makes both mouse click and <kbd>Enter</kbd> behave the same way, and lets you target
+                a new tab, the current page, or an iframe preview.
+            </p>
+
+            <h2>Rules</h2>
+            <ul>
+                <li><b>Activation</b>: click or <kbd>Enter</kbd>.</li>
+                <li><b>URL</b>: <code>href</code> is used first; if missing/empty, <code>data-href</code> is used.</li>
+                <li><b>Target</b> (<code>data-target</code>): <code>_blank</code> (default), <code>_self</code>, or an iframe id.</li>
+                <li>If <code>data-target</code> matches an existing <code>&lt;iframe&gt;</code> id, the URL is loaded into that iframe.</li>
+                <li>Default navigation is prevented (so behavior stays consistent).</li>
+            </ul>
+        </section>
+
+        <h2>Examples</h2>
+
+        <!-- Opens in new tab by default -->
+        <div class="row">
+            <a id="doc_link" role="button" href="https://sppas.org">Open SPPAS (tab)</a>
+        </div>
+
+        <!-- Forces same-page navigation -->
+        <div class="row">
+            <a id="self_link" role="button" href="./dummy.html" data-target="_self">Open here (_self)</a>
+        </div>
+
+        <!-- Opens into an iframe using data-href -->
+        <div class="row">
+            <button id="video_btn" data-href="https://example.org" data-target="preview_iframe">Open in iframe</button>
+        </div>
+
+        <iframe id="preview_iframe" title="Preview area"></iframe>
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <!-- ------------------- LINKS MANAGEMENT IS HERE --------------------- -->
+
+    <script type="module">
+        Wexa.links.handleLinks(['doc_link', 'self_link', 'video_btn']);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "id": "speechtotext",
+  "name": "Speech-To-Text",
+  "descr": "Whisper Speech-To-Text aims to transcribe speech. Its result HAS TO BE manually VERIFIED. Requires IPUs. Produces an approx. standard ortho. transcription into IPUs.",
+  "api": "sppasSpeechToText",
+  "required": "searchipus",
+
+  "resources": [],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern",
+      "type": "str",
+      "value": "-ipus",
+      "text": "Input pattern of the file with the IPUs."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-stt",
+      "text": "Output pattern of the file with the approx. transcription of Whisper."
+    },
+    {
+      "id": "modelname",
+      "type": "str",
+      "value": "base",
+      "text": "The Whisper model name (e.g., tiny, base, small, medium, large)."
+    },
+    {
+      "id": "lang",
+      "type": "str",
+      "value": "und",
+      "text": "The language code (iso639-3)."
+    },
+    {
+      "id": "prompt",
+      "type": "str",
+      "value": "",
+      "text": "Initial prompt: prefix text to bias transcription. Not guaranteed."
+    }
+  ],
+
+  "refs": {
+  }
+
+}

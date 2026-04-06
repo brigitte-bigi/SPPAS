@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Dialogs</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/dialog.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --nav-min-height: 4rem;
+            --header-height: 26rem;
+        }
+        :root:not([data-theme=dark]), [data-theme=light] {
+            --nav-fg-color: rgba(240, 230, 240);
+            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+<header>
+    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <nav style="position: absolute; top: 0;">
+        <ul>
+            <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
+            <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
+            <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
+        </ul>
+        <button id="btn-contrast" class="accessibility" role="menuitem"
+                aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-theme" class="accessibility" role="menuitem"
+                aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+    <h1>Dialogs</h1>
+    <h2>by Whakerexa</h2>
+</header>
+
+<main id="main-content">
+
+    <section id="preface">
+        <p>
+            This page documents <code>dialog.css</code>.
+            The visual styles are CSS-driven; dialogs are opened/closed via Whakerexa JavaScript helpers.
+        </p>
+        <p><b>Summary:</b></p>
+        <ul>
+            <li><a href="#message">Messages</a>: message dialogs </li>
+            <li><a href="#video">Video</a>: popup video dialogs</li>
+        </ul>
+    </section>
+
+    <section id="message">
+    <h1>Messages</h1>
+
+    <h2>CSS variables</h2>
+
+    <p>
+        Message colors are defined in <code>wexa.css</code> and used by <code>dialog.css</code>.
+        You can override them in <code>:root</code> (or inside a container like <code>.dark</code>).
+    </p>
+
+    <h3>Message dialogs</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Variable</th>
+            <th>Description</th>
+            <th>Default</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>--info-color</code></td>
+            <td>Border/marker color for this message type</td>
+            <td><code>rgb(60, 100, 160)</code></td>
+        </tr>
+        <tr>
+            <td><code>--info-bg-color</code></td>
+            <td>Background color for this message type</td>
+            <td><code>rgb(230, 240, 255)</code></td>
+        </tr>
+        <tr>
+            <td><code>--warning-color</code></td>
+            <td>Border/marker color for this message type</td>
+            <td><code>rgb(180, 110, 0)</code></td>
+        </tr>
+        <tr>
+            <td><code>--warning-bg-color</code></td>
+            <td>Background color for this message type</td>
+            <td><code>rgb(255, 240, 210)</code></td>
+        </tr>
+        <tr>
+            <td><code>--error-color</code></td>
+            <td>Border/marker color for this message type</td>
+            <td><code>rgb(170, 30, 30)</code></td>
+        </tr>
+        <tr>
+            <td><code>--error-bg-color</code></td>
+            <td>Background color for this message type</td>
+            <td><code>rgb(255, 230, 230)</code></td>
+        </tr>
+        <tr>
+            <td><code>--success-color</code></td>
+            <td>Border/marker color for this message type</td>
+            <td><code>rgb(40, 120, 40)</code></td>
+        </tr>
+        <tr>
+            <td><code>--success-bg-color</code></td>
+            <td>Background color for this message type</td>
+            <td><code>rgb(225, 245, 225)</code></td>
+        </tr>
+        <tr>
+            <td><code>--tips-color</code></td>
+            <td>Border/marker color for this message type</td>
+            <td><code>rgb(160, 130, 40)</code></td>
+        </tr>
+        <tr>
+            <td><code>--tips-bg-color</code></td>
+            <td>Background color for this message type</td>
+            <td><code>rgb(250, 245, 225)</code></td>
+        </tr>
+        <tr>
+            <td><code>--question-color</code></td>
+            <td>Border/marker color for this message type</td>
+            <td><code>rgb(120, 60, 180)</code></td>
+        </tr>
+        <tr>
+            <td><code>--question-bg-color</code></td>
+            <td>Background color for this message type</td>
+            <td><code>rgb(240, 230, 250)</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Dialog box</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Variable</th>
+            <th>Description</th>
+            <th>Default</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>--dialog-border-width</code></td>
+            <td>Border width for dialogs</td>
+            <td><code>1px</code></td>
+        </tr>
+        <tr>
+            <td><code>--dialog-border-radius</code></td>
+            <td>Border radius for dialogs</td>
+            <td><code>4px</code></td>
+        </tr>
+        <tr>
+            <td><code>--dialog-box-shadow</code></td>
+            <td>Box shadow for dialogs</td>
+            <td><code>-0.2rem 0.2rem 0.6rem 0.2rem rgba(128, 128, 128, 0.5)</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Video preview</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Variable</th>
+            <th>Description</th>
+            <th>Default</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>--dialog-img-preview-bg-color</code></td>
+            <td>Background of the video preview figure (<code>figure.img-video-visualization</code>)</td>
+            <td><code>rgb(128, 128, 128)</code></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>How do they look like?</h2>
+    <h3>Light color scheme</h3>
+    <table>
+        <tr>
+            <td>
+                <dialog id="info-demo" role="alertdialog" class="info" aria-label="Info dialog">
+                    <p>This is irrelevant information...</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog id="warning-demo" role="alertdialog" class="warning" aria-label="Warning dialog">
+                    <p>This is an irrelevant warning...</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog id="error-demo" role="alertdialog" class="error" aria-label="Error dialog">
+                    <p>This is an irrelevant error...</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog id="success-demo" role="alertdialog" class="success" aria-label="Success dialog">
+                    <p>This is a great success...</p>
+                </dialog>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <dialog role="alertdialog" class="tips" aria-label="Tips dialog">
+                    <p>This is a tip: a very useful one!</p>
+                </dialog>
+            </td>
+            <td>
+                <dialog role="alertdialog" class="question" aria-label="Question dialog">
+                    <main>
+                        <p>Is this a question?</p>
+                    </main>
+                    <footer>
+                        <form method="dialog">
+                            <button>yes</button>
+                            <button>no</button>
+                        </form>
+                    </footer>
+                </dialog>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="dark">
+        <h3>Dark color scheme</h3>
+        <table>
+            <tr>
+                <td>
+                    <dialog role="alertdialog" class="info" aria-label="Info dialog">
+                        <p>This is irrelevant information...</p>
+                    </dialog>
+                </td>
+                <td>
+                    <dialog role="alertdialog" class="warning" aria-label="Warning dialog">
+                        <p>This is an irrelevant warning...</p>
+                    </dialog>
+                </td>
+                <td>
+                    <dialog role="alertdialog" class="error" aria-label="Error dialog">
+                        <p>This is an irrelevant error...</p>
+                    </dialog>
+                </td>
+                <td>
+                    <dialog role="alertdialog" class="success" aria-label="Success dialog">
+                        <p>This is a great success...</p>
+                    </dialog>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <dialog role="alertdialog" class="tips" aria-label="Tips dialog">
+                        <p>This is a tip: a very useful one!</p>
+                    </dialog>
+                </td>
+                <td>
+                    <dialog role="alertdialog" class="question" aria-label="Question dialog">
+                        <main>
+                            <p>Is this a question?</p>
+                        </main>
+                        <footer>
+                            <form method="dialog">
+                                <button>yes</button>
+                                <button>no</button>
+                            </form>
+                        </footer>
+                    </dialog>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <p></p>
+    </div>
+
+    <h2>Use messages as modal...</h2>
+
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <dialog id="info-dlg" role="alertdialog" class="info hidden-alert" aria-label="Info dialog">
+                    <p>This is irrelevant information...</p>
+                </dialog>
+                <button name="info-btn" onclick="Wexa.dialog.open('info-dlg')">Open info</button>
+                <button name="info-modal-btn" onclick="Wexa.dialog.open('info-dlg', true)">Open info (modal version)</button>
+            </td>
+            <td>
+                <dialog id="warning-dlg" role="alertdialog" class="warning hidden-alert" aria-label="Warning dialog">
+                    <p>This is an irrelevant warning...</p>
+                </dialog>
+                <button name="warning-btn" onclick="Wexa.dialog.open('warning-dlg')">Open warning</button>
+                <button name="warning-modal-btn" onclick="Wexa.dialog.open('warning-dlg', true)">Open warning (modal version)</button>
+            </td>
+            <td>
+                <dialog id="error-dlg" role="alertdialog" class="error hidden-alert" aria-label="Error dialog">
+                    <p>This is an irrelevant error...</p>
+                </dialog>
+                <button name="error-btn" onclick="Wexa.dialog.open('error-dlg')">Open error</button>
+                <button name="error-modal-btn" onclick="Wexa.dialog.open('error-dlg', true)">Open error (modal version)</button>
+            </td>
+            <td>
+                <dialog id="success-dlg" role="alertdialog" class="success hidden-alert" aria-label="Success dialog">
+                    <p>This is a great success...</p>
+                </dialog>
+                <button name="success-btn" onclick="Wexa.dialog.open('success-dlg')">Open success</button>
+                <button name="success-modal-btn" onclick="Wexa.dialog.open('success-dlg', true)">Open success (modal version)</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <dialog id="tips-dlg" role="alertdialog" class="tips hidden-alert" aria-label="Tips dialog">
+                    <p>This alert is hidden when it isn't open!</p>
+                    <p>Add "hidden-alert" in the class attribute of the dialog element</p>
+                </dialog>
+                <button name="tips-btn" onclick="Wexa.dialog.open('tips-dlg')">Open hidden tips</button>
+                <button name="tips-modal-btn" onclick="Wexa.dialog.open('tips-dlg', true)">Open hidden tips (modal version)</button>
+            </td>
+        </tr>
+    </table>
+    </section>
+
+    <section id="video">
+
+    <h1>Video</h1>
+
+    <!--
+        The dialog doesn't have to be necessary in the same place of the button to open it,
+        Furthermore, a popup video can be open by multiple buttons with its id not only one
+    -->
+    <dialog id="popup-demo" class="popup-video">
+        <video id="popup-video-demo" controls preload="none">
+            <source src="video/demo_video.webm" type="video/webm"/>
+        </video>
+    </dialog>
+
+    <h2>Popup video with image pre-visualisation</h2>
+    <figure class="img-video-visualization" style="width: 35vw; height: auto;">
+        <img src="images/demo_video.png" alt="Video preview"/>
+        <button name="play-btn" aria-label="Play video" onclick="Wexa.dialog.playVideo('demo')">&#9658;</button>
+    </figure>
+
+    <h2>Popup video with just a play button</h2>
+    <!-- use a container if you want to center the button (not necessary a 'figure', the figure is required only for image pre-visualization) -->
+    <button name="play-btn" aria-label="Play video" onclick="Wexa.dialog.playVideo('demo')">&#9658;</button>
+    </section>
+
+</main>
+
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const script = document.createElement('script');
+
+        if (usingFile) {
+            script.src = '../wexa_statics/js/wexa.bundle.js';
+        } else {
+            script.type = 'module';
+            script.src = '../wexa_statics/js/wexa.js';
+        }
+
+        document.head.appendChild(script);
+    })();
+</script>
+
+</body>
+</html>
