@@ -9,7 +9,7 @@ It provides an API for annotating, segmenting, and analyzing audio and video
 speech recordings, as well as tools for working with annotated data.
 
 - Main Repository: <https://github.com/brigitte-bigi/sppas/>
-- Documentation: <https://brigittebigi.github.io/sppas/>
+- Documentation: <https://brigitte-bigi.github.io/sppas/>
 - SPPAS software: <https://sppas.org/>
 - License: AGPL-3.0-or-later
 - Copyright (C) 2011-2026 Brigitte Bigi, CNRS, Laboratoire Parole et Langage, Aix-en-Provence, France
