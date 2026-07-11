@@ -285,8 +285,19 @@ class swappBaseView:
         menu_button.add_attribute("name", "menu-button")
         menu_button.add_attribute("aria-label", "Menu")
         menu_button.add_attribute("aria-expanded", "false")
-        menu_button.add_attribute("aria-controls", "nav-menu")
+        menu_button.add_attribute("aria-controls", "nav-content")
         parent.append_child(menu_button)
+
+        # Hidden checkbox required by MenuManager.initMobileToggle() to
+        # track the mobile menu open/closed state.
+        mobile_checkbox = HTMLNode(parent.identifier, None, "input")
+        mobile_checkbox.add_attribute("type", "checkbox")
+        mobile_checkbox.add_attribute("id", "mobile")
+        mobile_checkbox.add_attribute("role", "button")
+        mobile_checkbox.add_attribute("aria-label", "Menu")
+        mobile_checkbox.add_attribute("aria-haspopup", "true")
+        mobile_checkbox.add_attribute("aria-expanded", "false")
+        parent.append_child(mobile_checkbox)
 
     # -----------------------------------------------------------------------
 
