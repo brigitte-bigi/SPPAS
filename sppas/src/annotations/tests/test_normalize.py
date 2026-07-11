@@ -41,6 +41,7 @@
 
 import unittest
 import os
+import shutil
 
 from sppas.core.config import paths
 
@@ -51,6 +52,13 @@ from sppas.src.resources.dictrepl import sppasDictRepl
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
+from sppas.src.anndata.transcription import sppasTranscription
+from sppas.src.anndata.ann.annotation import sppasAnnotation
+from sppas.src.anndata.ann.annlocation import sppasLocation
+from sppas.src.anndata.ann.annlocation import sppasInterval
+from sppas.src.anndata.ann.annlocation import sppasPoint
+from sppas.src.structs.baseoption import sppasOption
+from sppas.src.utils.fileutils import sppasFileUtils
 
 from ..TextNorm.normalize import TextNormalizer
 from ..TextNorm.orthotranscription import sppasOrthoTranscription
@@ -59,6 +67,10 @@ from ..TextNorm.splitter import sppasSimpleSplitter
 from ..TextNorm.tiernorm import TierNormalizer
 from ..TextNorm.cutparser import ParseCut
 from ..TextNorm.sppastextnorm import sppasTextNorm
+
+# ---------------------------------------------------------------------------
+
+TEMP = sppasFileUtils().set_random()
 
 # ---------------------------------------------------------------------------
 
@@ -592,3 +604,75 @@ class TestTextNorm(unittest.TestCase):
         for key in expected.get_meta_keys():
            if key != 'id':
                self.assertEqual(expected.get_meta(key), result.get_meta(key))
+
+# ---------------------------------------------------------------------------
+
+
+class TestTextNormOptions(unittest.TestCase):
+    """Test the options of the TextNorm automatic annotation."""
+
+    def setUp(self):
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+
+    def tearDown(self):
+        shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def create_input_file():
+        """Write a file with a 'transcription' and a 'translation' tiers.
+
+        :return: (str) Name of the created file.
+
+        """
+        trs = sppasTranscription()
+        tier_transcription = trs.create_tier(name="transcription")
+        tier_transcription.append(sppasAnnotation(
+            sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(3.))),
+            sppasLabel(sppasTag("bonjour"))))
+        tier_translation = trs.create_tier(name="translation")
+        tier_translation.append(sppasAnnotation(
+            sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(3.))),
+            sppasLabel(sppasTag("hello"))))
+
+        input_file = os.path.join(TEMP, "sample.xra")
+        parser = sppasTrsRW(input_file)
+        parser.write(trs)
+        return input_file
+
+    # -----------------------------------------------------------------------
+
+    def test_set_tiername(self):
+        """Test of fixing the tiername option."""
+
+        tn = sppasTextNorm()
+        tn.set_tiername("toto")
+        self.assertEqual(tn._options['tiername'], "toto")
+
+        tn.fix_options([sppasOption("tiername", "str", "translation")])
+        self.assertEqual(tn._options['tiername'], "translation")
+
+    # -----------------------------------------------------------------------
+
+    def test_get_inputs_default(self):
+        """Test of finding the input tier without the tiername option."""
+
+        input_file = TestTextNormOptions.create_input_file()
+
+        tn = sppasTextNorm()
+        tier = tn.get_inputs([input_file])
+        self.assertEqual(tier.get_name(), "transcription")
+
+    # -----------------------------------------------------------------------
+
+    def test_get_inputs_tiername(self):
+        """Test of finding the input tier with the tiername option."""
+
+        input_file = TestTextNormOptions.create_input_file()
+
+        tn = sppasTextNorm()
+        tn.set_tiername("translation")
+        tier = tn.get_inputs([input_file])
+        self.assertEqual(tier.get_name(), "translation")

@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ class sppasFindTier:
         """Return the tier with Inter-Pausal Units.
 
         :param trs: (sppasTranscription)
-        :returns: (sppasTier or None)
+        :return: (sppasTier or None)
 
         """
         # Search for a tier containing "ipu" in its name
@@ -63,22 +63,23 @@ class sppasFindTier:
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def transcription(trs):
+    def transcription(trs, default="transcription"):
         """Return the tier with orthographic transcription.
 
         :param trs: (sppasTranscription)
-        :returns: (sppasTier or None)
+        :param default: (str) default tier name for the orthographic transcription
+        :return: (sppasTier or None)
 
         """
         # Search for a tier with exact name "transcription"
-        tier = trs.find('transcription', case_sensitive=False)
+        tier = trs.find(default, case_sensitive=False)
         if tier is not None:
             return tier
 
         # Search for a tier containing "transcription" in its name
         for tier in trs:
             tier_name = tier.get_name().lower()
-            if "transcription" in tier_name:
+            if default in tier_name:
                 return tier
 
         # Search for a tier containing either
@@ -107,7 +108,7 @@ class sppasFindTier:
 
         :param trs: (sppasTranscription)
         :param pattern: (str) Priority pattern
-        :returns: (sppasTier or None)
+        :return: (sppasTier or None)
 
         """
         # Search with the pattern
@@ -153,7 +154,7 @@ class sppasFindTier:
         """Return the tier with phonetization.
 
         :param trs: (sppasTranscription)
-        :returns: (sppasTier or None)
+        :return: (sppasTier or None)
 
         """
         # Search for a tier with exact name "phones"
@@ -257,7 +258,7 @@ class sppasFindTier:
         """Return the tier with pitch values.
 
         :param trs: (sppasTranscription)
-        :returns: (sppasTier or None)
+        :return: (sppasTier or None)
 
         """
         for tier in trs:
@@ -279,7 +280,7 @@ class sppasFindTier:
         """Return the tier with pitch anchors, like momel result.
 
         :param trs: (sppasTranscription)
-        :returns: (sppasTier or None)
+        :return: (sppasTier or None)
 
         """
         for tier in trs:

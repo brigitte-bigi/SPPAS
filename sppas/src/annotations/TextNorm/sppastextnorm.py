@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
 :filename: sppas.src.annotations.TextNorm.sppastextnorm.py
-:author:   Brigitte Bigi
-:contact:  contact@sppas.org
-:summary:  SPPAS integration of Text Normalization automatic annotation.
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: SPPAS integration of Text Normalization automatic annotation.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -137,6 +137,7 @@ class sppasTextNorm(sppasBaseAnnotation):
             - faked
             - std
             - custom
+            - tiername
 
         :param options: (sppasOption)
 
@@ -159,11 +160,24 @@ class sppasTextNorm(sppasBaseAnnotation):
             elif key == "tok_speech":
                 self.set_tok_not_sil(opt.get_value())
 
+            elif key == "tiername":
+                self.set_tiername(opt.get_value())
+
             elif "pattern" in key:
                 self._options[key] = opt.get_value()
 
             else:
                 raise AnnotationOptionError(key)
+
+    # -----------------------------------------------------------------------
+
+    def set_tiername(self, value: str):
+        """Fix the input tier name.
+
+        :param value: (str) Name of the tier to be normalized.
+
+        """
+        self._options['tiername'] = str(value)
 
     # -----------------------------------------------------------------------
 
@@ -294,13 +308,16 @@ class sppasTextNorm(sppasBaseAnnotation):
     # -----------------------------------------------------------------------
 
     def get_inputs(self, input_files):
-        """Return the the tier with aligned tokens.
+        """Return the tier with aligned tokens.
 
         :param input_files: (list)
         :raise: NoTierInputError
         :return: (sppasTier)
 
         """
+        tier_name = "transcription"
+        if "tiername" in self._options and len(self._options['tiername']) > 0:
+            tier_name = self._options['tiername']
         tier = None
         annot_ext = self.get_input_extensions()
 
@@ -311,7 +328,7 @@ class sppasTextNorm(sppasBaseAnnotation):
             if tier is None and fe in annot_ext[0]:
                 parser = sppasTrsRW(filename)
                 trs_input = parser.read()
-                tier = sppasFindTier.transcription(trs_input)
+                tier = sppasFindTier.transcription(trs_input, tier_name)
                 if tier is not None:
                     if self.logfile:
                         self.logfile.print_message("Input tier to be normalized: "

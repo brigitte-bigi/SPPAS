@@ -32,6 +32,12 @@
       "text": "Output file pattern with the normalized text."
     },
     {
+      "id": "tiername",
+      "type": "str",
+      "value": "transcription",
+      "text": "Name of the tier to be normalized"
+    },
+    {
       "id": "faked",
       "type": "bool",
       "value": true,
