@@ -13,6 +13,13 @@
       "ext": "",
       "name": "lbfmodel68.yaml",
       "lang": false
+    },
+    {
+      "path": "faces",
+      "type": "file",
+      "ext": "",
+      "name": "face_landmarker.task",
+      "lang": false
     }
   ],
 

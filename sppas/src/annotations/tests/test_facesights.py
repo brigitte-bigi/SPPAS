@@ -58,6 +58,7 @@ from sppas.src.annotations.FaceSights.mpmark import MediaPipeFaceMesh
 DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 MODEL_LBF68 = os.path.join(paths.resources, "faces", "lbfmodel68.yaml")
 MODEL_DAT = os.path.join(paths.resources, "faces", "kazemi_landmark.dat")
+MODEL_TASK = os.path.join(paths.resources, "faces", "face_landmarker.task")
 # --> not efficient: os.path.join(paths.resources, "faces", "aam.xml")
 
 NET = os.path.join(paths.resources, "faces", "res10_300x300_ssd_iter_140000_fp16.caffemodel")
@@ -102,11 +103,13 @@ class TestBasicFaceMark(unittest.TestCase):
 class TestMediaPipeFaceMark(unittest.TestCase):
 
     def test_init(self):
-        d = MediaPipeFaceMesh()
+        d = MediaPipeFaceMesh(MODEL_TASK)
         self.assertIsNotNone(d._detector)
+        with self.assertRaises(IOError):
+            MediaPipeFaceMesh("toto.task")
 
     def test_detection_nothing(self):
-        md = MediaPipeFaceMesh()
+        md = MediaPipeFaceMesh(MODEL_TASK)
         fn = os.path.join(DATA, "Slovenia2016Sea.jpg")
         with self.assertRaises(TypeError):
             md.detect_sights(fn)
@@ -115,7 +118,7 @@ class TestMediaPipeFaceMark(unittest.TestCase):
         self.assertFalse(success)
 
     def test_detection(self):
-        fl = MediaPipeFaceMesh()
+        fl = MediaPipeFaceMesh(MODEL_TASK)
 
         # The image we'll work on
         fn = os.path.join(DATA, "BrigitteBigiSlovenie2016-portrait.jpg")
@@ -136,7 +139,7 @@ class TestMediaPipeFaceMark(unittest.TestCase):
 class TestMediaPipeFaceMesh(unittest.TestCase):
 
     def test_detection(self):
-        fl = MediaPipeFaceMesh()
+        fl = MediaPipeFaceMesh(MODEL_TASK)
         self.assertIsNotNone(fl._detector)
         fl.enable_mesh()
 
@@ -202,7 +205,10 @@ class TestImageFaceLandmark(unittest.TestCase):
 
         fl.add_model(MODEL_LBF68)
         fl.add_model(MODEL_DAT)
-        self.assertTrue(fl.get_nb_recognizers(), 4)
+        self.assertEqual(fl.get_nb_recognizers(), 2)
+
+        fl.add_model(MODEL_TASK)
+        self.assertEqual(fl.get_nb_recognizers(), 3)
 
     # ------------------------------------------------------------------------
 
@@ -225,6 +231,7 @@ class TestImageFaceLandmark(unittest.TestCase):
         img = sppasImage(filename=fn)
 
         # MediaPipe only
+        fl.add_model(MODEL_TASK)
         success = fl.detect_sights(img, sppasCoords(0, 0, 100, 100))
         self.assertFalse(success)
 
@@ -244,6 +251,7 @@ class TestImageFaceLandmark(unittest.TestCase):
         fl = ImageFaceLandmark()
         fl.add_model(MODEL_LBF68)
         fl.add_model(MODEL_DAT)
+        fl.add_model(MODEL_TASK)
 
         # The image we'll work on
         fn = os.path.join(DATA, "BrigitteBigiSlovenie2016-portrait.jpg")

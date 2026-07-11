@@ -1,12 +1,13 @@
+# -*- coding: UTF-8 -*-
 """
 :filename: sppas.src.annotations.FaceSights.mpmark.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
-:summary:  MediaPipe face mesh in an image.
+:summary:  MediaPipe Tasks detector of the face mesh in an image.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
-    ---------------------------------------------------------------------
+    -------------------------------------------------------------------------
 
      ######   ########   ########      ###      ######
     ##    ##  ##     ##  ##     ##    ## ##    ##    ##     the automatic
@@ -16,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -34,39 +35,66 @@
 
     This banner notice must not be removed.
 
-    ---------------------------------------------------------------------
+    -------------------------------------------------------------------------
 
-See <https://google.github.io/mediapipe/solutions/face_mesh.html>
-for details:
+The MediaPipe Face Landmarker estimates 478 3D face landmarks: the 468
+landmarks of the face mesh, plus 10 landmarks for the irises. Only the
+468 mesh landmarks are used here, so the results are the same as the ones
+of the previous "Face Mesh" solution. The z-axis is ignored.
 
-"MediaPipe Face Mesh is a face geometry solution that estimates 468
-3D face landmarks. You can find more information about the face landmark
-model in this paper: <https://arxiv.org/abs/1907.06724>.
+The MediaPipe Tasks API externalizes its models: the face landmarker is
+instantiated from a ".task" model file of the resources, exactly like the
+OpenCV face-markers are instantiated from their ".yaml", ".xml" or ".dat"
+model files.
 
 """
 
 import logging
-import mediapipe as mp
+import numpy
+import os
 
+from sppas.core.config import cfg
 from sppas.core.coreutils import sppasError
+from sppas.core.coreutils import sppasIOError
+from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.imgdata import sppasSights
 
 from .basemark import BaseFaceMark
+
+try:
+    import mediapipe as mp
+    from mediapipe.tasks import python as mp_tasks
+    from mediapipe.tasks.python import vision as mp_vision
+    cfg.set_feature("mediapipe", True)
+except (ModuleNotFoundError, ImportError):
+    cfg.set_feature("mediapipe", False)
 
 # ---------------------------------------------------------------------------
 
 
 class MediaPipeFaceMesh(BaseFaceMark):
-    """SPPAS wrapper of MediaPipe Face Mesh.
+    """Estimate the face mesh with MediaPipe Tasks.
 
-    z-axis is ignored.
+    The number of sights of the mesh is 468. The z-axis is ignored.
 
     """
 
-    def __init__(self):
+    def __init__(self, model):
+        """Create a new MediaPipeFaceMesh instance.
+
+        :param model: (str) Filename of the ".task" model file.
+        :raises: sppasEnableFeatureError: mediapipe is not installed.
+        :raises: IOError: The model file does not exist.
+        :raises: sppasError: The detector failed to be instantiated.
+
+        """
+        if cfg.feature_installed("mediapipe") is False:
+            raise sppasEnableFeatureError("mediapipe")
         super(MediaPipeFaceMesh, self).__init__()
-        # The MediaPipe Face Mesh detector
-        self._set_detector()
+        if os.path.exists(model) is False:
+            raise sppasIOError(model)
+
+        self._set_detector(model)
         # Store the mesh result of the detector (or None)
         self.__mesh_mode = False
         self.__mesh = None
@@ -91,22 +119,23 @@ class MediaPipeFaceMesh(BaseFaceMark):
 
     # -----------------------------------------------------------------------
 
-    def _set_detector(self):
-        """Initialize the detector.
+    def _set_detector(self, model):
+        """Initialize the detector with the given model file.
 
-        :raises: Exception
+        :param model: (str) Filename of the ".task" model file.
+        :raises: sppasError: The detector failed to be instantiated.
 
         """
         try:
-            self._detector = mp.solutions.face_mesh.FaceMesh(
-                static_image_mode=True,
-                max_num_faces=1,
-                min_detection_confidence=0.01
-               )
-            # We should check that the model is based on the detection of
-            # 468 sights like we expect.
+            base_options = mp_tasks.BaseOptions(model_asset_path=model)
+            options = mp_vision.FaceLandmarkerOptions(
+                base_options=base_options,
+                num_faces=1,
+                min_face_detection_confidence=0.01)
+            self._detector = mp_vision.FaceLandmarker.create_from_options(options)
         except Exception as e:
-            logging.error("MediaPipe face mesh failed to be instantiated.")
+            logging.error("MediaPipe face landmarker failed to be "
+                          "instantiated from model {:s}.".format(str(model)))
             raise sppasError(str(e))
 
     # -----------------------------------------------------------------------
@@ -131,37 +160,40 @@ class MediaPipeFaceMesh(BaseFaceMark):
         :return: (bool) True if sights were estimated properly
 
         """
-        # Convert the BGR image to RGB before processing.
-        img = image.ito_rgb()
-        # Make predictions
+        # MediaPipe requires a plain contiguous uint8 numpy.ndarray,
+        # not a subclass like sppasImage.
+        rgb = numpy.ascontiguousarray(image.ito_rgb(), dtype=numpy.uint8)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
         try:
-            results = self._detector.process(img)
+            results = self._detector.detect(mp_image)
         except Exception as e:
             logging.error("Error when detecting face sights: {}".format(str(e)))
             return False
 
         # Get results and convert to sights
-        if results.multi_face_landmarks:
-            w, h = image.size()
-            self.__mesh = sppasSights(nb=468)
-            # Only one face should be detected.
-            for face in results.multi_face_landmarks:
-                # face type is <class 'mediapipe.framework.formats.landmark_pb2.NormalizedLandmarkList'>
-                for i in range(len(face.landmark)):
-                    # the X- and Y- coordinates are normalized screen coordinates,
-                    # while the Z coordinate is relative and is scaled as the X
-                    # coordinate under the weak perspective projection camera model:
-                    # https://en.wikipedia.org/wiki/3D_projection#Weak_perspective_projection.
-                    mark = face.landmark[i]
-                    x_coord = max(0, int(mark.x * float(w)))
-                    y_coord = max(0, int(mark.y * float(h)))
-                    self.__mesh.set_sight(i, x_coord, y_coord)
-                # we have the mesh but we're interested in the landmarks
-                self._sights = self._mesh_to_sights()
-                if self.__mesh_mode is False:
-                    self.__mesh = None
-                return True
-        return False
+        if len(results.face_landmarks) == 0:
+            return False
+
+        w, h = image.size()
+        self.__mesh = sppasSights(nb=468)
+        # Only one face should be detected. The 10 landmarks of the
+        # irises, appended after the 468 ones of the mesh, are ignored.
+        face = results.face_landmarks[0]
+        for i in range(min(len(face), 468)):
+            # the X- and Y- coordinates are normalized screen coordinates,
+            # while the Z coordinate is relative and is scaled as the X
+            # coordinate under the weak perspective projection camera model:
+            # https://en.wikipedia.org/wiki/3D_projection#Weak_perspective_projection.
+            mark = face[i]
+            x_coord = max(0, int(mark.x * float(w)))
+            y_coord = max(0, int(mark.y * float(h)))
+            self.__mesh.set_sight(i, x_coord, y_coord)
+
+        # we have the mesh but we're interested in the landmarks
+        self._sights = self._mesh_to_sights()
+        if self.__mesh_mode is False:
+            self.__mesh = None
+        return True
 
     # -----------------------------------------------------------------------
 

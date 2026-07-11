@@ -43,6 +43,7 @@ on the face (called sights).
 """
 
 import logging
+import os
 
 from sppas.core.config import cfg
 from sppas.src.imgdata import sppasCoords
@@ -50,17 +51,7 @@ from sppas.src.imgdata import sppasCoords
 from .basemark import BaseFaceMark
 from .basemark import BasicFaceMark
 from .opencvmark import OpenCVFaceMark
-
-if cfg.feature_installed("mediapipe"):
-    from .mpmark import MediaPipeFaceMesh
-else:
-    class MediaPipeFaceMesh(object):
-        def __init__(self, *args, **kwargs):
-            logging.warning("Mediapipe Face Mesh is disabled. "
-                            "It requires mediapipe feature to be installed.")
-
-        def detect_sights(self, *args, **kwargs):
-            return False
+from .mpmark import MediaPipeFaceMesh
 
 # ---------------------------------------------------------------------------
 
@@ -77,8 +68,8 @@ class ImageFaceLandmark(BaseFaceMark):
         super(ImageFaceLandmark, self).__init__()
         # The basic "empirical" predictor
         self.__basic = None
-        # The MediaPipe predictor
-        self.__mediapipe = MediaPipeFaceMesh()
+        # The MediaPipe predictor, instantiated from its ".task" model
+        self.__mediapipe = None
         # The OpenCV landmark recognizers
         self.__markers = list()
 
@@ -86,22 +77,38 @@ class ImageFaceLandmark(BaseFaceMark):
 
     def get_nb_recognizers(self) -> int:
         """Return the number of initialized landmark recognizers."""
-        nb = 2
-        if self.__basic is None:
-            nb = 1
+        nb = 0
+        if self.__basic is not None:
+            nb = nb + 1
+        if self.__mediapipe is not None:
+            nb = nb + 1
         return nb + len(self.__markers)
 
     # -----------------------------------------------------------------------
 
     def add_model(self, filename: str) -> None:
-        """Append an OpenCV recognizer into the list and load the model.
+        """Append a recognizer into the list and load the model.
 
-        :param filename: (str) A recognizer model (Kazemi, LBF, AAM).
+        The recognizer is instantiated from the extension of the given
+        model filename: either an OpenCV one (Kazemi, LBF, AAM) or the
+        MediaPipe face landmarker (".task").
+
+        :param filename: (str) A recognizer model.
         :raise: IOError, IOExtensionError, Exception
 
         """
-        predictor = OpenCVFaceMark(filename)
-        self.__markers.append(predictor)
+        extension = os.path.splitext(filename)[1]
+        extension = extension.lower()
+        if extension == ".task":
+            if cfg.feature_installed("mediapipe") is False:
+                logging.warning("Model {:s} is ignored: it requires the "
+                                "mediapipe feature to be installed."
+                                "".format(filename))
+                return
+            self.__mediapipe = MediaPipeFaceMesh(filename)
+        else:
+            predictor = OpenCVFaceMark(filename)
+            self.__markers.append(predictor)
 
     # -----------------------------------------------------------------------
 
@@ -209,17 +216,19 @@ class ImageFaceLandmark(BaseFaceMark):
         all_points = {i:list() for i in range(len(self._sights))}
 
         # MediaPipe predicted sights
-        if coords is not None:
-            c = coords.portrait()
-        else:
-            # No coords. Estimation is on the whole image.
-            w, h = image.get_size()
-            c = sppasCoords(0, 0, w, h)
-        success = self.__mediapipe.detect_sights(image.icrop(c))
-        if success is True:
-            for i, sight in enumerate(self.__mediapipe):
-                (x, y, z, s) = sight
-                all_points[i].append((x + c.x, y + c.y))
+        success = False
+        if self.__mediapipe is not None:
+            if coords is not None:
+                c = coords.portrait()
+            else:
+                # No coords. Estimation is on the whole image.
+                w, h = image.get_size()
+                c = sppasCoords(0, 0, w, h)
+            success = self.__mediapipe.detect_sights(image.icrop(c))
+            if success is True:
+                for i, sight in enumerate(self.__mediapipe):
+                    (x, y, z, s) = sight
+                    all_points[i].append((x + c.x, y + c.y))
 
         # OpenCV predictors
         # https://docs.opencv.org/trunk/db/dd8/classcv_1_1face_1_1Facemark.html
