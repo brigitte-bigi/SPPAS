@@ -48,7 +48,7 @@ from sppas.core.coreutils import sppasEnableFeatureError
 
 
 if cfg.feature_installed("video") is False:
-    # Define classes in case opencv&numpy&mediapipe are not installed.
+    # Define classes in case opencv&numpy are not installed.
 
     class ImageFaceDetection(object):
         def __init__(self):

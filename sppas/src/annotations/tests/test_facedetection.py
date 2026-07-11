@@ -51,7 +51,7 @@ from sppas.src.imgdata import NeuralNetCaffeDetector
 from sppas.src.imgdata import NeuralNetTensorFlowDetector
 
 from sppas.src.annotations.FaceDetection.imgfacedetect import ImageFaceDetection
-from sppas.src.annotations.FaceDetection.imgfacedetect import MediaPipeFaceDetector
+from sppas.src.annotations.FaceDetection.mpfacedetect import MediaPipeFaceDetector
 
 # ---------------------------------------------------------------------------
 
@@ -63,6 +63,7 @@ NETTS = os.path.join(paths.resources, "faces", "opencv_face_detector_uint8.pb")
 HAAR1 = os.path.join(paths.resources, "faces", "haarcascade_profileface.xml")
 HAAR2 = os.path.join(paths.resources, "faces", "haarcascade_frontalface_alt.xml")
 HAAR3 = os.path.join(paths.resources, "faces", "lbpcascade_frontalface_improved.xml")
+MPFACE = os.path.join(paths.resources, "faces", "blaze_face_short_range.tflite")
 # HAAR3 model seems to give worse results than the other ones...
 
 # ---------------------------------------------------------------------------
@@ -73,21 +74,26 @@ class TestMediaPipeFaceDetection(unittest.TestCase):
     def test_init(self):
         d = MediaPipeFaceDetector()
         self.assertIsNone(d._detector)
+        self.assertEqual(d.get_extension(), ".tflite")
 
     def test_set_detector(self):
         md = MediaPipeFaceDetector()
-        md._set_detector()
+        md._set_detector(MPFACE)
+        self.assertIsNotNone(md._detector)
 
     def test_instantiate(self):
         md = MediaPipeFaceDetector()
-        md.load_model("whatever")
+        with self.assertRaises(IOError):
+            md.load_model("whatever")
+        md.load_model(MPFACE)
+        self.assertIsNotNone(md._detector)
 
     def test_detection(self):
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
 
         md = MediaPipeFaceDetector()
-        md.load_model()
+        md.load_model(MPFACE)
 
         # Nothing should be detected -- it's just the sea
         fn = os.path.join(DATA, "Slovenia2016Sea.jpg")
@@ -110,8 +116,6 @@ class TestMediaPipeFaceDetection(unittest.TestCase):
         img = sppasImage(filename=fn)   # (w, h) = (1632, 916)
         md.detect(img)
         self.assertEqual(0, len(md))  # should be 2
-        fn = os.path.join(DATA, "Slovenia2016-md.png")
-        w.write(img, [md.get_best()], fn)
 
     def test_montage_detection(self):
         # MediaPipe
@@ -123,7 +127,7 @@ class TestMediaPipeFaceDetection(unittest.TestCase):
         # Pictures extracted from a video. I'm moving, so my face is blurry!
         # I'm in the pictures three times, but Mediapipe fails to detect me once.
         md = MediaPipeFaceDetector()
-        md.load_model()
+        md.load_model(MPFACE)
         md.set_min_ratio(0.01)
         md.detect(img)
         coords = [c.copy() for c in md]
@@ -462,14 +466,13 @@ class TestFaceDetection(unittest.TestCase):
 
         fd.load_model(NETCAFFE)
         self.assertIsNotNone(fd._detector)
-        # 2 if mediapipe is installed, but 1 if not...
-        self.assertEqual(len(fd._detector), 2)
-        self.assertEqual(fd.get_nb_recognizers(), 2)
+        self.assertEqual(len(fd._detector), 1)
+        self.assertEqual(fd.get_nb_recognizers(), 1)
         names = fd.get_recognizer_names()
         self.assertIsInstance(fd.get_recognizer(names[0]), NeuralNetCaffeDetector)
 
         fd.load_model(NETTS)
-        self.assertEqual(fd.get_nb_recognizers(), 2)
+        self.assertEqual(fd.get_nb_recognizers(), 1)
         names = fd.get_recognizer_names()
         self.assertIsInstance(fd.get_recognizer(names[0]), NeuralNetTensorFlowDetector)
 
@@ -478,12 +481,17 @@ class TestFaceDetection(unittest.TestCase):
         names = fd.get_recognizer_names()
         self.assertIsInstance(fd.get_recognizer(names[0]), HaarCascadeDetector)
 
+        fd.load_model(MPFACE)
+        self.assertIsNotNone(fd._detector)
+        names = fd.get_recognizer_names()
+        self.assertIsInstance(fd.get_recognizer(names[0]), MediaPipeFaceDetector)
+
         fd.load_model(HAAR1, NETCAFFE, HAAR2)
-        self.assertEqual(len(fd._detector), 4)
+        self.assertEqual(len(fd._detector), 3)
         self.assertEqual(fd.get_nb_enabled_recognizers(), 3)
 
         fd.load_model(HAAR3)
-        self.assertEqual(len(fd._detector), 2)
+        self.assertEqual(len(fd._detector), 1)
 
     # ------------------------------------------------------------------------
 
@@ -492,7 +500,7 @@ class TestFaceDetection(unittest.TestCase):
         fd.load_model(HAAR1, HAAR2, HAAR3, NETCAFFE, NETTS)
         names = fd.get_recognizer_names()
         self.assertEqual(len(names), 5)
-        self.assertEqual(fd.get_nb_enabled_recognizers(), 5)  # mediapipe disabled
+        self.assertEqual(fd.get_nb_enabled_recognizers(), 5)
 
         # disable HAAR2 and HAAR3
         fd.enable_recognizer(names[1], False)
@@ -601,14 +609,14 @@ class TestFaceDetection(unittest.TestCase):
 
     def test_multi_detect(self):
         fd = ImageFaceDetection()
-        fd.load_model(NETTS, NETCAFFE, HAAR3, HAAR1, HAAR2)
+        fd.load_model(NETTS, NETCAFFE, HAAR3, HAAR1, HAAR2, MPFACE)
         names = fd.get_recognizer_names()
         self.assertEqual(names[0], 'opencv_face_detector_uint8.pb')
         self.assertEqual(names[1], 'res10_300x300_ssd_iter_140000_fp16.caffemodel')
         self.assertEqual(names[2], 'lbpcascade_frontalface_improved.xml')
         self.assertEqual(names[3], 'haarcascade_profileface.xml')
         self.assertEqual(names[4], 'haarcascade_frontalface_alt.xml')
-        self.assertEqual(names[5], 'mediapipe')
+        self.assertEqual(names[5], 'blaze_face_short_range.tflite')
 
         fn = os.path.join(DATA, "montage.png")
         img = sppasImage(filename=fn)
@@ -626,7 +634,8 @@ class TestFaceDetection(unittest.TestCase):
         coords = [c.copy() for c in fd]
         fn = os.path.join(DATA, "montage-faces-dnn.png")
         w.write(img, coords, fn)
-        self.assertEqual(4, len(fd))
+        # There are 3 faces in the montage image.
+        self.assertEqual(3, len(fd))
 
         # Haar cascade classifiers only
         fd.enable_recognizer(names[0], False)

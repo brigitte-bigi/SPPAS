@@ -127,10 +127,10 @@
       "text": "Enable the opencv's HaarCascade Profile face model."
     },
     {
-      "id": "model:mediapipe",
+      "id": "model:blaze_face_short_range.tflite",
       "type": "bool",
       "value": true,
-      "text": "Enable the MediaPipe Face Detection system (very fast)."
+      "text": "Enable the MediaPipe BlazeFace short-range model (very fast)."
     }
   ]
 }

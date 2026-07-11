@@ -989,10 +989,15 @@ class sppasImageObjectDetection(BaseObjectsDetector):
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def extensions():
-        """Return the whole list of supported extensions in lower case."""
-        return list(sppasImageObjectDetection.DETECTORS.keys())
+    @classmethod
+    def extensions(cls):
+        """Return the whole list of supported extensions in lower case.
+
+        The registry of detectors is inheritable: a subclass can declare
+        its own DETECTORS dict to extend the supported extensions.
+
+        """
+        return list(cls.DETECTORS.keys())
 
     # -----------------------------------------------------------------------
 
@@ -1010,14 +1015,14 @@ class sppasImageObjectDetection(BaseObjectsDetector):
         """
         # Key = detector instance / Value = tuple(name, enabled)
         self._detector = dict()
-        detector = sppasImageObjectDetection.create_recognizer_from_extension(model)
+        detector = self.create_recognizer_from_extension(model)
         detector.load_model(model)
         detector_name = os.path.basename(model)
         self._detector[detector] = (detector_name, True)
 
         for filename in args:
             try:
-                detector = sppasImageObjectDetection.create_recognizer_from_extension(filename)
+                detector = self.create_recognizer_from_extension(filename)
                 detector.load_model(filename)
                 detector_name = os.path.basename(filename)
                 self._detector[detector] = (detector_name, True)
@@ -1029,11 +1034,13 @@ class sppasImageObjectDetection(BaseObjectsDetector):
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def create_recognizer_from_extension(filename):
+    @classmethod
+    def create_recognizer_from_extension(cls, filename):
         """Return an object detector according to a given filename.
 
-        Only the extension of the filename is used.
+        Only the extension of the filename is used. The detector is
+        searched in the DETECTORS registry of the class, so a subclass
+        can extend the registry with its own detectors.
 
         :param filename: (str)
         :return: BaseObjectsDetector
@@ -1042,8 +1049,8 @@ class sppasImageObjectDetection(BaseObjectsDetector):
         """
         extension = os.path.splitext(filename)[1]
         extension = extension.lower()
-        if extension in sppasImageObjectDetection.extensions():
-            return sppasImageObjectDetection.DETECTORS[extension]()
+        if extension in cls.extensions():
+            return cls.DETECTORS[extension]()
 
         raise IOExtensionError(filename)
 

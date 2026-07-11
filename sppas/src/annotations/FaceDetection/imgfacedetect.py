@@ -40,19 +40,10 @@
 """
 
 from sppas.core.config import cfg
-from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.imgdata import sppasImage
 from sppas.src.imgdata import sppasImageObjectDetection
 
-try:
-    from .mpfacedetect import MediaPipeFaceDetector
-    cfg.set_feature("mediapipe", True)
-except (ModuleNotFoundError, ImportError):
-    cfg.set_feature("mediapipe", False)
-
-    class MediaPipeFaceDetector(object):
-        def __init__(self, *args, **kwargs):
-            raise sppasEnableFeatureError("mediapipe")
+from .mpfacedetect import MediaPipeFaceDetector
 
 # ---------------------------------------------------------------------------
 
@@ -69,8 +60,8 @@ class ImageFaceDetection(sppasImageObjectDetection):
     launch multiple detections and to combine results. Moreover, it allows
     to convert the coordinates into the portrait instead of the face.
 
-    SPPAS>=4.2: MediaPipe Face Detection is wrapped and used like the other
-    systems.
+    SPPAS>=5.1: The MediaPipe Tasks face detector is used exactly like the
+    other systems, from its ".tflite" model file in the resources.
 
     :Example:
 
@@ -95,39 +86,15 @@ class ImageFaceDetection(sppasImageObjectDetection):
 
     """
 
+    # Inheritable registry: the detectors of the base class and the
+    # face-dedicated ones. The MediaPipe face detector is added below,
+    # only if the mediapipe feature is installed.
+    DETECTORS = dict(sppasImageObjectDetection.DETECTORS)
+
     def __init__(self):
         """Create a new instance."""
         super(ImageFaceDetection, self).__init__()
         self._extension = ""
-
-    # -----------------------------------------------------------------------
-
-    def load_model(self, model, *args):
-        """Override. Instantiate detector(s) from the given models.
-
-        Calling this method invalidates the existing detectors.
-        All instantiated detectors are enabled by default.
-        The min ratio is divided by the number of detectors.
-
-        :param model: (str) Default required model filename
-        :param args: Other models to load in order to create object detectors
-        :raise: IOError, Exception
-
-        """
-        if model is not None and "mediapipe" not in model:
-            sppasImageObjectDetection.load_model(self, model, *args)
-
-        # then add the mediapipe detector -- if available
-        if cfg.feature_installed("mediapipe"):
-            all_models = [model]
-            for filename in args:
-                all_models.append(filename)
-            if any(["mediapipe" in m for m in all_models]) is True:
-                mp = MediaPipeFaceDetector()
-                mp.load_model()
-                if self._detector is None:
-                    self._detector = dict()
-                self._detector[mp] = ("mediapipe", False)
 
     # -----------------------------------------------------------------------
 
@@ -190,3 +157,11 @@ class ImageFaceDetection(sppasImageObjectDetection):
         # no error occurred, all faces are converted to their portrait
         self._coords = portraits
         return True
+
+# ---------------------------------------------------------------------------
+# Register the face-dedicated detector, only if available.
+# ---------------------------------------------------------------------------
+
+
+if cfg.feature_installed("mediapipe") is True:
+    ImageFaceDetection.DETECTORS[MediaPipeFaceDetector().get_extension().lower()] = MediaPipeFaceDetector
