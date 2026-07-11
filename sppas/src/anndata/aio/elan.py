@@ -896,6 +896,13 @@ class sppasEAF(sppasBaseIO):
         # 4. Time Order: we only create the main element
         time_order_root = ET.SubElement(root, 'TIME_ORDER')
 
+        # A CVE_ID is generated for each entry of each controlled
+        # vocabulary. It's computed only once, so that the CV_ENTRY_ML
+        # elements and the CVE_REF of the annotations refer to the same
+        # identifiers -- the original CVE_ID, read from a source file,
+        # is never preserved (see _parse_ctrl_vocab()).
+        self.__cve_ids = self._build_cve_id_map()
+
         # 5. Tiers
 
         # 5.1 Create the root of each tier
@@ -1230,6 +1237,20 @@ class sppasEAF(sppasBaseIO):
 
     # -----------------------------------------------------------------------
 
+    def _build_cve_id_map(self):
+        """Assign a CVE_ID to each entry of each controlled vocabulary.
+
+        :returns: (dict) name of the ctrl vocab -> dict(tag -> CVE_ID)
+
+        """
+        cve_ids = dict()
+        for ctrl_vocab in self.get_ctrl_vocab_list():
+            cve_ids[ctrl_vocab.get_name()] = dict(
+                (tag, "cveid%d" % i) for i, tag in enumerate(ctrl_vocab))
+        return cve_ids
+
+    # -----------------------------------------------------------------------
+
     def _format_ctrl_vocab(self, root, ctrl_vocab):
         """Add 'CONTROLLED_VOCABULARY' elements into the ElementTree (if any).
 
@@ -1238,8 +1259,8 @@ class sppasEAF(sppasBaseIO):
         """
         ctrl_root = ET.SubElement(root, 'CONTROLLED_VOCABULARY')
         ctrl_root.set('CV_ID', ctrl_vocab.get_name())
-        if ctrl_vocab.is_meta_key('EXT_REF'):
-            ctrl_root.set('EXT_REF', ctrl_vocab.get_meta('EXT_REF'))
+        # EXT_REF is not written: it would point to an EXTERNAL_REF
+        # document element that this class never reads nor re-creates.
 
         language = self.get_meta('language_code_0')
         if ctrl_vocab.is_meta_key('language_code_0'):
@@ -1251,11 +1272,12 @@ class sppasEAF(sppasBaseIO):
             desc_root.text = description
             desc_root.set('LANG_REF', language)
 
-        for i, tag in enumerate(ctrl_vocab):
+        cve_id_map = self.__cve_ids[ctrl_vocab.get_name()]
+        for tag in ctrl_vocab:
             entry_root = ET.SubElement(ctrl_root, 'CV_ENTRY_ML')
             entry_value_root = ET.SubElement(entry_root, 'CVE_VALUE')
             entry_value_root.set('CVE_ID',
-                                 "cveid%d" % i)
+                                 cve_id_map[tag])
             entry_value_root.set('DESCRIPTION',
                                  ctrl_vocab.get_tag_description(tag))
             entry_value_root.set('LANG_REF',
@@ -1346,9 +1368,9 @@ class sppasEAF(sppasBaseIO):
         for tier in new_alignable_tiers:
             for tier_root in root.findall('TIER'):
                 if tier_root.attrib['TIER_ID'] == tier.get_name():
-                    sppasEAF._format_alignable_annotations(tier_root,
-                                                           tier,
-                                                           time_values)
+                    self._format_alignable_annotations(tier_root,
+                                                       tier,
+                                                       time_values)
 
         # assign time slots to annotations
         time_slots = sppasEAF._fix_time_slots(time_values)
@@ -1369,8 +1391,7 @@ class sppasEAF(sppasBaseIO):
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def _format_alignable_annotations(tier_root, tier, time_values):
+    def _format_alignable_annotations(self, tier_root, tier, time_values):
         """Add the elements 'ANNOTATION' into the ElementTree (if any).
 
         Only for alignable tiers.
@@ -1384,6 +1405,11 @@ class sppasEAF(sppasBaseIO):
         of the tiers. Is completed in this method.
 
         """
+        ctrl_vocab = tier.get_ctrl_vocab()
+        cve_id_map = dict()
+        if ctrl_vocab is not None:
+            cve_id_map = self.__cve_ids[ctrl_vocab.get_name()]
+
         for ann in tier:
 
             # create an ANNOTATION for each label.
@@ -1391,7 +1417,8 @@ class sppasEAF(sppasBaseIO):
             # un-aligned annotations.
             created_anns = sppasEAF._create_alignable_annotation_element(
                 ann,
-                tier_root)
+                tier_root,
+                cve_id_map)
 
             for align_ann_root in created_anns:
                 b = align_ann_root.attrib['TIME_SLOT_REF1']
@@ -1425,10 +1452,13 @@ class sppasEAF(sppasBaseIO):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def _create_alignable_annotation_element(ann, tier_root):
+    def _create_alignable_annotation_element(ann, tier_root, cve_id_map):
         """Create ANNOTATION in ElementTree.
 
-        Return the list of created nodes of 'ALIGNABLE_ANNOTATION'.
+        :param cve_id_map: (dict) tag -> CVE_ID, for the controlled
+        vocabulary of the tier "ann" is in, or an empty dict if the tier
+        has none.
+        :returns: the list of created nodes of 'ALIGNABLE_ANNOTATION'.
 
         """
         begin = round(ann.get_lowest_localization().get_midpoint(), 4)
@@ -1456,9 +1486,20 @@ class sppasEAF(sppasBaseIO):
                 align_ann_root.set('ANNOTATION_ID',
                                    ann.get_meta('id'))
 
-            for attrib in ['SVG_REF', 'EXT_REF', 'LANG_REF', 'CVE_REF']:
+            # EXT_REF is not written: it would point to an EXTERNAL_REF
+            # document element that this class never reads nor re-creates.
+            for attrib in ['SVG_REF', 'LANG_REF']:
                 if ann.is_meta_key(attrib):
                     align_ann_root.set(attrib, ann.get_meta(attrib))
+
+            # CVE_REF is not restored from the metadata: the CV_ENTRY_ML
+            # elements are re-created with new CVE_ID (see _format_ctrl_
+            # vocab()), so it's re-computed from the same id map instead,
+            # matching this label's tag. No match: the tier has no
+            # controlled vocabulary, or this tag isn't one of its entries.
+            cve_id = cve_id_map.get(label.get_best())
+            if cve_id is not None:
+                align_ann_root.set('CVE_REF', cve_id)
 
             # Assign the label
             label_ann_root = ET.SubElement(align_ann_root, 'ANNOTATION_VALUE')

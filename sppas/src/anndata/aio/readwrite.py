@@ -65,6 +65,7 @@ from .htk import sppasLab
 from .subtitle import sppasSubRip
 from .subtitle import sppasSubViewer
 from .subtitle import sppasWebVTT
+from .subtitle import sppasLRC
 from .table import sppasTRA
 from .table import sppasARFF
 from .table import sppasXRFF
@@ -102,6 +103,7 @@ class sppasTrsRW(object):
     TRANSCRIPTION_TYPES[sppasSubRip().default_extension] = sppasSubRip
     TRANSCRIPTION_TYPES[sppasSubViewer().default_extension] = sppasSubViewer
     TRANSCRIPTION_TYPES[sppasWebVTT().default_extension] = sppasWebVTT
+    TRANSCRIPTION_TYPES[sppasLRC().default_extension] = sppasLRC
     TRANSCRIPTION_TYPES[sppasCTM().default_extension] = sppasCTM
     TRANSCRIPTION_TYPES[sppasSTM().default_extension] = sppasSTM
     TRANSCRIPTION_TYPES[sppasAudacity().default_extension] = sppasAudacity

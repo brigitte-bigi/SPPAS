@@ -3,7 +3,7 @@
 :filename: sppas.tests.anndata.test_aio_subtitles.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Test the classes sppasSubRip() and sppasSubViewer() to read subtitles.
+:summary: Test the reader/writer classes of the subtitle file formats.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -41,19 +41,51 @@
 
 import unittest
 import os.path
+import shutil
+import codecs
 
 from sppas.src.anndata.aio.subtitle import sppasBaseSubtitles
 from sppas.src.anndata.aio.subtitle import sppasSubRip
 from sppas.src.anndata.aio.subtitle import sppasSubViewer
+from sppas.src.anndata.aio.subtitle import sppasWebVTT
+from sppas.src.anndata.aio.subtitle import sppasLRC
 
+from sppas.src.anndata.transcription import sppasTranscription
+from sppas.src.anndata.ann.annlabel import sppasTag
+from sppas.src.anndata.ann.annlabel import sppasLabel
 from sppas.src.anndata.ann.annlocation import sppasInterval
 from sppas.src.anndata.ann.annlocation import sppasPoint
 from sppas.src.anndata.ann.annotation import sppasAnnotation
 from sppas.src.anndata.ann.annlocation import sppasLocation
 
+from sppas.src.utils.fileutils import sppasFileUtils
+
 # ---------------------------------------------------------------------------
 
+TEMP = sppasFileUtils().set_random()
 DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+# ---------------------------------------------------------------------------
+
+
+def create_transcription_with_silence():
+    """Return a transcription with two speech and one silence annotations.
+
+    :return: (sppasTranscription)
+
+    """
+    trs = sppasTranscription()
+    tier = trs.create_tier(name="subtitles")
+    tier.append(sppasAnnotation(
+        sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(3.5))),
+        sppasLabel(sppasTag("Lorem ipsum"))))
+    tier.append(sppasAnnotation(
+        sppasLocation(sppasInterval(sppasPoint(3.5), sppasPoint(5.))),
+        sppasLabel(sppasTag("#"))))
+    tier.append(sppasAnnotation(
+        sppasLocation(sppasInterval(sppasPoint(5.), sppasPoint(7.))),
+        sppasLabel(sppasTag("dolor sit amet"))))
+    return trs
 
 # ---------------------------------------------------------------------------
 
@@ -120,6 +152,25 @@ class TestBaseSubtitle(unittest.TestCase):
         self.assertEqual(sppasSubRip._serialize_location(a1),
                          "00:00:01,235 --> 00:00:03,567\n")
 
+    # -----------------------------------------------------------------
+
+    def test_is_silence(self):
+        """Test if the best tag of an annotation is a silence."""
+
+        location = sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(3.5)))
+
+        a1 = sppasAnnotation(location, sppasLabel(sppasTag("#")))
+        self.assertTrue(sppasBaseSubtitles._is_silence(a1))
+
+        a2 = sppasAnnotation(location, sppasLabel(sppasTag("sil")))
+        self.assertTrue(sppasBaseSubtitles._is_silence(a2))
+
+        a3 = sppasAnnotation(location, sppasLabel(sppasTag("Lorem ipsum")))
+        self.assertFalse(sppasBaseSubtitles._is_silence(a3))
+
+        a4 = sppasAnnotation(location)
+        self.assertFalse(sppasBaseSubtitles._is_silence(a4))
+
 # ---------------------------------------------------------------------
 
 
@@ -128,6 +179,15 @@ class TestSubRip(unittest.TestCase):
     Represents a SubRip reader/writer.
 
     """
+    def setUp(self):
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+
+    def tearDown(self):
+        shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------
+
     def test_read(self):
         """Test of reading a SRT sample file."""
 
@@ -159,6 +219,57 @@ class TestSubRip(unittest.TestCase):
         a1.set_meta("position_pixel_Y2", "200")
         self.assertEqual(sppasSubRip._serialize_metadata(a1), "X1:10 Y1:20 X2:100 Y2:200\n")
 
+    # -----------------------------------------------------------------
+
+    def test_write(self):
+        """Test of writing a SRT file: silences are not written."""
+
+        txt = sppasSubRip()
+        txt.set(create_transcription_with_silence())
+        output = os.path.join(TEMP, "sample.srt")
+        txt.write(output)
+
+        with codecs.open(output, "r", "utf-8") as fp:
+            content = fp.read()
+
+        self.assertTrue("1\n00:00:01,000 --> 00:00:03,500\nLorem ipsum\n" in content)
+        self.assertTrue("2\n00:00:05,000 --> 00:00:07,000\ndolor sit amet\n" in content)
+        self.assertFalse("#" in content)
+
+# ---------------------------------------------------------------------
+
+
+class TestWebVTT(unittest.TestCase):
+    """
+    Represents a WebVTT writer.
+
+    """
+    def setUp(self):
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+
+    def tearDown(self):
+        shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------
+
+    def test_write(self):
+        """Test of writing a VTT file: header, timestamps, no silence."""
+
+        txt = sppasWebVTT()
+        txt.set(create_transcription_with_silence())
+        output = os.path.join(TEMP, "sample.vtt")
+        txt.write(output)
+
+        with codecs.open(output, "r", "utf-8") as fp:
+            content = fp.read()
+
+        self.assertTrue(content.startswith("WEBVTT\n\n"))
+        self.assertTrue("1\n00:00:01.000 --> 00:00:03.500\nLorem ipsum\n" in content)
+        self.assertTrue("2\n00:00:05.000 --> 00:00:07.000\ndolor sit amet\n" in content)
+        self.assertFalse("#" in content)
+        self.assertFalse("," in content)
+
 # ---------------------------------------------------------------------
 
 
@@ -167,6 +278,15 @@ class TestSubViewer(unittest.TestCase):
     Represents a SubViewer reader/writer.
 
     """
+    def setUp(self):
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+
+    def tearDown(self):
+        shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------
+
     def test_read(self):
         """Test of reading a SUB sample file."""
 
@@ -193,3 +313,79 @@ class TestSubViewer(unittest.TestCase):
         txt = sppasSubViewer()
         header = txt._serialize_header()
         self.assertEqual(len(header.split('\n')), 14)
+
+    # -----------------------------------------------------------------
+
+    def test_write(self):
+        """Test of writing a SUB file: silences are not written."""
+
+        txt = sppasSubViewer()
+        txt.set(create_transcription_with_silence())
+        output = os.path.join(TEMP, "sample.sub")
+        txt.write(output)
+
+        with codecs.open(output, "r", "utf-8") as fp:
+            content = fp.read()
+
+        self.assertTrue("00:00:01.000,00:00:03.500\nLorem ipsum\n" in content)
+        self.assertTrue("00:00:05.000,00:00:07.000\ndolor sit amet\n" in content)
+        self.assertFalse("#" in content)
+
+# ---------------------------------------------------------------------
+
+
+class TestLRC(unittest.TestCase):
+    """
+    Represents a LRC reader/writer.
+
+    """
+    def setUp(self):
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+
+    def tearDown(self):
+        shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------
+
+    def test_read(self):
+        """Test of reading a LRC sample file."""
+
+        txt = sppasLRC()
+        txt.read(os.path.join(DATA, "sample.lrc"))
+
+        self.assertEqual(txt.get_meta("lrc_artist"), "The Artist")
+        self.assertEqual(txt.get_meta("lrc_title"), "The Title")
+
+        self.assertEqual(len(txt), 2)
+        self.assertEqual(txt[0].get_name(), "Transcription")
+        self.assertEqual(txt[1].get_name(), "Tokens")
+        self.assertEqual(len(txt[0]), 3)
+        self.assertEqual(len(txt[1]), 5)
+
+        self.assertEqual(sppasPoint(12.), txt[0].get_first_point())
+        self.assertEqual(sppasPoint(23.5), txt[0].get_last_point())
+
+        self.assertEqual("Lorem ipsum dolor sit amet",
+                         " ".join(label.get_best().get_content() for label in txt[0][0].get_labels()))
+        self.assertEqual("sed", txt[1][2].get_best_tag().get_content())
+        self.assertEqual(sppasPoint(21.8), txt[1][3].get_lowest_localization())
+
+    # -----------------------------------------------------------------
+
+    def test_write(self):
+        """Test of writing a LRC file: header, line and word timestamps."""
+
+        txt = sppasLRC()
+        txt.read(os.path.join(DATA, "sample.lrc"))
+        output = os.path.join(TEMP, "sample.lrc")
+        txt.write(output)
+
+        with codecs.open(output, "r", "utf-8") as fp:
+            content = fp.read()
+
+        self.assertTrue("[ar:The Artist]" in content)
+        self.assertTrue("[ti:The Title]" in content)
+        self.assertTrue("[00:12.00]Lorem ipsum dolor sit amet" in content)
+        self.assertTrue("[00:17.20]consectetur adipiscing elit" in content)
+        self.assertTrue("[00:21.10]<00:21.10>sed <00:21.80>do <00:22.50>eiusmod" in content)
