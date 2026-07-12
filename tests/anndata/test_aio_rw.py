@@ -175,7 +175,7 @@ class TestAIO(unittest.TestCase):
         """Read/Write/Read then compare XRA files."""
 
         # Read XRA file
-        parser = sppasTrsRW(os.path.join(paths.etc, "xml", "sample-1.2.xra"))
+        parser = sppasTrsRW(os.path.join(DATA, "sample-1.2.xra"))
         trs1 = parser.read(heuristic=True)
 
         # Write XRA file

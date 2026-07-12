@@ -50,7 +50,7 @@ from sppas.src.anndata.aio.xra import sppasXRA
 # ---------------------------------------------------------------------------
 
 TEMP = sppasFileUtils().set_random()
-DATA = os.path.join(paths.etc, "xml")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 # ---------------------------------------------------------------------------
 
