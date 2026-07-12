@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -87,12 +87,12 @@ class sppasHandPose(sppasBaseAnnotation):
     # -----------------------------------------------------------------------
 
     def load_resources(self, *args, **kwargs):
-        """Fix the model and proto files.
+        """Fix the model files.
 
-        :param args:
+        :param args: (str) Filenames of the hand and the pose landmarker models.
 
         """
-        self.__hdi.load_model()
+        self.__hdi.load_model(*args)
 
     # -----------------------------------------------------------------------
     # Methods to fix options

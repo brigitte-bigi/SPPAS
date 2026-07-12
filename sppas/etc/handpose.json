@@ -7,6 +7,20 @@
   "devel": 95,
 
   "resources": [
+    {
+      "path": "faces",
+      "type": "file",
+      "ext": "",
+      "name": "hand_landmarker.task",
+      "lang": false
+    },
+    {
+      "path": "faces",
+      "type": "file",
+      "ext": "",
+      "name": "pose_landmarker_full.task",
+      "lang": false
+    }
   ],
 
   "anntype": [

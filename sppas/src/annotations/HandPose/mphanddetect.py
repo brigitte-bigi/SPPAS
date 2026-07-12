@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyleft (C) 2011-2024  Brigitte Bigi
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -36,18 +36,33 @@
 
     ---------------------------------------------------------------------
 
+The MediaPipe Tasks API externalizes its models: the hand landmarker and
+the pose landmarker are instantiated from their ".task" model files of the
+resources, exactly like the models of the other detection annotations.
+
 """
 
 import logging
-import mediapipe as mp
-import numpy
+import os
 
+from sppas.core.config import cfg
 from sppas.core.coreutils import sppasTypeError
 from sppas.core.coreutils import IntervalRangeException
 from sppas.core.coreutils import sppasError
+from sppas.core.coreutils import sppasIOError
+from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.src.imgdata import sppasCoords
 from sppas.src.imgdata import sppasSights
 from sppas.src.imgdata import sppasImage
+
+try:
+    import numpy
+    import mediapipe as mp
+    from mediapipe.tasks import python as mp_tasks
+    from mediapipe.tasks.python import vision as mp_vision
+    cfg.set_feature("mediapipe", True)
+except (ModuleNotFoundError, ImportError):
+    cfg.set_feature("mediapipe", False)
 
 # ---------------------------------------------------------------------------
 
@@ -85,8 +100,8 @@ class HandTypes(object):
 class MediaPipeHandPoseDetector(object):
     """SPPAS wrapper of MediaPipe Hand Detection and Pose Detection.
 
-    See <https://google.github.io/mediapipe/solutions/hands.html>
-    See <https://google.github.io/mediapipe/solutions/pose.html>
+    See <https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker>
+    See <https://ai.google.dev/edge/mediapipe/solutions/vision/pose_landmarker>
     for details:
 
     MediaPipe Hands is a high-fidelity hand and finger tracking solution.
@@ -115,6 +130,13 @@ class MediaPipeHandPoseDetector(object):
     # -----------------------------------------------------------------------
 
     def __init__(self):
+        """Create a new MediaPipeHandPoseDetector instance.
+
+        :raises: sppasEnableFeatureError: mediapipe is not installed.
+
+        """
+        if cfg.feature_installed("mediapipe") is False:
+            raise sppasEnableFeatureError("mediapipe")
         # The hand and finger detector
         self._detector = None
         self._rescue_detector = None
@@ -197,13 +219,36 @@ class MediaPipeHandPoseDetector(object):
 
     # -----------------------------------------------------------------------
 
-    def load_model(self, model=None, *args):
-        """Instantiate the detectors.
+    def load_model(self, model, *args):
+        """Instantiate the detectors from the given model files.
 
-        :param model: Unused.
+        Both a hand landmarker and a pose landmarker ".task" model files
+        are expected, in any order: they are recognized from their
+        filename, one contains "hand" and the other contains "pose".
+
+        :param model: (str) Filename of a ".task" model file.
+        :param args: Other model files.
+        :raises: IOError: A given model file does not exist.
+        :raises: sppasError: A model is missing, or a detector failed to be instantiated.
 
         """
-        self._set_detector()
+        hand_model = None
+        pose_model = None
+        for filename in (model,) + args:
+            if os.path.exists(filename) is False:
+                raise sppasIOError(filename)
+            name = os.path.basename(filename).lower()
+            if "hand" in name:
+                hand_model = filename
+            elif "pose" in name:
+                pose_model = filename
+
+        if hand_model is None:
+            raise sppasError("A hand landmarker model file is required but was not given.")
+        if pose_model is None:
+            raise sppasError("A pose landmarker model file is required but was not given.")
+
+        self._set_detector(hand_model, pose_model)
 
     # -----------------------------------------------------------------------
 
@@ -288,9 +333,8 @@ class MediaPipeHandPoseDetector(object):
         self.invalidate()
 
         # Process the pose predictions on the given image
-        success = self._detect_pose(img)
-        if success is True and len(self._hands) > 1 and len(self._coords) > 1:
-            success = 0
+        pose_detected = self._detect_pose(img)
+        if pose_detected is True and len(self._hands) > 1 and len(self._coords) > 1:
 
             # Make a copy of the currently detected pose, hand and coords
             copied_coords = [c.copy() for c in self._coords]
@@ -299,12 +343,13 @@ class MediaPipeHandPoseDetector(object):
             self._coords = list()
 
             # Process the hands predictions on the given image
-            success = self._detect_hands(img)
-            if success is False:
-                success = self._detect_hands(img, rescue=True)
+            hands_detected = self._detect_hands(img)
+            if hands_detected is False:
+                self._detect_hands(img, rescue=True)
 
             # Make a match between the detected hands from pose and from hand detection
             # for right and left hands
+            success = 0
             for h in (0, 1):
                 hands, coords = self.__match_pose_with_hands(img, copied_coords[h])
                 if hands is not None:
@@ -409,55 +454,41 @@ class MediaPipeHandPoseDetector(object):
     # Private estimators
     # -----------------------------------------------------------------------
 
-    def _set_detector(self):
-        """Initialize the detector.
+    def _set_detector(self, hand_model, pose_model):
+        """Initialize the detectors with the given model files.
 
-        :raises: Exception
+        The rescue detector uses the same model as the default one but
+        with a lower detection confidence.
+
+        :param hand_model: (str) Filename of the hand landmarker ".task" model file.
+        :param pose_model: (str) Filename of the pose landmarker ".task" model file.
+        :raises: sppasError: A detector failed to be instantiated.
 
         """
         self._detector = None
         self._rescue_detector = None
         self._pose_detector = None
         try:
-            self._detector = mp.solutions.hands.Hands(
-                static_image_mode=True,
-                model_complexity=0,       # (0=low / 1=high). 0 detects more hands
-                max_num_hands=20,
-                min_detection_confidence=0.05
-               )
-            self._rescue_detector = mp.solutions.hands.Hands(
-                static_image_mode=True,
-                model_complexity=1,  # 0 detects more hands in large images, 1 in small images
-                max_num_hands=20,
-                min_detection_confidence=0.01
-               )
-            self._pose_detector = mp.solutions.pose.Pose(
-                static_image_mode=True,     # really worse results if False
-                model_complexity=1,         # (0=low / 1=medium / 2=high)
-                enable_segmentation=False,
-                min_detection_confidence=self.__min_score)
-        except:
-            try:
-                # The version of mediapipe is too old.
-                # model_complexity and enable_segmentation are not recognized;
-                # but there's no mediapipe.__version__ to test it before!
-                self._detector = mp.solutions.hands.Hands(
-                    static_image_mode=True,
-                    max_num_hands=20,
-                    min_detection_confidence=0.1
-                   )
-                self._rescue_detector = mp.solutions.hands.Hands(
-                    static_image_mode=True,
-                    max_num_hands=20,
-                    min_detection_confidence=0.01
-                   )
-                self._pose_detector = mp.solutions.pose.Pose(
-                    static_image_mode=True,     # really worse results if False
-                    min_detection_confidence=0.01)
-            except Exception as e:
-                logging.error("MediaPipe hand or pose detection system failed "
-                              "to be instantiated.")
-                raise sppasError(str(e))
+            hand_base_options = mp_tasks.BaseOptions(model_asset_path=hand_model)
+            self._detector = mp_vision.HandLandmarker.create_from_options(
+                mp_vision.HandLandmarkerOptions(
+                    base_options=hand_base_options,
+                    num_hands=20,
+                    min_hand_detection_confidence=0.05))
+            self._rescue_detector = mp_vision.HandLandmarker.create_from_options(
+                mp_vision.HandLandmarkerOptions(
+                    base_options=hand_base_options,
+                    num_hands=20,
+                    min_hand_detection_confidence=0.01))
+            pose_base_options = mp_tasks.BaseOptions(model_asset_path=pose_model)
+            self._pose_detector = mp_vision.PoseLandmarker.create_from_options(
+                mp_vision.PoseLandmarkerOptions(
+                    base_options=pose_base_options,
+                    min_pose_detection_confidence=0.01))
+        except Exception as e:
+            logging.error("MediaPipe hand or pose detection system failed "
+                          "to be instantiated.")
+            raise sppasError(str(e))
 
     # -----------------------------------------------------------------------
 
@@ -473,19 +504,24 @@ class MediaPipeHandPoseDetector(object):
         if w*h == 0:
             return False
 
+        # MediaPipe requires a plain contiguous uint8 numpy.ndarray,
+        # not a subclass like sppasImage.
+        rgb = numpy.ascontiguousarray(image, dtype=numpy.uint8)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+
         # make predictions
         if rescue is False:
-            results = self._detector.process(image)
+            results = self._detector.detect(mp_image)
         else:
-            results = self._rescue_detector.process(image)
+            results = self._rescue_detector.detect(mp_image)
 
         # Convert detections of each hand into a list of sppasSights
-        if results.multi_hand_landmarks:
-            for hand in results.multi_hand_landmarks:
+        if len(results.hand_landmarks) > 0:
+            for hand in results.hand_landmarks:
                 sights = sppasSights(nb=21)
-                for i in range(len(hand.landmark)):
+                for i in range(len(hand)):
                     # the x- and y- coordinates are normalized screen coordinates
-                    mark = hand.landmark[i]
+                    mark = hand[i]
                     x_coord = max(0, int(mark.x * float(w)))
                     y_coord = max(0, int(mark.y * float(h)))
                     if self.__mesh_mode is False:
@@ -515,21 +551,21 @@ class MediaPipeHandPoseDetector(object):
         """Remove Left or Right hands."""
         # Filter hands: keep only the ones of the given hand type
         # and set the confidence score
-        if len(results.multi_hand_landmarks) != len(results.multi_handedness):
-            logging.error("Hum... multi_hand_landmarks != multi_handedness")
+        if len(results.hand_landmarks) != len(results.handedness):
+            logging.error("Hum... hand_landmarks != handedness")
             return
         to_remove = list()
-        for i, hand in enumerate(results.multi_handedness):
-            if len(hand.classification) > 0:
-                if handtype == HandTypes().RIGHT and hand.classification[0].label != "Right":
+        for i, hand in enumerate(results.handedness):
+            if len(hand) > 0:
+                if handtype == HandTypes().RIGHT and hand[0].category_name != "Right":
                     to_remove.append(i)
-                elif handtype == HandTypes().LEFT and hand.classification[0].label != "Left":
+                elif handtype == HandTypes().LEFT and hand[0].category_name != "Left":
                     to_remove.append(i)
                 else:
-                    self._coords[i].set_confidence(hand.classification[0].score)
+                    self._coords[i].set_confidence(hand[0].score)
         for i in reversed(to_remove):
-            self._hands.pop(to_remove[i])
-            self._coords.pop(to_remove[i])
+            self._hands.pop(i)
+            self._coords.pop(i)
 
     # -----------------------------------------------------------------------
 
@@ -542,14 +578,20 @@ class MediaPipeHandPoseDetector(object):
         :param image: (sppasImage or numpy.ndarray)
 
         """
-        # make predictions
-        results = self._pose_detector.process(image)
+        # MediaPipe requires a plain contiguous uint8 numpy.ndarray,
+        # not a subclass like sppasImage.
+        rgb = numpy.ascontiguousarray(image, dtype=numpy.uint8)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
 
-        # Convert detections of each hand into a list of sppasSights
-        if results.pose_landmarks:
+        # make predictions
+        results = self._pose_detector.detect(mp_image)
+
+        # Convert detections of the pose into sppasSights
+        if len(results.pose_landmarks) > 0:
             w, h = image.size()
-            self._pose = sppasSights(nb=len(results.pose_landmarks.landmark))
-            for i, mark in enumerate(results.pose_landmarks.landmark):
+            pose_marks = results.pose_landmarks[0]
+            self._pose = sppasSights(nb=len(pose_marks))
+            for i, mark in enumerate(pose_marks):
                 # the x- and y- coordinates are normalized screen coordinates
                 x_coord = max(0, int(mark.x * float(w)))
                 y_coord = max(0, int(mark.y * float(h)))

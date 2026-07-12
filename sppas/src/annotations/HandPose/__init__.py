@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -81,6 +81,7 @@ else:
     else:
         # Import the classes in case mediapipe is installed so that
         # the automatic detections can work.
+        from .mphanddetect import MediaPipeHandPoseDetector
         from .sppashandpose import sppasHandPose
 
 # ---------------------------------------------------------------------------
