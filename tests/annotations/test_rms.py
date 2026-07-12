@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_rms.py
+:filename: tests.annotations.test_rms.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of RMS automatic annotation.
@@ -44,12 +44,12 @@ import os
 
 import audioopy.aio
 
-from ..RMS.irms import IntervalsRMS
-from ..RMS.sppasrms import sppasRMS
+from sppas.src.annotations.RMS.irms import IntervalsRMS
+from sppas.src.annotations.RMS.sppasrms import sppasRMS
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 # ---------------------------------------------------------------------------
 

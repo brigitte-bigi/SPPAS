@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_num2text.py
+:filename: tests.annotations.test_num2text.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Text Normalization automatic annotation.

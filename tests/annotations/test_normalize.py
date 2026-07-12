@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_normalize.py
+:filename: tests.annotations.test_normalize.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Text Normalization automatic annotation.
@@ -60,13 +60,13 @@ from sppas.src.anndata.ann.annlocation import sppasPoint
 from sppas.src.structs.baseoption import sppasOption
 from sppas.src.utils.fileutils import sppasFileUtils
 
-from ..TextNorm.normalize import TextNormalizer
-from ..TextNorm.orthotranscription import sppasOrthoTranscription
-from ..TextNorm.tokenize import sppasTokenSegmenter
-from ..TextNorm.splitter import sppasSimpleSplitter
-from ..TextNorm.tiernorm import TierNormalizer
-from ..TextNorm.cutparser import ParseCut
-from ..TextNorm.sppastextnorm import sppasTextNorm
+from sppas.src.annotations.TextNorm.normalize import TextNormalizer
+from sppas.src.annotations.TextNorm.orthotranscription import sppasOrthoTranscription
+from sppas.src.annotations.TextNorm.tokenize import sppasTokenSegmenter
+from sppas.src.annotations.TextNorm.splitter import sppasSimpleSplitter
+from sppas.src.annotations.TextNorm.tiernorm import TierNormalizer
+from sppas.src.annotations.TextNorm.cutparser import ParseCut
+from sppas.src.annotations.TextNorm.sppastextnorm import sppasTextNorm
 
 # ---------------------------------------------------------------------------
 

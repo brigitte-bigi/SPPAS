@@ -1,5 +1,5 @@
 """
-:filename: sppas.src.annotations.tests.test_handpose.py
+:filename: tests.annotations.test_handpose.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Hand & Pose automatic annotation.
@@ -40,6 +40,7 @@
 
 import os
 import unittest
+import shutil
 
 from sppas.core.config import paths
 from sppas.src.imgdata import sppasImage
@@ -49,7 +50,24 @@ from sppas.src.annotations.HandPose.mphanddetect import MediaPipeHandPoseDetecto
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+TEMP = sppasFileUtils().set_random()
+
+# ---------------------------------------------------------------------------
+
+
+def setUpModule():
+    if os.path.exists(TEMP) is False:
+        os.mkdir(TEMP)
+
+
+def tearDownModule():
+    shutil.rmtree(TEMP)
+
+
+
+# ---------------------------------------------------------------------------
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 HAND_MODEL = os.path.join(paths.resources, "faces", "hand_landmarker.task")
 POSE_MODEL = os.path.join(paths.resources, "faces", "pose_landmarker_full.task")
 
@@ -91,7 +109,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         img = sppasImage(filename=fn)
         md.detect_hands(img)
         self.assertEqual(1, len(md))
-        fn = os.path.join(DATA, "handcue-5-md.png")
+        fn = os.path.join(TEMP, "handcue-5-md.png")
         w = sppasHandsSightsImageWriter()
         w.set_options(tag=True, xra=False, csv=False)
         w.write(img, [md.get_hand_sights(i) for i in range(len(md))], fn)
@@ -99,7 +117,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         fn = os.path.join(DATA, "BrigitteBigi-Slovenie2016.jpg")
         img = sppasImage(filename=fn)
         md.detect_hands(img)
-        fn = os.path.join(DATA, "BrigitteBigiSlovenie2016-hand.png")
+        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-hand.png")
         w = sppasHandsSightsImageWriter()
         w.set_options(tag=True, xra=False, csv=False)
         img = w.write_tagged_img(img, [md.get_hand_sights(i) for i in range(len(md))], fn)
@@ -114,7 +132,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         # Multi-speaker: many hands! There are 6 in the image.
         img = sppasImage(filename=fn)
         md.detect_hands(img)
-        fn = os.path.join(DATA, "BrigitteBigi_Aix2020-hand.png")
+        fn = os.path.join(TEMP, "BrigitteBigi_Aix2020-hand.png")
         w = sppasHandsSightsImageWriter()
         w.set_options(tag=True, xra=True, csv=True)
         # w.write(img, [[md.get_hand_sights(i) for i in range(len(md))], [md.get_hand_coordinates(i) for i in range(len(md))]], fn)
@@ -130,7 +148,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         img = sppasImage(filename=fn)
         md.detect_pose(img)
         self.assertEqual(2, len(md))   # 1 pose == 2 hands!
-        fn = os.path.join(DATA, "BrigitteBigiSlovenie2016-pose.png")
+        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-pose.png")
         w = sppasHandsSightsImageWriter()
         w.set_options(tag=True, xra=False, csv=False)
         w.write(img, [md.get_pose_sights()], fn)
@@ -139,7 +157,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         img = sppasImage(filename=fn)
         md.detect_pose(img)
         self.assertEqual(2, len(md))   # 1 pose == 2 hands!
-        fn = os.path.join(DATA, "BrigitteBigi_Aix2020-pose.png")
+        fn = os.path.join(TEMP, "BrigitteBigi_Aix2020-pose.png")
         w = sppasHandsSightsImageWriter()
         w.set_options(tag=True, xra=False, csv=False)
         w.write(img, [md.get_pose_sights()], fn)
@@ -155,7 +173,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         success_value = md.detect(img)
         self.assertEqual(success_value, 2)   # 1 pose, 2 hands detected
         self.assertEqual(2, len(md))   # 1 pose == 2 hands!
-        fn = os.path.join(DATA, "BrigitteBigi_Aix2020-poha.png")
+        fn = os.path.join(TEMP, "BrigitteBigi_Aix2020-poha.png")
         p = [md.get_pose_sights()]
         s = [md.get_hand_sights(i) for i in range(len(md))]
         c = [md.get_hand_coordinates(i) for i in range(len(md))]
@@ -167,7 +185,7 @@ class TestMediaPipeHandDetection(unittest.TestCase):
         success_value = md.detect(img)
         self.assertEqual(success_value, 1)   # 1 pose, 1 hand detected
         self.assertEqual(2, len(md))         # 1 pose == 2 hands!
-        fn = os.path.join(DATA, "BrigitteBigiSlovenie2016-poha.png")
+        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-poha.png")
         p = [md.get_pose_sights()]
         s = [md.get_hand_sights(i) for i in range(len(md))]
         c = [md.get_hand_coordinates(i) for i in range(len(md))]

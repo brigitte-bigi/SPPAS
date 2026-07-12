@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_phonetize.py
+:filename: tests.annotations.test_phonetize.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Phonetization automatic annotation.

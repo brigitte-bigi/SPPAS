@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_syllabify.py
+:filename: tests.annotations.test_syllabify.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Syllabification automatic annotation.
@@ -52,8 +52,8 @@ from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
 from sppas.src.anndata import sppasTrsRW
 
-from ..Syll.syllabify import Syllabifier
-from ..Syll.sppassyll import sppasSyll
+from sppas.src.annotations.Syll.syllabify import Syllabifier
+from sppas.src.annotations.Syll.sppassyll import sppasSyll
 
 # -------------------------------------------------------------------------
 

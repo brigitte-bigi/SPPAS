@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_align.py
+:filename: tests.annotations.test_align.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Lexical Reprises automatic annotation.
@@ -49,9 +49,9 @@ from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
 from sppas.src.anndata import sppasInterval
 
-from ..SelfRepet.datastructs import DataSpeaker
-from ..SpkLexRep.sppaslexrep import sppasLexRep
-from ..SpkLexRep.sppaslexrep import LexReprise
+from sppas.src.annotations.SelfRepet.datastructs import DataSpeaker
+from sppas.src.annotations.SpkLexRep.sppaslexrep import sppasLexRep
+from sppas.src.annotations.SpkLexRep.sppaslexrep import LexReprise
 
 # ---------------------------------------------------------------------------
 

@@ -1,9 +1,9 @@
 # -*- coding: utf8 -*-
 """
-:filename: sppas.src.annotations.tests.test_activity.py
+:filename: tests.annotations.test_otherrepet.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
-:summary:  Tests of Activity automatic annotation.
+:summary:  Tests of Other-Repetitions automatic annotation.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -41,47 +41,35 @@
 
 import unittest
 
-from sppas.core.config import symbols
-from sppas.src.anndata import sppasTranscription
-
-from sppas.src.annotations.Activity.activity import Activity
+from sppas.src.annotations.SelfRepet.datastructs import DataSpeaker
+from sppas.src.annotations.OtherRepet.rules import OtherRules
+from sppas.src.annotations.OtherRepet.detectrepet import OtherRepetition
 
 # ---------------------------------------------------------------------------
 
 
-class TestActivity(unittest.TestCase):
+class TestOtherRules(unittest.TestCase):
 
-    def setUp(self):
-        pass
+    def test_rule_strict(self):
+        r = OtherRules(['euh'])
+        d1 = DataSpeaker(["tok1", "tok2", "tok3", "euh", "ok"])
+        d2 = DataSpeaker(["bla", "tok1", "tok2"])
+        d3 = DataSpeaker(["bla", "tok1", "tok2", "tok3"])
+        d4 = DataSpeaker(["tok1", "euh", "tok2", "tok3"])
+        self.assertFalse(r.rule_strict(0, 1, d1, d2))
+        self.assertFalse(r.rule_strict(0, 2, d1, d2))
+        self.assertTrue(r.rule_strict(0, 2, d1, d3))
+        self.assertFalse(r.rule_strict(0, 2, d1, d4))
 
-    def tearDown(self):
-        pass
-
-    def test_create(self):
-
-        # create an instance with the default symbols
-        a = Activity()
-        for s in symbols.all:
-            self.assertTrue(s in a)
-        self.assertTrue(symbols.unk in a)
-        self.assertEqual(len(a), len(symbols.all))
-
-        # try to add again the same symbols - they won't
-        for s in symbols.all:
-            a.append_activity(s, symbols.all[s])
-        self.assertEqual(len(a), len(symbols.all))
-
-    def test_get_tier(self):
-        a = Activity()
-        trs = sppasTranscription()
-
-        # Test with an empty Tokens tier
-        tier = trs.create_tier('TokensAlign')
-        tmin = trs.get_min_loc()
-        tmax = trs.get_max_loc()
-
-        tier = a.get_tier(tier, tmin, tmax)
-        self.assertEqual(len(tier), 0)
-
-        # now, test with a real TokensTier
-        # ...
+    def test_find_echos(self):
+        r = OtherRepetition(['euh'])
+        d1 = DataSpeaker(["tok1", "tok2", "tok3", "euh", "ok"])
+        d2 = DataSpeaker(["bla", "tok1", "tok2", "euh", "oui", "tok1"])
+        r.detect(d1, d2)
+        self.assertEqual(r.get_source(), (0, 1))
+        d1 = DataSpeaker(["a", "x1", "x2", "x3", "euh", "ok"])
+        d2 = DataSpeaker(["x2", "blabla", "x3", "x2", "x1", "yep", "oui", "x2", "ya", "x1"])
+        r.detect(d1, d2)
+        self.assertEqual((1, 3), r.get_source())
+        self.assertEqual([0, 2, 3, 4, 7, 9], r.get_all_echos())
+        self.assertEqual([(2, 4)], r.get_echos())

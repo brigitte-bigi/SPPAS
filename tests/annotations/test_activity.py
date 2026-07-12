@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf8 -*-
 """
-:filename: sppas.src.annotations.tests.test_intsint.py
+:filename: tests.annotations.test_activity.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
-:summary:  Tests of INTSINT automatic annotation.
+:summary:  Tests of Activity automatic annotation.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -41,26 +41,47 @@
 
 import unittest
 
-from sppas.src.annotations.Intsint import Intsint
-from sppas.src.annotations.Intsint import sppasIntsint
+from sppas.core.config import symbols
+from sppas.src.anndata import sppasTranscription
+
+from sppas.src.annotations.Activity.activity import Activity
 
 # ---------------------------------------------------------------------------
 
 
-class TestIntsint(unittest.TestCase):
-    """Test of the class Intsint."""
+class TestActivity(unittest.TestCase):
 
     def setUp(self):
-        self.anchors = [(0.1, 240), (0.4, 340), (0.6, 240), (0.7, 286)]
+        pass
 
-    def test_intsint(self):
-        result = Intsint().annotate(self.anchors)
-        self.assertEqual(len(self.anchors), len(result))
-        self.assertEqual(['M', 'T', 'L', 'H'], result)
+    def tearDown(self):
+        pass
 
-        with self.assertRaises(IOError):
-            Intsint().annotate([(0.1, 240)])
+    def test_create(self):
 
-    def test_sppasintsint(self):
-        si = sppasIntsint()
-        # to be continued...
+        # create an instance with the default symbols
+        a = Activity()
+        for s in symbols.all:
+            self.assertTrue(s in a)
+        self.assertTrue(symbols.unk in a)
+        self.assertEqual(len(a), len(symbols.all))
+
+        # try to add again the same symbols - they won't
+        for s in symbols.all:
+            a.append_activity(s, symbols.all[s])
+        self.assertEqual(len(a), len(symbols.all))
+
+    def test_get_tier(self):
+        a = Activity()
+        trs = sppasTranscription()
+
+        # Test with an empty Tokens tier
+        tier = trs.create_tier('TokensAlign')
+        tmin = trs.get_min_loc()
+        tmax = trs.get_max_loc()
+
+        tier = a.get_tier(tier, tmin, tmax)
+        self.assertEqual(len(tier), 0)
+
+        # now, test with a real TokensTier
+        # ...

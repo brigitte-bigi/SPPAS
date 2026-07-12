@@ -44,12 +44,13 @@ import os
 
 from sppas.src.utils.compare import sppasCompare
 
-from ..acm.hmm import sppasHMM, HMMInterpolation
-from ..acm.acmodelhtkio import sppasHtkIO
+from sppas.src.annotations.Align.models.acm.hmm import sppasHMM, HMMInterpolation
+from sppas.src.annotations.Align.models.acm.acmodelhtkio import sppasHtkIO
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))), "data")
 
 # ---------------------------------------------------------------------------
 

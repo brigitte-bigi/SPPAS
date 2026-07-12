@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_lexmetric.py
+:filename: tests.annotations.test_lexmetric.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Lexical Metrics automatic annotation.
@@ -47,7 +47,7 @@ from sppas.src.anndata import sppasPoint
 from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
 
-from ..LexMetric.occrank import OccRank
+from sppas.src.annotations.LexMetric.occrank import OccRank
 
 # ---------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 """
-:filename: sppas.src.annotations.tests.test_persontrack.py
+:filename: tests.annotations.test_persontrack.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Person Face Identity automatic annotation.
@@ -40,6 +40,7 @@
 
 import os
 import unittest
+import shutil
 
 from sppas.core.config import paths
 from sppas.core.coreutils import sppasError
@@ -57,7 +58,24 @@ from sppas.src.annotations.FaceDetection.imgfacedetect import ImageFaceDetection
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+TEMP = sppasFileUtils().set_random()
+
+# ---------------------------------------------------------------------------
+
+
+def setUpModule():
+    if os.path.exists(TEMP) is False:
+        os.mkdir(TEMP)
+
+
+def tearDownModule():
+    shutil.rmtree(TEMP)
+
+
+
+# ---------------------------------------------------------------------------
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 MODEL_LBF68 = os.path.join(paths.resources, "faces", "lbfmodel68.yaml")
 MODEL_DAT = os.path.join(paths.resources, "faces", "kazemi_landmark.dat")
 # --> not efficient: os.path.join(paths.resources, "faces", "aam.xml")
@@ -299,7 +317,7 @@ class TestFaceRecognition(unittest.TestCase):
         self.coords1 = [x.copy() for x in fd]
         self.assertEqual(7, len(self.coords1))
 
-        fn = os.path.join(DATA, "BientotQuadra1-face.png")
+        fn = os.path.join(TEMP, "BientotQuadra1-face.png")
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
         w.write(self.img1, self.coords1, fn)
@@ -321,7 +339,7 @@ class TestFaceRecognition(unittest.TestCase):
         self.coords2 = [x.copy() for x in fd]
         self.assertEqual(7, len(self.coords2))
 
-        fn = os.path.join(DATA, "BientotQuadra2-face.png")
+        fn = os.path.join(TEMP, "BientotQuadra2-face.png")
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
         w.write(self.img2, self.coords2, fn)

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_iva.py
+:filename: tests.annotations.test_iva.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Test of IVA auto annotation.
@@ -42,8 +42,8 @@
 import unittest
 import os.path
 
-from ..IVA import sppasIVA
-from ..IVA import IntervalValuesAnalysis
+from sppas.src.annotations.IVA import sppasIVA
+from sppas.src.annotations.IVA import IntervalValuesAnalysis
 from sppas.src.anndata import sppasTier
 from sppas.src.anndata import sppasTag
 from sppas.src.anndata import sppasLabel
@@ -51,7 +51,7 @@ from sppas.src.anndata import sppasLocation, sppasInterval, sppasPoint
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 # --------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_tga.py
+:filename: tests.annotations.test_tga.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of TGA automatic annotation.
@@ -42,8 +42,8 @@
 import unittest
 import os.path
 
-from ..TGA import sppasTGA
-from ..TGA import TimeGroupAnalysis
+from sppas.src.annotations.TGA import sppasTGA
+from sppas.src.annotations.TGA import TimeGroupAnalysis
 from sppas.src.anndata import sppasTrsRW
 from sppas.src.anndata import sppasTier
 from sppas.src.anndata import sppasTag
@@ -52,7 +52,7 @@ from sppas.src.anndata import sppasLocation, sppasInterval, sppasPoint
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 # --------------------------------------------------------------------------
 

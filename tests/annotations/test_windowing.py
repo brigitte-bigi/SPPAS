@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_windowing.py
+:filename: tests.annotations.test_windowing.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of windowing.

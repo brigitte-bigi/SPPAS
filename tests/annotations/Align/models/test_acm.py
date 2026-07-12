@@ -50,18 +50,19 @@ from sppas.src.utils.compare import sppasCompare
 from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.core.config import sppasLogSetup
 
-from ..acm.acmodelhtkio import sppasHtkIO
-from ..acm.htktrain import sppasHTKModelTrainer
-from ..acm.htktrain import sppasDataTrainer
-from ..acm.htktrain import sppasPhoneSet
-from ..acm.htktrain import sppasTrainingCorpus
-from ..acm.htktrain import sppasHTKModelInitializer
+from sppas.src.annotations.Align.models.acm.acmodelhtkio import sppasHtkIO
+from sppas.src.annotations.Align.models.acm.htktrain import sppasHTKModelTrainer
+from sppas.src.annotations.Align.models.acm.htktrain import sppasDataTrainer
+from sppas.src.annotations.Align.models.acm.htktrain import sppasPhoneSet
+from sppas.src.annotations.Align.models.acm.htktrain import sppasTrainingCorpus
+from sppas.src.annotations.Align.models.acm.htktrain import sppasHTKModelInitializer
 
 # ---------------------------------------------------------------------------
 
 TEMP = sppasFileUtils().set_random()
 MODEL_PATH = os.path.join(paths.resources, "models")
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))), "data")
 
 SIL_PHON = list(symbols.phone.keys())[list(symbols.phone.values()).index("silence")]
 SIL_ORTHO = list(symbols.ortho.keys())[list(symbols.ortho.values()).index("silence")]

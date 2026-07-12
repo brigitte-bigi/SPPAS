@@ -49,16 +49,17 @@ from sppas.core.config import paths
 from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.src.utils.compare import sppasCompare
 
-from ..acm.acmbaseio import sppasBaseIO
-from ..acm.readwrite import sppasACMRW
-from ..modelsexc import MioFolderError
-from ..modelsexc import MioFileFormatError
+from sppas.src.annotations.Align.models.acm.acmbaseio import sppasBaseIO
+from sppas.src.annotations.Align.models.acm.readwrite import sppasACMRW
+from sppas.src.annotations.Align.models.modelsexc import MioFolderError
+from sppas.src.annotations.Align.models.modelsexc import MioFileFormatError
 
 # ---------------------------------------------------------------------------
 
 TEMP = sppasFileUtils().set_random()
 MODEL_PATH = os.path.join(paths.resources, "models")
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))), "data")
 
 SIL_PHON = list(symbols.phone.keys())[list(symbols.phone.values()).index("silence")]
 LAUGH_PHON = list(symbols.phone.keys())[list(symbols.phone.values()).index("laugh")]

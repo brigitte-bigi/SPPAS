@@ -53,7 +53,8 @@ from sppas.src.annotations.Align.models.tiermapping import sppasMappingTier
 
 # ---------------------------------------------------------------------------
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))), "data")
 
 # ---------------------------------------------------------------------------
 

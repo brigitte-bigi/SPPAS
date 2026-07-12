@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.tests.test_reocc.py
+:filename: tests.annotations.test_reocc.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Re-Occurrences automatic annotation.
@@ -48,9 +48,9 @@ from sppas.src.anndata import sppasPoint
 from sppas.src.anndata import sppasAnnotation
 from sppas.src.anndata import sppasTier
 
-from ..ReOccurrences.reoccurrences import ReOccurences
-from ..ReOccurrences.reoccset import sppasAnnReOccSet
-from ..ReOccurrences.sppasreocc import sppasReOcc
+from sppas.src.annotations.ReOccurrences.reoccurrences import ReOccurences
+from sppas.src.annotations.ReOccurrences.reoccset import sppasAnnReOccSet
+from sppas.src.annotations.ReOccurrences.sppasreocc import sppasReOcc
 
 # ---------------------------------------------------------------------------
 

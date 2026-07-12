@@ -55,10 +55,10 @@ from sppas.src.resources.vocab import sppasVocabulary
 from sppas.src.utils.compare import sppasCompare
 from sppas.src.utils.fileutils import sppasFileUtils
 
-from ..modelsexc import NgramOrderValueError
-from ..modelsexc import NgramCountValueError
-from ..modelsexc import NgramMethodNameError
-from ..modelsexc import ModelsDataTypeError
+from sppas.src.annotations.Align.models.modelsexc import NgramOrderValueError
+from sppas.src.annotations.Align.models.modelsexc import NgramCountValueError
+from sppas.src.annotations.Align.models.modelsexc import NgramMethodNameError
+from sppas.src.annotations.Align.models.modelsexc import ModelsDataTypeError
 
 # ---------------------------------------------------------------------------
 

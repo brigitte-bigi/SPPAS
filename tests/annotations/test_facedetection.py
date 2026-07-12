@@ -1,5 +1,5 @@
 """
-:filename: sppas.src.annotations.tests.test_facedetection.py
+:filename: tests.annotations.test_facedetection.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Face Detection automatic annotation.
@@ -40,6 +40,7 @@
 
 import os
 import unittest
+import shutil
 
 from sppas.core.config import paths
 from sppas.src.imgdata import sppasCoords
@@ -56,8 +57,25 @@ from sppas.src.annotations.FaceDetection.yunetfacedetect import YuNetFaceDetecto
 
 # ---------------------------------------------------------------------------
 
+TEMP = sppasFileUtils().set_random()
 
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+# ---------------------------------------------------------------------------
+
+
+def setUpModule():
+    if os.path.exists(TEMP) is False:
+        os.mkdir(TEMP)
+
+
+def tearDownModule():
+    shutil.rmtree(TEMP)
+
+
+
+# ---------------------------------------------------------------------------
+
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 NETCAFFE = os.path.join(paths.resources, "faces", "res10_300x300_ssd_iter_140000_fp16.caffemodel")
 NETTS = os.path.join(paths.resources, "faces", "opencv_face_detector_uint8.pb")
@@ -114,7 +132,7 @@ class TestYuNetFaceDetection(unittest.TestCase):
         coords = [c.copy() for c in yd]
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
-        fn = os.path.join(DATA, "montage-faces-yn.png")
+        fn = os.path.join(TEMP, "montage-faces-yn.png")
         w.write(img, coords, fn)
         # There are 3 faces in the montage image. A weak false positive
         # remains detected, with a low squared score: the recall is
@@ -164,7 +182,7 @@ class TestMediaPipeFaceDetection(unittest.TestCase):
         img = sppasImage(filename=fn)   # (w, h) = (1632, 916)
         md.detect(img)
         self.assertEqual(1, len(md))
-        fn = os.path.join(DATA, "BrigitteBigi-Slovenia2016-md.png")
+        fn = os.path.join(TEMP, "BrigitteBigi-Slovenia2016-md.png")
         w.write(img, [md.get_best()], fn)
 
         # Kasia and I should be detected, but the picture was damaged.
@@ -187,7 +205,7 @@ class TestMediaPipeFaceDetection(unittest.TestCase):
         md.set_min_ratio(0.01)
         md.detect(img)
         coords = [c.copy() for c in md]
-        fn = os.path.join(DATA, "montage-faces-md.png")
+        fn = os.path.join(TEMP, "montage-faces-md.png")
         w.write(img, coords, fn)
         self.assertEqual(2, len(md))  # it should be 3
 
@@ -271,7 +289,7 @@ class TestHaarCascadeFaceDetection(unittest.TestCase):
         # with the default min score
         fd.detect(img)
         coords = [c.copy() for c in fd]
-        fn = os.path.join(DATA, "montage-haarprofilefaces.png")
+        fn = os.path.join(TEMP, "montage-haarprofilefaces.png")
         w.write(img, coords, fn)
         self.assertEqual(3, len(fd))
 
@@ -280,7 +298,7 @@ class TestHaarCascadeFaceDetection(unittest.TestCase):
         fd.set_min_score(0.067)
         fd.detect(img)
         # coords = [c.copy() for c in fd]
-        # fn = os.path.join(DATA, "montage-haarprofilefaces.png")
+        # fn = os.path.join(TEMP, "montage-haarprofilefaces.png")
         # w.write(img, coords, fn)
         self.assertEqual(3, len(fd))
 
@@ -290,7 +308,7 @@ class TestHaarCascadeFaceDetection(unittest.TestCase):
         fd.load_model(HAAR2)
         fd.detect(img)
         coords = [c.copy() for c in fd]
-        fn = os.path.join(DATA, "montage-haarfrontfaces1.png")
+        fn = os.path.join(TEMP, "montage-haarfrontfaces1.png")
         w.write(img, coords, fn)
         self.assertEqual(5, len(fd))
 
@@ -299,7 +317,7 @@ class TestHaarCascadeFaceDetection(unittest.TestCase):
         fd.load_model(HAAR3)
         fd.detect(img)
         coords = [c.copy() for c in fd]
-        fn = os.path.join(DATA, "montage-haarfrontfaces2.png")
+        fn = os.path.join(TEMP, "montage-haarfrontfaces2.png")
         w.write(img, coords, fn)
         self.assertEqual(2, len(fd))
 
@@ -328,7 +346,7 @@ class TestHaarCascadeFaceDetection(unittest.TestCase):
 
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
-        fn = os.path.join(DATA, "montage-faces.png")
+        fn = os.path.join(TEMP, "montage-faces.png")
         w.write(img, [c.copy() for c in fd], fn)
         self.assertEqual(3, len(fd))
 
@@ -435,7 +453,7 @@ class TestDNNCaffeFaceDetection(unittest.TestCase):
 
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
-        fn = os.path.join(DATA, "montage-dnnfaces.png")
+        fn = os.path.join(TEMP, "montage-dnnfaces.png")
         w.write(img, coords, fn)
         self.assertEqual(3, len(fd))
 
@@ -499,7 +517,7 @@ class TestDNNTensorFlowFaceDetection(unittest.TestCase):
 
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
-        fn = os.path.join(DATA, "montage-dnnfaces.png")
+        fn = os.path.join(TEMP, "montage-dnnfaces.png")
         w.write(img, coords, fn)
         self.assertEqual(3, len(fd))
 
@@ -693,7 +711,7 @@ class TestFaceDetection(unittest.TestCase):
         fd.enable_recognizer(names[5], True)
         fd.detect(img)
         coords = [c.copy() for c in fd]
-        fn = os.path.join(DATA, "montage-faces-dnn.png")
+        fn = os.path.join(TEMP, "montage-faces-dnn.png")
         w.write(img, coords, fn)
         # There are 3 faces in the montage image.
         self.assertEqual(3, len(fd))
@@ -707,7 +725,7 @@ class TestFaceDetection(unittest.TestCase):
         fd.enable_recognizer(names[5], False)
         fd.detect(img)
         coords = [c.copy() for c in fd]
-        fn = os.path.join(DATA, "montage-faces-haar.png")
+        fn = os.path.join(TEMP, "montage-faces-haar.png")
         w.write(img, coords, fn)
         self.assertEqual(3, len(fd))
 
@@ -716,6 +734,6 @@ class TestFaceDetection(unittest.TestCase):
             fd.enable_recognizer(name, True)
         fd.detect(img)
         coords = [c.copy() for c in fd]
-        fn = os.path.join(DATA, "montage-faces-all.png")
+        fn = os.path.join(TEMP, "montage-faces-all.png")
         w.write(img, coords, fn)
         self.assertEqual(4, len(fd))  # Mickey Mouse is detected

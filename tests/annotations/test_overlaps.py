@@ -1,5 +1,5 @@
 """
-:filename: sppas.src.annotations.tests.test_overlaps.py
+:filename: tests.annotations.test_overlaps.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of the Overlaps automatic annotation.
@@ -46,7 +46,7 @@ from sppas.src.anndata import sppasInterval
 from sppas.src.anndata import sppasPoint
 from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
-from ..Overlaps.overspeech import OverActivity
+from sppas.src.annotations.Overlaps.overspeech import OverActivity
 
 
 class TestOverActivity(unittest.TestCase):

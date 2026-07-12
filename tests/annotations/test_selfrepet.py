@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 """
-:filename: sppas.src.annotations.tests.test_selfrepet.py
+:filename: tests.annotations.test_selfrepet.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Self-Repetitions automatic annotation.
@@ -44,12 +44,12 @@ import os
 
 from sppas.core.config import paths
 
-from ..SelfRepet.datastructs import DataRepetition
-from ..SelfRepet.datastructs import Entry
-from ..SelfRepet.datastructs import DataSpeaker
-from ..SelfRepet.rules import SelfRules
-from ..SelfRepet.detectrepet import SelfRepetition
-from ..SelfRepet.sppasrepet import sppasSelfRepet
+from sppas.src.annotations.SelfRepet.datastructs import DataRepetition
+from sppas.src.annotations.SelfRepet.datastructs import Entry
+from sppas.src.annotations.SelfRepet.datastructs import DataSpeaker
+from sppas.src.annotations.SelfRepet.rules import SelfRules
+from sppas.src.annotations.SelfRepet.detectrepet import SelfRepetition
+from sppas.src.annotations.SelfRepet.sppasrepet import sppasSelfRepet
 
 # ---------------------------------------------------------------------------
 

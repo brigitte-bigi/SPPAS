@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 """
-:filename: sppas.src.annotations.tests.test_align.py
+:filename: tests.annotations.test_align.py
 :author:   Brigitte Bigi
 :contact:  contact@sppas.org
 :summary:  Tests of Alignment automatic annotation.
@@ -78,7 +78,7 @@ from sppas.src.annotations.Align.aligners.alignerio import palign, walign, mlf
 # ---------------------------------------------------------------------------
 
 TEMP = sppasFileUtils().set_random()
-DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 MODELDIR = os.path.join(paths.resources, "models")
 
 # ---------------------------------------------------------------------------
