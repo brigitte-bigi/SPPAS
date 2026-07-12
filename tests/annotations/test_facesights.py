@@ -40,10 +40,8 @@
 
 import os
 import unittest
-import shutil
 
 from sppas.core.config import paths
-from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.src.imgdata import sppasImage
 from sppas.src.imgdata import sppasCoords
 
@@ -57,18 +55,15 @@ from sppas.src.annotations.FaceSights.mpmark import MediaPipeFaceMesh
 
 # ---------------------------------------------------------------------------
 
-TEMP = sppasFileUtils().set_random()
+MANUAL_CHECK_OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "manual-check-out")
 
 # ---------------------------------------------------------------------------
 
 
 def setUpModule():
-    if os.path.exists(TEMP) is False:
-        os.mkdir(TEMP)
+    if os.path.exists(MANUAL_CHECK_OUT) is False:
+        os.mkdir(MANUAL_CHECK_OUT)
 
-
-def tearDownModule():
-    shutil.rmtree(TEMP)
 
 
 
@@ -111,7 +106,7 @@ class TestBasicFaceMark(unittest.TestCase):
         success = fl.detect_sights(img, coords)
         self.assertTrue(success)
 
-        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-basicmark.jpg")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-basicmark.jpg")
         w = sppasFaceSightsImageWriter()
         w.set_options(tag=True)
         w.write(img, [c for c in fl.get_sights()], fn)
@@ -147,7 +142,7 @@ class TestMediaPipeFaceMark(unittest.TestCase):
         self.assertTrue(success)
         self.assertIsNone(fl.get_mesh())
 
-        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-mpmark.jpg")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-mpmark.jpg")
         w = sppasFaceSightsImageWriter()
         w.set_options(tag=True)
         w.write(img, [c for c in fl.get_sights()], fn)
@@ -170,7 +165,7 @@ class TestMediaPipeFaceMesh(unittest.TestCase):
         self.assertTrue(success)
         self.assertIsNotNone(fl.get_mesh())
 
-        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-mpmesh.jpg")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-mpmesh.jpg")
         w = sppasFaceSightsImageWriter()
         w.set_options(tag=True)
         w.write(img, [c for c in fl.get_mesh()], fn)
@@ -196,7 +191,7 @@ class TestOpenCVFaceMark(unittest.TestCase):
         success = fl.detect_sights(self.img, self.coords)
         self.assertTrue(success)
 
-        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-yamlmark.jpg")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-yamlmark.jpg")
         w = sppasFaceSightsImageWriter()
         w.set_options(tag=True)
         w.write(self.img, [c for c in fl.get_sights()], fn)
@@ -206,7 +201,7 @@ class TestOpenCVFaceMark(unittest.TestCase):
         success = fl.detect_sights(self.img, self.coords)
         self.assertTrue(success)
 
-        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-datmark.jpg")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-datmark.jpg")
         w = sppasFaceSightsImageWriter()
         w.set_options(tag=True)
         w.write(self.img, [c for c in fl.get_sights()], fn)
@@ -279,7 +274,7 @@ class TestImageFaceLandmark(unittest.TestCase):
         coords = fd.get_best()
         fl.detect_sights(img, coords)
 
-        fn = os.path.join(TEMP, "BrigitteBigiSlovenie2016-sights.jpg")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-sights.jpg")
         w = sppasFaceSightsImageWriter()
         w.set_options(tag=True)
         w.write(img, [c for c in fl], fn)
@@ -303,7 +298,7 @@ class TestImageFaceLandmark(unittest.TestCase):
         w.set_options(tag=True)
         for i, coord in enumerate(fd):
             try:
-                fn = os.path.join(TEMP, "montage_{:d}-sights.jpg".format(i))
+                fn = os.path.join(MANUAL_CHECK_OUT, "montage_{:d}-sights.jpg".format(i))
                 fl.detect_sights(img, coord)
                 w.write(img, [c for c in fl], fn)
             except Exception as e:

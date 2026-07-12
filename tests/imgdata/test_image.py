@@ -40,30 +40,25 @@
 
 import os
 import unittest
-import shutil
 import cv2
 import numpy
 
 from sppas.core.config import paths
-from sppas.src.utils.fileutils import sppasFileUtils
 
 from sppas.src.imgdata.coordinates import sppasCoords
 from sppas.src.imgdata.image import sppasImage
 
 # ---------------------------------------------------------------------------
 
-TEMP = sppasFileUtils().set_random()
+MANUAL_CHECK_OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "manual-check-out")
 
 # ---------------------------------------------------------------------------
 
 
 def setUpModule():
-    if os.path.exists(TEMP) is False:
-        os.mkdir(TEMP)
+    if os.path.exists(MANUAL_CHECK_OUT) is False:
+        os.mkdir(MANUAL_CHECK_OUT)
 
-
-def tearDownModule():
-    shutil.rmtree(TEMP)
 
 
 # ---------------------------------------------------------------------------
@@ -185,7 +180,7 @@ class TestImage(unittest.TestCase):
         for row in cropped:
             self.assertEqual(len(row), 177)
 
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-face.jpg")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-face.jpg")
         cropped.write(fnc)
         self.assertTrue(os.path.exists(fnc))
         cropped_read = sppasImage(filename=fnc)
@@ -207,7 +202,7 @@ class TestImage(unittest.TestCase):
         image = sppasImage(filename=TestImage.fn)
 
         result = image.igray()
-        fnc = os.path.join(TEMP, "BrigitteBigi_Aix2020-gray.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigi_Aix2020-gray.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -219,7 +214,7 @@ class TestImage(unittest.TestCase):
         image = sppasImage(filename=sample)
 
         result = image.ibgr((0, 156, 32))
-        fnc = os.path.join(TEMP, "BrigitteBigi_Aix2020-green.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigi_Aix2020-green.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -231,7 +226,7 @@ class TestImage(unittest.TestCase):
         image = sppasImage(filename=sample)
 
         result = image.ialpha(64, direction=1)
-        fnc = os.path.join(TEMP, "BrigitteBigi_Aix2020-alpha.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigi_Aix2020-alpha.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -244,7 +239,7 @@ class TestImage(unittest.TestCase):
         other = sppasImage(filename=sample)
 
         pasted = image.ipaste(other, [100, 200, 300, 70])
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-paste.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-paste.png")
         pasted.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -257,7 +252,7 @@ class TestImage(unittest.TestCase):
         other = sppasImage(filename=sample)
 
         result = image.ioverlay(other, coord=(700, 300, 300, 200))
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-overlay.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-overlay.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -266,7 +261,7 @@ class TestImage(unittest.TestCase):
         image = sppasImage(filename=TestImage.fn)
 
         result = image.iflip()
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-flipped.jpg")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-flipped.jpg")
         # result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -276,7 +271,7 @@ class TestImage(unittest.TestCase):
         other = sppasImage(filename=os.path.join(DATA, "BrigitteBigi_Aix2020.png"))
 
         result = image.iblend(other, coord=(100, 100, 200, 200), weight1=0.8, weight2=0.5)
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-blended.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-blended.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -285,7 +280,7 @@ class TestImage(unittest.TestCase):
         image = sppasImage(filename=TestImage.fn)
 
         result = image.icontours()
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-contour.jpg")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-contour.jpg")
         # result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -297,7 +292,7 @@ class TestImage(unittest.TestCase):
         image = sppasImage(filename=sample)
 
         result = image.iblur()
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-blur.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-blur.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -311,7 +306,7 @@ class TestImage(unittest.TestCase):
         cropped = blur.icrop(sppasCoords(86, 222, 177, 189))
 
         result = image.imask(cropped)
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-mask.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-mask.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -322,7 +317,7 @@ class TestImage(unittest.TestCase):
             sample = os.path.join(DATA, "BrigitteBigi_Aix2020.png")
         image = sppasImage(filename=sample)
         result = image.ishift(60, -120)
-        fnc = os.path.join(TEMP, "shift.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "shift.png")
         result.write(fnc)
 
     # -----------------------------------------------------------------------
@@ -333,5 +328,5 @@ class TestImage(unittest.TestCase):
             sample = os.path.join(DATA, "BrigitteBigi_Aix2020.png")
         image = sppasImage(filename=sample)
         result = image.ishadow(5, 20)
-        fnc = os.path.join(TEMP, "shadow.png")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "shadow.png")
         result.write(fnc)

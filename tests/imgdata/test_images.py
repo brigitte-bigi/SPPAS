@@ -40,30 +40,25 @@
 
 import os
 import unittest
-import shutil
 import cv2
 import numpy
 
 from sppas.core.config import paths
-from sppas.src.utils.fileutils import sppasFileUtils
 
 from sppas.src.imgdata.image import sppasImage
 from sppas.src.imgdata.images import sppasExtendedImage
 
 # ---------------------------------------------------------------------------
 
-TEMP = sppasFileUtils().set_random()
+MANUAL_CHECK_OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "manual-check-out")
 
 # ---------------------------------------------------------------------------
 
 
 def setUpModule():
-    if os.path.exists(TEMP) is False:
-        os.mkdir(TEMP)
+    if os.path.exists(MANUAL_CHECK_OUT) is False:
+        os.mkdir(MANUAL_CHECK_OUT)
 
-
-def tearDownModule():
-    shutil.rmtree(TEMP)
 
 
 # ---------------------------------------------------------------------------
@@ -102,7 +97,7 @@ class TestImages(unittest.TestCase):
         to_coords = (800, 800, 600, 600)
 
         results = image.ioverlays(other, from_coords, to_coords, 10)
-        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-over")
+        fnc = os.path.join(MANUAL_CHECK_OUT, "BrigitteBigiSlovenie2016-over")
         for i in range(len(results)):
             fnci = fnc + str(i+1) + ".jpg"
             results[i].write(fnci)

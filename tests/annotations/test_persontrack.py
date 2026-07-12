@@ -40,10 +40,8 @@
 
 import os
 import unittest
-import shutil
 
 from sppas.core.config import paths
-from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.core.coreutils import sppasError
 from sppas.src.annotations.param import sppasParam
 from sppas.src.videodata import sppasVideoReaderBuffer
@@ -59,18 +57,15 @@ from sppas.src.annotations.FaceDetection.imgfacedetect import ImageFaceDetection
 
 # ---------------------------------------------------------------------------
 
-TEMP = sppasFileUtils().set_random()
+MANUAL_CHECK_OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "manual-check-out")
 
 # ---------------------------------------------------------------------------
 
 
 def setUpModule():
-    if os.path.exists(TEMP) is False:
-        os.mkdir(TEMP)
+    if os.path.exists(MANUAL_CHECK_OUT) is False:
+        os.mkdir(MANUAL_CHECK_OUT)
 
-
-def tearDownModule():
-    shutil.rmtree(TEMP)
 
 
 
@@ -318,7 +313,7 @@ class TestFaceRecognition(unittest.TestCase):
         self.coords1 = [x.copy() for x in fd]
         self.assertEqual(7, len(self.coords1))
 
-        fn = os.path.join(TEMP, "BientotQuadra1-face.png")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BientotQuadra1-face.png")
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
         w.write(self.img1, self.coords1, fn)
@@ -340,7 +335,7 @@ class TestFaceRecognition(unittest.TestCase):
         self.coords2 = [x.copy() for x in fd]
         self.assertEqual(7, len(self.coords2))
 
-        fn = os.path.join(TEMP, "BientotQuadra2-face.png")
+        fn = os.path.join(MANUAL_CHECK_OUT, "BientotQuadra2-face.png")
         w = sppasCoordsImageWriter()
         w.set_options(tag=True)
         w.write(self.img2, self.coords2, fn)

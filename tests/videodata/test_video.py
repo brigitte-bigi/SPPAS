@@ -36,12 +36,10 @@
 """
 
 import unittest
-import shutil
 import os
 import numpy as np
 
 from sppas.core.config import paths
-from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.src.imgdata import sppasImage
 
 from sppas.src.videodata import sppasVideoReader
@@ -49,18 +47,15 @@ from sppas.src.videodata import sppasVideoWriter
 
 # ---------------------------------------------------------------------------
 
-TEMP = sppasFileUtils().set_random()
+MANUAL_CHECK_OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "manual-check-out")
 
 # ---------------------------------------------------------------------------
 
 
 def setUpModule():
-    if os.path.exists(TEMP) is False:
-        os.mkdir(TEMP)
+    if os.path.exists(MANUAL_CHECK_OUT) is False:
+        os.mkdir(MANUAL_CHECK_OUT)
 
-
-def tearDownModule():
-    shutil.rmtree(TEMP)
 
 
 # ---------------------------------------------------------------------------
@@ -188,7 +183,7 @@ class TestVideoReader(unittest.TestCase):
 
 class TestVideoWriter(unittest.TestCase):
 
-    VIDEO = os.path.join(TEMP, "video_test.mp4")
+    VIDEO = os.path.join(MANUAL_CHECK_OUT, "video_test.mp4")
 
     # -----------------------------------------------------------------------
 

@@ -49,6 +49,14 @@ from sppas.src.imgdata import sppasImage
 # ---------------------------------------------------------------------------
 
 DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+MANUAL_CHECK_OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "manual-check-out")
+
+# ---------------------------------------------------------------------------
+
+
+def setUpModule():
+    if os.path.exists(MANUAL_CHECK_OUT) is False:
+        os.mkdir(MANUAL_CHECK_OUT)
 
 # ---------------------------------------------------------------------------
 
@@ -63,36 +71,36 @@ class TestImageFilter(unittest.TestCase):
     def test_img_color_quantization(self):
         # test basic filter parameter
         img_process = self.img.iquantization_color()
-        img_process.write("test_quantization_1.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_quantization_1.jpg"))
 
         # upgrade the number of down samp that increase the blur
         img_process = self.img.iquantization_color(nb_down_samp=5)
-        img_process.write("test_quantization_2.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_quantization_2.jpg"))
 
     # ---------------------------------------------------------------------------
 
     def test_cartoonize(self):
         # normal cartoon filter
         img_process = self.img.icartoon()
-        img_process.write("test_cartoonize.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_cartoonize.jpg"))
 
         # cartoon filter in black and white
         img_process = self.img.icartoon(colorize=False)
-        img_process.write("test_cartoonize_2.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_cartoonize_2.jpg"))
 
     # ---------------------------------------------------------------------------
 
     def test_invert_filter(self):
         img_process = self.img.iinvert()
-        img_process.write("test_invert.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_invert.jpg"))
 
     # ---------------------------------------------------------------------------
 
     def test_color_overlay(self):
         # green overlay
         img_process = self.img.ioverlay_color((10, 240, 10))
-        img_process.write("test_color_overlay.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_color_overlay.jpg"))
 
         # red overlay with an intensity increase
         img_process = self.img.ioverlay_color((230, 0, 10), intensity=0.8)
-        img_process.write("test_color_overlay_2.jpg")
+        img_process.write(os.path.join(MANUAL_CHECK_OUT, "test_color_overlay_2.jpg"))
