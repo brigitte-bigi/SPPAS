@@ -52,6 +52,7 @@ from sppas.src.imgdata import NeuralNetTensorFlowDetector
 
 from sppas.src.annotations.FaceDetection.imgfacedetect import ImageFaceDetection
 from sppas.src.annotations.FaceDetection.mpfacedetect import MediaPipeFaceDetector
+from sppas.src.annotations.FaceDetection.yunetfacedetect import YuNetFaceDetector
 
 # ---------------------------------------------------------------------------
 
@@ -64,9 +65,64 @@ HAAR1 = os.path.join(paths.resources, "faces", "haarcascade_profileface.xml")
 HAAR2 = os.path.join(paths.resources, "faces", "haarcascade_frontalface_alt.xml")
 HAAR3 = os.path.join(paths.resources, "faces", "lbpcascade_frontalface_improved.xml")
 MPFACE = os.path.join(paths.resources, "faces", "blaze_face_short_range.tflite")
+YUNET = os.path.join(paths.resources, "faces", "face_detection_yunet_2023mar.onnx")
 # HAAR3 model seems to give worse results than the other ones...
 
 # ---------------------------------------------------------------------------
+
+
+class TestYuNetFaceDetection(unittest.TestCase):
+
+    def test_init(self):
+        d = YuNetFaceDetector()
+        self.assertIsNone(d._detector)
+        self.assertEqual(d.get_extension(), ".onnx")
+
+    def test_instantiate(self):
+        yd = YuNetFaceDetector()
+        with self.assertRaises(IOError):
+            yd.load_model("whatever")
+        yd.load_model(YUNET)
+        self.assertIsNotNone(yd._detector)
+
+    def test_detection(self):
+        yd = YuNetFaceDetector()
+        yd.load_model(YUNET)
+
+        # Nothing should be detected -- it's just the sea
+        fn = os.path.join(DATA, "Slovenia2016Sea.jpg")
+        with self.assertRaises(TypeError):
+            yd.detect(fn)
+        img = sppasImage(filename=fn)
+        yd.detect(img)
+        self.assertEqual(0, len(yd))
+
+        # I should be detected...
+        fn = os.path.join(DATA, "BrigitteBigi-Slovenie2016.jpg")
+        img = sppasImage(filename=fn)
+        yd.detect(img)
+        self.assertEqual(1, len(yd))
+
+    def test_montage_detection(self):
+        fn = os.path.join(DATA, "montage.png")
+        img = sppasImage(filename=fn)
+
+        yd = YuNetFaceDetector()
+        yd.load_model(YUNET)
+        yd.set_min_ratio(0.01)
+        yd.detect(img)
+        coords = [c.copy() for c in yd]
+        w = sppasCoordsImageWriter()
+        w.set_options(tag=True)
+        fn = os.path.join(DATA, "montage-faces-yn.png")
+        w.write(img, coords, fn)
+        # There are 3 faces in the montage image. A weak false positive
+        # remains detected, with a low squared score: the recall is
+        # privileged, the fusion of the systems removes such detections.
+        self.assertEqual(4, len(yd))
+        self.assertEqual(3, len(yd.get_confidence(0.7)))
+
+# ---------------------------------------------------------------------
 
 
 class TestMediaPipeFaceDetection(unittest.TestCase):
@@ -485,6 +541,11 @@ class TestFaceDetection(unittest.TestCase):
         self.assertIsNotNone(fd._detector)
         names = fd.get_recognizer_names()
         self.assertIsInstance(fd.get_recognizer(names[0]), MediaPipeFaceDetector)
+
+        fd.load_model(YUNET)
+        self.assertIsNotNone(fd._detector)
+        names = fd.get_recognizer_names()
+        self.assertIsInstance(fd.get_recognizer(names[0]), YuNetFaceDetector)
 
         fd.load_model(HAAR1, NETCAFFE, HAAR2)
         self.assertEqual(len(fd._detector), 3)

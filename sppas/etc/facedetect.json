@@ -34,6 +34,20 @@
       "ext": "",
       "name": "haarcascade_profileface.xml",
       "lang": false
+    },
+    {
+      "path": "faces",
+      "type": "file",
+      "ext": "",
+      "name": "blaze_face_short_range.tflite",
+      "lang": false
+    },
+    {
+      "path": "faces",
+      "type": "file",
+      "ext": "",
+      "name": "face_detection_yunet_2023mar.onnx",
+      "lang": false
     }
   ],
 
@@ -131,6 +145,12 @@
       "type": "bool",
       "value": true,
       "text": "Enable the MediaPipe BlazeFace short-range model (very fast)."
+    },
+    {
+      "id": "model:face_detection_yunet_2023mar.onnx",
+      "type": "bool",
+      "value": true,
+      "text": "Enable the OpenCV YuNet model (light and fast)."
     }
   ]
 }

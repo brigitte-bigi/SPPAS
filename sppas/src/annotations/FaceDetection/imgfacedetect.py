@@ -45,6 +45,7 @@ from sppas.src.imgdata import sppasImage
 from sppas.src.imgdata import sppasImageObjectDetection
 
 from .mpfacedetect import MediaPipeFaceDetector
+from .yunetfacedetect import YuNetFaceDetector
 
 # ---------------------------------------------------------------------------
 
@@ -88,9 +89,12 @@ class ImageFaceDetection(sppasImageObjectDetection):
     """
 
     # Inheritable registry: the detectors of the base class and the
-    # face-dedicated ones. The MediaPipe face detector is added below,
-    # only if the mediapipe feature is installed.
+    # face-dedicated ones. The ".onnx" extension of the base class is
+    # overridden: for the faces, an ONNX model is the YuNet one, which
+    # requires its dedicated cv2.FaceDetectorYN API. The MediaPipe face
+    # detector is added below, only if the mediapipe feature is installed.
     DETECTORS = dict(sppasImageObjectDetection.DETECTORS)
+    DETECTORS[YuNetFaceDetector().get_extension().lower()] = YuNetFaceDetector
 
     def __init__(self):
         """Create a new instance."""
