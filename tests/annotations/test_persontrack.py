@@ -43,6 +43,7 @@ import unittest
 import shutil
 
 from sppas.core.config import paths
+from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.core.coreutils import sppasError
 from sppas.src.annotations.param import sppasParam
 from sppas.src.videodata import sppasVideoReaderBuffer

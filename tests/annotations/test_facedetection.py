@@ -43,6 +43,7 @@ import unittest
 import shutil
 
 from sppas.core.config import paths
+from sppas.src.utils.fileutils import sppasFileUtils
 from sppas.src.imgdata import sppasCoords
 from sppas.src.imgdata import sppasImage
 from sppas.src.imgdata import sppasCoordsImageWriter

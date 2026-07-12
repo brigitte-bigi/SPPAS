@@ -216,11 +216,22 @@ class sppasFaceSightsImageWriter(sppasCoordsImageWriter):
             b = self._colors['b'][0]
             rgb = (r, g, b)
 
+        # Turn the given coords into a list of sights: either it is
+        # already a list of sppasSights -- one per face, or it is the
+        # sights of a single face -- a sppasSights or a list of tuples.
         if isinstance(coords, (list, tuple)) is True:
+            all_sights = list()
             for s in coords:
-                img = self.__tag_sights(img, s, color=rgb)
-            return img
-        return self.__tag_sights(img, coords, color=rgb)
+                if isinstance(s, sppasSights) is True:
+                    all_sights.append(s)
+            if len(all_sights) != len(coords):
+                all_sights = [coords]
+        else:
+            all_sights = [coords]
+
+        for s in all_sights:
+            img = self.__tag_sights(img, s, color=rgb)
+        return img
 
     # -----------------------------------------------------------------------
 
@@ -330,16 +341,25 @@ class sppasFaceSightsImageWriter(sppasCoordsImageWriter):
             trs = sppasXRA("ImageSights")
             trs.append(tier)
 
+        # Turn the given coords into a list of sights: either it is
+        # already a list of sppasSights -- one per face, or it is the
+        # sights of a single face -- a sppasSights or a list of tuples.
         if isinstance(coords, (list, tuple)) is True:
-            if len(coords) > 1:
-                raise NotImplementedError("Saving sights of more than one face in an image is not supported yet.")
-            if len(coords) == 1:
-                coords = coords[0]
+            all_sights = list()
+            for s in coords:
+                if isinstance(s, sppasSights) is True:
+                    all_sights.append(s)
+            if len(all_sights) != len(coords):
+                all_sights = [coords]
+        else:
+            all_sights = [coords]
 
-        # Create the annotation representing the given sights
-        labels = self.__sight_labels(coords)
-        ann = tier.create_annotation(sppasLocation(loc), labels)
-        ann.set_meta("image_name", img_name)
+        # Create one annotation for each face, at successive locations
+        for sights in all_sights:
+            labels = self.__sight_labels(sights)
+            ann = tier.create_annotation(sppasLocation(loc), labels)
+            ann.set_meta("image_name", img_name)
+            loc = sppasPoint(loc.get_midpoint() + 1)
 
         # Override the XRA file
         trs.write(out_xra_name)
