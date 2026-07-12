@@ -43,6 +43,7 @@ import unittest
 
 from sppas.ui.agnostic.appcomm.appcom_base import sppasCommServerError
 from sppas.ui.agnostic.appcomm.appcom_client import sppasCommClient
+from sppas.ui.agnostic.appcomm.appcom_base import sppasCommKeys
 
 # ---------------------------------------------------------------------------
 
@@ -66,21 +67,22 @@ class TestClient(unittest.TestCase):
             self.client.port = "bad"
 
     def test_format_request_json_value(self):
-        req = self.client.format_request("audio", ["16000", "2", "stream"])
+        req = self.client.format_request(sppasCommKeys.PING, ["16000", "2", "stream"])
         parsed = json.loads(req)
-        self.assertEqual(parsed["key"], "audio")
+        self.assertEqual(parsed["key"], sppasCommKeys.PING)
         self.assertEqual(parsed["value"], ["16000", "2", "stream"])
 
     def test_format_request_rejects_bytes(self):
         with self.assertRaises(TypeError):
-            self.client.format_request("audio", b"ABCDEF")
+            self.client.format_request(sppasCommKeys.PING, b"ABCDEF")
 
     def test_format_request_invalid_key(self):
-        with self.assertRaises(Exception):
-            self.client.format_request(2, ["x"])
+        # The keys of the messages are the integer constants of sppasCommKeys
+        with self.assertRaises(TypeError):
+            self.client.format_request("audio", ["x"])
 
     def test_request_connection_error(self):
-        data = self.client.format_request("2", ["test"])
+        data = self.client.format_request(sppasCommKeys.PING, ["test"])
         with self.assertRaises(sppasCommServerError):
             self.client.request(data)
 

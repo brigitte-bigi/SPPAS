@@ -39,11 +39,14 @@
 """
 
 import unittest
+import json
 
 from sppas.ui.agnostic.appcomm.appcom_base import sppasCommunication
+from sppas.ui.agnostic.appcomm.appcom_base import sppasCommKeys
 from sppas.ui.agnostic.appcomm.appcom_base import sppasCommServerError
 from sppas.ui.agnostic.appcomm.appcom_base import sppasCommServerDataError
 from sppas.ui.agnostic.appcomm.appcom_base import sppasCommServerAddressError
+from sppas.ui.agnostic.appcomm.appcom_base import COMM_PROTOCOL_VERSION
 
 # ---------------------------------------------------------------------------
 
@@ -89,3 +92,55 @@ class TestCommunication(unittest.TestCase):
         self.assertEqual(exc.status, 44)
         self.assertEqual(exc.error, err)
         self.assertEqual(str(exc), f"':ERROR 44: Invalid received data: {err}'")
+
+# ---------------------------------------------------------------------------
+
+
+class TestCommKeys(unittest.TestCase):
+
+    def test_values_are_unique(self):
+        values = [value for name, value in vars(sppasCommKeys).items()
+                  if name.isupper() is True]
+        self.assertEqual(len(values), len(set(values)))
+
+    def test_name_of(self):
+        self.assertEqual("PING", sppasCommKeys.name_of(sppasCommKeys.PING))
+        self.assertEqual("ACK", sppasCommKeys.name_of(sppasCommKeys.ACK))
+        # An unknown value is returned as it, for the logs
+        self.assertEqual("999", sppasCommKeys.name_of(999))
+
+# ---------------------------------------------------------------------------
+
+
+class TestMessageEnvelope(unittest.TestCase):
+
+    def test_format_message(self):
+        data = sppasCommunication.format_message(sppasCommKeys.PING, "abc")
+        parsed = json.loads(data)
+        self.assertEqual(parsed["key"], sppasCommKeys.PING)
+        self.assertEqual(parsed["value"], "abc")
+
+    def test_format_message_unicode(self):
+        data = sppasCommunication.format_message(sppasCommKeys.ACK, "éàç œ")
+        self.assertTrue("éàç œ" in data)
+
+    def test_format_message_invalid_key(self):
+        with self.assertRaises(TypeError):
+            sppasCommunication.format_message("PING", "abc")
+
+    def test_parse_message(self):
+        hello_value = {"source": "swapp", "version": COMM_PROTOCOL_VERSION, "port": 8888}
+        data = sppasCommunication.format_message(sppasCommKeys.HELLO, hello_value)
+        key, value = sppasCommunication.parse_message(data)
+        self.assertEqual(key, sppasCommKeys.HELLO)
+        self.assertEqual(value, hello_value)
+
+    def test_parse_message_errors(self):
+        with self.assertRaises(sppasCommServerDataError):
+            sppasCommunication.parse_message(json.dumps({"value": "abc"}))
+        with self.assertRaises(sppasCommServerDataError):
+            sppasCommunication.parse_message(json.dumps({"key": sppasCommKeys.PING}))
+        with self.assertRaises(sppasCommServerDataError):
+            sppasCommunication.parse_message(json.dumps({"key": "PING", "value": ""}))
+        with self.assertRaises(json.JSONDecodeError):
+            sppasCommunication.parse_message("not a json")

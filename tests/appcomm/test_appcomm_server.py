@@ -38,10 +38,11 @@
 
 """
 
-import json
 import unittest
 
-from sppas.ui.agnostic.appcomm.appcom_base import sppasCommServerDataError
+from sppas.ui.agnostic.appcomm.appcom_base import sppasCommKeys
+from sppas.ui.agnostic.appcomm.appcom_base import sppasCommunication
+from sppas.ui.agnostic.appcomm.appcom_base import COMM_PROTOCOL_VERSION
 from sppas.ui.agnostic.appcomm.appcom_server import sppasCommServer
 
 # ---------------------------------------------------------------------------
@@ -70,34 +71,39 @@ class TestServerCommunication(unittest.TestCase):
 
 class TestServer(unittest.TestCase):
 
-    def test_parse_received_data(self):
-        server = sppasCommServer("127.0.0.1", 1234)
-
-        valid_data = json.dumps({
-            "key": "audio",
-            "value": ["16000", "2", "stream"]
-        })
-        key, value = server._parse_received_data(valid_data)
-        self.assertEqual(key, "audio")
-        self.assertEqual(value, ["16000", "2", "stream"])
-
-        missing_key = json.dumps({"value": "abc"})
-        with self.assertRaises(sppasCommServerDataError):
-            server._parse_received_data(missing_key)
-
-        missing_value = json.dumps({"key": "audio"})
-        with self.assertRaises(sppasCommServerDataError):
-            server._parse_received_data(missing_value)
-
-        empty_key = json.dumps({"key": "", "value": "abc"})
-        with self.assertRaises(sppasCommServerDataError):
-            server._parse_received_data(empty_key)
-
     def test_process_received_data_stop(self):
         server = sppasCommServer("127.0.0.1", 1234)
-        data_stop = json.dumps({"key": "0", "value": ""})
+        data_stop = sppasCommunication.format_message(sppasCommKeys.STOP, "")
         result = server._process_received_data(data_stop)
         self.assertEqual(result, "__STOP__")
+
+    def test_prepare_response_ping(self):
+        server = sppasCommServer("127.0.0.1", 1234)
+        response = server._prepare_response(sppasCommKeys.PING, "")
+        key, value = sppasCommunication.parse_message(response)
+        self.assertEqual(key, sppasCommKeys.ACK)
+        self.assertEqual(value, {"version": COMM_PROTOCOL_VERSION})
+
+    def test_prepare_response_hello(self):
+        server = sppasCommServer("127.0.0.1", 1234)
+        hello = {"source": "swapp", "version": COMM_PROTOCOL_VERSION, "port": 8888}
+        response = server._prepare_response(sppasCommKeys.HELLO, hello)
+        key, value = sppasCommunication.parse_message(response)
+        self.assertEqual(key, sppasCommKeys.ACK)
+        self.assertEqual(value, {"version": COMM_PROTOCOL_VERSION})
+
+    def test_prepare_response_bye(self):
+        server = sppasCommServer("127.0.0.1", 1234)
+        response = server._prepare_response(sppasCommKeys.BYE, "wxapp")
+        key, value = sppasCommunication.parse_message(response)
+        self.assertEqual(key, sppasCommKeys.ACK)
+
+    def test_prepare_response_unknown_key(self):
+        server = sppasCommServer("127.0.0.1", 1234)
+        response = server._prepare_response(999, "")
+        key, value = sppasCommunication.parse_message(response)
+        self.assertEqual(key, sppasCommKeys.ERROR)
+        self.assertTrue("999" in value)
 
 
 # ---------------------------------------------------------------------------
