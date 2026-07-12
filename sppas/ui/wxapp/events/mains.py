@@ -138,3 +138,75 @@ class sppasDataChangedEvent(wx.PyCommandEvent):
     # -----------------------------------------------------------------------
 
     workspace = property(GetWorkspace, SetWorkspace)
+
+# ---------------------------------------------------------------------------
+
+
+class sppasCommMessageEvent(wx.PyCommandEvent):
+    """Class for an event sent when a message is received on the socket.
+
+    The binder of this event is EVT_COMM_MESSAGE. The event carries the
+    (key, value) of a message received from the other UI (swapp), exactly
+    as parsed from the shared JSON envelope (see sppasCommKeys).
+
+    """
+
+    def __init__(self, event_id):
+        """Default class constructor.
+
+        :param event_id: the event identifier.
+
+        """
+        super(sppasCommMessageEvent, self).__init__(sb.EVT_COMM_MESSAGE.typeId, event_id)
+        self.__key = -1
+        self.__value = None
+
+    # -----------------------------------------------------------------------
+
+    def SetKey(self, key):
+        """Set the key of the received message.
+
+        :param key: (int) One of the sppasCommKeys constants
+
+        """
+        if isinstance(key, int) is False:
+            raise sppasTypeError("int", type(key))
+        self.__key = key
+
+    # -----------------------------------------------------------------------
+
+    def GetKey(self):
+        """Return the key of the received message.
+
+        :returns: (int)
+
+        """
+        return self.__key
+
+    # -----------------------------------------------------------------------
+
+    key = property(GetKey, SetKey)
+
+    # -----------------------------------------------------------------------
+
+    def SetValue(self, value):
+        """Set the value of the received message.
+
+        :param value: (any) The JSON-parsed value of the message
+
+        """
+        self.__value = value
+
+    # -----------------------------------------------------------------------
+
+    def GetValue(self):
+        """Return the value of the received message.
+
+        :returns: (any)
+
+        """
+        return self.__value
+
+    # -----------------------------------------------------------------------
+
+    value = property(GetValue, SetValue)

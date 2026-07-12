@@ -76,6 +76,7 @@ class sppasEventBinder(object):
             EVT_WINDOW_MOVED=wx.PyEventBinder(wx.NewEventType(), 1),
             EVT_WINDOW_RESIZED=wx.PyEventBinder(wx.NewEventType(), 1),
             EVT_BUTTON_PRESSED=wx.PyEventBinder(wx.NewEventType(), 1),
+            EVT_COMM_MESSAGE=wx.PyEventBinder(wx.NewEventType(), 1),
         )
 
     # -----------------------------------------------------------------------

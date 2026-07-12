@@ -40,9 +40,6 @@
 
 from __future__ import annotations
 import socket
-import json
-
-from sppas.core import sppasTypeError
 
 from .appcom_base import sppasCommunication
 from .appcom_base import sppasCommServerError
@@ -67,23 +64,16 @@ class sppasCommClient(sppasCommunication):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def format_request(key: str, value) -> str:
+    def format_request(key: int, value) -> str:
         """Create a serialized JSON allowing to send data to the server.
 
-        :param key: (str) The action to be performed by the server
-        :param value: (any) A serializable object
-        :raises: sppasError: Invalid argument
+        :param key: (int) One of the sppasCommKeys constants
+        :param value: (any) A JSON-serializable object
+        :raises: TypeError: Invalid key type
         :return: (str) The ready-to-send JSON string.
 
         """
-        if isinstance(key, str) is False:
-            raise sppasTypeError("str", type(key))
-
-        data = dict()
-        data["key"] = key
-        data["value"] = value
-
-        return json.dumps(data, ensure_ascii=False)
+        return sppasCommunication.format_message(key, value)
 
     # -----------------------------------------------------------------------
 

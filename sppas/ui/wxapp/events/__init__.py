@@ -1,6 +1,7 @@
 from .binder import sb
 from .mains import sppasLoggingEvent
 from .mains import sppasDataChangedEvent
+from .mains import sppasCommMessageEvent
 from .actions import sppasActionEvent
 from .actions import sppasActionFileEvent
 from .wins import sppasWindowMovedEvent
@@ -13,6 +14,7 @@ __all__ = (
     "sb",
     "sppasLoggingEvent",
     "sppasDataChangedEvent",
+    "sppasCommMessageEvent",
     "sppasActionEvent",
     "sppasActionFileEvent",
     "sppasWindowMovedEvent",

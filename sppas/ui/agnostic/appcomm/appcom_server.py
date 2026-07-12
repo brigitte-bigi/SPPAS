@@ -40,12 +40,12 @@
 
 from __future__ import annotations
 import logging
-import json
 import socket
 
 from .appcom_base import sppasCommunication
-from .appcom_base import sppasCommServerDataError
+from .appcom_base import sppasCommKeys
 from .appcom_base import sppasCommServerAddressError
+from .appcom_base import COMM_PROTOCOL_VERSION
 
 # ---------------------------------------------------------------------------
 
@@ -122,8 +122,8 @@ class sppasCommServer(sppasCommunication):
                 data = data.decode()
                 logging.debug(f" ... Server received data of length={len(data)}")
 
-                response = " ... Connection established."
-                error = None
+                response = self.format_message(sppasCommKeys.ACK, "Connection established.")
+                stop_requested = False
 
                 if isinstance(data, str) is True and len(data) > 0:
                     # Parse the received data and prepare the response for the client
@@ -132,22 +132,26 @@ class sppasCommServer(sppasCommunication):
                         # Check for stop message
                         if response == "__STOP__":
                             logging.info(" ... Server received close command.")
-                            conn.close()
-                            break
+                            stop_requested = True
+                            response = self.format_message(sppasCommKeys.ACK, "Server is stopping.")
                     except Exception as e:
-                        error = f"Server received invalid data: {str(e)}"
+                        response = self.format_message(
+                            sppasCommKeys.ERROR,
+                            f"Server received invalid data: {str(e)}")
                 else:
-                    error = (f"Server received empty data or data of an invalid type: "
-                             f"{str(type(data))}")
+                    response = self.format_message(
+                        sppasCommKeys.ERROR,
+                        f"Server received empty data or data of an invalid type: "
+                        f"{str(type(data))}")
 
-                if error is not None:
-                    conn.send(error.encode())
-                else:
-                    # Response may be str or already bytes depending on the service output.
-                    conn.send(response if isinstance(response, bytes) else response.encode())
+                # Response may be str or already bytes depending on the service output.
+                conn.send(response if isinstance(response, bytes) else response.encode())
 
                 conn.close()
                 logging.info("Connection closed.")
+
+                if stop_requested is True:
+                    break
         finally:
             # Always executed, even on exception
             logging.info("Server stopped.")
@@ -183,58 +187,46 @@ class sppasCommServer(sppasCommunication):
     # -----------------------------------------------------------------------
 
     def _process_received_data(self, data: str) -> str:
-        """Parse received data from server and launch the expected service.
+        """Parse received data and launch the expected service.
 
         :param data: (str) The received data -- JSON.
         :return: (str) The response from the service(s)
+        :raises: sppasCommServerDataError: Invalid message envelope.
         :raises: JSONDecodeError: The received data can't be parsed.
 
         """
-        # Received data are supposed to be in JSON format
-        key, value = self._parse_received_data(data)
-        logging.info(f" ... Server received key: {key}")
+        # Received data are supposed to be in the shared JSON envelope
+        key, value = self.parse_message(data)
+        logging.info(f" ... Server received key: {sppasCommKeys.name_of(key)}")
 
         # Analyze action and ask for the relevant services
-        if key == "0":
+        if key == sppasCommKeys.STOP:
             return "__STOP__"
 
         return self._prepare_response(key, value)
 
     # -----------------------------------------------------------------------
-
-    @staticmethod
-    def _parse_received_data(data: str) -> (str, str):
-        """Parse received data from server and launch the expected service.
-
-        :param data: (str) The received data -- JSON.
-        :return: (str) The response from the service(s)
-        :raises: JSONDecodeError: The received data can't be parsed.
-
-        """
-        # Received data are supposed to be in JSON format
-        parsed = json.loads(data)
-
-        # Get the name of the action to perform
-        if "key" not in parsed:
-            raise sppasCommServerDataError("'key' key missing in received data.")
-        if "value" not in parsed:
-            raise sppasCommServerDataError("'value' key missing in received data.")
-
-        if len(parsed["key"]) == 0:
-            raise sppasCommServerDataError("key can't be empty in received data.")
-
-        return parsed["key"], parsed["value"]
-
-    # -----------------------------------------------------------------------
     # To be overridden by the app.
     # -----------------------------------------------------------------------
 
-    def _prepare_response(self, key: str, value: str) -> str:
-        """To be overridden. Prepare response to send data to server.
+    def _prepare_response(self, key: int, value) -> str:
+        """To be overridden. Prepare the response to send to the client.
 
-        :param key: (str) The key sent by the client.
-        :param value: (str) The value sent by the client.
-        :return: (str) The response to the client.
+        :param key: (int) One of the sppasCommKeys constants, sent by the client.
+        :param value: (any) The value sent by the client.
+        :return: (str) The response to the client, in the shared JSON envelope.
 
         """
-        return "0"
+        if key == sppasCommKeys.PING:
+            return self.format_message(sppasCommKeys.ACK, {"version": COMM_PROTOCOL_VERSION})
+
+        if key == sppasCommKeys.HELLO:
+            # The interlocutor announced itself: value = {"source", "version", "port"}
+            logging.info(f" ... Handshake received: {value}")
+            return self.format_message(sppasCommKeys.ACK, {"version": COMM_PROTOCOL_VERSION})
+
+        if key == sppasCommKeys.BYE:
+            logging.info(f" ... The interlocutor announced its shutdown: {value}")
+            return self.format_message(sppasCommKeys.ACK, "Goodbye.")
+
+        return self.format_message(sppasCommKeys.ERROR, f"Unknown message key: {key}")

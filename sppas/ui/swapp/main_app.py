@@ -49,7 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.swapp.wappsg import wapp_settings
-from sppas.ui.agnostic import sppasCommServer
+from .main_comm import sppasWappCommServer
 
 from .wapps import *
 
@@ -222,7 +222,7 @@ class sppasWebApp:
         self.__server.create_pages(_app.name)
 
         # Create a socket to communicate with the apps
-        self.__socket = sppasCommServer(wapp_settings.shost, wapp_settings.sport)
+        self.__socket = sppasWappCommServer(wapp_settings.shost, wapp_settings.sport)
 
     # -----------------------------------------------------------------------
 
@@ -261,6 +261,10 @@ class sppasWebApp:
         except KeyboardInterrupt:
             # Stop the server
             self.__server.shutdown()
+        finally:
+            # The HTTP server is no longer serving -- whatever the exit path
+            # (KeyboardInterrupt or shutdown by the handler on the 410 event):
+            # the communication socket must not survive it.
             self.__socket.shutdown()
 
         # Save current configuration

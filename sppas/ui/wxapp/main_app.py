@@ -45,6 +45,7 @@ Create and run the application:
 """
 
 import traceback
+import threading
 import wx
 import logging
 from os import path
@@ -56,9 +57,12 @@ from sppas.core.config import lgs
 
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommServerError
+from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
 
 from .main_settings import WxAppSettings
 from .main_window import sppasMainWindow
+from .main_comm import sppasWxCommServer
 from .imgtools import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
@@ -90,6 +94,12 @@ class sppasApp(wx.App):
         # Fix logging level and settings
         # self.process_command_line_args()
         self.settings = WxAppSettings()
+
+        # The communication server of this UI: the swapp UI is its client.
+        # Its port is the one of the swapp communication server, plus one;
+        # it is announced to swapp in the HELLO message.
+        self.__comm_server = sppasWxCommServer(
+            self.settings.shost, self.settings.sport + 1, self)
 
         # This catches events when the app is asked to activate
         # by some other process
@@ -188,7 +198,11 @@ class sppasApp(wx.App):
         """
         try:
             client = sppasCommClient(self.settings.shost, self.settings.sport)
-            request = client.format_request("ping", {"source": "wxapp"})
+            request = client.format_request(
+                sppasCommKeys.HELLO,
+                {"source": "wxapp",
+                 "version": COMM_PROTOCOL_VERSION,
+                 "port": self.__comm_server.port})
             response = client.request(request)
             logging.info("Valid communication server. Connection established.")
             logging.debug(f"Server Response: {response}")
@@ -210,6 +224,9 @@ class sppasApp(wx.App):
         try:
             window = sppasMainWindow()
             self.SetTopWindow(window)
+            # Start the socket to receive messages from the swapp UI
+            comm_thread = threading.Thread(target=self.__comm_server.start, daemon=True)
+            comm_thread.start()
             self._background_initialization()
             window.Show(True)
             self.MainLoop()
@@ -229,6 +246,16 @@ class sppasApp(wx.App):
                     pass
             else:
                 logging.error(traceback.format_exc())
+        finally:
+            # Stop receiving messages from the swapp UI.
+            self.__comm_server.shutdown()
+            # Announce the shutdown to the communication server, if any.
+            try:
+                client = sppasCommClient(self.settings.shost, self.settings.sport)
+                request = client.format_request(sppasCommKeys.BYE, {"source": "wxapp"})
+                client.request(request)
+            except sppasCommServerError:
+                logging.info("No communication server to say goodbye to.")
 
         return status
 

@@ -38,7 +38,51 @@
 
 """
 
+import json
+
 from sppas.core import sppasError
+
+# ---------------------------------------------------------------------------
+
+# Version of the communication protocol, announced in the HELLO message.
+COMM_PROTOCOL_VERSION = 1
+
+# ---------------------------------------------------------------------------
+
+
+class sppasCommKeys:
+    """The shared vocabulary of the messages exchanged on the socket.
+
+    Both UIs (swapp and wxapp) use these named constants as the "key" of
+    every message, in both directions. The integer value is what travels
+    on the wire; the name is what appears in the code and in the logs.
+
+    """
+
+    # Control messages, sent by a client
+    STOP = 0     # ask the server to stop listening
+    PING = 1     # are you alive? expects ACK
+    HELLO = 2    # handshake. value = {"source": str, "version": int, "port": int}
+    BYE = 3      # the interlocutor announces its shutdown
+
+    # Response messages, sent back by a server
+    ACK = 10     # request understood and processed. value = response payload
+    ERROR = 11   # request failed. value = human-readable message
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def name_of(key: int) -> str:
+        """Return the constant name of a key value, for the logs.
+
+        :param key: (int) The value of one of the constants of this class.
+        :return: (str) The constant name, or the value itself if unknown.
+
+        """
+        for name, value in vars(sppasCommKeys).items():
+            if name.isupper() is True and value == key:
+                return name
+        return str(key)
 
 # ---------------------------------------------------------------------------
 
@@ -126,4 +170,52 @@ class sppasCommunication:
         self.__port = value
 
     port = property(get_port, set_port)
+
+    # -----------------------------------------------------------------------
+    # The message envelope, shared by both directions
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def format_message(key: int, value) -> str:
+        """Create the serialized JSON envelope of a message.
+
+        The same envelope is used for the requests and for the responses.
+
+        :param key: (int) One of the sppasCommKeys constants
+        :param value: (any) A JSON-serializable object
+        :raises: TypeError: Invalid key type
+        :return: (str) The ready-to-send JSON string
+
+        """
+        if isinstance(key, int) is False:
+            raise TypeError("message key must be an integer")
+
+        data = dict()
+        data["key"] = key
+        data["value"] = value
+
+        return json.dumps(data, ensure_ascii=False)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def parse_message(data: str):
+        """Parse the serialized JSON envelope of a message.
+
+        :param data: (str) A received JSON string
+        :raises: sppasCommServerDataError: Missing or invalid envelope field
+        :raises: json.JSONDecodeError: The received data can't be parsed
+        :return: (tuple) The (key, value) of the message
+
+        """
+        parsed = json.loads(data)
+
+        if "key" not in parsed:
+            raise sppasCommServerDataError("'key' key missing in received data.")
+        if "value" not in parsed:
+            raise sppasCommServerDataError("'value' key missing in received data.")
+        if isinstance(parsed["key"], int) is False:
+            raise sppasCommServerDataError("key must be an integer in received data.")
+
+        return parsed["key"], parsed["value"]
 
