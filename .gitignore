@@ -23,3 +23,5 @@ sppas-venv/*
 /sppas/ui/swapp/statics/images/desktop.ini
 sppas/bin/*.txt
 sppas/bin/*.exe
+demo
+demo/*
