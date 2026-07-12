@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -105,6 +105,8 @@ class sppasBaseIO(sppasTranscription):
         self._accept_disjoint = False
         self._accept_alt_localization = False
         self._accept_alt_tag = False
+        self._accept_tag_types = False
+        self._accept_tag_geometry = False
         self._accept_radius = True
         self._accept_gaps = False
         self._accept_overlaps = False
@@ -224,6 +226,32 @@ class sppasBaseIO(sppasTranscription):
 
         """
         return self._accept_alt_tag
+
+    # -----------------------------------------------------------------------
+
+    def tag_types_support(self):
+        """Return True if it supports the typed tags.
+
+        The typed tags are the ones of type "bool", "int" or "float":
+        a format without this support converts them into "str".
+
+        :returns: boolean
+
+        """
+        return self._accept_tag_types
+
+    # -----------------------------------------------------------------------
+
+    def tag_geometry_support(self):
+        """Return True if it supports the geometric tags.
+
+        The geometric tags are the ones of type "point" or "rect":
+        a format without this support converts them into "str".
+
+        :returns: boolean
+
+        """
+        return self._accept_tag_geometry
 
     # -----------------------------------------------------------------------
 

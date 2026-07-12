@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -180,6 +180,8 @@ class sppasXRA(sppasBaseIO):
         self._accept_disjoint = True
         self._accept_alt_localization = True
         self._accept_alt_tag = True
+        self._accept_tag_types = True
+        self._accept_tag_geometry = True
         self._accept_radius = True
         self._accept_gaps = True
         self._accept_overlaps = True

@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -80,6 +80,8 @@ class TestXRA(unittest.TestCase):
         self.assertTrue(xra.disjoint_support())
         self.assertTrue(xra.alternative_localization_support())
         self.assertTrue(xra.alternative_tag_support())
+        self.assertTrue(xra.tag_types_support())
+        self.assertTrue(xra.tag_geometry_support())
         self.assertTrue(xra.radius_support())
         self.assertTrue(xra.gaps_support())
         self.assertTrue(xra.overlaps_support())

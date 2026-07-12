@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -75,6 +75,8 @@ class FileSupports:
         "radius_support": _('Vagueness'),
         "alternative_localization_support": _('Alt. loc'),
         "alternative_tag_support": _('Alt. tag'),
+        "tag_types_support": _('Typed tags'),
+        "tag_geometry_support": _('Geom. tags'),
     }
 
 # ---------------------------------------------------------------------------
