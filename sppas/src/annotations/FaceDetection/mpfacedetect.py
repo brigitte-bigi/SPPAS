@@ -45,7 +45,6 @@ the OpenCV detectors are instantiated from their ".xml", ".caffemodel",
 """
 
 import logging
-import numpy
 
 from sppas.core.config import cfg
 from sppas.core.coreutils import sppasError
@@ -55,6 +54,7 @@ from sppas.src.imgdata import sppasImage
 from sppas.src.imgdata import BaseObjectsDetector
 
 try:
+    import numpy
     import mediapipe as mp
     from mediapipe.tasks import python as mp_tasks
     from mediapipe.tasks.python import vision as mp_vision
