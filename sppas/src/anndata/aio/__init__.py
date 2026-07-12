@@ -48,6 +48,7 @@ from .htk import sppasLab
 from .phonedit import sppasMRK
 from .phonedit import sppasSignaix
 from .praat import sppasTextGrid
+from .teicorpo import sppasTEICORPO
 from .praat import sppasIntensityTier
 from .praat import sppasPitchTier
 from .sclite import sppasCTM
@@ -90,15 +91,16 @@ ext_annotationpro = ['.antx', '.[aA][aN][tT][xX]']
 ext_xtrans = ['.tdf', '.[tT][dD][fF]']
 ext_audacity = ['.aup']
 ext_table = ['.tra', '.arff', '.xrff']
+ext_teicorpo = ['.tei', '.[tT][eE][iI]']
 
 primary_in = ['.hz', '.PitchTier']
-annotations_in = ['.xra', '.TextGrid', '.eaf', '.csv', '.mrk', '.txt', '.stm', '.ctm', '.lab', '.mlf', '.sub', '.srt', '.antx', '.anvil', '.aup', '.trs', '.tdf']
+annotations_in = ['.xra', '.TextGrid', '.eaf', '.csv', '.mrk', '.txt', '.stm', '.ctm', '.lab', '.mlf', '.sub', '.srt', '.antx', '.anvil', '.aup', '.trs', '.tdf', '.tei']
 
-extensions = ['.xra', '.textgrid', '.pitchtier', '.hz', '.eaf', '.trs', '.csv', '.mrk', '.txt', '.mrk', '.stm', '.ctm', '.lab', '.mlf', '.sub', '.srt', 'anvil', '.antx', '.tdf', '.arff', '.xrff']
-extensionsul = ext_sppas + ext_praat + ext_transcriber + ext_elan + ext_ascii + ext_phonedit + ext_signaix + ext_sclite + ext_htk + ext_subtitles + ext_anvil + ext_annotationpro + ext_xtrans + ext_audacity + ext_table
+extensions = ['.xra', '.textgrid', '.pitchtier', '.hz', '.eaf', '.trs', '.csv', '.mrk', '.txt', '.mrk', '.stm', '.ctm', '.lab', '.mlf', '.sub', '.srt', 'anvil', '.antx', '.tdf', '.arff', '.xrff', '.tei']
+extensionsul = ext_sppas + ext_praat + ext_transcriber + ext_elan + ext_ascii + ext_phonedit + ext_signaix + ext_sclite + ext_htk + ext_subtitles + ext_anvil + ext_annotationpro + ext_xtrans + ext_audacity + ext_table + ext_teicorpo
 extensions_in = primary_in + annotations_in
-extensions_out = ['.xra', '.TextGrid', '.eaf', '.csv', '.mrk', '.txt', '.stm', '.ctm', '.lab', '.mlf', '.sub', '.srt', '.antx', '.arff', '.xrff']
-extensions_out_multitiers = ['.xra', '.TextGrid', '.eaf', '.csv', '.mrk', '.antx', '.arff', '.xrff']
+extensions_out = ['.xra', '.TextGrid', '.eaf', '.csv', '.mrk', '.txt', '.stm', '.ctm', '.lab', '.mlf', '.sub', '.srt', '.antx', '.arff', '.xrff', '.tei']
+extensions_out_multitiers = ['.xra', '.TextGrid', '.eaf', '.csv', '.mrk', '.antx', '.arff', '.xrff', '.tei']
 
 # ----------------------------------------------------------------------------
 
@@ -113,6 +115,7 @@ __all__ = (
     "sppasMRK",
     "sppasSignaix",
     "sppasTextGrid",
+    "sppasTEICORPO",
     "sppasIntensityTier",
     "sppasPitchTier",
     "sppasCTM",
