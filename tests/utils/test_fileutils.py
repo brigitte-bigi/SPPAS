@@ -42,6 +42,10 @@ import unittest
 from sppas.core.config import paths
 from sppas.src.utils.fileutils import sppasDirUtils, sppasFileUtils
 
+# ---------------------------------------------------------------------------
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -52,7 +56,7 @@ class TestFileUtils(unittest.TestCase):
 
     def setUp(self):
         self.sample_1 = os.path.join(paths.samples, "samples-eng", "oriana1.wav")
-        self.sample_2 = os.path.join(paths.samples, "samples-fra", "AG_éàç_0460.TextGrid")
+        self.sample_2 = os.path.join(DATA, "AG_éàç_0460.TextGrid")
 
     def test_set_random(self):
         sf = sppasFileUtils()

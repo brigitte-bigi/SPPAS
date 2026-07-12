@@ -48,11 +48,15 @@ from sppas.src.imgdata import sppasImage
 
 # ---------------------------------------------------------------------------
 
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+# ---------------------------------------------------------------------------
+
 
 class TestImageFilter(unittest.TestCase):
 
     def setUp(self):
-        self.img = sppasImage(filename=os.path.join(paths.samples, "faces", "BrigitteBigiSlovenie2016.jpg"))
+        self.img = sppasImage(filename=os.path.join(DATA, "BrigitteBigiSlovenie2016.jpg"))
 
     # ---------------------------------------------------------------------------
 

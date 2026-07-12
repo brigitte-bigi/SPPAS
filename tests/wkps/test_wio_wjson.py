@@ -59,7 +59,7 @@ class TestsppasWJSON(unittest.TestCase):
 
     def setUp(self):
         self.data = sppasWorkspace()
-        self.data.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        self.data.add_file(os.path.join(DATA, '0001.txt'))
         self.r1 = sppasCatReference('SpeakerAB')
         self.r1.set_type('SPEAKER')
         self.r1.append(sppasRefAttribute('initials', 'AB'))
@@ -85,7 +85,7 @@ class TestsppasWJSON(unittest.TestCase):
 
     def test_set(self):
         data = sppasWorkspace()
-        data.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        data.add_file(os.path.join(DATA, '0001.txt'))
         r1 = sppasCatReference('SpeakerAB')
         r1.set_type('SPEAKER')
         r1.append(sppasRefAttribute('initials', 'AB'))
@@ -103,7 +103,7 @@ class TestsppasWJSON(unittest.TestCase):
 
     def test_serialize(self):
         data = sppasWJSON()
-        data.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        data.add_file(os.path.join(DATA, '0001.txt'))
         r1 = sppasCatReference('SpeakerAB')
         r1.set_type('SPEAKER')
         r1.append(sppasRefAttribute('initials', 'AB'))
@@ -119,7 +119,7 @@ class TestsppasWJSON(unittest.TestCase):
 
     def test_read_write(self):
         data = sppasWJSON()
-        data.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        data.add_file(os.path.join(DATA, '0001.txt'))
         r1 = sppasCatReference('SpeakerAB')
         r1.set_type('SPEAKER')
         r1.append(sppasRefAttribute('initials', 'AB'))
@@ -190,7 +190,7 @@ class TestsppasWJSON(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test__parse_path(self):
-        p = os.path.join(sppas.paths.samples, 'samples-pol')
+        p = DATA
         fp = FilePath(p)
         d = self.wkpjson._serialize_path(fp)
         new_path = self.wkpjson._parse_path(d, 2)
@@ -211,7 +211,7 @@ class TestsppasWJSON(unittest.TestCase):
         self.assertEqual(new_path.get_id(), os.path.abspath(d["rel"]))
 
         # path changed so we can't add with the old path name
-        fn = FileName(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        fn = FileName(os.path.join(DATA, '0001.txt'))
         with self.assertRaises(FilesMatchingValueError):
             new_path.append(fn)
 
@@ -226,7 +226,7 @@ class TestsppasWJSON(unittest.TestCase):
         self.assertEqual(new_path.get_state(), States().MISSING)
 
         with self.assertRaises(FilesMatchingValueError):
-            fn = FileName(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+            fn = FileName(os.path.join(DATA, '0001.txt'))
             new_path.append(fn)
 
         self.assertEqual(fp, new_path)

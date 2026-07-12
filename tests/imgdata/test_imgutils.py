@@ -48,11 +48,15 @@ from sppas.src.imgdata.imageutils import sppasImageCompare
 
 # ---------------------------------------------------------------------------
 
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+# ---------------------------------------------------------------------------
+
 
 class TestImageCompare(unittest.TestCase):
 
-    IMAGE1 = os.path.join(paths.samples, "faces", "BrigitteBigiSlovenie2016.jpg")
-    IMAGE2 = os.path.join(paths.samples, "faces", "BrigitteBigi_Aix2020.png")
+    IMAGE1 = os.path.join(DATA, "BrigitteBigiSlovenie2016.jpg")
+    IMAGE2 = os.path.join(DATA, "BrigitteBigi_Aix2020.png")
 
     def test_compare_distance(self):
         img1 = sppasImage(filename=TestImageCompare.IMAGE1)

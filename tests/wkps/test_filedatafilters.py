@@ -48,13 +48,17 @@ from sppas.src.wkps.filestructure import FileRoot
 
 # ---------------------------------------------------------------------------
 
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+# ---------------------------------------------------------------------------
+
 
 class TestsFileDataFilter (unittest.TestCase):
 
     def setUp(self):
         f1 = os.path.join(paths.samples, 'samples-fra', 'AC track_0379.PitchTier')
-        f2 = os.path.join(paths.samples, 'samples-jpn', 'JPA_M16_JPA_T02.TextGrid')
-        f3 = os.path.join(paths.samples, 'samples-cat', 'TB-FE1-H1_phrase1.TextGrid')
+        f2 = os.path.join(DATA, 'JPA_M16_JPA_T02.TextGrid')
+        f3 = os.path.join(DATA, 'TB-FE1-H1_phrase1.TextGrid')
 
         self.files = sppasWorkspace()
         self.files.add_file(__file__)
@@ -134,8 +138,8 @@ class TestsFileDataFilter (unittest.TestCase):
         files.add_file(os.path.join(paths.samples, 'samples-fra', 'F_F_B003_P8.TextGrid'))
         files.add_file(os.path.join(paths.samples, 'samples-fra', 'F_F_B003_P9.wav'))
         files.add_file(os.path.join(paths.samples, 'samples-fra', 'F_F_B003_P9.TextGrid'))
-        files.add_file(os.path.join(paths.samples, 'samples-fra', 'F_F_C006_P6.wav'))
-        files.add_file(os.path.join(paths.samples, 'samples-fra', 'F_F_C006_P6.TextGrid'))
+        files.add_file(os.path.join(DATA, 'F_F_C006_P6.wav'))
+        files.add_file(os.path.join(DATA, 'F_F_C006_P6.TextGrid'))
         files.add_file(os.path.join(paths.samples, 'samples-eng', 'ENG_M15_ENG_T02.wav'))
         files.add_file(os.path.join(paths.samples, 'samples-eng', 'ENG_M15_ENG_T02.PitchTier'))
         files.add_file(os.path.join(paths.samples, 'samples-eng', 'ENG_M15_ENG_T33.wav'))
@@ -170,7 +174,7 @@ class TestsFileDataFilter (unittest.TestCase):
         fr2.add_ref(rf)
         fr2.add_ref(spk1)
 
-        fr3 = files.get_object(FileRoot.root(os.path.join(paths.samples, 'samples-fra', 'F_F_C006_P6.wav')))
+        fr3 = files.get_object(FileRoot.root(os.path.join(DATA, 'F_F_C006_P6.wav')))
         fr3.add_ref(rf)
         fr3.add_ref(spk2)
 

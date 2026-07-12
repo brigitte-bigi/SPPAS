@@ -108,7 +108,7 @@ class TestFileName(unittest.TestCase):
 
     def test_update_properties(self):
         # Properties were not changed
-        fn = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
+        fn = FileName(os.path.join(DATA, "0001.txt"))
         self.assertFalse(fn.update_properties())
         fn = FileName("toto")
         self.assertFalse(fn.update_properties())
@@ -223,12 +223,12 @@ class TestFileRoot(unittest.TestCase):
     # ----------------------------------------------------------------------------
 
     def test_update_state_with_missing(self):
-        fr = FileRoot(os.path.join(sppas.paths.samples, "samples-pol", "0001"))
-        fr.append(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
+        fr = FileRoot(os.path.join(DATA, "0001"))
+        fr.append(os.path.join(DATA, "0001.txt"))
         self.assertEqual(fr.state, States().UNUSED)
         self.assertFalse(fr.update_state())
 
-        fr.append(os.path.join(sppas.paths.samples, "samples-pol", "0001missing.txt"))
+        fr.append(os.path.join(DATA, "0001missing.txt"))
         self.assertEqual(fr.state, States().UNUSED)
 
         fr.set_state(States().CHECKED)
@@ -237,8 +237,8 @@ class TestFileRoot(unittest.TestCase):
     # ----------------------------------------------------------------------------
 
     def test_update_state(self):
-        fr = FileRoot(os.path.join(sppas.paths.samples, "samples-pol", "0001"))
-        fr.append(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
+        fr = FileRoot(os.path.join(DATA, "0001"))
+        fr.append(os.path.join(DATA, "0001.txt"))
         self.assertEqual(fr.state, States().UNUSED)
         self.assertFalse(fr.update_state())
 
@@ -259,8 +259,8 @@ class TestFileRoot(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_append(self):
-        fr = FileRoot(os.path.join(sppas.paths.samples, "samples-pol", "0001"))
-        fn = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
+        fr = FileRoot(os.path.join(DATA, "0001"))
+        fn = FileName(os.path.join(DATA, "0001.txt"))
 
         # adding existing file
         fns = fr.append(fn)
@@ -298,12 +298,12 @@ class TestFileRoot(unittest.TestCase):
     def test_get_object(self):
         # create our data structure to prepare our tests
         s = States()
-        fr = FileRoot(os.path.join(sppas.paths.samples, "samples-pol", "0001"))
-        fn1 = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
+        fr = FileRoot(os.path.join(DATA, "0001"))
+        fn1 = FileName(os.path.join(DATA, "0001.txt"))
         self.assertEqual(fn1.state, s.UNUSED)
-        fn2 = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.wav"))
+        fn2 = FileName(os.path.join(DATA, "0001.wav"))
         self.assertEqual(fn2.state, s.UNUSED)
-        fn3 = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing"))
+        fn3 = FileName(os.path.join(DATA, "0001.missing"))
         self.assertEqual(fn3.state, s.MISSING)
         fns = fr.append(fn1)
         self.assertEqual(len(fns), 1)
@@ -314,9 +314,9 @@ class TestFileRoot(unittest.TestCase):
         self.assertEqual(len(fr), 3)
 
         # get object
-        self.assertEqual(fr.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt")), fn1)
-        self.assertEqual(fr.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.wav")), fn2)
-        self.assertEqual(fr.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing")), fn3)
+        self.assertEqual(fr.get_object(os.path.join(DATA, "0001.txt")), fn1)
+        self.assertEqual(fr.get_object(os.path.join(DATA, "0001.wav")), fn2)
+        self.assertEqual(fr.get_object(os.path.join(DATA, "0001.missing")), fn3)
 
 # ---------------------------------------------------------------------------
 
@@ -449,7 +449,7 @@ class TestFilePath(unittest.TestCase):
     # ----------------------------------------------------------------------------
 
     def test_set_state(self):
-        d = os.path.join(sppas.paths.samples, 'samples-pol')
+        d = DATA
         fp = FilePath(d)
         fp.append(os.path.join(d, '0001.txt'))
         s = States()
@@ -518,8 +518,8 @@ class TestFilePath(unittest.TestCase):
     # ----------------------------------------------------------------------------
 
     def test_update_state(self):
-        fp = FilePath(os.path.join(sppas.paths.samples, "samples-pol"))
-        fn = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
+        fp = FilePath(DATA)
+        fn = FileName(os.path.join(DATA, "0001.txt"))
         self.assertEqual(fp.get_state(), States().UNUSED)
         self.assertEqual(fn.get_state(), States().UNUSED)
 
@@ -559,32 +559,32 @@ class TestFilePath(unittest.TestCase):
 
     def test_get_object(self):
         # create our data structure to prepare our tests
-        fp = FilePath(os.path.join(sppas.paths.samples, "samples-pol"))
-        fp.append(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
-        fp.append(os.path.join(sppas.paths.samples, "samples-pol", "0001.wav"))
-        fn = FileName(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing"))
+        fp = FilePath(DATA)
+        fp.append(os.path.join(DATA, "0001.txt"))
+        fp.append(os.path.join(DATA, "0001.wav"))
+        fn = FileName(os.path.join(DATA, "0001.missing"))
         fp.append(fn)
         self.assertEqual(len(fp), 1)
 
         fr = fp[0]
 
         # get object
-        self.assertEqual(fp.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt")), fr[0])
-        self.assertEqual(fp.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.wav")), fr[1])
-        self.assertEqual(fp.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing")), fn)
+        self.assertEqual(fp.get_object(os.path.join(DATA, "0001.txt")), fr[0])
+        self.assertEqual(fp.get_object(os.path.join(DATA, "0001.wav")), fr[1])
+        self.assertEqual(fp.get_object(os.path.join(DATA, "0001.missing")), fn)
 
         # create the file that was missing
-        with open(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing"), "w") as f:
+        with open(os.path.join(DATA, "0001.missing"), "w") as f:
             f.write('this file is used to test SPPAS workspaces.')
 
         fp.set_object_state(States().CHECKED, fn)
         self.assertEqual(fn.state, States().CHECKED)
-        self.assertEqual(fp.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing")), fn)
+        self.assertEqual(fp.get_object(os.path.join(DATA, "0001.missing")), fn)
 
         # delete the file of the disk
-        os.remove(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing"))
-        self.assertEqual(fp.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing")), fn)
+        os.remove(os.path.join(DATA, "0001.missing"))
+        self.assertEqual(fp.get_object(os.path.join(DATA, "0001.missing")), fn)
 
         fp.set_object_state(States().CHECKED, fn)
         self.assertEqual(fn.state, States().MISSING)
-        self.assertEqual(fp.get_object(os.path.join(sppas.paths.samples, "samples-pol", "0001.missing")), fn)
+        self.assertEqual(fp.get_object(os.path.join(DATA, "0001.missing")), fn)

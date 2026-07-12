@@ -72,11 +72,11 @@ class TestsppasWANT(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_read(self):
-        self.antw.read(os.path.join(sppas.paths.wkps, "apWkp.antw"))
+        self.antw.read(os.path.join(DATA, "apWkp.antw"))
 
         # apWkp.antw contains two files
-        fname1 = FileName(os.path.join(sppas.paths.wkps, "annprowkp.ant"))
-        fname2 = FileName(os.path.join(sppas.paths.wkps, "annprowkp1.ant"))
+        fname1 = FileName(os.path.join(DATA, "annprowkp.ant"))
+        fname2 = FileName(os.path.join(DATA, "annprowkp1.ant"))
 
         for fp in self.antw.get_paths():
             for fr in fp:
@@ -88,20 +88,20 @@ class TestsppasWANT(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_write(self):
-        fn = self.antw.read(os.path.join(sppas.paths.wkps, "apWkp.antw"))
+        fn = self.antw.read(os.path.join(DATA, "apWkp.antw"))
 
-        self.antw.add_file(os.path.join(sppas.paths.samples, "samples-pol", "0001.txt"))
-        self.antw.add_file(os.path.join(sppas.paths.samples, "samples-pol", "0001.wav"))
+        self.antw.add_file(os.path.join(DATA, "0001.txt"))
+        self.antw.add_file(os.path.join(DATA, "0001.wav"))
 
-        self.antw.write(os.path.join(sppas.paths.wkps, "testapro.antw"))
+        self.antw.write(os.path.join(DATA, "testapro.antw"))
 
-        fname = self.antw.read(os.path.join(sppas.paths.wkps, "testapro.antw"))
+        fname = self.antw.read(os.path.join(DATA, "testapro.antw"))
         self.assertEqual(fn, fname)
 
     # -----------------------------------------------------------------------
 
     def test_serialize(self):
-        fn = FileName(os.path.join(sppas.paths.wkps, "annprowkp.ant"))
+        fn = FileName(os.path.join(DATA, "annprowkp.ant"))
 
         # dictionary with information that an annotation pro workspace could contain
         sub = {
@@ -157,7 +157,7 @@ class TestsppasWANT(unittest.TestCase):
         child_accepted = ET.SubElement(root, "Accepted")
         child_accepted.text = "false"
 
-        fn = FileName(os.path.join(sppas.paths.wkps, "apWkp.antw"))
+        fn = FileName(os.path.join(DATA, "apWkp.antw"))
 
         fname = self.antw._parse(root)
         self.assertEqual(fn, fname)

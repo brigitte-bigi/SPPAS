@@ -47,10 +47,14 @@ from sppas.src.videodata.videobuffer import sppasBufferVideoWriter
 
 # ---------------------------------------------------------------------------
 
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+# ---------------------------------------------------------------------------
+
 
 class TestVideoReaderBuffer(unittest.TestCase):
 
-    VIDEO = os.path.join(paths.samples, "faces", "video_sample.mp4")
+    VIDEO = os.path.join(DATA, "video_sample.mp4")
 
     # -----------------------------------------------------------------------
 
@@ -249,7 +253,7 @@ class TestVideoReaderBuffer(unittest.TestCase):
 
 class TestVideoWriterBuffer(unittest.TestCase):
 
-    VIDEO = os.path.join(paths.samples, "faces", "video_sample.mp4")
+    VIDEO = os.path.join(DATA, "video_sample.mp4")
 
     def setUp(self):
         if os.path.exists("test.mp4"):

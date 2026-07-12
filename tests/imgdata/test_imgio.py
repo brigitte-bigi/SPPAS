@@ -48,8 +48,12 @@ from sppas.src.imgdata import sppasImage
 from sppas.src.imgdata import sppasCoordsReader
 from sppas.src.imgdata import sppasCoordsImageWriter
 
+# ---------------------------------------------------------------------------
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
 # a JPG image has no transparency, so shape is 3
-IMAGE = os.path.join(paths.samples, "faces", "BrigitteBigiSlovenie2016.jpg")
+IMAGE = os.path.join(DATA, "BrigitteBigiSlovenie2016.jpg")
 
 # ---------------------------------------------------------------------------
 

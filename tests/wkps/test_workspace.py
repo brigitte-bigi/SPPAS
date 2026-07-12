@@ -49,6 +49,10 @@ from sppas.src.wkps.workspace import sppasWorkspace
 from sppas.src.wkps.filestructure import FileName, FileRoot
 from sppas.src.wkps.filebase import States
 
+# ---------------------------------------------------------------------------
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
 # ----------------------------------------------------------------------------
 
 
@@ -59,8 +63,8 @@ class TestWorkspace(unittest.TestCase):
         self.data.add_file(__file__)
         self.data.add_file(os.path.join(sppas.paths.samples, 'samples-fra', 'AC track_0379.PitchTier'))
         self.data.add_file(os.path.join(sppas.paths.samples, 'samples-fra', 'AC track_0379.TextGrid'))
-        self.data.add_file(os.path.join(sppas.paths.samples, 'samples-jpn', 'JPA_M16_JPA_T02.TextGrid'))
-        self.data.add_file(os.path.join(sppas.paths.samples, 'samples-cat', 'TB-FE1-H1_phrase1.TextGrid'))
+        self.data.add_file(os.path.join(DATA, 'JPA_M16_JPA_T02.TextGrid'))
+        self.data.add_file(os.path.join(DATA, 'TB-FE1-H1_phrase1.TextGrid'))
 
         self.r1 = sppasCatReference('SpeakerAB')
         self.r1.set_type('SPEAKER')
@@ -96,7 +100,7 @@ class TestWorkspace(unittest.TestCase):
     def test_wrong_way_to_set_state(self):
         """This is exactly what We WILL NEVER DO."""
         wkp = sppasWorkspace()
-        wkp.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        wkp.add_file(os.path.join(DATA, '0001.txt'))
         for fp in wkp.get_paths():
             for fr in fp:
                 for fn in fr:
@@ -121,8 +125,8 @@ class TestWorkspace(unittest.TestCase):
     def test_right_way_to_set_state(self):
         # USE THIS INSTEAD:
         wkp = sppasWorkspace()
-        wkp.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
-        fn = wkp.get_object(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        wkp.add_file(os.path.join(DATA, '0001.txt'))
+        fn = wkp.get_object(os.path.join(DATA, '0001.txt'))
         wkp.set_object_state(States().CHECKED, fn)
         for fp in wkp.get_paths():
             self.assertEqual(fp.state, States().CHECKED)
@@ -216,16 +220,16 @@ class TestWorkspace(unittest.TestCase):
     def test_remove(self):
         # Create a workspace and add 6 files (3 roots, 2 paths)
         wkp = sppasWorkspace()
-        wkp.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'), brothers=True)
-        wkp.add_file(os.path.join(sppas.paths.samples, 'samples-pol', '0002.txt'), brothers=True)
+        wkp.add_file(os.path.join(DATA, '0001.txt'), brothers=True)
+        wkp.add_file(os.path.join(DATA, '0002.txt'), brothers=True)
         wkp.add_file(os.path.join(sppas.paths.samples, 'samples-eng', 'oriana1.txt'))
         wkp.add_file(os.path.join(sppas.paths.samples, 'samples-eng', 'oriana1.wav'))
 
         # Check 4 of the files
-        fn = wkp.get_object(os.path.join(sppas.paths.samples, 'samples-pol', '0001.wav'))
+        fn = wkp.get_object(os.path.join(DATA, '0001.wav'))
         self.assertIsNotNone(fn)
         wkp.set_object_state(States().CHECKED, fn)
-        fn = wkp.get_object(os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt'))
+        fn = wkp.get_object(os.path.join(DATA, '0001.txt'))
         self.assertIsNotNone(fn)
         wkp.set_object_state(States().CHECKED, fn)
         fn = wkp.get_object(os.path.join(sppas.paths.samples, 'samples-eng', 'oriana1.wav'))

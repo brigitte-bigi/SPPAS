@@ -40,13 +40,35 @@
 
 import os
 import unittest
+import shutil
 import cv2
 import numpy
 
 from sppas.core.config import paths
+from sppas.src.utils.fileutils import sppasFileUtils
 
 from sppas.src.imgdata.image import sppasImage
 from sppas.src.imgdata.images import sppasExtendedImage
+
+# ---------------------------------------------------------------------------
+
+TEMP = sppasFileUtils().set_random()
+
+# ---------------------------------------------------------------------------
+
+
+def setUpModule():
+    if os.path.exists(TEMP) is False:
+        os.mkdir(TEMP)
+
+
+def tearDownModule():
+    shutil.rmtree(TEMP)
+
+
+# ---------------------------------------------------------------------------
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 
 # ---------------------------------------------------------------------------
 
@@ -54,7 +76,7 @@ from sppas.src.imgdata.images import sppasExtendedImage
 class TestImages(unittest.TestCase):
 
     # a JPG image has no transparency, so shape is 3
-    fn = os.path.join(paths.samples, "faces", "BrigitteBigiSlovenie2016.jpg")
+    fn = os.path.join(DATA, "BrigitteBigiSlovenie2016.jpg")
 
     def test_init(self):
         img = cv2.imread(TestImages.fn)
@@ -73,14 +95,14 @@ class TestImages(unittest.TestCase):
         image = sppasExtendedImage(filename=TestImages.fn)
         sample = os.path.join(paths.resources, "cuedspeech", "hand-lfpc-1.png")
         if os.path.exists(sample) is False:
-            sample = os.path.join(paths.samples, "faces", "BrigitteBigi_Aix2020.png")
+            sample = os.path.join(DATA, "BrigitteBigi_Aix2020.png")
         other = sppasImage(filename=sample)
 
         from_coords = (100, 0, 200, 200)
         to_coords = (800, 800, 600, 600)
 
         results = image.ioverlays(other, from_coords, to_coords, 10)
-        fnc = os.path.join(paths.samples, "faces", "BrigitteBigiSlovenie2016-over")
+        fnc = os.path.join(TEMP, "BrigitteBigiSlovenie2016-over")
         for i in range(len(results)):
             fnci = fnc + str(i+1) + ".jpg"
             results[i].write(fnci)

@@ -61,9 +61,9 @@ class testSppasWkpRW(unittest.TestCase):
         self.r1.append(sppasRefAttribute('initials', 'AB'))
         self.r1.append(sppasRefAttribute('sex', 'F'))
         self.att = sppasRefAttribute("att")
-        self.file = os.path.join(sppas.paths.samples, 'samples-pol', '0001.txt')
+        self.file = os.path.join(DATA, '0001.txt')
 
-        self.rw2 = sppasWkpRW(os.path.join(sppas.paths.wkps, 'AnnotProWkp.antw'))
+        self.rw2 = sppasWkpRW(os.path.join(DATA, 'AnnotProWkp.antw'))
         self.want = sppasWANT()
 
     # -------------------------------------------------------------------------

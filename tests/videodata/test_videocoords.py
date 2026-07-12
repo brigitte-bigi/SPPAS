@@ -52,10 +52,14 @@ from sppas.src.videodata import sppasCoordsVideoReader
 
 # ---------------------------------------------------------------------------
 
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+# ---------------------------------------------------------------------------
+
 
 class TestVideoCoords(unittest.TestCase):
 
-    VIDEO = os.path.join(paths.samples, "faces", "video_sample.mp4")
+    VIDEO = os.path.join(DATA, "video_sample.mp4")
 
     def tearDown(self):
         if os.path.exists("test.csv"):
