@@ -47,7 +47,6 @@ from sppas.core.coreutils import u
 from sppas.src.anndata.anndataexc import AioEncodingError
 
 from .wjson import sppasWJSON
-from .wannotationpro import sppasWANT
 
 # ----------------------------------------------------------------------------
 
@@ -59,7 +58,6 @@ class sppasWkpRW(object):
 
     WORKSPACE_TYPES = OrderedDict()
     WORKSPACE_TYPES[sppasWJSON().default_extension.lower()] = sppasWJSON
-    WORKSPACE_TYPES[sppasWANT().default_extension.lower()] = sppasWANT
 
     # ------------------------------------------------------------------------
 

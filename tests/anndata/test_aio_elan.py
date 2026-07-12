@@ -525,7 +525,7 @@ class TestEAF(unittest.TestCase):
         tier_root = tree.getroot()
         a1 = sppasAnnotation(sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(3.5))))
         a1.set_meta('id', "a1")
-        created_anns = sppasEAF._create_alignable_annotation_element(a1, tier_root)
+        created_anns = sppasEAF._create_alignable_annotation_element(a1, tier_root, dict())
         self.assertEqual(1, len(created_anns))
         self.assertEqual(None, created_anns[0].text)
         label_value = created_anns[0].find('ANNOTATION_VALUE')
@@ -541,7 +541,7 @@ class TestEAF(unittest.TestCase):
         a2 = sppasAnnotation(sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(3.5))),
                              sppasLabel(sppasTag("toto")))
         a2.set_meta('id', "a2")
-        created_anns = sppasEAF._create_alignable_annotation_element(a2, tier_root)
+        created_anns = sppasEAF._create_alignable_annotation_element(a2, tier_root, dict())
         self.assertEqual(1, len(created_anns))
         label_value = created_anns[0].find('ANNOTATION_VALUE')
         self.assertEqual("toto", label_value.text)
@@ -557,7 +557,7 @@ class TestEAF(unittest.TestCase):
                              [sppasLabel(sppasTag("toto1")),
                              sppasLabel(sppasTag("toto2"))])
         a3.set_meta('id', "a3")
-        created_anns = sppasEAF._create_alignable_annotation_element(a3, tier_root)
+        created_anns = sppasEAF._create_alignable_annotation_element(a3, tier_root, dict())
         self.assertEqual(2, len(created_anns))
         label_value = created_anns[0].find('ANNOTATION_VALUE')
         self.assertEqual("toto1", label_value.text)
@@ -579,7 +579,7 @@ class TestEAF(unittest.TestCase):
                               sppasLabel(sppasTag("toto2")),
                               sppasLabel(sppasTag("toto3"))])
         a3.set_meta('id', "a3")
-        created_anns = sppasEAF._create_alignable_annotation_element(a3, tier_root)
+        created_anns = sppasEAF._create_alignable_annotation_element(a3, tier_root, dict())
         self.assertEqual(3, len(created_anns))
         label_value = created_anns[0].find('ANNOTATION_VALUE')
         self.assertEqual("toto1", label_value.text)
@@ -616,7 +616,8 @@ class TestEAF(unittest.TestCase):
                                      sppasLabel(sppasTag("toto2_a3"))])
         a3.set_meta('id', "a3")
         time_values = list()
-        sppasEAF._format_alignable_annotations(tier_root, tier, time_values)
+        eaf = sppasEAF()
+        eaf._format_alignable_annotations(tier_root, tier, time_values)
 
         created = dict()
         for ann_root in tier_root.findall('ANNOTATION'):

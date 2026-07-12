@@ -169,6 +169,10 @@ class sppasEAF(sppasBaseIO):
         # ELAN only supports (and assumes) milliseconds.
         self.unit = 0.001
 
+        # A CVE_ID for each entry of each controlled vocabulary.
+        # The map is (re-)built by write().
+        self.__cve_ids = dict()
+
     # -----------------------------------------------------------------------
 
     def make_point(self, midpoint):
@@ -1272,7 +1276,14 @@ class sppasEAF(sppasBaseIO):
             desc_root.text = description
             desc_root.set('LANG_REF', language)
 
-        cve_id_map = self.__cve_ids[ctrl_vocab.get_name()]
+        # The map of CVE_ID is built by write(). It is built here when
+        # this method is invoked without a write, so it stays
+        # self-sufficient.
+        cve_id_map = self.__cve_ids.get(ctrl_vocab.get_name(), None)
+        if cve_id_map is None:
+            cve_id_map = dict(
+                (tag, "cveid%d" % i) for i, tag in enumerate(ctrl_vocab))
+
         for tag in ctrl_vocab:
             entry_root = ET.SubElement(ctrl_root, 'CV_ENTRY_ML')
             entry_value_root = ET.SubElement(entry_root, 'CVE_VALUE')
@@ -1408,7 +1419,13 @@ class sppasEAF(sppasBaseIO):
         ctrl_vocab = tier.get_ctrl_vocab()
         cve_id_map = dict()
         if ctrl_vocab is not None:
-            cve_id_map = self.__cve_ids[ctrl_vocab.get_name()]
+            # The map of CVE_ID is built by write(). It is built here
+            # when this method is invoked without a write, so it stays
+            # self-sufficient.
+            cve_id_map = self.__cve_ids.get(ctrl_vocab.get_name(), None)
+            if cve_id_map is None:
+                cve_id_map = dict(
+                    (tag, "cveid%d" % i) for i, tag in enumerate(ctrl_vocab))
 
         for ann in tier:
 
@@ -1440,14 +1457,10 @@ class sppasEAF(sppasBaseIO):
 
                 # we save only once a couple (time_value, rank, tier).
                 # it allows to link consecutive annotations.
-                """
                 if (b, b_rank, tier) not in time_values:
                     time_values.append((b, b_rank, tier))
                 if (e, e_rank, tier) not in time_values:
                     time_values.append((e, e_rank, tier))
-                """
-                time_values.append((b, b_rank, tier))
-                time_values.append((e, e_rank, tier))
 
     # -----------------------------------------------------------------------
 
