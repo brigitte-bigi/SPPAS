@@ -41,7 +41,7 @@
 Examples:
 
 Install a plugin:
->>> ./sppas/bin/plugin.py --install -p sppas/src/plugins/tests/data/soxplugin.zip
+>>> ./sppas/bin/plugin.py --install -p tests/data/soxplugin.zip
 
 Use a plugin on a file:
 >>> ./sppas/bin/plugin.py --apply -p soxplugin -i samples/samples-eng/oriana1.wav -o resampled.wav
@@ -50,7 +50,7 @@ Remove a plugin:
 >>> ./sppas/bin/plugin.py --remove -p soxplugin
 
 An "all-in-one" solution:
->>> ./sppas/bin/plugin.py --install --apply --remove -p sppas/src/plugins/tests/data/soxplugin.zip -i samples/samples-eng/oriana1.wav -o resampled.wav
+>>> ./sppas/bin/plugin.py --install --apply --remove -p tests/data/soxplugin.zip -i samples/samples-eng/oriana1.wav -o resampled.wav
 
 """
 
