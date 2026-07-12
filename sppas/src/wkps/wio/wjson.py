@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -46,7 +46,6 @@ import codecs
 from collections import OrderedDict
 
 from sppas.core.config import sg
-from sppas.core.config import paths
 
 from ..filebase import FileBase, States
 from ..filestructure import FilePath, FileRoot, FileName
@@ -110,7 +109,7 @@ class sppasWJSON(sppasBaseWkpIO):
             raise FileOSError(filename)
         with codecs.open(filename, 'r', "UTF-8") as f:
             d = json.load(f)
-            self._parse(d)
+            self._parse(d, os.path.dirname(os.path.abspath(filename)))
 
     # -----------------------------------------------------------------------
 
@@ -120,15 +119,18 @@ class sppasWJSON(sppasBaseWkpIO):
         :param filename: (str)
 
         """
-        serialized_dict = self._serialize()
+        serialized_dict = self._serialize(
+            os.path.dirname(os.path.abspath(filename)))
         with codecs.open(filename, 'w', "UTF-8") as f:
             json.dump(serialized_dict, f, indent=4, separators=(',', ': '))
 
     # -----------------------------------------------------------------------
 
-    def _serialize(self):
+    def _serialize(self, anchor_dir=""):
         """Convert this sppasWJSON instance into a serializable structure.
 
+        :param anchor_dir: (str) Folder of the written file, the anchor
+        of its relative paths.
         :returns: (dict) a dictionary that can be serialized
 
         """
@@ -143,7 +145,7 @@ class sppasWJSON(sppasBaseWkpIO):
         # The list of paths/roots/files stored in this sppasWorkspace()
         d['paths'] = list()
         for fp in self.get_paths():
-            d['paths'].append(self._serialize_path(fp))
+            d['paths'].append(self._serialize_path(fp, anchor_dir))
 
         # The list of references/attributes stored in this sppasWorkspace()
         d['catalogue'] = list()
@@ -194,10 +196,12 @@ class sppasWJSON(sppasBaseWkpIO):
 
     # -----------------------------------------------------------------------
 
-    def _serialize_path(self, fp):
+    def _serialize_path(self, fp, anchor_dir=""):
         """Convert a FilePath into a serializable structure.
 
         :param fp: (FilePath)
+        :param anchor_dir: (str) Folder of the written file, the anchor
+        of its relative paths.
         :returns: (dict) a dictionary that can be serialize
 
         """
@@ -208,15 +212,16 @@ class sppasWJSON(sppasBaseWkpIO):
         path = path.replace(os.sep, "/")
         dict_path["id"] = path
 
-        # Save the relative path
-        try:
-            rel_path = os.path.relpath(fp.get_id())
-            rel_path = rel_path.replace(os.sep, "/")
-            dict_path["rel"] = rel_path
-        except ValueError:
-            # On Windows, a ValueError is raised if the current directory and
-            # the start path are not on the same drive.
-            dict_path["rel"] = fp.get_id()
+        # Save the path relatively to the folder of the written file
+        if len(anchor_dir) > 0:
+            try:
+                rel_path = os.path.relpath(fp.get_id(), anchor_dir)
+                rel_path = rel_path.replace(os.sep, "/")
+                dict_path["rel"] = rel_path
+            except ValueError:
+                # On Windows, a ValueError is raised if the anchor and
+                # the path are not on the same drive: no relative path.
+                pass
 
         # serialize the roots
         dict_path["roots"] = list()
@@ -279,10 +284,12 @@ class sppasWJSON(sppasBaseWkpIO):
 
     # -----------------------------------------------------------------------
 
-    def _parse(self, d):
+    def _parse(self, d, anchor_dir=""):
         """Fill the data of a sppasWJSON reader with the given dictionary.
 
         :param d: (dict)
+        :param anchor_dir: (str) Folder of the workspace file, the anchor
+        of its relative paths.
         :returns: the id of the workspace
 
         """
@@ -312,7 +319,7 @@ class sppasWJSON(sppasBaseWkpIO):
         if 'paths' in d:
             for dict_path in d['paths']:
                 try:
-                    self._parse_path(dict_path, version)
+                    self._parse_path(dict_path, version, anchor_dir)
                 except KeyError as e:
                     logging.error("Path can't be saved to the workspace: {:s}"
                                   "".format(str(e)))
@@ -351,11 +358,13 @@ class sppasWJSON(sppasBaseWkpIO):
 
     # -----------------------------------------------------------------------
 
-    def _parse_path(self, d, version):
+    def _parse_path(self, d, version, anchor_dir=""):
         """Fill in the paths of a sppasWJSON reader with the given dictionary.
 
         :param d: (dict)
         :param version: (str) Indicate the version of the wjson
+        :param anchor_dir: (str) Folder of the workspace file, the anchor
+        of its relative paths.
         :returns: (FilePath)
 
         """
@@ -372,11 +381,10 @@ class sppasWJSON(sppasBaseWkpIO):
             logging.debug("Absolute path {:s} does not exist.".format(path))
             # check if the relative path exists. "rel" was introduced in v2.0.
             # check if "rel" exists for compatibility with v1.0.
-            if "rel" in d:
-                # rel_path = os.path.abspath(d["rel"])
+            if "rel" in d and len(anchor_dir) > 0:
                 rel_path = d["rel"]
                 rel_path = rel_path.replace("/", os.sep)
-                rel_path = os.path.join(paths.basedir, rel_path)
+                rel_path = os.path.normpath(os.path.join(anchor_dir, rel_path))
                 if os.path.exists(rel_path) is True:
                     logging.debug("Relative path {:s} exists.".format(rel_path))
                     path = rel_path

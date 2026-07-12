@@ -155,13 +155,18 @@ class TestsppasWJSON(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test__serialize_path(self):
+        anchor = os.path.dirname(os.path.abspath(__file__))
         fp = FilePath(os.path.dirname(__file__))
-        d = self.wkpjson._serialize_path(fp)
-        self.assertEqual(self.wkpjson._parse_path(d, version=2), fp)
+        d = self.wkpjson._serialize_path(fp, anchor)
+        self.assertEqual(self.wkpjson._parse_path(d, 2, anchor), fp)
 
         # test the absolute path and the relative path
         self.assertEqual(d["id"], fp.get_id())
-        self.assertEqual(d["rel"], os.path.relpath(fp.get_id()))
+        self.assertEqual(d["rel"], os.path.relpath(fp.get_id(), anchor))
+
+        # without the anchor folder, no relative path is written
+        d = self.wkpjson._serialize_path(fp)
+        self.assertFalse("rel" in d)
 
     # -----------------------------------------------------------------------
 
@@ -190,25 +195,26 @@ class TestsppasWJSON(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test__parse_path(self):
+        anchor = os.path.dirname(os.path.abspath(__file__))
         p = DATA
         fp = FilePath(p)
-        d = self.wkpjson._serialize_path(fp)
-        new_path = self.wkpjson._parse_path(d, 2)
+        d = self.wkpjson._serialize_path(fp, anchor)
+        new_path = self.wkpjson._parse_path(d, 2, anchor)
         fn = FileName(os.path.join(p, '0001.txt'))
         new_path.append(fn)
         self.assertEqual(new_path, fp)
         self.assertEqual(d["id"], new_path.get_id())
-        self.assertEqual(d["rel"], os.path.relpath(new_path.get_id()))
+        self.assertEqual(d["rel"], os.path.relpath(new_path.get_id(), anchor))
         self.assertEqual(new_path.get_state(), States().UNUSED)
 
         # wrong absolute and right relative path
         fp = FilePath("/toto/samples-pol")
-        d = self.wkpjson._serialize_path(fp)
-        # setting the relative path to an existing one
-        d["rel"] = os.path.relpath(os.path.dirname(__file__))
+        d = self.wkpjson._serialize_path(fp, anchor)
+        # setting the relative path to an existing one, from the anchor
+        d["rel"] = "."
 
-        new_path = self.wkpjson._parse_path(d, 2)
-        self.assertEqual(new_path.get_id(), os.path.abspath(d["rel"]))
+        new_path = self.wkpjson._parse_path(d, 2, anchor)
+        self.assertEqual(new_path.get_id(), anchor)
 
         # path changed so we can't add with the old path name
         fn = FileName(os.path.join(DATA, '0001.txt'))
