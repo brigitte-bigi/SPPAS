@@ -1,14 +1,14 @@
 /*
-:filename: statics/css/button.css
+:filename: wexa_statics/css/button.css
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: a CSS framework to create custom buttons
 
 -------------------------------------------------------------------------
 
-This file is part of Whakerexa: https://whakerexa.sf.net/
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
-Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+Copyright (C) 2023-2026 Brigitte Bigi, CNRS
 Laboratoire Parole et Langage, Aix-en-Provence, France
 
 This program is free software: you can redistribute it and/or modify
@@ -30,271 +30,325 @@ This banner notice must not be removed.
 
 */
 
-/* -----------------------------------------------------------------------
- Toggle switch -- with or without text; squared or rounded.
- ----------------------------------------------------------------------- */
+@layer reset, base, theme, accessibility;
 
-:root {
-    --switch-width: calc(var(--font-size) * 5);
-    --switch-height: calc(var(--font-size) * 2.8);
-    --switch-bg-color: var(--inputs-bg-color);
-    --switch-fg-color: var(--bg-color-alt);
-    --switch-slider-off-color: var(--fg-color-alt);
-    --switch-slider-on-color: var(--fg-color);
-    --switch-slider-unselected-opacity: 0;
-    --action-height: calc(var(--font-size) * 2.8);
-    --apply-height: calc(var(--font-size) * 2.1);
-    --text-reveal-height: calc(var(--font-size) * 1.6);
-    --text-reveal-width: calc(var(--font-size) * 1.6);
-}
 
-/* The switch container. Usually it's a label element. */
-/* --------------------------------------------------- */
-/* Override the switch width specifically for label, which is defined to
-'fit-content' in wexa.css */
-label.switch {
-    width: var(--switch-width);
-}
+/* =======================================================================
+                    @layer base — structure, layout, sizing
+   ======================================================================== */
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: var(--switch-width);
-    height: var(--switch-height);
-    font-family: var(--font-family-serif);
-}
+@layer base {
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
+    /* ------------------------------------------------------------------ */
+    /* Variable definitions — sizes only (no color values)                 */
+    /* ------------------------------------------------------------------ */
 
-/* The designed switch. Usually in a span element. */
-/* ----------------------------------------------- */
-.switch-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--switch-bg-color);
-    transition: background-color 0.4s ease, transform 0.4s ease;
-    border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--border-color-alt);
-}
+    :root {
+        --switch-width:                    calc(var(--font-size) * 5);
+        --switch-height:                   calc(var(--font-size) * 2.8);
+        --switch-slider-unselected-opacity: 0;
+        --action-height:                   calc(var(--font-size) * 2.8);
+        --apply-height:                    calc(var(--font-size) * 2.1);
+        --text-reveal-height:              calc(var(--font-size) * 1.6);
+        --text-reveal-width:               calc(var(--font-size) * 1.6);
+    }
 
-.switch-slider:before {
-    border-radius: var(--border-radius);
-}
+    /* -----------------------------------------------------------------------
+     Toggle switch -- with or without text; squared or rounded.
+     ----------------------------------------------------------------------- */
 
-/* Rounded switch. */
-.switch-slider.round {
-    border-radius: calc(var(--switch-height) / 2); /* Adjusted to match height */
-}
+    /* The switch container. Usually it's a label element. */
+    /* --------------------------------------------------- */
+    /* Override the switch width specifically for label, which is defined to
+    'fit-content' in wexa.css */
+    label.switch {
+        width: var(--switch-width);
+    }
 
-/* The switch indicator, with or without text */
-/* ------------------------------------------ */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: var(--switch-width);
+        height: var(--switch-height);
+        font-family: var(--font-family-serif);
+    }
 
-.switch-slider .switch-off-text,
-.switch-slider .switch-on-text
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: calc(var(--font-size) * 0.75);
-    font-weight: var(--font-weight-semibold);
-    text-align: center;
-    min-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
-    max-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
-    width: fit-content;
-    width: -moz-fit-content;
-    height: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
-    line-height: normal; /* Important to prevent line-height issues */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
-.switch-slider .switch-off-text {
-    background-color: var(--switch-slider-off-color);
-    left: calc(var(--font-size) * 0.4);
-    opacity: 1;
-}
+    /* The designed switch. Usually in a span element. */
+    /* ----------------------------------------------- */
+    .switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        color: var(--switch-fg-color);
+        background-color: var(--switch-bg-color);
+        transition: background-color 0.4s ease, transform 0.4s ease;
+        border-radius: var(--border-radius);
+        border: var(--border-width) solid var(--border-color-alt);
+    }
 
-.switch-slider .switch-on-text {
-    background-color: var(--switch-slider-on-color);
-    right: calc(var(--font-size) * 0.4);
-    opacity: var(--switch-slider-unselected-opacity);
-}
+    .switch-slider:before {
+        border-radius: var(--border-radius);
+    }
 
-.switch-slider.switch-no-text:before {
-    content: "";
-    width: calc(var(--switch-height) - var(--font-size) * 0.4);
-    background-color: var(--switch-slider-off-color);
-    left: calc(var(--font-size) * 0.4); /* Add consistent left margin */
-}
+    /* Rounded switch. */
+    .switch-slider.round {
+        border-radius: calc(var(--switch-height) / 2);
+    }
 
-.switch-slider .switch-off-text,
-.switch-slider .switch-on-text,
-.switch-slider.switch-no-text:before {
-    position: absolute;
-    padding: 0 calc(var(--font-size) * 0.4);
-    height: calc(var(--switch-height) - var(--font-size) * 0.4);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    color: var(--switch-fg-color);
-    border-radius: var(--border-radius);
-    line-height: calc(var(--font-size) * 2.4);
-    top: 50%;
-    transform: translateY(-50%); /* Center the slider vertically */
-}
+    /* The switch indicator, with or without text */
+    /* ------------------------------------------ */
 
-.switch-slider.round .switch-off-text,
-.switch-slider.round .switch-on-text,
-.switch-slider.round:before {
-    border-radius: 50%;
-}
+    .switch-slider .switch-off-text,
+    .switch-slider .switch-on-text
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: calc(var(--font-size) * 0.75);
+        font-weight: var(--font-weight-semibold);
+        text-align: center;
+        min-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+        max-width: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+        width: fit-content;
+        height: calc(var(--switch-height) - calc(var(--font-size) * 0.4));
+        line-height: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-/* Adjust slider position when checked */
-/* ----------------------------------- */
+    .switch-slider .switch-off-text {
+        background-color: var(--switch-slider-off-color);
+        left: calc(var(--font-size) * 0.4);
+        opacity: 1;
+    }
 
-input:checked + .switch-slider {
-  background-color: var(--switch-bg-color);
-}
+    .switch-slider .switch-on-text {
+        background-color: var(--switch-slider-on-color);
+        right: calc(var(--font-size) * 0.4);
+        opacity: var(--switch-slider-unselected-opacity);
+    }
 
-input:checked + .switch-slider:before {
-  transform: translateX(calc(var(--switch-width) - calc(var(--font-size) * 2.4 + (2 * calc(var(--font-size) / 4)))));
-}
+    .switch-slider.switch-no-text:before {
+        content: "";
+        width: calc(var(--switch-height) - var(--font-size) * 0.4);
+        background-color: var(--switch-slider-off-color);
+        left: calc(var(--font-size) * 0.4);
+    }
 
-input:checked + .switch-slider.switch-no-text:before {
-  background-color: var(--switch-slider-on-color);  /* Change color for "on" state */
-  transform: translateY(-50%) translateX(calc(var(--switch-width) - calc(var(--font-size) * 2.8 + (2 * calc(var(--font-size) / 4)))));
-}
+    .switch-slider .switch-off-text,
+    .switch-slider .switch-on-text,
+    .switch-slider.switch-no-text:before {
+        position: absolute;
+        padding: 0 calc(var(--font-size) * 0.4);
+        height: calc(var(--switch-height) - var(--font-size) * 0.4);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        color: var(--switch-fg-color);
+        border-radius: var(--border-radius);
+        line-height: calc(var(--font-size) * 2.4);
+        top: 50%;
+        transform: translateY(-50%);
+    }
 
-input:checked + .switch-slider .switch-off-text {
-  opacity: var(--switch-slider-unselected-opacity);
-  transform: translateY(-50%) translateX(0);
-}
+    .switch-slider.round .switch-off-text,
+    .switch-slider.round .switch-on-text,
+    .switch-slider.round:before {
+        border-radius: 50%;
+    }
 
-input:checked + .switch-slider .switch-on-text {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
+    /* Adjust slider position when checked */
+    /* ----------------------------------- */
 
-/* Switch focus */
-/* ------------ */
+    input:checked + .switch-slider {
+        background-color: var(--switch-bg-color);
+    }
 
-input[type="checkbox"]:focus + .switch-slider {
-  outline: var(--outline-size) solid var(--outline-color);
-  box-shadow: 0 0 calc(var(--font-size) / 3) var(--shadow-color);
-}
+    input:checked + .switch-slider:before {
+        transform: translateX(calc(var(--switch-width) - calc(var(--font-size) * 2.4 + (2 * calc(var(--font-size) / 4)))));
+    }
 
-/* -----------------------------------------------------------------------
- Gradient buttons: left/right gradient and shadow for a better contrast.
- - action-button: img + span
- - apply-button: text only
- ----------------------------------------------------------------------- */
+    input:checked + .switch-slider.switch-no-text:before {
+        background-color: var(--switch-slider-on-color);
+        transform: translateY(-50%) translateX(calc(var(--switch-width) - var(--switch-height) - calc(0.4 * var(--font-size))));
+    }
 
-.action-button {
-    height: var(--action-height);
-    min-height: 2rem;
-}
+    input:checked + .switch-slider .switch-off-text {
+        opacity: var(--switch-slider-unselected-opacity);
+        transform: translateY(-50%) translateX(0);
+    }
 
-.apply-button {
-    height: var(--apply-height);
-    min-height: 1.4rem;
-    padding: 0.2rem;
-}
+    input:checked + .switch-slider .switch-on-text {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
 
-.action-button,
-.apply-button {
-    box-shadow: 0 0 var(--border-width) var(--border-width) var(--border-color);
-    border-radius: var(--border-radius);
-    background: linear-gradient(to right, var(--bg-color-alt), var(--buttons-bg-color));
-    color: var(--fg-color-alt);
-    transform: all 0.3s ease;
-    margin-left: 0.5rem
-}
+    /* Switch focus */
+    /* ------------ */
 
-.action-button:hover, .action-button:focus,
-.apply-button:hover, .apply-button:focus {
-    background: linear-gradient(to right, var(--buttons-bg-color), var(--bg-color-alt));
-}
+    input[type="checkbox"]:focus + .switch-slider {
+        outline: var(--outline-size) solid var(--outline-color);
+        box-shadow: 0 0 calc(var(--font-size) / 3) var(--shadow-color);
+    }
 
-.action-button > img {
-    object-fit: contain;
-    flex-shrink: 0;
-    max-height: calc(var(--action-height) * 0.9);
-    padding: 0.2rem;
-    background: none;
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))
-            drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
-            drop-shadow(0 0 16px rgba(255, 255, 255, 0.4))
-            drop-shadow(0 0 32px rgba(255, 255, 255, 0.2));
-}
+    /* -----------------------------------------------------------------------
+     Gradient buttons: left/right gradient and shadow for a better contrast.
+     - action-button: img + span
+     - apply-button: text only
+     ----------------------------------------------------------------------- */
 
-.action-button > span {
-    background: none;
-    padding: 0.2rem;
-}
+    .action-button {
+        height: var(--action-height);
+        min-height: 2rem;
+    }
 
-/* -----------------------------------------------------------------------
- Text-reveal button: img + a span text displayed on hover.
- No transition is defined because of "width: auto".
- ----------------------------------------------------------------------- */
+    .apply-button {
+        height: var(--apply-height);
+        min-height: 1.4rem;
+        padding: 0.2rem;
+    }
 
-.text-reveal-button {
-    border: var(--border-width) solid var(--buttons-fg-color);
-    height: var(--text-reveal-height);
-    width: var(--text-reveal-width);
-    align-items: center;
-    overflow: hidden;
-    justify-content: center;
-    position: relative;
-    white-space: nowrap;
-    padding: 0;
-    margin: 0;
-}
+    .action-button,
+    .apply-button {
+        box-shadow: 0 0 var(--border-width) var(--border-width) var(--border-color);
+        border-radius: var(--border-radius);
+        background: linear-gradient(to right, var(--bg-color-alt), var(--buttons-bg-color));
+        color: var(--fg-color-alt);
+        transform: all 0.3s ease;
+        margin-left: 0.5rem;
+    }
 
-.text-reveal-button > img {
-    object-fit: contain; /*cover;*/
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    padding: 0.2rem;
-    margin: 0;
-}
+    .action-button:hover, .action-button:focus,
+    .apply-button:hover, .apply-button:focus {
+        background: linear-gradient(to right, var(--buttons-bg-color), var(--bg-color-alt));
+    }
 
-.text-reveal-button > span {
-    font-size: 0.8rem;
-    display: none;
-    opacity: 0;
-    padding: 0.2rem;
-    margin: 0;
-}
+    .action-button > img {
+        object-fit: contain;
+        flex-shrink: 0;
+        max-height: calc(var(--action-height) * 0.9);
+        padding: 0.2rem;
+        background: none;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))
+                drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
+                drop-shadow(0 0 16px rgba(255, 255, 255, 0.4))
+                drop-shadow(0 0 32px rgba(255, 255, 255, 0.2));
+    }
 
-.text-reveal-button:hover,
-.text-reveal-button:focus {
-    width: auto;
-}
+    .action-button > span {
+        background: none;
+        padding: 0.2rem;
+    }
 
-/* Reveal text when hovered */
-.text-reveal-button:hover > span,
-.text-reveal-button:focus:hover > span {
-    opacity: 1;
-    display: inline;
-}
+    /* -----------------------------------------------------------------------
+     Text-reveal button: img + a span text displayed on hover.
+     No transition is defined because of "width: auto".
+     ----------------------------------------------------------------------- */
 
-/* When the button is clicked */
-.text-reveal-button[data-clicked="true"] > span {
-    opacity: 0;
-    display: none;
-}
+    .text-reveal-button {
+        border: var(--border-width) solid var(--buttons-fg-color);
+        height: var(--text-reveal-height);
+        width: var(--text-reveal-width);
+        align-items: center;
+        overflow: hidden;
+        justify-content: center;
+        position: relative;
+        white-space: nowrap;
+        padding: 0;
+        margin: 0;
+    }
 
-/* Hide text after a click (when focus is lost) */
-.text-reveal-button:not(:focus):not(:hover) > span {
-    opacity: 0;
-    display: none;
-}
+    .text-reveal-button > img {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        padding: 0.2rem;
+        margin: 0;
+    }
+
+    .text-reveal-button > span {
+        font-size: 0.8rem;
+        display: none;
+        padding: 0.2rem;
+        margin: 0;
+    }
+
+    .text-reveal-button:hover,
+    .text-reveal-button:focus {
+        width: auto;
+    }
+
+    .text-reveal-button:hover > span,
+    .text-reveal-button:focus > span {
+        display: inline;
+    }
+
+    .text-reveal-button[data-clicked="true"] > span {
+        display: none;
+    }
+
+    .text-reveal-button:not(:focus):not(:hover) > span {
+        display: none;
+    }
+
+    /* -----------------------------------------------------------------------
+     Call-to-action button: primary action, high visual weight.
+     ----------------------------------------------------------------------- */
+
+    .cta-button {
+        font-variant: small-caps;
+        font-weight: bold;
+        font-size: calc(var(--font-size) * 1.125);
+        text-transform: uppercase;
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 0 1.5rem var(--shadow-color);
+        background: var(--buttons-bg-color);
+        color: var(--buttons-fg-color);
+        transition: background 0.4s ease;
+    }
+
+    .cta-button:enabled:hover {
+        background: var(--buttons-bg-color-hover);
+    }
+
+    a.cta-button {
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    a.cta-button:hover {
+        background: var(--buttons-bg-color-hover);
+    }
+
+} /* end @layer base */
+
+
+/* =======================================================================
+                    @layer theme — color variables
+   ======================================================================== */
+
+@layer theme {
+
+    /* ------------------------------------------------------------------ */
+    /* Color variable definitions for switches                             */
+    /* ------------------------------------------------------------------ */
+
+    :root {
+        --switch-bg-color:          var(--inputs-bg-color);
+        --switch-fg-color:          var(--buttons-fg-color);
+        --switch-slider-off-color:  var(--error-color);
+        --switch-slider-on-color:   var(--success-color);
+    }
+
+} /* end @layer theme */

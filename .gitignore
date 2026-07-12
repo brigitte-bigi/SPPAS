@@ -25,3 +25,6 @@ sppas/bin/*.txt
 sppas/bin/*.exe
 demo
 demo/*
+/sppas/ui/swapp/whakerexa-backup/
+sppas/ui/swapp/whakerexa-backup
+sppas/ui/swapp/whakerexa-backup/*

@@ -6,9 +6,9 @@
  *
  *  -------------------------------------------------------------------------
  *
- *  This file is part of Whakerexa: https://whakerexa.sf.net/
+ *  This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
  *
- *  Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ *  Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  *  Laboratoire Parole et Langage, Aix-en-Provence, France
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -94,6 +94,18 @@ export class LinkController {
         this._bindLinks(selectors, true);
     }
 
+    /**
+     * Make every element with a `data-href` attribute (but no `href` and no
+     * explicit `tabindex`) focusable via the Tab key, exactly as a real link.
+     *
+     * Call once at page load via OnLoadManager.addLoadFunction().
+     */
+    static initFocusable() {
+        document.querySelectorAll('[data-href]:not([href]):not([tabindex])').forEach(el => {
+            el.setAttribute('tabindex', '0');
+        });
+    }
+
     // ----------------------------------------------------------------------
     // Private
     // ----------------------------------------------------------------------
@@ -121,8 +133,8 @@ export class LinkController {
             }
 
             // Avoid multiple bindings on the same element
-            element.removeEventListener('click', this._handleActivation);
-            element.removeEventListener('keydown', this._handleActivation);
+            if (element.dataset.linkBound) continue;
+            element.dataset.linkBound = '1';
 
             element.addEventListener('click', (event) => this._handleActivation(event, element, withParameters));
             element.addEventListener('keydown', (event) => this._handleActivation(event, element, withParameters));

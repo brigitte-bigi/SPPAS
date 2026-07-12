@@ -4,7 +4,7 @@
 :contact: contact@sppas.org
 :summary: Test file of the RequestManager class.
 
-.. _This file is part of Whakerexa: https://sourceforge.net/projects/whakerexa/ ,
+.. _This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa ,
 .. on 2024-02-28.
     -------------------------------------------------------------------------
 

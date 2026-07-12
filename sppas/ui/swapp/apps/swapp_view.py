@@ -59,7 +59,7 @@ from ..htmltags import SwappFooter
 
 MSG_WEB = _("SPPAS website")
 MSG_CONTRAST = _("Contrast")
-MSG_COLOR = _("Theme")
+MSG_COLOR = _("Color")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
 
@@ -242,30 +242,23 @@ class swappBaseView:
     # -----------------------------------------------------------------------
 
     def update_accessibility(self):
-        """Update the body classes for accessibility control.
+        """Remove the color and contrast classes from the body.
+
+        The accessibility state is carried by the classes of the root
+        element: it is restored from the URL parameters by the
+        AccessibilityManager of Whakerexa. Classes on the body would
+        conflict with it.
 
         """
         body_classes = self._htree.get_body_attribute_value("class")
         if body_classes is None:
-            body_classes = ""
+            return
 
-        # Append contrast if relevant
         tab_classes = body_classes.split(" ")
-        if "contrast" in tab_classes and self._accessibility["contrast"] is False:
-            tab_classes.remove("contrast")
-        if self._accessibility["contrast"] is True:
-            tab_classes.append("contrast")
+        for class_name in ("contrast", "light", "dark"):
+            if class_name in tab_classes:
+                tab_classes.remove(class_name)
 
-        # Remove any previous defined color
-        for color in ("light", "dark"):
-            if color in tab_classes:
-                tab_classes.remove(color)
-
-        # Add the expected color scheme
-        if self._accessibility["color"] != "light" and len(self._accessibility["color"]) > 0:
-            tab_classes.append(self._accessibility["color"])
-
-        # Update attribute
         self._htree.set_body_attribute("class", " ".join(tab_classes))
 
     # -----------------------------------------------------------------------
@@ -314,20 +307,20 @@ class swappBaseView:
         contrast_button = HTMLNode(parent.identifier, None, "button",
                                    value=contrast_image)
         contrast_button.add_attribute("id", "btn-contrast")
-        contrast_button.add_attribute("class", "menuitem")
-        contrast_button.add_attribute("type", "button")
+        contrast_button.add_attribute("class", "menuitem accessibility")
+        contrast_button.add_attribute("aria-label", "contrast")
         contrast_button.add_attribute("aria-pressed", "false")
         contrast_button.add_attribute("onclick", "window.Wexa.accessibility.switchContrastScheme();")
         parent.append_child(contrast_button)
 
-        # theme
-        svg_theme = sppasImagesAccess.get_wexa_svg_icon("theme")
+        # color scheme
+        svg_theme = sppasImagesAccess.get_wexa_svg_icon("color")
         theme_image = svg_theme + "<span>" + MSG_COLOR + "</span>"
         theme_button = HTMLNode(parent.identifier, None, "button",
                                 value=theme_image)
-        theme_button.add_attribute("id", "btn-theme")
-        theme_button.add_attribute("class", "menuitem")
-        theme_button.add_attribute("type", "button")
+        theme_button.add_attribute("id", "btn-color")
+        theme_button.add_attribute("class", "menuitem accessibility")
+        theme_button.add_attribute("aria-label", "color")
         theme_button.add_attribute("aria-pressed", "false")
         theme_button.add_attribute("onclick", "window.Wexa.accessibility.switchColorScheme();")
         parent.append_child(theme_button)

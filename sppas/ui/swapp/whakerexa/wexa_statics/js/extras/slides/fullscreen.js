@@ -6,9 +6,9 @@
 
  -------------------------------------------------------------------------
 
- This file is part of Whakerexa: https://whakerexa.sf.net/
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
- Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  Laboratoire Parole et Langage, Aix-en-Provence, France
 
  This program is free software: you can redistribute it and/or modify

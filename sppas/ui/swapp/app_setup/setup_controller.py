@@ -95,7 +95,7 @@ class SetupController:
         if self.__model.is_installation_running() is True:
             p = self.__fieldsets.get_progress()
             if p is not None:
-                return p.get_percent(), p.get_text(), p.get_header()
+                return p.get_percent(), p.get_header(), p.get_text()
 
         return 100, "Installation completed.", ""
 

@@ -1,25 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+
+    <title>Code • Whakerexa</title>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
 
-    <title>Source code</title>
-
     <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/code.css" type="text/css" media="all" />
 
     <style>
         :root {
-            --nav-min-height: 4rem;
-            --header-height: 26rem;
-        }
-        :root:not([data-theme=dark]), [data-theme=light] {
-            --nav-fg-color: rgba(240, 230, 240);
-            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
         }
     </style>
 
@@ -27,71 +31,206 @@
 
 <body>
 
-<header id="header-content">
-    <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
-        Skip to main content
-    </a>
 
-    <h1>Custom colors of pygments code</h1>
-    <h2>by Whakerexa</h2>
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa > Content > Code</p>
 </header>
 
-<nav id="nav-content">
-    <ul>
-        <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
-        <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
-        <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
-    </ul>
-    <button id="btn-contrast" class="accessibility" role="menuitem"
-            aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()" aria-label="Switch contrast scheme"></button>
-    <button id="btn-theme" class="accessibility" role="menuitem"
-            aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()" aria-label="Switch color scheme"></button>
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
+<main id="main-content">
 
-<main id="main-content" class="panel">
+    <!-- ============================================================ -->
+    <section class="panel-item">
 
-    <section id="description">
-        <h1>Description</h1>
+    <h1>Code</h1>
 
-        <h2>Overview</h2>
+        <h2>Inline code</h2>
+        <p>
+            Use <code>&lt;code&gt;</code> for short fragments of code or technical terms
+            within a sentence. The element receives a distinct background color and
+            monospace font automatically.
+        </p>
 
-        <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
-            accessible web content, and to minimize the use of CSS classes for enhancing the
-            readability of HTML code, like it should always be! <b>wexa.css</b> is the main
-            CSS framework of  <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.</p>
+        <article class="card-doc" aria-label="Inline code — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <p>Call <code>wexa.init()</code> before any other method.</p>
+                <p>Set <code>--font-size: 18px</code> on <code>:root</code> to scale the entire layout.</p>
+            </div>
+            <pre class="dark"><code>&lt;p&gt;Call &lt;code&gt;wexa.init()&lt;/code&gt; before any other method.&lt;/p&gt;</code></pre>
+        </article>
 
-        <p><a class="external-link" href="https://pygments.org/">Pygments</a> is a generic syntax highlighter suitable for use in code hosting,
-            forums, wikis or other applications that need to prettify source code. </p>
+        <h3>Variables</h3>
+        <p>Inline code appearance is controlled by the following variables:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>--code-bg-color</code></td>
+                    <td>Background color of inline <code>&lt;code&gt;</code></td>
+                </tr>
+                <tr>
+                    <td><code>--font-family-mono</code></td>
+                    <td>Font family for <code>code</code>, <code>kbd</code>, <code>samp</code>, <code>var</code>, <code>output</code></td>
+                </tr>
+                <tr>
+                    <td><code>--font-family-pre</code></td>
+                    <td>Font family for <code>pre</code></td>
+                </tr>
+            </tbody>
+        </table>
 
-        <blockquote><b>code.css</b> is a custom colors definition for Python code.</blockquote>
+    </section>
 
-        <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
-        <pre>
-&lt;link
-    rel="stylesheet"
-    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
-    media="all" /&gt;
-&lt;link
-    rel="stylesheet"
-    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/code.css?format=raw"
-    media="all" /&gt;
-            </pre>
+    <!-- ============================================================ -->
+    <section class="panel-item">
 
-        <h2>Examples</h2>
+        <h2>Code blocks</h2>
+        <p>
+            Use <code>&lt;pre&gt;</code> for multi-line code or preformatted text.
+            Nest a <code>&lt;code&gt;</code> element inside for semantic markup.
+            The block is scrollable when content overflows.
+            A left border visually separates the block from surrounding text.
+        </p>
 
-        <p>The following examples were automatically generated with <a href="https://clamming.sf.net" class="external-link">
-            ClammingPy</a> 1.7.</p>
+        <article class="card-doc" aria-label="Code block pre+code — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <pre><code>function greet(name) {
+    return "Hello, " + name + "!";
+}
 
+console.log(greet("Whakerexa"));</code></pre>
+            </div>
+            <pre class="dark"><code>&lt;pre&gt;&lt;code&gt;
+function greet(name) {
+    return "Hello, " + name + "!";
+}
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+        </article>
+
+        <p>
+            A <code>.dark</code> class on the <code>&lt;pre&gt;</code> element
+            forces dark background for code blocks regardless of the page theme —
+            useful when a light page needs high-contrast code display.
+        </p>
+
+        <article class="card-doc" aria-label="Code block pre.dark — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <pre class="dark"><code>const answer = 42;</code></pre>
+            </div>
+            <pre class="dark"><code>&lt;pre class="dark"&gt;&lt;code&gt;const answer = 42;&lt;/code&gt;&lt;/pre&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Keyboard input</h2>
+        <p>
+            Use <code>&lt;kbd&gt;</code> to represent a key or combination of keys
+            the user must press. It renders with a monospace font and a bottom border
+            that evokes the physical depth of a key.
+        </p>
+
+        <article class="card-doc" aria-label="Keyboard input kbd — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>
+                <p>Use <kbd>Tab</kbd> to navigate between fields.</p>
+                <p>Hold <kbd>Shift</kbd> + <kbd>F10</kbd> to open the context menu.</p>
+            </div>
+            <pre class="dark"><code>&lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;S&lt;/kbd&gt; to save.&lt;/p&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Other semantic elements</h2>
+        <p>
+            Three additional elements carry semantic meaning for computer output and notation.
+            All share the monospace font of <code>&lt;code&gt;</code>.
+        </p>
+
+        <article class="card-doc" aria-label="samp, var, output — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <p>The program returned <samp>Error: file not found</samp>.</p>
+                <p>The variable <var>x</var> holds the current offset.</p>
+                <p>Result: <output>42</output></p>
+            </div>
+            <pre class="dark"><code>&lt;samp&gt;Error: file not found&lt;/samp&gt;
+
+&lt;var&gt;x&lt;/var&gt;
+
+&lt;output&gt;42&lt;/output&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Syntax highlighting</h2>
+
+        <p>
+            <code>code.css</code> is an optional extra stylesheet that provides custom colors
+            for Python source code generated by <a class="external-link" href="https://pygments.org/">Pygments</a>.
+            It styles the <code>.highlight</code> class and its token children,
+            with a full dark-mode variant. Load it after <code>wexa.css</code>:
+        </p>
+        <pre class="dark"><code>&lt;link rel="stylesheet" href=".../wexa_statics/css/wexa.css" media="all" /&gt;
+&lt;link rel="stylesheet" href=".../wexa_statics/css/code.css" media="all" /&gt;</code></pre>
+
+        <p>
+            The following examples were automatically generated with
+            <a href="https://github.com/brigitte-bigi/ClammingPy" class="external-link">ClammingPy</a> 1.7.
+        </p>
+
+        <article class="card-doc" aria-label="Pygments syntax highlighting — example">
+        <div class="card-view" style="overflow: auto; width: 100%;">
         <pre class="highlight"><code><span class="k">def</span> <span class="nf">markdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the documentation of the package as a standalone Markdown content.&quot;&quot;&quot;</span>
   <span class="n">md</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
   <span class="n">md</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;## Package `</span><span class="si">{:s}</span><span class="s1">`</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">))</span>
   <span class="k">for</span> <span class="n">clams</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__clams</span><span class="p">:</span>
       <span class="n">md</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clams</span><span class="o">.</span><span class="n">markdown</span><span class="p">())</span>
-  <span class="n">md</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">~ Created using [Clamming](https://clamming.sf.net) version </span><span class="si">{:s}</span><span class="s1"> ~</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">clamming</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
+  <span class="n">md</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">~ Created using [Clamming](https://github.com/brigitte-bigi/ClammingPy) version </span><span class="si">{:s}</span><span class="s1"> ~</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">clamming</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
   <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
 </code></pre>
+        </div>
+        <pre class="dark"><code>&lt;pre class="highlight"&gt;&lt;code&gt;
+    &lt;!-- Pygments HTML output --&gt;
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+        </article>
+
+        <p>
+            Use <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> to let users
+            show or hide a long code block on demand — useful for lengthy listings that
+            would otherwise break the reading flow.
+        </p>
 
         <details>
             <summary>Show/Hide source code into a details/summary element</summary>
@@ -147,34 +286,56 @@
         </details>
 
     </section>
+
 </main>
 
 <footer>
     <p class="center">This site respects your privacy.</p>
     <p class="center">We do not collect any information and do not use cookies.</p>
     <hr>
-    <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
         Laboratoire Parole et Langage, Aix-en-Provence, France</p>
     <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
         This document is under the terms of the GNU Free Documentation License, v1.3.</a>
     </p>
 </footer>
 
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
 <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
 <script>
     (function () {
         const usingFile = (window.location.protocol === 'file:');
-        const script = document.createElement('script');
-
+        const s = document.createElement('script');
         if (usingFile) {
-            script.src = '../wexa_statics/js/wexa.bundle.js';
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+            });
         } else {
-            script.type = 'module';
-            script.src = '../wexa_statics/js/wexa.js';
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
         }
-
-        document.head.appendChild(script);
+        document.head.appendChild(s);
     })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
 </script>
 
 </body>

@@ -8,9 +8,9 @@ import { BaseManager } from './transport/base_manager.js';
  *
  * -------------------------------------------------------------------------
  *
- * This file is part of Whakerexa: https://whakerexa.sf.net/
+ * This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
  *
- * Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ * Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  * Laboratoire Parole et Langage, Aix-en-Provence, France
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,7 +90,6 @@ export class ProgressBar extends BaseManager {
         this._requestManager = options.requestManager || null;
         this._targetUrl = options.targetUrl || '';
         this._intervalMs = options.intervalMs || 1500;
-        this._domIds = { percent: '', text: '', header: '' };
         this._domIds = options.domIds || {
             percent: 'percent_progress',
             text: 'progress_text',

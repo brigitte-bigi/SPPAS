@@ -5,9 +5,9 @@
 
  -------------------------------------------------------------------------
 
- This file is part of Whakerexa: https://whakerexa.sf.net/
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
- Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  Laboratoire Parole et Langage, Aix-en-Provence, France
 
  This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,8 @@
  * Imported classes:
  * - Core managers (OnLoadManager, WexaLogger, AccessibilityManager, MenuManager,
  *   DialogManager, LinkController)
- * - UI components (ProgressBar, SortaTable, ToggleSelector, Book)
+ * - UI components (ProgressBar, ToggleSelector)
+ * - Extras (Book, SortaTable, ThemeManager) are imported directly by pages that need them.
  *
  * The global namespace is defined at the end of the file.
  */
@@ -52,12 +53,13 @@ import { DialogManager } from './dialog.js';
 import { LinkController } from './links.js';
 
 import { ProgressBar } from './progressbar.js';
-import { SortaTable } from './sortatable.js';
 import { ToggleSelector } from './toggleselect.js';
-import { Book } from './book.js';
+import { SVGIconsManager } from './svgicons.js';
 
 import { BaseManager } from './transport/base_manager.js';
 import { RequestManager } from './transport/request.js';
+
+SVGIconsManager.init(import.meta.url);
 
 // --- Debug -------------------------------------------------------
 console.debug('Imports OK:', {
@@ -67,12 +69,11 @@ console.debug('Imports OK:', {
     MenuManager,
     DialogManager,
     LinkController,
-    SortaTable,
     ToggleSelector,
     ProgressBar,
-    Book,
     BaseManager,
-    RequestManager
+    RequestManager,
+    SVGIconsManager
 });
 
 // ----- Exports (framework public API) -----
@@ -84,11 +85,10 @@ export {
     DialogManager,
     LinkController,
     ProgressBar,
-    SortaTable,
     ToggleSelector,
-    Book,
     BaseManager,
-    RequestManager
+    RequestManager,
+    SVGIconsManager
 };
 
 // ---------------------------------------------------------------------------
@@ -102,7 +102,7 @@ export {
 // bundled (non-module) version. Applications can safely rely on Wexa.*
 // regardless of whether modules are loaded or the bundle is used.
 // ---------------------------------------------------------------------------
-window.Wexa = {
+window.Wexa = Object.assign(window.Wexa || {}, {
 
     // ---------------------------------------------------------------
     // Singletons (global services)
@@ -114,6 +114,9 @@ window.Wexa = {
     // Note: OnLoadManager is not instantiated because it is a scheduler /
     // dispatcher whose methods are static or utility-like.
     onload: OnLoadManager,
+
+    // SVGIconsManager is a static class — no instance needed.
+    icons: SVGIconsManager,
 
     accessibility: new AccessibilityManager(),
     dialog: new DialogManager(),
@@ -131,11 +134,13 @@ window.Wexa = {
     MenuManager,
     ProgressBar,
     ToggleSelector,
-    SortaTable,
-    Book,
     BaseManager,
-    RequestManager
-};
+    RequestManager,
+    SVGIconsManager
+});
+
+// Make every [data-href] element without a real href focusable via Tab.
+OnLoadManager.addLoadFunction(() => LinkController.initFocusable());
 
 // Register the global onload handler so that all deferred load functions
 // declared across Whakerexa modules are executed once the document is ready.

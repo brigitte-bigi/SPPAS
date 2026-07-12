@@ -160,7 +160,7 @@
 }
 
 
-:not(.dark) {
+:root:not(.dark) {
     #web_text {
         background-color: rgb(120, 140, 190);
     }
@@ -256,8 +256,8 @@ dialog[role=alertdialog].about-dialog > header {
 }
 
 .dark dialog[role=alertdialog].about-dialog > header {
-	background: rgb(10, 10, 55);;
-	color: #ebf4fb;
+	background: rgb(10, 10, 55);
+	color: rgb(235, 244, 251);
 }
 
 .about-dialog > main {

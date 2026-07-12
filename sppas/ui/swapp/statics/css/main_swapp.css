@@ -37,19 +37,31 @@
     -------------------------------------------------------------------------
 */
 
+/*
+ Structure:
+   Section 1 - CSS variables: overrides of wexa.css / layout.css defaults
+   Section 2 - Theming: rules targeting HTML tags and Whakerexa components
+   Section 3 - SPPAS components: custom classes and IDs specific to this application
+*/
 
-/* ------------------------------------------------- */
-/* Override some wexa.css variable for a custom look */
-/* ------------------------------------------------- */
+
+
+/* ============================================================
+   SECTION 1 — CSS variables
+   Overrides of wexa.css / layout.css defaults.
+   Only variables that differ from the framework defaults appear here.
+   ============================================================ */
+
+/* ── Always-on overrides ──────────────────────────────────── */
 
 :root {
-    /* HEADER/FOOTER */
+    /* Header / footer */
     --header-slidein: animDisabled;
     --footer-slidein: animDisabled;
     --header-height: max(calc(3rem / var(--size-divisor)), 2rem);
     --footer-height: max(calc(8rem / var(--size-divisor)), 7rem);
 
-    /* NAV -- at left collapsible responsive */
+    /* Side navigation (collapsible) */
     --nav-min-height: 0;
     --nav-min-width: max(calc(4 * var(--font-size) / var(--size-divisor)), 3rem);
 
@@ -64,16 +76,17 @@
     --appmenu-position: left;
     --appmenu-align: left top;
 
-    /* CARDS */
+    /* Cards */
     --card-border-radius: 0.8rem;
     --card-border-width: 0;
 
-    /* NEW COLOR DEFINITIONS */
+    /* SPPAS color tokens */
     --logo-color: rgb(70, 100, 150);
     --sppas-color1: rgb(100, 160, 220); /* soft blue */
     --sppas-color2: rgb(20, 40, 70);    /* desaturated navy */
-
 }
+
+/* ── Border radius: normal vs contrast ───────────────────── 
 
 :root:not(.contrast) {
     --border-radius: 0.4rem;
@@ -83,18 +96,17 @@
 .contrast {
     --border-radius: 0.6rem;
     --dialog-border-radius: 0.6rem;
-}
+}*/
 
+/* ── Light mode ───────────────────────────────────────────── */
 
-/* Light mode */
-/* ---------- */
-
-:root:not([data-theme=dark]), [data-theme=light] {
-    /* Main colors */
+/* was: :root:not([data-theme=dark]), [data-theme=light] */
+:root:not(.dark), .light {
     --bg-color: rgb(249, 250, 251);
     --bg-color-alt: rgb(235, 235, 240);
     --fg-color: rgb(17, 17, 20);
     --fg-color-alt: rgb(28, 28, 32);
+
     --header-bg-color: linear-gradient(323deg, rgb(10, 40, 90) 0%, rgb(0, 0, 50) 100%);
     --header-fg-color: rgb(220, 230, 255);
     --footer-bg-color: linear-gradient(to bottom,
@@ -107,37 +119,39 @@
     --nav-bg-color: transparent;
     --nav-fg-color: rgb(220, 230, 255);
 
-    /* Elements */
     --progress-bg-color: rgb(2, 0, 36);
     --buttons-bg-color: linear-gradient(120deg, rgb(210, 210, 250) 0%, rgb(233, 233, 242) 50%, rgb(241, 223, 245) 100%);
     --buttons-bg-color-hover: linear-gradient(300deg, rgb(210, 210, 250) 0%, rgb(233, 233, 242) 50%, rgb(241, 223, 245) 100%);
-    --li-color: rgb(20, 100, 110);
+    --buttons-fg-color: rgb(20, 25, 30);
 
     --border-color: rgb(204, 213, 224);
-    --link-color: rgb(42, 111, 190);
     --a-color: rgb(0, 70, 100);
-
+    --link-color: rgb(42, 111, 190);
+    --li-color: rgb(20, 100, 110);
     --blockquote-border-color: rgb(20, 100, 110);
 
     --card-bg-color: rgb(238, 233, 242);
     --card-fg-color: rgb(10, 40, 90);
-
 }
 
-
-/* Dark mode */
-/* ---------- */
+/* ── Dark mode ────────────────────────────────────────────── */
 
 @media screen {
     .dark {
-        /* Main colors */
         --bg-color: rgb(10, 10, 30);
         --bg-color-alt: rgb(25, 25, 45);
         --fg-color: rgb(226, 232, 240);
         --fg-color-alt: rgb(250, 250, 255);
 
-        --header-bg-color: linear-gradient(323deg, rgb(70, 15, 70) 0%, rgb(49, 5, 92) 70%, rgb(30, 0, 70) 100%);;
+        --header-bg-color: linear-gradient(323deg, rgb(70, 15, 70) 0%, rgb(49, 5, 92) 70%, rgb(30, 0, 70) 100%);
         --header-fg-color: rgb(240, 230, 210);
+        --footer-bg-color: linear-gradient(to bottom,
+            var(--bg-color) 0%,
+            rgb(35, 0, 75) 30%,
+            rgb(70, 15, 70) 50%,
+            rgb(100, 50, 90) 70%,
+            rgb(130, 60, 130) 100%);
+        --footer-fg-color: rgb(243, 248, 250);
         --nav-bg-color: var(--sppas-color2);
         --nav-fg-color: rgb(240, 230, 210);
 
@@ -145,56 +159,89 @@
         --buttons-bg-color-hover: linear-gradient(300deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
         --buttons-fg-color: rgb(243, 248, 250);
 
-        --footer-bg-color: linear-gradient(to bottom,
-            var(--bg-color) 0%,
-            rgb(35, 0, 75), 30%,
-            rgb(70, 15, 70) 50%,
-            rgb(100, 50, 90) 70%,
-            rgb(130, 60, 130) 100%);
-
-        --footer-fg-color: rgb(243, 248, 250);
-        --li-color: rgb(130, 60, 130);
-        --a-color: rgb(42, 111, 190);
-
-        --progress-bg-color: #F7E6BE;
         --border-color: rgb(100, 120, 170);
+        --a-color: rgb(42, 111, 190);
+        --li-color: rgb(130, 60, 130);
         --blockquote-border-color: rgb(130, 60, 130);
+        --progress-bg-color: rgb(247, 230, 190);
 
         --card-bg-color: rgb(30, 0, 70);
         --card-fg-color: rgb(240, 230, 210);
     }
 }
 
-/* Increase the bg/fg contrast of some colors in the default mode */
+/* ── Contrast mode ────────────────────────────────────────── */
+
 .contrast:not(.dark) {
     --a-color: rgb(0, 70, 100);
 }
 
+/* ── Responsive: mobile nav width ────────────────────────── */
 
-/* ============================================================
-Custom Navigation
-============================================================ */
-
-#nav-content {
-    box-shadow: none;
+@media screen and (max-width: 896px) {
+    :root {
+        --nav-expanded-width: clamp(
+            calc(11rem / var(--size-divisor)),
+            70vw,
+            calc(22rem / var(--size-divisor))
+        );
+    }
 }
 
-nav#nav-content.nav-wexa.side:not(.dark) {
+
+/* ============================================================
+   SECTION 2 — Theming
+   Rules targeting HTML tags and Whakerexa components.
+   These are unlayered and therefore win over all @layer rules.
+   ============================================================ */
+
+/* ── Page structure ──────────────────────────────────────── */
+
+body > header {
+    padding-top: 0;
+    text-align: left !important;
+    align-items: flex-start;
+}
+
+body > header > h1 {
+    font-size: calc(2.5 * var(--font-size));
+    margin: 0;
+}
+
+/* The larger right padding keeps the content away from the scrollbar. */
+body > main {
+    margin: var(--typography-spacing-vertical) 0;
+    padding-top: var(--typography-spacing-vertical);
+    padding-bottom: var(--typography-spacing-vertical);
+    padding-left: var(--typography-spacing-horizontal);
+    padding-right: calc(6 * var(--typography-spacing-horizontal));
+}
+
+body > main > h2 {
+    padding-left: var(--card-border-radius);
+    padding-bottom: 0;
+    padding-top: 2rem;
+}
+
+/* ── Side navigation ─────────────────────────────────────── */
+
+/* was: nav#nav-content.nav-wexa.side:not(.dark) */
+:root:not(.dark) nav#nav-content.nav-wexa.side {
     background: linear-gradient(180deg,
-    rgb(0, 0, 50) 0%,
-    rgb(10, 10, 60) 20%,
-    rgb(10, 40, 90) 40%,
-    rgb(70, 70, 140) 60%,
-    rgb(20, 100, 110) 100%);
+        rgb(0, 0, 50) 0%,
+        rgb(10, 10, 60) 20%,
+        rgb(10, 40, 90) 40%,
+        rgb(70, 70, 140) 60%,
+        rgb(20, 100, 110) 100%);
 }
 
 .dark nav#nav-content.nav-wexa.side {
     background: linear-gradient(180deg,
-    rgb(30, 0, 70), 0%,
-    rgb(35, 0, 75), 30%,
-    rgb(70, 15, 70) 50%,
-    rgb(100, 50, 90) 70%,
-    rgb(130, 60, 130) 100%);
+        rgb(30, 0, 70) 0%,
+        rgb(35, 0, 75) 30%,
+        rgb(70, 15, 70) 50%,
+        rgb(100, 50, 90) 70%,
+        rgb(130, 60, 130) 100%);
 }
 
 #nav-content [role='menuitem'],
@@ -212,7 +259,7 @@ nav#nav-content.nav-wexa.side:not(.dark) {
 }
 
 nav.nav-wexa button > span {
-  color: var(--nav-fg-color) !important;
+    color: var(--nav-fg-color) !important;
 }
 
 #nav-content [role='menuitem']:hover,
@@ -227,64 +274,23 @@ nav.nav-wexa button > span {
     filter: brightness(0.8) saturate(0.9);
 }
 
-/*
- ================================= BODY =================================
- */
+/* ── Card zones (layout.css override) ───────────────────── */
+/* layout.css colors .card-header with --header-bg-color and .card-body
+   with transparent. Force SPPAS card color throughout all zones.        */
+/* .card omitted: layout.css already uses the same variables.        */
 
-body {
-    margin: 0 auto;
-    width: 100%;
-}
-
-body > header {
-    padding-top: 0;
-    width: 100%;
-    text-align: left !important;
-    display: flex;
-    align-items: flex-start;
-}
-
-body > header > h1 {
-    font-size: calc(2.5 * var(--font-size));
-    margin: 0;
-}
-
-body > main {
-    margin: 0;
-    padding-left: calc((100% - var(--screen-width)) / 2);
-    padding-right: calc((100% - var(--screen-width)) / 2);
-}
-
-body > main > h2 {
-    padding-left: var(--card-border-radius);
-    padding-bottom: 0;
-    padding-top: 2rem;
-}
-
-.menu-png-button img {
-    filter: brightness(0) invert(1);
-}
-
-.menu-svg-button {
-    color: var(--nav-fg-color);
-}
-
-.card,
-.card > header,
-.card > main,
-.card > footer,
+.card-header,
+.card-body,
+.card-footer,
 main > .panel-item:nth-child(2n) .card,
-main > .panel-item:nth-child(2n) .card > header,
-main > .panel-item:nth-child(2n) .card > main,
-main > .panel-item:nth-child(2n) .card > footer {
+main > .panel-item:nth-child(2n) .card-header,
+main > .panel-item:nth-child(2n) .card-body,
+main > .panel-item:nth-child(2n) .card-footer {
     background-color: var(--card-bg-color);
     color: var(--card-fg-color);
 }
 
-
-/*
-=================================  BUTTONS & LINKS  ===================================
-*/
+/* ── Buttons ─────────────────────────────────────────────── */
 
 button:not(.menuitem), [role="button"]:not(.menuitem) {
     background: var(--buttons-bg-color);
@@ -292,10 +298,22 @@ button:not(.menuitem), [role="button"]:not(.menuitem) {
     border: var(--border-width) solid var(--border-color);
 }
 
-button:hover, [role='button']:hover  {
+button:hover, [role='button']:hover {
     color: var(--buttons-fg-color);
     background: var(--buttons-bg-color-hover);
 }
+
+/* ── Checkboxes ──────────────────────────────────────────── */
+/* wexa.css hides any native checkbox inside a label. The SPPAS
+   checkboxes are native controls: restore their visibility.    */
+
+label.focusable > input[type="checkbox"] {
+    opacity: 1;
+    width: auto;
+    height: auto;
+}
+
+/* ── Links — animated fill-from-bottom ───────────────────── */
 
 a:not(:has(img)),
 [role=link]:not(:has(img)) {
@@ -314,6 +332,8 @@ a:not(:has(img)):hover,
     transition: background-size .35s ease, color 0s;
 }
 
+/* ── details/summary — button-like appearance ────────────── */
+
 details summary {
     cursor: pointer;
     padding: 0.6rem 1rem;
@@ -324,14 +344,14 @@ details summary {
     font-weight: var(--font-weight-semibold);
 }
 
+/* ── blockquote ──────────────────────────────────────────── */
+
 blockquote {
     border: var(--border-width) solid var(--blockquote-border-color);
     box-shadow: var(--card-box-shadow);
 }
 
-/*
-=================================  DIALOGS  ===================================
-*/
+/* ── dialog ──────────────────────────────────────────────── */
 
 dialog {
     border-radius: calc(var(--border-radius) * 2);
@@ -348,9 +368,32 @@ dialog[role=alertdialog].error {
     );
 }
 
-/*
-=================================  FOOTER  ===================================
-*/
+/* ── Mobile: header padding to clear the nav toggle button ── */
+
+@media only screen and (max-width: 896px) {
+    body > header {
+        padding-left: var(--nav-item-min-width-h);
+    }
+}
+
+
+/* ============================================================
+   SECTION 3 — SPPAS components
+   Custom classes and IDs specific to this application.
+   Not present in wexa.css or layout.css.
+   ============================================================ */
+
+/* ── Navigation: image and SVG buttons ───────────────────── */
+
+.menu-png-button img {
+    filter: brightness(0) invert(1);
+}
+
+.menu-svg-button {
+    color: var(--nav-fg-color);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
 
 .footer-button {
     width: fit-content;
@@ -394,7 +437,7 @@ dialog[role=alertdialog].error {
     margin: 0.5rem;
 }
 
-/* --------------------------------------- */
+/* ── Layout panels ───────────────────────────────────────── */
 
 section.logos-panel {
     padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
@@ -418,55 +461,39 @@ section.actions-panel {
     padding: 0.3rem;
 }
 
-/* --------------------------------------- */
+/* ── Logos ───────────────────────────────────────────────── */
 
 @media all and (min-width: 896px) {
-
     .small-logo {
         max-height: 3.5rem;
         width: auto;
     }
+
     .medium-logo {
         max-height: 6.5rem;
         width: auto;
     }
+
     .large-logo {
         max-height: 10rem;
         width: auto;
     }
 }
 
-/* mostly mobile screens */
 @media only screen and (max-width: 896px) {
-    body > header {
-        padding-left: var(--nav-item-min-width-h);
-    }
-
     .small-logo {
         height: auto;
         max-width: 3.5rem;
     }
+
     .medium-logo {
         max-width: 6.5rem;
         height: auto;
     }
+
     .large-logo {
         max-width: 10rem;
         height: auto;
-    }
-}
-
-/* ======================================================================= */
-/* Responsive override: side menu width                                    */
-/* ======================================================================= */
-
-@media screen and (max-width: 896px) {
-    :root {
-        --nav-expanded-width: clamp(
-            calc(11rem / var(--size-divisor)),
-            70vw,
-            calc(22rem / var(--size-divisor))
-        );
     }
 }
 
@@ -475,22 +502,21 @@ section.actions-panel {
     min-width: 15rem;
 }
 
+/* ── Utilities ───────────────────────────────────────────── */
+
 .noborder {
-    border: none
+    border: none;
 }
 
 :where(table) .noborder {
     border: none;
 }
 
-
-/*
-=================================  APPLICATIONS  ===================================
-*/
-
 .flow > * + * {
     margin-top: var(--flow-space, 1em);
 }
+
+/* ── Application cards ───────────────────────────────────── */
 
 .apps-panel {
     padding: 1rem;
@@ -501,8 +527,6 @@ section.actions-panel {
     grid-row-gap: 1rem;
     place-items: center;
     border-radius: 1rem;
-
-    background: #165e7a;
     background: linear-gradient(120deg, rgb(22, 94, 122) 0%, rgb(167, 87, 199) 60%, rgb(245, 235, 162) 100%);
 }
 
@@ -517,9 +541,11 @@ section.actions-panel {
     transition: box-shadow 0.2s ease-in-out;
 }
 
-.app:not(.dark) {
+/* was: .app:not(.dark) — .dark is on :root, not on .app */
+:root:not(.dark) .app {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
 }
+
 .dark .app {
     background: linear-gradient(0deg, rgba(0, 0, 45, 0.9) 0%, rgba(0, 0, 45, 0.7) 100%);
 }
@@ -620,11 +646,9 @@ section.actions-panel {
     font-weight: bold;
     border-radius: var(--border-radius);
     text-transform: uppercase;
-    box-shadow: 0 0 20px #eee;
-    font-size: calc(var(--font-size) * 1.125)
+    box-shadow: 0 0 20px rgb(238, 238, 238);
+    font-size: calc(var(--font-size) * 1.125);
 }
-
-/* background */
 
 .app-button {
     background: var(--buttons-bg-color) !important;
@@ -635,6 +659,8 @@ section.actions-panel {
     color: var(--buttons-fg-color);
     background: var(--buttons-bg-color-hover) !important;
 }
+
+/* Hover/focus animation — only for pointer devices */
 
 @media (any-hover: hover) and (any-pointer: fine) {
 
@@ -680,7 +706,6 @@ section.actions-panel {
         transition: transform 300ms ease-in;
     }
 
-
     .app:focus-within .app-content {
         transition-duration: 0ms;
     }
@@ -709,15 +734,6 @@ section.actions-panel {
         opacity: 0.33;
         outline: none;
     }
-    /*
-        .app:hover .app-title::after,
-        .app:focus-within .app-title::after {
-            opacity: 1;
-            transform: scaleX(1);
-            transform-origin: left;
-            transition: opacity 300ms ease-in, transform 300ms ease-in;
-            transition-delay: 400ms;
-        }*/
 }
 
 .app.app-disabled {
@@ -729,9 +745,7 @@ section.actions-panel {
     opacity: 0.5;
 }
 
-/* --------------------------------------------------------------------------
-     Page Table of Content
--------------------------------------------------------------------------- */
+/* ── Page table of contents ──────────────────────────────── */
 
 .page-toc {
     margin: 1.5rem 0 2.5rem 0;
@@ -751,6 +765,7 @@ section.actions-panel {
     margin: 0;
     padding: 0;
 }
+
 .page-toc li::before {
     content: none;
 }
@@ -774,7 +789,7 @@ section.actions-panel {
 }
 
 .page-toc a:hover {
-    border-color: #6ea86c;
+    border-color: rgb(110, 168, 108);
 }
 
 .page-toc a:focus-visible {
@@ -789,8 +804,8 @@ section.actions-panel {
     align-self: stretch;
     font-size: 1.6rem;
     font-weight: 800;
-    color: #ffffff;
-    background: #7fc35d;
+    color: rgb(255, 255, 255);
+    background: rgb(127, 195, 93);
 }
 
 .page-toc .toc-label {
@@ -807,9 +822,8 @@ section.actions-panel {
     color: rgb(130, 60, 130);
 }
 
-.page-toc li .toc-num { background: #4a7fa5; }
-.page-toc li:nth-child(2) .toc-num { background: #5b43a8; }
-.page-toc li:nth-child(3) .toc-num { background: #4a8d99; }
-.page-toc li:nth-child(4) .toc-num { background: #af7a55; }
-.page-toc li:nth-child(5) .toc-num { background: #70912b; }
-
+.page-toc li .toc-num { background: rgb(74, 127, 165); }
+.page-toc li:nth-child(2) .toc-num { background: rgb(91, 67, 168); }
+.page-toc li:nth-child(3) .toc-num { background: rgb(74, 141, 153); }
+.page-toc li:nth-child(4) .toc-num { background: rgb(175, 122, 85); }
+.page-toc li:nth-child(5) .toc-num { background: rgb(112, 145, 43); }

@@ -8,323 +8,366 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 
     <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" />
-    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
-    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css">
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
 
     <style>
         :root {
-            --nav-min-height: 4rem;
-            --header-height: 26rem;
-        }
-        :root:not([data-theme=dark]), [data-theme=light] {
-            --nav-fg-color: rgba(240, 230, 240);
-            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
         }
     </style>
 
 </head>
 <body>
 
-    <header>
-        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
-            Skip to main content
-        </a>
-        <nav style="position: absolute; top: 0;">
-            <ul>
-                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
-                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
-                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
-            </ul>
-            <button id="btn-contrast" class="accessibility" role="menuitem"
-                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()"></button>
-            <button id="btn-theme" class="accessibility" role="menuitem"
-                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()"></button>
-        </nav>
-        <h1>Layout</h1>
-        <h2>by Whakerexa</h2>
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Layout &gt; Containers</p>
     </header>
+<nav class="nav-wexa top" aria-label="Page navigation">
+            <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <polyline points="20 24 12 16 20 8" />
+                </svg>
+            </a>
+            <button id="btn-css-theme" class="menuitem" type="button"
+                    aria-label="Switch CSS theme" title="Switch CSS theme"
+                    onclick="window.themes && window.themes.next()">
+            </button>
+            <button id="btn-contrast" class="menuitem accessibility"
+                    aria-label="contrast" aria-pressed="false"
+                    onclick="Wexa.accessibility.switchContrastScheme()"></button>
+            <button id="btn-color" class="menuitem accessibility"
+                    aria-label="color" aria-pressed="false"
+                    onclick="Wexa.accessibility.switchColorScheme()"></button>
+        </nav>
+
 
 
     <main id="main-content">
 
-        <section id="description">
-            <h1>Description</h1>
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h1>Containers</h1>
+            <p><b>layout.css</b> provides layout containers and a card component for Whakerexa pages.
+                Load it after <code>wexa.css</code>:</p>
+            <pre class="dark"><code>&lt;link rel="stylesheet" href=".../wexa_statics/css/wexa.css" media="screen" /&gt;
+&lt;link rel="stylesheet" href=".../wexa_statics/css/layout.css" media="all" /&gt;</code></pre>
 
-            <h2>Overview</h2>
-
-            <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
-                accessible web content, and to minimize the use of CSS classes for enhancing the
-                readability of HTML code, like it should always be! <b>wexa.css</b> is the main
-                CSS framework of  <a class="external-link" href="https://whakerexa.sf.net">Whakerexa</a>.
-            </p>
-            <p><b>layout.css</b> is a CSS framework based on wexa.css, allowing you to manage
-                layouts of HTML elements. It includes the possibility to add
-                content that looks like a card. At this time, it is provided as-is, offering
-                a streamlined selection of customization solutions.</p>
-
-            <p>Not convinced? Take a look at the source code of this page!</p>
-
-            <p>This page shows how a website looks like if this code is added to the <code>&lt;head&gt;</code>:</p>
-            <pre>
-&lt;link
-    rel="stylesheet"
-    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/wexa.css?format=raw"
-    media="all" /&gt;
-&lt;link
-    rel="stylesheet"
-    href="https://sourceforge.net/p/whakerexa/code/ci/master/tree/statics/css/layout.css?format=raw"
-    media="all" /&gt;
-            </pre>
-
-
-            <h2>The containers</h2>
-
-            <h3>Simple panel</h3>
-            <h3>Scrolled panel</h3>
-            <h3>Flex panel</h3>
-            <h3>Grid panel</h3>
-            <h3>Collapsible panel (HTML <code>&lt;details&gt;</code>)</h3>
-
-            <h3>Cards panel</h3>
-            <p>layout.css provides a container allowing to organize cards:
-                <code>cards-panel</code>. See the demos for details. </p>
-
-            <h4>A card</h4>
-            <p>The class <code>card</code> can be added to any HTML element which can be used
-                as a container. Preferably, you should use either <code>&lt;section&gt;</code> or
-                <code>&lt;article&gt;</code> element, instead of the nonsensical <code>&lt;div&gt;</code>.
-                Any of then will be displayed the same way, but screen readers interpret
-                a <code>section</code> or an <code>article</code>in a more appropriate manner,
-                unlike a <code>div</code>!</p>
-
-            <table role="presentation">
-                <thead>
-                <tr>
-                    <td>Example</td>
-                    <td>Result</td>
-                </tr>
-                <tbody>
-                <tr>
-                    <td>
-                        <pre>&lt;article class="card"&gt;
-    &lt;main&gt;
-        &lt;h2&gt;card title&lt;/h2&gt;
-        &lt;p&gt;multi-line card content... the text wraps when needed!&lt;/p&gt;
-        &lt;a href="#somewhere"&gt;Convinced!&lt;/a&gt;
-    &lt;/main&gt;
-&lt;/article&gt;
-            </pre>
-                    </td>
-                    <td>
-                        <article class="card" id="somewhere1">
-                            <main>
-                                <h2>card title</h2>
-                                <p>multi-line card content... the text wraps when needed!</p>
-                                <a href="#">Convinced!</a>
-                            </main>
-                        </article>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Classically, the card can be divided into: a header, a main and a footer:</p>
-                        <pre>&lt;article class="card"&gt;
-    &lt;header&gt;
-        &lt;h2&gt;card title&lt;/h2&gt;
-    &lt;/header&gt;
-    &lt;main&gt;
-        &lt;p&gt;multi-line card content... the text wraps when needed!&lt;/p&gt;
-    &lt;/main&gt;
-    &lt;footer&gt;
-        &lt;a role="button" href="#somewhere"&gt;Footer link!&lt;/a&gt;
-    &lt;/footer&gt;
-&lt;/article&gt;
-            </pre>
-                    </td>
-                    <td>
-                        <article class="card" id="somewhere2">
-                            <header><h2>card title</h2></header>
-                            <main>
-                                <p>multi-line card content into 'main'... the text wraps when needed!</p>
-                            </main>
-                            <footer>
-                                <a role="button" href="#">Footer link!</a>
-                            </footer>
-                        </article>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <h2>The variables</h2>
-            <p><code>layout.css</code> allows to override the following variables:</p>
+            <h2>Variables</h2>
+            <p><code>layout.css</code> exposes the following CSS variables:</p>
 
             <table>
                 <thead>
                 <tr>
                     <th>Variable</th>
-                    <th>Description</th>
+                    <th>Role</th>
                     <th>Default</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
+                    <td><code>--card-bg-color</code></td>
+                    <td>Card background</td>
+                    <td><code>var(--bg-color-alt)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--card-fg-color</code></td>
+                    <td>Card text color</td>
+                    <td><code>var(--fg-color)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--card-padding</code></td>
+                    <td>Inner padding; header and footer bleed to edges</td>
+                    <td><code>0.6rem</code></td>
+                </tr>
+                <tr>
                     <td><code>--card-max-width</code></td>
-                    <td>Max width of cards in <code>.cards-panel</code>.</td>
+                    <td>Max width of cards inside <code>.cards-panel</code></td>
                     <td><code>15rem</code></td>
                 </tr>
                 <tr>
                     <td><code>--card-border-width</code></td>
-                    <td>Border width of a <code>.card</code>.</td>
-                    <td><code>2px</code></td>
+                    <td>Card border width</td>
+                    <td><code>0</code></td>
                 </tr>
                 <tr>
                     <td><code>--card-border-radius</code></td>
-                    <td>Border radius of a <code>.card</code>.</td>
+                    <td>Card corner radius</td>
                     <td><code>8px</code></td>
                 </tr>
                 <tr>
                     <td><code>--card-box-shadow</code></td>
-                    <td>Shadow of a <code>.card</code>.</td>
-                    <td><code>-0.2rem 0.2rem 0.6rem 0.2rem var(--shadow-color)</code></td>
+                    <td>Card drop shadow</td>
+                    <td><code>-0.1rem 0.1rem 0.4rem 0.1rem var(--shadow-color)</code></td>
                 </tr>
                 <tr>
                     <td><code>--columns-sep-color</code></td>
-                    <td>Color used for column separators (if enabled in custom layouts).</td>
-                    <td><code>rgba(128, 128, 128, 128)</code></td>
+                    <td>Color for <code>.flex-border-left</code> separators</td>
+                    <td><code>rgba(128, 128, 128, 0.5)</code></td>
                 </tr>
                 </tbody>
             </table>
-
-            <p>Example: override variables in the <code>&lt;head&gt;</code> (after the CSS links):</p>
-            <pre>&lt;style&gt;
-    :root {
-        --card-max-width: 15rem;
-        --card-border-width: 4px;
-        --card-border-radius: 0;
-        --card-box-shadow: none;
-    }
-&lt;/style&gt;</pre>
-
         </section>
 
-        <section id="demo">
-            <h1>Demos</h1>
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Simple panel</h2>
+            <p>Use <code>.panel</code> for a basic block container that clears floats.</p>
+            <article class="card-doc" aria-label="Simple panel — example">
+                <div class="card-view">
+                    <div class="panel" style="border: 1px solid var(--border-color); padding: 1rem; min-width: 10rem;">
+                        <p>Panel content</p>
+                    </div>
+                </div>
+                <pre class="dark"><code>&lt;div class="panel"&gt;
+    Content
+&lt;/div&gt;</code></pre>
+            </article>
+        </section>
 
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Scrolled panel</h2>
+            <p>Use <code>.scrolled-panel</code> for a container with scrollable overflow.
+                Set an explicit height to activate scrolling.</p>
+            <article class="card-doc" aria-label="Scrolled panel — example">
+                <div class="card-view">
+                    <div class="scrolled-panel" style="height: 4rem; width: 14rem; border: 1px solid var(--border-color); padding: 0.5rem;">
+                        <p>Line 1</p><p>Line 2</p><p>Line 3</p><p>Line 4</p><p>Line 5</p>
+                    </div>
+                </div>
+                <pre class="dark"><code>&lt;div class="scrolled-panel" style="height: 4rem;"&gt;
+    &lt;!-- content taller than container --&gt;
+&lt;/div&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Flex panel</h2>
+            <p>Use <code>.flex-panel</code> for a responsive row of items.
+                Each child takes <code>.flex-item</code>.
+                Width helpers (<code>.width_30</code>, <code>.width_60</code>, etc.) control proportions.
+                On narrow screens the layout collapses to a single column.
+                Add <code>.flex-border-left</code> to a <code>.flex-item</code> for a vertical separator.</p>
+            <article class="card-doc" aria-label="Flex panel — example">
+                <div class="card-view" style="width: 100%;">
+                    <div class="flex-panel width_full">
+                        <p class="flex-item width_30" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">30 %</p>
+                        <p class="flex-item width_40 flex-border-left" style="border-right: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">40 %</p>
+                        <p class="flex-item width_20 flex-border-left" style="padding: 0.5rem; text-align: center;">20 %</p>
+                    </div>
+                </div>
+                <pre class="dark"><code>&lt;div class="flex-panel"&gt;
+    &lt;p class="flex-item width_30"&gt;30 %&lt;/p&gt;
+    &lt;p class="flex-item width_40 flex-border-left"&gt;40 %&lt;/p&gt;
+    &lt;p class="flex-item width_20 flex-border-left"&gt;20 %&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Grid panel</h2>
+            <p>Use <code>.grid-panel</code> for an equal-column auto-fit grid.
+                Items use <code>.grid-item</code>.
+                The number of columns adapts to the available space.</p>
+            <article class="card-doc" aria-label="Grid panel — example">
+                <div class="card-view" style="width: 100%;">
+                    <div class="grid-panel width_full">
+                        <p class="grid-item" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">Cell 1</p>
+                        <p class="grid-item" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">Cell 2</p>
+                        <p class="grid-item" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">Cell 3</p>
+                        <p class="grid-item" style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">Cell 4</p>
+                    </div>
+                </div>
+                <pre class="dark"><code>&lt;div class="grid-panel"&gt;
+    &lt;p class="grid-item"&gt;Cell 1&lt;/p&gt;
+    &lt;p class="grid-item"&gt;Cell 2&lt;/p&gt;
+    &lt;p class="grid-item"&gt;Cell 3&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Collapsible panel</h2>
+            <p>Use the native HTML <code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code> elements.
+                No CSS class required — <code>wexa.css</code> styles them directly.
+                Keyboard-accessible: Tab to focus, Enter or Space to toggle.</p>
+            <article class="card-doc" aria-label="Collapsible panel — example">
+                <div class="card-view">
+                    <details>
+                        <summary>Toggle me</summary>
+                        <p>Hidden content revealed on click.</p>
+                    </details>
+                </div>
+                <pre class="dark"><code>&lt;details&gt;
+    &lt;summary&gt;Toggle me&lt;/summary&gt;
+    &lt;p&gt;Hidden content.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
             <h2>Cards</h2>
+            <p>Use <code>.card</code> on an <code>&lt;article&gt;</code> or <code>&lt;section&gt;</code> element.
+                A card can contain up to three zones: <code>.card-header</code>, <code>.card-body</code>, <code>.card-footer</code>.
+                Group cards in a <code>.cards-panel</code> container for a responsive grid layout.</p>
 
-            <p><em>Note:</em> images used in this page are decorative; keeping <code>alt=""</code> is intended.</p>
-
-            <h3>Create cards in a section with article elements</h3>
-            <section class="cards-panel">
-
-                <article class="card">
-                    <header>
-                        <img src="https://sppas.org/whakerkit/icons/flav64.png" alt="">
-                    </header>
-                    <main>
-                        <h2>SPPAS card instance</h2>
-                        <p>An amazing software tool.</p>
-                    </main>
-                    <footer>
-                        <a href="https://sppas.org/">SPPAS web site</a>
-                    </footer>
-                </article>
-
-                <article class="card" id="somewhere3">
-                    <header>
-                        <img src="images/cards.png" alt="">
-                    </header>
-                    <main>
-                        <h2> A card </h2>
-                        <p>Le read more ci-dessous est un lien avec role button.</p>
-                        <a role="button" id="desc-a-card" href="#somewhere3">Read more →</a>
-                    </main>
-                    <footer>
-                        <p>This is a text inside the footer of the card.</p>
-                    </footer>
-                </article>
-
-                <article class="card">
-                    <header>
-                        <h2>Header</h2>
-                    </header>
-                    <main>
-                        <h2>Another card instance</h2>
-                        <p>Cupidatat tempor sint mollit in tempor ut fugiat excepteur laborum labore.</p>
-                        <button id="desc-third-card-instance">Read more →</button>
-                    </main>
-                    <footer>
-                        <p>This is a text inside the footer of the card.</p>
-                    </footer>
-                </article>
-
-            </section>
-
-            <p>Not implemented yet: horizontal card -- any help is welcome!</p>
-            <article class="card card-horiz">
-                <header>
-                    <img src="https://sppas.org/whakerkit/icons/flav64.png" alt="">
-                </header>
-                <main>
-                    <h2>Horizontal card</h2>
-                    <p>with dark and high contrast</p>
-                </main>
-                <footer>
-                    <a href="https://sppas.org/">Some footer</a>
-                </footer>
+            <article class="card-doc" aria-label="Simple card — example">
+                <div class="card-view">
+                    <article class="card">
+                        <div class="card-body">
+                            <h2>Card title</h2>
+                            <p>Card content — wraps when needed.</p>
+                            <a href="#">Learn more →</a>
+                        </div>
+                    </article>
+                </div>
+                <pre class="dark"><code>&lt;article class="card"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h2&gt;Card title&lt;/h2&gt;
+        &lt;p&gt;Content&lt;/p&gt;
+        &lt;a href="#"&gt;Learn more →&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
             </article>
 
-            <h3>Create cards in a full-cards-panel</h3>
+            <article class="card-doc" aria-label="Card with header, body and footer — example">
+                <div class="card-view">
+                    <article class="card">
+                        <div class="card-header"><h2>Header</h2></div>
+                        <div class="card-body">
+                            <p>Body content.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#">Footer link</a>
+                        </div>
+                    </article>
+                </div>
+                <pre class="dark"><code>&lt;article class="card"&gt;
+    &lt;div class="card-header"&gt;&lt;h2&gt;Title&lt;/h2&gt;&lt;/div&gt;
+    &lt;div class="card-body"&gt;&lt;p&gt;Content&lt;/p&gt;&lt;/div&gt;
+    &lt;div class="card-footer"&gt;
+        &lt;a href="#"&gt;Link&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            </article>
 
-            <section class="full-cards-panel">
-                <article class="card full-card">
-                    <header>
-                        <img src="https://sppas.org/etc/images/background-header.png" alt="">
-                    </header>
-                    <main>
-                        <p>SPPAS offers open source cross-platform, customizable automatic annotation
-                            and analysis solutions for audio and video media.</p>
-                        <p>SPPAS was awarded by the French Ministry of Higher Education, Research and
-                            Innovation at the 2022 Open Source Research Software Competition.</p>
-                    </main>
-                    <footer>
-                        <a role="button" href="https://sppas.org/">More about SPPAS</a>
-                        <a role="button" href="https://sppas.sf.net/">Get it!</a>
-                    </footer>
-                </article>
-            </section>
+            <article class="card-doc" aria-label="cards-panel — example">
+                <div class="card-view">
+                    <section class="cards-panel">
+                        <article class="card">
+                            <div class="card-header"><h2>Card A</h2></div>
+                            <div class="card-body"><p>First card in the grid.</p></div>
+                            <div class="card-footer"><a href="#">More →</a></div>
+                        </article>
+                        <article class="card">
+                            <div class="card-header"><h2>Card B</h2></div>
+                            <div class="card-body"><p>Second card in the grid.</p></div>
+                            <div class="card-footer"><a href="#">More →</a></div>
+                        </article>
+                        <article class="card">
+                            <div class="card-header"><h2>Card C</h2></div>
+                            <div class="card-body"><p>Third card in the grid.</p></div>
+                            <div class="card-footer"><a href="#">More →</a></div>
+                        </article>
+                    </section>
+                </div>
+                <pre class="dark"><code>&lt;section class="cards-panel"&gt;
+    &lt;article class="card"&gt;
+        &lt;div class="card-header"&gt;...&lt;/div&gt;
+        &lt;div class="card-body"&gt;...&lt;/div&gt;
+        &lt;div class="card-footer"&gt;...&lt;/div&gt;
+    &lt;/article&gt;
+&lt;/section&gt;</code></pre>
+            </article>
 
+            <article class="card-doc" aria-label="full-cards-panel — example">
+                <div class="card-view">
+                    <section class="full-cards-panel" style="width: 100%;">
+                        <article class="card full-card">
+                            <div class="card-body">
+                                <p>A <code>.full-card</code> inside a <code>.full-cards-panel</code>
+                                    spans the full available width — suitable for featured content.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#">See more</a>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+                <pre class="dark"><code>&lt;section class="full-cards-panel"&gt;
+    &lt;article class="card full-card"&gt;
+        &lt;div class="card-body"&gt;...&lt;/div&gt;
+        &lt;div class="card-footer"&gt;...&lt;/div&gt;
+    &lt;/article&gt;
+&lt;/section&gt;</code></pre>
+            </article>
         </section>
+
+
     </main>
 
     <footer>
         <p class="center">This site respects your privacy.</p>
         <p class="center">We do not collect any information and do not use cookies.</p>
         <hr>
-        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
             Laboratoire Parole et Langage, Aix-en-Provence, France</p>
         <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
             This document is under the terms of the GNU Free Documentation License, v1.3.</a>
         </p>
     </footer>
 
-    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
     <script>
         (function () {
             const usingFile = (window.location.protocol === 'file:');
-            const script = document.createElement('script');
-
+            const s = document.createElement('script');
             if (usingFile) {
-                script.src = '../wexa_statics/js/wexa.bundle.js';
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        t.setDefault('wexa_theme');
+                        window.themes = t;
+                    }
+                });
             } else {
-                script.type = 'module';
-                script.src = '../wexa_statics/js/wexa.js';
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
             }
-
-            document.head.appendChild(script);
+            document.head.appendChild(s);
         })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        themes.setDefault('wexa_theme');
+        window.themes = themes;
     </script>
 
 </body>

@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-03-29 10:24:31
+// Bundle automatically generated on 2026-07-10 12:18:39
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -205,7 +205,7 @@ class RequestManager {
         console.debug("File size to upload: ", input.files[0].size);
         // Exit the function if size limit
         if (this.maxFileSize !== 0 && input.files[0].size > this.maxFileSize) {
-            console.error("File size exceeds maximum of ${this.maxFileSize} bytes.");
+            console.error(`File size exceeds maximum of ${this.maxFileSize} bytes.`);
             // Return a JSON object with status 400 and an error message
             return { error: "File size exceeds maximum allowed length." };
         }
@@ -280,7 +280,7 @@ class BaseManager {
             WexaLogger.error(`HTTP error ${this._requestManager.status}: ${error}`);
             this._showDialog('error_dialog', `Erreur ${this._requestManager.status} : ${error}`);
         } else {
-            if (info) {
+            if (info && !reload) {
                 WexaLogger.info(info);
                 this._showDialog('info_dialog', info);
             }
@@ -327,7 +327,7 @@ class BaseManager {
         }
         // Server replied: process normally
         if (respError || respInfo) {
-            this._showActionResult(respError, '', true);
+            this._showActionResult(respError, respInfo, true);
             return;
         }
         // No server response: ignore silently
@@ -364,15 +364,232 @@ window.Wexa.BaseManager = BaseManager;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
+// ---------------- extras/slides/slides_data.js ---------------
+'use strict';
+class SlidesData {
+    constructor(slides) {
+        this.slides = Array.isArray(slides) ? slides : [];
+        this.currentIndex = 1;   // 1-based
+        this.currentStep  = 0;
+        this.previousIndex = 0;  // 0 = no previous (initial state)
+        this.mode = 'presentation';
+        this.autoPlay = false;
+    }
+    get count() {
+        return this.slides.length;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlidesData = SlidesData;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/navigation_logic.js ---------------
+'use strict';
+class NavigationLogic {
+    constructor(data) {
+        this._data = data;
+        this._onNavigate = null;
+    }
+    set onNavigate(fn) {
+        this._onNavigate = typeof fn === 'function' ? fn : null;
+    }
+    // -----------------------------------------------------------------------
+    // Public API
+    // -----------------------------------------------------------------------
+    next() {
+        const { currentIndex, currentStep } = this._data;
+        const maxStep = this._incrementalCount(currentIndex);
+        if (currentIndex === this._data.count && currentStep >= maxStep) {
+            return;
+        }
+        if (currentStep >= maxStep) {
+            this._navigateTo(currentIndex + 1, 0);
+        } else {
+            this._navigateTo(currentIndex, currentStep + 1);
+        }
+    }
+    prev() {
+        const { currentIndex, currentStep } = this._data;
+        if (currentIndex === 1 && currentStep === 0) {
+            return;
+        }
+        if (currentStep === 0) {
+            const prevIdx = currentIndex - 1;
+            this._navigateTo(prevIdx, this._incrementalCount(prevIdx));
+        } else {
+            this._navigateTo(currentIndex, currentStep - 1);
+        }
+    }
+    goTo(index, step = 0) {
+        this._navigateTo(index, step);
+    }
+    goStart() {
+        this._navigateTo(1, 0);
+    }
+    goEnd() {
+        const last = this._data.count;
+        this._navigateTo(last, this._incrementalCount(last));
+    }
+    toggleContent() {
+        const slide = this._data.slides[this._data.currentIndex - 1];
+        if (!(slide instanceof HTMLElement)) {
+            return;
+        }
+        const video = slide.querySelector('video');
+        if (!(video instanceof HTMLVideoElement)) {
+            return;
+        }
+        if (video.paused || video.ended) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    }
+    updateFromHash(hash) {
+        if (typeof hash !== 'string' || hash === '' || hash[0] !== '#') {
+            this._setPosition(1, 0);
+            return;
+        }
+        const parts = hash.substring(1).split('.');
+        const idx = parseInt(parts[0], 10);
+        const stp = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+        this._setPosition(
+            Number.isNaN(idx) ? 1 : idx,
+            Number.isNaN(stp) ? 0 : stp
+        );
+    }
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
+    _navigateTo(index, step) {
+        const changed = this._setPosition(index, step);
+        if (changed) {
+            window.location.hash = `#${this._data.currentIndex}.${this._data.currentStep}`;
+        }
+    }
+    _setPosition(index, step) {
+        const clamped = this._clampIndex(index);
+        const clampedStep = this._clampStep(clamped, step);
+        const isInitial = this._data.previousIndex === 0;
+        const unchanged = clamped === this._data.currentIndex
+                       && clampedStep === this._data.currentStep;
+        if (!isInitial && unchanged) {
+            return false;
+        }
+        // Pause video on the slide we're leaving
+        const prevSlide = this._data.slides[this._data.currentIndex - 1];
+        if (prevSlide instanceof HTMLElement) {
+            const v = prevSlide.querySelector('video');
+            if (v instanceof HTMLVideoElement) {
+                v.pause();
+            }
+        }
+        this._data.previousIndex = this._data.currentIndex;
+        this._data.currentIndex  = clamped;
+        this._data.currentStep   = clampedStep;
+        // Autoplay video on the slide we're entering
+        if (this._data.autoPlay) {
+            const currSlide = this._data.slides[clamped - 1];
+            if (currSlide instanceof HTMLElement) {
+                const v = currSlide.querySelector('video');
+                if (v instanceof HTMLVideoElement) {
+                    v.play();
+                }
+            }
+        }
+        if (this._onNavigate !== null) {
+            this._onNavigate(this._data);
+        }
+        return true;
+    }
+    _incrementalCount(index) {
+        const slide = this._data.slides[this._clampIndex(index) - 1];
+        if (!(slide instanceof HTMLElement)) {
+            return 0;
+        }
+        return slide.querySelectorAll('.incremental > *').length;
+    }
+    _clampIndex(index) {
+        const n = this._data.count;
+        if (n === 0) {
+            return 1;
+        }
+        return Math.max(1, Math.min(index, n));
+    }
+    _clampStep(index, step) {
+        return Math.max(0, Math.min(step, this._incrementalCount(index)));
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.NavigationLogic = NavigationLogic;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/viewmode_logic.js ---------------
+'use strict';
+class ViewModeLogic {
+    static MODES = {
+        PRESENTATION: 'presentation',
+        OVERVIEW:     'overview',
+        HANDOUT:      'handout',
+        NOTE:         'note',
+    };
+    static DEFAULT = 'presentation';
+    constructor(data) {
+        this._data = data;
+        this._onModeChange = null;
+    }
+    set onModeChange(fn) {
+        this._onModeChange = typeof fn === 'function' ? fn : null;
+    }
+    get current() {
+        return this._data.mode;
+    }
+    set(mode) {
+        const valid = Object.values(ViewModeLogic.MODES);
+        if (!valid.includes(mode)) {
+            return;
+        }
+        this._data.mode = mode;
+        if (this._onModeChange !== null) {
+            this._onModeChange(this._data);
+        }
+    }
+    toggle(mode = ViewModeLogic.MODES.OVERVIEW) {
+        const next = this._data.mode === mode
+            ? ViewModeLogic.MODES.PRESENTATION
+            : mode;
+        this._data.mode = next;
+        if (this._onModeChange !== null) {
+            this._onModeChange(this._data);
+        }
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.ViewModeLogic = ViewModeLogic;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
 // ---------------- extras/slides/visibility.js ---------------
 'use strict';
 class SlidesVisibilityController {
     constructor(element) {
         this._element = element instanceof HTMLElement ? element : null;
     }
+    isVisible() {
+        if (!(this._element instanceof HTMLElement)) {
+            return false;
+        }
+        return window.getComputedStyle(this._element).display !== 'none';
+    }
     show() {
         if (this._element instanceof HTMLElement) {
-            this._element.style.display = 'block';
+            this._element.classList.remove('controls-hidden');
+            this._element.style.display = '';
         }
     }
     hide() {
@@ -384,11 +601,12 @@ class SlidesVisibilityController {
         if (!(this._element instanceof HTMLElement)) {
             return;
         }
-        const current = this._element.style.display;
-        if (current === 'none') {
-            this._element.style.display = 'block';
+        // Use getComputedStyle to handle elements visible via CSS rules (not inline style).
+        const computed = window.getComputedStyle(this._element).display;
+        if (computed === 'none') {
+            this.show();
         } else {
-            this._element.style.display = 'none';
+            this.hide();
         }
     }
 }
@@ -408,6 +626,13 @@ class SlidesVisibilityManager {
             const element = elementsMap[name];
             this._controllers[name] = new SlidesVisibilityController(element);
         }
+    }
+    isVisible(name) {
+        const controller = this._controllers[name];
+        if (controller instanceof SlidesVisibilityController) {
+            return controller.isVisible();
+        }
+        return false;
     }
     show(name) {
         const controller = this._controllers[name];
@@ -525,15 +750,6 @@ class SlidesFocusController {
         if (ariaDisabled !== null && ariaDisabled.toLowerCase() === 'true') {
             return true;
         }
-        /*
-        const tabIndexAttribute = element.getAttribute('tabindex');
-        if (tabIndexAttribute !== null) {
-            const parsed = parseInt(tabIndexAttribute, 10);
-            const isNumber = Number.isNaN(parsed) === false;
-            if (isNumber === true && parsed < 0) {
-                return true;
-            }
-        }*/
         return false;
     }
 }
@@ -599,252 +815,53 @@ window.Wexa.SlidesFullscreenController = SlidesFullscreenController;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- extras/slides/keyboard.js ---------------
+// ---------------- extras/slides/presentation_view.js ---------------
 'use strict';
-class SlidesKeyboardController {
-    static SLIDE_KEYS = new Set([
-        'Escape',  // Switch to Presentation mode
-        'o', 'O',  // Switch to Overview mode
-        's', 'S',  // Switch to Presentation mode
-        'f', 'F',  // Enable/Disable Fullscreen
-        'n', 'N',  // Show/Hide controls
-        'b', 'B',  // Show/Hide progress bar
-        'l', 'L',  // Show/Hide logo
-        'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',  // Browse slides
-        'PageUp', 'PageDown',
-        'Home', 'End'
-    ]);
-    // ----------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ----------------------------------------------------------------------
-    constructor(slidesManager, options = {}) {
-        if (typeof slidesManager !== 'object' || slidesManager === null) {
-            throw new Error('SlidesKeyboardController: "slidesManager" must be an object.');
-        }
-        this._manager = slidesManager;
-        this._boundKeyHandler = this._onKeyDown.bind(this);
+class PresentationView {
+    constructor(slides, progressBar = null, controlsElement = null, controlsViewElement = null) {
+        this._slides       = Array.isArray(slides) ? slides : [];
+        this._progressBar  = progressBar instanceof HTMLElement ? progressBar : null;
+        this._controls     = controlsElement instanceof HTMLElement ? controlsElement : null;
+        this._controlsView = controlsViewElement instanceof HTMLElement ? controlsViewElement : null;
+        this._currentMode  = null;
     }
-    // ----------------------------------------------------------------------
-    // INITIALIZATION
-    // ----------------------------------------------------------------------
-    init() {
-        document.body.addEventListener('keydown', this._boundKeyHandler, false);
+    // -----------------------------------------------------------------------
+    // Called by SlidesAssembler via navLogic.onNavigate
+    // -----------------------------------------------------------------------
+    render(data) {
+        this._renderSlide(data.currentIndex, data.previousIndex);
+        this._renderIncremental(data.currentIndex, data.currentStep);
+        this._renderProgress(data.currentIndex, data.count);
     }
-    destroy() {
-        document.body.removeEventListener('keydown', this._boundKeyHandler, false);
+    // -----------------------------------------------------------------------
+    // Called by SlidesAssembler via modeLogic.onModeChange
+    // -----------------------------------------------------------------------
+    onModeChange(data) {
+        // Sync body class
+        if (this._currentMode !== null) {
+            document.body.classList.remove(`${this._currentMode}-view`);
+        }
+        this._currentMode = data.mode;
+        document.body.classList.add(`${data.mode}-view`);
+        if (data.mode === 'presentation' || data.mode === 'handout' || data.mode === 'note') {
+            this._showSlides();
+        } else {
+            this._hideSlides();
+        }
+        // The view-mode radio group: keep visible (shows current mode and allows switching back)
     }
-    // ---------------------------------------------------------------------
-    // PRIVATE — ACCESSIBILITY-FIRST KEYBOARD HANDLING
-    // ---------------------------------------------------------------------
-    _onKeyDown(event) {
-        const key = event.key;
-        // --- RULE 1: Ignore all keys not part of the Slides UI ----------------
-        if (!SlidesKeyboardController.SLIDE_KEYS.has(key)) {
-            return;
-        }
-        // --- RULE 2: Never handle Enter or Space ------------------------------
-        // Space is " " (U+0020)
-        if (key === 'Enter' || key === ' ') {
-            return;
-        }
-        // --- RULE 3: If focus is on an interactive element → browser priority -
-        if (this._isInteractiveTarget(event.target)) {
-            return;
-        }
-        // ----------------------------------------------------------------------
-        // From here, we know safely:
-        //  - The key is a slide key
-        //  - It is not Enter/Space
-        //  - The focused element is *not* interactive
-        // ----------------------------------------------------------------------
-        switch (key) {
-            case 'Escape':
-                if (this._manager.viewModeManager !== null) {
-                    this._manager.viewModeManager.set(SlidesView.DEFAULT_MODE);
-                }
-                return;
-            case 'o': case 'O':
-                if (this._manager.viewModeManager !== null) {
-                    this._manager.viewModeManager.set(SlidesView.MODES.OVERVIEW);
-                }
-                return;
-            case 's': case 'S':
-                if (this._manager.viewModeManager !== null) {
-                    this._manager.viewModeManager.set(SlidesView.MODES.PRESENTATION);
-                }
-                return;
-            case 'f': case 'F':
-                this._manager.toggleFullscreen?.();
-                return;
-            case 'n': case 'N':
-                if (this._manager.visibilityManager !== null) {
-                    this._manager.visibilityManager.toggle('controls');
-                }
-                return;
-            case 'l': case 'L':
-                if (this._manager.visibilityManager !== null) {
-                    //this._manager.visibilityManager.toggle('logo');
-                }
-                return;
-            case 'b': case 'B':
-                if (this._manager.visibilityManager !== null) {
-                    //this._manager.visibilityManager.toggle('progress');
-                }
-                return;
-            // Navigation backward
-            case 'ArrowLeft':
-            case 'ArrowUp':
-            case 'PageUp':
-                event.preventDefault();
-                this._manager.prev();
-                return;
-            // Navigation forward
-            case 'ArrowRight':
-            case 'ArrowDown':
-            case 'PageDown':
-                event.preventDefault();
-                this._manager.next();
-                return;
-            case 'Home':
-                event.preventDefault();
-                this._manager.goStart();
-                return;
-            case 'End':
-                event.preventDefault();
-                this._manager.goEnd();
-                return;
-            default:
-                return;
+    // -----------------------------------------------------------------------
+    // Visibility of the controls panel (toggled via keyboard / buttons)
+    // -----------------------------------------------------------------------
+    renderControls(visible) {
+        if (this._controls instanceof HTMLElement) {
+            this._controls.classList.toggle('controls-hidden', visible === false);
         }
     }
-    // ----------------------------------------------------------------------
-    _isInteractiveTarget(target) {
-        if (!(target instanceof HTMLElement)) {
-            return true;
-        }
-        const tag = target.tagName.toLowerCase();
-        // Native interactive elements
-        if (tag === 'input' ||
-            tag === 'select' ||
-            tag === 'textarea' ||
-            tag === 'button' ||
-            tag === 'summary') {
-            return true;
-        }
-        // Links
-        if (tag === 'a' && target.hasAttribute('href')) {
-            return true;
-        }
-        // Media controls
-        if ((tag === 'video' || tag === 'audio') && target.hasAttribute('controls')) {
-            return true;
-        }
-        // Any element with tabindex >= 0 is interactive
-        const tab = target.getAttribute('tabindex');
-        if (tab !== null) {
-            const n = parseInt(tab, 10);
-            if (!Number.isNaN(n) && n >= 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-    // ---------------------------------------------------------------------
-    // Utils
-    // ---------------------------------------------------------------------
-    _elementOrNull(element) {
-        return element instanceof HTMLElement ? element : null;
-    }
-}
-// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
-if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesKeyboardController = SlidesKeyboardController;
-// ---- END AUTO-GENERATED EXPORTS ----
-
-
-// ---------------- extras/slides/overview.js ---------------
-'use strict';
-class SlidesOverview {
-    constructor(slides, panelElement, onSelectSlide) {
-        this._slides = Array.isArray(slides) ? slides : [];
-        this._panel = panelElement instanceof HTMLElement ? panelElement : null;
-        this._onSelectSlide = (typeof onSelectSlide === 'function') ? onSelectSlide : null;
-        if (this._panel !== null) {
-            this._panel.style.display = 'none'; // hidden by default
-        }
-    }
-    // -------------------------------------------------------------------------
-    //  Public API
-    // -------------------------------------------------------------------------
-    build() {
-        if (this._panel === null) {
-            return;
-        }
-        this._panel.innerHTML = '';
-        const total = this._slides.length;
-        for (let i = 0; i < total; i++) {
-            const slide = this._slides[i];
-            const index = i + 1;
-            // Create the <article> container.
-            const article = document.createElement('article');
-            article.className = 'overview-item';
-            // Header: slide number.
-            const header = document.createElement('header');
-            header.textContent = String(index);
-            article.appendChild(header);
-            // Main: clone of the slide.
-            const main = document.createElement('main');
-            // only the content, not the section container
-            const fragment = document.createRange().createContextualFragment(slide.innerHTML);
-            main.appendChild(fragment);
-            article.appendChild(main);
-            // Footer: GoTo button.
-            const footer = document.createElement('footer');
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.textContent = 'GoTo';
-            btn.addEventListener('click', () => {
-                if (typeof this._onSelectSlide === 'function') {
-                    this._onSelectSlide(index);
-                }
-                this.hide();
-            });
-            footer.appendChild(btn);
-            article.appendChild(footer);
-            this._panel.appendChild(article);
-        }
-    }
-    // ----------------------------------------------------------------------
-    show() {
-        if (this._panel !== null) {
-            this._panel.style.display = 'block';
-        }
-    }
-    // ----------------------------------------------------------------------
-    hide() {
-        if (this._panel !== null) {
-            this._panel.style.display = 'none';
-        }
-    }
-}
-// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
-if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesOverview = SlidesOverview;
-// ---- END AUTO-GENERATED EXPORTS ----
-
-
-// ---------------- extras/slides/presentation.js ---------------
-'use strict';
-class SlidesPresentation {
-    constructor(slides, progressBar = null, controlsElement = null) {
-        this._slides = Array.isArray(slides) ? slides : [];
-        this._progressBar = progressBar;
-        this._controls = controlsElement;
-    }
-    // -------------------------------------------------------------------------
-    //  Public API
-    // -------------------------------------------------------------------------
-    renderSlide(newIndex, oldIndex) {
+    // -----------------------------------------------------------------------
+    // Private rendering helpers
+    // -----------------------------------------------------------------------
+    _renderSlide(newIndex, oldIndex) {
         const total = this._slides.length;
         if (oldIndex >= 1 && oldIndex <= total) {
             const prev = this._slides[oldIndex - 1];
@@ -859,854 +876,666 @@ class SlidesPresentation {
             }
         }
     }
-    // -------------------------------------------------------------------------
-    renderIncremental(currentIndex, step) {
-        const slide = this._getSlide(currentIndex);
+    _renderIncremental(index, step) {
+        const slide = this._getSlide(index);
         if (slide === null) {
             return;
         }
-        const containers = slide.querySelectorAll('.incremental');
-        containers.forEach(c => this._clearIncrementals(c));
+        // Clear all incremental state on this slide
+        slide.querySelectorAll('.incremental').forEach(container => {
+            container.removeAttribute('active');
+            container.querySelectorAll('*').forEach(item => item.removeAttribute('aria-selected'));
+        });
         if (step === 0) {
             return;
         }
         const items = slide.querySelectorAll('.incremental > *');
-        const totalItems = items.length;
-        if (totalItems === 0 || step > totalItems) {
+        if (items.length === 0 || step > items.length) {
             return;
         }
         const target = items[step - 1];
-        const parent = target.parentElement;
-        if (parent instanceof HTMLElement) {
-            parent.setAttribute('active', 'true');
+        if (target.parentElement instanceof HTMLElement) {
+            target.parentElement.setAttribute('active', 'true');
         }
         target.setAttribute('aria-selected', 'true');
     }
-    // -------------------------------------------------------------------------
-    renderProgress(widthPercent) {
-        if (this._progressBar instanceof HTMLElement) {
-            this._progressBar.style.width = String(widthPercent) + '%';
+    _renderProgress(currentIndex, count) {
+        if (!(this._progressBar instanceof HTMLElement)) {
+            return;
         }
+        const pct = count <= 1 ? 0 : (currentIndex - 1) * 100 / (count - 1);
+        this._progressBar.style.width = `${pct}%`;
     }
-    // -------------------------------------------------------------------------
-    renderControls(visible) {
-        if (this._controls instanceof HTMLElement) {
-            this._controls.classList.toggle('controls-hidden', visible === false);
-        }
-    }
-    // -------------------------------------------------------------------------
-    showPresentation() {
+    _showSlides() {
         for (const slide of this._slides) {
-            slide.style.display = 'block';
+            slide.style.display = '';
         }
     }
-    // -------------------------------------------------------------------------
-    hidePresentation() {
+    _hideSlides() {
         for (const slide of this._slides) {
             slide.style.display = 'none';
         }
     }
-    // -------------------------------------------------------------------------
-    //  Private Helpers
-    // -------------------------------------------------------------------------
     _getSlide(index) {
         if (index < 1 || index > this._slides.length) {
             return null;
         }
         return this._slides[index - 1];
     }
-    // -------------------------------------------------------------------------
-    _clearIncrementals(container) {
-        if (!(container instanceof HTMLElement)) {
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.PresentationView = PresentationView;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/overview_view.js ---------------
+'use strict';
+class OverviewView {
+    constructor(slides, panelElement) {
+        this._slides = Array.isArray(slides) ? slides : [];
+        this._panel  = panelElement instanceof HTMLElement ? panelElement : null;
+    }
+    // -----------------------------------------------------------------------
+    // Called once during init
+    // -----------------------------------------------------------------------
+    build() {
+        if (this._panel === null) {
             return;
         }
-        container.removeAttribute('active');
-        const items = container.querySelectorAll('*');
-        items.forEach(item => {
-            item.removeAttribute('aria-selected');
+        this._panel.innerHTML = '';
+        this._panel.setAttribute('role', 'radiogroup');
+        this._panel.setAttribute('aria-label', 'Slides overview');
+        this._slides.forEach((slide, i) => {
+            const index = i + 1;
+            const id    = `overview-slide-${index}`;
+            const radio = document.createElement('input');
+            radio.type  = 'radio';
+            radio.name  = 'overview-slide';
+            radio.id    = id;
+            radio.value = String(index);
+            radio.addEventListener('change', () => {
+                document.dispatchEvent(new CustomEvent('slides:navigate', {
+                    detail: { action: 'goTo', index, step: 0 }
+                }));
+                document.dispatchEvent(new CustomEvent('slides:viewmode', {
+                    detail: { mode: 'presentation' }
+                }));
+            });
+            const numEl = document.createElement('span');
+            numEl.className   = 'overview-num';
+            numEl.textContent = String(index);
+            const titleEl = document.createElement('span');
+            titleEl.className   = 'overview-title';
+            titleEl.textContent = this._slideTitle(slide);
+            const label = document.createElement('label');
+            label.className  = 'overview-btn';
+            label.htmlFor    = id;
+            label.appendChild(radio);
+            label.appendChild(numEl);
+            label.appendChild(titleEl);
+            this._panel.appendChild(label);
         });
+    }
+    // -----------------------------------------------------------------------
+    // Called by SlidesAssembler via navLogic.onNavigate
+    // -----------------------------------------------------------------------
+    render(data) {
+        if (this._panel === null) {
+            return;
+        }
+        const radios = this._panel.querySelectorAll('input[type="radio"]');
+        radios.forEach((radio, i) => {
+            radio.checked = (i + 1) === data.currentIndex;
+        });
+    }
+    // -----------------------------------------------------------------------
+    // Called by SlidesAssembler via modeLogic.onModeChange
+    // -----------------------------------------------------------------------
+    onModeChange(data) {
+        if (this._panel === null) {
+            return;
+        }
+        this._panel.style.display = data.mode === 'overview' ? '' : 'none';
+        if (data.mode === 'overview') {
+            this.render(data);
+        }
+    }
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
+    _slideTitle(slide) {
+        const heading = slide.querySelector('h1, h2, h3, h4, h5, h6');
+        return heading ? heading.textContent.trim() : '';
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesPresentation = SlidesPresentation;
+window.Wexa.OverviewView = OverviewView;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- extras/slides/slides_view.js ---------------
+// ---------------- extras/slides/keyboard_controller.js ---------------
 'use strict';
-class SlidesView {
-    // ---------------------------------------------------------------------------
-    // STATIC ENUM OF MODES
-    // ---------------------------------------------------------------------------
-    static MODES = {
-        PRESENTATION: 'presentation',
-        OVERVIEW: 'overview',
-        //PRINT: 'print',
-        //NOTES: 'notes'
+class KeyboardController {
+    static SHORTCUTS = [
+        { keys: ['ArrowRight', 'ArrowDown', 'PageDown'], label: 'Next slide' },
+        { keys: ['ArrowLeft', 'ArrowUp', 'PageUp'],      label: 'Previous slide' },
+        { keys: ['Home'],                                 label: 'First slide' },
+        { keys: ['End'],                                  label: 'Last slide' },
+        { keys: ['h', 'H', '?'],                          label: 'Help' },
+        { keys: ['f', 'F'],                               label: 'Fullscreen' },
+        { keys: ['o', 'O'],                               label: 'Overview mode' },
+        { keys: ['d', 'D'],                               label: 'Handout mode' },
+        { keys: ['m', 'M'],                               label: 'Memo mode' },
+        { keys: ['Escape', 's', 'S'],                     label: 'Presentation mode' },
+        { keys: ['a', 'A'],                               label: 'Accessibility controls' },
+        { keys: ['n', 'N'],                               label: 'Navigation controls' },
+        { keys: ['b', 'B'],                               label: 'Progress bar' },
+        { keys: ['l', 'L'],                               label: 'Logo' },
+    ];
+    static SLIDE_KEYS = new Set(KeyboardController.SHORTCUTS.flatMap(s => s.keys));
+    constructor() {
+        this._boundHandler = this._onKeyDown.bind(this);
     }
-    static DEFAULT_MODE = SlidesView.MODES.PRESENTATION;
-    // ---------------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ---------------------------------------------------------------------------
-    constructor(slides,
-                progressBar = null,
-                controlsElement = null,
-                controlsViewElement  = null,
-                overviewContainer = null) {
-        this._slides = slides;
-        // Sub-views
-        this._presentation = new SlidesPresentation(
-            slides,
-            progressBar,
-            controlsElement
-        );
-        this._controlsView = controlsViewElement instanceof HTMLElement ? controlsViewElement : null;
-        this._controls = controlsElement instanceof HTMLElement ? controlsElement : null;
-        this._overviewContainer = overviewContainer instanceof HTMLElement ? overviewContainer : null;
-        this._overview = null;
-        this._viewMode = SlidesView.MODES.PRESENTATION;
-        // Callback for clicking a slide in the overview.
-        this.onSelectSlide = null;
-    }
-    // -----------------------------------------------------------------------
-    // INITIALIZATION
-    // -----------------------------------------------------------------------
-    initOverview(onSelectSlide) {
-        if (this._overviewContainer !== null) {
-            this._overview = new SlidesOverview(
-                (
-                    this._slides.map((slide) => slide.cloneNode(true))
-                ),
-                this._overviewContainer,
-                onSelectSlide
-            );
-        }
-    }
-    buildOverview() {
-        if (this._overview !== null) {
-            this._overview.build();
-        }
-    }
-    // ---------------------------------------------------------------------------
-    // MODE SWITCHING
-    // ---------------------------------------------------------------------------
-    setMode(mode) {
-        this._mode = mode;
-        // Manage the body class="view" to enable the relevant CSS render class
-        this._removeBodyView()
-        document.body.classList.add(`${mode}-view`);
-        // switch to the requested view [presentation by default]
-        switch (mode) {
-            case SlidesView.MODES.OVERVIEW:
-                this._enterOverview();
-                return;
-            default:
-                this._enterPresentation();
-                return;
-        }
-    }
-    get mode() {
-        return this._mode;
-    }
-    // ---------------------------------------------------------------------------
-    // RENDERING (CALLED ONLY BY SlidesManager)
-    // ---------------------------------------------------------------------------
-    renderSlide(newIndex, oldIndex) {
-        // Presentation view update (always required)
-        this._presentation.renderSlide(newIndex, oldIndex);
-        /* Overview view update (safe no-op when inactive)
-        if (typeof this._overview.renderSlide === 'function') {
-            this._overview.renderSlide(newIndex, oldIndex);
-        }*/
-    }
-    renderIncremental(index, step) {
-        if (this._mode === SlidesView.MODES.PRESENTATION) {
-            this._presentation.renderIncremental(index, step);
-        }
-    }
-    renderProgress(percent) {
-        if (this._mode === SlidesView.MODES.PRESENTATION) {
-            this._presentation.renderProgress(percent);
-        }
-    }
-    renderControls(visible) {
-        if (this._mode === SlidesView.MODES.PRESENTATION) {
-            this._presentation.renderControls(visible);
-        }
-        if (this._controlsView instanceof HTMLElement) {
-            this._controlsView.classList.toggle('controls-hidden', visible === false);
-        }
-    }
-    // ----------------------------------------------------------------------
-    // PRIVATE: MODE ENTRY HANDLERS
-    // ----------------------------------------------------------------------
-    _enterPresentation() {
-        if (this._overview !== null) {
-            this._overview.hide();
-        }
-        this._presentation.showPresentation();
-    }
-    _enterOverview() {
-        this._presentation.hidePresentation();
-        if (this._overview !== null) {
-            this._overview.show();
-        }
-    }
-    _removeBodyView() {
-        const modes = Object.values(SlidesView.MODES);
-        modes.forEach(mode => {
-            document.body.classList.remove(`${mode}-view`);
-        });
-    }
-}
-// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
-if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesView = SlidesView;
-// ---- END AUTO-GENERATED EXPORTS ----
-
-
-// ---------------- extras/slides/slides_manager.js ---------------
-'use strict';
-class SlidesManager {
-    // ----------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ----------------------------------------------------------------------
-    constructor(slides, options = {}, dependencies = {}) {
-        // Slides validation
-        // ------------------------------
-        if (!Array.isArray(slides)) {
-            console.error('SlidesManager: slides must be an array.');
-            this._slides = [];
-        } else {
-            this._slides = slides;
-        }
-        if (this._slides.length === 0) {
-            console.warn('SlidesManager: no slides found.');
-        }
-        // State
-        // ------------------------------
-        this._currentIndex = 1;  // 1-based
-        this._currentStep = 0;
-        this._autoPlayEnabled = Boolean(options.autoPlayEnabled);
-        this._controlsVisible = Boolean(options.controlsVisible);
-        // Dependencies
-        // ------------------------------
-        if (typeof dependencies.visibilityManager === 'object' && dependencies.visibilityManager !== null) {
-            this.visibilityManager = dependencies.visibilityManager;
-        } else {
-            this.visibilityManager = null;
-        }
-        if (typeof dependencies.viewModeManager === 'object' && dependencies.viewModeManager !== null) {
-            this.viewModeManager = dependencies.viewModeManager;
-        } else {
-            this.viewModeManager = null;
-        }
-        this._view =
-            (typeof dependencies.view === 'object' && dependencies.view !== null)
-                ? dependencies.view
-                : null;
-        this._fullscreen =
-            (typeof dependencies.fullscreen === 'object' && dependencies.fullscreen !== null)
-                ? dependencies.fullscreen
-                : null;
-        this._focusController =
-            (typeof dependencies.focusController === 'object' &&
-                dependencies.focusController !== null)
-                ? dependencies.focusController
-                : null;
-    }
-    // ----------------------------------------------------------------------
-    // INITIALIZATION
-    // ----------------------------------------------------------------------
     init() {
-        // Clamp index (safety)
-        if (this._slides.length === 0) {
-            return;
-        }
-        // Apply default mode BEFORE any rendering (mandatory for hash)
-        // this._view.setMode(this._view.DEFAULT_MODE);
-        // Initial render
-        this._view.renderSlide(this._currentIndex, 0);
-        this._view.renderIncremental(this._currentIndex, this._currentStep);
-        // Initial progress
-        const pct = (this._currentIndex - 1) * 100 / (this._slides.length - 1);
-        this._view.renderProgress(pct);
-        // Controls visibility
-        this._view.renderControls(this._controlsVisible);
+        document.body.addEventListener('keydown', this._boundHandler, false);
     }
-    // ----------------------------------------------------------------------
-    //  Public API
-    // ----------------------------------------------------------------------
-    next() {
-        const lastIndex = this._slides.length;
-        const incrementalCount = this.getIncrementalCount(this._currentIndex);
-        if (this._currentIndex === lastIndex && this._currentStep >= incrementalCount) {
-            return;
-        }
-        if (this._currentStep >= incrementalCount) {
-            this.goTo(this._currentIndex + 1, 0);
-        } else {
-            this.goTo(this._currentIndex, this._currentStep + 1);
-        }
+    destroy() {
+        document.body.removeEventListener('keydown', this._boundHandler, false);
     }
-    // ----------------------------------------------------------------------
-    prev() {
-        const atFirstSlide = this._currentIndex === 1 && this._currentStep === 0;
-        if (atFirstSlide === true) {
-            return;
-        }
-        if (this._currentStep === 0) {
-            const previousIndex = this._currentIndex - 1;
-            const lastStep = this.getIncrementalCount(previousIndex);
-            this.goTo(previousIndex, lastStep);
-        } else {
-            this.goTo(this._currentIndex, this._currentStep - 1);
-        }
-    }
-    // ----------------------------------------------------------------------
-    goTo(index, step = 0) {
-        const previousIndex = this._currentIndex;
-        const previousStep = this._currentStep;
-        const clampedIndex = this._clampIndex(index);
-        const clampedStep = this._clampStep(clampedIndex, step);
-        if (clampedIndex === previousIndex && clampedStep === previousStep) {
-            return;
-        }
-        const previousSlide = this.getActiveSlide();
-        if (previousSlide !== null) {
-            this._pauseVideo(previousSlide);
-        }
-        this._currentIndex = clampedIndex;
-        this._currentStep = clampedStep;
-        const currentSlide = this.getActiveSlide();
-        if (currentSlide !== null) {
-            this._autoplayVideo(currentSlide);
-        }
-        if (typeof window !== 'undefined') {
-            const hashValue = '#' + String(this._currentIndex) + '.' + String(this._currentStep);
-            window.location.hash = hashValue;
-        }
-        this._notifyAll(previousIndex, previousStep);
-        if (this._focusController !== null) {
-            this._focusController.updateFocus(this._slides, this._currentIndex);
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
+    _onKeyDown(event) {
+        const key = event.key;
+        if (!KeyboardController.SLIDE_KEYS.has(key)) return;
+        if (key === 'Enter' || key === ' ')            return;
+        if (this._isInteractiveTarget(event.target))   return;
+        switch (key) {
+            case 'h': case 'H': case '?':
+                this._emit('slides:help', { action: 'toggle' });
+                return;
+            case 'Escape':
+            case 's': case 'S':
+                this._emit('slides:viewmode', { mode: 'presentation' });
+                return;
+            case 'o': case 'O':
+                this._emit('slides:viewmode', { action: 'toggle', mode: 'overview' });
+                return;
+            case 'd': case 'D':
+                this._emit('slides:viewmode', { action: 'toggle', mode: 'handout' });
+                return;
+            case 'm': case 'M':
+                this._emit('slides:viewmode', { action: 'toggle', mode: 'note' });
+                return;
+            case 'f': case 'F':
+                this._emit('slides:fullscreen', {});
+                return;
+            case 'a': case 'A':
+                this._emit('slides:visibility', { name: 'accessibility', action: 'toggle' });
+                return;
+            case 'n': case 'N':
+                this._emit('slides:visibility', { name: 'controls', action: 'toggle' });
+                return;
+            case 'b': case 'B':
+                this._emit('slides:visibility', { name: 'progress', action: 'toggle' });
+                return;
+            case 'l': case 'L':
+                this._emit('slides:visibility', { name: 'logo', action: 'toggle' });
+                return;
+            case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+                event.preventDefault();
+                this._emit('slides:navigate', { action: 'prev' });
+                return;
+            case 'ArrowRight': case 'ArrowDown': case 'PageDown':
+                event.preventDefault();
+                this._emit('slides:navigate', { action: 'next' });
+                return;
+            case 'Home':
+                event.preventDefault();
+                this._emit('slides:navigate', { action: 'goStart' });
+                return;
+            case 'End':
+                event.preventDefault();
+                this._emit('slides:navigate', { action: 'goEnd' });
+                return;
         }
     }
-    // ----------------------------------------------------------------------
-    goStart() {
-        this.goTo(1, 0);
+    _emit(type, detail) {
+        document.dispatchEvent(new CustomEvent(type, { detail }));
     }
-    // ----------------------------------------------------------------------
-    goEnd() {
-        const lastIndex = this._slides.length;
-        const lastStep = this.getIncrementalCount(lastIndex);
-        this.goTo(lastIndex, lastStep);
-    }
-    // ----------------------------------------------------------------------
-    toggleContent() {
-        const slide = this.getActiveSlide();
-        if (slide === null) {
-            return;
+    _isInteractiveTarget(target) {
+        if (!(target instanceof HTMLElement)) {
+            return true;
         }
-        const video = this.getVideo(slide);
-        if (video === null) {
-            return;
+        const tag = target.tagName.toLowerCase();
+        if (['input', 'select', 'textarea', 'button', 'summary'].includes(tag)) {
+            return true;
         }
-        if (video.ended === true || video.paused === true) {
-            video.play();
-        } else {
-            video.pause();
+        if (tag === 'a' && target.hasAttribute('href')) {
+            return true;
         }
-    }
-    // ----------------------------------------------------------------------
-    toggleFullscreen() {
-        if (this._fullscreen) {
-            this._fullscreen.toggle();
-        } else {
-            console.log("No fullscreen available.");
+        if ((tag === 'video' || tag === 'audio') && target.hasAttribute('controls')) {
+            return true;
         }
-    }
-    // ----------------------------------------------------------------------
-    updateFromHash(hash) {
-        const previousIndex = this._currentIndex;
-        const previousStep = this._currentStep;
-        const isString = typeof hash === 'string';
-        const isEmpty = hash === '';
-        const startsWithHash = isString === true && hash.charAt(0) === '#';
-        if (isString === false || isEmpty === true || startsWithHash === false) {
-            this._currentIndex = this._clampIndex(1);
-            this._currentStep = this._clampStep(this._currentIndex, 0);
-            this._notifyAll(previousIndex, previousStep);
-            return;
-        }
-        const cursor = hash.substring(1).split('.');
-        const parsedIndex = parseInt(cursor[0], 10);
-        const parsedStep = cursor.length > 1 ? parseInt(cursor[1], 10) : 0;
-        const safeIndex = Number.isNaN(parsedIndex) ? 1 : parsedIndex;
-        const safeStep = Number.isNaN(parsedStep) ? 0 : parsedStep;
-        const clampedIndex = this._clampIndex(safeIndex);
-        const clampedStep = this._clampStep(clampedIndex, safeStep);
-        this._currentIndex = clampedIndex;
-        this._currentStep = clampedStep;
-        this._notifyAll(previousIndex, previousStep);
-    }
-    // ----------------------------------------------------------------------
-    getActiveSlide() {
-        const index = this._currentIndex;
-        if (index < 1 || index > this._slides.length) {
-            return null;
-        }
-        return this._slides[index - 1];
-    }
-    // ----------------------------------------------------------------------
-    getIncrementalCount(index) {
-        const slideIndex = typeof index === 'number' ? index : this._currentIndex;
-        const clampedIndex = this._clampIndex(slideIndex);
-        const slide = this._slides[clampedIndex - 1];
-        if (!(slide instanceof HTMLElement)) {
-            return 0;
-        }
-        const items = slide.querySelectorAll('.incremental > *');
-        return items.length;
-    }
-    // ----------------------------------------------------------------------
-    getVideo(slide) {
-        const isElement = slide instanceof HTMLElement;
-        if (isElement === false) {
-            return null;
-        }
-        const video = slide.querySelector('video');
-        const isVideo = video instanceof HTMLVideoElement;
-        return isVideo === true ? video : null;
-    }
-    // ----------------------------------------------------------------------
-    // PRIVATE
-    // ----------------------------------------------------------------------
-    _notifyAll(previousIndex, previousStep) {
-        if (this._view !== null) {
-            const hasRenderSlide = typeof this._view.renderSlide === 'function';
-            const hasRenderIncremental = typeof this._view.renderIncremental === 'function';
-            const hasUpdateProgress = typeof this._view.renderProgress === 'function';
-            if (hasRenderSlide === true) {
-                this._view.renderSlide(this._currentIndex, previousIndex);
-            }
-            if (hasRenderIncremental === true) {
-                this._view.renderIncremental(this._currentIndex, this._currentStep);
-            }
-            if (hasUpdateProgress === true) {
-                const totalSlides = this._slides.length - 1;
-                const progressPercent = (this._currentIndex - 1) * 100 / totalSlides;
-                this._view.renderProgress(progressPercent);
+        const tab = target.getAttribute('tabindex');
+        if (tab !== null) {
+            const n = parseInt(tab, 10);
+            if (!Number.isNaN(n) && n >= 0) {
+                return true;
             }
         }
-        const hasFocusController = this._focusController !== null;
-        const hasUpdateFocus = hasFocusController === true
-            && typeof this._focusController.updateFocus === 'function';
-        if (hasUpdateFocus === true) {
-            this._focusController.updateFocus(this._slides, this._currentIndex);
-        }
-    }
-    // ----------------------------------------------------------------------
-    _pauseVideo(slide) {
-        const video = this.getVideo(slide);
-        if (video !== null) {
-            video.pause();
-        }
-    }
-    // ----------------------------------------------------------------------
-    _autoplayVideo(slide) {
-        if (this._autoPlayEnabled === false) {
-            return;
-        }
-        const video = this.getVideo(slide);
-        if (video !== null) {
-            video.play();
-        }
-    }
-    // ----------------------------------------------------------------------
-    _clampIndex(index) {
-        if (index < 1) {
-            return 1;
-        }
-        if (index > this._slides.length) {
-            return this._slides.length;
-        }
-        return index;
-    }
-    // ----------------------------------------------------------------------
-    _clampStep(index, step) {
-        if (step < 0) {
-            return 0;
-        }
-        const maxSteps = this.getIncrementalCount(index);
-        if (this._slides.length === 0) {
-            return 0;
-        }
-        if (step > maxSteps) {
-            return maxSteps;
-        }
-        return step;
+        return false;
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesManager = SlidesManager;
+window.Wexa.KeyboardController = KeyboardController;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- extras/slides/touch.js ---------------
+// ---------------- extras/slides/touch_controller.js ---------------
 'use strict';
-class SlidesTouchController {
-    constructor(slidesManager, options = {}) {
-        if (typeof slidesManager !== 'object' || slidesManager === null) {
-            throw new Error('SlidesTouchController: "slidesManager" must be an object.');
-        }
-        this._manager = slidesManager;
+class TouchController {
+    constructor(options = {}) {
         const target = options.target;
         this._target = target instanceof HTMLElement ? target : document.body;
         const threshold = options.threshold;
         this._threshold = typeof threshold === 'number' && threshold > 0 ? threshold : 100;
         this._tracking = false;
-        this._originX = 0;
+        this._originX  = 0;
         this._onStart = this._touchStart.bind(this);
-        this._onMove = this._touchMove.bind(this);
+        this._onMove  = this._touchMove.bind(this);
     }
     init() {
         this._target.addEventListener('touchstart', this._onStart, { passive: false });
-        this._target.addEventListener('touchmove', this._onMove, { passive: false });
+        this._target.addEventListener('touchmove',  this._onMove,  { passive: false });
     }
     destroy() {
         this._target.removeEventListener('touchstart', this._onStart, false);
-        this._target.removeEventListener('touchmove', this._onMove, false);
+        this._target.removeEventListener('touchmove',  this._onMove,  false);
     }
-    // ---------------------------------------------------------------------
-    // Private methods
-    // ---------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
     _touchStart(event) {
         if (event.changedTouches.length === 0) {
             return;
         }
         event.preventDefault();
         this._tracking = true;
-        this._originX = event.changedTouches[0].pageX;
+        this._originX  = event.changedTouches[0].pageX;
     }
     _touchMove(event) {
-        if (this._tracking === false) {
+        if (!this._tracking || event.changedTouches.length === 0) {
             return;
         }
-        if (event.changedTouches.length === 0) {
-            return;
-        }
-        const newX = event.changedTouches[0].pageX;
-        const delta = this._originX - newX;
+        const delta = this._originX - event.changedTouches[0].pageX;
         if (delta > this._threshold) {
             this._tracking = false;
-            this._manager.next();
-            return;
-        }
-        if (delta < -this._threshold) {
+            document.dispatchEvent(new CustomEvent('slides:navigate', {
+                detail: { action: 'next' }
+            }));
+        } else if (delta < -this._threshold) {
             this._tracking = false;
-            this._manager.prev();
-            return;
+            document.dispatchEvent(new CustomEvent('slides:navigate', {
+                detail: { action: 'prev' }
+            }));
         }
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesTouchController = SlidesTouchController;
+window.Wexa.TouchController = TouchController;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- extras/slides/controls.js ---------------
+// ---------------- extras/slides/buttons_controller.js ---------------
 'use strict';
-class SlidesControlsController {
-    constructor(manager, {
-        prevButton = null,
-        nextButton = null,
-        backButton = null,
-        lastButton = null,
-        overviewButton = null,
+class ButtonsController {
+    constructor({
+        prevButton         = null,
+        nextButton         = null,
+        backButton         = null,
+        lastButton         = null,
+        overviewButton     = null,
+        handoutButton      = null,
+        noteButton         = null,
         presentationButton = null,
-        fullscreenButton = null,
-        goToButton = null
+        fullscreenButton   = null,
+        goToButton         = null,
     } = {}) {
-        if (typeof manager !== 'object' || manager === null) {
-            throw new Error('SlidesControlsController: "manager" must be an object.');
-        }
-        this._manager = manager;
-        this._buttons = {
-            prev: this._elementOrNull(prevButton),
-            next: this._elementOrNull(nextButton),
-            back: this._elementOrNull(backButton),
-            last: this._elementOrNull(lastButton),
-            overview: this._elementOrNull(overviewButton),
-            presentation: this._elementOrNull(presentationButton),
-            fullscreen: this._elementOrNull(fullscreenButton),
-            goto: this._elementOrNull(goToButton)
+        this._b = {
+            prev:         this._el(prevButton),
+            next:         this._el(nextButton),
+            back:         this._el(backButton),
+            last:         this._el(lastButton),
+            overview:     this._el(overviewButton),
+            handout:      this._el(handoutButton),
+            note:         this._el(noteButton),
+            presentation: this._el(presentationButton),
+            fullscreen:   this._el(fullscreenButton),
+            goto:         this._el(goToButton),
         };
         this._bindEvents();
     }
-    // ----------------------------------------------------------------------
-    updateViewButtons(mode) {
-        // Update the OVERVIEW button
-        // Disable it only when the current mode *is* overview.
-        if (this._buttons.overview instanceof HTMLElement) {
-            if (mode === 'overview') {
-                this._buttons.overview.setAttribute('disabled', '');
-            } else {
-                this._buttons.overview.removeAttribute('disabled');
-            }
+    // -----------------------------------------------------------------------
+    // Called by SlidesAssembler via modeLogic.onModeChange
+    // -----------------------------------------------------------------------
+    onModeChange(data) {
+        if (this._b.overview instanceof HTMLElement) {
+            this._b.overview.checked = (data.mode === 'overview');
         }
-        // Update the PRESENTATION button
-        // Disable it only when the current mode *is* presentation.
-        if (this._buttons.presentation instanceof HTMLElement) {
-            if (mode === 'presentation') {
-                this._buttons.presentation.setAttribute('disabled', '');
-            } else {
-                this._buttons.presentation.removeAttribute('disabled');
-            }
+        if (this._b.handout instanceof HTMLElement) {
+            this._b.handout.checked = (data.mode === 'handout');
+        }
+        if (this._b.note instanceof HTMLElement) {
+            this._b.note.checked = (data.mode === 'note');
+        }
+        if (this._b.presentation instanceof HTMLElement) {
+            this._b.presentation.checked = (data.mode === 'presentation');
         }
     }
-    // ----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
     _bindEvents() {
-        const b = this._buttons;
-        if (b.prev !== null) {
-            b.prev.addEventListener('click', () => {
-                this._manager.prev();
-            });
-        }
-        if (b.next !== null) {
-            b.next.addEventListener('click', () => {
-                this._manager.next();
-            });
-        }
-        if (b.back !== null) {
-            b.back.addEventListener('click', () => {
-                this._manager.goStart();
-            });
-        }
-        if (b.last !== null) {
-            b.last.addEventListener('click', () => {
-                this._manager.goEnd();
-            });
-        }
-        if (b.goto !== null) {
-            b.goto.addEventListener('click', () => {
-                const index = window.prompt('Go to slide number: ');
-                if (index !== null) {
-                    // If currently in overview mode, switch to presentation first
-                    if (this._manager._view?.mode === SlidesView.MODES.OVERVIEW) {
-                        this._switchView(SlidesView.MODES.PRESENTATION);
-                    }
-                    this._manager.goTo(Number(index), 0);
-                }
-            });
-        }
-        if (b.overview !== null) {
-            b.overview.addEventListener('click', () => {
-                this._switchView(SlidesView.MODES.OVERVIEW);
-            });
-        }
-        if (b.presentation !== null) {
-            b.presentation.addEventListener('click', () => {
-                this._switchView(SlidesView.MODES.PRESENTATION);
-            });
-        }
-        if (b.fullscreen !== null) {
-            b.fullscreen.addEventListener('click', () => {
-                if (this._manager._fullscreen &&
-                    typeof this._manager._fullscreen.toggle === 'function') {
-                    this._manager._fullscreen.toggle();
-                }
-            });
+        const b = this._b;
+        const nav  = (action, index, step) =>
+            document.dispatchEvent(new CustomEvent('slides:navigate', {
+                detail: { action, index, step }
+            }));
+        const mode = (m) =>
+            document.dispatchEvent(new CustomEvent('slides:viewmode', {
+                detail: { mode: m }
+            }));
+        b.prev?.addEventListener('click',     () => nav('prev'));
+        b.next?.addEventListener('click',     () => nav('next'));
+        b.back?.addEventListener('click',     () => nav('goStart'));
+        b.last?.addEventListener('click',     () => nav('goEnd'));
+        b.overview?.addEventListener('change', () => mode('overview'));
+        b.handout?.addEventListener('change',  () => mode('handout'));
+        b.note?.addEventListener('change',     () => mode('note'));
+        b.presentation?.addEventListener('change', () => mode('presentation'));
+        b.fullscreen?.addEventListener('click', () =>
+            document.dispatchEvent(new CustomEvent('slides:fullscreen', { detail: {} }))
+        );
+        b.goto?.addEventListener('click', () => {
+            const input = window.prompt('Go to slide number:');
+            if (input !== null) {
+                nav('goTo', Number(input), 0);
+                mode('presentation');
+            }
+        });
+    }
+    _el(e) {
+        return e instanceof HTMLElement ? e : null;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.ButtonsController = ButtonsController;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/note_view.js ---------------
+'use strict';
+class NoteView {
+    constructor(slides) {
+        this._slides     = Array.isArray(slides) ? slides : [];
+        this._containers = [];
+    }
+    onModeChange(data) {
+        if (data.mode === 'note') {
+            this._build();
+        } else {
+            this._teardown();
         }
     }
-    // ----------------------------------------------------------------------
-    disableAll() {
-        for (const key in this._buttons) {
-            if (!Object.prototype.hasOwnProperty.call(this._buttons, key)) {
-                continue;
-            }
-            const btn = this._buttons[key];
-            if (btn instanceof HTMLElement) {
-                btn.setAttribute('disabled', '');
-            }
-        }
-    }
-    // ----------------------------------------------------------------------
-    enable(feature) {
-        if (typeof feature !== 'string') {
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
+    _build() {
+        if (this._containers.length > 0) {
             return;
         }
-        const btn = this._buttons[feature];
-        if (btn instanceof HTMLElement) {
-            btn.removeAttribute('disabled');
+        for (const slide of this._slides) {
+            const aside = slide.id
+                ? document.querySelector(`aside[for="${slide.id}"]`)
+                : null;
+            const container = document.createElement('div');
+            container.className = 'note-container';
+            slide.parentNode.insertBefore(container, slide);
+            container.appendChild(slide);
+            if (aside instanceof HTMLElement) {
+                container.appendChild(aside);
+            }
+            this._containers.push(container);
         }
     }
-    // ----------------------------------------------------------------------
-    _switchView(viewMode) {
-        if (this._manager.viewModeManager !== null &&
-            typeof this._manager.viewModeManager.set === 'function') {
-            this._manager.viewModeManager.set(viewMode);
+    _teardown() {
+        if (this._containers.length === 0) {
+            return;
         }
-    }
-    // ----------------------------------------------------------------------
-    _elementOrNull(element) {
-        return element instanceof HTMLElement ? element : null;
+        for (const container of this._containers) {
+            const parent = container.parentNode;
+            if (!(parent instanceof HTMLElement)) {
+                continue;
+            }
+            while (container.firstChild) {
+                parent.insertBefore(container.firstChild, container);
+            }
+            parent.removeChild(container);
+        }
+        this._containers = [];
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesControlsController = SlidesControlsController;
+window.Wexa.NoteView = NoteView;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- extras/slides/modeview.js ---------------
+// ---------------- extras/slides/help_dialog.js ---------------
 'use strict';
-class SlidesViewModeManager {
-    constructor(slidesView, controlsController) {
-        if (typeof slidesView === 'object' && slidesView !== null) {
-            this._slidesView = slidesView;
+const DIALOG_ID = 'slides-help-dialog';
+class HelpDialog {
+    constructor() {
+        this._manager = new DialogManager();
+        this._inject();
+    }
+    toggle() {
+        const dialog = document.getElementById(DIALOG_ID);
+        if (dialog && dialog.open) {
+            this._manager.close(DIALOG_ID);
         } else {
-            this._slidesView = null;
-        }
-        if (typeof controlsController === 'object' && controlsController !== null) {
-            this._controlsController = controlsController;
-        } else {
-            this._controlsController = null;
-        }
-        this._mode = null;
-    }
-    set(mode) {
-        this._mode = mode;
-        if (this._slidesView !== null &&
-            typeof this._slidesView.setMode === 'function') {
-            this._slidesView.setMode(mode);
-        }
-        if (this._controlsController !== null &&
-            typeof this._controlsController.updateViewButtons === 'function') {
-            this._controlsController.updateViewButtons(mode);
+            this._manager.open(DIALOG_ID, true);
         }
     }
-    get() {
-        return this._mode;
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
+    _inject() {
+        if (document.getElementById(DIALOG_ID)) return;
+        document.body.appendChild(this._build());
     }
-}
-// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
-if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesViewModeManager = SlidesViewModeManager;
-// ---- END AUTO-GENERATED EXPORTS ----
-
-
-// ---------------- extras/slides/slides_app.js ---------------
-'use strict';
-class SlidesApp {
-    // ----------------------------------------------------------------------
-    // CONSTRUCTOR
-    // ----------------------------------------------------------------------
-    constructor(config) {
-        // ****** VIEWS ******
-        // -------------------
-        this._view = new SlidesView(
-            config.slides,
-            config.progressBar,
-            config.controls,
-            config.controlsView,
-            config.overviewContainer
-        );
-        // ****** CONTROLLERS ******
-        // -------------------------
-        this._fullscreen = new SlidesFullscreenController();
-        this._focusController = new SlidesFocusController();
-        // ****** MANAGERS ******
-        // -------------------------
-        this._visibilityManager = new SlidesVisibilityManager({
-            controls: config.controls instanceof HTMLElement ? config.controls : null
-        });
-        this._manager = new SlidesManager(
-            config.slides,
-            {
-                autoPlayEnabled: false,
-                controlsVisible: true
-            },
-            { // dependencies
-                view: this._view,
-                fullscreen: this._fullscreen,
-                focusController: this._focusController,
-                visibilityManager: this._visibilityManager
-            }
-        );
-        this._touch = new SlidesTouchController(this._manager);
-        this._keyboard = new SlidesKeyboardController(this._manager);
-        this._controls = new SlidesControlsController(
-            this._manager,
-            {
-                prevButton: config.controls?.querySelector('#btn-prev') || null,
-                nextButton: config.controls?.querySelector('#btn-next') || null,
-                backButton: config.controls?.querySelector('#btn-back') || null,
-                lastButton:  config.controls?.querySelector('#btn-last')  || null,
-                goToButton: config.controls?.querySelector('#btn-goto') || null,
-                overviewButton: config.controlsView?.querySelector('#btn-overview')  || null,
-                presentationButton: config.controlsView?.querySelector('#btn-presentation')  || null,
-                fullscreenButton: config.controls?.querySelector('#btn-fullscreen')|| null
-            }
-        );
-        // ********** VIEWS INITIALIZATIONS *********
-        // ------------------------------------------
-        // MVC: View emits → Manager handles
-        this._view.onSelectSlide = (index) => {
-            this._manager.goTo(index, 0);
+    _build() {
+        const dialog = document.createElement('dialog');
+        dialog.id = DIALOG_ID;
+        dialog.setAttribute('role', 'alertdialog');
+        dialog.setAttribute('aria-label', 'Keyboard shortcuts');
+        dialog.classList.add('tips', 'hidden-alert');
+        const div = document.createElement('div');
+        const h2 = document.createElement('h2');
+        h2.textContent = 'Keyboard shortcuts';
+        div.appendChild(h2);
+        const table = document.createElement('table');
+        table.setAttribute('role', 'presentation');
+        for (const { keys, label } of KeyboardController.SHORTCUTS) {
+            const tr = document.createElement('tr');
+            const tdKeys = document.createElement('td');
+            tdKeys.textContent = keys.map(k => this._keyLabel(k)).join(' / ');
+            const tdLabel = document.createElement('td');
+            tdLabel.textContent = label;
+            tr.appendChild(tdKeys);
+            tr.appendChild(tdLabel);
+            table.appendChild(tr);
+        }
+        div.appendChild(table);
+        dialog.appendChild(div);
+        return dialog;
+    }
+    _keyLabel(key) {
+        const map = {
+            ArrowRight: '→', ArrowLeft: '←', ArrowUp: '↑', ArrowDown: '↓',
+            PageUp: 'PgUp', PageDown: 'PgDn',
+            Home: 'Home', End: 'End', Escape: 'Esc',
         };
-        // Normalize initial mode safely
-        this._initialViewMode = SlidesView.MODES.PRESENTATION;
+        return map[key] ?? key;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.HelpDialog = HelpDialog;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slides_assembler.js ---------------
+'use strict';
+class SlidesAssembler {
+    constructor(config) {
+        // ── 1. DATA ──────────────────────────────────────────────────────────
+        this._data = new SlidesData(config.slides);
+        this._data.autoPlay = Boolean(config.autoPlayEnabled);
+        // ── 2. LOGIC ─────────────────────────────────────────────────────────
+        this._navLogic  = new NavigationLogic(this._data);
+        this._modeLogic = new ViewModeLogic(this._data);
+        // ── 3. VIEWS ─────────────────────────────────────────────────────────
+        this._presentationView = new PresentationView(
+            config.slides,
+            config.progressBar   instanceof HTMLElement ? config.progressBar   : null,
+            config.controls      instanceof HTMLElement ? config.controls      : null,
+            config.controlsView  instanceof HTMLElement ? config.controlsView  : null
+        );
+        this._overviewView = config.overviewContainer instanceof HTMLElement
+            ? new OverviewView(config.slides, config.overviewContainer)
+            : null;
+        this._noteView = new NoteView(config.slides);
+        // ── 4. UTILITIES ─────────────────────────────────────────────────────
+        this._focus      = new SlidesFocusController();
+        this._fullscreen = new SlidesFullscreenController();
+        this._visibilityManager = new SlidesVisibilityManager({
+            accessibility: config.accessibility       instanceof HTMLElement ? config.accessibility       : null,
+            controls:      config.controls            instanceof HTMLElement ? config.controls            : null,
+            progress:      config.progressBarContainer instanceof HTMLElement ? config.progressBarContainer : null,
+            logo:          config.logo                instanceof HTMLElement ? config.logo                : null,
+        });
+        // ── 5. CONTROLLERS ───────────────────────────────────────────────────
+        this._helpDialog = new HelpDialog();
+        this._keyboard = new KeyboardController();
+        this._touch    = new TouchController();
+        const c = config.controls;
+        const v = config.controlsView;
+        this._buttons = new ButtonsController({
+            prevButton:         c?.querySelector('#btn-prev')         || null,
+            nextButton:         c?.querySelector('#btn-next')         || null,
+            backButton:         c?.querySelector('#btn-back')         || null,
+            lastButton:         c?.querySelector('#btn-last')         || null,
+            goToButton:         c?.querySelector('#btn-goto')         || null,
+            overviewButton:     v?.querySelector('#btn-overview')     || null,
+            handoutButton:      v?.querySelector('#btn-handout')      || null,
+            noteButton:         v?.querySelector('#btn-note')         || null,
+            presentationButton: v?.querySelector('#btn-presentation') || null,
+            fullscreenButton:   c?.querySelector('#btn-fullscreen')   || null,
+        });
+        // ── 6. WIRE LOGIC → VIEWS (callbacks) ────────────────────────────────
+        this._navLogic.onNavigate = (data) => {
+            this._presentationView.render(data);
+            this._focus.updateFocus(data.slides, data.currentIndex);
+            if (this._overviewView !== null) {
+                this._overviewView.render(data);
+            }
+        };
+        this._modeLogic.onModeChange = (data) => {
+            this._noteView.onModeChange(data);
+            this._presentationView.onModeChange(data);
+            if (this._overviewView !== null) {
+                this._overviewView.onModeChange(data);
+            }
+            this._buttons.onModeChange(data);
+        };
+        // ── 7. WIRE CUSTOM EVENTS → LOGIC ────────────────────────────────────
+        document.addEventListener('slides:navigate', (e) => {
+            this._dispatch(e.detail);
+        });
+        document.addEventListener('slides:viewmode', (e) => {
+            const { mode, action } = e.detail;
+            if (action === 'toggle') { this._modeLogic.toggle(mode); }
+            else { this._modeLogic.set(mode); }
+        });
+        document.addEventListener('slides:visibility', (e) => {
+            const { name, action } = e.detail;
+            if (action === 'toggle') { this._visibilityManager.toggle(name); }
+            else if (action === 'show')   { this._visibilityManager.show(name);   }
+            else if (action === 'hide')   { this._visibilityManager.hide(name);   }
+        });
+        document.addEventListener('slides:fullscreen', () => {
+            this._fullscreen.toggle();
+        });
+        document.addEventListener('slides:help', () => {
+            this._helpDialog.toggle();
+        });
+        // ── 8. HASH CHANGE ───────────────────────────────────────────────────
+        window.addEventListener('hashchange', () => {
+            this._navLogic.updateFromHash(window.location.hash);
+        });
+        // ── 9. INITIAL MODE ──────────────────────────────────────────────────
+        this._initialMode = ViewModeLogic.DEFAULT;
         if (typeof config.mode === 'string') {
-            const values = Object.values(SlidesView.MODES);
-            if (values.includes(config.mode)) {
-                this._initialViewMode = config.mode;
+            const modes = Object.values(ViewModeLogic.MODES);
+            if (modes.includes(config.mode)) {
+                this._initialMode = config.mode;
             }
         }
-        // Initialize overview only if an overview container is provided
-        if (this._view && config.overviewContainer) {
-            this._view.initOverview((index) => this._manager.goTo(index, 0));
-        }
-        // ***** VIEW !!! ******
-        this._viewModeManager = new SlidesViewModeManager(this._view, this._controls);
-        this._manager.viewModeManager = this._viewModeManager;
-        this._manager.updateFromHash(window.location.hash);
-        window.addEventListener('hashchange', () => {
-            this._manager.updateFromHash(window.location.hash);
-        });
     }
-    // ----------------------------------------------------------------------
-    // INITIALIZATION
-    // ----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // Public API
+    // -----------------------------------------------------------------------
     init() {
-        this._view.buildOverview();
-        this._view.setMode(this._initialViewMode);
-        this._viewModeManager.set(this._initialViewMode);
-        this._manager.init();
+        // Build overview panel (before any mode is applied)
+        if (this._overviewView !== null) {
+            this._overviewView.build();
+        }
+        // Apply initial mode (fires onModeChange → updates views + buttons)
+        this._modeLogic.set(this._initialMode);
+        // Navigate to position from URL hash (fires onNavigate → renders)
+        this._navLogic.updateFromHash(window.location.hash);
+        // Start input controllers
         this._keyboard.init();
         this._touch.init();
-    }
-    // ----------------------------------------------------------------------
-    //  Public API
-    // ----------------------------------------------------------------------
-    get manager() {
-        return this._manager;
-    }
-    get keyboard() {
-        return this._keyboard;
-    }
-    get touch() {
-        return this._touch;
     }
     get fullscreen() {
         return this._fullscreen;
     }
+    // -----------------------------------------------------------------------
+    // Private
+    // -----------------------------------------------------------------------
+    _dispatch(detail) {
+        const { action, index, step } = detail;
+        switch (action) {
+            case 'next':          this._navLogic.next();                           break;
+            case 'prev':          this._navLogic.prev();                           break;
+            case 'goStart':       this._navLogic.goStart();                        break;
+            case 'goEnd':         this._navLogic.goEnd();                          break;
+            case 'goTo':          this._navLogic.goTo(Number(index) || 1, Number(step) || 0); break;
+            case 'toggleContent': this._navLogic.toggleContent();                  break;
+        }
+    }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SlidesApp = SlidesApp;
+window.Wexa.SlidesAssembler = SlidesAssembler;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
@@ -1735,13 +1564,10 @@ class Slides {
             slides: slidesArray
         };
         // --- Instantiate the internal application -----------------------------
-        this._app = new SlidesApp(cleanedConfig);
+        this._app = new SlidesAssembler(cleanedConfig);
     }
     init() {
         this._app.init();
-    }
-    get manager() {
-        return this._app.manager;
     }
     get fullscreen() {
         return this._app.fullscreen;
@@ -1762,9 +1588,7 @@ class OnLoadManager {
         OnLoadManager.#functions.push(func);
     }
     static runLoadFunctions() {
-        OnLoadManager.#functions.forEach(async func => {
-            await func();
-        });
+        OnLoadManager.#functions.forEach(func => func());
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
@@ -1773,174 +1597,127 @@ window.Wexa.OnLoadManager = OnLoadManager;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
+// ---------------- svgicons.js ---------------
+class SVGIconsManager {
+    // -----------------------------------------------------------------------
+    // PRIVATE FIELDS
+    // -----------------------------------------------------------------------
+    static #cache = new Map();
+    static #base = null;
+    // -----------------------------------------------------------------------
+    // PUBLIC STATIC METHODS
+    // -----------------------------------------------------------------------
+    static init(metaUrl) {
+        const base = metaUrl !== null ? metaUrl : (document.currentScript && document.currentScript.src);
+        SVGIconsManager.#base = new URL('../icons/mono-svg/', base).href;
+        WexaLogger.debug('SVGIconsManager: base URL set to ' + SVGIconsManager.#base);
+    }
+    // -----------------------------------------------------------------------
+    static register(name, svgContent) {
+        SVGIconsManager.#cache.set(name, svgContent);
+    }
+    static async inject(element, name) {
+        if (element === null || element === undefined) {
+            return;
+        }
+        if (element.querySelector('svg') !== null) {
+            return;
+        }
+        element.insertAdjacentHTML('afterbegin', await SVGIconsManager.get(name));
+    }
+    // -----------------------------------------------------------------------
+    static async get(name) {
+        if (SVGIconsManager.#cache.has(name)) {
+            return SVGIconsManager.#cache.get(name);
+        }
+        if (SVGIconsManager.#base === null) {
+            WexaLogger.error('SVGIconsManager: call init() before get().');
+            return '';
+        }
+        try {
+            const response = await fetch(SVGIconsManager.#base + name + '.svg');
+            if (response.ok === false) {
+                WexaLogger.warn(`SVGIconsManager: icon "${name}" not found (HTTP ${response.status}).`);
+                return '';
+            }
+            const content = await response.text();
+            SVGIconsManager.#cache.set(name, content);
+            return content;
+        } catch (error) {
+            WexaLogger.error(`SVGIconsManager: failed to fetch icon "${name}".`, error);
+            return '';
+        }
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SVGIconsManager = SVGIconsManager;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
 // ---------------- accessibility.js ---------------
 class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
     // FIELDS
     // -----------------------------------------------------------------------
-    #colors;
-    #activated_color;
-    #contrasts;
-    #activated_contrast;
+    #activatedColor;
+    #activatedContrast;
     // -----------------------------------------------------------------------
     // CONSTRUCTOR
     // -----------------------------------------------------------------------
     constructor() {
         super();
-        this.#colors = ["dark"];
-        this.#activated_color = "";
-        this.#contrasts = ["contrast"];
-        this.#activated_contrast = "";
-        // add onload events
+        this.#activatedColor = "";
+        this.#activatedContrast = "";
         OnLoadManager.addLoadFunction(this.#loadBodyClasses.bind(this));
         OnLoadManager.addLoadFunction(this.#setAllLinksCustom.bind(this));
         OnLoadManager.addLoadFunction(this.#setSubmitCustom.bind(this));
+        OnLoadManager.addLoadFunction(this.#injectButtonIcons.bind(this));
     }
+    // -----------------------------------------------------------------------
+    // STATIC CONSTANTS
+    // -----------------------------------------------------------------------
+    static get COLOR_MODE()              { return "dark"; }
+    static get CONTRAST_MODE()           { return "contrast"; }
+    static get COLOR_PARAMETER_NAME()    { return "wexa_color"; }
+    static get CONTRAST_PARAMETER_NAME() { return "wexa_contrast"; }
     // -----------------------------------------------------------------------
     // GETTERS
     // -----------------------------------------------------------------------
-    get colorSchemes() {
-        return this.#colors;
+    get activatedColorMode() {
+        return this.#activatedColor;
     }
     // -----------------------------------------------------------------------
-    get activatedColorScheme() {
-        return this.#activated_color;
-    }
-    // -----------------------------------------------------------------------
-    get contrastSchemes() {
-        return this.#contrasts;
-    }
-    // -----------------------------------------------------------------------
-    get activatedContrastScheme() {
-        return this.#activated_contrast;
-    }
-    // -----------------------------------------------------------------------
-    // SETTERS
-    // -----------------------------------------------------------------------
-    addColorScheme(colorScheme) {
-        if (typeof colorScheme === 'string') {
-            this.#colors.push(colorScheme);
-        } else {
-            console.log("The 'colorScheme' parameter must be a string, not a: " + typeof colorScheme);
-        }
-    }
-    // -----------------------------------------------------------------------
-    removeColorScheme(colorScheme) {
-        if (typeof colorScheme !== 'string') {
-            console.log("The 'colorScheme' parameter must be a string, not a: " + typeof colorScheme);
-        }
-        const colorIndex = this.#colors.indexOf(colorScheme);
-        if (colorIndex === -1) {
-            console.log("The color scheme '" + colorScheme + "' does not exist!");
-        } else {
-            this.#colors.splice(colorIndex, 1);
-        }
-    }
-    // -----------------------------------------------------------------------
-    addContrastScheme(contrastScheme) {
-        if (typeof contrastScheme === 'string') {
-            this.#contrasts.push(contrastScheme);
-        } else {
-            console.log("The 'contrastScheme' parameter must be a string, not a: " + typeof contrastScheme);
-        }
-    }
-    // -----------------------------------------------------------------------
-    removeContrastScheme(contrastScheme) {
-        if (typeof contrastScheme !== 'string') {
-            console.log("The 'contrastScheme' parameter must be a string, not a: " + typeof contrastScheme);
-        }
-        const contrastIndex = this.#contrasts.indexOf(contrastScheme);
-        if (contrastIndex === -1) {
-            console.log("The contrast scheme '" + contrastScheme + "' does not exist!");
-        } else {
-            this.#contrasts.splice(contrastIndex, 1);
-        }
-    }
-    // -----------------------------------------------------------------------
-    // PUBLIC STATIC METHODS
-    // -----------------------------------------------------------------------
-    static get COLOR_PARAMETER_NAME() {
-        return "wexa_color";
-    }
-    static get CONTRAST_PARAMETER_NAME() {
-        return "wexa_contrast";
+    get activatedContrastMode() {
+        return this.#activatedContrast;
     }
     // -----------------------------------------------------------------------
     // PUBLIC METHODS
     // -----------------------------------------------------------------------
-    async switch_color_scheme() {
-        await this.switchColorScheme();
-    }
     async switchColorScheme() {
-        if (this.#colors.length > 1) {
-            console.log("Impossible to switch color scheme because multiple color schemes has set !" +
-                "You have to use the activate_color_scheme() method!");
-        }
-        if (this.#activated_color === "") {
-            this.#activated_color = this.#colors[0];
-            document.body.classList.add(this.#colors[0]);
+        if (this.#activatedColor === "") {
+            this.#activatedColor = AccessibilityManager.COLOR_MODE;
+            document.documentElement.classList.add(AccessibilityManager.COLOR_MODE);
         } else {
-            this.#activated_color = "";
-            document.body.classList.remove(this.#colors[0]);
+            this.#activatedColor = "";
+            document.documentElement.classList.remove(AccessibilityManager.COLOR_MODE);
         }
-        // Update state of the theme button
-        this.#updateButtonState('btn-theme');
-        await this.postEvents({"accessibility_color": this.#activated_color});
+        this.#updateButtonState('btn-color');
+        this.#updateUrl();
+        await this.postEvents({"accessibility_color": this.#activatedColor});
     }
     // -----------------------------------------------------------------------
-    async activate_color_scheme(color_scheme) {
-        await this.activateColorScheme(color_scheme);
-    }
-    async activateColorScheme(colorScheme) {
-        if (colorScheme === "" || this.#colors.includes(colorScheme)) {
-            if (this.#activated_color !== "") {
-                document.body.classList.remove(this.#activated_color);
-            }
-            if (colorScheme !== "") {
-                document.body.classList.add(colorScheme);
-            }
-            this.#activated_color = colorScheme;
-            await this.postEvents({"accessibility_color": this.#activated_color});
-        } else {
-            console.log("Unknown given color scheme: " + colorScheme);
-        }
-    }
-    // -----------------------------------------------------------------------
-    async switch_contrast_scheme() {
-        await this.switchContrastScheme();
-    }
     async switchContrastScheme() {
-        if (this.#contrasts.length > 1) {
-            console.log('Impossible to switch contrast scheme because multiple contrast schemes are set! ' +
-                'Use activateContrastScheme() instead.');
-        }
-        if (this.#activated_contrast === '') {
-            this.#activated_contrast = this.#contrasts[0];
-            document.body.classList.add(this.#contrasts[0]);
+        if (this.#activatedContrast === "") {
+            this.#activatedContrast = AccessibilityManager.CONTRAST_MODE;
+            document.documentElement.classList.add(AccessibilityManager.CONTRAST_MODE);
         } else {
-            this.#activated_contrast = '';
-            document.body.classList.remove(this.#contrasts[0]);
+            this.#activatedContrast = "";
+            document.documentElement.classList.remove(AccessibilityManager.CONTRAST_MODE);
         }
         this.#updateButtonState('btn-contrast');
-        await this.postEvents({accessibility_contrast: this.#activated_contrast});
-    }
-    // -----------------------------------------------------------------------
-    async activate_contrast_scheme(contrast_scheme) {
-        await this.activateContrastScheme(contrast_scheme);
-    }
-    async activateContrastScheme(contrastScheme) {
-        if (contrastScheme === '' || this.#contrasts.includes(contrastScheme)) {
-            if (this.#activated_contrast !== '') {
-                document.body.classList.remove(this.#activated_contrast);
-            }
-            if (contrastScheme !== '') {
-                document.body.classList.add(contrastScheme);
-            }
-            this.#activated_contrast = contrastScheme;
-            const response = await this.postEvents({accessibility_contrast: this.#activated_contrast});
-        } else {
-            console.log('Unknown given contrast scheme: ' + contrastScheme);
-        }
+        this.#updateUrl();
+        await this.postEvents({"accessibility_contrast": this.#activatedContrast});
     }
     // -----------------------------------------------------------------------
     goToLink(element, openInNewTab = false) {
@@ -1949,17 +1726,12 @@ class AccessibilityManager extends BaseManager {
             return;
         }
         const url = new URL(element.href, window.location.href);
-        // Determine whether accessibility parameters must be propagated.
-        // They are added when:
-        //   - running from localhost (development server), or
-        //   - navigating within the same host.
         let targetUrl;
         if (window.location.protocol !== 'file:' && (window.location.hostname === 'localhost' || url.host === window.location.host)) {
             targetUrl = this.setUrlWithParameters(url.href);
         } else {
             targetUrl = url.href;
         }
-        // Open either in a new tab or in the current page.
         if (openInNewTab === true) {
             window.open(targetUrl, '_blank', 'noopener');
             return;
@@ -1971,14 +1743,20 @@ class AccessibilityManager extends BaseManager {
         if (url === null || url === '') {
             return '';
         }
-        const customUrl = new URL(url, window.location.origin);
-        if (this.#activated_color !== '') {
-            customUrl.searchParams.set(AccessibilityManager.COLOR_PARAMETER_NAME, this.#activated_color);
+        const customUrl = new URL(url, window.location.href);
+        // Forward all parameters from the current URL so that params owned by
+        // other managers (e.g. wexa_theme) survive cross-page navigation.
+        const currentParams = new URLSearchParams(window.location.search);
+        for (const [key, value] of currentParams) {
+            customUrl.searchParams.set(key, value);
+        }
+        if (this.#activatedColor !== '') {
+            customUrl.searchParams.set(AccessibilityManager.COLOR_PARAMETER_NAME, this.#activatedColor);
         } else {
             customUrl.searchParams.delete(AccessibilityManager.COLOR_PARAMETER_NAME);
         }
-        if (this.#activated_contrast !== '') {
-            customUrl.searchParams.set(AccessibilityManager.CONTRAST_PARAMETER_NAME, this.#activated_contrast);
+        if (this.#activatedContrast !== '') {
+            customUrl.searchParams.set(AccessibilityManager.CONTRAST_PARAMETER_NAME, this.#activatedContrast);
         } else {
             customUrl.searchParams.delete(AccessibilityManager.CONTRAST_PARAMETER_NAME);
         }
@@ -1990,38 +1768,35 @@ class AccessibilityManager extends BaseManager {
     async #loadBodyClasses() {
         const params = new URLSearchParams(window.location.search);
         const events = {};
-        // manage color scheme
         if (params.has(AccessibilityManager.COLOR_PARAMETER_NAME)) {
-            const color_parameter = params.get(AccessibilityManager.COLOR_PARAMETER_NAME).toLowerCase();
-            if (this.#colors.includes(color_parameter)) {
-                this.#activated_color = color_parameter;
-                document.body.classList.add(color_parameter);
-                events.accessibility_color = this.#activated_color
+            const colorParam = params.get(AccessibilityManager.COLOR_PARAMETER_NAME).toLowerCase();
+            if (colorParam === AccessibilityManager.COLOR_MODE) {
+                this.#activatedColor = colorParam;
+                document.documentElement.classList.add(colorParam);
+                events.accessibility_color = this.#activatedColor;
             } else {
-                console.log(AccessibilityManager.COLOR_PARAMETER_NAME + " get parameter unknown : " + color_parameter);
+                console.log(AccessibilityManager.COLOR_PARAMETER_NAME + " unknown value: " + colorParam);
             }
         }
-        // manage contrast scheme
         if (params.has(AccessibilityManager.CONTRAST_PARAMETER_NAME)) {
-            const contrast_param = params.get(AccessibilityManager.CONTRAST_PARAMETER_NAME).toLowerCase();
-            if (this.#contrasts.includes(contrast_param)) {
-                this.#activated_contrast = contrast_param;
-                document.body.classList.add(contrast_param);
-                events.accessibility_contrast = this.#activated_contrast
+            const contrastParam = params.get(AccessibilityManager.CONTRAST_PARAMETER_NAME).toLowerCase();
+            if (contrastParam === AccessibilityManager.CONTRAST_MODE) {
+                this.#activatedContrast = contrastParam;
+                document.documentElement.classList.add(contrastParam);
+                events.accessibility_contrast = this.#activatedContrast;
             } else {
-                console.log(AccessibilityManager.CONTRAST_PARAMETER_NAME + " get parameter unknown : " + contrast_param);
+                console.log(AccessibilityManager.CONTRAST_PARAMETER_NAME + " unknown value: " + contrastParam);
             }
         }
-        // Inform the server in case of change
         if (Object.keys(events).length > 0) {
             await this.postEvents(events);
         }
     }
     // -----------------------------------------------------------------------
     #setAllLinksCustom() {
-        let link_elements = Array.from(document.querySelectorAll("a"));
-        link_elements = link_elements.filter(el => el.href !== null && el.href !== '');
-        link_elements.forEach(element => {
+        let linkElements = Array.from(document.querySelectorAll("a"));
+        linkElements = linkElements.filter(el => el.href !== null && el.href !== '');
+        linkElements.forEach(element => {
             element.addEventListener("click", event => {
                 event.preventDefault();
                 this.goToLink(element, element.target === '_blank');
@@ -2040,12 +1815,21 @@ class AccessibilityManager extends BaseManager {
         });
     }
     // -----------------------------------------------------------------------
+    async #injectButtonIcons() {
+        await SVGIconsManager.inject(document.getElementById('btn-contrast'), 'contrast');
+        await SVGIconsManager.inject(document.getElementById('btn-color'), 'color');
+    }
+    // -----------------------------------------------------------------------
+    #updateUrl() {
+        history.replaceState(null, '', this.setUrlWithParameters(window.location.href));
+    }
+    // -----------------------------------------------------------------------
     #updateButtonState(buttonId) {
         const btn = document.getElementById(buttonId);
         if (btn === null) { console.error(`Button not found: ${buttonId}.`); return; }
         let pressed = false;
-        if (buttonId === 'btn-contrast') { pressed = this.#activated_contrast !== ''; }
-        else if (buttonId === 'btn-theme') { pressed = this.#activated_color !== ''; }
+        if (buttonId === 'btn-contrast') { pressed = this.#activatedContrast !== ''; }
+        else if (buttonId === 'btn-color') { pressed = this.#activatedColor !== ''; }
         else { console.error(`Unknown button id: ${buttonId}.`); return; }
         btn.setAttribute('aria-pressed', String(pressed));
     }
@@ -2189,16 +1973,6 @@ class MenuManager {
         }
         // Dictionary of registered submenus.
         this.#submenus = new Map();
-        // Close all registered submenus when the mouse re-enters the side menu.
-        const sideMenu = this.#navElement.matches('.side') ? this.#navElement : null;
-        if (sideMenu) {
-            sideMenu.addEventListener('mouseenter', () => {
-                // Iterate over the dictionary to close only registered submenus.
-                for (const [submenu /* SubMenuManager */, /* toggle */] of this.#submenus) {
-                    submenu.closeSubmenu();
-                }
-            });
-        }
         document.addEventListener('click', (e) => this.#handleBodyClick(e), true);
     }
     // ----------------------------------------------------------------------
@@ -2451,7 +2225,6 @@ class ProgressBar extends BaseManager {
         this._requestManager = options.requestManager || null;
         this._targetUrl = options.targetUrl || '';
         this._intervalMs = options.intervalMs || 1500;
-        this._domIds = { percent: '', text: '', header: '' };
         this._domIds = options.domIds || {
             percent: 'percent_progress',
             text: 'progress_text',
@@ -2565,18 +2338,395 @@ window.Wexa.ProgressBar = ProgressBar;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- book.js ---------------
+// ---------------- toggleselect.js ---------------
+// --------------------------------------------------------------------------
+class ToggleSelector {
+    // Define base path and icon names as member variables
+    static ICON_PATH = "./whakerkit/icons";
+    // Icon names for different states
+    static ICONS = {
+        CHECKED: "checked.png",
+        UNCHECKED: "unchecked.png",
+        HALF_CHECKED: "half-checked.png",
+        HALF_UNCHECKED: "half-unchecked.png",
+        HALF_CHECKED_DARK: "half-checked-dark.png",
+        HALF_UNCHECKED_DARK: "half-unchecked-dark.png",
+        CHECKED_DARK: "checked-dark.png",
+        UNCHECKED_DARK: "unchecked-dark.png"
+    };
+    // Define CSS selectors for buttons and checkboxes
+    static BUTTON_SELECTOR = 'button.accordion-action';
+    static CHECKBOX_SELECTOR = 'input[type="checkbox"]';
+    // Fields
+    _iconPath;
+    _detailsElt;
+    // Constructor
+    constructor(icon_path, detailsId) {
+        if (icon_path) {
+            this._iconPath = icon_path;
+        } else {
+            this._iconPath = ToggleSelector.ICON_PATH;
+        }
+        // The <details> element which is manipulated in this class
+        this._detailsElt = document.getElementById(detailsId);
+        if (!this._detailsElt) {
+            throw new Error(`ToggleSelector instantiation failed: No details element found with id: ${detailsId}.`);
+        }
+        // Call handleInputsOnLoad() to initialize any inputs or settings
+        this.handleInputsOnLoad();
+    }
+    // ----------------------------------------------------------------------
+    getCheckboxes() {
+        return this._detailsElt.querySelectorAll('input[type="checkbox"][data-toggle]');
+    }
+    // ----------------------------------------------------------------------
+    handleInputsOnLoad() {
+        // Setup listeners for checkboxes
+        this.setupCheckboxListeners();
+        // Update all toggle buttons to adjust colors with theme
+        this.updateAllToggleButtons();
+        // Attach event listener for click events on checkboxes
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.type === 'checkbox') {
+                this.updateAllToggleButtons();
+            }
+        });
+    }
+    // ----------------------------------------------------------------------
+    toggleSelection(event) {
+        const checkboxes = this.getCheckboxes();
+        const button = event.currentTarget;
+        // Check if any of the checkboxes are already checked
+        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        // Toggle the checked state of all checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = !anyChecked;
+        });
+        // Update the button image based on the new state
+        this.updateToggleButton(button, !anyChecked);
+    }
+    // ----------------------------------------------------------------------
+    updateToggleButton(button, anyChecked, oneChecked = false, check = false) {
+        // Get the image inside the button
+        const toggleImg = button.querySelector('img');
+        // Detect if dark mode is active
+        const isDarkMode = document.body.classList.contains('dark');
+        let imgSrc = ""; // Variable to hold the image source path
+        // Determine which image to display based on the checkbox states
+        if (oneChecked && check) {
+            imgSrc = isDarkMode ?
+                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED_DARK}` :
+                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED}`;
+        } else if (oneChecked && !check) {
+            imgSrc = isDarkMode ?
+                `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED_DARK}` :
+                `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED}`;
+        } else {
+            imgSrc = anyChecked
+                ? (isDarkMode ?
+                    `${this._iconPath}/${ToggleSelector.ICONS.CHECKED_DARK}` :
+                    `${this._iconPath}/${ToggleSelector.ICONS.CHECKED}`)
+                : (isDarkMode ?
+                    `${this._iconPath}/${ToggleSelector.ICONS.UNCHECKED_DARK}` :
+                    `${this._iconPath}/${ToggleSelector.ICONS.UNCHECKED}`);
+        }
+        // Update the image source
+        if (toggleImg) {
+            toggleImg.src = imgSrc;
+        } else {
+            console.error(`Image not found in button: ${button.id}`);
+        }
+    }
+    // ----------------------------------------------------------------------
+    setupCheckboxListeners() {
+        const checkboxes = this.getCheckboxes();
+        const button = this._detailsElt.querySelector('button.accordion-action[data-toggle]');
+        // Add a 'change' event listener to each checkbox
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // At least one is checked
+                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+                // All are checked
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                // Log the state for debugging purposes
+                console.log(`Checkbox ${checkbox.id} changed. Any checked: ${anyChecked}, All checked: ${allChecked}`);
+                // Update button based on the state
+                this.updateButtonState(button, anyChecked, allChecked);
+            });
+        });
+    }
+    // ----------------------------------------------------------------------
+    updateButtonState(button, anyChecked, allChecked) {
+        if (allChecked) {
+            this.updateToggleButton(button, anyChecked);
+        } else if (anyChecked) {
+            this.updateToggleButton(button, anyChecked, true, true);
+        } else {
+            this.updateToggleButton(button, anyChecked, false, false);
+        }
+    }
+    // ----------------------------------------------------------------------
+    updateAllToggleButtons() {
+        const buttons = this._detailsElt.querySelectorAll(ToggleSelector.BUTTON_SELECTOR);
+        buttons.forEach(button => {
+            const checkboxes = button.closest('details').querySelectorAll(ToggleSelector.CHECKBOX_SELECTOR);
+            const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            // Update button based on the state of checkboxes
+            this.updateButtonState(button, anyChecked, allChecked);
+        });
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.ToggleSelector = ToggleSelector;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- links.js ---------------
+'use strict';
+class LinkController {
+    constructor() {
+        // Nothing to initialize; listeners are attached explicitly via handleLinks().
+    }
+    // ----------------------------------------------------------------------
+    handleLinks(selectors) {
+        this._bindLinks(selectors, false);
+    }
+    handleLinksWithParameters(selectors) {
+        this._bindLinks(selectors, true);
+    }
+    static initFocusable() {
+        document.querySelectorAll('[data-href]:not([href]):not([tabindex])').forEach(el => {
+            el.setAttribute('tabindex', '0');
+        });
+    }
+    // ----------------------------------------------------------------------
+    // Private
+    // ----------------------------------------------------------------------
+    _bindLinks(selectors, withParameters) {
+        if (!Array.isArray(selectors)) {
+            console.error('LinkController: Expected a list of element ids.');
+            return;
+        }
+        for (const id of selectors) {
+            const element = document.getElementById(id);
+            if (element === null) {
+                console.warn(`LinkController: No element found with id "${id}".`);
+                continue;
+            }
+            // Avoid multiple bindings on the same element
+            if (element.dataset.linkBound) continue;
+            element.dataset.linkBound = '1';
+            element.addEventListener('click', (event) => this._handleActivation(event, element, withParameters));
+            element.addEventListener('keydown', (event) => this._handleActivation(event, element, withParameters));
+        }
+    }
+    // ----------------------------------------------------------------------
+    _handleActivation(event, element, withParameters) {
+        const isClick = (event.type === 'click');
+        const isEnter = (event.type === 'keydown' && event.key === 'Enter');
+        if (isClick === false && isEnter === false) {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        const url = element.getAttribute('href') || element.dataset.href;
+        if (!url) {
+            console.warn(`LinkController: No URL defined for element id="${element.id}".`);
+            return;
+        }
+        const target = element.dataset.target || '_blank';
+        this._openUrl(url, target, withParameters);
+    }
+    // ----------------------------------------------------------------------
+    _openUrl(url, target, withParameters) {
+        let finalUrl = url;
+        if (withParameters === true) {
+            const absoluteUrl = new URL(url, window.location.href).href;
+            finalUrl = window.Wexa.accessibility.setUrlWithParameters(absoluteUrl);
+        }
+        if (target === '_blank' || target === '_self') {
+            window.open(finalUrl, target, 'noopener');
+            return;
+        }
+        const iframe = document.getElementById(target);
+        if (iframe && iframe.tagName.toLowerCase() === 'iframe') {
+            iframe.src = finalUrl;
+        } else {
+            console.warn(`LinkController: No iframe found with id="${target}". Opening in new tab.`);
+            window.open(finalUrl, '_blank', 'noopener');
+        }
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.LinkController = LinkController;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/theme_manager.js ---------------
+class ThemeManager extends BaseManager {
+    // -----------------------------------------------------------------------
+    // FIELDS
+    // -----------------------------------------------------------------------
+    #themes;        // Map<name, path>
+    #activeTheme;   // "" or a registered name
+    #defaultTheme;  // "" or a registered name applied when no URL param is present
+    static get THEME_PARAMETER_NAME() { return "wexa_theme"; }
+    static get LINK_ID()              { return "wexa-theme"; }
+    // -----------------------------------------------------------------------
+    // CONSTRUCTOR
+    // -----------------------------------------------------------------------
+    constructor() {
+        super();
+        this.#themes = new Map();
+        this.#activeTheme = "";
+        this.#defaultTheme = "";
+        OnLoadManager.addLoadFunction(this.#loadFromUrl.bind(this));
+        OnLoadManager.addLoadFunction(this.#injectButtonIcon.bind(this));
+    }
+    // -----------------------------------------------------------------------
+    // GETTERS
+    // -----------------------------------------------------------------------
+    get themeNames() {
+        return [...this.#themes.keys()];
+    }
+    // -----------------------------------------------------------------------
+    get activeTheme() {
+        return this.#activeTheme;
+    }
+    // -----------------------------------------------------------------------
+    // PUBLIC METHODS
+    // -----------------------------------------------------------------------
+    register(name, path) {
+        if (typeof name !== 'string' || typeof path !== 'string') {
+            console.error("ThemeManager.register: name and path must be strings.");
+            return;
+        }
+        this.#themes.set(name, path);
+    }
+    // -----------------------------------------------------------------------
+    setDefault(name) {
+        if (!this.#themes.has(name)) {
+            console.error(`ThemeManager.setDefault: unknown theme "${name}".`);
+            return;
+        }
+        this.#defaultTheme = name;
+        const params = new URLSearchParams(window.location.search);
+        if (params.has(ThemeManager.THEME_PARAMETER_NAME)) {
+            const urlTheme = params.get(ThemeManager.THEME_PARAMETER_NAME);
+            if (this.#themes.has(urlTheme)) {
+                this.activate(urlTheme);
+            }
+        } else if (this.#activeTheme === "") {
+            this.activate(name);
+        }
+    }
+    // -----------------------------------------------------------------------
+    async activate(name) {
+        if (name !== "" && !this.#themes.has(name)) {
+            console.error(`ThemeManager.activate: unknown theme "${name}".`);
+            return;
+        }
+        this.#activeTheme = name;
+        this.#applyLink(name === "" ? "" : this.#themes.get(name));
+        history.replaceState(null, '', this.setUrlWithParameters(window.location.href));
+        await this.postEvents({"theme": name});
+    }
+    // -----------------------------------------------------------------------
+    async next() {
+        const names = this.themeNames;
+        if (names.length === 0) {
+            return;
+        }
+        if (this.#activeTheme === "") {
+            await this.activate(names[0]);
+            return;
+        }
+        const idx = names.indexOf(this.#activeTheme);
+        const nextIdx = idx + 1;
+        await this.activate(nextIdx >= names.length ? this.#defaultTheme : names[nextIdx]);
+    }
+    // -----------------------------------------------------------------------
+    setUrlWithParameters(url) {
+        if (url === null || url === '') {
+            return '';
+        }
+        const customUrl = new URL(url, window.location.href);
+        if (this.#activeTheme !== '') {
+            customUrl.searchParams.set(ThemeManager.THEME_PARAMETER_NAME, this.#activeTheme);
+        } else {
+            customUrl.searchParams.delete(ThemeManager.THEME_PARAMETER_NAME);
+        }
+        return customUrl.href;
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE METHODS
+    // -----------------------------------------------------------------------
+    async #injectButtonIcon() {
+        await SVGIconsManager.inject(document.getElementById('btn-css-theme'), 'theme');
+    }
+    // -----------------------------------------------------------------------
+    #applyLink(path) {
+        let link = document.getElementById(ThemeManager.LINK_ID);
+        if (path === "") {
+            if (link !== null) {
+                link.remove();
+            }
+            return;
+        }
+        if (link === null) {
+            link = document.createElement('link');
+            link.id = ThemeManager.LINK_ID;
+            link.rel = 'stylesheet';
+            document.head.appendChild(link);
+        }
+        link.href = path;
+    }
+    // -----------------------------------------------------------------------
+    async #loadFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has(ThemeManager.THEME_PARAMETER_NAME)) {
+            const name = params.get(ThemeManager.THEME_PARAMETER_NAME);
+            if (this.#themes.has(name)) {
+                await this.activate(name);
+            } else {
+                console.log(ThemeManager.THEME_PARAMETER_NAME + " unknown value: " + name);
+            }
+        } else if (this.#defaultTheme !== "" && this.#activeTheme === "") {
+            await this.activate(this.#defaultTheme);
+        }
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.ThemeManager = ThemeManager;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book.js ---------------
 'use strict';
 class Book {
     // FIELDS
     #toc_element;
     #headings_container;
     #html_tags;
+    #toggle_button;
     // CONSTRUCTOR
     constructor(id_headings, id_toc = "toc") {
         this.#toc_element = document.getElementById(id_toc);
         this.#headings_container = document.getElementById(id_headings);
         this.#html_tags = "h1, h2, h3, h4";
+        const container = this.#toc_element?.closest('nav, aside');
+        if (container instanceof HTMLElement) {
+            if (container.classList.contains('book-toc-aside')) {
+                this.#setup_aside(container);
+            } else {
+                container.setAttribute('tabindex', '-1');
+            }
+        }
     }
     // GETTERS
     get dom_toc() {
@@ -2603,6 +2753,7 @@ class Book {
         });
     }
     fill_table(only_numerate_headings = true) {
+        if (!(this.#toc_element instanceof HTMLElement)) return;
         const headings = this.#get_headings(only_numerate_headings);
         headings.forEach((heading, index) => {
             /* Add the anchor right before the heading */
@@ -2621,14 +2772,48 @@ class Book {
         });
     }
     // PRIVATE METHODS
+    #setup_aside(aside) {
+        if (!aside.id) aside.id = 'book-toc-aside';
+        aside.setAttribute('aria-hidden', 'true');
+        const titleEl = aside.querySelector('h1, h2');
+        const label = titleEl?.textContent?.trim() || 'Table of contents';
+        this.#toggle_button = document.createElement('button');
+        this.#toggle_button.className = 'book-toc-toggle';
+        this.#toggle_button.setAttribute('aria-controls', aside.id);
+        this.#toggle_button.setAttribute('aria-expanded', 'false');
+        this.#toggle_button.setAttribute('aria-label', label);
+        this.#toggle_button.textContent = label;
+        this.#toggle_button.addEventListener('click', () => {
+            const isOpen = aside.classList.toggle('open');
+            this.#toggle_button.setAttribute('aria-expanded', String(isOpen));
+            aside.setAttribute('aria-hidden', String(!isOpen));
+            if (isOpen) {
+                aside.querySelector('a[href], button')?.focus();
+            } else {
+                this.#toggle_button.focus();
+            }
+        });
+        aside.before(this.#toggle_button);
+        // Browsers do not honour page-break on <aside> elements when printing.
+        // Inserting a <section class="blank-page"> immediately after the aside
+        // acts as the page-break carrier (print.css targets .blank-page).
+        // The empty <p> that follows prevents the section from being collapsed
+        // by certain layout engines before the break is applied.
+        const blankPage = document.createElement('section');
+        blankPage.className = 'blank-page';
+        aside.after(blankPage);
+        const spacer = document.createElement('p');
+        blankPage.after(spacer);
+    }
     #get_headings(only_numerate_headings) {
-        let titles = [].slice.call(this.#headings_container.querySelectorAll(this.#html_tags));
+        if (!(this.#headings_container instanceof HTMLElement)) return [];
+        const titles = Array.from(this.#headings_container.querySelectorAll(this.#html_tags));
         let headings = [];
         titles.forEach(current => {
             if (only_numerate_headings) {
                 // check if the heading begin by a number
-                let before = window.getComputedStyle(current,'::before');
-                if (before['content'].includes("counter(")) {
+                const c = window.getComputedStyle(current, '::before')['content'];
+                if (c && c !== 'none' && c !== '""' && c !== "''") {
                     headings.push(current);
                 }
             } else {
@@ -2644,7 +2829,7 @@ window.Wexa.Book = Book;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- sortatable.js ---------------
+// ---------------- extras/sortatable.js ---------------
 class SortaTable {
     // FIELDS
     _tableElt
@@ -2659,6 +2844,7 @@ class SortaTable {
         if (!this._tableElt) {
             // Table element is not found, log a warning and prevent further execution
             console.warn(`No table element found with id: ${tableId}. SortaTable instantiation is skipped.`);
+            return;
         }
         // Store original rows order
         const tbody = this._tableElt.querySelector('tbody');
@@ -2828,230 +3014,313 @@ window.Wexa.SortaTable = SortaTable;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- toggleselect.js ---------------
+// ---------------- extras/keypiano/keypiano.js ---------------
 // --------------------------------------------------------------------------
-class ToggleSelector {
-    // Define base path and icon names as member variables
-    static ICON_PATH = "./whakerkit/icons";
-    // Icon names for different states
-    static ICONS = {
-        CHECKED: "checked.png",
-        UNCHECKED: "unchecked.png",
-        HALF_CHECKED: "half-checked.png",
-        HALF_UNCHECKED: "half-unchecked.png",
-        HALF_CHECKED_DARK: "half-checked-dark.png",
-        HALF_UNCHECKED_DARK: "half-unchecked-dark.png",
-        CHECKED_DARK: "checked-dark.png",
-        UNCHECKED_DARK: "unchecked-dark.png"
-    };
-    // Define CSS selectors for buttons and checkboxes
-    static BUTTON_SELECTOR = 'button.accordion-action';
-    static CHECKBOX_SELECTOR = 'input[type="checkbox"]';
+// Constants
+// --------------------------------------------------------------------------
+const CSS_GROUP = 'wexa-key-piano-group';
+const CSS_KEY = 'wexa-key-piano-key';
+const CSS_CONTROLS = 'wexa-key-piano-controls';
+const CSS_CONTROL = 'wexa-key-piano-control';
+const CSS_STATUS = 'wexa-key-piano-status';
+const MODE_RADIO = 'radio';
+const MODE_FREE = 'free';
+const DEFAULT_GROUP_SEP = '-';
+const DEFAULT_KEY_SEP = '.';
+const DEFAULT_BACKSPACE_LABEL = 'Delete last key';
+const DEFAULT_CLEAR_LABEL = 'Clear all';
+// --------------------------------------------------------------------------
+class KeyPiano {
+    static #BACKSPACE_ICON = 'backward';
+    static #CLEAR_ICON = 'cancel';
     // Fields
-    _iconPath;
-    _detailsElt;
-    // Constructor
-    constructor(icon_path, detailsId) {
-        if (icon_path) {
-            this._iconPath = icon_path;
-        } else {
-            this._iconPath = ToggleSelector.ICON_PATH;
+    #container;
+    #targetField;
+    #groupSep;
+    #keySep;
+    #groups;
+    #history;
+    #buffer;
+    #currentTurn;
+    #freeClickCount;
+    #statusElt;
+    #instanceId;
+    constructor(container) {
+        if ((container instanceof HTMLElement) === false) {
+            throw new Error(`KeyPiano instantiation failed: container is not an HTMLElement. Got ${container}.`);
         }
-        // The <details> element which is manipulated in this class
-        this._detailsElt = document.getElementById(detailsId);
-        if (!this._detailsElt) {
-            throw new Error(`ToggleSelector instantiation failed: No details element found with id: ${detailsId}.`);
+        this.#container = container;
+        this.#instanceId = container.id.length > 0 ? container.id : `key-piano-${Math.random().toString(36).slice(2)}`;
+        this.#targetField = document.getElementById(container.dataset.target);
+        if (this.#targetField === null) {
+            throw new Error(`KeyPiano instantiation failed: no target field found with `
+                + `id: ${container.dataset.target}.`);
         }
-        // Call handleInputsOnLoad() to initialize any inputs or settings
-        this.handleInputsOnLoad();
+        this.#groupSep = container.dataset.groupSep ?? DEFAULT_GROUP_SEP;
+        this.#keySep = container.dataset.keySep ?? DEFAULT_KEY_SEP;
+        this.#groups = Array.from(container.querySelectorAll(`.${CSS_GROUP}`));
+        this.#history = [];
+        this.#buffer = new Array(this.#groups.length).fill(null);
+        this.#currentTurn = 0;
+        this.#freeClickCount = 0;
+        this.#setupGroups();
+        this.#applyGating();
+        this.#injectControls();
+        this.#injectStatus();
+        WexaLogger.debug(`KeyPiano: activated on #${this.#instanceId} with ${this.#groups.length} group(s).`);
     }
-    // ----------------------------------------------------------------------
-    getCheckboxes() {
-        return this._detailsElt.querySelectorAll('input[type="checkbox"][data-toggle]');
+    // ------------------------------------------------------------------
+    // Retargeting
+    // ------------------------------------------------------------------
+    setTarget(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (field === null) {
+            throw new Error(`KeyPiano.setTarget failed: no field found with id: ${fieldId}.`);
+        }
+        this.#targetField = field;
+        this.#history = [];
+        this.#freeClickCount = 0;
+        this.#resetCycle();
     }
-    // ----------------------------------------------------------------------
-    handleInputsOnLoad() {
-        // Setup listeners for checkboxes
-        this.setupCheckboxListeners();
-        // Update all toggle buttons to adjust colors with theme
-        this.updateAllToggleButtons();
-        // Attach event listener for click events on checkboxes
-        document.addEventListener('click', (event) => {
-            const target = event.target;
-            if (target.type === 'checkbox') {
-                this.updateAllToggleButtons();
+    // ------------------------------------------------------------------
+    // Setup
+    // ------------------------------------------------------------------
+    #setupGroups() {
+        this.#groups.forEach((group, index) => {
+            const mode = group.dataset.mode === MODE_RADIO ? MODE_RADIO : MODE_FREE;
+            group.dataset.mode = mode;
+            if (mode === MODE_RADIO) {
+                this.#setupRadioGroup(group, index);
+            } else {
+                this.#setupFreeGroup(group);
             }
         });
     }
-    // ----------------------------------------------------------------------
-    toggleSelection(event) {
-        const checkboxes = this.getCheckboxes();
-        const button = event.currentTarget;
-        // Check if any of the checkboxes are already checked
-        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-        // Toggle the checked state of all checkboxes
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = !anyChecked;
+    // ------------------------------------------------------------------
+    #setupRadioGroup(group, index) {
+        const groupName = `${this.#instanceId}-group-${index}`;
+        const radios = group.querySelectorAll('input[type="radio"]');
+        radios.forEach((radio) => {
+            radio.name = groupName;
+            radio.addEventListener('change', () => this.#handleRadioChange(index, radio.value));
         });
-        // Update the button image based on the new state
-        this.updateToggleButton(button, !anyChecked);
-    }
-    // ----------------------------------------------------------------------
-    updateToggleButton(button, anyChecked, oneChecked = false, check = false) {
-        // Get the image inside the button
-        const toggleImg = button.querySelector('img');
-        // Detect if dark mode is active
-        const isDarkMode = document.body.classList.contains('dark');
-        let imgSrc = ""; // Variable to hold the image source path
-        // Determine which image to display based on the checkbox states
-        if (oneChecked && check) {
-            imgSrc = isDarkMode ?
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED_DARK}` :
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED}`;
-        } else if (oneChecked && !check) {
-            imgSrc = isDarkMode ?
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED_DARK}` :
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED}`;
-        } else {
-            imgSrc = anyChecked
-                ? (isDarkMode ?
-                    `${this._iconPath}/${ToggleSelector.ICONS.CHECKED_DARK}` :
-                    `${this._iconPath}/${ToggleSelector.ICONS.CHECKED}`)
-                : (isDarkMode ?
-                    `${this._iconPath}/${ToggleSelector.ICONS.UNCHECKED_DARK}` :
-                    `${this._iconPath}/${ToggleSelector.ICONS.UNCHECKED}`);
-        }
-        // Update the image source
-        if (toggleImg) {
-            toggleImg.src = imgSrc;
-        } else {
-            console.error(`Image not found in button: ${button.id}`);
+        if (radios.length === 0) {
+            WexaLogger.warn(`KeyPiano: group ${index} is declared "radio" but has no radio input.`);
         }
     }
-    // ----------------------------------------------------------------------
-    setupCheckboxListeners() {
-        const checkboxes = this.getCheckboxes();
-        const button = this._detailsElt.querySelector('button.accordion-action[data-toggle]');
-        // Add a 'change' event listener to each checkbox
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                // At least one is checked
-                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-                // All are checked
-                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-                // Log the state for debugging purposes
-                console.log(`Checkbox ${checkbox.id} changed. Any checked: ${anyChecked}, All checked: ${allChecked}`);
-                // Update button based on the state
-                this.updateButtonState(button, anyChecked, allChecked);
+    // ------------------------------------------------------------------
+    #setupFreeGroup(group) {
+        const buttons = group.querySelectorAll(`button.${CSS_KEY}`);
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => this.#handleFreeClick(button.value));
+        });
+        if (buttons.length === 0) {
+            WexaLogger.warn('KeyPiano: a "free" group has no button key.');
+        }
+    }
+    // ------------------------------------------------------------------
+    // Radio groups: turn-taking
+    // ------------------------------------------------------------------
+    #handleRadioChange(index, value) {
+        this.#buffer[index] = value;
+        if (index === this.#currentTurn) {
+            this.#currentTurn += 1;
+        }
+        this.#applyGating();
+        const isCycleComplete = this.#groups.every((group, i) => {
+            return group.dataset.mode !== MODE_RADIO || this.#buffer[i] !== null;
+        });
+        if (isCycleComplete === true) {
+            const composedKey = this.#buffer.join(this.#groupSep);
+            this.#appendToTarget(composedKey);
+            this.#announce(`Key added: ${composedKey}`);
+            this.#resetCycle();
+        }
+    }
+    // ------------------------------------------------------------------
+    #applyGating() {
+        this.#groups.forEach((group, index) => {
+            if (group.dataset.mode !== MODE_RADIO) {
+                return;
+            }
+            const radios = group.querySelectorAll('input[type="radio"]');
+            radios.forEach((radio) => {
+                radio.disabled = index !== this.#currentTurn;
             });
         });
     }
-    // ----------------------------------------------------------------------
-    updateButtonState(button, anyChecked, allChecked) {
-        if (allChecked) {
-            this.updateToggleButton(button, anyChecked);
-        } else if (anyChecked) {
-            this.updateToggleButton(button, anyChecked, true, true);
-        } else {
-            this.updateToggleButton(button, anyChecked, false, false);
-        }
-    }
-    // ----------------------------------------------------------------------
-    updateAllToggleButtons() {
-        const buttons = this._detailsElt.querySelectorAll(ToggleSelector.BUTTON_SELECTOR);
-        buttons.forEach(button => {
-            const checkboxes = button.closest('details').querySelectorAll(ToggleSelector.CHECKBOX_SELECTOR);
-            const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-            // Update button based on the state of checkboxes
-            this.updateButtonState(button, anyChecked, allChecked);
+    // ------------------------------------------------------------------
+    #resetCycle() {
+        this.#buffer = new Array(this.#groups.length).fill(null);
+        this.#currentTurn = 0;
+        this.#groups.forEach((group) => {
+            group.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+                radio.checked = false;
+            });
         });
+        this.#applyGating();
+    }
+    // ------------------------------------------------------------------
+    // Free groups: immediate append
+    // ------------------------------------------------------------------
+    #handleFreeClick(value) {
+        const isCycleStart = this.#freeClickCount % this.#groups.length === 0;
+        const separator = isCycleStart ? this.#keySep : this.#groupSep;
+        this.#freeClickCount += 1;
+        this.#appendToTarget(value, separator);
+        this.#announce(`Added: ${value}`);
+    }
+    // ------------------------------------------------------------------
+    // Target field: append, undo, clear
+    // ------------------------------------------------------------------
+    #appendToTarget(value, separator) {
+        const sep = typeof separator === 'string' ? separator : this.#keySep;
+        this.#history.push(this.#targetField.value);
+        this.#setTargetValue(this.#targetField.value.length === 0
+            ? value
+            : this.#targetField.value + sep + value);
+    }
+    // ------------------------------------------------------------------
+    #setTargetValue(value) {
+        this.#targetField.value = value;
+        this.#targetField.dispatchEvent(new Event('input', {bubbles: true}));
+    }
+    // ------------------------------------------------------------------
+    #handleBackspace() {
+        if (this.#currentTurn > 0) {
+            const index = this.#currentTurn - 1;
+            const group = this.#groups[index];
+            group.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+                radio.checked = false;
+            });
+            this.#buffer[index] = null;
+            this.#currentTurn = index;
+            this.#applyGating();
+            this.#announce('Last key selection undone.');
+            return;
+        }
+        if (this.#history.length === 0) {
+            this.#announce('Nothing to undo.');
+            return;
+        }
+        this.#setTargetValue(this.#history.pop());
+        this.#announce('Last entry deleted.');
+    }
+    // ------------------------------------------------------------------
+    #handleClear() {
+        this.#setTargetValue('');
+        this.#history = [];
+        this.#freeClickCount = 0;
+        this.#resetCycle();
+        this.#announce('Everything cleared.');
+    }
+    // ------------------------------------------------------------------
+    // Injected controls: "delete last key", "clear all", live status
+    // ------------------------------------------------------------------
+    async #injectControls() {
+        const backspaceLabel = this.#container.dataset.backspaceLabel ?? DEFAULT_BACKSPACE_LABEL;
+        const clearLabel = this.#container.dataset.clearLabel ?? DEFAULT_CLEAR_LABEL;
+        const backspaceButton = await this.#createControlButton(
+            KeyPiano.#BACKSPACE_ICON, backspaceLabel, () => this.#handleBackspace());
+        backspaceButton.classList.add(`${CSS_CONTROL}-backspace`);
+        const clearButton = await this.#createControlButton(
+            KeyPiano.#CLEAR_ICON, clearLabel, () => this.#handleClear());
+        clearButton.classList.add(`${CSS_CONTROL}-clear`);
+        // The outer container is a column flex (one row per group): both
+        // controls are wrapped in their own row, same idiom as the
+        // accessibility buttons sitting side by side in their <nav> section.
+        const controls = document.createElement('div');
+        controls.classList.add(CSS_CONTROLS);
+        controls.appendChild(backspaceButton);
+        controls.appendChild(clearButton);
+        this.#container.appendChild(controls);
+    }
+    // ------------------------------------------------------------------
+    async #createControlButton(iconName, label, onClick) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.classList.add(CSS_CONTROL);
+        button.setAttribute('aria-label', label);
+        button.addEventListener('click', onClick);
+        button.innerHTML = await SVGIconsManager.get(iconName);
+        return button;
+    }
+    // ------------------------------------------------------------------
+    #injectStatus() {
+        this.#statusElt = document.createElement('div');
+        this.#statusElt.classList.add(CSS_STATUS);
+        this.#statusElt.setAttribute('role', 'status');
+        this.#statusElt.setAttribute('aria-live', 'polite');
+        this.#container.appendChild(this.#statusElt);
+    }
+    // ------------------------------------------------------------------
+    #announce(message) {
+        this.#statusElt.textContent = message;
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.ToggleSelector = ToggleSelector;
+window.Wexa.KeyPiano = KeyPiano;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- links.js ---------------
-'use strict';
-class LinkController {
-    constructor() {
-        // Nothing to initialize; listeners are attached explicitly via handleLinks().
-    }
-    // ----------------------------------------------------------------------
-    handleLinks(selectors) {
-        this._bindLinks(selectors, false);
-    }
-    handleLinksWithParameters(selectors) {
-        this._bindLinks(selectors, true);
-    }
-    // ----------------------------------------------------------------------
-    // Private
-    // ----------------------------------------------------------------------
-    _bindLinks(selectors, withParameters) {
-        if (!Array.isArray(selectors)) {
-            console.error('LinkController: Expected a list of element ids.');
-            return;
-        }
-        for (const id of selectors) {
-            const element = document.getElementById(id);
-            if (element === null) {
-                console.warn(`LinkController: No element found with id "${id}".`);
-                continue;
-            }
-            // Avoid multiple bindings on the same element
-            element.removeEventListener('click', this._handleActivation);
-            element.removeEventListener('keydown', this._handleActivation);
-            element.addEventListener('click', (event) => this._handleActivation(event, element, withParameters));
-            element.addEventListener('keydown', (event) => this._handleActivation(event, element, withParameters));
-        }
-    }
-    // ----------------------------------------------------------------------
-    _handleActivation(event, element, withParameters) {
-        const isClick = (event.type === 'click');
-        const isEnter = (event.type === 'keydown' && event.key === 'Enter');
-        if (isClick === false && isEnter === false) {
-            return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        const url = element.getAttribute('href') || element.dataset.href;
-        if (!url) {
-            console.warn(`LinkController: No URL defined for element id="${element.id}".`);
-            return;
-        }
-        const target = element.dataset.target || '_blank';
-        this._openUrl(url, target, withParameters);
-    }
-    // ----------------------------------------------------------------------
-    _openUrl(url, target, withParameters) {
-        let finalUrl = url;
-        if (withParameters === true) {
-            const absoluteUrl = new URL(url, window.location.href).href;
-            finalUrl = window.Wexa.accessibility.setUrlWithParameters(absoluteUrl);
-        }
-        if (target === '_blank' || target === '_self') {
-            window.open(finalUrl, target, 'noopener');
-            return;
-        }
-        const iframe = document.getElementById(target);
-        if (iframe && iframe.tagName.toLowerCase() === 'iframe') {
-            iframe.src = finalUrl;
-        } else {
-            console.warn(`LinkController: No iframe found with id="${target}". Opening in new tab.`);
-            window.open(finalUrl, '_blank', 'noopener');
-        }
-    }
-}
-// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
-if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.LinkController = LinkController;
-// ---- END AUTO-GENERATED EXPORTS ----
-
+// ---------------- SVG icons (pre-registered for file:// mode) ---------------
+SVGIconsManager.register('anonymous', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <ns0:path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n  <ns0:line x1=\"8\" y1=\"8\" x2=\"24\" y2=\"24\" />\n</ns0:svg>");
+SVGIconsManager.register('audio', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polygon points=\"7 12 12 12 17 7 17 25 12 20 7 20 7 12\"/>\n  <path d=\"M21 11.333a6.7 7 0 0 1 0 9\"/>\n</svg>\n\n\n");
+SVGIconsManager.register('back', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n</svg>");
+SVGIconsManager.register('backward', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polyline points=\"20 24 12 16 20 8\" />\n</svg>");
+SVGIconsManager.register('bell', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <ns0:path d=\"M24 11a8 8 0 0 0-16 0c0 9-4 8-4 11h24c0-3-4-1-4-11\" />\n  <ns0:path d=\"M18 28a3 3 0 0 1-5 0\" />\n</ns0:svg>");
+SVGIconsManager.register('book-open', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z\"/>\n  <path d=\"M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z\"/>\n</svg>\n");
+SVGIconsManager.register('cadenas', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <ns0:rect x=\"7\" y=\"15\" width=\"19\" height=\"13\" rx=\"3\" />\n  <ns0:path d=\"M11 15V9a5 5 0 0 1 11 0v5\" />\n</ns0:svg>");
+SVGIconsManager.register('cancel', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n\t<circle cx=\"16\" cy=\"16\" r=\"10\" />\n\t<line x1=\"10\" y1=\"22\" x2=\"22\" y2=\"10\" />\n</svg>");
+SVGIconsManager.register('checked', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\">\n  <ns0:g id=\"SVGRepo_bgCarrier\" stroke-width=\"2\" />\n  <ns0:g id=\"SVGRepo_tracerCarrier\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n  <ns0:g id=\"SVGRepo_iconCarrier\">\n    <ns0:path d=\"M11 17L14 20L21 12M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n  </ns0:g>\n</ns0:svg>");
+SVGIconsManager.register('color', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n\t<polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>");
+SVGIconsManager.register('compas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n\n  <!-- Compass ticks -->\n  <line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"4\"/>\n  <line x1=\"16\" y1=\"28\" x2=\"16\" y2=\"30\"/>\n  <line x1=\"2\" y1=\"16\" x2=\"4\" y2=\"16\"/>\n  <line x1=\"28\" y1=\"16\" x2=\"30\" y2=\"16\"/>\n\n  <!-- Needle (angled ~30\u00b0) -->\n  <polygon points=\"18 8 22 18 14 24 10 14\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"1\"/>\n</svg>\n\n");
+SVGIconsManager.register('congrats', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <ns0:circle cx=\"16\" cy=\"11\" r=\"8\" />\n  <ns0:path d=\"M11 19l-3 8 8-4 8 4-3-8\" />\n</ns0:svg>");
+SVGIconsManager.register('content', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <ns0:circle cx=\"7\" cy=\"16\" r=\"2\" />\n  <ns0:circle cx=\"16\" cy=\"16\" r=\"2\" />\n  <ns0:circle cx=\"25\" cy=\"16\" r=\"2\" />\n</ns0:svg>");
+SVGIconsManager.register('contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n\tviewBox=\"0 0 32 32\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n</svg>");
+SVGIconsManager.register('cuedspeech', "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" id=\"Calque_1\" x=\"0px\" y=\"0px\" width=\"119.055px\" height=\"119.055px\" viewBox=\"-5.838 29.144 90.205 90.205\" enable-background=\"new 0 0 119.055 119.055\" xml:space=\"preserve\"><polygon points=\"-0.024,97.39 0.231,98.014 0.231,97.18 \" />\n<path d=\"M21.312,117.349c1.022,0,1.726-0.25,2.149-0.764l0.173-0.209c3.688-4.487,11.127-12.775,19.522-17.867  C49.166,94.864,53.823,91.098,57,87.317c1.407-1.416,2.341-2.569,2.998-3.419c3.947-5.104,15.603-22.875,16.603-26.323  c0.372-1.286,0.154-2.516-0.628-3.557c-0.599-0.796-1.479-1.386-2.255-1.679c1.443-1.975,2.707-3.799,3.654-5.352  c1.11-1.82,1.227-3.79,0.32-5.404c-0.478-0.849-1.204-1.502-2.016-1.853c0.651-0.855,1.994-2.895,1.796-4.972  c-0.107-1.124-0.655-2.102-1.584-2.829c-0.665-0.521-1.428-0.785-2.269-0.785c-1.618,0-3.419,0.991-5.414,3.01  c-0.229,0.266-0.479,0.544-0.753,0.844l-0.389,0.428l-0.003-0.002c-2.369,2.549-5.944,6.138-9.527,9.642  c-0.193-0.716-0.689-1.3-1.426-1.667c-0.99-0.493-2.333-1.059-3.946-1.059c-2.112,0-4.143,0.932-6.208,2.849  c-1.342,1.244-8.23,6.507-11.541,9.037l-1.378,1.054l-4.207,3.465c-0.169,0.15-0.333,0.298-0.562,0.508l-2.755,2.711  c-4.447,4.745-6.033,8.552-7.568,12.232c-0.81,1.944-1.576,3.78-2.75,5.737c-0.764,1.274-1.683,2.636-2.733,4.047  c-0.304,0.241-0.533,0.545-0.686,0.907c-3.574,4.637-7.668,8.742-9.809,10.794l-0.581,0.553L0.231,97.18v0.834l0.124,0.302  C6.716,113.853,17.896,117.349,21.312,117.349z M3.192,98.035c0.164-0.153,0.348-0.328,0.545-0.52  c2.21-2.117,6.473-6.392,10.182-11.23l0.144-0.236l0.04-0.106l0.144-0.09l0.143-0.19c1.151-1.536,2.159-3.023,2.995-4.419  c1.27-2.116,2.106-4.125,2.917-6.068c1.516-3.638,2.949-7.074,7.098-11.494l2.659-2.61c0.151-0.139,0.305-0.277,0.521-0.469  l5.386-4.35c3.598-2.749,10.296-7.866,11.727-9.193c1.572-1.459,3.036-2.168,4.474-2.168c1.075,0,2.022,0.4,2.807,0.791  c0.065,0.033,0.097,0.058,0.104,0.058c0.229,1.019-2.395,3.946-7.8,8.702c-1.838,1.618-2.432,2.152-2.685,2.641l-0.35,0.716  l0.765,1.233l0.718-0.001c0.607,0,1.008-0.001,9.979-8.63c4.211-4.05,9.896-9.652,13.225-13.233l0.023-0.013  c0.012-0.016,0.023-0.032,0.035-0.048l0.357-0.391c0.286-0.313,0.553-0.609,0.737-0.829c1.377-1.391,2.668-2.188,3.541-2.188  c0.264,0,0.484,0.077,0.695,0.242c0.379,0.297,0.575,0.633,0.617,1.059c0.123,1.257-1.072,2.958-1.491,3.444  c-1.112,1.256-6.668,7.529-6.804,7.688c-0.841,0.983-2.757,2.939-4.976,5.205C51.038,62.18,49.746,63.989,50.247,65.427  c0.188,0.542,0.653,0.91,1.243,0.985l0.161,0.01c0.726,0,1.044-0.511,1.299-0.921c0.335-0.537,1.032-1.656,2.126-2.892  c2.408-2.717,6.164-6.695,9.798-10.542c1.771-1.876,3.493-3.699,4.976-5.289c1.562-1.673,2.67-2.938,3.403-3.774  c0.384-0.438,0.747-0.853,0.826-0.927c0.31-0.249,0.984,0.032,1.39,0.754c0.26,0.462,0.569,1.445-0.273,2.827  c-2.286,3.747-6.564,9.244-10.701,14.559c-1.354,1.739-2.695,3.464-3.957,5.112c-0.638,0.835-1.274,1.633-1.884,2.398  c-2.009,2.521-3.744,4.697-4.51,6.826l-0.615,1.712l1.817-0.003c0.705-0.001,0.705-0.001,4.302-4.63  c1.754-2.257,4.444-5.774,7.303-9.715l0.119-0.164c2.834-3.909,4.626-6.38,5.766-7.019c0.313,0.128,0.882,0.445,1.189,0.947  c0.218,0.354,0.258,0.729,0.126,1.182c-0.787,2.714-11.695,19.685-16.17,25.473c-0.618,0.798-1.497,1.884-2.826,3.218l-0.075,0.081  c-2.998,3.581-7.455,7.179-13.247,10.691c-8.719,5.288-16.38,13.816-20.17,18.429l-0.018,0.022c-0.071,0.01-0.179,0.02-0.333,0.02  c-2.373,0-12.278-2.851-18.254-16.638L3.192,98.035z\" />\n</svg>");
+SVGIconsManager.register('dashboard', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     stroke=\"currentColor\"\n     fill=\"none\"\n     stroke-width=\"2\"\n     stroke-linecap=\"round\"\n     stroke-linejoin=\"round\">\n  <rect x=\"5\" y=\"5\" width=\"8\" height=\"21\" rx=\"1\" />\n  <rect x=\"19\" y=\"5\" width=\"8\" height=\"8\" rx=\"1\" />\n  <rect x=\"19\" y=\"19\" width=\"8\" height=\"8\" rx=\"1\" />\n</svg>");
+SVGIconsManager.register('discovery', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:circle cx=\"15\" cy=\"15\" r=\"8\" />\n  <ns0:line x1=\"23\" y1=\"23\" x2=\"28\" y2=\"28\" />\n</ns0:svg>");
+SVGIconsManager.register('download', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M16 5v16\"/>\n  <polyline points=\"10 15 16 21 22 15\"/>\n  <line x1=\"6\" y1=\"27\" x2=\"26\" y2=\"27\"/>\n</svg>\n");
+SVGIconsManager.register('error', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polygon points=\"16 3 29 27 3 27 16 3\" />\n  <line x1=\"16\" y1=\"12\" x2=\"16\" y2=\"17\" />\n  <circle cx=\"16\" cy=\"23\" r=\"1\" />\n</svg>");
+SVGIconsManager.register('feedback', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:path d=\"M28 20a3 3 0 0 1-3 3H9l-5 5V7a3 3 0 0 1 3-3h19a3 3 0 0 1 3 3z\" />\n</ns0:svg>");
+SVGIconsManager.register('first', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n    <line x1=\"4\" y1=\"4\" x2=\"4\" y2=\"28\" />\n</svg>\n");
+SVGIconsManager.register('games', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:rect x=\"5\" y=\"11\" width=\"21\" height=\"11\" rx=\"3\" />\n  <ns0:circle cx=\"11\" cy=\"16\" r=\"1\" />\n  <ns0:circle cx=\"13\" cy=\"16\" r=\"1\" />\n  <ns0:circle cx=\"19\" cy=\"13\" r=\"1\" />\n  <ns0:circle cx=\"19\" cy=\"19\" r=\"1\" />\n</ns0:svg>");
+SVGIconsManager.register('goto', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path d=\"M6 8 H18 V18\" />\n    <polyline points=\"12 18 18 24 24 18\" />\n</svg>\n");
+SVGIconsManager.register('heart-svgrepo-com', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" fill=\"none\">\n  <ns0:path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16 8C14 5 10 4 7 7C4 9 3 14 6 17C7 19 13 25 15 26C16 27 16 27 16 27C16 27 16 27 16 27C16 27 16 27 17 26C19 25 25 19 26 17C29 14 28 9 25 7C22 4 18 5 16 8Z\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</ns0:svg>");
+SVGIconsManager.register('help', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <ns0:circle cx=\"16\" cy=\"16\" r=\"13\" />\n  <ns0:path d=\"M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5\" />\n  <ns0:circle cx=\"16\" cy=\"23\" r=\"1\" />\n</ns0:svg>");
+SVGIconsManager.register('house', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <ns0:path d=\"M4 16L16 5l12 11\" />\n  <ns0:path d=\"M7 16v9a1 1 0 0 0 1 1h5v-7h5v7h5a1 1 0 0 0 1-1v-9\" />\n</ns0:svg>");
+SVGIconsManager.register('install', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n\t<path d=\"M28.36 14.65V11.38l-3.63-.59a9.64 9.64 0 0 0-1-2.41l2.12-3.03-2.16-2.16-2.98 2.14a8.94 8.94 0 0 0-2.42-1l-.63-3.63h-3.06l-.64 3.63a9.1 9.1 0 0 0-2.43 1L8.12 3.19 5.97 5.35l2.09 2.99a9.5 9.5 0 0 0-.22 2.48L4.06 11.4v3.27l3.6.64a9.6 9.6 0 0 0 1.02 2.45l-2.13 2.98 2.17 2.17 3.01-2.11a9 9 0 0 0 2.43 1l.6 3.63h3.06l.64-3.63a9.1 9.1 0 0 0 2.42-1l3 2.11 2.16-2.17-2.16-3a9.5 9.5 0 0 0 1-2.46l3.63-.62zM16 16.54a4.26 4.26 0 1 1 0-8.52 4.26 4.26 0 0 1 0 8.52zM29.54 23.36v4.92a1.23 1.23 0 0 1-1.23 1.23H3.69a1.23 1.23 0 0 1-1.23-1.23v-4.92H0v4.92a3.69 3.69 0 0 0 3.69 3.69h24.62a3.69 3.69 0 0 0 3.69-3.69v-4.92h-2.46z\"/>\n</svg>");
+SVGIconsManager.register('lang', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:path d=\"M28 20a3 3 0 0 1-3 3h-5l-5 5v-5H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h19a3 3 0 0 1 3 3z\" />\n  <ns0:line x1=\"11\" y1=\"12\" x2=\"21\" y2=\"12\" />\n  <ns0:line x1=\"13\" y1=\"17\" x2=\"19\" y2=\"17\" />\n</ns0:svg>");
+SVGIconsManager.register('last', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n    <line x1=\"28\" y1=\"4\" x2=\"28\" y2=\"28\" />\n</svg>\n");
+SVGIconsManager.register('light-bulb', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Bulb -->\n  <circle cx=\"16\" cy=\"12\" r=\"8\"/>\n  <!-- Filament -->\n  <polyline points=\"13 13 15 15 17 11 19 13\"/>\n  <!-- Neck -->\n  <line x1=\"12\" y1=\"20\" x2=\"20\" y2=\"20\"/>\n  <line x1=\"12\" y1=\"22\" x2=\"20\" y2=\"22\"/>\n  <!-- Base -->\n  <line x1=\"13\" y1=\"24\" x2=\"19\" y2=\"24\"/>\n  <line x1=\"14\" y1=\"26\" x2=\"18\" y2=\"26\"/>\n</svg>\n");
+SVGIconsManager.register('like', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <ns0:path d=\"M16 28c-4-4-8-8-8-13a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 5-4 9-8 13z\" />\n</ns0:svg>");
+SVGIconsManager.register('logout', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M21 23l7-7-7-7\" />\n  <path d=\"M28 16H12\" />\n  <path d=\"M16 4H8a3 3 0 0 0-3 3v19a3 3 0 0 0 3 3h8\" />\n</svg>");
+SVGIconsManager.register('menu', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:line x1=\"4\" y1=\"8\" x2=\"28\" y2=\"8\" />\n  <ns0:line x1=\"4\" y1=\"16\" x2=\"28\" y2=\"16\" />\n  <ns0:line x1=\"4\" y1=\"24\" x2=\"28\" y2=\"24\" />\n</ns0:svg>");
+SVGIconsManager.register('misty-moon-svgrepo-com', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" xmlns:ns1=\"http://www.bohemiancoding.com/sketch/ns\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" version=\"1.1\">\n  <ns0:title>misty-moon</ns0:title>\n  <ns0:desc>Created with Sketch Beta.</ns0:desc>\n  <ns0:defs>\n\n</ns0:defs>\n  <ns0:g id=\"Page-1\" stroke=\"none\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\" ns1:type=\"MSPage\">\n    <ns0:g id=\"Icon-Set\" ns1:type=\"MSLayerGroup\" transform=\"translate(-516.000000, -828.000000)\" fill=\"#000000\">\n      <ns0:path d=\"M697,1131 C696,1129 696,1127 696,1125 C696,1114 702,1111 707,1108 C710,1106 715,1106 717,1107 C712,1109 707,1118 707,1126 C707,1128 707,1129 707,1131 L697,1131 L697,1131 Z M729,1131 L710,1131 C710,1129 709,1128 709,1126 C709,1117 715,1109 724,1106 C721,1105 717,1104 714,1104 C703,1104 693,1113 693,1125 C693,1127 694,1129 694,1131 L689,1131 C689,1131 688,1131 688,1132 C688,1133 689,1133 689,1133 L729,1133 C730,1133 731,1133 731,1132 C731,1131 730,1131 729,1131 L729,1131 Z M713,1136 L695,1136 C694,1136 693,1137 693,1137 C693,1138 694,1139 695,1139 L713,1139 C714,1139 715,1138 715,1137 C715,1137 714,1136 713,1136 L713,1136 Z M711,1141 L697,1141 C697,1141 696,1142 696,1143 C696,1143 697,1144 697,1144 L711,1144 C711,1144 712,1143 712,1143 C712,1142 711,1141 711,1141 L711,1141 Z\" id=\"misty-moon\" ns1:type=\"MSShapeGroup\">\n\n</ns0:path>\n    </ns0:g>\n  </ns0:g>\n</ns0:svg>");
+SVGIconsManager.register('next', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n</svg>");
+SVGIconsManager.register('parameters', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <ns0:line x1=\"5\" y1=\"9\" x2=\"27\" y2=\"9\" />\n  <ns0:circle cx=\"11\" cy=\"9\" r=\"2\" />\n  <ns0:line x1=\"5\" y1=\"23\" x2=\"27\" y2=\"23\" />\n  <ns0:circle cx=\"21\" cy=\"23\" r=\"2\" />\n</ns0:svg>");
+SVGIconsManager.register('pathway', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:circle cx=\"5\" cy=\"16\" r=\"3\" />\n  <ns0:circle cx=\"16\" cy=\"5\" r=\"3\" />\n  <ns0:circle cx=\"27\" cy=\"21\" r=\"3\" />\n  <ns0:path d=\"M7 15L14 7L25 19\" />\n</ns0:svg>");
+SVGIconsManager.register('pin', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n\t viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"\n\t aria-label=\"Pushpin\">\n\t<path d=\"M9 3h6l-1 8H10L9 3z\"/>\n\t<path d=\"M7 13h10\"/>\n\t<path d=\"M12 13v9\"/>\n</svg>");
+SVGIconsManager.register('readings', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <ns0:path d=\"M5 25h21M5 20h13M5 15h21M5 9h13\" />\n</ns0:svg>");
+SVGIconsManager.register('redo', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M16 4a12 12 0 1 0 11.3 8h-2.6A9.5 9.5 0 1 1 16 6.5\n               c2.5 0 4.7 1 6.3 2.6L19 12h9V3l-2.7 2.7A12 12 0 0 0 16 4Z\"/>\n</svg>");
+SVGIconsManager.register('researchinfo', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n     viewBox=\"0 0 32 32\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <!-- Left brace { -->\n    <path d=\"M13 5\n             C10 5 10 8 10 10\n             C10 12 8 12 8 12\n             C10 12 10 14 10 16\n             C10 18 8 18 8 18\n             C10 18 10 20 10 22\n             C10 24 10 27 13 27\" />\n    <!-- Right brace } -->\n    <path d=\"M19 5\n             C22 5 22 8 22 10\n             C22 12 24 12 24 12\n             C22 12 22 14 22 16\n             C22 18 24 18 24 18\n             C22 18 22 20 22 22\n             C22 24 22 27 19 27\" />\n    <!-- Dot -->\n    <circle cx=\"16\" cy=\"16\" r=\"1.5\" />\n</svg>\n");
+SVGIconsManager.register('scrolltop', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- upward arrow -->\n  <polyline points=\"8 18 16 10 24 18\" />\n  <!-- top baseline -->\n  <line x1=\"8\" y1=\"22\" x2=\"24\" y2=\"22\" />\n</svg>");
+SVGIconsManager.register('settings', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:circle cx=\"16\" cy=\"16\" r=\"4\" />\n  <ns0:path d=\"M26 20a2 2 0 0 0 0 2l00a3 3 0 1 1-4 4l00a2 2 0 0 0-20 2 2 0 0 0-1 2V28a3 3 0 1 1-5 0v0a2 2 0 0 0-1-2 2 2 0 0 0-20l00a3 3 0 1 1-4-4l00a2 2 0 0 0 0-2 2 2 0 0 0-2-1H4a3 3 0 1 1 0-5h0a2 2 0 0 0 2-1 2 2 0 0 00-2l00a3 3 0 1 1 4-4l00a2 2 0 0 0 20h0A2 2 0 0 0 12 4V4a3 3 0 1 1 5 0v0a2 2 0 0 0 1 2h0a2 2 0 0 0 20l00a3 3 0 1 1 4 4l00a2 2 0 0 00 2v0A2 2 0 0 0 28 15H28a3 3 0 1 1 0 5h0a2 2 0 0 0-2 1z\" />\n</ns0:svg>");
+SVGIconsManager.register('smiley_neutral', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <line x1=\"11\" y1=\"21\" x2=\"21\" y2=\"21\"/>\n</svg>\n\n\n");
+SVGIconsManager.register('smiley_sad', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <path d=\"M11 21 Q16 16 21 21\" fill=\"none\"/>\n</svg>\n\n");
+SVGIconsManager.register('smiley_smile', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <path d=\"M11 21 Q16 26 21 21\" fill=\"none\"/>\n</svg>\n");
+SVGIconsManager.register('sun-svgrepo-com', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" xmlns:ns1=\"http://www.bohemiancoding.com/sketch/ns\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" version=\"1.1\">\n  <ns0:title>sun</ns0:title>\n  <ns0:desc>Created with Sketch Beta.</ns0:desc>\n  <ns0:defs>\n\n</ns0:defs>\n  <ns0:g id=\"Page-1\" stroke=\"none\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\" ns1:type=\"MSPage\">\n    <ns0:g id=\"Icon-Set\" ns1:type=\"MSLayerGroup\" transform=\"translate(-206.000000, -831.000000)\" fill=\"#000000\">\n      <ns0:path d=\"M282,1129 C283,1123 288,1119 295,1119 C301,1119 306,1123 308,1129 L311,1129 C309,1122 303,1116 295,1116 C287,1116 280,1122 279,1129 L282,1129 L282,1129 Z M313,1132 L276,1132 C275,1132 275,1133 275,1133 C275,1134 275,1135 276,1135 L313,1135 C314,1135 315,1134 315,1133 C315,1133 314,1132 313,1132 L313,1132 Z M279,1119 C279,1120 280,1120 281,1119 C281,1119 281,1118 281,1117 L279,1115 C278,1115 277,1115 277,1115 C276,1116 276,1117 277,1117 L279,1119 L279,1119 Z M311,1119 L313,1117 C313,1117 313,1116 313,1115 C312,1115 311,1115 311,1115 L309,1117 C308,1118 308,1119 309,1119 C309,1120 310,1120 311,1119 L311,1119 Z M295,1113 C295,1113 296,1113 296,1112 L296,1109 C296,1109 295,1108 295,1108 C294,1108 293,1109 293,1109 L293,1112 C293,1113 294,1113 295,1113 L295,1113 Z\" id=\"sun\" ns1:type=\"MSShapeGroup\">\n\n</ns0:path>\n    </ns0:g>\n  </ns0:g>\n</ns0:svg>");
+SVGIconsManager.register('switch_contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-label=\"Contrast switcher icon\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <!-- text x=\"16\" y=\"20\" font-size=\"13\" text-anchor=\"middle\" fill=\"currentColor\" font-family=\"Commissioner, sans-serif\">A</text -->\n  <!-- Letter A drawn with three lines -->\n  <line x1=\"13\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"19\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"14\" y1=\"18\" x2=\"18\" y2=\"18\"/>\n  \n  <!-- Plus sign (top-left) -->\n  <line x1=\"5.5\" y1=\"5.5\" x2=\"5.5\" y2=\"8.5\"/>\n  <line x1=\"4\" y1=\"7\" x2=\"7\" y2=\"7\"/>\n\n  <!-- Minus sign (bottom-right) -->\n  <line x1=\"25\" y1=\"25\" x2=\"28\" y2=\"25\"/>\n</svg>");
+SVGIconsManager.register('switch_theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n    <polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>\n");
+SVGIconsManager.register('theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"\n     stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n    <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n    <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n    <line x1=\"16\" y1=\"3\"  x2=\"16\" y2=\"8\"/>\n    <line x1=\"16\" y1=\"24\" x2=\"16\" y2=\"29\"/>\n    <line x1=\"3\"  y1=\"16\" x2=\"8\"  y2=\"16\"/>\n    <line x1=\"24\" y1=\"16\" x2=\"29\" y2=\"16\"/>\n</svg>\n");
+SVGIconsManager.register('user', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n</svg>");
+SVGIconsManager.register('valid', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:polyline points=\"7 17 12 23 25 9\" />\n</ns0:svg>");
+SVGIconsManager.register('video', "<ns0:svg xmlns:ns0=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <ns0:rect x=\"4\" y=\"8\" width=\"20\" height=\"16\" rx=\"3\" />\n  <ns0:polygon points=\"21 13 28 9 28 23 21 19\" />\n</ns0:svg>");
 
 // ---------------- wexa.js ---------------
+SVGIconsManager.init(null);
 // --- Debug -------------------------------------------------------
 console.debug('Imports OK:', {
     OnLoadManager,
@@ -3060,12 +3329,11 @@ console.debug('Imports OK:', {
     MenuManager,
     DialogManager,
     LinkController,
-    SortaTable,
     ToggleSelector,
     ProgressBar,
-    Book,
     BaseManager,
-    RequestManager
+    RequestManager,
+    SVGIconsManager
 });
 // ----- Exports (framework public API) -----
 // ---------------------------------------------------------------------------
@@ -3079,7 +3347,7 @@ console.debug('Imports OK:', {
 // bundled (non-module) version. Applications can safely rely on Wexa.*
 // regardless of whether modules are loaded or the bundle is used.
 // ---------------------------------------------------------------------------
-window.Wexa = {
+window.Wexa = Object.assign(window.Wexa || {}, {
     // ---------------------------------------------------------------
     // Singletons (global services)
     // ---------------------------------------------------------------
@@ -3088,6 +3356,8 @@ window.Wexa = {
     // Note: OnLoadManager is not instantiated because it is a scheduler /
     // dispatcher whose methods are static or utility-like.
     onload: OnLoadManager,
+    // SVGIconsManager is a static class — no instance needed.
+    icons: SVGIconsManager,
     accessibility: new AccessibilityManager(),
     dialog: new DialogManager(),
     links: new LinkController(),
@@ -3102,13 +3372,311 @@ window.Wexa = {
     MenuManager,
     ProgressBar,
     ToggleSelector,
-    SortaTable,
-    Book,
     BaseManager,
-    RequestManager
-};
+    RequestManager,
+    SVGIconsManager
+});
+// Make every [data-href] element without a real href focusable via Tab.
+OnLoadManager.addLoadFunction(() => LinkController.initFocusable());
 // Register the global onload handler so that all deferred load functions
 // declared across Whakerexa modules are executed once the document is ready.
 window.onload = () => {
     OnLoadManager.runLoadFunctions();
 };
+// ---------------- extras/slides/slides.init.js ---------------
+'use strict';
+const _MODULE_URL = null;
+class SlidesInitializer {
+    // -----------------------------------------------------------------------
+    // PRIVATE FIELDS
+    // -----------------------------------------------------------------------
+    #base;
+    #themesAttr;
+    #defaultName;
+    #themesPath;
+    #mode;
+    #logoSrc;
+    #progressOn;
+    // -----------------------------------------------------------------------
+    // CONSTRUCTOR
+    // -----------------------------------------------------------------------
+    constructor() {
+        this.#base = (_MODULE_URL !== null) ? new URL('.', _MODULE_URL).href : null;
+        const scriptEl = this.#findScriptElement();
+        this.#themesAttr  = (scriptEl?.dataset.themes     || '').trim();
+        this.#defaultName = (scriptEl?.dataset.default    || '').trim();
+        this.#themesPath  = (scriptEl?.dataset.themesPath || '').trim();
+        this.#mode        = (scriptEl?.dataset.mode       || 'presentation').trim();
+        this.#logoSrc     = (scriptEl?.dataset.logo       || '').trim();
+        this.#progressOn  = (scriptEl?.dataset.progress   !== 'false');
+    }
+    // -----------------------------------------------------------------------
+    // PUBLIC METHODS
+    // -----------------------------------------------------------------------
+    async init() {
+        if (this.#base === null) {
+            this.#initFromLoadedBundle();
+        } else if (window.location.protocol === 'file:') {
+            await this.#initFromBundle();
+        } else {
+            await this.#initFromModules();
+        }
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE METHODS — initialization paths
+    // -----------------------------------------------------------------------
+    #findScriptElement() {
+        if (_MODULE_URL === null) {
+            return document.currentScript;
+        }
+        const scripts = Array.from(document.querySelectorAll('script[type="module"][src]'));
+        for (const script of scripts) {
+            try {
+                if (new URL(script.src).href === _MODULE_URL) {
+                    return script;
+                }
+            } catch {
+                // Malformed src attribute — skip this element.
+            }
+        }
+        return null;
+    }
+    #initFromBundle() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = new URL('../../wexa.bundle.js', this.#base).href;
+            script.onerror = () => {
+                reject(new Error('SlidesInitializer: failed to load wexa.bundle.js.'));
+            };
+            script.onload = async () => {
+                window.Wexa = window.Wexa || {};
+                await this.#injectBoilerplate();
+                window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
+                this.#registerThemes(window.Wexa.ThemeManager || null);
+                const app = this.#buildConfig(window.Wexa.Slides);
+                app.init();
+                this.#ready(app);
+                resolve();
+            };
+            document.head.appendChild(script);
+        });
+    }
+    async #initFromLoadedBundle() {
+        if (document.querySelectorAll('section.slide').length === 0) {
+            return;
+        }
+        window.Wexa = window.Wexa || {};
+        await this.#injectBoilerplate();
+        window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
+        this.#registerThemes(window.Wexa.ThemeManager || null);
+        const app = this.#buildConfig(window.Wexa.Slides);
+        app.init();
+        this.#ready(app);
+    }
+    async #initFromModules() {
+        const [slidesModule] = await Promise.all([
+            import(new URL('slides.js', this.#base).href),
+            import(new URL('../../wexa.js', this.#base).href),
+        ]);
+        window.Wexa = window.Wexa || {};
+        await this.#injectBoilerplate();
+        if (this.#themesAttr !== '') {
+            const { ThemeManager } = await import(new URL('../theme_manager.js', this.#base).href);
+            this.#registerThemes(ThemeManager);
+        }
+        const app = this.#buildConfig(slidesModule.default);
+        app.init();
+        this.#ready(app);
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE METHODS — DOM building
+    // -----------------------------------------------------------------------
+    #ensureCss(filename) {
+        const alreadyLoaded = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+            .some(link => link.href.endsWith(filename));
+        if (alreadyLoaded === true) {
+            return;
+        }
+        if (this.#base === null) {
+            console.warn(`SlidesInitializer: ${filename} not found in <head>. Add it manually in bundle mode.`);
+            return;
+        }
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = new URL(`../../../css/${filename}`, this.#base).href;
+        document.head.appendChild(link);
+    }
+    async #injectBoilerplate() {
+        this.#ensureCss('menu.css');
+        this.#ensureCss('togglegroup.css');
+        if (this.#progressOn === true && document.getElementById('progress-container') === null) {
+            const container = document.createElement('div');
+            container.id = 'progress-container';
+            const bar = document.createElement('div');
+            bar.id = 'progress-bar';
+            container.appendChild(bar);
+            document.body.appendChild(container);
+        }
+        if (document.getElementById('overview-container') === null) {
+            const overview = document.createElement('div');
+            overview.id = 'overview-container';
+            document.body.appendChild(overview);
+        }
+        if (document.getElementById('accessibility-controls') === null) {
+            document.body.appendChild(await this.#buildAccessibilityNav());
+        }
+        if (document.getElementById('nav-content') === null) {
+            document.body.appendChild(await this.#buildNavContent());
+        }
+        if (this.#logoSrc !== '' && document.getElementById('logo-container') === null) {
+            const logo = document.createElement('div');
+            logo.id = 'logo-container';
+            logo.className = 'top right';
+            const img = document.createElement('img');
+            img.src = this.#logoSrc;
+            img.alt = '';
+            img.className = 'img-logo';
+            logo.appendChild(img);
+            document.body.appendChild(logo);
+        }
+    }
+    async #buildAccessibilityNav() {
+        const nav = document.createElement('nav');
+        nav.id = 'accessibility-controls';
+        nav.className = 'nav-wexa controls-hidden';
+        nav.setAttribute('aria-label', 'Accessibility controls');
+        nav.appendChild(await this.#buildIconButton(
+            'btn-color',
+            'menuitem accessibility',
+            'color',
+            'color',
+            () => {
+                if (window.Wexa !== null
+                        && window.Wexa !== undefined
+                        && window.Wexa.accessibility !== null
+                        && window.Wexa.accessibility !== undefined) {
+                    window.Wexa.accessibility.switchColorScheme();
+                }
+            },
+            { ariaPressed: 'false' }
+        ));
+        if (this.#themesAttr !== '') {
+            nav.appendChild(await this.#buildIconButton(
+                'btn-css-theme',
+                'menuitem',
+                'theme',
+                'Switch theme',
+                () => {
+                    if (window.themes !== null && window.themes !== undefined) {
+                        window.themes.next();
+                    }
+                },
+                { title: 'Switch theme' }
+            ));
+        }
+        return nav;
+    }
+    async #buildIconButton(id, className, iconName, ariaLabel, onClick, extras = {}) {
+        const btn = document.createElement('button');
+        btn.id = id;
+        btn.className = className;
+        btn.setAttribute('aria-label', ariaLabel);
+        if (extras.ariaPressed !== undefined) {
+            btn.setAttribute('aria-pressed', extras.ariaPressed);
+        }
+        if (extras.title !== undefined) {
+            btn.title = extras.title;
+        }
+        btn.innerHTML = await window.Wexa.icons.get(iconName);
+        btn.addEventListener('click', onClick);
+        return btn;
+    }
+    async #buildNavContent() {
+        const nav = document.createElement('nav');
+        nav.id = 'nav-content';
+        nav.className = 'nav-wexa bottom controls-hidden';
+        nav.setAttribute('aria-label', 'Slide navigation');
+        const prevIcon  = await window.Wexa.icons.get('back');
+        const nextIcon  = await window.Wexa.icons.get('next');
+        const firstIcon = await window.Wexa.icons.get('first');
+        const lastIcon  = await window.Wexa.icons.get('last');
+        const gotoIcon  = await window.Wexa.icons.get('goto');
+        nav.innerHTML =
+            '<section>'
+            +     '<button class="menuitem" id="btn-prev" aria-label="Previous slide" title="Previous slide">' + prevIcon + '</button>'
+            +     '<button class="menuitem" id="btn-next" aria-label="Next slide" title="Next slide">' + nextIcon + '</button>'
+            +     '<button class="menuitem" id="btn-back" aria-label="First slide" title="First slide">' + firstIcon + '</button>'
+            +     '<button class="menuitem" id="btn-last" aria-label="Last slide" title="Last slide">' + lastIcon + '</button>'
+            +     '<button class="menuitem" id="btn-goto" aria-label="Go to slide" title="Go to slide">' + gotoIcon + '</button>'
+            + '</section>'
+            + '<section>'
+            +     '<button class="menuitem" id="btn-fullscreen">Fullscreen</button>'
+            + '</section>'
+            + '<section id="slides-controls-view" class="toggle-group" role="radiogroup" aria-label="View mode">'
+            +     '<label class="menuitem" for="btn-overview">'
+            +         '<input type="radio" name="view-mode" id="btn-overview" value="overview">'
+            +         ' Overview'
+            +     '</label>'
+            +     '<label class="menuitem" for="btn-handout">'
+            +         '<input type="radio" name="view-mode" id="btn-handout" value="handout">'
+            +         ' Handout'
+            +     '</label>'
+            +     '<label class="menuitem" for="btn-note">'
+            +         '<input type="radio" name="view-mode" id="btn-note" value="note">'
+            +         ' Note'
+            +     '</label>'
+            +     '<label class="menuitem" for="btn-presentation">'
+            +         '<input type="radio" name="view-mode" id="btn-presentation" value="presentation" checked>'
+            +         ' Slides'
+            +     '</label>'
+            + '</section>';
+        return nav;
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE METHODS — application bootstrap
+    // -----------------------------------------------------------------------
+    #registerThemes(ThemeManager) {
+        if (this.#themesAttr === '' || ThemeManager === null) {
+            return;
+        }
+        const manager = new ThemeManager();
+        for (const entry of this.#themesAttr.split(',')) {
+            const parts = entry.trim().split(':');
+            const name  = parts[0].trim();
+            const file  = parts[1].trim();
+            const href  = /^([./]|https?:)/.test(file) ? file : this.#themesPath + file;
+            manager.register(name, href);
+        }
+        if (this.#defaultName !== '') {
+            manager.setDefault(this.#defaultName);
+        }
+        window.themes = manager;
+    }
+    #buildConfig(SlidesClass) {
+        return new SlidesClass({
+            slides:               document.querySelectorAll('section.slide'),
+            controls:             document.getElementById('nav-content'),
+            controlsView:         document.getElementById('slides-controls-view'),
+            overviewContainer:    document.getElementById('overview-container'),
+            progressBarContainer: this.#progressOn === true ? document.getElementById('progress-container') : null,
+            progressBar:          this.#progressOn === true ? document.getElementById('progress-bar')        : null,
+            logo:                 document.getElementById('logo-container'),
+            accessibility:        document.getElementById('accessibility-controls'),
+            mode:                 this.#mode,
+        });
+    }
+    #ready(app) {
+        window.app = app;
+        window.dispatchEvent(new CustomEvent('wexa:slides:ready', { detail: { app } }));
+    }
+}
+// ---------------------------------------------------------------------------
+// Entry point
+// ---------------------------------------------------------------------------
+const initializer = new SlidesInitializer();
+initializer.init();
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlidesInitializer = SlidesInitializer;
+// ---- END AUTO-GENERATED EXPORTS ----
+

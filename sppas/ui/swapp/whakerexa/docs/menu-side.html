@@ -2,258 +2,362 @@
 
 <html lang="en">
 <head>
+
+    <title>Side menu • Whakerexa</title>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords" content="menu, app, mobile, web, css, html5, framework, accessibility, disability"/>
 
-    <title>menu-side.css</title>
-
     <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+
     <style>
         :root {
-            --header-height: 28vh;
-            --header-slidein: none;
+            --header-height: 2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
 
-            --nav-min-height: 0;
-            --nav-min-width: max(calc(4rem / var(--size-divisor)), 3rem);
-
-            --nav-item-min-width-h: max(calc(4rem / var(--size-divisor)), 3rem);
-            --nav-item-width-h:    calc(6rem / var(--size-divisor));
-            --nav-item-max-width-h: calc(15rem / var(--size-divisor));
-
-            --nav-expanded-width: calc(12rem / var(--size-divisor));
+            --nav-min-height:  0;
+            --nav-min-width:   max(calc(4rem / var(--size-divisor)), 3rem);
             --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
-            --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
-            --border-radius: 1rem;
-
+            --nav-item-width-v-expanded:  calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
             --appmenu-position: left;
-            --appmenu-align: left top;
-        }
-
-        :root:not([data-theme=dark]), [data-theme=light], .light {
-            --nav-bg-color: linear-gradient(180deg,rgba(2, 1, 20, 1) 0%, rgba(6, 6, 71, 1) 35%, rgba(10, 55, 128, 1) 100%);
-            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
+            --appmenu-align:    left top;
         }
     </style>
-
-    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-<script>
-  (function () {
-    const usingFile = (window.location.protocol === 'file:');
-    const s = document.createElement('script');
-    if (usingFile) {
-      s.src = '../wexa_statics/js/wexa.bundle.js';
-    } else {
-      s.type = 'module';
-      s.src = '../wexa_statics/js/wexa.js';
-    }
-    document.head.appendChild(s);
-  })();
-</script>
-    <script>
-  (function () {
-    function initMenu() {
-      if (!window.Wexa || !window.Wexa.MenuManager) {
-        return false;
-      }
-
-      const MenuManager = window.Wexa.MenuManager;
-      window.mainmenu = new MenuManager();
-      window.mainmenu.initSideMenu();
-      window.mainmenu.initMobileToggle();
-      window.mainmenu.registerSubmenu('appmenu-get', 'submenu-toggle-get');
-      window.mainmenu.registerSubmenu('appmenu-discover', 'submenu-toggle-discover');
-      window.mainmenu.registerSubmenu('appmenu-book', 'submenu-toggle-book');
-      return true;
-    }
-
-    function start() {
-      // Wait for Whakerexa to be available (bundle/module)
-      const t = setInterval(function () {
-        if (initMenu()) {
-          clearInterval(t);
-        }
-      }, 20);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', start, { once: true });
-    } else {
-      start();
-    }
-  })();
-</script>
 
 </head>
 
 <body>
 
-    <!-- Header Section for the mobile menu -->
-    <header>
-        <!-- Accessible and responsive menu management -->
-        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
-            Skip to main content
-        </a>
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <button id="menu-button" aria-controls="nav-content" aria-expanded="false"
+            aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6"  x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
+    <input type="checkbox" id="mobile" role="button"
+           aria-label="Menu" aria-haspopup="true" aria-expanded="false">
+    <p>Whakerexa > Menus > Side menu demo</p>
 
-        <button id="menu-button" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation menu"></button>
-        <input type="checkbox" id="mobile" role="button" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
-
-        <h2>Menu for web and mobile applications</h2>
-
-        <nav id="header-nav-content" aria-label="Accessibility navigation">
-            <button id="btn-contrast" class="accessibility print-off" role="menuitem"
-                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()" aria-label="Switch contrast scheme"></button>
-            <button id="btn-theme" class="accessibility print-off" role="menuitem"
-                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()" aria-label="Switch color scheme"></button>
-            <a role="menuitem" class="print-off" href="https://whakerexa.sourceforge.io">
-                <img src="../wexa_statics/logos/whakerexa.png" alt="Whakerexa home page" />
-            </a>
-        </nav>
-    </header>
-
-    <!-- Mobile Menu at the bottom -->
-    <nav id="nav-content" class="nav-wexa side collapsible" aria-label="Main navigation">
-
-        <button aria-label="Pin menu" role="menuitem"
-                id="pin-menu"
-                type="button"
-                aria-controls="nav-content"
-                aria-pressed="true"
-                title="Pin menu"
-                class="menu-pin">
-
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                 aria-label="Pushpin">
-                <path d="M9 3h6l-1 8H10L9 3z"/>
-                <path d="M7 13h10"/>
-                <path d="M12 13v9"/>
-            </svg>
+    <nav id="header-nav-content" aria-label="Accessibility navigation">
+        <button id="btn-contrast" class="menuitem accessibility print-off"
+                aria-pressed="false" aria-label="Switch contrast scheme"
+                onclick="Wexa.accessibility.switchContrastScheme()">
         </button>
-
-        <!-- Main menu entries -->
-        <a role="menuitem" href="index.html" class="nav-current">Home</a>
-        <button role="menuitem" id="submenu-toggle-get"
-                aria-haspopup="true" aria-controls="appmenu-get">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 32 32"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-                <path d="M16 5v16"/>
-                <polyline points="10 15 16 21 22 15"/>
-                <line x1="6" y1="27" x2="26" y2="27"/>
-            </svg>
-            <span>Get SPPAS</span>
+        <button id="btn-color" class="menuitem accessibility print-off"
+                aria-pressed="false" aria-label="Switch color scheme"
+                onclick="Wexa.accessibility.switchColorScheme()">
         </button>
-        <button role="menuitem" id="submenu-toggle-discover"
-                aria-haspopup="true" aria-controls="appmenu-discover">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 32 32"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-                <!-- Outer circle -->
-                <circle cx="16" cy="16" r="13"/>
-                <!-- Compass ticks -->
-                <line x1="16" y1="2" x2="16" y2="4"/>
-                <line x1="16" y1="28" x2="16" y2="30"/>
-                <line x1="2" y1="16" x2="4" y2="16"/>
-                <line x1="28" y1="16" x2="30" y2="16"/>
-                <!-- Needle (angled ~30°) -->
-                <polygon points="18 8 22 18 14 24 10 14"/>
-                <circle cx="16" cy="16" r="1"/>
-            </svg>
-            <span>Discover</span>
-        </button>
-
-        <button role="menuitem" id="submenu-toggle-book"
-                aria-haspopup="true" aria-controls="appmenu-book">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 32 32"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-                <path d="M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z"/>
-                <path d="M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z"/>
-            </svg>
-            <span>Book</span>
-        </button>
-        <a role="menuitem" href="resources.html">Languages</a>
-        <a role="menuitem" href="scripting.html">Scripting</a>
-
-        <!-- Submenus -->
-        <aside id="appmenu-get" class="appmenu" aria-label="Get SPPAS submenu">
-            <nav class="submenu-orange">
-                <a role="menuitem" href="download.html">Download</a>
-                <a role="menuitem" href="installation.html">Install</a>
-                <a role="menuitem" href="https://sourceforge.net/projects/sppas/" class="external-link">Source Code</a>
-            </nav>
-        </aside>
-
-        <aside id="appmenu-discover" class="appmenu" aria-label="Discover submenu">
-            <nav>
-                <a role="menuitem" href="features.html">Features</a>
-                <a role="menuitem" href="tutorial.html">Tutorials</a>
-                <a role="menuitem" href="workdemo.html">Solution samples</a>
-                <a role="menuitem" href="events.html">Events</a>
-            </nav>
-        </aside>
-
-        <aside id="appmenu-book" class="appmenu" aria-label="Book submenu">
-            <nav>
-                <a role="menuitem" href="book_01_introduction.html">Introduction</a>
-                <a role="menuitem" href="book_02_interface.html">Interfaces</a>
-                <a role="menuitem" href="book_03_annotations.html">Annotations</a>
-                <a role="menuitem" href="book_04_convert.html">Convert</a>
-                <a role="menuitem" href="book_05_analyses.html">Analyses</a>
-                <a role="menuitem" href="book_06_references.html">References</a>
-                <a role="menuitem" href="book_07_changes.html">Changes</a>
-                <a role="menuitem" href="book_08_annexes.html">Annexes</a>
-            </nav>
-        </aside>
     </nav>
+</header>
 
-    <!-- Main content -->
-    <main id="main-content">
-        <h1>Description</h1>
+<!-- This nav IS the live demo of nav.nav-wexa.side.collapsible -->
+<nav id="nav-content" class="nav-wexa side collapsible" aria-label="Main navigation">
 
+    <button aria-label="Pin menu"
+            id="pin-menu" type="button"
+            aria-controls="nav-content"
+            aria-pressed="true"
+            title="Pin menu"
+            class="menuitem menu-pin">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+             viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             aria-label="Pushpin">
+            <path d="M9 3h6l-1 8H10L9 3z"/>
+            <path d="M7 13h10"/>
+            <path d="M12 13v9"/>
+        </svg>
+    </button>
+
+    <a class="menuitem" href="index.html" aria-current="page">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true">
+            <path d="M4 16 L16 4 L28 16"/>
+            <path d="M8 13 L8 28 L24 28 L24 13"/>
+        </svg>
+        <span>Home</span>
+    </a>
+
+    <button class="menuitem" id="submenu-toggle-get"
+            aria-haspopup="true" aria-controls="appmenu-get">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5v16"/>
+            <polyline points="10 15 16 21 22 15"/>
+            <line x1="6" y1="27" x2="26" y2="27"/>
+        </svg>
+        <span>Get SPPAS</span>
+    </button>
+
+    <button class="menuitem" id="submenu-toggle-discover"
+            aria-haspopup="true" aria-controls="appmenu-discover">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="16" cy="16" r="13"/>
+            <line x1="16" y1="2" x2="16" y2="4"/>
+            <line x1="16" y1="28" x2="16" y2="30"/>
+            <line x1="2" y1="16" x2="4" y2="16"/>
+            <line x1="28" y1="16" x2="30" y2="16"/>
+            <polygon points="18 8 22 18 14 24 10 14"/>
+            <circle cx="16" cy="16" r="1"/>
+        </svg>
+        <span>Discover</span>
+    </button>
+
+    <button class="menuitem" id="submenu-toggle-book"
+            aria-haspopup="true" aria-controls="appmenu-book">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z"/>
+            <path d="M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z"/>
+        </svg>
+        <span>Book</span>
+    </button>
+
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+        <span>Theme</span>
+    </button>
+
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+        <span>Back</span>
+    </a>
+
+    <!-- aside.appmenu must be direct children of nav, never inside section -->
+    <aside id="appmenu-get" class="appmenu" aria-label="Get SPPAS submenu">
+        <nav class="submenu-orange">
+            <p class="nav-section-label">Get SPPAS</p>
+            <a class="menuitem" href="#">Download</a>
+            <a class="menuitem" href="#">Install</a>
+            <a class="menuitem" href="#" class="external-link">Source Code</a>
+        </nav>
+    </aside>
+
+    <aside id="appmenu-discover" class="appmenu" aria-label="Discover submenu">
+        <nav>
+            <p class="nav-section-label">Discover</p>
+            <a class="menuitem" href="#">Features</a>
+            <a class="menuitem" href="#">Tutorials</a>
+            <a class="menuitem" href="#">Events</a>
+        </nav>
+    </aside>
+
+    <aside id="appmenu-book" class="appmenu" aria-label="Book submenu">
+        <nav>
+            <p class="nav-section-label">Book</p>
+            <a class="menuitem" href="#">Introduction</a>
+            <a class="menuitem" href="#">Interfaces</a>
+            <a class="menuitem" href="#">Annotations</a>
+            <a class="menuitem" href="#">References</a>
+        </nav>
+    </aside>
+
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Side menu — live demo</h1>
         <p>
-            This page demonstrates a “side navigation” layout (desktop-style).
-            The HTML of this page is the reference (doc + demo).
+            This page is the live demo of <code>nav.nav-wexa.side.collapsible</code>.
+            The navigation on the left is the component being documented.
+            It demonstrates: collapsible expand on hover/focus, pin button,
+            mobile toggle, and <code>aside.appmenu</code> off-canvas submenus.
         </p>
 
-        <h2>What this example shows</h2>
+        <h2>What this demo shows</h2>
         <ul>
-            <li>A top navigation bar: <code>#nav-content</code></li>
-            <li>A side menu container: <code>aside.appmenu</code> with submenus</li>
-            <li>Menu controls: <code>#menu-button</code> (mobile toggle) and <code>#pin-menu</code> (pin)</li>
+            <li>
+                <code>nav#nav-content.nav-wexa.side.collapsible</code> — the side nav
+                itself, with pin button and menu items.
+            </li>
+            <li>
+                <code>button#menu-button</code> — mobile hamburger toggle in
+                <code>&lt;header&gt;</code>, visible below 896 px.
+            </li>
+            <li>
+                <code>nav#header-nav-content</code> — compact accessibility controls
+                in the header, absolutely positioned at top-right.
+            </li>
+            <li>
+                Three <code>aside.appmenu</code> panels (Get SPPAS, Discover, Book)
+                registered with <code>MenuManager.registerSubmenu()</code>.
+            </li>
         </ul>
-
         <p>
-            CSS provides the layout (<code>menu.css</code>).
-            JavaScript is only used to open/close menus and manage submenus (<code>MenuManager</code>).
+            CSS provides all layout and transitions (<code>menu.css</code>).
+            JavaScript is only used to manage pin state, mobile toggle, and submenu
+            open/close (<code>MenuManager</code>).
         </p>
-    </main>
 
-    <footer>
-        <p class="center">This site respects your privacy.</p>
-        <p class="center">We do not collect any information and do not use cookies.</p>
-        <hr>
-        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
-            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
-        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
-            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
-        </p>
-    </footer>
+        <h2>HTML structure</h2>
+
+        <article class="card-doc" aria-label="Side menu — HTML structure">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <p>The full running demo is this page's navigation. View source for the complete code.</p>
+            </div>
+            <pre class="dark"><code>&lt;header id="header-content"&gt;
+    &lt;button id="menu-button" aria-controls="nav-content"
+            aria-expanded="false" aria-label="Toggle navigation menu"&gt;
+        &lt;svg ...&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;nav id="header-nav-content" aria-label="Accessibility navigation"&gt;
+        &lt;button class="menuitem" aria-label="..."&gt;&lt;/button&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;nav id="nav-content" class="nav-wexa side collapsible"
+     aria-label="Main navigation"&gt;
+
+    &lt;button id="pin-menu" class="menuitem menu-pin"
+            type="button" aria-controls="nav-content"
+            aria-pressed="true" aria-label="Pin menu"&gt;
+        &lt;svg aria-label="Pushpin"&gt;...&lt;/svg&gt;
+    &lt;/button&gt;
+
+    &lt;a class="menuitem" href="#"&gt;
+        &lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+        &lt;span&gt;Home&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;button class="menuitem" id="submenu-toggle-get"
+            aria-haspopup="true" aria-controls="appmenu-get"&gt;
+        &lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+        &lt;span&gt;Get SPPAS&lt;/span&gt;
+    &lt;/button&gt;
+
+    &lt;!-- aside must be a direct child of nav, never inside section --&gt;
+    &lt;aside id="appmenu-get" class="appmenu" aria-label="Get SPPAS submenu"&gt;
+        &lt;nav class="submenu-orange"&gt;
+            &lt;p class="nav-section-label"&gt;Get SPPAS&lt;/p&gt;
+            &lt;a class="menuitem" href="#"&gt;Download&lt;/a&gt;
+            &lt;a class="menuitem" href="#"&gt;Install&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/aside&gt;
+
+&lt;/nav&gt;</code></pre>
+        </article>
+
+        <h2>JavaScript initialization</h2>
+
+        <article class="card-doc" aria-label="Side menu — JS initialization">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <p><code>MenuManager</code> handles expand/collapse, pin, mobile toggle, and submenu open/close.</p>
+            </div>
+            <pre class="dark"><code>const menu = new MenuManager();
+menu.initSideMenu();       // wires #pin-menu
+menu.initMobileToggle();   // wires #menu-button
+menu.registerSubmenu('appmenu-get',      'submenu-toggle-get');
+menu.registerSubmenu('appmenu-discover', 'submenu-toggle-discover');
+menu.registerSubmenu('appmenu-book',     'submenu-toggle-book');</code></pre>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    (function () {
+        function initMenu() {
+            if (!window.Wexa || !window.Wexa.MenuManager) {
+                return false;
+            }
+            const m = new window.Wexa.MenuManager();
+            window.mainmenu = m;
+            m.initSideMenu();
+            m.initMobileToggle();
+            m.registerSubmenu('appmenu-get',      'submenu-toggle-get');
+            m.registerSubmenu('appmenu-discover', 'submenu-toggle-discover');
+            m.registerSubmenu('appmenu-book',     'submenu-toggle-book');
+            return true;
+        }
+        function start() {
+            const t = setInterval(function () {
+                if (initMenu()) {
+                    clearInterval(t);
+                }
+            }, 20);
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', start, { once: true });
+        } else {
+            start();
+        }
+    })();
+</script>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+</script>
 
 </body>
 </html>

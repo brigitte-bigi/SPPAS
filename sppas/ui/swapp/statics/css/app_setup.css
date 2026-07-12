@@ -49,7 +49,7 @@
 }
 
 /* Light mode */
-:root:not([data-theme=dark]), [data-theme=light] {
+:root:not(.dark), .light {
     --breadcrumb-bg-color-inactive: rgb(20, 30, 80);
     --breadcrumb-bg-color-active: rgb(220, 230, 255);
     --breadcrumb-bg-color-visited: rgb(190, 200, 215);
@@ -107,6 +107,10 @@ Inspired from: https://codepen.io/arkev/pen/nRGEYZ
 */
 ol.breadcrumb > li:before  {
     color: var(--breadcrumb-bg-color-active);
+    /* wexa.css pulls the marker out of the container with a negative
+       margin, and the breadcrumb hides its overflow */
+    width: auto;
+    margin-inline-start: 0;
 }
 
 .breadcrumb li {
@@ -114,6 +118,7 @@ ol.breadcrumb > li:before  {
 	outline: none;
 	display: block;
 	float: left;
+	flex: 1 1 0;
 	font-size: var(--breadcrumb-font-size);
 	line-height: var(--breacrumb-height);
     color: var(--bg-color);
@@ -204,10 +209,10 @@ ol.breadcrumb > li:before  {
 }
 
 .dark .wizard-fieldset {
-    scrollbar-color: #666 #2a223a;
+    scrollbar-color: rgb(102, 102, 102) rgb(42, 34, 58);
 }
 
-.wizard-fieldset:not([data-theme=dark]), [data-theme=light] {
+:root:not(.dark) .wizard-fieldset {
     background: linear-gradient(120deg, rgb(210, 210, 250) 0%, rgb(233, 233, 242) 50%, rgb(241, 223, 245) 100%);
 }
 
@@ -291,6 +296,10 @@ ol.breadcrumb > li:before  {
     padding-left: 0.5rem;
     padding-right: 0.4rem;
     margin-right: 0.5rem;
+    /* wexa.css gives the marker a fixed width, too narrow once the
+       padding and the border above are added */
+    width: auto;
+    margin-inline-start: 0;
 }
 
 .progress-infinite {

@@ -1,0 +1,400 @@
+/*
+ :filename: wexa_statics/css/extras/wexa_theme_aurora.css
+ :author: Brigitte Bigi
+ :contact: contact@sppas.org
+ :summary: Aurora theme for Whakerexa — blue, mauve, violet gradients.
+
+ -------------------------------------------------------------------------
+
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+ Laboratoire Parole et Langage, Aix-en-Provence, France
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+ This banner notice must not be removed.
+
+ -------------------------------------------------------------------------
+
+ Load AFTER wexa.css:
+   <link rel="stylesheet" href="wexa.css">
+   <link rel="stylesheet" href="extras/wexa_theme_aurora.css">
+
+ Architecture:
+   - Color/font-family variables are unlayered so they win over all wexa.css
+     @layer rules regardless of load order.
+   - Sizing variables (--font-size, --typography-spacing-*, --border-radius) are
+     inside @layer theme so that unlayered page-specific CSS (e.g. slides.css)
+     can override them without specificity games.
+   - Decoration overrides (element rules) are inside @layer theme.
+
+ Aurora theme — blue, mauve, violet palette with gradients.
+ Flat type scale, system-ui font, card-style articles.
+
+ Variable conventions used in this file:
+   [override] — variable already defined in wexa.css, value changed for Aurora style
+   [new]      — variable that does not exist in wexa.css, created for Aurora-specific needs
+*/
+
+
+/* =========================================================================
+   CSS variables -- unlayered, win over all @layer rules in wexa.css
+   ========================================================================= */
+
+/* ======================================================================
+   Typography — normal mode
+   ====================================================================== */
+
+:root:not(.contrast) {
+    --font-family-sans:   system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu,
+                          Cantarell, Helvetica, Arial, sans-serif;
+    --font-family-serif:  var(--font-family-sans);
+}
+
+/* ======================================================================
+   Light mode — CSS variable overrides
+   ====================================================================== */
+
+:root:not(.dark) {
+
+    /* ── @layer theme color overrides ──────────────────────────────── */
+    --body-bg-color: rgb(248, 242, 255);
+    --bg-color:     rgb(252, 250, 255);
+    --bg-color-alt: rgb(240, 236, 255);
+    --fg-color:     rgb(28, 18, 60);
+    --fg-color-alt: rgb(58, 44, 95);
+
+    --border-color:     rgba(110, 70, 200, 0.2);
+    --border-color-alt: rgba(110, 70, 200, 0.12);
+
+    /* [override] Primary accent — Aurora violet */
+    --a-color:          rgb(80, 40, 185);
+    --li-color:         rgb(100, 55, 200);
+    --buttons-bg-color: rgb(95, 50, 200);
+    --buttons-fg-color: rgb(255, 255, 255);
+
+    --header-bg-color: linear-gradient(135deg, rgb(38, 12, 110) 0%, rgb(80, 35, 170) 55%, rgb(130, 65, 200) 100%);
+    --nav-bg-color:    rgb(38, 12, 110);
+    --footer-bg-color: rgb(240, 236, 255);
+    --header-fg-color: rgb(255, 255, 255);
+    --nav-fg-color:    rgb(210, 195, 255);
+    --footer-fg-color: rgb(58, 44, 95);
+
+    --h1-color: rgb(20, 10, 55);
+    --h2-color: rgb(35, 22, 80);
+    --h3-color: rgb(55, 38, 105);
+    --h4-color: rgb(55, 38, 105);
+    --h5-color: rgb(75, 55, 128);
+    --h6-color: rgb(95, 72, 150);
+
+    --blockquote-border-color: rgb(95, 50, 200);
+    --blockquote-footer-color: rgb(128, 98, 168);
+
+    --table-border-color:           rgba(110, 70, 200, 0.15);
+    --table-row-stripped-bg-color:  rgb(248, 245, 255);
+    --table-head-bg-color:          rgb(232, 226, 255);
+    --table-head-fg-color:          rgb(28, 18, 60);
+    --table-caption-bg-color:       rgb(232, 226, 255);
+    --table-caption-fg-color:       rgb(58, 44, 95);
+
+    --inputs-bg-color: rgb(255, 255, 255);
+
+    --progress-bg-color: rgb(218, 210, 248);
+    --progress-fg-color: rgb(95, 50, 200);
+
+    --shadow-color: rgba(95, 50, 200, 0.14);
+
+}
+
+
+/* =========================================================================
+   Dark mode — CSS variable overrides (unlayered)
+   ========================================================================= */
+
+:root.dark {
+    --body-bg-color: rgb(17, 11, 40);
+    --bg-color: rgb(12, 8, 28);
+}
+
+
+/* ======================================================================
+   Dark mode — CSS variable overrides
+   ====================================================================== */
+
+.dark {
+
+        --bg-color-alt: rgb(22, 14, 50);
+        --fg-color:     rgb(218, 212, 248);
+        --fg-color-alt: rgb(182, 172, 222);
+
+        --border-color:     rgba(180, 145, 255, 0.2);
+        --border-color-alt: rgba(180, 145, 255, 0.12);
+
+        --a-color:          rgb(165, 125, 255);
+        --li-color:         rgb(165, 125, 255);
+        --buttons-bg-color: rgb(120, 75, 235);
+        --buttons-fg-color: rgb(255, 255, 255);
+
+        --header-bg-color: linear-gradient(135deg, rgb(8, 4, 20) 0%, rgb(30, 12, 75) 55%, rgb(65, 22, 125) 100%);
+        --nav-bg-color:    rgba(0, 0, 0, 0.45);
+        --footer-bg-color: rgb(18, 11, 40);
+        --header-fg-color: rgb(218, 212, 248);
+        --nav-fg-color:    rgb(195, 178, 242);
+        --footer-fg-color: rgb(182, 172, 222);
+
+        --h1-color: rgb(218, 212, 248);
+        --h2-color: rgb(202, 194, 238);
+        --h3-color: rgb(186, 175, 228);
+        --h4-color: rgb(186, 175, 228);
+        --h5-color: rgb(170, 156, 218);
+        --h6-color: rgb(154, 138, 208);
+
+        --blockquote-border-color: rgb(145, 108, 255);
+        --blockquote-footer-color: rgb(158, 138, 212);
+        --blockquote-border-width: calc(0.25 * var(--font-size));
+
+        --table-border-color:           rgba(180, 145, 255, 0.15);
+        --table-row-stripped-bg-color:  rgb(28, 18, 55);
+        --table-head-bg-color:          rgb(20, 12, 42);
+        --table-head-fg-color:          rgb(218, 212, 248);
+        --table-caption-bg-color:       rgb(20, 12, 42);
+        --table-caption-fg-color:       rgb(182, 172, 222);
+
+        --inputs-bg-color: rgb(22, 14, 50);
+
+        --progress-bg-color: rgb(42, 28, 85);
+        --progress-fg-color: rgb(145, 108, 255);
+
+    --shadow-color: rgba(120, 80, 255, 0.28);
+
+}
+
+
+
+/* =========================================================================
+   Decoration overrides -- inside @layer theme
+   ========================================================================= */
+
+@layer theme {
+
+    /* ======================================================================
+       Slides accent colors — override slides.css defaults
+       ====================================================================== */
+
+    :root {
+        --custom-color1: rgb(28, 11, 76);
+        --custom-color2: rgb(208, 197, 246);
+    }
+
+    .dark {
+        --custom-color1: rgb(208, 197, 246);
+        --custom-color2: rgb(28, 11, 76);
+    }
+
+    /* ======================================================================
+       Sizing variables — in @layer so unlayered page CSS (e.g. slides.css)
+       can override without specificity games.
+       ====================================================================== */
+
+    :root:not(.contrast) {
+        --border-radius:                 6px;
+        --font-size:                     calc(16px / var(--fontsize-divisor));
+        --typography-spacing-vertical:   calc(0.8 * 16px / var(--size-divisor));
+        --typography-spacing-horizontal: calc(0.6 * 16px / var(--size-divisor));
+    }
+
+    .contrast {
+        --border-radius:                 6px;
+        --font-size:                     calc(17px / var(--fontsize-divisor));
+        --typography-spacing-vertical:   calc(1.0 * 17px / var(--size-divisor));
+        --typography-spacing-horizontal: calc(0.8 * 17px / var(--size-divisor));
+    }
+
+    /* ======================================================================
+       Layout — .grid-panel override
+       ====================================================================== */
+
+    /* [override] Aurora: top-align items (layout.css default: center) */
+    .grid-panel {
+        align-items: start;
+    }
+    /* ======================================================================
+       Decoration overrides — Aurora visual style
+       Interactive element padding uses var(--font-size) multiples.
+       Block-level structural spacing uses var(--typography-spacing-*).
+       ====================================================================== */
+
+    /* ── Headings: flat type scale ───────────────────────────────────────── */
+    /* Overrides wexa.css context-dependent sizing (header/main/footer) with  */
+    /* a flat scale. Sets bold on all levels (wexa uses semibold for h3/h4).  */
+    /* Removes h6 italic. Adds line-height on all levels.                     */
+
+    h1 {
+        font-size: calc(2 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h2 {
+        font-size: calc(1.75 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h3 {
+        font-size: calc(1.5 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h4 {
+        font-size: calc(1.25 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h5 {
+        font-size: calc(1.125 * var(--font-size));
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    h6 {
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        font-weight: var(--font-weight-bold);
+    }
+
+    /* ── Blockquote: left border only, no background ─────────────────────── */
+    /* border shorthand resets ALL borders before adding left border.         */
+
+    blockquote {
+        border: none;
+        border-left: var(--blockquote-border-width) solid var(--blockquote-border-color);
+        border-radius: 0;
+        background-image: none;
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    blockquote,
+    blockquote > p,
+    blockquote > a {
+        font-weight: var(--font-weight-normal);
+    }
+
+    /* ── Buttons: reset secondary style ─────────────────────────────────── */
+
+    button[type=reset],
+    input[type=reset] {
+        background-color: var(--bg-color-alt);
+        color: var(--fg-color);
+        border-color: var(--border-color);
+    }
+
+    /* ── Progress: thin bar ─────────────────────────────────────────────── */
+
+    progress {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        display: block;
+        width: 100%;
+        height: calc(0.5 * var(--font-size));
+        border: 0;
+        border-radius: var(--border-radius);
+        background-color: var(--progress-bg-color);
+        overflow: hidden;
+        color: var(--progress-fg-color);
+        margin-bottom: var(--typography-spacing-vertical);
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: var(--progress-bg-color);
+        border-radius: var(--border-radius);
+    }
+
+    progress::-webkit-progress-value {
+        background-color: var(--progress-fg-color);
+        border-radius: var(--border-radius);
+    }
+
+    progress::-moz-progress-bar {
+        background-color: var(--progress-fg-color);
+        border-radius: var(--border-radius);
+    }
+
+    /* ── Table: horizontal lines only, no outer border ──────────────────── */
+
+    table:not([role="presentation"]) {
+        border: none;
+    }
+
+    td, th {
+        border-left: none;
+        border-bottom: var(--table-border-width) solid var(--table-border-color);
+    }
+
+    thead td, thead th {
+        border-bottom: calc(var(--table-border-width) * 3) solid var(--table-border-color);
+    }
+
+    tfoot td, tfoot th {
+        border-top: var(--table-border-width) solid var(--table-border-color);
+        border-bottom: none;
+    }
+
+    /* ── Forms: full-width inputs ────────────────────────────────────────── */
+
+    button[type=submit],
+    button[type=reset],
+    input:not([type=checkbox],[type=radio],[type=range],[type=file]),
+    select,
+    textarea {
+        width: 100%;
+    }
+
+    /* ── Switch: compact toggle ──────────────────────────────────────────── */
+
+    .switch,
+    label.switch {
+        --switch-width:  calc(2.625 * var(--font-size));
+        --switch-height: calc(1.375 * var(--font-size));
+    }
+
+    /* ── Article: card with Aurora gradient ──────────────────────────────── */
+
+    article {
+        padding: calc(1.5 * var(--typography-spacing-vertical));
+        border-radius: var(--border-radius);
+        background: linear-gradient(135deg, var(--bg-color-alt) 0%, var(--bg-color) 100%);
+        box-shadow: 0 calc(0.125 * var(--font-size)) calc(0.5 * var(--font-size)) var(--shadow-color);
+        overflow: hidden;
+    }
+
+    /* wexa.css @layer base sets background-color on ALL elements (*).        */
+    /* Override for article descendants so the card gradient shows through.  */
+    article * {
+        background-color: transparent;
+    }
+
+    article > footer {
+        margin-top: var(--typography-spacing-vertical);
+        padding-top: var(--typography-spacing-vertical);
+        border-top: var(--border-width) solid var(--border-color-alt);
+    }
+
+}

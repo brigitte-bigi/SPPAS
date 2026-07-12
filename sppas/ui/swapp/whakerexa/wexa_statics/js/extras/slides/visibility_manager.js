@@ -8,9 +8,9 @@ import SlidesVisibilityController from './visibility.js';
 
  -------------------------------------------------------------------------
 
- This file is part of Whakerexa: https://whakerexa.sf.net/
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
- Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  Laboratoire Parole et Langage, Aix-en-Provence, France
 
  This program is free software: you can redistribute it and/or modify
@@ -54,6 +54,18 @@ export default class SlidesVisibilityManager {
             const element = elementsMap[name];
             this._controllers[name] = new SlidesVisibilityController(element);
         }
+    }
+
+    /**
+     * @param {string} name
+     * @returns {boolean}
+     */
+    isVisible(name) {
+        const controller = this._controllers[name];
+        if (controller instanceof SlidesVisibilityController) {
+            return controller.isVisible();
+        }
+        return false;
     }
 
     /**

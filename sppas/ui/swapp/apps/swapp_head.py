@@ -94,5 +94,12 @@ class swappHeadNode(HTMLHeadNode):
         self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/button.css", link_type=CSS_MIME_TYPE)
         self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/menu.css", link_type=CSS_MIME_TYPE)
 
+        print_css = HTMLNode(self.identifier, None, "link")
+        print_css.add_attribute("rel", "stylesheet")
+        print_css.add_attribute("href", wapp_settings.wexa_statics + "css/print.css")
+        print_css.add_attribute("type", CSS_MIME_TYPE)
+        print_css.add_attribute("media", "print")
+        self.append_child(print_css)
+
         # Add the javascript, from Whakerexa
         self.script(src=wapp_settings.wexa_statics + "js/wexa.js", script_type="module")

@@ -1,4 +1,4 @@
-import SlidesApp from './slides_app.js';
+import SlidesAssembler from './slides_assembler.js';
 
 /**
  :filename: statics.js.slides.slides.js
@@ -8,9 +8,9 @@ import SlidesApp from './slides_app.js';
 
  -------------------------------------------------------------------------
 
- This file is part of Whakerexa: https://whakerexa.sf.net/
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
- Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  Laboratoire Parole et Langage, Aix-en-Provence, France
 
  This program is free software: you can redistribute it and/or modify
@@ -75,7 +75,7 @@ export default class Slides {
 
         // --- Instantiate the internal application -----------------------------
 
-        this._app = new SlidesApp(cleanedConfig);
+        this._app = new SlidesAssembler(cleanedConfig);
     }
 
     /**
@@ -84,14 +84,6 @@ export default class Slides {
      */
     init() {
         this._app.init();
-    }
-
-    /**
-     * Expose SlidesManager to the outside.
-     * @returns {SlidesManager}
-     */
-    get manager() {
-        return this._app.manager;
     }
 
     /**

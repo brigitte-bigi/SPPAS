@@ -7,9 +7,9 @@
 
 -------------------------------------------------------------------------
 
-This file is part of Whakerexa: https://whakerexa.sf.net/
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
-Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+Copyright (C) 2023-2026 Brigitte Bigi, CNRS
 Laboratoire Parole et Langage, Aix-en-Provence, France
 
 This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ This banner notice must not be removed.
 -------------------------------------------------------------------------
 
 */
-:root:not([data-theme=dark]), [data-theme=light], .light {
+:root:not(.dark) {
     --dialog-img-preview-bg-color: rgb(128, 128, 128);
 }
 
@@ -91,83 +91,117 @@ figure.img-video-visualization button[name=play-btn] {
                            Message dialogs
    ======================================================================= */
 
-/* A fixed color for each message type. Transparency allows to match with any color scheme. */
+/* Two-zone layout: colored icon header on top, bg-color content below. */
+dialog[role=alertdialog] {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    min-width: min(28rem, 80vw);
+    max-height: 80vh;
+    overflow: hidden;
+    border-left-width: var(--dialog-border-width); /* normalize: wexa.css sets 4x on left */
+}
+
+/* Override wexa.css @layer base hidden-alert rule (display:none is inside a layer,
+   display:flex above is unlayered and would win without this). */
+dialog[role=alertdialog].hidden-alert {
+    display: none;
+}
+
+/* Children transparent: dialog bg-color (white/dark) shows through.
+   Must be unlayered to override wexa.css @layer base `* { background-color }`. */
+dialog[role=alertdialog] * {
+    background: transparent;
+}
+
+/* Content padding and scroll for direct children */
+dialog[role=alertdialog] > p,
+dialog[role=alertdialog] > div {
+    padding: var(--typography-spacing-horizontal);
+    overflow-y: auto;
+}
+
+/* Icon zone: centered, colored background, icon contrasts against it */
+dialog[role=alertdialog]::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--typography-spacing-vertical);
+    font-size: calc(1.5 * var(--font-size));
+    color: var(--dialog-icon-color, rgb(255, 255, 255));
+}
+
+/* Type colors: border + icon zone background + icon content */
 
 dialog[role=alertdialog].info {
     border-color: var(--info-color);
-    background-color: var(--info-bg-color);
+}
+dialog[role=alertdialog].info::before {
+    content: "\002139";
+    background-color: var(--info-color);
 }
 
 dialog[role=alertdialog].warning {
     border-color: var(--warning-color);
-    background-color: var(--warning-bg-color);
+}
+dialog[role=alertdialog].warning::before {
+    content: "\26A0";
+    background-color: var(--warning-color);
 }
 
 dialog[role=alertdialog].error {
     border-color: var(--error-color);
-    background-color: var(--error-bg-color);
+}
+dialog[role=alertdialog].error::before {
+    content: "\0021";
+    background-color: var(--error-color);
 }
 
 dialog[role=alertdialog].success {
     border-color: var(--success-color);
-    background-color: var(--success-bg-color);
+}
+dialog[role=alertdialog].success::before {
+    content: "\2713";
+    background-color: var(--success-color);
 }
 
 dialog[role=alertdialog].tips {
     border-color: var(--tips-color);
-    background-color: var(--tips-bg-color);
+}
+dialog[role=alertdialog].tips::before {
+    content: "\01F4A1";
+    background-color: var(--tips-color);
 }
 
 dialog[role=alertdialog].question {
     border-color: var(--question-color);
-    background-color: var(--question-bg-color);
 }
-
-
-/* A fixed character to represent differently each message type. Important! */
-
-dialog[role=alertdialog].info::before {
-    color: var(--info-color);
-    content: "\002139";
-    font-size: calc(2*var(--font-size));
-
-    /* this is an attempt which does not work. to be continued. */
-    text-align: left;
-    vertical-align: middle;
-    line-height: 2rem;
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-}
-
-dialog[role=alertdialog].warning::before {
-    color: var(--warning-color);
-    content: "\26A0";
-    font-size: calc(2*var(--font-size));
-}
-
-dialog[role=alertdialog].success::before {
-    color: var(--success-color);
-    content: "\2713";
-    font-size: calc(2*var(--font-size));
-}
-
-dialog[role=alertdialog].error::before {
-    color: var(--error-color);
-    content: "\0021";
-    font-size: calc(2*var(--font-size));
-}
-
 dialog[role=alertdialog].question::before {
-    color: var(--question-color);
     content: "\0003F";
-    font-size: calc(2*var(--font-size));
+    background-color: var(--question-color);
 }
 
-dialog[role=alertdialog].tips::before {
-    color: var(--tips-color);
-    content: "\01F4A1";
-    font-size: calc(2*var(--font-size));
+/* Form layout for question-type buttons */
+dialog[role=alertdialog] form {
+    display: flex;
+    justify-content: center;
+    gap: var(--typography-spacing-horizontal);
+    margin-top: calc(var(--typography-spacing-vertical) / 2);
 }
+
+dialog[role=alertdialog] form button {
+    border-radius: var(--dialog-border-radius);
+    padding: calc(var(--typography-spacing-vertical) / 2) var(--typography-spacing-horizontal);
+    color: var(--dialog-icon-color, rgb(255, 255, 255));
+    border: none;
+}
+
+dialog[role=alertdialog].info form button     { background-color: var(--info-color); }
+dialog[role=alertdialog].warning form button  { background-color: var(--warning-color); }
+dialog[role=alertdialog].error form button    { background-color: var(--error-color); }
+dialog[role=alertdialog].success form button  { background-color: var(--success-color); }
+dialog[role=alertdialog].tips form button     { background-color: var(--tips-color); }
+dialog[role=alertdialog].question form button { background-color: var(--question-color); }
 
 
 /* =======================================================================

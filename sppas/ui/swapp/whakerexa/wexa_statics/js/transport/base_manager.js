@@ -86,8 +86,9 @@ export class BaseManager {
      *
      * Handles the result of an action by checking the status of the request. If the
      * request was unsuccessful (status code not 200), an error message is displayed.
-     * Otherwise, an optional info message is shown. If `reload` is set to true, the page
-     * is reloaded after displaying the message.
+     * Otherwise, an optional info message is shown -- unless `reload` is also true: an
+     * unconditional reload right after would destroy the dialog before it could ever
+     * be read, so showing it would only produce a pointless flash.
      * The messages are displayed in a <dialog> element if available, or in an alert box otherwise.
      *
      * HTML Requirement:
@@ -95,7 +96,7 @@ export class BaseManager {
      *  - A <dialog> element with id="info_dialog" to display info messages.
      *
      * @param {string} [error="No details"] - The error message to display if a request fails.
-     * @param {string} [info=""] - An optional info message to display upon success.
+     * @param {string} [info=""] - An optional info message to display upon success (ignored if `reload` is true).
      * @param {boolean} [reload=true] - Whether to reload the page if no error occurred.
      *
      * @returns {void}
@@ -106,7 +107,7 @@ export class BaseManager {
             WexaLogger.error(`HTTP error ${this._requestManager.status}: ${error}`);
             this._showDialog('error_dialog', `Erreur ${this._requestManager.status} : ${error}`);
         } else {
-            if (info) {
+            if (info && !reload) {
                 WexaLogger.info(info);
                 this._showDialog('info_dialog', info);
             }
@@ -187,7 +188,7 @@ export class BaseManager {
 
         // Server replied: process normally
         if (respError || respInfo) {
-            this._showActionResult(respError, '', true);
+            this._showActionResult(respError, respInfo, true);
             return;
         }
 

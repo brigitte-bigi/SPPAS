@@ -6,9 +6,9 @@
 
  -------------------------------------------------------------------------
 
- This file is part of Whakerexa: https://whakerexa.sf.net/
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
- Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  Laboratoire Parole et Langage, Aix-en-Provence, France
 
  This program is free software: you can redistribute it and/or modify
@@ -56,9 +56,17 @@ export default class SlidesVisibilityController {
      * Show the element.
      * @returns {void}
      */
+    isVisible() {
+        if (!(this._element instanceof HTMLElement)) {
+            return false;
+        }
+        return window.getComputedStyle(this._element).display !== 'none';
+    }
+
     show() {
         if (this._element instanceof HTMLElement) {
-            this._element.style.display = 'block';
+            this._element.classList.remove('controls-hidden');
+            this._element.style.display = '';
         }
     }
 
@@ -81,12 +89,12 @@ export default class SlidesVisibilityController {
             return;
         }
 
-        const current = this._element.style.display;
-
-        if (current === 'none') {
-            this._element.style.display = 'block';
+        // Use getComputedStyle to handle elements visible via CSS rules (not inline style).
+        const computed = window.getComputedStyle(this._element).display;
+        if (computed === 'none') {
+            this.show();
         } else {
-            this._element.style.display = 'none';
+            this.hide();
         }
     }
 }

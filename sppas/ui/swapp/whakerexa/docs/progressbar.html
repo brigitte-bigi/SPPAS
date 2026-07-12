@@ -1,182 +1,369 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <title>Progress Bar</title>
 
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="keywords" content="web, js, progress, framework, accessibility, demo"/>
+    <title>Progress Bar • Whakerexa</title>
 
-    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all"/>
-    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, js, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
 
     <style>
         :root {
-            --header-height: 32vh;
-            --header-slidein: none;
-
-            --nav-min-height: 0;
-            --nav-min-width: max(calc(6 * var(--font-size) / var(--size-divisor)), 4rem);
-
-            --nav-item-min-width-h: max(calc(6rem / var(--size-divisor)), 4rem);
-            --nav-item-width-h:    calc(8rem / var(--size-divisor));
-            --nav-item-max-width-h: calc(15rem / var(--size-divisor));
-
-            --nav-expanded-width: calc(12rem / var(--size-divisor));
-            --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
-            --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
-            --border-radius: 1rem;
-
-            --appmenu-position: left;
-            --appmenu-align: left top;
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
         }
-
-        :root:not([data-theme=dark]), [data-theme=light] {
-            --nav-bg-color: rgba(100, 55, 128, 0.5);
-            --nav-fg-color: rgba(240, 230, 240);
-            --header-bg-color: linear-gradient(90deg, rgb(97,33,140) 0%, rgb(11,4,97) 50%, rgb(28,133,136) 100%);
-        }
-
-        .dark {
-            --nav-bg-color: rgba(50, 5, 0, 0.5);
-        }
-
-        header > nav {
-            border-radius: 0.8rem;
-            padding: 0.5rem;
-            margin: 0.2rem;
-        }
-        header > nav [role="menuitem"] {
-            border-radius: 0.4rem;
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* ============================================================
-        Custom Navigation
-        ============================================================ */
-
-        nav#nav-content.nav-wexa.side:not(.dark) {
-            background: linear-gradient(180deg,
-            rgb(10, 10, 60) 0%,
-            rgb(10, 40, 90) 25%,
-            rgb(90, 70, 120) 50%,
-            rgb(20, 100, 110) 100%);
-        }
-        .dark nav#nav-content.nav-wexa.side {
-            background: linear-gradient(180deg,
-            rgb(120, 40, 70) 0%,
-            rgb(160, 90, 140) 25%,
-            rgb(200, 160, 220) 45%,
-            rgb(240, 170, 230) 100%);
-        }
-
-        #nav-content [role='menuitem'] {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 0.5rem;
-            transition: background 0.25s ease, transform 0.15s ease, color 0.25s ease;
-            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.15);
-        }
-
-        #nav-content [role='menuitem']:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateX(3px);
-            color: #ffffff;
-        }
-
-        #nav-content .nav-current {
-            background: rgba(255, 255, 255, 0.18);
-            color: #ffffff;
-        }
-
-        aside.appmenu nav:not(.dark) {
-            background: rgba(10, 40, 90, 0.7);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .dark aside.appmenu nav {
-            background: rgba(210, 180, 170, 0.95);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-        }
-
     </style>
 
-    <script type="module">
+</head>
+
+<body>
+
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa > Utilities > Progress Bar</p>
+</header>
+
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+    <h1>Progress Bar</h1>
+    <p>
+        Whakerexa provides both a native HTML <code>&lt;progress&gt;</code> element,
+        styled by <code>wexa.css</code>, and a JavaScript <code>ProgressBar</code> class
+        for managing dynamic progress updates in application workflows.
+    </p>
+
+        <h2>HTML element</h2>
+        <p>
+            A <code>&lt;progress&gt;</code> element renders a full-width bar.
+            Set <code>max</code> and <code>value</code> to indicate completion.
+            Always associate a <code>&lt;label&gt;</code> for accessibility.
+        </p>
+
+        <article class="card-doc" aria-label="Progress bar — HTML element">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <label for="pb-download">Download:</label>
+                <progress id="pb-download" max="100" value="35">35%</progress>
+                <label for="pb-install">Installation:</label>
+                <progress id="pb-install" max="100" value="70">70%</progress>
+                <label for="pb-complete">Complete:</label>
+                <progress id="pb-complete" max="100" value="100">100%</progress>
+            </div>
+            <pre class="dark"><code>&lt;label for="file"&gt;File progress:&lt;/label&gt;
+&lt;progress id="file" max="100" value="70"&gt;70%&lt;/progress&gt;</code></pre>
+        </article>
+
+        <h3>Variables</h3>
+        <p>Track and fill colors are controlled by theme variables:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>--progress-bg-color</code></td>
+                    <td>Track background (empty portion)</td>
+                </tr>
+                <tr>
+                    <td><code>--progress-fg-color</code></td>
+                    <td>Fill color (completed portion)</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>ProgressBar JS class</h2>
+        <p>
+            The <code>ProgressBar</code> class manages a visual progress bar and supports
+            two operating modes: <strong>Managed mode</strong>, driven by application callbacks,
+            and <strong>Autonomous mode</strong>, using a <code>RequestManager</code> to poll
+            a target URL automatically.
+        </p>
+
+        <h3>Parameters</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>updateCallback</code></td>
+                    <td><em>Function</em></td>
+                    <td>Optional. Called periodically to fetch progress data (managed mode).</td>
+                </tr>
+                <tr>
+                    <td><code>completeCallback</code></td>
+                    <td><em>Function</em></td>
+                    <td>Optional. Called when progress reaches 100%.</td>
+                </tr>
+                <tr>
+                    <td><code>requestManager</code></td>
+                    <td><em>Object</em></td>
+                    <td>Optional. Instance of <code>RequestManager</code> for autonomous mode.</td>
+                </tr>
+                <tr>
+                    <td><code>targetUrl</code></td>
+                    <td><em>string</em></td>
+                    <td>Optional. URL polled by POST in autonomous mode.</td>
+                </tr>
+                <tr>
+                    <td><code>domIds</code></td>
+                    <td><em>Object</em></td>
+                    <td>IDs of the DOM elements to update: <code>percent</code>, <code>text</code>, <code>header</code>.</td>
+                </tr>
+                <tr>
+                    <td><code>intervalMs</code></td>
+                    <td><em>number</em></td>
+                    <td>Optional. Refresh interval in milliseconds. Default: 1500.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Behavior</h3>
+        <ol>
+            <li>Calls <code>updateCallback</code> or <code>RequestManager.send_post_request()</code> every interval.</li>
+            <li>Updates DOM elements referenced by <code>domIds.percent</code>, <code>domIds.text</code>, <code>domIds.header</code>.</li>
+            <li>Stops automatically when <code>percent &gt;= 100</code>, then calls <code>completeCallback</code>.</li>
+        </ol>
+
+        <h3>Requirements</h3>
+        <ul>
+            <li>A <code>&lt;progress&gt;</code> element with the ID given in <code>domIds.percent</code>.</li>
+            <li>A <code>RequestManager</code> instance (autonomous mode) or an <code>updateCallback</code> (managed mode).</li>
+        </ul>
+
+        <h3>Minimal example</h3>
+        <pre class="dark"><code>const bar = new ProgressBar({
+    updateCallback: async () => ({ percent: 50, text: 'Halfway', header: 'Demo' }),
+    domIds: { percent: 'my-bar', text: 'my-text', header: 'my-header' },
+    completeCallback: () => console.log('Done!')
+});
+bar.start();</code></pre>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Demo — Managed mode</h2>
+        <p>
+            The application provides an <code>updateCallback</code> that returns
+            <code>{ percent, text, header }</code>. The bar polls this callback
+            every <code>intervalMs</code> milliseconds until <code>percent</code> reaches 100.
+        </p>
+
+        <article class="card-doc" aria-label="ProgressBar — managed mode demo">
+            <div class="card-view" style="flex-direction: column; align-items: stretch; width: 100%;">
+                <button type="button" onclick="startManagedDemo()">Start Managed Demo</button>
+                <p id="progress_header-managed">Managed header</p>
+                <progress id="percent_progress-managed" max="100" value="0"></progress>
+                <p id="progress_text-managed">Managed text...</p>
+                <p id="managed-msg" class="center"></p>
+            </div>
+            <pre class="dark"><code>const bar = new ProgressBar({
+    updateCallback: async () => {
+        const p = parseInt(el.value, 10) + 10;
+        return { percent: p, text: `Processing... ${p}%`, header: 'In progress' };
+    },
+    domIds: {
+        percent: 'percent_progress-managed',
+        text:    'progress_text-managed',
+        header:  'progress_header-managed'
+    },
+    completeCallback: () => { msg.textContent = 'Done!'; },
+    intervalMs: 1000
+});
+bar.start();</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Demo — Autonomous mode</h2>
+        <p>
+            The bar drives itself by sending POST requests to <code>targetUrl</code>
+            via a <code>RequestManager</code> and reading <code>{ percent, text, header }</code>
+            from each response.
+        </p>
+
+        <article class="card-doc" aria-label="ProgressBar — autonomous mode demo">
+            <div class="card-view" style="flex-direction: column; align-items: stretch; width: 100%;">
+                <button type="button" onclick="startAutonomousDemo()">Start Autonomous Demo</button>
+                <p id="progress_header-autonomous">Autonomous header</p>
+                <progress id="percent-autonomous" max="100" value="0"></progress>
+                <p id="progress_text-autonomous">Autonomous text...</p>
+                <p id="auto-msg" class="center"></p>
+            </div>
+            <pre class="dark"><code>const bar = new ProgressBar({
+    requestManager: new RequestManager(),
+    targetUrl: '/api/progress',
+    domIds: {
+        percent: 'percent-autonomous',
+        text:    'progress_text-autonomous',
+        header:  'progress_header-autonomous'
+    },
+    completeCallback: () => { msg.textContent = 'Done!'; },
+    intervalMs: 1000
+});
+bar.start();</code></pre>
+        </article>
+
+        <p>
+            The <code>ProgressBar</code> class is reusable across Whakerexa applications.
+            The same class operates in either mode depending on the constructor parameters supplied.
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
         const usingFile = (window.location.protocol === 'file:');
-        const statics = '../wexa_statics/js/';
-
-        function addLoadFunction(fn) {
-            const mgr = window.Wexa?.onload || window.Wexa?.OnLoadManager;
-            if (mgr && typeof mgr.addLoadFunction === 'function') {
-                mgr.addLoadFunction(fn);
-            } else {
-                window.addEventListener('DOMContentLoaded', fn, { once: true });
-            }
-        }
-
-        function boot(ProgressBar) {
-
-            // Menu (accessibilité / clavier)
-            addLoadFunction(() => {
-                const MenuManager = window.Wexa?.MenuManager;
-                if (!MenuManager) return;
-                window.mainmenu = new MenuManager();
-                window.mainmenu.initSideMenu();
-                window.mainmenu.initMobileToggle();
-                window.mainmenu.registerSubmenu('appmenu-menu', 'submenu-toggle-menu');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+                if (window.Wexa && window.Wexa.ProgressBar) {
+                    bootProgressBarDemos(window.Wexa.ProgressBar);
+                }
             });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    import { ProgressBar } from '../wexa_statics/js/progressbar.js';
 
-            // ----------------------------
-            // Managed mode demo
-            // ----------------------------
-            window.startManagedDemo = async function startManagedDemo() {
+    const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
 
-                if (!ProgressBar) {
-                    console.error('ProgressBar is not available.');
-                    return;
-                }
+    bootProgressBarDemos(ProgressBar);
+</script>
+<script>
+    function bootProgressBarDemos(ProgressBar) {
 
-                if (window.managedDemoBar !== undefined) {
-                    window.managedDemoBar.stop();
-                }
+        window.startManagedDemo = function startManagedDemo() {
+            if (window.managedDemoBar !== undefined) {
+                window.managedDemoBar.stop();
+            }
+            const bar = new ProgressBar({
+                updateCallback: async () => {
+                    const el = document.getElementById('percent_progress-managed');
+                    const p = parseInt(el?.value || '0', 10) + 10;
+                    return {
+                        percent: p,
+                        text: `Processing... ${p}%`,
+                        header: 'Managed demo in progress'
+                    };
+                },
+                domIds: {
+                    percent: 'percent_progress-managed',
+                    text:    'progress_text-managed',
+                    header:  'progress_header-managed'
+                },
+                completeCallback: () => {
+                    const msg = document.getElementById('managed-msg');
+                    if (msg) {
+                        msg.textContent = 'Managed demo finished!';
+                    }
+                },
+                intervalMs: 1000
+            });
+            window.managedDemoBar = bar;
+            bar.start();
+        };
 
-                const bar = new ProgressBar({
-                    updateCallback: async () => {
-                        const el = document.getElementById('percent_progress');
-                        const current = parseInt(el?.value || '0', 10);
-                        const p = current + 10;
-                        return {
-                            percent: p,
-                            text: `Processing... ${p}%`,
-                            header: 'Managed demo in progress'
-                        };
-                    },
-                    domIds: {
-                        percent: 'percent_progress',
-                        text: 'managed-msg',
-                        header: 'managed-msg'
-                    },
-                    completeCallback: () => {
-                        const msg = document.getElementById('managed-msg');
-                        if (msg) msg.textContent = 'Managed demo finished!';
-                    },
-                    intervalMs: 1000
-                });
-
-                window.managedDemoBar = bar;
-                bar.start();
-            };
-
-            // ----------------------------
-            // Autonomous mode demo
-            // ----------------------------
+        window.startAutonomousDemo = function startAutonomousDemo() {
+            if (window.autoDemoBar !== undefined) {
+                window.autoDemoBar.stop();
+            }
             class FakeRequestManager {
-                constructor() { this.status = 202; }
-
+                constructor() {
+                    this.status = 202;
+                }
                 async send_post_request(data, url) {
-                    const bar = document.querySelector('#percent-autonomous');
-                    const val = parseInt(bar.value, 10) + 10;
-                    bar.value = val;
+                    const barEl = document.querySelector('#percent-autonomous');
+                    const val = parseInt(barEl.value, 10) + 10;
+                    barEl.value = val;
                     return {
                         percent: val,
                         text: `Auto-demo @${url}: ${val}%`,
@@ -184,249 +371,27 @@
                     };
                 }
             }
-
-            window.startAutonomousDemo = async function startAutonomousDemo() {
-
-                if (!ProgressBar) {
-                    console.error('ProgressBar is not available.');
-                    return;
-                }
-
-                if (window.autoDemoBar !== undefined) {
-                    window.autoDemoBar.stop();
-                }
-
-                const fakeReq = new FakeRequestManager();
-                const bar = new ProgressBar({
-                    requestManager: fakeReq,
-                    targetUrl: '/fake/progress',
-                    domIds: {
-                        percent: 'percent-autonomous',
-                        text: 'progress_text-autonomous',
-                        header: 'progress_header-autonomous'
-                    },
-                    completeCallback: () => {
-                        const msg = document.getElementById('auto-msg');
-                        if (msg) msg.textContent = 'Autonomous demo finished!';
-                    },
-                    intervalMs: 1000
-                });
-
-                window.autoDemoBar = bar;
-                bar.start();
-            };
-        }
-
-        if (usingFile) {
-            const script = document.createElement('script');
-            script.src = statics + 'wexa.bundle.js';
-            script.onload = () => boot(window.Wexa?.ProgressBar);
-            document.head.appendChild(script);
-        } else {
-            await import(statics + 'wexa.js');
-            const { ProgressBar } = await import(statics + 'progressbar.js');
-            boot(ProgressBar);
-        }
-    </script>
-
-</head>
-
-<body>
-
-    <header id="header-content">
-        <!-- Accessible and responsive menu management -->
-        <a role="button" class="skip" href="#main-content" aria-label="skip to main content">
-            Skip to main content
-        </a>
-
-        <button id="menu-button" aria-controls="nav-content" aria-expanded="false" aria-label="Menu"></button>
-        <input type="checkbox" id="mobile" role="button" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
-
-        <nav class="nav-wexa top">
-            <ul>
-                <li><a class="external-link" role="menuitem" href="https://sppas.org/">SPPAS</a></li>
-                <li><a class="external-link" role="menuitem" href="https://whakerpy.sf.net">WhakerPy</a></li>
-                <li><a class="external-link" role="menuitem" href="https://sourceforge.net/projects/whakerexa/">Whakerexa</a></li>
-            </ul>
-            <button id="btn-contrast" class="accessibility print-off" role="menuitem"
-                    aria-pressed="false" onclick="Wexa.accessibility.switchContrastScheme()"></button>
-            <button id="btn-theme" class="accessibility print-off" role="menuitem"
-                    aria-pressed="false" onclick="Wexa.accessibility.switchColorScheme()"></button>
-        </nav>
-        <h1>Progress Bar</h1>
-        <h2>by Whakerexa</h2>
-    </header>
-
-    <nav id="nav-content" class="nav-wexa side collapsible" aria-label="Main navigation">
-
-        <button id="submenu-toggle-menu" role="menuitem" aria-label="Menu" aria-haspopup="true" aria-controls="appmenu-menu">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" fill-opacity="0.5">
-                <circle cx="12" cy="12" r="10"/>
-                <circle cx="8" cy="12" r="1.5" fill="currentColor" stroke="none"/>
-                <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
-                <circle cx="16" cy="12" r="1.5" fill="currentColor" stroke="none"/>
-            </svg>
-            <span>Options</span>
-        </button>
-        <button aria-label="Applications" role="menuitem">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" fill-opacity="0.5">
-                <rect x="4" y="4" width="6" height="16" rx="1"/>
-                <rect x="14" y="4" width="6" height="6" rx="1"/>
-                <rect x="14" y="14" width="6" height="6" rx="1"/>
-            </svg>
-            <span>Apps</span>
-        </button>
-        <button aria-label="Help" role="menuitem">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4" />
-                <circle cx="12" cy="17" r="1"/>
-            </svg>
-            <span>Help</span>
-        </button>
-        <button aria-label="Pin menu" role="menuitem"
-                id="pin-menu"
-                type="button"
-                aria-controls="nav-content"
-                aria-pressed="false"
-                title="Pin menu"
-                class="menu-pin">
-
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-                 viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                 aria-label="Pushpin">
-                <path d="M9 3h6l-1 8H10L9 3z"/>
-                <path d="M7 13h10"/>
-                <path d="M12 13v9"/>
-            </svg>
-        </button>
-
-        <!-- Submenu for the Menu button -->
-        <aside class="appmenu" id="appmenu-menu" aria-label="Submenu">
-            <nav>
-                <a role="menuitem" href="#">Option 1</a>
-                <a role="menuitem" href="#">Option 2</a>
-                <a role="menuitem" href="#">Option 3</a>
-            </nav>
-        </aside>
-
-    </nav>
-
-
-
-<main id="main-content">
-    <h2>Description</h2>
-    <p>
-        The <code>ProgressBar</code> class manages a visual progress bar and supports two operating modes:
-        <strong>Managed mode</strong>, using application callbacks, and <strong>Autonomous mode</strong>,
-        using a <code>RequestManager</code> to poll a target URL automatically.
-    </p>
-
-    <h3>Parameters</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Parameter</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><code>updateCallback</code></td>
-            <td><em>Function</em></td>
-            <td>Optional. Called periodically to fetch progress data (managed mode).</td>
-        </tr>
-        <tr>
-            <td><code>completeCallback</code></td>
-            <td><em>Function</em></td>
-            <td>Optional. Called when progress reaches 100%.</td>
-        </tr>
-        <tr>
-            <td><code>requestManager</code></td>
-            <td><em>Object</em></td>
-            <td>Optional. Instance of <code>RequestManager</code> for autonomous mode.</td>
-        </tr>
-        <tr>
-            <td><code>targetUrl</code></td>
-            <td><em>string</em></td>
-            <td>Optional. URL to send POST requests to when in autonomous mode.</td>
-        </tr>
-        <tr>
-            <td><code>intervalMs</code></td>
-            <td><em>number</em></td>
-            <td>Optional. Refresh interval in milliseconds. Default is 1500.</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h3>Behavior</h3>
-    <ol>
-        <li>Calls <code>updateCallback</code> or <code>RequestManager.send_post_request()</code> every interval.</li>
-        <li>Updates DOM elements <code>#percent_progress</code>, <code>#progress_text</code>, <code>#progress_header</code>.</li>
-        <li>Stops when <code>percent >= 100</code>, then calls <code>completeCallback</code>.</li>
-    </ol>
-
-    <h3>Example usage</h3>
-    <pre><code>// Example: managed mode
-const bar = new ProgressBar({
-  updateCallback: async () => ({ percent: 50, text: 'Halfway', header: 'Demo' }),
-  completeCallback: () => console.log('Done!')
-});
-bar.start();
-</code></pre>
-
-    <h3>Requirements</h3>
-    <ul>
-        <li>DOM elements with IDs <code>percent_progress</code>, <code>progress_text</code>, <code>progress_header</code>.</li>
-        <li>A <code>RequestManager</code> instance or update callback.</li>
-    </ul>
-
-    <h3>Demo</h3>
-
-    <section>
-        <h4>Managed mode</h4>
-        <button type="button" onclick="startManagedDemo()">Start Managed Demo</button>
-        <p id="progress_header">Managed header</p>
-        <progress id="percent_progress" max="100" value="0"></progress>
-        <p id="progress_text">Managed text...</p>
-        <p id="managed-msg" class="center"></p>
-    </section>
-
-    <section>
-        <h4>Autonomous mode</h4>
-        <button type="button" onclick="startAutonomousDemo()">Start Autonomous Demo</button>
-        <p id="progress_header-autonomous">Autonomous header</p>
-        <progress id="percent-autonomous" max="100" value="0"></progress>
-        <p id="progress_text-autonomous">Autonomous text...</p>
-        <p id="auto-msg" class="center"></p>
-    </section>
-
-    <h3>Notes</h3>
-    <p>
-        The <code>ProgressBar</code> class is reusable across Whakerexa applications. It does not
-        depend on any specific UI context. The same instance can operate either through
-        callbacks (managed) or through network polling (autonomous) with a configured
-        <code>RequestManager</code>.
-    </p>
-</main>
-
-
-    <footer>
-        <p class="center">This site respects your privacy.</p>
-        <p class="center">We do not collect any information and do not use cookies.</p>
-        <hr>
-        <p>Copyright @ 2023-2025 Brigitte Bigi, CNRS<br>
-            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
-        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
-            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
-        </p>
-    </footer>
+            const bar = new ProgressBar({
+                requestManager: new FakeRequestManager(),
+                targetUrl: '/fake/progress',
+                domIds: {
+                    percent: 'percent-autonomous',
+                    text:    'progress_text-autonomous',
+                    header:  'progress_header-autonomous'
+                },
+                completeCallback: () => {
+                    const msg = document.getElementById('auto-msg');
+                    if (msg) {
+                        msg.textContent = 'Autonomous demo finished!';
+                    }
+                },
+                intervalMs: 1000
+            });
+            window.autoDemoBar = bar;
+            bar.start();
+        };
+    }
+</script>
 
 </body>
 </html>

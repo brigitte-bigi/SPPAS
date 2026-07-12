@@ -6,9 +6,9 @@
  *
  *  -------------------------------------------------------------------------
  *
- *  This file is part of Whakerexa: https://whakerexa.sf.net/
+ *  This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
  *
- *  Copyright (C) 2023-2025 Brigitte Bigi, CNRS
+ *  Copyright (C) 2023-2026 Brigitte Bigi, CNRS
  *  Laboratoire Parole et Langage, Aix-en-Provence, France
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ export class WexaLogger {
     }
 
     /**
-     * Log a debug message if level <= 10.>
+     * Log a debug message if level <= 10.
      *
      * @param {string} msg - Message to display.
      * @returns {void}
@@ -87,7 +87,7 @@ export class WexaLogger {
     }
 
     /**
-     * Log an informational message if level <= 20.>
+     * Log an informational message if level <= 20.
      *
      * @param {string} msg - Message to display.
      * @returns {void}

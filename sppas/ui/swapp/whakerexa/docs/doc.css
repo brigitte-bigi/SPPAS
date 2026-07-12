@@ -1,0 +1,62 @@
+/*
+:filename: docs/doc.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: CSS for Whakerexa documentation pages
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+/* ------------------------------------------------------------------ */
+/* Card for component rendering in doc pages                           */
+/* ------------------------------------------------------------------ */
+
+.card-doc {
+    margin-left: var(--typography-spacing-horizontal);
+    background-color: var(--bg-color);
+    border: var(--border-width) solid var(--border-color-alt);
+    border-radius: var(--border-radius);
+    margin-top: var(--typography-spacing-vertical);
+    margin-bottom: var(--typography-spacing-vertical);
+    box-shadow: var(--card-box-shadow);
+}
+
+.card-view {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--typography-spacing-horizontal);
+    padding: calc(2 * var(--typography-spacing-horizontal));
+    box-shadow: none;
+}
+
+/* How to apply dark mode to pre? instead of writing <pre class="dark"> */
+.card-doc pre {
+    background-color: var(--bg-color);
+    border-left: calc(var(--border-width) * 2) solid var(--border-color);
+}

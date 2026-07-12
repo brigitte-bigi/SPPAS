@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>KeyPiano • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="keypiano, input, button, sequence, web, css, html5, framework, accessibility"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/keypiano.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; KeyPiano</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="description">
+
+            <h1>Description</h1>
+
+            <p><strong>KeyPiano</strong> is a generic clickable "piano" of buttons that composes a
+                technical sequence -- made of codes and separators that are hard to type by hand --
+                into a target text field. Only the content of the keys (images, text, values) is
+                domain-specific and stays in the HTML written by the consuming page; <code>KeyPiano</code>
+                only knows about groups of keys, two separators, and the target field.</p>
+
+            <h2>JavaScript</h2>
+            <p>The <code>KeyPiano</code> class is activated on an existing container element. It reads
+                its configuration from the container's <code>data-*</code> attributes and from its
+                <code>.wexa-key-piano-group</code> children, found in document order.</p>
+
+            <p><strong>Usage example:</strong></p>
+            <pre>
+&lt;script type="module"&gt;
+    import { KeyPiano } from '../wexa_statics/js/extras/keypiano/keypiano.js';
+
+    const piano = new KeyPiano(document.getElementById('my-piano'));
+&lt;/script&gt;
+</pre>
+
+            <h2>HTML</h2>
+
+            <p>The container carries the following <code>data-*</code> attributes:</p>
+            <ul>
+                <li><code>data-target</code> (required): id of the target text field.</li>
+                <li><code>data-group-sep</code> (optional): separator between the parts of one composed entry. Default: <code>"-"</code>.</li>
+                <li><code>data-key-sep</code> (optional): separator between successive entries. Default: <code>"."</code>.</li>
+                <li><code>data-backspace-label</code> (optional): accessible label of the "delete last key" button. Default: <code>"Delete last key"</code>.</li>
+                <li><code>data-clear-label</code> (optional): accessible label of the "clear all" button. Default: <code>"Clear all"</code>.</li>
+            </ul>
+
+            <p>Each <code>.wexa-key-piano-group</code> child is either:</p>
+            <ul>
+                <li><code>data-mode="radio"</code>: native <code>&lt;input type="radio"&gt;</code> keys,
+                    wrapped in a <code>.wexa-key-piano-key</code> label. Groups take turns: only the first
+                    group is enabled initially, the composed entry is appended only once every group of
+                    the cycle has a selection.</li>
+                <li><code>data-mode="free"</code> (or no <code>data-mode</code>): plain
+                    <code>&lt;button type="button" class="wexa-key-piano-key" value="..."&gt;</code> keys.
+                    Every click appends its value immediately, with no turn and no exclusivity.</li>
+            </ul>
+
+            <pre>
+&lt;div class="wexa-key-piano" id="my-piano"
+     data-target="my-target-field" data-group-sep="-" data-key-sep="."&gt;
+
+    &lt;div class="wexa-key-piano-group" data-mode="radio" aria-label="Group 1"&gt;
+        &lt;label class="wexa-key-piano-key"&gt;
+            &lt;input type="radio" value="1"&gt;
+            1
+        &lt;/label&gt;
+        ...
+    &lt;/div&gt;
+
+    &lt;div class="wexa-key-piano-group" data-mode="radio" aria-label="Group 2"&gt;
+        ...
+    &lt;/div&gt;
+
+&lt;/div&gt;
+</pre>
+
+            <p>Radio and free groups can be mixed in a single container. Free groups always respond
+                to clicks; radio groups only respond when it is their turn in the cycle.</p>
+
+            <p><code>KeyPiano</code> itself injects, at the end of the container: a "delete last key"
+                button, a "clear all" button (both using the shared Whakerexa mono-svg icons), and a
+                visually-hidden <code>aria-live="polite"</code> status region announcing every action to
+                screen reader users.</p>
+
+            <p><strong>"Delete last key"</strong> has two behaviours depending on context:</p>
+            <ul>
+                <li>While a radio cycle is in progress: undoes the last radio selection and re-enables
+                    that group.</li>
+                <li>Otherwise: restores the target field to its value before the last append.</li>
+            </ul>
+
+            <p>Every change to the target field dispatches a real <code>input</code> event
+                (with <code>bubbles: true</code>), so consuming pages can react to piano-driven
+                changes the same way they react to keyboard input.</p>
+
+            <p>Real native <code>&lt;input type="radio"&gt;</code> and <code>&lt;button&gt;</code>
+                elements are used throughout, so keyboard navigation and focus styling are already
+                covered by Whakerexa's global rules -- nothing to add.</p>
+
+            <h2>Retargeting</h2>
+            <p><code>piano.setTarget(fieldId)</code> points the piano at a different target field,
+                discarding any in-progress entry and undo history. Useful when a single shared piano
+                serves several fields in turn (e.g. opened from different rows of a table).</p>
+            <pre>
+const piano = new KeyPiano(document.getElementById('my-piano'));
+
+// later, when the context changes:
+piano.setTarget('other-field-id');
+</pre>
+
+        </section>
+
+        <section id="demo">
+            <h1>Demo</h1>
+
+            <h2>Example 1: two "radio" groups (e.g. a two-part code)</h2>
+            <p>Click a key in "Group A", then a key in "Group B": one entry is appended only once both
+                groups have a choice. "Delete last key" undoes the last selection while a choice is in
+                progress, or removes the last full entry otherwise.</p>
+
+            <label for="demo-code-field">Composed sequence:</label>
+            <textarea id="demo-code-field" rows="2" style="width: 100%;"></textarea>
+
+            <div class="wexa-key-piano" id="demo-code-piano"
+                 data-target="demo-code-field" data-group-sep="-" data-key-sep=".">
+
+                <div class="wexa-key-piano-group" data-mode="radio" aria-label="Group A">
+                    <label class="wexa-key-piano-key"><input type="radio" value="1">1</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="2">2</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="3">3</label>
+                </div>
+
+                <div class="wexa-key-piano-group" data-mode="radio" aria-label="Group B">
+                    <label class="wexa-key-piano-key"><input type="radio" value="s">s</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="t">t</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="m">m</label>
+                </div>
+
+            </div>
+
+            <h2>Example 2: one "free" group (e.g. a phoneme sequence)</h2>
+            <p>Every click appends its value immediately, separated by the outer separator.</p>
+
+            <label for="demo-pron-field">Composed sequence:</label>
+            <textarea id="demo-pron-field" rows="2" style="width: 100%;"></textarea>
+
+            <div class="wexa-key-piano" id="demo-pron-piano"
+                 data-target="demo-pron-field" data-key-sep="-">
+
+                <div class="wexa-key-piano-group" data-mode="free" aria-label="Phonemes">
+                    <button type="button" class="wexa-key-piano-key" value="p">p</button>
+                    <button type="button" class="wexa-key-piano-key" value="a">a</button>
+                    <button type="button" class="wexa-key-piano-key" value="t">t</button>
+                    <button type="button" class="wexa-key-piano-key" value="i">i</button>
+                </div>
+
+            </div>
+
+            <h2>Example 3: mixed "radio" + "free" groups</h2>
+            <p>Radio groups take turns (Group A first, then Group B); the free group appends
+                immediately at any time. The entry is composed and appended only once both radio
+                groups have a selection.</p>
+
+            <label for="demo-mixed-field">Composed sequence:</label>
+            <textarea id="demo-mixed-field" rows="2" style="width: 100%;"></textarea>
+
+            <div class="wexa-key-piano" id="demo-mixed-piano"
+                 data-target="demo-mixed-field" data-group-sep="-" data-key-sep=".">
+
+                <div class="wexa-key-piano-group" data-mode="radio" aria-label="Group A">
+                    <label class="wexa-key-piano-key"><input type="radio" value="x">x</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="y">y</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="z">z</label>
+                </div>
+
+                <div class="wexa-key-piano-group" data-mode="radio" aria-label="Group B">
+                    <label class="wexa-key-piano-key"><input type="radio" value="1">1</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="2">2</label>
+                    <label class="wexa-key-piano-key"><input type="radio" value="3">3</label>
+                </div>
+
+                <div class="wexa-key-piano-group" data-mode="free" aria-label="Extras">
+                    <button type="button" class="wexa-key-piano-key" value="!">!</button>
+                    <button type="button" class="wexa-key-piano-key" value="?">?</button>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<script>
+    function bootKeyPianoDemo(KeyPianoClass) {
+        if (window._keypianoDemoBooted === true) { return; }
+        window._keypianoDemoBooted = true;
+        document.querySelectorAll('.wexa-key-piano').forEach((container) => {
+            new KeyPianoClass(container);
+        });
+    }
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<!-- KeyPiano is an extra included in wexa.bundle.js. -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+                if (window.Wexa && window.Wexa.KeyPiano) {
+                    bootKeyPianoDemo(window.Wexa.KeyPiano);
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import '../wexa_statics/js/wexa.js';
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    import { KeyPiano } from '../wexa_statics/js/extras/keypiano/keypiano.js';
+
+    const themes = new ThemeManager();
+    themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+    themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+
+    bootKeyPianoDemo(KeyPiano);
+</script>
+
+</body>
+</html>

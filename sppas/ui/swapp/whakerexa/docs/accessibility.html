@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Accessibility — Whakerexa</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+</head>
+<body>
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa &gt; Getting started &gt; Accessibility</p>
+</header>
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8" />
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Accessibility</h1>
+
+        <p>
+            A <dfn>web page is accessible</dfn> when it can be read, understood, and operated
+            by everyone — including people with visual, motor, cognitive, or hearing impairments,
+            people using assistive technologies such as screen readers or keyboard-only navigation,
+            and people in difficult conditions such as poor lighting, slow connections, or small screens.
+            Accessibility is not a niche concern: it benefits all users, in all situations.
+            Learn more: <a class="external-link" href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">W3C — Introduction to Web Accessibility</a>,
+            <a class="external-link" href="https://www.w3.org/TR/WCAG21/">WCAG 2.1 Guidelines</a>.
+        </p>
+        <p>
+            In Whakerexa, accessibility is not a feature you add at the end.
+            It is <strong>the foundation the framework is built on</strong>.
+            Every component, every stylesheet, every color decision starts from the question:
+            <em>will this work for everyone?</em>
+            The result: your pages are accessible by default, with zero extra effort on your part.
+        </p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Your users choose how they read</h2>
+
+        <p>
+            Two buttons — already in the navigation bar of this page — give your users
+            direct control over their reading experience.
+            No settings panel. No account required. One click.
+        </p>
+
+        <article class="card-doc" aria-label="Light / Dark mode demo">
+            <div class="card-view" style="flex-direction: column; align-items: center; gap: 0.5rem;">
+                <button id="btn-color-demo" class="menuitem accessibility"
+                        aria-label="Switch color scheme" aria-pressed="false"
+                        onclick="Wexa.accessibility.switchColorScheme()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="16" cy="16" r="13"/>
+                        <clipPath id="cut-color">
+                            <polygon points="0,32 32,0 32,32"/>
+                        </clipPath>
+                        <circle cx="16" cy="16" r="13" fill="currentColor" clip-path="url(#cut-color)" stroke="none"/>
+                    </svg>
+                </button>
+                <p><strong>Light / Dark mode</strong></p>
+                <p>
+                    Switches the entire page between light and dark palette instantly.
+                    Respects the user's OS preference on first load.
+                    The choice travels with the URL — share a link, keep the preference.
+                </p>
+            </div>
+            <pre class="dark"><code>&lt;button id="btn-color" class="menuitem accessibility"
+        aria-label="Switch color scheme" aria-pressed="false"
+        onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="High contrast mode demo">
+            <div class="card-view" style="flex-direction: column; align-items: center; gap: 0.5rem;">
+                <button id="btn-contrast-demo" class="menuitem accessibility"
+                        aria-label="Switch contrast scheme" aria-pressed="false"
+                        onclick="Wexa.accessibility.switchContrastScheme()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" aria-hidden="true">
+                        <path d="M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z"/>
+                        <circle cx="16" cy="16" r="5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </button>
+                <p><strong>High contrast mode</strong></p>
+                <p>
+                    Activates a reading profile designed for users with low vision or
+                    sensitivity to visual noise: larger font, increased spacing,
+                    heavier weights, stronger borders.
+                    Compliant with <a class="external-link" href="https://www.w3.org/TR/WCAG21/#text-spacing">WCAG 2.1 — 1.4.12 Text Spacing</a>.
+                </p>
+            </div>
+            <pre class="dark"><code>&lt;button id="btn-contrast" class="menuitem accessibility"
+        aria-label="Switch contrast scheme" aria-pressed="false"
+        onclick="Wexa.accessibility.switchContrastScheme()"&gt;&lt;/button&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Accessibility is architectural</h2>
+
+        <p>
+            Whakerexa uses <strong>CSS Cascade Layers</strong> to make accessibility guarantees that cannot
+            be accidentally broken by custom styles.
+            The <code>@layer accessibility</code> layer owns contrast mode and enforces its rules with
+            <code>!important</code> — exclusively within that layer, never elsewhere.
+            Your own CSS, written outside any layer, wins over everything else
+            and can never interfere with contrast mode.
+        </p>
+        <p>
+            What this means in practice: <strong>you cannot accidentally break accessibility</strong>
+            by adding your own styles, even without knowing how CSS layers work.
+        </p>
+
+        <h2>Semantic HTML, ready out of the box</h2>
+
+        <p>
+            Whakerexa styles standard HTML5 elements directly —
+            <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>,
+            <code>&lt;footer&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;dialog&gt;</code> —
+            without requiring extra wrapper classes.
+            Screen readers, keyboard navigation, and browser accessibility tools
+            all work because the HTML is correct, not because workarounds were added.
+        </p>
+        <p>
+            All interactive components carry the right <code>aria-*</code> attributes.
+            Focus outlines are always visible. Skip-to-content links are included in every page template.
+            External links are marked with a visible icon and an implicit warning for screen readers.
+        </p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>No stored preferences — no surprises</h2>
+
+        <p>
+            Whakerexa never uses <code>localStorage</code> or cookies to persist user preferences.
+            Mode choices (dark, contrast, theme) travel as URL parameters.
+            Every page state is <strong>reproducible from a link</strong>:
+            send a URL, your colleague sees exactly what you see.
+            Close the tab, the next visit starts fresh.
+        </p>
+
+        <h2>Printing just works</h2>
+
+        <p>
+            A dedicated <code>print.css</code> silences all animations, resets backgrounds,
+            and enforces readable typography for print.
+            No black boxes, no disappearing content, no broken layouts on paper.
+        </p>
+
+        <h2>Wire it up in two lines</h2>
+
+        <article class="card-doc" aria-label="AccessibilityManager wiring">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>
+                    Add two buttons to your navigation — IDs and <code>aria-pressed</code> are the only requirements.
+                    <code>AccessibilityManager</code>, loaded automatically with <code>wexa.js</code> or the bundle,
+                    handles everything else.
+                </p>
+            </div>
+            <pre class="dark"><code>&lt;button id="btn-contrast" class="menuitem accessibility"
+        aria-pressed="false" aria-label="Switch contrast scheme"
+        onclick="Wexa.accessibility.switchContrastScheme()"&gt;&lt;/button&gt;
+
+&lt;button id="btn-color" class="menuitem accessibility"
+        aria-pressed="false" aria-label="Switch color scheme"
+        onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;</code></pre>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    (function () {
+        function injectIcons() {
+            if (!window.Wexa || !window.Wexa.icons) {
+                return false;
+            }
+            Wexa.icons.injectIcon(document.getElementById('btn-color-demo'),    'color');
+            Wexa.icons.injectIcon(document.getElementById('btn-contrast-demo'), 'contrast');
+            return true;
+        }
+        function start() {
+            const t = setInterval(function () {
+                if (injectIcons()) {
+                    clearInterval(t);
+                }
+            }, 20);
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', start, { once: true });
+        } else {
+            start();
+        }
+    })();
+</script>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    t.setDefault('wexa_theme');
+                    window.themes = t;
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    const themes = new ThemeManager();
+    themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+    themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+</script>
+
+</body>
+</html>

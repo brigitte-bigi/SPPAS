@@ -4,7 +4,7 @@
  :contact: contact@sppas.org
  :summary: Class for toggling checkbox states.
 
- Copyright (C) 2023-2025, Brigitte Bigi, CNRS
+ Copyright (C) 2023-2026, Brigitte Bigi, CNRS
  Laboratoire Parole et Langage, Aix-en-Provence, France
 
  This program is free software: you can redistribute it and/or modify
@@ -181,7 +181,7 @@ export class ToggleSelector {
         } else if (oneChecked && !check) {
             imgSrc = isDarkMode ?
                 `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED_DARK}` :
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED}`;
+                `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED}`;
         } else {
             imgSrc = anyChecked
                 ? (isDarkMode ?

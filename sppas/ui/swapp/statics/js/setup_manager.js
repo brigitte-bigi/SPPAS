@@ -87,10 +87,47 @@ export default class SetupManager extends BaseManager {
             document.addEventListener('DOMContentLoaded', () => {
                 this.attachSetupListeners();
                 this.attachCheckboxListeners();
+                this.#resumeProgressPolling();
             });
         } else {
             this.attachSetupListeners();
             this.attachCheckboxListeners();
+            this.#resumeProgressPolling();
+        }
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Start the progress polling loop of the installation.
+     *
+     * The polling is the only sender of the 'complete' event leading to
+     * the completed page.
+     *
+     * @returns {void}
+     */
+    #startProgressPolling() {
+        const progressBar = new ProgressBar({
+            requestManager: this._requestManager,
+            targetUrl: '/setup.html',
+            intervalMs: 1000
+        });
+        progressBar.start();
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Resume the progress polling when the page shows the installation.
+     *
+     * A page loaded while the installation is running, after a reload for
+     * example, must resume the polling to reach the completed page.
+     *
+     * @returns {void}
+     */
+    #resumeProgressPolling() {
+        if (document.getElementById('percent_progress') !== null) {
+            this.#startProgressPolling();
         }
     }
 
@@ -252,12 +289,7 @@ export default class SetupManager extends BaseManager {
             }
         }
         if (start_progress) {
-            const progressBar = new ProgressBar({
-                requestManager: this._requestManager,
-                targetUrl: '/setup.html',
-                intervalMs: 1000
-            });
-            progressBar.start();
+            this.#startProgressPolling();
         }
     }
 

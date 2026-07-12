@@ -1,16 +1,17 @@
 import { BaseManager } from './transport/base_manager.js';
 import { OnLoadManager } from './dom-loader.js';
+import { SVGIconsManager } from './svgicons.js';
 
 /**
 :filename: statics.js.accessibility.js
 :author: Brigitte Bigi
 :contributor: Florian Lopitaux
 :contact: contact@sppas.org
-:summary: A class to manage the color and contrast scheme of the body.
+:summary: A class to manage the color and contrast modes of the body.
 
 -------------------------------------------------------------------------
 
-This file is part of Whakerexa: https://whakerexa.sf.net/
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 
 Copyright (C) 2023-2026 Brigitte Bigi, CNRS
 Laboratoire Parole et Langage, Aix-en-Provence, France
@@ -35,31 +36,19 @@ This banner notice must not be removed.
 */
 
 /**
- * Manage the color and contrast accessibility schemes of a web application.
+ * Manage the color and contrast accessibility modes of a web application.
  *
- * The AccessibilityManager controls two user interface properties:
- * color theme (e.g., light or dark) and contrast level (e.g., normal or high).
- * It applies the appropriate CSS classes to the <body> element, ensures that
- * all internal links maintain the selected scheme through URL parameters, and
- * synchronizes the current accessibility state with the server using POST events.
+ * The AccessibilityManager controls two orthogonal binary modes:
+ *   - color mode: light (default) or dark, toggled with switchColorScheme().
+ *   - contrast mode: normal (default) or high-contrast, toggled with switchContrastScheme().
  *
- * The manager operates fully client-side but can inform the server of any
- * theme or contrast change through inherited BaseManager methods. It is designed
- * to remain lightweight, non-intrusive, and compatible with all Whakerexa modules.
- *
- * Typical interactions:
- * - Automatic setup on page load (reading URL parameters and applying classes).
- * - Real-time update when switching color or contrast schemes.
- * - Optional server synchronization via `postEvents()` for persistence across pages.
+ * CSS themes (wexa_theme_*.css) are loaded statically and are not managed here.
+ * This class only applies the two mode classes to <body>, propagates them via
+ * URL parameters across pages, and synchronizes state with the server.
  *
  * @example
- * // Toggle dark mode
- * AccessibilityManager.switch_color_scheme();
- *
- * @example
- * // Activate high-contrast mode
- * AccessibilityManager.activate_contrast_scheme('contrast');
- *
+ * Wexa.accessibility.switchColorScheme();    // toggle dark mode
+ * Wexa.accessibility.switchContrastScheme(); // toggle contrast mode
  */
 export class AccessibilityManager extends BaseManager {
 
@@ -67,10 +56,8 @@ export class AccessibilityManager extends BaseManager {
     // FIELDS
     // -----------------------------------------------------------------------
 
-    #colors;
-    #activated_color;
-    #contrasts;
-    #activated_contrast;
+    #activatedColor;
+    #activatedContrast;
 
     // -----------------------------------------------------------------------
     // CONSTRUCTOR
@@ -79,183 +66,53 @@ export class AccessibilityManager extends BaseManager {
     /**
     * Create a new AccessibilityManager instance.
     *
-    * This constructor initializes default color and contrast schemes,
-    * sets their active values to empty (light and no-contrast by default),
-    * and registers two onload functions:
-    * 1. `#load_body_classes()` – applies color and contrast settings from URL parameters.
-    * 2. `#set_all_links_custom()` – ensures internal links preserve accessibility parameters.
+    * Initializes both modes to their default (inactive) state and registers
+    * three onload functions: class restoration from URL, link customization,
+    * and form submit customization.
     *
     * @constructor
-    * @returns {AccessibilityManager} A new accessibility manager instance.
+    * @returns {AccessibilityManager}
     */
     constructor() {
         super();
-        this.#colors = ["dark"];
-        this.#activated_color = "";
-        this.#contrasts = ["contrast"];
-        this.#activated_contrast = "";
+        this.#activatedColor = "";
+        this.#activatedContrast = "";
 
-        // add onload events
         OnLoadManager.addLoadFunction(this.#loadBodyClasses.bind(this));
         OnLoadManager.addLoadFunction(this.#setAllLinksCustom.bind(this));
         OnLoadManager.addLoadFunction(this.#setSubmitCustom.bind(this));
+        OnLoadManager.addLoadFunction(this.#injectButtonIcons.bind(this));
     }
+
+    // -----------------------------------------------------------------------
+    // STATIC CONSTANTS
+    // -----------------------------------------------------------------------
+
+    static get COLOR_MODE()              { return "dark"; }
+    static get CONTRAST_MODE()           { return "contrast"; }
+    static get COLOR_PARAMETER_NAME()    { return "wexa_color"; }
+    static get CONTRAST_PARAMETER_NAME() { return "wexa_contrast"; }
 
     // -----------------------------------------------------------------------
     // GETTERS
     // -----------------------------------------------------------------------
 
     /**
-     * Get all color schemes register in the class.
-     * By default, contains only 'dark' (the 'light' mode is the default scheme when no scheme is set).
-     *
-     * @returns {Array[string]}
-     */
-    get colorSchemes() {
-        return this.#colors;
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * Get the current color scheme activated.
-     * If this value is an empty string, then it's the default (light) mode which is activated.
-     *
+     * The currently active color mode class, or "" when light (default).
      * @returns {string}
      */
-    get activatedColorScheme() {
-        return this.#activated_color;
+    get activatedColorMode() {
+        return this.#activatedColor;
     }
 
     // -----------------------------------------------------------------------
 
     /**
-     * Get all contrast schemes register in the class.
-     * By default, contains only 'contrast'.
-     *
-     * @returns {Array[string]}
-     */
-    get contrastSchemes() {
-        return this.#contrasts;
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * Get the current contrast scheme activated.
-     * If this value is an empty string, then it's the default (no-contrast) mode which is activated.
-     *
+     * The currently active contrast mode class, or "" when normal (default).
      * @returns {string}
      */
-    get activatedContrastScheme() {
-        return this.#activated_contrast;
-    }
-
-    // -----------------------------------------------------------------------
-    // SETTERS
-    // -----------------------------------------------------------------------
-
-    /**
-     * Add a new color scheme to the registered list.
-     *
-     * This method registers a custom color scheme that can later be applied
-     * through `activateColorScheme()`. The provided name must correspond to a
-     * CSS class that overrides the color variables used by the `<body>` element.
-     *
-     * @param {string} colorScheme - The name of the new color scheme (CSS class name).
-     * @returns {void}
-     */
-    addColorScheme(colorScheme) {
-        if (typeof colorScheme === 'string') {
-            this.#colors.push(colorScheme);
-        } else {
-            console.log("The 'colorScheme' parameter must be a string, not a: " + typeof colorScheme);
-        }
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * Remove a color scheme from the registered list.
-     *
-     * This method deletes a specific color scheme name from the internal list
-     * if it exists. If the provided name is invalid or not found, a warning
-     * message is logged.
-     *
-     * @param {string} colorScheme - The name of the color scheme to remove.
-     * @returns {void}
-     */
-    removeColorScheme(colorScheme) {
-        if (typeof colorScheme !== 'string') {
-            console.log("The 'colorScheme' parameter must be a string, not a: " + typeof colorScheme);
-        }
-
-        const colorIndex = this.#colors.indexOf(colorScheme);
-
-        if (colorIndex === -1) {
-            console.log("The color scheme '" + colorScheme + "' does not exist!");
-        } else {
-            this.#colors.splice(colorIndex, 1);
-        }
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * Add a new contrast scheme to the registered list.
-     *
-     * This method registers a custom contrast scheme that can later be applied
-     * through `activateContrastScheme()`. The given name must correspond to a CSS
-     * class defining the contrast variables usable by the `<body>` element.
-     *
-     * @param {string} contrastScheme - The name of the contrast scheme to add.
-     * @returns {void}
-     */
-    addContrastScheme(contrastScheme) {
-        if (typeof contrastScheme === 'string') {
-            this.#contrasts.push(contrastScheme);
-        } else {
-            console.log("The 'contrastScheme' parameter must be a string, not a: " + typeof contrastScheme);
-        }
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * Remove a contrast scheme from the registered list.
-     *
-     * This method deletes a specific contrast scheme name from the internal list
-     * if it exists. If the provided name is invalid or unknown, a warning message
-     * is logged.
-     *
-     * @param {string} contrastScheme - The name of the contrast scheme to remove.
-     * @returns {void}
-     */
-    removeContrastScheme(contrastScheme) {
-        if (typeof contrastScheme !== 'string') {
-            console.log("The 'contrastScheme' parameter must be a string, not a: " + typeof contrastScheme);
-        }
-
-        const contrastIndex = this.#contrasts.indexOf(contrastScheme);
-
-        if (contrastIndex === -1) {
-            console.log("The contrast scheme '" + contrastScheme + "' does not exist!");
-        } else {
-            this.#contrasts.splice(contrastIndex, 1);
-        }
-    }
-
-    // -----------------------------------------------------------------------
-    // PUBLIC STATIC METHODS
-    // -----------------------------------------------------------------------
-
-    static get COLOR_PARAMETER_NAME() {
-        return "wexa_color";
-    }
-
-    static get CONTRAST_PARAMETER_NAME() {
-        return "wexa_contrast";
+    get activatedContrastMode() {
+        return this.#activatedContrast;
     }
 
     // -----------------------------------------------------------------------
@@ -263,164 +120,51 @@ export class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     /**
-     * DEPRECATED.
-     * @returns {Promise<void>}
-     */
-    async switch_color_scheme() {
-        await this.switchColorScheme();
-    }
-
-    /**
-    * Toggle between the default (light) and the configured color scheme.
+    * Toggle between light (default) and dark color mode.
     *
-    * This method switches the color mode when only one color scheme is registered.
-    * If multiple color schemes exist, it logs a warning and requires using
-    * `activate_color_scheme()` instead. The method updates the `<body>` element’s
-    * CSS class, refreshes the visual state of the theme button, and informs the
-    * server of the current color scheme through a POST event.
+    * Adds or removes the "dark" class on <body>, updates the color mode
+    * button state, and notifies the server via a POST event.
     *
     * @async
     * @returns {Promise<void>}
     */
     async switchColorScheme() {
-        if (this.#colors.length > 1) {
-            console.log("Impossible to switch color scheme because multiple color schemes has set !" +
-                "You have to use the activate_color_scheme() method!");
-        }
-
-        if (this.#activated_color === "") {
-            this.#activated_color = this.#colors[0];
-            document.body.classList.add(this.#colors[0]);
-
+        if (this.#activatedColor === "") {
+            this.#activatedColor = AccessibilityManager.COLOR_MODE;
+            document.documentElement.classList.add(AccessibilityManager.COLOR_MODE);
         } else {
-            this.#activated_color = "";
-            document.body.classList.remove(this.#colors[0]);
+            this.#activatedColor = "";
+            document.documentElement.classList.remove(AccessibilityManager.COLOR_MODE);
         }
 
-        // Update state of the theme button
-        this.#updateButtonState('btn-theme');
-        await this.postEvents({"accessibility_color": this.#activated_color});
+        this.#updateButtonState('btn-color');
+        this.#updateUrl();
+        await this.postEvents({"accessibility_color": this.#activatedColor});
     }
 
     // -----------------------------------------------------------------------
 
     /**
-    * DEPRECATED.
-    * @param {string} color_scheme - Name of the color scheme to activate.
-    * @returns {Promise<void>}
-    */
-    async activate_color_scheme(color_scheme) {
-        await this.activateColorScheme(color_scheme);
-    }
-
-    /**
-    * Activate a specific color scheme on the current page.
-    *
-    * This method applies the selected color theme by updating the `<body>` class
-    * and removing any previously active color. It synchronizes the chosen scheme
-    * with the server using a POST event, ensuring that both client and server
-    * maintain a consistent accessibility state.
-    *
-    * @async
-    * @param {string} colorScheme - The name of the color scheme to apply
-    *                               (e.g., 'dark', 'light', or custom name).
-    * @returns {Promise<void>}
-    */
-    async activateColorScheme(colorScheme) {
-        if (colorScheme === "" || this.#colors.includes(colorScheme)) {
-            if (this.#activated_color !== "") {
-                document.body.classList.remove(this.#activated_color);
-            }
-
-            if (colorScheme !== "") {
-                document.body.classList.add(colorScheme);
-            }
-
-            this.#activated_color = colorScheme;
-            await this.postEvents({"accessibility_color": this.#activated_color});
-        } else {
-            console.log("Unknown given color scheme: " + colorScheme);
-        }
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * DEPRECATED.
-     * @returns {Promise<void>}
-     */
-    async switch_contrast_scheme() {
-        await this.switchContrastScheme();
-    }
-
-    /**
-     * Toggle between the default (no-contrast) and the configured contrast scheme.
+     * Toggle between normal (default) and high-contrast mode.
      *
-     * This method switches the contrast mode when only one contrast scheme is registered.
-     * If multiple contrast schemes exist, it logs a warning and requires using
-     * `activateContrastScheme()` instead. The method updates the `<body>` element’s
-     * CSS class, refreshes the visual state of the contrast button, and notifies
-     * the server of the current contrast mode via a POST event.
+     * Adds or removes the "contrast" class on <body>, updates the contrast
+     * button state, and notifies the server via a POST event.
      *
      * @async
      * @returns {Promise<void>}
      */
     async switchContrastScheme() {
-        if (this.#contrasts.length > 1) {
-            console.log('Impossible to switch contrast scheme because multiple contrast schemes are set! ' +
-                'Use activateContrastScheme() instead.');
-        }
-
-        if (this.#activated_contrast === '') {
-            this.#activated_contrast = this.#contrasts[0];
-            document.body.classList.add(this.#contrasts[0]);
+        if (this.#activatedContrast === "") {
+            this.#activatedContrast = AccessibilityManager.CONTRAST_MODE;
+            document.documentElement.classList.add(AccessibilityManager.CONTRAST_MODE);
         } else {
-            this.#activated_contrast = '';
-            document.body.classList.remove(this.#contrasts[0]);
+            this.#activatedContrast = "";
+            document.documentElement.classList.remove(AccessibilityManager.CONTRAST_MODE);
         }
 
         this.#updateButtonState('btn-contrast');
-        await this.postEvents({accessibility_contrast: this.#activated_contrast});
-    }
-
-    // -----------------------------------------------------------------------
-
-    /**
-     * DEPRECATED.
-     * @param {string} contrast_scheme - Name of the contrast scheme to activate.
-     * @returns {Promise<void>}
-     */
-    async activate_contrast_scheme(contrast_scheme) {
-        await this.activateContrastScheme(contrast_scheme);
-    }
-
-    /**
-     * Activate a specific contrast scheme on the current page.
-     *
-     * This method applies or removes the given contrast mode by updating the `<body>`
-     * element’s class and synchronizes the resulting accessibility state with the
-     * server through a POST event. If the provided scheme is unknown, a warning is logged.
-     *
-     * @async
-     * @param {string} contrastScheme - The name of the contrast scheme to apply.
-     *                                  An empty value disables contrast mode.
-     * @returns {Promise<void>}
-     */
-    async activateContrastScheme(contrastScheme) {
-        if (contrastScheme === '' || this.#contrasts.includes(contrastScheme)) {
-            if (this.#activated_contrast !== '') {
-                document.body.classList.remove(this.#activated_contrast);
-            }
-
-            if (contrastScheme !== '') {
-                document.body.classList.add(contrastScheme);
-            }
-
-            this.#activated_contrast = contrastScheme;
-            const response = await this.postEvents({accessibility_contrast: this.#activated_contrast});
-        } else {
-            console.log('Unknown given contrast scheme: ' + contrastScheme);
-        }
+        this.#updateUrl();
+        await this.postEvents({"accessibility_contrast": this.#activatedContrast});
     }
 
     // -----------------------------------------------------------------------
@@ -433,7 +177,7 @@ export class AccessibilityManager extends BaseManager {
      * External domains are left unchanged unless the current host is localhost.
      *
      * @param {HTMLAnchorElement} element - The <a> element providing the target URL.
-     * @param {boolean} openInNewTab - True to open the destination in a new tab. False to navigate in place.
+     * @param {boolean} openInNewTab - True to open the destination in a new tab.
      * @returns {void}
      */
     goToLink(element, openInNewTab = false) {
@@ -443,19 +187,13 @@ export class AccessibilityManager extends BaseManager {
         }
         const url = new URL(element.href, window.location.href);
 
-        // Determine whether accessibility parameters must be propagated.
-        // They are added when:
-        //   - running from localhost (development server), or
-        //   - navigating within the same host.
         let targetUrl;
-
         if (window.location.protocol !== 'file:' && (window.location.hostname === 'localhost' || url.host === window.location.host)) {
             targetUrl = this.setUrlWithParameters(url.href);
         } else {
             targetUrl = url.href;
         }
 
-        // Open either in a new tab or in the current page.
         if (openInNewTab === true) {
             window.open(targetUrl, '_blank', 'noopener');
             return;
@@ -469,28 +207,35 @@ export class AccessibilityManager extends BaseManager {
     /**
      * Append accessibility parameters (color and contrast) to a given URL.
      *
-     * This method constructs a new URL that includes GET parameters reflecting
-     * the current accessibility state. If a parameter is inactive (empty), it is
-     * removed from the query string. External links should not be processed by
-     * this method.
+     * All parameters present in the current page URL are forwarded first, so
+     * that parameters owned by other managers (e.g. wexa_theme from ThemeManager)
+     * are preserved during navigation. Accessibility parameters are then set or
+     * removed on top of those forwarded values.
      *
      * @param {string} url - The URL to modify.
-     * @returns {string} The updated URL containing accessibility parameters.
+     * @returns {string} The updated URL with accessibility parameters.
      */
     setUrlWithParameters(url) {
         if (url === null || url === '') {
             return '';
         }
-        const customUrl = new URL(url, window.location.origin);
+        const customUrl = new URL(url, window.location.href);
 
-        if (this.#activated_color !== '') {
-            customUrl.searchParams.set(AccessibilityManager.COLOR_PARAMETER_NAME, this.#activated_color);
+        // Forward all parameters from the current URL so that params owned by
+        // other managers (e.g. wexa_theme) survive cross-page navigation.
+        const currentParams = new URLSearchParams(window.location.search);
+        for (const [key, value] of currentParams) {
+            customUrl.searchParams.set(key, value);
+        }
+
+        if (this.#activatedColor !== '') {
+            customUrl.searchParams.set(AccessibilityManager.COLOR_PARAMETER_NAME, this.#activatedColor);
         } else {
             customUrl.searchParams.delete(AccessibilityManager.COLOR_PARAMETER_NAME);
         }
 
-        if (this.#activated_contrast !== '') {
-            customUrl.searchParams.set(AccessibilityManager.CONTRAST_PARAMETER_NAME, this.#activated_contrast);
+        if (this.#activatedContrast !== '') {
+            customUrl.searchParams.set(AccessibilityManager.CONTRAST_PARAMETER_NAME, this.#activatedContrast);
         } else {
             customUrl.searchParams.delete(AccessibilityManager.CONTRAST_PARAMETER_NAME);
         }
@@ -503,17 +248,7 @@ export class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     /**
-     * Load and apply accessibility classes from the current URL.
-     *
-     * This private asynchronous method reads `wexa_color` and `wexa_contrast`
-     * parameters from the query string and applies the corresponding CSS classes
-     * to the `<body>` element. It updates the internal state of the manager and,
-     * if valid parameters were found, sends a single POST event to the server to
-     * synchronize accessibility settings (color and contrast).
-     *
-     * This function is automatically executed on page load to restore the user's
-     * accessibility preferences and ensure visual consistency across sessions.
-     *
+     * Restore color and contrast modes from URL parameters on page load.
      * @private
      * @async
      * @returns {Promise<void>}
@@ -522,33 +257,28 @@ export class AccessibilityManager extends BaseManager {
         const params = new URLSearchParams(window.location.search);
         const events = {};
 
-        // manage color scheme
         if (params.has(AccessibilityManager.COLOR_PARAMETER_NAME)) {
-            const color_parameter = params.get(AccessibilityManager.COLOR_PARAMETER_NAME).toLowerCase();
-
-            if (this.#colors.includes(color_parameter)) {
-                this.#activated_color = color_parameter;
-                document.body.classList.add(color_parameter);
-                events.accessibility_color = this.#activated_color
+            const colorParam = params.get(AccessibilityManager.COLOR_PARAMETER_NAME).toLowerCase();
+            if (colorParam === AccessibilityManager.COLOR_MODE) {
+                this.#activatedColor = colorParam;
+                document.documentElement.classList.add(colorParam);
+                events.accessibility_color = this.#activatedColor;
             } else {
-                console.log(AccessibilityManager.COLOR_PARAMETER_NAME + " get parameter unknown : " + color_parameter);
+                console.log(AccessibilityManager.COLOR_PARAMETER_NAME + " unknown value: " + colorParam);
             }
         }
 
-        // manage contrast scheme
         if (params.has(AccessibilityManager.CONTRAST_PARAMETER_NAME)) {
-            const contrast_param = params.get(AccessibilityManager.CONTRAST_PARAMETER_NAME).toLowerCase();
-
-            if (this.#contrasts.includes(contrast_param)) {
-                this.#activated_contrast = contrast_param;
-                document.body.classList.add(contrast_param);
-                events.accessibility_contrast = this.#activated_contrast
+            const contrastParam = params.get(AccessibilityManager.CONTRAST_PARAMETER_NAME).toLowerCase();
+            if (contrastParam === AccessibilityManager.CONTRAST_MODE) {
+                this.#activatedContrast = contrastParam;
+                document.documentElement.classList.add(contrastParam);
+                events.accessibility_contrast = this.#activatedContrast;
             } else {
-                console.log(AccessibilityManager.CONTRAST_PARAMETER_NAME + " get parameter unknown : " + contrast_param);
+                console.log(AccessibilityManager.CONTRAST_PARAMETER_NAME + " unknown value: " + contrastParam);
             }
         }
 
-        // Inform the server in case of change
         if (Object.keys(events).length > 0) {
             await this.postEvents(events);
         }
@@ -557,13 +287,14 @@ export class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     /**
-     * Custom the click event of all 'a' html element to call the goToLink function.
+     * Customize the click event of all 'a' elements to call goToLink().
+     * @private
      */
     #setAllLinksCustom() {
-        let link_elements = Array.from(document.querySelectorAll("a"));
-        link_elements = link_elements.filter(el => el.href !== null && el.href !== '');
+        let linkElements = Array.from(document.querySelectorAll("a"));
+        linkElements = linkElements.filter(el => el.href !== null && el.href !== '');
 
-        link_elements.forEach(element => {
+        linkElements.forEach(element => {
             element.addEventListener("click", event => {
                 event.preventDefault();
                 this.goToLink(element, element.target === '_blank');
@@ -574,16 +305,7 @@ export class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     /**
-     * Customize the main form submission to preserve accessibility parameters.
-     *
-     * This private method attaches a click listener to the first submit button
-     * found in the document. When triggered, it rewrites the form’s `action`
-     * attribute using `setUrlWithParameters()` so that the current color and
-     * contrast schemes remain applied after submission.
-     *
-     * This behavior ensures continuity of the accessibility context between pages
-     * without requiring any manual script injection.
-     *
+     * Rewrite the form action on submit to preserve accessibility parameters.
      * @private
      * @returns {void}
      */
@@ -602,17 +324,43 @@ export class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
 
     /**
-     * Update the visual pressed state of a specific accessibility button.
+     * Inject inline SVG icons into btn-contrast and btn-color if they are empty.
+     * Inline SVG is required so that stroke/fill currentColor inherits from CSS color.
+     *
+     * @async
      * @private
-     * @param {string} buttonId - 'btn-contrast' or 'btn-theme'.
+     * @returns {Promise<void>}
+     */
+    async #injectButtonIcons() {
+        await SVGIconsManager.inject(document.getElementById('btn-contrast'), 'contrast');
+        await SVGIconsManager.inject(document.getElementById('btn-color'), 'color');
+    }
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Reflect the current accessibility state in the browser URL without reloading.
+     * Ensures that a page reload restores both color and contrast modes.
+     * @private
+     */
+    #updateUrl() {
+        history.replaceState(null, '', this.setUrlWithParameters(window.location.href));
+    }
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Update the aria-pressed state of a mode toggle button.
+     * @private
+     * @param {string} buttonId - 'btn-contrast' or 'btn-color'.
      */
     #updateButtonState(buttonId) {
         const btn = document.getElementById(buttonId);
         if (btn === null) { console.error(`Button not found: ${buttonId}.`); return; }
 
         let pressed = false;
-        if (buttonId === 'btn-contrast') { pressed = this.#activated_contrast !== ''; }
-        else if (buttonId === 'btn-theme') { pressed = this.#activated_color !== ''; }
+        if (buttonId === 'btn-contrast') { pressed = this.#activatedContrast !== ''; }
+        else if (buttonId === 'btn-color') { pressed = this.#activatedColor !== ''; }
         else { console.error(`Unknown button id: ${buttonId}.`); return; }
 
         btn.setAttribute('aria-pressed', String(pressed));
