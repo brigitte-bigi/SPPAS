@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -44,8 +44,13 @@ import wx
 
 from sppas.core.config import sppasAppConfig
 from sppas.core.coreutils import msg
+from sppas.src.wkps.wio import sppasWJSON
+from sppas.ui.agnostic import sppasCommClient
+from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.agnostic import sppasCommServerError
 
 from .events import sb
+from .events import sppasDataChangedEvent
 
 from .windows import sppasStaticLine
 from .windows import BitmapTextButton
@@ -268,6 +273,10 @@ class sppasMainWindow(sppasDialog):
         # This event was sent by any of the children
         self.FindWindow("content").Bind(sb.EVT_DATA_CHANGED, self._process_data_changed)
 
+        # A message was received on the socket, posted by the communication
+        # server of the application.
+        self.Bind(sb.EVT_COMM_MESSAGE, self._process_comm_message)
+
         # Capture keys
         self.Bind(wx.EVT_CHAR_HOOK, self._process_key_event)
 
@@ -323,6 +332,54 @@ class sppasMainWindow(sppasDialog):
             page = book.GetPage(i)
             if emitted != page and page.GetName() in self._pages:
                 page.set_data(wkp)
+
+        # Send the workspace to the other UI -- except when the change is
+        # the one it just sent: this window is then the emitter.
+        if emitted != self:
+            self._send_workspace(wkp)
+
+    # -----------------------------------------------------------------------
+
+    def _send_workspace(self, wkp):
+        """Send the workspace to the communication server of the other UI.
+
+        :param wkp: (sppasWorkspace)
+
+        """
+        wjson = sppasWJSON()
+        wjson.set(wkp)
+        settings = wx.GetApp().settings
+        client = sppasCommClient(settings.shost, settings.sport)
+        request = client.format_request(sppasCommKeys.WKP_CHANGED, wjson.serialize())
+        try:
+            client.request(request)
+            logging.debug("Workspace sent to the communication server.")
+        except sppasCommServerError:
+            logging.info("No communication server to send the workspace to.")
+
+    # -----------------------------------------------------------------------
+
+    def _process_comm_message(self, event):
+        """Process a message received from the other UI.
+
+        A WKP_CHANGED message carries the serialized dict of a workspace:
+        parse it and re-emit EVT_DATA_CHANGED, with this window as the
+        emitter so that the workspace is not sent back to its sender.
+
+        :param event: (sppasCommMessageEvent)
+
+        """
+        key = event.GetKey()
+        if key == sppasCommKeys.WKP_CHANGED:
+            wjson = sppasWJSON()
+            wjson.parse(event.GetValue())
+            evt = sppasDataChangedEvent(self.GetId())
+            evt.SetEventObject(self)
+            evt.SetWorkspace(wjson)
+            wx.PostEvent(self.FindWindow("content"), evt)
+        else:
+            logging.warning("Unexpected message received: key={:s}."
+                            "".format(sppasCommKeys.name_of(key)))
 
     # -----------------------------------------------------------------------
 

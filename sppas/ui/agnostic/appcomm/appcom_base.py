@@ -69,6 +69,9 @@ class sppasCommKeys:
     ACK = 10     # request understood and processed. value = response payload
     ERROR = 11   # request failed. value = human-readable message
 
+    # Application messages, sent in both directions
+    WKP_CHANGED = 20   # the workspace changed. value = its serialized dict
+
     # -----------------------------------------------------------------------
 
     @staticmethod

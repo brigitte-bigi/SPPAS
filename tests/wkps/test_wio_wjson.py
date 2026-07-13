@@ -117,6 +117,27 @@ class TestsppasWJSON(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
+    def test_serialize_parse_public(self):
+        """The public serialize/parse pair round-trips a workspace."""
+        data = sppasWJSON()
+        data.add_file(os.path.join(DATA, '0001.txt'))
+        r1 = sppasCatReference('SpeakerAB')
+        r1.set_type('SPEAKER')
+        r1.append(sppasRefAttribute('initials', 'AB'))
+        r1.append(sppasRefAttribute('sex', 'F'))
+        data.add_ref(r1)
+
+        d = data.serialize()
+        self.assertEqual(d, data._serialize())
+
+        parsed_data = sppasWJSON()
+        parsed_id = parsed_data.parse(d)
+        self.assertEqual(data.id, parsed_id)
+        self.assertEqual(data.get_paths(), parsed_data.get_paths())
+        self.assertEqual(data.get_refs(), parsed_data.get_refs())
+
+    # -----------------------------------------------------------------------
+
     def test_read_write(self):
         data = sppasWJSON()
         data.add_file(os.path.join(DATA, '0001.txt'))

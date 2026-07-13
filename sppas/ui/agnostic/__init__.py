@@ -49,10 +49,16 @@ from .filechooser import FileChooserMixin
 from .appcomm.appcom_server import sppasCommServer
 from .appcomm.appcom_client import sppasCommClient
 from .appcomm.appcom_base import sppasCommServerError
+from .appcomm.appcom_base import sppasCommKeys
+from .appcomm.appcom_base import COMM_PROTOCOL_VERSION
+from .appcomm.appcom_notify import sppasCommNotifier
 
 __all__ = (
     'FileChooserMixin',
     'sppasCommServer',
     'sppasCommClient',
-    'sppasCommServerError'
+    'sppasCommServerError',
+    'sppasCommKeys',
+    'COMM_PROTOCOL_VERSION',
+    'sppasCommNotifier'
 )

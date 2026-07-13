@@ -40,6 +40,7 @@
 """
 
 from __future__ import annotations
+import os
 import random
 import logging
 import time
@@ -48,10 +49,16 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLButtonNode
 
 from sppas.core.config import sg
+from sppas.src.wkps.wio import sppasWJSON
+from sppas.ui.agnostic import sppasCommClient
+from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic.filechooser.filechooser_mixin import FileChooserMixin
 from sppas.ui.swapp.wappsg import wapp_settings
-from sppas.ui.swapp.apps.swapp_response import BaseResponseRecipe
-from sppas.ui.agnostic.appcomm.appcom_client import sppasCommClient
+from sppas.ui.swapp.wappsg import wapp_wkps
+from sppas.ui.swapp.wappsg import notify_wkp_changed
+from sppas.ui.swapp.wapputils import sppasImagesAccess
+from sppas.ui.swapp.htmltags import sppasHTMLButton
+from sppas.ui.swapp.apps.swapp_response import swappBaseResponse
 
 # ---------------------------------------------------------------------------
 
@@ -73,10 +80,12 @@ def _run_file_dialog(filetypes=None):
 
 # javascript code example to send a post request and get data in response
 JS_VALUE = """
+const PAGE_URI = window.location.pathname.substring(1);
+
 async function setRandomColor() {
     // test with json post request
-    const requestManager = new RequestManager();
-    const response = await requestManager.send_post_request({update_text_color: true});
+    const requestManager = new window.Wexa.RequestManager();
+    const response = await requestManager.send_post_request({update_text_color: true}, "application/json", PAGE_URI);
 
     let date = new Date();
     console.log("time to receive server response: " + (date.getTime() - response["time"]) + "ms");
@@ -86,10 +95,30 @@ async function setRandomColor() {
 }
 
 async function choisirFichier() {
-    const requestManager = new RequestManager();
-    const response = await requestManager.send_post_request({choose_file: true});
+    const requestManager = new window.Wexa.RequestManager();
+    const response = await requestManager.send_post_request({choose_file: true}, "application/json", PAGE_URI);
     alert("Fichier choisi : " + response["file_path"]);
 }
+
+window.Wexa.onload.addLoadFunction(() => {
+    window.Wexa.links.handleLinksWithParameters(["home_button"]);
+});
+
+window.Wexa.onload.addLoadFunction(() => {
+    document.getElementsByName("update_btn_text")[0].onclick = async () => {
+        const requestManager = new window.Wexa.RequestManager();
+        await requestManager.send_post_request({update_btn_text_event: true}, "application/json", PAGE_URI);
+        window.location.reload();
+    };
+});
+
+window.Wexa.onload.addLoadFunction(() => {
+    document.getElementsByName("socket_ping")[0].onclick = async () => {
+        const requestManager = new window.Wexa.RequestManager();
+        const response = await requestManager.send_post_request({socket_ping: true}, "application/json", PAGE_URI);
+        alert(JSON.stringify(response["socket_response"]));
+    };
+});
 
 window.Wexa.onload.addLoadFunction(() => {
     document.getElementsByName("choose_file")[0].onclick = choisirFichier;
@@ -97,9 +126,18 @@ window.Wexa.onload.addLoadFunction(() => {
 
 window.Wexa.onload.addLoadFunction(() => {
     document.getElementsByName("choose_txt_file")[0].onclick = async () => {
-        const requestManager = new RequestManager();
-        const response = await requestManager.send_post_request({choose_txt_file: true});
+        const requestManager = new window.Wexa.RequestManager();
+        const response = await requestManager.send_post_request({choose_txt_file: true}, "application/json", PAGE_URI);
         alert("Fichier TXT choici : " + response["file_path"]);
+    };
+});
+
+window.Wexa.onload.addLoadFunction(() => {
+    document.getElementsByName("show_workspace")[0].onclick = async () => {
+        const requestManager = new window.Wexa.RequestManager();
+        const response = await requestManager.send_post_request({show_workspace: true}, "application/json", PAGE_URI);
+        const workspaceElement = document.getElementsByName("workspace_content")[0];
+        workspaceElement.textContent = JSON.stringify(response["workspace"], null, 4);
     };
 });
 
@@ -117,7 +155,7 @@ window.Wexa.onload.addLoadFunction(() => {
 # ---------------------------------------------------------------------------
 
 
-class TestsResponseRecipe(BaseResponseRecipe):
+class TestsResponseRecipe(swappBaseResponse):
 
     def __init__(self, name="Test", tree=None, title= sg.__name__ + " Tests"):
         """Create a HTTPD Response instance with a default response.
@@ -126,7 +164,7 @@ class TestsResponseRecipe(BaseResponseRecipe):
 
         """
         # Inheritance with a given dynamic HTMLTree.
-        super(TestsResponseRecipe, self).__init__(name, tree)
+        super(TestsResponseRecipe, self).__init__(name, tree, title)
         self._bake()
 
     # -----------------------------------------------------------------------
@@ -156,13 +194,21 @@ class TestsResponseRecipe(BaseResponseRecipe):
 
         # Added js scripts
         script = HTMLNode(self._htree.head.identifier, None, "script",
-                          value=JS_VALUE, attributes={'type': "application/javascript"})
+                          value=JS_VALUE, attributes={'type': "module"})
         self._htree.head.append_child(script)
 
         # Add elements in the header
         _h1 = HTMLNode(self._htree.body_header.identifier, None, "h1",
                        value="Test of swapp")
         self._htree.body_header.append_child(_h1)
+
+        home_button = sppasHTMLButton(self._htree.body_header.identifier, identifier="home_button")
+        home_button.add_attribute("data-href", "/")
+        home_button.add_attribute("data-target", "_self")
+        home_button.add_attribute("class", "menuitem")
+        home_button.set_icon(sppasImagesAccess.get_image_filename("home"))
+        home_button.set_text(None, "Home")
+        self._htree.body_header.append_child(home_button)
 
         # Add an element in the footer
         _p = HTMLNode(self._htree.body_footer.identifier, None, "p",
@@ -192,17 +238,28 @@ class TestsResponseRecipe(BaseResponseRecipe):
 
             elif event_name == "choose_file":
                 path = _run_file_dialog()
+                if os.path.isfile(path) is True:
+                    wapp_wkps.data.add_file(path)
+                    notify_wkp_changed()
                 self._data = {"file_path": path}
 
             elif event_name == "choose_txt_file":
                 path = _run_file_dialog(filetypes=[("Texts", "*.txt"), ("All files", "*.*")])
+                if os.path.isfile(path) is True:
+                    wapp_wkps.data.add_file(path)
+                    notify_wkp_changed()
                 self._data = {"file_path": path}
 
             elif event_name == "socket_ping":
                 client = sppasCommClient(wapp_settings.shost, wapp_settings.sport)
-                request = client.format_request("ping", {"source": "test.html"})
+                request = client.format_request(sppasCommKeys.PING, {"source": "test.html"})
                 response = client.request(request)
                 self._data = {"socket_response": response}
+
+            elif event_name == "show_workspace":
+                wjson = sppasWJSON()
+                wjson.set(wapp_wkps.data)
+                self._data = {"workspace": wjson.serialize()}
 
             else:
                 logging.warning("Ignore event: {:s}".format(event_name))
@@ -232,10 +289,7 @@ class TestsResponseRecipe(BaseResponseRecipe):
                      value="Click the button to re-create the dynamic content of the page.")
         self._htree.body_main.append_child(p)
 
-        attr = dict()
-        attr["onkeydown"] = "notify_event(this);"
-        attr["onclick"] = "notify_event(this);"
-        b = HTMLButtonNode(self._htree.body_main.identifier, "update_btn_text", attributes=attr)
+        b = HTMLButtonNode(self._htree.body_main.identifier, "update_btn_text")
         b.set_value(text)
         self._htree.body_main.append_child(b)
 
@@ -244,13 +298,11 @@ class TestsResponseRecipe(BaseResponseRecipe):
         h2 = self.element("h2")
         h2.set_value("Test file chooser")
 
-        attr = {"onclick": "notify_event(this);"}
-        b = HTMLButtonNode(self._htree.body_main.identifier, "choose_file", attributes=attr)
+        b = HTMLButtonNode(self._htree.body_main.identifier, "choose_file")
         b.set_value("Choose a file")
         self._htree.body_main.append_child(b)
 
-        attr = {"onclick": "notify_event(this);"}
-        b = HTMLButtonNode(self._htree.body_main.identifier, "choose_txt_file", attributes=attr)
+        b = HTMLButtonNode(self._htree.body_main.identifier, "choose_txt_file")
         b.set_value("Choose a txt file")
         self._htree.body_main.append_child(b)
 
@@ -259,10 +311,22 @@ class TestsResponseRecipe(BaseResponseRecipe):
         h2 = self.element("h2")
         h2.set_value("Test socket communication")
 
-        attr = {"onclick": "notify_event(this);"}
-        b = HTMLButtonNode(self._htree.body_main.identifier, "socket_ping", attributes=attr)
+        b = HTMLButtonNode(self._htree.body_main.identifier, "socket_ping")
         b.set_value("Send ping to socket server")
         self._htree.body_main.append_child(b)
+
+        # ---------------------
+
+        h2 = self.element("h2")
+        h2.set_value("Test workspace exchange")
+
+        b = HTMLButtonNode(self._htree.body_main.identifier, "show_workspace")
+        b.set_value("Show the shared workspace")
+        self._htree.body_main.append_child(b)
+
+        workspace_pre = HTMLNode(self._htree.body_main.identifier, None, "pre", value="")
+        workspace_pre.set_attribute("name", "workspace_content")
+        self._htree.body_main.append_child(workspace_pre)
 
     # ------------------------------------------------------------------
     # STATIC METHODS

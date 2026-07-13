@@ -41,10 +41,14 @@
 from __future__ import annotations
 import logging
 
+from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommServer
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
+
+from .wappsg import wapp_wkps
+from .wappsg import notify_wkp_changed
 
 # ---------------------------------------------------------------------------
 
@@ -104,6 +108,10 @@ class sppasWappCommServer(sppasCommServer):
     def _prepare_response(self, key: int, value) -> str:
         """Override. Register the interlocutor and answer the messages.
 
+        The HELLO and BYE messages register/un-register the interlocutor.
+        The WKP_CHANGED message stores the received workspace into the
+        shared state -- the workspaces manager of the web application.
+
         :param key: (int) One of the sppasCommKeys constants, sent by the client.
         :param value: (any) The value sent by the client.
         :return: (str) The response to the client, in the shared JSON envelope.
@@ -113,6 +121,9 @@ class sppasWappCommServer(sppasCommServer):
             if isinstance(value, dict) is True and "port" in value:
                 self.__interlocutor = value
                 logging.info(f"Interlocutor registered: {value}")
+                # The interlocutor starts with its own workspace: publish the
+                # shared one, so that both UIs work on the same data.
+                notify_wkp_changed()
             else:
                 logging.warning(f"HELLO received without a port. Not registered: {value}")
 
@@ -120,4 +131,30 @@ class sppasWappCommServer(sppasCommServer):
             self.__interlocutor = None
             logging.info("Interlocutor un-registered.")
 
+        if key == sppasCommKeys.WKP_CHANGED:
+            wjson = sppasWJSON()
+            wjson.parse(value)
+            wapp_wkps.data = wjson
+            logging.info("Workspace received and stored into the shared state.")
+            return self.format_message(sppasCommKeys.ACK, "Workspace stored.")
+
         return super(sppasWappCommServer, self)._prepare_response(key, value)
+
+    # -----------------------------------------------------------------------
+
+    def push(self, key: int, value) -> None:
+        """Push an event to the registered interlocutor, if any.
+
+        Tolerant version of send(): when there is no interlocutor -- the
+        other UI is not running -- the event is dropped, with a log only.
+        This is the observer the application subscribes to the notifier.
+
+        :param key: (int) One of the sppasCommKeys constants
+        :param value: (any) A JSON-serializable object
+
+        """
+        try:
+            self.send(key, value)
+            logging.debug(f"Event {sppasCommKeys.name_of(key)} pushed to the interlocutor.")
+        except sppasCommServerError as e:
+            logging.info(f"Event {sppasCommKeys.name_of(key)} not pushed: {e}")

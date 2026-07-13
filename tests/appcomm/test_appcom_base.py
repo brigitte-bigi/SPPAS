@@ -106,6 +106,7 @@ class TestCommKeys(unittest.TestCase):
     def test_name_of(self):
         self.assertEqual("PING", sppasCommKeys.name_of(sppasCommKeys.PING))
         self.assertEqual("ACK", sppasCommKeys.name_of(sppasCommKeys.ACK))
+        self.assertEqual("WKP_CHANGED", sppasCommKeys.name_of(sppasCommKeys.WKP_CHANGED))
         # An unknown value is returned as it, for the logs
         self.assertEqual("999", sppasCommKeys.name_of(999))
 

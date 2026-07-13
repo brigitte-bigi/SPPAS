@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -49,6 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.swapp.wappsg import wapp_settings
+from sppas.ui.swapp.wappsg import wapp_notify
 from .main_comm import sppasWappCommServer
 
 from .wapps import *
@@ -223,6 +224,10 @@ class sppasWebApp:
 
         # Create a socket to communicate with the apps
         self.__socket = sppasWappCommServer(wapp_settings.shost, wapp_settings.sport)
+
+        # Any application event -- e.g. the shared workspace changed -- is
+        # pushed to the interlocutor registered on this socket, if any.
+        wapp_notify.subscribe(self.__socket.push)
 
     # -----------------------------------------------------------------------
 

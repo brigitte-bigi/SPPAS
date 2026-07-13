@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023 Brigitte Bigi
+    Copyright (C) 2011-2026 Brigitte Bigi
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,10 @@
 """
 
 from sppas.src.wkps.appwkpm import sppasWkpsManager
+from sppas.src.wkps.wio import sppasWJSON
 
+from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.agnostic import sppasCommNotifier
 from sppas.ui.swapp.main_settings import sppasWebAppSettings
 
 # -----------------------------------------------------------------------
@@ -50,3 +53,21 @@ wapp_settings = sppasWebAppSettings()
 
 # Instantiate the workspaces manager
 wapp_wkps = sppasWkpsManager()
+
+# Instantiate the application events notifier
+wapp_notify = sppasCommNotifier()
+
+# -----------------------------------------------------------------------
+
+
+def notify_wkp_changed() -> None:
+    """Notify the observers that the shared workspace changed.
+
+    The workspace of the manager is serialized and published with the
+    WKP_CHANGED event key. Without any observer -- no local server, or
+    no other UI -- nothing happens.
+
+    """
+    wjson = sppasWJSON()
+    wjson.set(wapp_wkps.data)
+    wapp_notify.notify(sppasCommKeys.WKP_CHANGED, wjson.serialize())

@@ -126,6 +126,31 @@ class sppasWJSON(sppasBaseWkpIO):
 
     # -----------------------------------------------------------------------
 
+    def serialize(self, anchor_dir=""):
+        """Convert this sppasWJSON instance into a serializable structure.
+
+        :param anchor_dir: (str) Anchor folder of the relative paths, or
+        an empty string to store absolute paths only.
+        :returns: (dict) a dictionary that can be serialized
+
+        """
+        return self._serialize(anchor_dir)
+
+    # -----------------------------------------------------------------------
+
+    def parse(self, d, anchor_dir=""):
+        """Fill the data of this sppasWJSON with the given dictionary.
+
+        :param d: (dict)
+        :param anchor_dir: (str) Anchor folder of the relative paths, or
+        an empty string to resolve absolute paths only.
+        :returns: the id of the workspace
+
+        """
+        return self._parse(d, anchor_dir)
+
+    # -----------------------------------------------------------------------
+
     def _serialize(self, anchor_dir=""):
         """Convert this sppasWJSON instance into a serializable structure.
 
