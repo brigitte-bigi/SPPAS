@@ -49,6 +49,8 @@ from .app_sppas import MainWebData
 from .app_test.app_test import TestsWebData
 # Install all installed application -- the spin-offs ones
 from .spinoff import *
+# Import the provider of the generic pages
+from .pages import swappPagesData
 
 # Determine if we're running in debug mode (log level lower than DEBUG)
 DEBUG_MODE = logging.getLogger().getEffectiveLevel() < 10
@@ -70,3 +72,9 @@ for cls in SPINOFF_SWAPPS:
         WEB_APPLICATIONS.append(WebApplicationInfo(app_id, cls, True))
     except Exception as e:
         logging.debug(f"SWAPP: skip {cls} (instantiation failed): {e}")
+
+# List of the providers of the generic pages. A page is not an app: it is
+# dispatched after the apps and it never gets a card in the Dashboard.
+WEB_PAGES = [
+    swappPagesData,
+]

@@ -62,6 +62,7 @@ MSG_CONTRAST = _("Contrast")
 MSG_COLOR = _("Color")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
+MSG_DASHBOARD = _("Dashboard")
 
 # Must be appended to the HTMLTree before sppas.js
 JS_INIT = (
@@ -341,6 +342,31 @@ class swappBaseView:
         ic = _button.set_icon("sppas-logo-v5")
         ic.add_attribute("alt", "")
         _button.set_text(None, MSG_WEB)
+        parent.append_child(_button)
+        return _button
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def append_dashboard_link_button(parent: HTMLNode) -> HTMLNode:
+        """Create and append the button to go back to the Dashboard.
+
+        The button must be registered with handleLinksWithParameters() in the
+        body script of the page, so the accessibility parameters are kept
+        when navigating back.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :return: (HTMLNode) the dashboard link button node
+
+        """
+        svg_dashboard = sppasImagesAccess.get_wexa_svg_icon("dashboard")
+        dashboard_image = svg_dashboard + "<span>" + MSG_DASHBOARD + "</span>"
+        _button = HTMLNode(parent.identifier, None, "button", value=dashboard_image)
+        _button.add_attribute("id", "link-dashboard_button")
+        _button.add_attribute("aria-label", "Dashboard")
+        _button.add_attribute("type", "button")
+        _button.add_attribute("data-href", "index.html")
+        _button.add_attribute("class", "menuitem menu-svg-button")
         parent.append_child(_button)
         return _button
 
