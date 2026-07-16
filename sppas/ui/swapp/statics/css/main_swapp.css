@@ -827,3 +827,27 @@ section.actions-panel {
 .page-toc li:nth-child(3) .toc-num { background: rgb(74, 141, 153); }
 .page-toc li:nth-child(4) .toc-num { background: rgb(175, 122, 85); }
 .page-toc li:nth-child(5) .toc-num { background: rgb(112, 145, 43); }
+
+/* ── Illustrated content — image at left, content at right ── */
+/* The SPPAS way of organizing an illustration with its content,
+   in a dialog main as well as in a page main. */
+
+.illustrated-content {
+    display: grid;
+    grid-template-columns: minmax(140px, 22%) 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+}
+
+.illustrated-content > img {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.illustrated-content > section {
+    min-width: 0;
+}

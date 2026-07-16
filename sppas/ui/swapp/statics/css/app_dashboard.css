@@ -260,25 +260,8 @@ dialog[role=alertdialog].about-dialog > header {
 	color: rgb(235, 244, 251);
 }
 
-.about-dialog > main {
-    display: grid;
-    grid-template-columns: minmax(140px, 22%) 1fr;
-    gap: 1rem;
-    align-items: center;
-    padding: 1rem;
-}
-
-.about-dialog > main > img {
-    display: block;
-    width: 100%;
-    max-width: 220px;
-    height: auto;
-    margin: 0 auto;
-}
-
-.about-dialog > main > section {
-    min-width: 0;
-}
+/* The main layout of the dialog is the .illustrated-content class,
+   defined in main_swapp.css. */
 
 .about-dialog > main h1 {
     margin: 0 0 1rem 0;

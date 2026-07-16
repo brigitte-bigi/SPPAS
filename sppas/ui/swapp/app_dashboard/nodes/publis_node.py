@@ -88,6 +88,7 @@ class PublisDialog(HTMLNode):
         # main
         # ----
         _main_section = TagNode(self.identifier, None, "main")
+        _main_section.set_attribute("class", "illustrated-content")
         self.append_child(_main_section)
 
         # at left: Reference image in a link

@@ -48,7 +48,6 @@ from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp import sppasImagesAccess
 from sppas.ui.swapp.apps.swapp_view import swappBaseView
-from sppas.ui.swapp.wappsg import wapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -99,6 +98,9 @@ class CiteView(swappBaseView):
             raise TypeError("CiteView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
+        # The SPPAS way of organizing an illustration with its content.
+        self._htree.body_main.add_attribute("class", "illustrated-content")
+
     # -----------------------------------------------------------------------
     # Populate the tree
     # -----------------------------------------------------------------------
@@ -106,8 +108,10 @@ class CiteView(swappBaseView):
     def _populate_head_css(self):
         """Override. Populate the `<head>` section of the HTML tree for CSS links.
 
+        No page-specific stylesheet: the page relies on the shared one only.
+
         """
-        self._htree.head.link("stylesheet", wapp_settings.css + "pages.css", link_type="text/css")
+        pass
 
     # -----------------------------------------------------------------------
 
@@ -150,7 +154,7 @@ class CiteView(swappBaseView):
         """
         # At left: the capture of the reference article, in a link
         _a = TagNode(self._htree.body_main.identifier, None, "a")
-        _a.set_attribute("class", "noborder width_50 page-illustration")
+        _a.set_attribute("class", "noborder")
         _a.set_attribute("role", "button")
         _a.set_attribute("target", "_blank")
         _a.set_attribute("href", "https://hal.science/hal-01417876")
