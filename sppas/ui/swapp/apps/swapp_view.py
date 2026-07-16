@@ -366,6 +366,9 @@ class swappBaseView:
         _button.add_attribute("aria-label", "Dashboard")
         _button.add_attribute("type", "button")
         _button.add_attribute("data-href", "index.html")
+        # Going back to the Dashboard is a navigation, not an external link:
+        # without this target, the LinkController opens a new tab.
+        _button.add_attribute("data-target", "_self")
         _button.add_attribute("class", "menuitem menu-svg-button")
         parent.append_child(_button)
         return _button

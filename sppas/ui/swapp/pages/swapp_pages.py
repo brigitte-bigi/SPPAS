@@ -47,6 +47,7 @@ from ..apps.swapp_bakery import swappWebData
 
 from .aboutmaker import AboutResponseRecipe
 from .citemaker import CiteResponseRecipe
+from .feedbackmaker import FeedbackResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -62,7 +63,7 @@ class swappPagesData(swappWebData):
     """
 
     # The ResponseRecipe classes of all the known generic pages.
-    PAGE_RECIPES = (AboutResponseRecipe, CiteResponseRecipe)
+    PAGE_RECIPES = (AboutResponseRecipe, CiteResponseRecipe, FeedbackResponseRecipe)
 
     def __init__(self, json_filename: str | None = None) -> None:
         """Create a swappPagesData instance.

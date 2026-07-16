@@ -609,3 +609,39 @@ msgstr "Lancer"
 
 msgid "Skip to content"
 msgstr "Aller au contenu principal"
+
+# ---------------------------------------------------------------------------
+# Feedback page
+# ---------------------------------------------------------------------------
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "Message:"
+msgstr "Message :"
+
+msgid "Write the message here"
+msgstr "Écrivez le message ici"
+
+msgid "Technical information included in the message"
+msgstr "Informations techniques incluses dans le message"
+
+msgid "Send by e-mail"
+msgstr "Envoyer par e-mail"
+
+msgid "The message is copied. Paste it in the e-mail and send it."
+msgstr "Le message est copié. Collez-le dans l'e-mail et envoyez-le."
+
+msgid "Write a message before sending."
+msgstr "Écrivez un message avant d'envoyer."
+
+msgid "The message can not be copied. Select and copy it manually."
+msgstr "Le message n'a pas pu être copié. Sélectionnez-le et copiez-le manuellement."
+
+msgid ":INFO 9800: "
+msgstr "Cette page permet d'envoyer un e-mail à l'auteure : déclarer un bug, proposer une amélioration, ou simplement dire merci !"
+
+msgid ":INFO 9801: "
+msgstr "Le feedback est anonyme : SPPAS n'insère aucune donnée personnelle dans le message. Toutefois, s'il est envoyé par e-mail, l'adresse de l'expéditeur est visible du destinataire."
+
+msgid ":INFO 9802: "
+msgstr "Cliquez sur le bouton ci-dessous : le message est copié. Choisissez votre application e-mail si demandé, puis collez le message (Ctrl+V) dans le corps de l'e-mail et envoyez-le."

@@ -295,3 +295,39 @@ msgstr "Session ended"
 
 msgid "You can close this tab. [...]"
 msgstr "You can close this tab.<br>For a new session, restart SPPAS from your file explorer."
+
+# ---------------------------------------------------------------------------
+# Feedback page
+# ---------------------------------------------------------------------------
+msgid "Feedback"
+msgstr ""
+
+msgid "Message:"
+msgstr ""
+
+msgid "Write the message here"
+msgstr ""
+
+msgid "Technical information included in the message"
+msgstr ""
+
+msgid "Send by e-mail"
+msgstr ""
+
+msgid "The message is copied. Paste it in the e-mail and send it."
+msgstr ""
+
+msgid "Write a message before sending."
+msgstr ""
+
+msgid "The message can not be copied. Select and copy it manually."
+msgstr ""
+
+msgid ":INFO 9800: "
+msgstr "This page allows you to send an e-mail to the author: report a bug, suggest an improvement, or simply say thank you!"
+
+msgid ":INFO 9801: "
+msgstr "The feedback is anonymous: SPPAS does not insert any personal data in the message. However, if it is sent by e-mail, the sender address is visible to the recipient."
+
+msgid ":INFO 9802: "
+msgstr "Click the button below: the message is copied. Choose your e-mail application if asked, then paste the message (Ctrl+V) in the e-mail body and send it."

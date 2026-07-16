@@ -210,7 +210,7 @@ body > header > h1 {
 
 /* The larger right padding keeps the content away from the scrollbar. */
 body > main {
-    margin: var(--typography-spacing-vertical) 0;
+    /* margin: var(--typography-spacing-vertical) 0; */
     padding-top: var(--typography-spacing-vertical);
     padding-bottom: var(--typography-spacing-vertical);
     padding-left: var(--typography-spacing-horizontal);
@@ -883,4 +883,10 @@ section.actions-panel {
 
 .red {
     color: rgb(200, 10, 10);
+}
+
+/* ── Status of the send action of the Feedback page ──────── */
+
+#feedback_status {
+    font-weight: bold;
 }
