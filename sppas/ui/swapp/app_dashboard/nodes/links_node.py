@@ -95,6 +95,21 @@ class BaseLinksNode(HTMLNode):
 
     # ----------------------------------------------------------------------
 
+    def page_button(self, ident, icon_name, text, link):
+        """A specific button to open an internal page of SPPAS.
+
+        The button is handled by the JS DashboardManager, which preserves
+        the accessibility parameters when navigating to the page.
+
+        :return: (sppasHTMLButton)
+
+        """
+        button_node = self.link_button(ident, icon_name, text, link)
+        button_node.add_attribute("class", "page-button")
+        return button_node
+
+    # ----------------------------------------------------------------------
+
     def dialog_button(self, ident, icon_name, text, dialog_name):
         """A specific button which is used to open a modal dialog.
 
@@ -135,6 +150,8 @@ class LinksNode(BaseLinksNode):
         self.link_button("res", "link_resources", MSG_RSC, link="https://sppas.org/resources.html")
         self.link_button("tuto", "link_tutovideo", MSG_TUTOS, link="https://sppas.org/tutorials.html")
         self.link_button("faq", "link_question", MSG_FAQ, link="https://sppas.org/faq.html")
+        self.link_button("award", "link_sppas_award", MSG_AWARD, link='https://www.ouvrirlascience.fr/sppas-2/')
+        self.link_button("src", "badge-sourceforge", MSG_SRC, link="https://sourceforge.net/p/sppas/code/ci/master/tree/")
 
 # ---------------------------------------------------------------------------
 
@@ -150,6 +167,5 @@ class AboutsNode(BaseLinksNode):
         super(AboutsNode, self).__init__(parent_id, AboutsNode.ID)
 
         self.dialog_button("about", "link_about", MSG_ABOUT, dialog_name="about_dialog")
-        self.dialog_button("cite", "link_publis", MSG_CITE, dialog_name="publis_dialog")
-        self.link_button("award", "link_sppas_award", MSG_AWARD, link='https://www.ouvrirlascience.fr/sppas-2/')
-        self.link_button("src", "badge-sourceforge", MSG_SRC, link="https://sourceforge.net/p/sppas/code/ci/master/tree/")
+        # The "How to cite" button is appended dynamically: the page declares
+        # itself, like any page of the WEB_PAGES registry.

@@ -129,6 +129,10 @@ class sppasWebApp:
                 _dashboard_response = self._pages[self._default]
                 _dashboard_response.add_apps(apps)
 
+                # Adding the page providers allows the link buttons of their
+                # pages to be displayed in the interface.
+                _dashboard_response.add_pages(WEB_PAGES)
+
                 # Adding applications to the server's pages allows them to be accessed
                 # directly as known web apps. All apps must be created, not only the
                 # ones the UI is showing.

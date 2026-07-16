@@ -74,6 +74,9 @@ current_package = __name__
 # Store the defined spin-off SWAPP_CLASS
 SPINOFF_SWAPPS = []
 
+# Store the defined spin-off SWAPP_PAGES_CLASS
+SPINOFF_PAGES = []
+
 # Iterate through all modules in this directory (excluding __init__.py and sub-packages)
 for _, module_name, is_pkg in pkgutil.iter_modules([current_dir]):
     if is_pkg or module_name == "__init__":
@@ -93,6 +96,10 @@ for _, module_name, is_pkg in pkgutil.iter_modules([current_dir]):
         app_cls = getattr(module, "SWAPP_CLASS", None)
         if app_cls is not None:
             SPINOFF_SWAPPS.append(app_cls)
+
+        pages_cls = getattr(module, "SWAPP_PAGES_CLASS", None)
+        if pages_cls is not None:
+            SPINOFF_PAGES.append(pages_cls)
 
     except Exception as e:
         # Silently fail to keep robustness (optional: log this if needed)

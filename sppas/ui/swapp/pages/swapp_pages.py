@@ -72,6 +72,19 @@ class swappPagesData(swappWebData):
 
     # -----------------------------------------------------------------------
 
+    def get_pages(self) -> tuple:
+        """Return the ResponseRecipe classes of all the pages of this provider.
+
+        Each recipe describes its page with the page(), name() and icon()
+        class methods, so the Dashboard can create its link buttons.
+
+        :return: (tuple) The ResponseRecipe classes of the pages.
+
+        """
+        return swappPagesData.PAGE_RECIPES
+
+    # -----------------------------------------------------------------------
+
     def is_page(self, page_name: str) -> bool:
         """Override. Return true if the given page name can be baked.
 

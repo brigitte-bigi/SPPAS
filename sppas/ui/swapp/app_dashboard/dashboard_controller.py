@@ -105,6 +105,16 @@ class DashboardController:
 
     # -----------------------------------------------------------------------
 
+    def append_pages(self, providers: list) -> None:
+        """Append the pages of a list of page providers to the model.
+
+        :param providers: (list) List of page provider classes, of type WebSiteData.
+
+        """
+        self.__model.append_pages(providers)
+
+    # -----------------------------------------------------------------------
+
     def handle_licence_agreement(self) -> bool:
         """Process the licence agreement acceptance.
 
@@ -178,3 +188,9 @@ class DashboardController:
             # self._htree.body_main.append_child(h2)
             # ln = AppsNode(self._htree.body_main.identifier)
             # self._htree.body_main.append_child(ln)
+
+        for recipe in self.__model.get_page_recipes():
+            try:
+                self.__view.append_page_link(recipe.name(), recipe.icon(), recipe.page())
+            except Exception as e:
+                logging.error(f"Failed to create page link for {recipe}: {str(e)}")

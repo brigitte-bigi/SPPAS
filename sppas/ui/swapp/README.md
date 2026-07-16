@@ -65,8 +65,21 @@ Pages live in the `pages/` package. Each page has its own module; a page
 has no model, no dedicated JavaScript manager, and a controller only when 
 the page processes events (a form, for example).
 
-A single provider, `swappPagesData`, exposes the same
-`is_page()`/`bake_response()` interface and routes all the generic pages.
-It is registered in a distinct `WEB_PAGES` registry, consulted by
-`main_app.py` after the apps. This keeps the App/Page taxonomy visible in
-the code and keeps pages out of the Dashboard cards.
+A provider exposes the same `is_page()`/`bake_response()` interface as an
+app and routes a set of pages: `swappPagesData` routes all the generic
+pages of swapp. The providers are registered in a distinct `WEB_PAGES`
+registry, consulted by `main_app.py` after the apps. This keeps the
+App/Page taxonomy visible in the code and keeps pages out of the
+Dashboard cards.
+
+Like `WEB_APPLICATIONS`, the `WEB_PAGES` registry is built from the fixed
+providers and the discovered ones: a spin-off module declares its page
+provider with `SWAPP_PAGES_CLASS`, exactly as it declares its app with
+`SWAPP_CLASS`.
+
+The pages follow the same principle as the app cards in the Dashboard:
+each page recipe describes itself with the `page()`, `name()` and `icon()`
+class methods, and the Dashboard creates one link button per page in its
+"Find out more" section. The buttons carry the `page-button` class and are
+handled by the JS `DashboardManager`, which preserves the accessibility
+parameters when navigating.

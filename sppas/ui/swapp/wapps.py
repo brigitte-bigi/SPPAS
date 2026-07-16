@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -73,8 +73,17 @@ for cls in SPINOFF_SWAPPS:
     except Exception as e:
         logging.debug(f"SWAPP: skip {cls} (instantiation failed): {e}")
 
-# List of the providers of the generic pages. A page is not an app: it is
-# dispatched after the apps and it never gets a card in the Dashboard.
+# List of the providers of the generic pages (fixed and discovered ones).
+# A page is not an app: it is dispatched after the apps and it never gets
+# a card in the Dashboard.
 WEB_PAGES = [
     swappPagesData,
 ]
+
+# Add all discovered spin-off page providers
+for cls in SPINOFF_PAGES:
+    try:
+        inst = cls()        # if instantiation fails, skip the pages
+        WEB_PAGES.append(cls)
+    except Exception as e:
+        logging.debug(f"SWAPP: skip pages of {cls} (instantiation failed): {e}")

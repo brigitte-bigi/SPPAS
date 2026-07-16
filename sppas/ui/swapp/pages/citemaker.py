@@ -44,6 +44,7 @@ import logging
 
 from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
+from sppas.ui import _
 
 from ..apps.swapp_response import swappBaseResponse
 
@@ -53,6 +54,7 @@ from .cite_view import CiteView
 
 
 MSG_TITLE = f"SPPAS {sg.__release__} How to cite"
+MSG_CITE = _("How to cite")
 
 # ---------------------------------------------------------------------------
 
@@ -83,6 +85,20 @@ class CiteResponseRecipe(swappBaseResponse):
     def page(cls) -> str:
         """Override. Return the HTML page name."""
         return "cite.html"
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def name(cls) -> str:
+        """Return the short name of the page, displayed in link buttons."""
+        return MSG_CITE
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def icon(cls) -> str:
+        """Return the name of the image representing the page."""
+        return "link_publis"
 
     # -----------------------------------------------------------------------
 

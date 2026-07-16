@@ -62,8 +62,9 @@ class DashboardModel:
     """
 
     def __init__(self):
-        """Initialize the model with an empty list of web applications."""
+        """Initialize the model with empty lists of web applications and pages."""
         self.__bakeries = list()
+        self.__pages = list()
 
     # -----------------------------------------------------------------------
 
@@ -126,3 +127,28 @@ class DashboardModel:
             if success is False:
                 logging.error("The application {app} is not added to the "
                               "Dashboard".format(app=str(web_app)))
+
+    # -----------------------------------------------------------------------
+
+    def get_page_recipes(self) -> list:
+        """Return the list of the stored page recipe classes."""
+        return list(self.__pages)
+
+    # -----------------------------------------------------------------------
+
+    def append_pages(self, providers: list) -> None:
+        """Store the page recipes declared by the given page providers.
+
+        :param providers: (list) List of page provider classes, of type WebSiteData.
+
+        """
+        for provider_cls in providers:
+            try:
+                provider = provider_cls()
+                for recipe in provider.get_pages():
+                    if recipe not in self.__pages:
+                        self.__pages.append(recipe)
+            except Exception as e:
+                logging.error("The pages of the provider {provider} are not added "
+                              "to the Dashboard: {error}"
+                              "".format(provider=str(provider_cls), error=str(e)))

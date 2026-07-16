@@ -52,7 +52,6 @@ from sppas.ui.swapp.wappsg import wapp_settings
 
 from .nodes.agree_node import AgreementDialog
 from .nodes.about_node import AboutDialog
-from .nodes.publis_node import PublisDialog
 from .nodes.links_node import LinksNode
 from .nodes.links_node import AboutsNode
 from .nodes.apps_node import AppsNode
@@ -132,6 +131,20 @@ class DashboardView(swappBaseView):
         """
         apps_node = self._htree.body_main.get_child(AppsNode.ID)
         apps_node.create_app_card(name, icon_name, text, link, enable)
+
+    # -----------------------------------------------------------------------
+
+    def append_page_link(self, name: str, icon_name: str, link: str):
+        """Append a page link button to the about section.
+
+        :param name: (str) The short name of the page.
+        :param icon_name: (str) Name of an image representing the page
+        :param link: (str) Link to the page
+
+        """
+        about_node = self._htree.body_main.get_child(AboutsNode.ID)
+        ident = link.split(".")[0]
+        about_node.page_button(ident, icon_name, name, link)
 
     # -----------------------------------------------------------------------
     # Populate the tree
@@ -216,21 +229,19 @@ class DashboardView(swappBaseView):
         # Other sections
         # --------------
 
-        # List of recommended links section
-        h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_LINKS)
-        self._htree.body_main.append_child(h2)
-        ln = LinksNode(self._htree.body_main.identifier)
-        self._htree.body_main.append_child(ln)
-
         # Other links and infos
         h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_ABOUT)
         self._htree.body_main.append_child(h2)
         ln = AboutsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(ln)
 
+        # List of recommended links section
+        h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_LINKS)
+        self._htree.body_main.append_child(h2)
+        ln = LinksNode(self._htree.body_main.identifier)
+        self._htree.body_main.append_child(ln)
+
         # Hidden Dialogs
         _about = AboutDialog(self._htree.body_main.identifier)
         self._htree.body_main.append_child(_about)
-        _refs = PublisDialog(self._htree.body_main.identifier)
-        self._htree.body_main.append_child(_refs)
 

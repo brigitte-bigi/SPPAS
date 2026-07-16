@@ -101,7 +101,10 @@ export default class DashboardManager extends BaseManager {
         if (!container) return;
 
         // Redirections in any button -- with data-href
-        const redirectButtons = container.querySelectorAll('#apps_section button.app-button[data-href]');
+        // The page-button ones are the links to the internal pages of the
+        // WEB_PAGES registry: they follow the same principle as the apps.
+        const redirectButtons = container.querySelectorAll(
+            '#apps_section button.app-button[data-href], button.page-button[data-href]');
         for (const redirectButton of redirectButtons) {
             if (!(redirectButton instanceof HTMLButtonElement)) {
                 continue;
