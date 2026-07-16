@@ -63,6 +63,7 @@ MSG_COLOR = _("Color")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
 MSG_DASHBOARD = _("Dashboard")
+MSG_TRACES = _("Traces")
 
 # Must be appended to the HTMLTree before sppas.js
 JS_INIT = (
@@ -369,6 +370,31 @@ class swappBaseView:
         # Going back to the Dashboard is a navigation, not an external link:
         # without this target, the LinkController opens a new tab.
         _button.add_attribute("data-target", "_self")
+        _button.add_attribute("class", "menuitem menu-svg-button")
+        parent.append_child(_button)
+        return _button
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def append_trace_link_button(parent: HTMLNode) -> HTMLNode:
+        """Create and append the button opening the Traces page.
+
+        The page opens in a new tab: the user consults the traces without
+        leaving the current app. The button must be registered with
+        handleLinksWithParameters() in the body script of the page.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :return: (HTMLNode) the trace link button node
+
+        """
+        svg_trace = sppasImagesAccess.get_wexa_svg_icon("content")
+        trace_image = svg_trace + "<span>" + MSG_TRACES + "</span>"
+        _button = HTMLNode(parent.identifier, None, "button", value=trace_image)
+        _button.add_attribute("id", "link-trace_button")
+        _button.add_attribute("aria-label", "Traces")
+        _button.add_attribute("type", "button")
+        _button.add_attribute("data-href", "trace.html")
         _button.add_attribute("class", "menuitem menu-svg-button")
         parent.append_child(_button)
         return _button

@@ -62,6 +62,7 @@ BODY_SCRIPT = f"""
         setupManager.handleSetupManagerOnLoad();
 
         window.Wexa.links.handleLinks(['link-sppas_button']);
+        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------
@@ -150,6 +151,7 @@ class SetupView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
+        self.append_trace_link_button(self._htree.body_nav)
         self.append_sppas_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------

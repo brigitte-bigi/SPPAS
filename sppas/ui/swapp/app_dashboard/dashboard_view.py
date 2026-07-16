@@ -75,6 +75,7 @@ BODY_SCRIPT = f"""
         dashboardManager.handleDashboardManagerOnLoad();
 
         window.Wexa.links.handleLinksWithParameters(['web_button', 'docu_button', 'res_button', 'tuto_button', 'faq_button']);
+        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
         window.Wexa.links.handleLinks(['src_button', 'award_button']);
 """
 
@@ -174,6 +175,7 @@ class DashboardView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
+        self.append_trace_link_button(self._htree.body_nav)
         self.append_exit_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------

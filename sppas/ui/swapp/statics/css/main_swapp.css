@@ -890,3 +890,10 @@ section.actions-panel {
 #feedback_status {
     font-weight: bold;
 }
+
+/* ── Actions of the Traces page: the buttons on a single line ── */
+
+#trace_actions {
+    display: flex;
+    gap: 1rem;
+}
