@@ -60,6 +60,25 @@ wapp_notify = sppasCommNotifier()
 # -----------------------------------------------------------------------
 
 
+class sppasWxAppState:
+    """Shared running state of the wx interface.
+
+    The state is updated by the communication server: True from the HELLO
+    of the wxapp interlocutor to its BYE. It allows any web application to
+    know whether the wx interface is currently running.
+
+    """
+
+    def __init__(self):
+        self.running = False
+
+
+# Instantiate the shared state of the wx interface
+wapp_wxstate = sppasWxAppState()
+
+# -----------------------------------------------------------------------
+
+
 def notify_wkp_changed() -> None:
     """Notify the observers that the shared workspace changed.
 

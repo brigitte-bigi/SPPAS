@@ -49,6 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
 from sppas.ui.swapp.wappsg import wapp_settings
+from sppas.ui.swapp.wappsg import wapp_wxstate
 
 # ---------------------------------------------------------------------------
 
@@ -72,6 +73,8 @@ class DashboardController:
         """
         self.__model = model
         self.__view = view
+        # True while the wx interface is running: only one instance is allowed.
+        self.__wx_running = False
 
     # -----------------------------------------------------------------------
 
@@ -128,19 +131,25 @@ class DashboardController:
 
     # -----------------------------------------------------------------------
 
-    @staticmethod
-    def handle_start_sppas() -> str:
+    def handle_start_sppas(self) -> str:
         """Launch the classic SPPAS wx interface.
 
         This method executes the main entry point of the wx application
         as a subprocess. It uses the same Python interpreter as the server.
+        Only one instance is allowed: the method blocks the running state
+        until the subprocess ends, whatever the exit path.
 
         :return: (str) Error message if any.
 
         """
+        if self.__wx_running is True or wapp_wxstate.running is True:
+            logging.warning("SPPAS wx interface is already running.")
+            return "SPPAS is already running."
+
         program = paths.ui + os.sep + os.path.join("wxapp", "__main__.py")
         command = quote(sys.executable) + " " + quote(program)
         pyprocess = sppasExecProcess()
+        self.__wx_running = True
         try:
             # IMPORTANT: timeout=None means NO timeout.
             pyprocess.run(command, timeout=None)
@@ -148,6 +157,8 @@ class DashboardController:
         except Exception as e:
             logging.error(str(e))
             return str(e)
+        finally:
+            self.__wx_running = False
 
         return ""
 
@@ -157,10 +168,21 @@ class DashboardController:
         """Populate the dashboard view with data from the model.
 
         The method instructs the view to create the page content according
-        to the model data and the current agreement state.
+        to the model data and the current agreement state. The wx card is
+        disabled while the wx interface is running: only one instance is
+        allowed.
 
         """
-        self.__view.populate_tree_content(wapp_settings.license_agreement)
+        wx_enabled = cfg.feature_installed("wxpython")
+        logging.debug(f"Dashboard wx card state: feature={wx_enabled}, "
+                      f"subprocess_running={self.__wx_running}, "
+                      f"socket_running={wapp_wxstate.running}")
+        # Two sources are needed: the subprocess flag covers the launches of
+        # this dashboard, including the delay before the HELLO of wx arrives;
+        # the socket state covers a wx launched elsewhere, and its Close.
+        if self.__wx_running is True or wapp_wxstate.running is True:
+            wx_enabled = False
+        self.__view.populate_tree_content(wapp_settings.license_agreement, wx_enabled)
 
         for app_name in self.__model.get_names(visible_only=True):
             app_info = self.__model.get_bakery_by_name(app_name)

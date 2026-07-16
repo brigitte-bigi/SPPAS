@@ -48,6 +48,7 @@ from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
 
 from .wappsg import wapp_wkps
+from .wappsg import wapp_wxstate
 from .wappsg import notify_wkp_changed
 
 # ---------------------------------------------------------------------------
@@ -121,6 +122,10 @@ class sppasWappCommServer(sppasCommServer):
             if isinstance(value, dict) is True and "port" in value:
                 self.__interlocutor = value
                 logging.info(f"Interlocutor registered: {value}")
+                # The shared state allows the Dashboard to disable the launch
+                # of a second wx instance: only one is allowed.
+                if value.get("source", "") == "wxapp":
+                    wapp_wxstate.running = True
                 # The interlocutor starts with its own workspace: publish the
                 # shared one, so that both UIs work on the same data.
                 notify_wkp_changed()
@@ -129,6 +134,7 @@ class sppasWappCommServer(sppasCommServer):
 
         if key == sppasCommKeys.BYE:
             self.__interlocutor = None
+            wapp_wxstate.running = False
             logging.info("Interlocutor un-registered.")
 
         if key == sppasCommKeys.WKP_CHANGED:

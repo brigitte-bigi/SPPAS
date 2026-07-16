@@ -44,7 +44,6 @@ from whakerpy.htmlmaker import TagNode
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.core.config import sg
-from sppas.core.config import cfg
 from sppas.ui import _
 from sppas.ui.swapp import sppasImagesAccess
 from sppas.ui.swapp.apps.swapp_view import swappBaseView
@@ -199,8 +198,11 @@ class DashboardView(swappBaseView):
     # Update the tree -- for baking the page
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self, agreement: bool = False):
+    def populate_tree_content(self, agreement: bool = False, wx_enabled: bool = True):
         """Populate the tree content.
+
+        :param agreement: (bool) The license agreement is already accepted.
+        :param wx_enabled: (bool) Enable the card launching the wx interface.
 
         """
         # Create the new ones
@@ -222,7 +224,7 @@ class DashboardView(swappBaseView):
             sg.__name__,
             icon,
             text=MSG_DESCR_WX,
-            enable=cfg.feature_installed("wxpython")
+            enable=wx_enabled
         )
 
         # Other sections
