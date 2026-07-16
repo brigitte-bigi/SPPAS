@@ -51,7 +51,6 @@ from sppas.ui.swapp.apps.swapp_view import swappBaseView
 from sppas.ui.swapp.wappsg import wapp_settings
 
 from .nodes.agree_node import AgreementDialog
-from .nodes.about_node import AboutDialog
 from .nodes.links_node import LinksNode
 from .nodes.links_node import AboutsNode
 from .nodes.apps_node import AppsNode
@@ -240,8 +239,4 @@ class DashboardView(swappBaseView):
         self._htree.body_main.append_child(h2)
         ln = LinksNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(ln)
-
-        # Hidden Dialogs
-        _about = AboutDialog(self._htree.body_main.identifier)
-        self._htree.body_main.append_child(_about)
 

@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.app_dashboard.about_node.py
+:filename: sppas.ui.swapp.pages.about_view.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The about dialog of the SPPAS Dashboard Application.
+:summary: View of the "About" page.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -38,18 +38,20 @@
 
 """
 
+from __future__ import annotations
+from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 from whakerpy.htmlmaker import EmptyNode
 
-from sppas.core import sg
-from sppas.core import cfg
-from sppas.ui.swapp import sppasImagesAccess
+from sppas.core.config import sg
+from sppas.core.config import cfg
 from sppas.ui import _
+from sppas.ui.swapp import sppasImagesAccess
+from sppas.ui.swapp.apps.swapp_view import swappBaseView
 
-# ----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 
-MSG_HEADER_ABOUT = _("About SPPAS")
 
 # Le code source « sppas » est à jour.
 MSG_UP_TO_DATE = _("The « sppas » source code is up to date.")
@@ -77,75 +79,116 @@ MSG_LINK_SCRIPT = _("Write scripts")
 
 # ---------------------------------------------------------------------------
 
+MSG_HEADER = f"SPPAS {sg.__release__} » " + _("About")
 
-class AboutDialog(HTMLNode):
-    """A dialog for the user to see the About and Update information.
+BODY_SCRIPT = """
+        window.Wexa.links.handleLinksWithParameters(['link-dashboard_button']);
+        window.Wexa.links.handleLinks(['link-sppas_button']);
+"""
+
+# ---------------------------------------------------------------------------
+
+
+class AboutView(swappBaseView):
+    """View class responsible for populating the *about.html* page.
+
+    This class represents the **View** component of the "About" page.
+    It receives an existing :class:`HTMLTree` instance and fills it with the
+    information about SPPAS and its update state. As a page, it has no
+    business logic: its content is pure information, reachable from the nav
+    of any app.
 
     """
 
-    def __init__(self, parent_id, identifier: str = "about_dialog"):
-        """Create a dialog to show "About SPPAS".
+    def __init__(self, tree: HTMLTree):
+        """Initialize and populate the "About" view structure.
 
-        <dialog id="about_dialog" role="alertdialog" class="info hidden-alert" aria-label="About dialog">
+        :param tree: (HTMLTree) An existing HTML tree to populate with
+                     the page-specific content.
+        :raises: TypeError: tree is not an instance of HTMLTree
 
         """
-        super(AboutDialog, self).__init__(parent_id, identifier, "dialog")
-        self.add_attribute("id", self.identifier)
-        self.add_attribute("role", "alertdialog")
-        self.add_attribute("class", "info hidden-alert about-dialog")
-        self.add_attribute("aria-label", "About SPPAS dialog")
+        if isinstance(tree, HTMLTree) is False:
+            raise TypeError("AboutView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
+        super().__init__(tree, MSG_HEADER)
 
-        # header
-        # ------
-        _header_section = TagNode(self.identifier, None, "header")
-        self.append_child(_header_section)
-        _p = HTMLNode(_header_section.identifier, None, "p", value=MSG_HEADER_ABOUT)
-        _header_section.append_child(_p)
+        # The SPPAS way of organizing an illustration with its content.
+        self._htree.body_main.add_attribute("class", "illustrated-content")
 
-        # main
-        # ----
-        _main_section = TagNode(self.identifier, None, "main")
-        _main_section.set_attribute("class", "illustrated-content")
-        self.append_child(_main_section)
+    # -----------------------------------------------------------------------
+    # Populate the tree
+    # -----------------------------------------------------------------------
 
-        # main at left: SPPAS logo
-        _a = TagNode(_main_section.identifier, None, "a")
+    def _populate_head_css(self):
+        """Override. Populate the `<head>` section of the HTML tree for CSS links.
+
+        No page-specific stylesheet: the page relies on the shared one only.
+
+        """
+        pass
+
+    # -----------------------------------------------------------------------
+
+    def _populate_body_header(self):
+        """Override. Populate the header area of the page.
+
+        """
+        self.append_responsive_menu_button(self._htree.body_header)
+
+    # -----------------------------------------------------------------------
+
+    def _populate_body_nav(self):
+        """Override. Populate the nav area of the page.
+
+        """
+        _s = TagNode(self._htree.body_nav.identifier, None, "section")
+        self.append_pin_button(_s)
+        self.append_accessibility_buttons(_s)
+        self._htree.body_nav.append_child(_s)
+
+        self.append_dashboard_link_button(self._htree.body_nav)
+        self.append_sppas_link_button(self._htree.body_nav)
+
+    # -----------------------------------------------------------------------
+
+    def populate_body_script(self):
+        """Override. Populate the script body section.
+
+        """
+        self._htree.body_script.add_attribute("type", "module")
+        self._htree.body_script.set_value(BODY_SCRIPT)
+
+    # -----------------------------------------------------------------------
+    # Update the tree -- for baking the page
+    # -----------------------------------------------------------------------
+
+    def populate_tree_content(self):
+        """Populate the tree content with the information about SPPAS.
+
+        """
+        # At left: the SPPAS logo, in a link
+        _a = TagNode(self._htree.body_main.identifier, None, "a")
         _a.set_attribute("class", "noborder")
         _a.set_attribute("role", "button")
         _a.set_attribute("target", "_blank")
         _a.set_attribute("href", "https://sppas.org/")
-        _main_section.append_child(_a)
+        self._htree.body_main.append_child(_a)
         _logo = EmptyNode(_a.identifier, None, "img")
         _logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
         _logo.set_attribute("alt", "logo SPPAS")
         _a.append_child(_logo)
 
-        # main at right: information
-        _content_section = TagNode(_main_section.identifier, None, "section")
-        _main_section.append_child(_content_section)
-        AboutDialog._append_content(_content_section)
-
-        # footer
-        # ------
-        _footer_section = TagNode(self.identifier, None, "footer")
-        self.append_child(_footer_section)
-        _p_links = TagNode(_footer_section.identifier, None, "p")
-        AboutDialog._append_link(_p_links, "https://sppas.org/book_introduction.html#license", MSG_LINK_LICENSE)
-        AboutDialog._append_link(_p_links, "https://sppas.org/resources.html", MSG_LINK_LANG)
-        AboutDialog._append_link(_p_links, "https://sppas.org/scripting.html", MSG_LINK_SCRIPT)
-        _footer_section.append_child(_p_links)
-
-        _p_copy = HTMLNode(_footer_section.identifier, None, "p", value=sg.__copyright__)
-        _p_copy.set_attribute("class", "copyright")
-        _footer_section.append_child(_p_copy)
+        # At right: the information
+        _content_section = TagNode(self._htree.body_main.identifier, None, "section")
+        self._htree.body_main.append_child(_content_section)
+        AboutView._append_content(_content_section)
 
     # -----------------------------------------------------------------------
 
     @staticmethod
     def _append_content(parent: TagNode):
-        # Title: Program name + release
-        # -----------------------------
-        _node = HTMLNode(parent.identifier, None, "h1", value=" ".join([sg.__name__, sg.__release__]))
+        # Title: Program name + release. The h1 of the page is its header.
+        _node = HTMLNode(parent.identifier, None, "h2", value=" ".join([sg.__name__, sg.__release__]))
         _node.set_attribute("id", "program_name")
         parent.append_child(_node)
 
@@ -184,7 +227,17 @@ class AboutDialog(HTMLNode):
         _article2.append_child(_p)
         _p = HTMLNode(_article2.identifier, None, "p", value=MSG_WOULD_YOU_LIKE)
         _article2.append_child(_p)
-        AboutDialog._append_link(_p, "https://sppas.org/resources.html#contribute", MSG_CREATING_RESOURCES)
+        AboutView._append_link(_p, "https://sppas.org/resources.html#contribute", MSG_CREATING_RESOURCES)
+
+        # More links block -- was the footer of the dialog
+        # ----------------
+        _article3 = TagNode(parent.identifier, None, "article")
+        parent.append_child(_article3)
+        _p_links = TagNode(_article3.identifier, None, "p")
+        AboutView._append_link(_p_links, "https://sppas.org/book_introduction.html#license", MSG_LINK_LICENSE)
+        AboutView._append_link(_p_links, "https://sppas.org/resources.html", MSG_LINK_LANG)
+        AboutView._append_link(_p_links, "https://sppas.org/scripting.html", MSG_LINK_SCRIPT)
+        _article3.append_child(_p_links)
 
     # -----------------------------------------------------------------------
 
@@ -195,5 +248,3 @@ class AboutDialog(HTMLNode):
         _a.set_attribute("class", "external-link")
         _a.set_attribute("href", href)
         parent.append_child(_a)
-
-

@@ -39,12 +39,14 @@
 
 """
 
+from .aboutmaker import AboutResponseRecipe
 from .citemaker import CiteResponseRecipe
 from .swapp_pages import swappPagesData
 
 # -----------------------------------------------------------------------
 
 __all__ = (
+    "AboutResponseRecipe",
     "CiteResponseRecipe",
     "swappPagesData"
 )

@@ -851,3 +851,36 @@ section.actions-panel {
 .illustrated-content > section {
     min-width: 0;
 }
+
+@media (max-width: 640px) {
+    .illustrated-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .illustrated-content > img {
+        max-width: 160px;
+    }
+}
+
+/* ── Version block of the About page ─────────────────────── */
+
+.version-block {
+    margin: 1rem 0;
+}
+
+.version-block .details {
+    margin-left: 1.6rem;
+}
+
+.version-block .details p {
+    margin: 0.25rem 0 0 0;
+}
+
+.green {
+    color: rgb(10, 200, 10);
+}
+
+.red {
+    color: rgb(200, 10, 10);
+}

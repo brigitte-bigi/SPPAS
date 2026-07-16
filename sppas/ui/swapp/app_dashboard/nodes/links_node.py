@@ -55,8 +55,6 @@ MSG_FAQ = "F.A.Q."
 MSG_SRC = _("Source code")
 MSG_AUTH = _("The author")
 MSG_AWARD = _("Award")
-MSG_CITE = _("How to cite")
-MSG_ABOUT = _("About")
 
 # ---------------------------------------------------------------------------
 
@@ -157,7 +155,10 @@ class LinksNode(BaseLinksNode):
 
 
 class AboutsNode(BaseLinksNode):
-    """The section with external links or dialogs of the dashboard application.
+    """The section with the page links of the dashboard application.
+
+    The buttons are appended dynamically: each page of the WEB_PAGES
+    registry declares itself, like any app declares its card.
 
     """
 
@@ -165,7 +166,3 @@ class AboutsNode(BaseLinksNode):
 
     def __init__(self, parent_id):
         super(AboutsNode, self).__init__(parent_id, AboutsNode.ID)
-
-        self.dialog_button("about", "link_about", MSG_ABOUT, dialog_name="about_dialog")
-        # The "How to cite" button is appended dynamically: the page declares
-        # itself, like any page of the WEB_PAGES registry.
