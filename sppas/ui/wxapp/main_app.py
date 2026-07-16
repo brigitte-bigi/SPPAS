@@ -58,6 +58,7 @@ from sppas.core.config import lgs
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommServerError
 from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.agnostic import sppasCommLogHandler
 from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
 
 from .main_settings import WxAppSettings
@@ -100,6 +101,12 @@ class sppasApp(wx.App):
         # it is announced to swapp in the HELLO message.
         self.__comm_server = sppasWxCommServer(
             self.settings.shost, self.settings.sport + 1, self)
+
+        # The collector of the traces is the swapp server: the python
+        # logging records of this process are sent to it on the socket.
+        # Tolerant handler: without a collector, the records are dropped.
+        logging.getLogger().addHandler(sppasCommLogHandler(
+            self.settings.shost, self.settings.sport, "wxapp"))
 
         # This catches events when the app is asked to activate
         # by some other process

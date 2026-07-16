@@ -39,6 +39,7 @@
 """
 
 from __future__ import annotations
+import logging
 import threading
 
 from whakerpy.httpd import HTTPDHandler
@@ -50,6 +51,8 @@ from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
 from sppas.ui.swapp.wappsg import wapp_settings
 from sppas.ui.swapp.wappsg import wapp_notify
+from sppas.ui.swapp.wappsg import wapp_trace
+from .swapp_trace_handler import swappTraceHandler
 from .main_comm import sppasWappCommServer
 
 from .wapps import *
@@ -205,6 +208,10 @@ class sppasWebApp:
         :param arguments: (dict) Optional arguments passed to the server.
 
         """
+        # Collect the python logging into the shared trace store: the swapp
+        # server is the collector of the traces of all the SPPAS components.
+        logging.getLogger().addHandler(swappTraceHandler(wapp_trace))
+
         self.__location = "localhost"
         self.__port = self.__port_value()
         self.__server = None

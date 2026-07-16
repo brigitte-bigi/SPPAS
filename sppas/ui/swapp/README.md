@@ -83,3 +83,28 @@ class methods, and the Dashboard creates one link button per page in its
 "Find out more" section. The buttons carry the `page-button` class and are
 handled by the JS `DashboardManager`, which preserves the accessibility
 parameters when navigating.
+
+
+## The trace/info store
+
+The swapp server is the collector of the traces of all the SPPAS
+components. The shared store (`wapp_trace`, a `swappTraceStore`) replaces
+the wx log window: it accumulates the useful trace/info messages, to be
+displayed by the trace page, saved into the log files, or sent with a
+feedback.
+
+The store is fed by two producers:
+
+- the python logging of the server process, through `swappTraceHandler`,
+  added to the root logger at startup;
+- the wx interface, through the communication socket (its python logging
+  records are sent by a dedicated handler).
+
+Each record keeps its "source" (`swapp` or `wxapp`) and its "origin": the
+useful/important messages of the API (`sppas/core`, `sppas/src`) are
+distinguished from the secondary messages of the interfaces (`sppas/ui`),
+from the `pathname` of the record, without modifying the existing code.
+The records of the communication modules below the WARNING level are
+excluded from the store: each socket message -- including every TRACE --
+produces its own debug and info records, storing them would drown the
+useful trace.

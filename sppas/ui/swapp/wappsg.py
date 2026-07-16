@@ -44,6 +44,7 @@ from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommNotifier
 from sppas.ui.swapp.main_settings import sppasWebAppSettings
+from sppas.ui.swapp.swapp_trace_store import swappTraceStore
 
 # -----------------------------------------------------------------------
 
@@ -56,6 +57,10 @@ wapp_wkps = sppasWkpsManager()
 
 # Instantiate the application events notifier
 wapp_notify = sppasCommNotifier()
+
+# Instantiate the shared store of the trace/info records: the swapp server
+# is the collector of the traces of all the SPPAS components.
+wapp_trace = swappTraceStore()
 
 # -----------------------------------------------------------------------
 

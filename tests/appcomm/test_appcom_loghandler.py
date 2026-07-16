@@ -1,8 +1,8 @@
 """
-:package: sppas.ui.agnostic
+:filename: test_appcom_loghandler.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Components and utilities shared across all SPPAS user interfaces.
+:summary: Tests of the logging handler sending records on the socket
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -36,31 +36,37 @@
 
     -------------------------------------------------------------------------
 
-This package contains classes and functions that are interface-agnostic,
-i.e., usable by any user interface (web, terminal, or graphical).
-It includes features such as native file choosers or common logic that
-must remain independent of any specific UI framework (e.g., wxPython or HTML).
-
-It ensures consistency, code reuse, and interface independence across the SPPAS ecosystem.
-
 """
 
-from .filechooser import FileChooserMixin
-from .appcomm.appcom_server import sppasCommServer
-from .appcomm.appcom_client import sppasCommClient
-from .appcomm.appcom_base import sppasCommServerError
-from .appcomm.appcom_base import sppasCommKeys
-from .appcomm.appcom_base import COMM_PROTOCOL_VERSION
-from .appcomm.appcom_notify import sppasCommNotifier
-from .appcomm.appcom_loghandler import sppasCommLogHandler
+import unittest
+import logging
 
-__all__ = (
-    'FileChooserMixin',
-    'sppasCommServer',
-    'sppasCommClient',
-    'sppasCommServerError',
-    'sppasCommKeys',
-    'COMM_PROTOCOL_VERSION',
-    'sppasCommNotifier',
-    'sppasCommLogHandler'
-)
+from sppas.ui.agnostic.appcomm.appcom_loghandler import sppasCommLogHandler
+
+# ---------------------------------------------------------------------------
+
+
+class TestCommLogHandler(unittest.TestCase):
+
+    @staticmethod
+    def record(message, levelno=logging.INFO):
+        return logging.LogRecord(
+            name="", level=levelno, pathname="/sppas/src/module.py",
+            lineno=1, msg=message, args=None, exc_info=None)
+
+    def test_format_value(self):
+        record = TestCommLogHandler.record("a message", logging.WARNING)
+        value = sppasCommLogHandler.format_value(record, "wxapp")
+        self.assertEqual(value["levelno"], logging.WARNING)
+        self.assertEqual(value["levelname"], "WARNING")
+        self.assertEqual(value["pathname"], "/sppas/src/module.py")
+        self.assertEqual(value["message"], "a message")
+        self.assertEqual(value["source"], "wxapp")
+        self.assertEqual(value["created"], record.created)
+
+    def test_emit_without_server_is_tolerant(self):
+        # Port 1 is never listening: the record must be dropped silently.
+        handler = sppasCommLogHandler("127.0.0.1", 1, "wxapp")
+        handler.emit(TestCommLogHandler.record("a message"))
+        # No exception raised: the test passes by reaching this point.
+        self.assertTrue(True)

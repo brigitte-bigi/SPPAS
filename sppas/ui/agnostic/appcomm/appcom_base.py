@@ -71,6 +71,7 @@ class sppasCommKeys:
 
     # Application messages, sent in both directions
     WKP_CHANGED = 20   # the workspace changed. value = its serialized dict
+    TRACE = 21         # a python logging record. value = its serialized dict
 
     # -----------------------------------------------------------------------
 

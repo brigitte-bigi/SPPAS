@@ -49,7 +49,9 @@ from sppas.ui.agnostic import sppasCommServerError
 
 from .wappsg import wapp_wkps
 from .wappsg import wapp_wxstate
+from .wappsg import wapp_trace
 from .wappsg import notify_wkp_changed
+from .swapp_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
 
@@ -143,6 +145,17 @@ class sppasWappCommServer(sppasCommServer):
             wapp_wkps.data = wjson
             logging.info("Workspace received and stored into the shared state.")
             return self.format_message(sppasCommKeys.ACK, "Workspace stored.")
+
+        if key == sppasCommKeys.TRACE:
+            if isinstance(value, dict) is True:
+                wapp_trace.append(
+                    value.get("levelno", 0),
+                    value.get("levelname", ""),
+                    value.get("message", ""),
+                    value.get("source", "wxapp"),
+                    swappTraceStore.origin_of(value.get("pathname", ""), value.get("name", "")),
+                    value.get("created"))
+            return self.format_message(sppasCommKeys.ACK, "Trace stored.")
 
         return super(sppasWappCommServer, self)._prepare_response(key, value)
 
