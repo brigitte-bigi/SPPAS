@@ -108,6 +108,11 @@ class sppasApp(wx.App):
         logging.getLogger().addHandler(sppasCommLogHandler(
             self.settings.shost, self.settings.sport, "wxapp"))
 
+        # The log window does not exist anymore. Without an active target,
+        # wx would open a dialog for each wx.LogError: the messages are
+        # sent to the standard error instead.
+        wx.Log.SetActiveTarget(wx.LogStderr())
+
         # This catches events when the app is asked to activate
         # by some other process
         self.Bind(wx.EVT_ACTIVATE_APP, self.OnActivate)

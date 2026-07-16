@@ -290,6 +290,11 @@ class sppasWebApp:
             # the communication socket must not survive it.
             self.__socket.shutdown()
 
+        # Save the collected traces into the log file, like the former wx
+        # log window did when the application exited.
+        saved = wapp_trace.save()
+        logging.info(f"Traces saved into: {saved}")
+
         # Save current configuration
         logging.debug("Save config files.")
         cfg.save()

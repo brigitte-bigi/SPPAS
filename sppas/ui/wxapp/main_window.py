@@ -42,7 +42,6 @@
 import logging
 import wx
 
-from sppas.core.config import sppasAppConfig
 from sppas.core.coreutils import msg
 from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommClient
@@ -67,7 +66,6 @@ from .page_analyze import sppasAnalyzePanel
 from .page_editor import sppasEditorPanel
 from .page_convert import sppasConvertPanel
 from .page_plugins import sppasPluginsPanel
-from .main_log import sppasLogWindow
 
 # ---------------------------------------------------------------------------
 
@@ -76,7 +74,6 @@ MSG_CONFIRM = msg("Confirm exit?", "ui")
 MSG_ACTION_EXIT = msg('Close', "ui")
 MSG_ACTION_ABOUT = msg('About', "ui")
 MSG_ACTION_SETTINGS = msg('Settings', "ui")
-MSG_ACTION_VIEWLOGS = msg('View logs', "ui")
 
 MENU_BUTTONS = {
     "page_home": msg("Home", "ui"),
@@ -132,9 +129,6 @@ class sppasMainWindow(sppasDialog):
         # Members
         self._init_infos()
 
-        # Create the log window of the application
-        self.log_window = sppasLogWindow(self, sppasAppConfig().log_level)
-
         # Fix this frame content
         self._pages = list()
         self._create_content()
@@ -150,8 +144,7 @@ class sppasMainWindow(sppasDialog):
     # -----------------------------------------------------------------------
 
     def Show(self, show=True):
-        """Override to show the log window at the same time."""
-        self.log_window.Show(show)
+        """Override to fade the window in."""
         if show is True:
             self.FadeIn(wx.GetApp().settings.fade_in_delta)
         sppasDialog.Show(self, show)
@@ -293,9 +286,6 @@ class sppasMainWindow(sppasDialog):
 
         if event_name == "exit":
             self.exit(interactive=True)
-
-        elif event_name == "view_log":
-            self.log_window.focus()
 
         elif event_name == "about":
             About(self)
@@ -463,7 +453,6 @@ class sppasMainWindow(sppasDialog):
             return
 
         self.UpdateUI()
-        self.log_window.UpdateUI()
 
     # -----------------------------------------------------------------------
     # Public methods
@@ -486,10 +475,6 @@ class sppasMainWindow(sppasDialog):
         # Remember some properties of this window
         wx.GetApp().settings.set("frame_size", self.GetSize())
         wx.GetApp().settings.set("frame_pos", self.GetPosition())
-
-        # Save logs and stop redirecting logging to the log window
-        self.log_window.silent_save()
-        self.log_window.redirect_logging(False)
 
         # Destroy after decreasing transparency of the frame
         self.DestroyFadeOut()
@@ -672,10 +657,7 @@ class sppasActionsPanel(sppasPanel):
         exit_btn = self._create_button(MSG_ACTION_EXIT, "exit")
         about_btn = self._create_button(MSG_ACTION_ABOUT, "about")
         settings_btn = self._create_button(MSG_ACTION_SETTINGS, "settings")
-        log_btn = self._create_button(MSG_ACTION_VIEWLOGS, "view_log")
 
-        sizer.Add(log_btn, 1, wx.ALL | wx.EXPAND, 0)
-        sizer.Add(self.VertLine(), 0, wx.ALL | wx.EXPAND, 0)
         sizer.Add(settings_btn, 1, wx.ALL | wx.EXPAND, 0)
         sizer.Add(self.VertLine(), 0, wx.ALL | wx.EXPAND, 0)
         sizer.Add(about_btn, 1, wx.ALL | wx.EXPAND, 0)
