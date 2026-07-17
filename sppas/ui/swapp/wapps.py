@@ -41,6 +41,7 @@
 import logging
 
 from .wappinfo import WebApplicationInfo
+from .wpageinfo import WebPageInfo
 
 # Import all locally developed applications
 from .app_setup import SetupWebData
@@ -49,8 +50,12 @@ from .app_sppas import MainWebData
 from .app_test.app_test import TestsWebData
 # Install all installed application -- the spin-offs ones
 from .spinoff import *
-# Import the provider of the generic pages
+# Import all locally developed generic pages, and their single provider
 from .pages import swappPagesData
+from .pages import AboutResponseRecipe
+from .pages import CiteResponseRecipe
+from .pages import FeedbackResponseRecipe
+from .pages import TraceResponseRecipe
 
 # Determine if we're running in debug mode (log level lower than DEBUG)
 DEBUG_MODE = logging.getLogger().getEffectiveLevel() < 10
@@ -73,17 +78,21 @@ for cls in SPINOFF_SWAPPS:
     except Exception as e:
         logging.debug(f"SWAPP: skip {cls} (instantiation failed): {e}")
 
-# List of the providers of the generic pages (fixed and discovered ones).
+# List of all known generic pages (fixed and discovered ones).
 # A page is not an app: it is dispatched after the apps and it never gets
-# a card in the Dashboard.
+# a card in the Dashboard. Like an app, each page is declared with True
+# or False: True to get a link button in the "Find out more" section of
+# the Dashboard, False to be served without a link button.
 WEB_PAGES = [
-    swappPagesData,
+    WebPageInfo(AboutResponseRecipe, True),
+    WebPageInfo(CiteResponseRecipe, True),
+    WebPageInfo(FeedbackResponseRecipe, True),
+    WebPageInfo(TraceResponseRecipe, False),
 ]
 
-# Add all discovered spin-off page providers
-for cls in SPINOFF_PAGES:
-    try:
-        inst = cls()        # if instantiation fails, skip the pages
-        WEB_PAGES.append(cls)
-    except Exception as e:
-        logging.debug(f"SWAPP: skip pages of {cls} (instantiation failed): {e}")
+# Add all discovered spin-off pages
+for page_info in SPINOFF_PAGES:
+    if isinstance(page_info, WebPageInfo) is True:
+        WEB_PAGES.append(page_info)
+    else:
+        logging.debug(f"SWAPP: skip page {page_info}: not a WebPageInfo.")

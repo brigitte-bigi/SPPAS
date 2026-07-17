@@ -47,6 +47,7 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..apps.swapp_response import swappBaseResponse
+from ..wappsg import wapp_trace
 
 from .feedback_view import FeedbackView
 
@@ -152,4 +153,4 @@ class FeedbackResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content()
+        self.__view.populate_tree_content(wapp_trace.serialize())

@@ -646,8 +646,23 @@ msgstr "Le feedback est anonyme : SPPAS n'insère aucune donnée personnelle dan
 msgid ":INFO 9802: "
 msgstr "Cliquez sur le bouton ci-dessous : le message est copié. Choisissez votre application e-mail si demandé, puis collez le message (Ctrl+V) dans le corps de l'e-mail et envoyez-le."
 
-msgid "Traces"
-msgstr "Traces"
+msgid "Infos"
+msgstr "Infos"
 
 msgid "Refresh"
 msgstr "Actualiser"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "Minimal system information"
+msgstr "Informations système minimales"
+
+msgid "Full trace report"
+msgstr "Rapport de traces complet"
+
+msgid "Saved into: "
+msgstr "Enregistré dans : "

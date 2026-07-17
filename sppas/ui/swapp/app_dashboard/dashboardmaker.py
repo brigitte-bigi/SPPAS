@@ -109,13 +109,13 @@ class DashboardResponseRecipe(swappBaseResponse):
 
     # -----------------------------------------------------------------------
 
-    def add_pages(self, providers: list) -> None:
-        """Add the pages of a list of page providers into the dashboard.
+    def add_pages(self, pages: list) -> None:
+        """Add a list of pages into the dashboard.
 
-        :param providers: (list) The list of page provider classes, of type WebSiteData.
+        :param pages: (list) The list of pages of type WebPageInfo.
 
         """
-        self.__controller.append_pages(providers)
+        self.__controller.append_pages(pages)
 
     # -----------------------------------------------------------------------
     # OVERRIDE METHODS FROM Whakerpy -- Create une UI

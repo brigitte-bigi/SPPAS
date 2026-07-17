@@ -63,7 +63,8 @@ MSG_COLOR = _("Color")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
 MSG_DASHBOARD = _("Dashboard")
-MSG_TRACES = _("Traces")
+MSG_INFOS = _("Infos")
+MSG_FEEDBACK = _("Feedback")
 
 # Must be appended to the HTMLTree before sppas.js
 JS_INIT = (
@@ -388,13 +389,38 @@ class swappBaseView:
         :return: (HTMLNode) the trace link button node
 
         """
-        svg_trace = sppasImagesAccess.get_wexa_svg_icon("content")
-        trace_image = svg_trace + "<span>" + MSG_TRACES + "</span>"
+        svg_trace = sppasImagesAccess.get_wexa_svg_icon("info-square")
+        trace_image = svg_trace + "<span>" + MSG_INFOS + "</span>"
         _button = HTMLNode(parent.identifier, None, "button", value=trace_image)
         _button.add_attribute("id", "link-trace_button")
-        _button.add_attribute("aria-label", "Traces")
+        _button.add_attribute("aria-label", "Infos")
         _button.add_attribute("type", "button")
         _button.add_attribute("data-href", "trace.html")
+        _button.add_attribute("class", "menuitem menu-svg-button")
+        parent.append_child(_button)
+        return _button
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def append_feedback_link_button(parent: HTMLNode) -> HTMLNode:
+        """Create and append the button opening the Feedback page.
+
+        The page opens in a new tab: the user sends a feedback without
+        leaving the current app. The button must be registered with
+        handleLinksWithParameters() in the body script of the page.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :return: (HTMLNode) the feedback link button node
+
+        """
+        svg_feedback = sppasImagesAccess.get_wexa_svg_icon("feedback")
+        feedback_image = svg_feedback + "<span>" + MSG_FEEDBACK + "</span>"
+        _button = HTMLNode(parent.identifier, None, "button", value=feedback_image)
+        _button.add_attribute("id", "link-feedback_button")
+        _button.add_attribute("aria-label", "Feedback")
+        _button.add_attribute("type", "button")
+        _button.add_attribute("data-href", "feedback.html")
         _button.add_attribute("class", "menuitem menu-svg-button")
         parent.append_child(_button)
         return _button

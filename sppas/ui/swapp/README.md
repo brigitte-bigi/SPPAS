@@ -65,24 +65,26 @@ Pages live in the `pages/` package. Each page has its own module; a page
 has no model, no dedicated JavaScript manager, and a controller only when 
 the page processes events (a form, for example).
 
-A provider exposes the same `is_page()`/`bake_response()` interface as an
-app and routes a set of pages: `swappPagesData` routes all the generic
-pages of swapp. The providers are registered in a distinct `WEB_PAGES`
-registry, consulted by `main_app.py` after the apps. This keeps the
-App/Page taxonomy visible in the code and keeps pages out of the
-Dashboard cards.
+The `WEB_PAGES` registry lists all the known pages, exactly as
+`WEB_APPLICATIONS` lists the apps: one `WebPageInfo(recipe, show)` entry
+per page. Each page recipe describes itself with the `page()`, `name()`
+and `icon()` class methods. A spin-off module declares its pages with a
+`SWAPP_PAGES` list of `WebPageInfo`, exactly as it declares its app with
+`SWAPP_CLASS`: whatever the origin of a page, the mechanics is the same.
 
-Like `WEB_APPLICATIONS`, the `WEB_PAGES` registry is built from the fixed
-providers and the discovered ones: a spin-off module declares its page
-provider with `SWAPP_PAGES_CLASS`, exactly as it declares its app with
-`SWAPP_CLASS`.
+All the pages are served by the single `swappPagesData` provider. It owns
+no page list: it exposes the `is_page()`/`bake_response()` interface over
+the given `WEB_PAGES` registry, consulted by `main_app.py` after the
+apps. This keeps the App/Page taxonomy visible in the code and keeps
+pages out of the Dashboard cards.
 
-The pages follow the same principle as the app cards in the Dashboard:
-each page recipe describes itself with the `page()`, `name()` and `icon()`
-class methods, and the Dashboard creates one link button per page in its
-"Find out more" section. The buttons carry the `page-button` class and are
-handled by the JS `DashboardManager`, which preserves the accessibility
-parameters when navigating.
+The `show` member of a `WebPageInfo` follows the same principle as the
+app cards: only the pages declared with True get a link button in the
+"Find out more" section of the Dashboard. The buttons carry the
+`page-button` class and are handled by the JS `DashboardManager`, which
+preserves the accessibility parameters when navigating. The "Traces"
+page is declared with False: it is served, but reachable from the nav
+of the apps only.
 
 
 ## The trace/info store

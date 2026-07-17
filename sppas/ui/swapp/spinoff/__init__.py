@@ -74,7 +74,7 @@ current_package = __name__
 # Store the defined spin-off SWAPP_CLASS
 SPINOFF_SWAPPS = []
 
-# Store the defined spin-off SWAPP_PAGES_CLASS
+# Store the declared spin-off SWAPP_PAGES -- a list of WebPageInfo objects
 SPINOFF_PAGES = []
 
 # Iterate through all modules in this directory (excluding __init__.py and sub-packages)
@@ -97,9 +97,9 @@ for _, module_name, is_pkg in pkgutil.iter_modules([current_dir]):
         if app_cls is not None:
             SPINOFF_SWAPPS.append(app_cls)
 
-        pages_cls = getattr(module, "SWAPP_PAGES_CLASS", None)
-        if pages_cls is not None:
-            SPINOFF_PAGES.append(pages_cls)
+        page_infos = getattr(module, "SWAPP_PAGES", None)
+        if page_infos is not None:
+            SPINOFF_PAGES.extend(page_infos)
 
     except Exception as e:
         # Silently fail to keep robustness (optional: log this if needed)

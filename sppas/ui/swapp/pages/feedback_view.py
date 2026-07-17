@@ -39,6 +39,8 @@
 """
 
 from __future__ import annotations
+import html
+
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
@@ -64,6 +66,8 @@ MSG_SUBJECT = _("Subject: ")
 MSG_DESCRIBE = _("Write the message here")
 MSG_MESSAGE = _("Message:")
 MSG_INCLUDED = _("Technical information included in the message")
+MSG_MINIMAL = _("Minimal system information")
+MSG_FULL = _("Full trace report")
 MSG_SEND = _("Send by e-mail")
 MSG_COPIED = _("The message is copied. Paste it in the e-mail and send it.")
 MSG_EMPTY = _("Write a message before sending.")
@@ -156,8 +160,11 @@ class FeedbackView(swappBaseView):
     # Update the tree -- for baking the page
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self):
+    def populate_tree_content(self, trace_text: str):
         """Populate the tree content with the feedback form.
+
+        :param trace_text: (str) The serialized content of the trace store,
+                           proposed as the full report of the message.
 
         """
         # The purpose of the page
@@ -196,7 +203,37 @@ class FeedbackView(swappBaseView):
         _text.set_attribute("placeholder", MSG_DESCRIBE)
         self._htree.body_main.append_child(_text)
 
-        # The technical information, visible in an accordion
+        # The choice of the technical information to include: minimal
+        # system information, or the full report of the trace store.
+        # There is no "nothing" choice, on purpose.
+        _choice = TagNode(self._htree.body_main.identifier, None, "p")
+        _choice.set_attribute("id", "feedback_choice")
+        self._htree.body_main.append_child(_choice)
+
+        _label = TagNode(_choice.identifier, None, "label")
+        _choice.append_child(_label)
+        _radio = HTMLNode(_label.identifier, None, "input")
+        _radio.set_attribute("type", "radio")
+        _radio.set_attribute("name", "feedback_report")
+        _radio.set_attribute("value", "minimal")
+        _radio.set_attribute("checked", None)
+        _label.append_child(_radio)
+        _text = HTMLNode(_label.identifier, None, "span", value=MSG_MINIMAL)
+        _label.append_child(_text)
+
+        _label = TagNode(_choice.identifier, None, "label")
+        _choice.append_child(_label)
+        _radio = HTMLNode(_label.identifier, None, "input")
+        _radio.set_attribute("type", "radio")
+        _radio.set_attribute("name", "feedback_report")
+        _radio.set_attribute("value", "full")
+        _label.append_child(_radio)
+        _text = HTMLNode(_label.identifier, None, "span", value=MSG_FULL)
+        _label.append_child(_text)
+
+        # The technical information, visible in an accordion: the user
+        # sees exactly what will be sent. One block for each choice, the
+        # JS FeedbackManager shows the selected one.
         _details = TagNode(self._htree.body_main.identifier, None, "details")
         self._htree.body_main.append_child(_details)
         _summary = HTMLNode(_details.identifier, None, "summary", value=MSG_INCLUDED)
@@ -204,11 +241,16 @@ class FeedbackView(swappBaseView):
         _info = HTMLNode(_details.identifier, None, "pre", value=sppasLogFile.get_header())
         _info.set_attribute("id", "feedback_sysinfo")
         _details.append_child(_info)
+        _report = HTMLNode(_details.identifier, None, "pre", value=html.escape(trace_text))
+        _report.set_attribute("id", "feedback_fullreport")
+        _report.set_attribute("class", "hidden")
+        _details.append_child(_report)
 
         # The procedure to follow, replaced by the status of the send action.
         # The area is announced to screen readers when its content changes.
         _status = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_HOWTO)
         _status.set_attribute("id", "feedback_status")
+        _status.set_attribute("class", "status-message")
         _status.set_attribute("aria-live", "polite")
         self._htree.body_main.append_child(_status)
 

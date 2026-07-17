@@ -44,11 +44,9 @@ import logging
 from whakerpy.httpd import BaseResponseRecipe
 
 from ..apps.swapp_bakery import swappWebData
+from ..wpageinfo import WebPageInfo
 
-from .aboutmaker import AboutResponseRecipe
 from .citemaker import CiteResponseRecipe
-from .feedbackmaker import FeedbackResponseRecipe
-from .tracemaker import TraceResponseRecipe
 
 # ---------------------------------------------------------------------------
 
@@ -57,35 +55,24 @@ class swappPagesData(swappWebData):
     """Serve all the generic pages of swapp.
 
     A page is a document with its own URL and without business logic: see
-    the taxonomy in the README of swapp. All the pages are served by this
-    single provider, registered in the WEB_PAGES registry -- not in the
-    WEB_APPLICATIONS one, so no card is created in the Dashboard.
+    the taxonomy in the README of swapp. This provider is the single one:
+    it serves all the pages of the given WEB_PAGES registry, whatever
+    their origin -- SPPAS itself or a spin-off. It owns no page list.
 
     """
 
-    # The ResponseRecipe classes of all the known generic pages.
-    PAGE_RECIPES = (AboutResponseRecipe, CiteResponseRecipe,
-                    FeedbackResponseRecipe, TraceResponseRecipe)
-
-    def __init__(self, json_filename: str | None = None) -> None:
+    def __init__(self, pages: list, json_filename: str | None = None) -> None:
         """Create a swappPagesData instance.
+
+        :param pages: (list) The WebPageInfo of all the pages to serve.
 
         """
         super(swappPagesData, self).__init__(json_filename)
+        self.__pages = list()
+        for page_info in pages:
+            if isinstance(page_info, WebPageInfo) is True:
+                self.__pages.append(page_info)
         self._default = CiteResponseRecipe.page()
-
-    # -----------------------------------------------------------------------
-
-    def get_pages(self) -> tuple:
-        """Return the ResponseRecipe classes of all the pages of this provider.
-
-        Each recipe describes its page with the page(), name() and icon()
-        class methods, so the Dashboard can create its link buttons.
-
-        :return: (tuple) The ResponseRecipe classes of the pages.
-
-        """
-        return swappPagesData.PAGE_RECIPES
 
     # -----------------------------------------------------------------------
 
@@ -96,8 +83,8 @@ class swappPagesData(swappWebData):
         :return: (bool) True if the given page name can be baked.
 
         """
-        for recipe in swappPagesData.PAGE_RECIPES:
-            if page_name == recipe.page():
+        for page_info in self.__pages:
+            if page_name == page_info.recipe.page():
                 return True
         return False
 
@@ -113,9 +100,9 @@ class swappPagesData(swappWebData):
         """
         logging.info(f"Requested page name: {page_name}")
 
-        for recipe in swappPagesData.PAGE_RECIPES:
-            if page_name == recipe.page():
-                return recipe()
+        for page_info in self.__pages:
+            if page_name == page_info.recipe.page():
+                return page_info.recipe()
 
         # Any other page name
         return None

@@ -108,13 +108,13 @@ class DashboardController:
 
     # -----------------------------------------------------------------------
 
-    def append_pages(self, providers: list) -> None:
-        """Append the pages of a list of page providers to the model.
+    def append_pages(self, pages: list) -> None:
+        """Append a list of web pages to the model.
 
-        :param providers: (list) List of page provider classes, of type WebSiteData.
+        :param pages: (list) List of WebPageInfo objects.
 
         """
-        self.__model.append_pages(providers)
+        self.__model.append_pages(pages)
 
     # -----------------------------------------------------------------------
 

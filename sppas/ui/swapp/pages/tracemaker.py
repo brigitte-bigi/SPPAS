@@ -47,6 +47,7 @@ from sppas.core.config import sg
 from sppas.ui import _
 
 from ..apps.swapp_response import swappBaseResponse
+from ..swapp_trace_store import swappTraceStore
 from ..wappsg import wapp_trace
 
 from .trace_view import TraceView
@@ -54,8 +55,9 @@ from .trace_view import TraceView
 # ---------------------------------------------------------------------------
 
 
-MSG_TITLE = f"SPPAS {sg.__release__} Traces"
-MSG_TRACES = _("Traces")
+MSG_TITLE = f"SPPAS {sg.__release__} Infos"
+MSG_INFOS = _("Infos")
+MSG_SAVED = _("Saved into: ")
 
 # ---------------------------------------------------------------------------
 
@@ -76,6 +78,8 @@ class TraceResponseRecipe(swappBaseResponse):
 
         """
         self.__view = None
+        # The status of the last action, displayed once in the next bake.
+        self.__status_message = ""
 
         super(TraceResponseRecipe, self).__init__(name, tree, title)
 
@@ -93,7 +97,7 @@ class TraceResponseRecipe(swappBaseResponse):
     @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
-        return MSG_TRACES
+        return MSG_INFOS
 
     # -----------------------------------------------------------------------
 
@@ -125,9 +129,10 @@ class TraceResponseRecipe(swappBaseResponse):
         :return: (bool) True if the whole page must be re-created.
 
         """
-        logging.debug(f" >>>>> Page Traces -- Process events: {events} <<<<<< ")
+        logging.debug(f" >>>>> Page Infos -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
+        self.__status_message = ""
 
         # Accessibility events can be received in the same post
         if "accessibility_color" in events:
@@ -144,6 +149,7 @@ class TraceResponseRecipe(swappBaseResponse):
             if e == "handle_trace_save":
                 saved = wapp_trace.save()
                 logging.info(f"Traces saved into: {saved}")
+                self.__status_message = MSG_SAVED + saved
 
             elif e == "handle_trace_clear":
                 wapp_trace.clear()
@@ -166,4 +172,8 @@ class TraceResponseRecipe(swappBaseResponse):
         """
         self.comment("Body content")
         self.__view.update_accessibility()
-        self.__view.populate_tree_content(wapp_trace.serialize())
+        self.__view.populate_tree_content(
+            wapp_trace.get_header(),
+            wapp_trace.serialize_records(origin=swappTraceStore.API_ORIGIN),
+            wapp_trace.serialize_records(origin=swappTraceStore.UI_ORIGIN),
+            self.__status_message)

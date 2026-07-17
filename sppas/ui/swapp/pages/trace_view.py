@@ -55,14 +55,13 @@ from sppas.ui.swapp.apps.swapp_view import swappBaseView
 MSG_REFRESH = _("Refresh")
 MSG_SAVE = _("Save")
 MSG_CLEAR = _("Clear")
+MSG_MESSAGES = _("Messages")
+MSG_LOGS = _("Logs")
 
 # ---------------------------------------------------------------------------
 
-MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Traces")
+MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Infos")
 
-BODY_SCRIPT = """
-        window.Wexa.links.handleLinksWithParameters(['link-dashboard_button']);
-"""
 
 # ---------------------------------------------------------------------------
 
@@ -118,30 +117,28 @@ class TraceView(swappBaseView):
         """Override. Populate the nav area of the page.
 
         """
+        # No Dashboard button here: the page opens in its own tab, the app
+        # which opened it stays in the other one.
         _s = TagNode(self._htree.body_nav.identifier, None, "section")
         self.append_pin_button(_s)
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
-        self.append_dashboard_link_button(self._htree.body_nav)
-
-    # -----------------------------------------------------------------------
-
-    def populate_body_script(self):
-        """Override. Populate the script body section.
-
-        """
-        self._htree.body_script.add_attribute("type", "module")
-        self._htree.body_script.set_value(BODY_SCRIPT)
-
     # -----------------------------------------------------------------------
     # Update the tree -- for baking the page
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self, trace_text: str):
+    def populate_tree_content(self, header_text: str, api_text: str,
+                              ui_text: str, status_text: str = ""):
         """Populate the tree content with the given trace.
 
-        :param trace_text: (str) The serialized content of the trace store.
+        The records are displayed in two side-by-side panels: the messages
+        of the API on the left, the logs of the interfaces on the right.
+
+        :param header_text: (str) The header of the trace store.
+        :param api_text: (str) The serialized records of the API origin.
+        :param ui_text: (str) The serialized records of the UI origin.
+        :param status_text: (str) The status of the last action, if any.
 
         """
         # The actions, sent to the server with a native form POST
@@ -168,9 +165,44 @@ class TraceView(swappBaseView):
         _clear.set_attribute("value", "handle_trace_clear")
         _form.append_child(_clear)
 
-        # The trace content. The messages are escaped: they are plain text
-        # and could contain characters interpreted as HTML.
-        _content = HTMLNode(self._htree.body_main.identifier, None, "pre",
-                            value=html.escape(trace_text))
-        _content.set_attribute("id", "trace_content")
-        self._htree.body_main.append_child(_content)
+        # The status of the last action -- an inline message, never a dialog.
+        if len(status_text) > 0:
+            _status = HTMLNode(self._htree.body_main.identifier, None, "p",
+                               value=html.escape(status_text))
+            _status.set_attribute("class", "status-message")
+            _status.set_attribute("role", "status")
+            self._htree.body_main.append_child(_status)
+
+        # The header of the store, once, above the two panels.
+        # The values are escaped: they are plain text and could contain
+        # characters interpreted as HTML.
+        _header = HTMLNode(self._htree.body_main.identifier, None, "pre",
+                           value=html.escape(header_text))
+        _header.set_attribute("id", "trace_header")
+        self._htree.body_main.append_child(_header)
+
+        # The records, in two side-by-side panels: one for each origin.
+        _panels = TagNode(self._htree.body_main.identifier, None, "section")
+        _panels.set_attribute("id", "trace_panels")
+        _panels.set_attribute("class", "flex-panel")
+        self._htree.body_main.append_child(_panels)
+
+        _api = TagNode(_panels.identifier, None, "section")
+        _api.set_attribute("class", "width_50")
+        _panels.append_child(_api)
+        _title = HTMLNode(_api.identifier, None, "h2", value=MSG_MESSAGES)
+        _api.append_child(_title)
+        _content = HTMLNode(_api.identifier, None, "pre",
+                            value=html.escape(api_text))
+        _content.set_attribute("id", "trace_api_content")
+        _api.append_child(_content)
+
+        _ui = TagNode(_panels.identifier, None, "section")
+        _ui.set_attribute("class", "width_50")
+        _panels.append_child(_ui)
+        _title = HTMLNode(_ui.identifier, None, "h2", value=MSG_LOGS)
+        _ui.append_child(_title)
+        _content = HTMLNode(_ui.identifier, None, "pre",
+                            value=html.escape(ui_text))
+        _content.set_attribute("id", "trace_ui_content")
+        _ui.append_child(_content)

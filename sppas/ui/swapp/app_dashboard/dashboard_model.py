@@ -43,6 +43,7 @@ from __future__ import annotations
 import logging
 
 from ..wappinfo import WebApplicationInfo
+from ..wpageinfo import WebPageInfo
 
 # ---------------------------------------------------------------------------
 
@@ -136,19 +137,21 @@ class DashboardModel:
 
     # -----------------------------------------------------------------------
 
-    def append_pages(self, providers: list) -> None:
-        """Store the page recipes declared by the given page providers.
+    def append_pages(self, pages: list) -> None:
+        """Store the page recipes declared with True in the given page infos.
 
-        :param providers: (list) List of page provider classes, of type WebSiteData.
+        Like append() does with the applications, the method filters with
+        the "show" member: the pages declared with False are not stored.
+
+        :param pages: (list) List of WebPageInfo objects.
 
         """
-        for provider_cls in providers:
-            try:
-                provider = provider_cls()
-                for recipe in provider.get_pages():
-                    if recipe not in self.__pages:
-                        self.__pages.append(recipe)
-            except Exception as e:
-                logging.error("The pages of the provider {provider} are not added "
-                              "to the Dashboard: {error}"
-                              "".format(provider=str(provider_cls), error=str(e)))
+        for page_info in pages:
+            if isinstance(page_info, WebPageInfo) is False:
+                logging.error("The page {page} is not added to the Dashboard: "
+                              "not a WebPageInfo.".format(page=str(page_info)))
+                continue
+            if page_info.show is False:
+                continue
+            if page_info.recipe not in self.__pages:
+                self.__pages.append(page_info.recipe)

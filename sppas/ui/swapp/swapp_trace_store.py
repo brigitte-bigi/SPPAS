@@ -136,22 +136,50 @@ class swappTraceStore:
 
     # -----------------------------------------------------------------------
 
-    def get_records(self, min_level: int = 0) -> list:
+    def get_records(self, min_level: int = 0, origin: str | None = None) -> list:
         """Return a copy of the stored records.
 
         :param min_level: (int) Return only the records of at least this level.
+        :param origin: (str) Return only the records of this origin, or None for all.
         :return: (list) List of dict records.
 
         """
         with self.__lock:
-            return [dict(record) for record in self.__records
-                    if record["levelno"] >= min_level]
+            records = list()
+            for record in self.__records:
+                if record["levelno"] < min_level:
+                    continue
+                if origin is not None and record["origin"] != origin:
+                    continue
+                records.append(dict(record))
+            return records
 
     # -----------------------------------------------------------------------
 
     def get_header(self) -> str:
         """Return the header of the store."""
         return self.__header
+
+    # -----------------------------------------------------------------------
+
+    def serialize_records(self, min_level: int = 0, origin: str | None = None) -> str:
+        """Return the formatted records as text, without the header.
+
+        :param min_level: (int) Serialize only the records of at least this level.
+        :param origin: (str) Serialize only the records of this origin, or None for all.
+        :return: (str) The formatted records, one per line.
+
+        """
+        lines = list()
+        for record in self.get_records(min_level, origin):
+            when = datetime.fromtimestamp(record["created"])
+            lines.append("{:s} [{:s}] ({:s}/{:s}) {:s}".format(
+                when.strftime("%Y-%m-%d %H:%M:%S"),
+                record["levelname"],
+                record["source"],
+                record["origin"],
+                record["message"]))
+        return "\n".join(lines) + "\n"
 
     # -----------------------------------------------------------------------
 
@@ -162,16 +190,7 @@ class swappTraceStore:
         :return: (str) The full trace content.
 
         """
-        lines = list()
-        for record in self.get_records(min_level):
-            when = datetime.fromtimestamp(record["created"])
-            lines.append("{:s} [{:s}] ({:s}/{:s}) {:s}".format(
-                when.strftime("%Y-%m-%d %H:%M:%S"),
-                record["levelname"],
-                record["source"],
-                record["origin"],
-                record["message"]))
-        return self.__header + "\n".join(lines) + "\n"
+        return self.__header + self.serialize_records(min_level)
 
     # -----------------------------------------------------------------------
 

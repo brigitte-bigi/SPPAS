@@ -186,12 +186,11 @@ class sppasWebApp:
                     except sppasEnableFeatureError as e:
                         logging.info(f"Application {web_app.name} disabled: {e}.")
 
-            # Still unknown: browse through the providers of the generic pages.
+            # Still unknown: ask the single provider of the generic pages.
             if page_name not in self._pages:
-                for web_pages in WEB_PAGES:
-                    _bakery = web_pages()
-                    if _bakery.is_page(page_name) is True:
-                        self._pages[page_name] = _bakery.bake_response(page_name)
+                _bakery = swappPagesData(WEB_PAGES)
+                if _bakery.is_page(page_name) is True:
+                    self._pages[page_name] = _bakery.bake_response(page_name)
 
             # Process received events and bake the given page.
             return HTTPDHandlerUtils.bakery(self._pages, page_name, headers, events, has_to_return_data)

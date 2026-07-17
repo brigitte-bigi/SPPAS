@@ -885,9 +885,9 @@ section.actions-panel {
     color: rgb(200, 10, 10);
 }
 
-/* ── Status of the send action of the Feedback page ──────── */
+/* ── Inline status messages of the pages -- never a dialog ── */
 
-#feedback_status {
+.status-message {
     font-weight: bold;
 }
 
@@ -896,4 +896,10 @@ section.actions-panel {
 #trace_actions {
     display: flex;
     gap: 1rem;
+}
+
+/* ── Panels of the Traces page: long lines scroll inside each panel ── */
+
+#trace_panels pre {
+    overflow-x: auto;
 }

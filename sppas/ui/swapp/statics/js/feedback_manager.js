@@ -73,6 +73,7 @@ export default class FeedbackManager {
         this.sendButton = null;
         this.messageInput = null;
         this.systemInfoBlock = null;
+        this.fullReportBlock = null;
         this.statusParagraph = null;
     }
 
@@ -107,12 +108,23 @@ export default class FeedbackManager {
         this.sendButton = document.getElementById('feedback_send_button');
         this.messageInput = document.getElementById('feedback_message');
         this.systemInfoBlock = document.getElementById('feedback_sysinfo');
+        this.fullReportBlock = document.getElementById('feedback_fullreport');
         this.statusParagraph = document.getElementById('feedback_status');
 
         if (this.sendButton === null || this.messageInput === null ||
-                this.systemInfoBlock === null || this.statusParagraph === null) {
+                this.systemInfoBlock === null || this.fullReportBlock === null ||
+                this.statusParagraph === null) {
             console.error('FeedbackManager: an element of the feedback form was not found.');
             return;
+        }
+
+        const radios = document.querySelectorAll('input[name="feedback_report"]');
+        if (radios.length === 0) {
+            console.error('FeedbackManager: the report choice radios were not found.');
+            return;
+        }
+        for (const radio of radios) {
+            radio.addEventListener('change', () => this.#onReportChoiceChanged());
         }
 
         this.sendButton.addEventListener('click', () => this.#onSendActivated());
@@ -123,11 +135,48 @@ export default class FeedbackManager {
     // ------------------------------------------------------------------------
 
     /**
+     * Return the technical information block matching the selected report.
+     *
+     * @returns {HTMLElement|null} The selected block, or null with an error logged.
+     */
+    #selectedReportBlock() {
+        const selected = document.querySelector('input[name="feedback_report"]:checked');
+        if (selected === null) {
+            console.error('FeedbackManager: no report choice is selected.');
+            return null;
+        }
+        if (selected.value === 'full') {
+            return this.fullReportBlock;
+        }
+        return this.systemInfoBlock;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Show the technical information block matching the selected report,
+     * so the user always sees exactly what will be sent.
+     *
+     * @returns {void}
+     */
+    #onReportChoiceChanged() {
+        const selectedBlock = this.#selectedReportBlock();
+        if (selectedBlock === null) {
+            return;
+        }
+        this.systemInfoBlock.classList.add('hidden');
+        this.fullReportBlock.classList.add('hidden');
+        selectedBlock.classList.remove('hidden');
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
      * Copy the whole message into the clipboard, then open the e-mail client.
      *
      * The mailto URL carries the recipient and the subject only: the body
-     * (user text and technical information) travels in the clipboard, so
-     * pasting it never duplicates anything.
+     * (user text and the selected technical information) travels in the
+     * clipboard, so pasting it never duplicates anything.
      *
      * @returns {Promise<void>}
      */
@@ -138,7 +187,11 @@ export default class FeedbackManager {
             return;
         }
 
-        const systemInfo = this.systemInfoBlock.textContent;
+        const selectedBlock = this.#selectedReportBlock();
+        if (selectedBlock === null) {
+            return;
+        }
+        const systemInfo = selectedBlock.textContent;
         const wholeMessage = userText + '\n\n' + systemInfo;
 
         try {
