@@ -50,6 +50,7 @@ from sppas.ui.swapp.components.swapp_view import swappBaseView
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 
 from .nodes.agree_node import AgreementDialog
+from .nodes.trace_dialog import TraceInfoDialog
 from .nodes.links_node import LinksNode
 from .nodes.links_node import AboutsNode
 from .nodes.apps_node import AppsNode
@@ -200,16 +201,23 @@ class DashboardView(swappBaseView):
     # Update the tree -- for baking the page
     # -----------------------------------------------------------------------
 
-    def populate_tree_content(self, agreement: bool = False, wx_enabled: bool = True):
+    def populate_tree_content(self, agreement: bool = False, wx_enabled: bool = True,
+                              trace_alive: bool = True):
         """Populate the tree content.
 
         :param agreement: (bool) The license agreement is already accepted.
         :param wx_enabled: (bool) Enable the card launching the wx interface.
+        :param trace_alive: (bool) The Infos tab gave a recent sign of life.
 
         """
         # Create the new ones
         if agreement is False:
             wn = AgreementDialog(self._htree.body_main.identifier)
+            self._htree.body_main.append_child(wn)
+        elif trace_alive is False:
+            # The Infos tab is not open: invite the user to open it. The
+            # license dialog passes first, one dialog at a time.
+            wn = TraceInfoDialog(self._htree.body_main.identifier)
             self._htree.body_main.append_child(wn)
 
         # Add dialogs for messages

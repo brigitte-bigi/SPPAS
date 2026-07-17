@@ -381,9 +381,10 @@ class swappBaseView:
     def append_trace_link_button(parent: HTMLNode) -> HTMLNode:
         """Create and append the button opening the Traces page.
 
-        The page opens in a new tab: the user consults the traces without
-        leaving the current app. The button must be registered with
-        handleLinksWithParameters() in the body script of the page.
+        The page opens in its named tab: whatever the app the button is
+        clicked from, the single "sppas_infos" tab is reused and reloaded.
+        The button must be registered with handleLinksWithParameters() in
+        the body script of the page.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the trace link button node
@@ -396,6 +397,7 @@ class swappBaseView:
         _button.add_attribute("aria-label", "Infos")
         _button.add_attribute("type", "button")
         _button.add_attribute("data-href", "trace.html")
+        _button.add_attribute("data-target", "sppas_infos")
         _button.add_attribute("class", "menuitem menu-svg-button")
         parent.append_child(_button)
         return _button

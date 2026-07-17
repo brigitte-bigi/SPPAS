@@ -134,6 +134,12 @@ class TraceResponseRecipe(swappBaseResponse):
         self._status.code = 200
         self.__status_message = ""
 
+        # The periodic heartbeat of the page: the server knows the single
+        # tab displaying the traces is open. No re-bake.
+        if "trace_heartbeat" in events:
+            wapp_trace.viewer_ping()
+            return False
+
         # Accessibility events can be received in the same post
         if "accessibility_color" in events:
             self.__view.set_accessibility(color=events["accessibility_color"])

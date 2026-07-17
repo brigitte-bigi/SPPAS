@@ -81,6 +81,8 @@ class swappTraceStore:
         self.__records = list()
         self.__header = sppasLogFile.get_header()
         self.__logfile = sppasLogFile(pattern="log")
+        # Time of the last heartbeat of the trace page, or None if never.
+        self.__viewer_seen = None
 
     # -----------------------------------------------------------------------
 
@@ -159,6 +161,32 @@ class swappTraceStore:
     def get_header(self) -> str:
         """Return the header of the store."""
         return self.__header
+
+    # -----------------------------------------------------------------------
+
+    def viewer_ping(self) -> None:
+        """Store the time of the last sign of life of the trace page.
+
+        The trace page sends a periodic heartbeat: the server knows if the
+        single tab displaying the traces is currently open.
+
+        """
+        with self.__lock:
+            self.__viewer_seen = time.time()
+
+    # -----------------------------------------------------------------------
+
+    def viewer_alive(self, max_age: float = 40.) -> bool:
+        """Return True if the trace page gave a recent sign of life.
+
+        :param max_age: (float) Maximum age of the last heartbeat, in seconds.
+        :return: (bool) True if the last heartbeat is younger than max_age.
+
+        """
+        with self.__lock:
+            if self.__viewer_seen is None:
+                return False
+            return (time.time() - self.__viewer_seen) < max_age
 
     # -----------------------------------------------------------------------
 

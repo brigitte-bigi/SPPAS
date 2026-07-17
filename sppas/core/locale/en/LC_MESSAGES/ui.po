@@ -323,13 +323,13 @@ msgstr ""
 msgid "The message can not be copied. Select and copy it manually."
 msgstr ""
 
-msgid ":INFO 9800: "
+msgid "This page allows you to send an e-mail to the author."
 msgstr "This page allows you to send an e-mail to the author: report a bug, suggest an improvement, or simply say thank you!"
 
-msgid ":INFO 9801: "
+msgid "The feedback is anonymous."
 msgstr "The feedback is anonymous: SPPAS does not insert any personal data in the message. However, if it is sent by e-mail, the sender address is visible to the recipient."
 
-msgid ":INFO 9802: "
+msgid "Click the button below: the message is copied."
 msgstr "Click the button below: the message is copied. Choose your e-mail application if asked, then paste the message (Ctrl+V) in the e-mail body and send it."
 
 msgid "Infos"
@@ -342,6 +342,12 @@ msgid "Messages"
 msgstr ""
 
 msgid "Logs"
+msgstr ""
+
+msgid "Please check the Infos tab regularly."
+msgstr "Please check the Infos tab regularly. It contains important information about what SPPAS is doing and whether each operation has completed successfully."
+
+msgid "Open the Infos tab"
 msgstr ""
 
 msgid "Minimal system information"

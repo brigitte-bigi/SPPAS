@@ -637,13 +637,13 @@ msgstr "Écrivez un message avant d'envoyer."
 msgid "The message can not be copied. Select and copy it manually."
 msgstr "Le message n'a pas pu être copié. Sélectionnez-le et copiez-le manuellement."
 
-msgid ":INFO 9800: "
+msgid "This page allows you to send an e-mail to the author."
 msgstr "Cette page permet d'envoyer un e-mail à l'auteure : déclarer un bug, proposer une amélioration, ou simplement dire merci !"
 
-msgid ":INFO 9801: "
+msgid "The feedback is anonymous."
 msgstr "Le feedback est anonyme : SPPAS n'insère aucune donnée personnelle dans le message. Toutefois, s'il est envoyé par e-mail, l'adresse de l'expéditeur est visible du destinataire."
 
-msgid ":INFO 9802: "
+msgid "Click the button below: the message is copied."
 msgstr "Cliquez sur le bouton ci-dessous : le message est copié. Choisissez votre application e-mail si demandé, puis collez le message (Ctrl+V) dans le corps de l'e-mail et envoyez-le."
 
 msgid "Infos"
@@ -657,6 +657,12 @@ msgstr "Messages"
 
 msgid "Logs"
 msgstr "Logs"
+
+msgid "Please check the Infos tab regularly."
+msgstr "Consultez régulièrement l'onglet Infos. Il contient des informations importantes sur ce que SPPAS est en train de faire et indique si chaque opération s'est terminée correctement."
+
+msgid "Open the Infos tab"
+msgstr "Ouvrir l'onglet Infos"
 
 msgid "Minimal system information"
 msgstr "Informations système minimales"

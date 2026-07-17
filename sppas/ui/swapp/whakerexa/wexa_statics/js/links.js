@@ -199,8 +199,10 @@ export class LinkController {
         if (iframe && iframe.tagName.toLowerCase() === 'iframe') {
             iframe.src = finalUrl;
         } else {
-            console.warn(`LinkController: No iframe found with id="${target}". Opening in new tab.`);
-            window.open(finalUrl, '_blank', 'noopener');
+            // A named window: open the tab of this name, or reuse it.
+            // No 'noopener' here: the window name lookup needs the opener
+            // relationship, and a named target is an internal page.
+            window.open(finalUrl, target);
         }
     }
 }

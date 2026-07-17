@@ -54,13 +54,10 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 # ---------------------------------------------------------------------------
 
 
-# The long messages use a key, translated in ui.po: never a long text in the code.
-# This page allows you to send an e-mail to the author: report a bug, ...
-MSG_PURPOSE = _(":INFO 9800: ")
-# The feedback is anonymous: SPPAS does not insert any personal data ...
-MSG_NOTICE = _(":INFO 9801: ")
-# Click the button below: the message is copied. Choose your e-mail application ...
-MSG_HOWTO = _(":INFO 9802: ")
+# The long versions of these messages are in the "po" files.
+MSG_PURPOSE = _("This page allows you to send an e-mail to the author.")
+MSG_NOTICE = _("The feedback is anonymous.")
+MSG_HOWTO = _("Click the button below: the message is copied.")
 MSG_TO = _("To: ")
 MSG_SUBJECT = _("Subject: ")
 MSG_DESCRIBE = _("Write the message here")

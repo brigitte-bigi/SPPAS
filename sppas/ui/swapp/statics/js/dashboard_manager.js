@@ -3,6 +3,7 @@ const wexa_log_level = window.WEXA_LOG_LEVEL;
 const { WexaLogger } = await import(`${wexa_statics_js}/logger.js`);
 WexaLogger.setLogLevel(wexa_log_level);
 const { BaseManager } = await import(`${wexa_statics_js}/transport/base_manager.js`);
+const { DialogManager } = await import(`${wexa_statics_js}/dialog.js`);
 
 /**
  * :filename: sppas.ui.swapp.statics.js.dashboard_manager.js
@@ -124,6 +125,12 @@ export default class DashboardManager extends BaseManager {
         if (exitBtn) {
             exitBtn.addEventListener('click', (e) => this.#handleButtonClick(e.currentTarget));
         }
+
+        // Attach the button of the Infos dialog, when the dialog is baked
+        const traceDialogBtn = document.getElementById('trace_dialog_button');
+        if (traceDialogBtn) {
+            traceDialogBtn.addEventListener('click', (e) => this.#openTraceTabFromDialog(e.currentTarget));
+        }
     }
 
    // ----------------------------------------------------------------------
@@ -177,6 +184,38 @@ export default class DashboardManager extends BaseManager {
         const absolute = new URL(href, window.location.href).href;
         const target = window.Wexa.accessibility.setUrlWithParameters(absolute);
         window.location.href = target;
+    }
+
+    // ----------------------------------------------------------------------
+
+    /**
+     * Open (or reuse) the named tab of the Infos page, then hide the dialog.
+     *
+     * The named target reuses the single tab of the trace page. There is no
+     * 'noopener': the window name lookup needs the opener relationship, and
+     * the target is an internal page.
+     *
+     * @param {HTMLButtonElement} btn - The clicked button of the Infos dialog.
+     * @returns {void}
+     */
+    #openTraceTabFromDialog(btn) {
+        const href = btn.getAttribute('data-href');
+        const name = btn.getAttribute('data-target');
+        if (typeof href !== 'string' || href.trim().length === 0) {
+            return;
+        }
+
+        const absolute = new URL(href, window.location.href).href;
+        const finalUrl = window.Wexa.accessibility.setUrlWithParameters(absolute);
+        window.open(finalUrl, name);
+
+        const dlg = document.getElementById('trace_dialog');
+        if (dlg != null) {
+            dlg.classList.add("hidden-alert");
+            DialogManager.close('trace_dialog');
+        } else {
+            WexaLogger.warn("No such dialog with ID 'trace_dialog'.");
+        }
     }
 
     // ----------------------------------------------------------------------

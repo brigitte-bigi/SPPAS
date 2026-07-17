@@ -49,6 +49,7 @@ from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.wappcore.wappsg import wapp_trace
 from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
 
 # ---------------------------------------------------------------------------
@@ -182,7 +183,11 @@ class DashboardController:
         # the socket state covers a wx launched elsewhere, and its Close.
         if self.__wx_running is True or wapp_wxstate.running is True:
             wx_enabled = False
-        self.__view.populate_tree_content(wapp_settings.license_agreement, wx_enabled)
+        # The Infos tab sends a heartbeat: absent, the view bakes the
+        # dialog inviting the user to open it.
+        trace_alive = wapp_trace.viewer_alive()
+        self.__view.populate_tree_content(wapp_settings.license_agreement,
+                                          wx_enabled, trace_alive)
 
         for app_name in self.__model.get_names(visible_only=True):
             app_info = self.__model.get_bakery_by_name(app_name)

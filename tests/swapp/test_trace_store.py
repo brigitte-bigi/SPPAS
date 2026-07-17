@@ -40,6 +40,7 @@
 
 import unittest
 import logging
+import time
 
 from sppas.ui.swapp.main_trace_store import swappTraceStore
 from sppas.ui.swapp.main_trace_handler import swappTraceHandler
@@ -95,6 +96,18 @@ class TestTraceStore(unittest.TestCase):
         self.store.clear()
         self.assertEqual(len(self.store.get_records()), 0)
         self.assertTrue(self.store.serialize().startswith(self.store.get_header()))
+
+    def test_viewer_not_alive_initially(self):
+        self.assertFalse(self.store.viewer_alive())
+
+    def test_viewer_alive_after_ping(self):
+        self.store.viewer_ping()
+        self.assertTrue(self.store.viewer_alive())
+
+    def test_viewer_ping_expires(self):
+        self.store.viewer_ping()
+        time.sleep(0.02)
+        self.assertFalse(self.store.viewer_alive(max_age=0.01))
 
 # ---------------------------------------------------------------------------
 

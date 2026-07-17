@@ -48,6 +48,7 @@ from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp.components.swapp_view import swappBaseView
+from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 
 # ---------------------------------------------------------------------------
 
@@ -62,6 +63,12 @@ MSG_LOGS = _("Logs")
 
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Infos")
 
+BODY_SCRIPT = f"""
+        import {{ TraceManager }} from '/{wapp_settings.js}sppas.js';
+
+        const traceManager = new TraceManager();
+        traceManager.handleTraceManagerOnLoad();
+"""
 
 # ---------------------------------------------------------------------------
 
@@ -74,8 +81,9 @@ class TraceView(swappBaseView):
     the content of the shared trace store: the useful trace/info messages
     of all the SPPAS components. It replaces the former wx log window.
 
-    The Save and Clear actions are sent with a native form POST: the page
-    needs no JavaScript to offer its service.
+    The Save and Clear actions are sent with a native form POST. The only
+    JavaScript of the page is the heartbeat of the TraceManager: the
+    server knows the single tab displaying the traces is open.
 
     """
 
@@ -123,6 +131,15 @@ class TraceView(swappBaseView):
         self.append_pin_button(_s)
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
+
+    # -----------------------------------------------------------------------
+
+    def populate_body_script(self):
+        """Override. Populate the script body section.
+
+        """
+        self._htree.body_script.add_attribute("type", "module")
+        self._htree.body_script.set_value(BODY_SCRIPT)
 
     # -----------------------------------------------------------------------
     # Update the tree -- for baking the page
