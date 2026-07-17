@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.apps.swapp_bakery.py
+:filename: sppas.ui.swapp.wappcore.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Bakery for any SPPAS web-based application.
+:summary: The registries and the infrastructure of the swapp package.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -36,45 +36,9 @@
 
     -------------------------------------------------------------------------
 
+The modules of this package are imported with their explicit paths, for
+example `from sppas.ui.swapp.wappcore.wappsg import wapp_settings`: this
+package imports nothing, to never create a circular import with the apps
+the `wapps.py` registries refer to.
+
 """
-
-from __future__ import annotations
-
-from whakerpy.webapp import WebSiteData
-from sppas.ui.swapp import sppasImagesAccess
-
-# ---------------------------------------------------------------------------
-
-
-class swappWebData(WebSiteData):
-    """Parse the JSON file, store data and create the bakery system.
-
-    """
-
-    def __init__(self, json_filename: str | None = None):
-        """Create a swappWebData instance.
-
-        """
-        super(swappWebData, self).__init__(json_filename)
-
-    # -----------------------------------------------------------------------
-
-    @staticmethod
-    def icon() -> str:
-        """Return the page icon name."""
-        return sppasImagesAccess.get_image_filename("sppas-logo-v5")
-
-    @staticmethod
-    def description() -> str:
-        """Return a short description of the application."""
-        return "No description available."
-
-    @staticmethod
-    def name() -> str:
-        """Return a short name of the application."""
-        return "Undefined"
-
-    @staticmethod
-    def id() -> str:
-        """Return an identifier of the application."""
-        return "Undefined"

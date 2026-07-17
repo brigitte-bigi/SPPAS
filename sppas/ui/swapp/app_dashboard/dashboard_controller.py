@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -48,8 +48,8 @@ from sppas.core.config import sppasExecProcess
 from sppas.core.config import cfg
 from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
-from sppas.ui.swapp.wappsg import wapp_settings
-from sppas.ui.swapp.wappsg import wapp_wxstate
+from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
 
 # ---------------------------------------------------------------------------
 

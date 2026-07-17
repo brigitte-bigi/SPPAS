@@ -47,7 +47,7 @@ from whakerpy.htmlmaker import TagNode
 
 from sppas.core.config import sg
 from sppas.ui import _
-from sppas.ui.swapp.apps.swapp_view import swappBaseView
+from sppas.ui.swapp.components.swapp_view import swappBaseView
 
 # ---------------------------------------------------------------------------
 

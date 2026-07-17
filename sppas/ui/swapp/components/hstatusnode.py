@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swpapp.htmltags.hstatusnode.py
+:filename: sppas.ui.swapp.components.hstatusnode.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A set of nodes to represent the HTTPD response status.
@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import HTMLTree
 from whakerpy.httpd import HTTPDStatus
 from sppas.ui import _
 
-from ..wappsg import wapp_settings
+from ..wappcore.wappsg import wapp_settings
 
 # ---------------------------------------------------------------------------
 

@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -45,10 +45,10 @@ from whakerpy.htmlmaker import HTMLNode
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.core.coreutils import info
-from sppas.ui.swapp.wexc import sppasHTMLIncompleteFieldset
-from sppas.ui.swapp.htmltags import sppasHTMLCheckboxNode
+from sppas.ui.swapp.wappcore.wexc import sppasHTMLIncompleteFieldset
+from sppas.ui.swapp.components import sppasHTMLCheckboxNode
 
-from ..wappsg import wapp_settings
+from ..wappcore.wappsg import wapp_settings
 
 from .basefieldset import SetupBaseFieldset
 

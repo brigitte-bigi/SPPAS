@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.apps.swapp_view.py
+:filename: sppas.ui.swapp.components.swapp_view.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application Base View of the MVC paradigm.
@@ -48,11 +48,11 @@ from sppas.core.config import get_language
 
 from sppas.ui import _
 
-from ..wapputils import sppasImagesAccess
-from ..htmltags import sppasHTMLButton
-from ..wappsg import wapp_settings
-from ..htmltags import SwappHeader
-from ..htmltags import SwappFooter
+from ..wappcore.wapputils import sppasImagesAccess
+from .hbutton import sppasHTMLButton
+from ..wappcore.wappsg import wapp_settings
+from .hheader import SwappHeader
+from .hfooter import SwappFooter
 
 # ---------------------------------------------------------------------------
 

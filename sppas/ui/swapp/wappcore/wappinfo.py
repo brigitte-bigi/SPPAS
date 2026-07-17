@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.components.__init__.py
+:filename: sppas.ui.swapp.wappinfo.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: All the shared bricks of the swapp package.
+:summary: This is the SPPAS Web-based application information.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026 Brigitte Bigi
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -38,53 +38,32 @@
 
 """
 
-# The HTML node widgets
-from .hcheckbox import sppasHTMLCheckboxNode
-from .hbutton import sppasHTMLButton
-from .hbutton import LinkButtonNode
-from .hbutton import MenuLinkButtonNode
-from .dialog import sppasHTMLModalDialog
-from .messages import swappConfirmDialog
-from .messages import swappInformationDialog
-from .messages import swappWarnDialog
-from .messages import swappErrorDialog
-from .messages import swappYesNoDialog
-from .hheader import SwappHeader
-from .hfooter import SwappFooter
+from dataclasses import dataclass
+from typing import Type
 
-# The higher-level components
-from .view import ViewBarNode
-from .view import ViewManager
-from .view import BaseViewNode
-from .progress import ProgressBar
-from .annot_param import AnnotParamDialog
-
-# The base classes of the apps and the pages -- kept last: importing them
-# triggers the import of the whole swapp package.
-from .swapp_view import swappBaseView
-from .swapp_bakery import swappWebData
+from sppas.core.coreutils import sppasTypeError
 
 # ---------------------------------------------------------------------------
 
 
-__all__ = (
-    "sppasHTMLCheckboxNode",
-    "sppasHTMLButton",
-    "LinkButtonNode",
-    "MenuLinkButtonNode",
-    "sppasHTMLModalDialog",
-    "swappConfirmDialog",
-    "swappInformationDialog",
-    "swappWarnDialog",
-    "swappErrorDialog",
-    "swappYesNoDialog",
-    "SwappHeader",
-    "SwappFooter",
-    "BaseViewNode",
-    "ViewBarNode",
-    "ViewManager",
-    "AnnotParamDialog",
-    "ProgressBar",
-    "swappBaseView",
-    "swappWebData"
-)
+@dataclass
+class WebApplicationInfo:
+    """Store metadata for a web application.
+
+    :param name: (str) Identifier name used to refer to the application.
+    :param bakery: (type) The class used to represent or launch the
+        application. Typically inherits from a WebSiteData class.
+    :param show: (bool) Indicates whether the app should appear in the GUI.
+
+    """
+    name: str
+    bakery: Type
+    show: bool
+
+    def __post_init__(self):
+        if isinstance(self.name, str) is False:
+            raise sppasTypeError(type(self.name).__name__, "string")
+        if isinstance(self.bakery, type) is False and hasattr(self.bakery, "bake_response") is False:
+            raise sppasTypeError(type(self.bakery).__name__, "WebSiteData")
+        if isinstance(self.show, bool) is False:
+            raise sppasTypeError(type(self.show).__name__, "bool")

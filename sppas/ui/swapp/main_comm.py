@@ -47,11 +47,11 @@ from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommServerError
 
-from .wappsg import wapp_wkps
-from .wappsg import wapp_wxstate
-from .wappsg import wapp_trace
-from .wappsg import notify_wkp_changed
-from .swapp_trace_store import swappTraceStore
+from .wappcore.wappsg import wapp_wkps
+from .wappcore.wappsg import wapp_wxstate
+from .wappcore.wappsg import wapp_trace
+from .wappcore.wappsg import notify_wkp_changed
+from .main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
 

@@ -45,7 +45,7 @@ from whakerpy.httpd import BaseResponseRecipe
 
 from sppas.ui import _
 from sppas.ui.swapp import sppasImagesAccess
-from ..apps.swapp_bakery import swappWebData
+from ..components.swapp_bakery import swappWebData
 
 from .setupmaker import SetupResponseRecipe
 

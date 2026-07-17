@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025 Brigitte Bigi
+    Copyright (C) 2011-2026 Brigitte Bigi
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -38,9 +38,9 @@
 
 """
 
-from .wapputils import sppasImagesAccess
+from .wappcore.wapputils import sppasImagesAccess
 from .main_settings import sppasWebAppSettings
-from .wappsg import sppasWkpsManager
+from .wappcore.wappsg import sppasWkpsManager
 from .main_app import sppasWebApp
 
 

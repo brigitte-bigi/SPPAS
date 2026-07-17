@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 from sppas.core.preinstall import Installer
 
-from sppas.ui.swapp.htmltags import sppasHTMLCheckboxNode
+from sppas.ui.swapp.components import sppasHTMLCheckboxNode
 
 from .basefieldset import SetupBaseFieldset
 

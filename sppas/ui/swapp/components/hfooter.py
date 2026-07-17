@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.htmltags.hfooter.py
+:filename: sppas.ui.swapp.components.hfooter.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Default footer node for any SPPAS Web APPlication.
@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -44,8 +44,8 @@ from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLFooterNode
 
 from sppas.core.config import sg
-from sppas.ui.swapp.wappsg import wapp_settings
-from sppas.ui.swapp.wapputils import sppasImagesAccess
+from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 

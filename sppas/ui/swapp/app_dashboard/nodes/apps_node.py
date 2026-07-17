@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import EmptyNode
 
 from sppas.ui import _
-from sppas.ui.swapp.htmltags import LinkButtonNode
+from sppas.ui.swapp.components import LinkButtonNode
 
 # ---------------------------------------------------------------------------
 

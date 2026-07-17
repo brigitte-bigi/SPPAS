@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swpapp.htmltags.hbutton.py
+:filename: sppas.ui.swapp.components.hbutton.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A button node with easy access to icons.
@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLButtonNode
 
-from ..wapputils import sppasImagesAccess
+from ..wappcore.wapputils import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 

@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -42,8 +42,8 @@
 from __future__ import annotations
 import logging
 
-from ..wappinfo import WebApplicationInfo
-from ..wpageinfo import WebPageInfo
+from ..wappcore.wappinfo import WebApplicationInfo
+from ..wappcore.wpageinfo import WebPageInfo
 
 # ---------------------------------------------------------------------------
 

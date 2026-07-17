@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.swapp_trace_handler.py
+:filename: sppas.ui.swapp.main_trace_handler.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The logging handler feeding the shared trace store.
@@ -41,7 +41,7 @@
 from __future__ import annotations
 import logging
 
-from .swapp_trace_store import swappTraceStore
+from .main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
 

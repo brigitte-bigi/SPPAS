@@ -53,12 +53,12 @@ from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic.filechooser.filechooser_mixin import FileChooserMixin
-from sppas.ui.swapp.wappsg import wapp_settings
-from sppas.ui.swapp.wappsg import wapp_wkps
-from sppas.ui.swapp.wappsg import notify_wkp_changed
-from sppas.ui.swapp.wapputils import sppasImagesAccess
-from sppas.ui.swapp.htmltags import sppasHTMLButton
-from sppas.ui.swapp.apps.swapp_response import swappBaseResponse
+from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
+from sppas.ui.swapp.wappcore.wappsg import notify_wkp_changed
+from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
+from sppas.ui.swapp.components import sppasHTMLButton
+from sppas.ui.swapp.components.swapp_response import swappBaseResponse
 
 # ---------------------------------------------------------------------------
 
@@ -212,7 +212,7 @@ class TestsResponseRecipe(swappBaseResponse):
 
         # Add an element in the footer
         _p = HTMLNode(self._htree.body_footer.identifier, None, "p",
-                      value="Copyright 2011-2025 Brigitte Bigi, CNRS")
+                      value="Copyright 2011-2026 Brigitte Bigi, CNRS")
         self._htree.body_footer.append_child(_p)
 
     # -----------------------------------------------------------------------

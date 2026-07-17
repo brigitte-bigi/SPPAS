@@ -6,6 +6,26 @@ toolkit. Accessibility is the first priority of any design decision in this
 package.
 
 
+## Organization of the package
+
+- the root only contains the server process: `main_app.py` (HTTPD server),
+  `main_comm.py` (communication socket), `main_settings.py`,
+  `main_trace_store.py` and `main_trace_handler.py` (trace collector);
+- `wappcore/` holds the registries and the infrastructure: `wapps.py`
+  (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `wappinfo.py` and
+  `wpageinfo.py` (their entry classes), `wappsg.py` (the shared globals),
+  `wapputils.py` and `wexc.py`;
+- `components/` holds ALL the shared bricks: the base classes of the apps
+  (`swapp_bakery.py`, `swapp_response.py`, `swapp_view.py`, `swapp_head.py`),
+  the HTML node widgets and the higher-level components;
+- each app is an `app_*` directory, like each wx page is a `page_*` one;
+- `pages/` holds the generic pages;
+- `statics/` and `whakerexa/` hold the front-end resources; `spinoff/`
+  discovers the external apps and pages.
+
+Nothing else is ever added to the root.
+
+
 ## Taxonomy: App / Page / Dialog
 
 The user interface is made of three kinds of objects. The single decision
@@ -46,11 +66,11 @@ Examples: Agreement, error and information alert dialogs.
 ### How apps are served
 
 Each app is a module named `app_*`. It declares a `WebData` class, derived
-from `swappWebData` (see `apps/swapp_bakery.py`), which answers two
+from `swappWebData` (see `components/swapp_bakery.py`), which answers two
 questions: `is_page(page_name)` and `bake_response(page_name)`.
 
 All the `WebData` classes are registered in the `WEB_APPLICATIONS` list of
-`wapps.py`. When a page is requested, `main_app.py` iterates over this list
+`wappcore/wapps.py`. When a page is requested, `main_app.py` iterates over this list
 and asks each entry `is_page()`; the first one that answers `True` bakes
 the response.
 

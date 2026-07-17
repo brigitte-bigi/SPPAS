@@ -42,7 +42,7 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.src.wkps import States
 from sppas.ui import _
-from sppas.ui.swapp.wappsg import wapp_wkps
+from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
 
 # ---------------------------------------------------------------------------
 

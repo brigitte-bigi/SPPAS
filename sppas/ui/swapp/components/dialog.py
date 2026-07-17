@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.htmltags.dialog.py
+:filename: sppas.ui.swapp.components.dialog.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Base class for modal dialogs for SPPAS web-based apps.
@@ -42,7 +42,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLImage
 
 from sppas.ui import _
-from sppas.ui.swapp.htmltags import sppasHTMLButton
+from .hbutton import sppasHTMLButton
 
 # ----------------------------------------------------------------------------
 

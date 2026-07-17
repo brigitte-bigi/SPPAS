@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.swapp_trace_store.py
+:filename: sppas.ui.swapp.main_trace_store.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The shared store of the trace/info records of SPPAS.

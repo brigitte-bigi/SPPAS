@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -48,8 +48,8 @@ from sppas.core.config import lgs
 from sppas.core.coreutils import sppasLogFile
 from sppas.ui import _
 
-from ..apps.swapp_response import swappBaseResponse
-from ..htmltags.hstatusnode import HTMLTreeError410
+from ..components.swapp_response import swappBaseResponse
+from ..components.hstatusnode import HTMLTreeError410
 
 from .setup_model import SetupModel
 from .setup_view import SetupView

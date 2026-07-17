@@ -43,7 +43,7 @@ from .aboutmaker import AboutResponseRecipe
 from .citemaker import CiteResponseRecipe
 from .feedbackmaker import FeedbackResponseRecipe
 from .tracemaker import TraceResponseRecipe
-from .swapp_pages import swappPagesData
+from .pages_data import swappPagesData
 
 # -----------------------------------------------------------------------
 

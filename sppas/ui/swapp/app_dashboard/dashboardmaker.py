@@ -46,9 +46,9 @@ import logging
 from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 
-from ..apps.swapp_response import swappBaseResponse
-from ..wappinfo import WebApplicationInfo
-from ..htmltags.hstatusnode import HTMLTreeError410
+from ..components.swapp_response import swappBaseResponse
+from ..wappcore.wappinfo import WebApplicationInfo
+from ..components.hstatusnode import HTMLTreeError410
 
 from .dashboard_view import DashboardView
 from .dashboard_model import DashboardModel

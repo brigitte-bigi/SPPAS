@@ -41,8 +41,8 @@
 import unittest
 import logging
 
-from sppas.ui.swapp.swapp_trace_store import swappTraceStore
-from sppas.ui.swapp.swapp_trace_handler import swappTraceHandler
+from sppas.ui.swapp.main_trace_store import swappTraceStore
+from sppas.ui.swapp.main_trace_handler import swappTraceHandler
 
 # ---------------------------------------------------------------------------
 

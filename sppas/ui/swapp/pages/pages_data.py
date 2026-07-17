@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.pages.swapp_pages.py
+:filename: sppas.ui.swapp.pages.pages_data.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The provider of all the generic pages of swapp.
@@ -43,8 +43,8 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..apps.swapp_bakery import swappWebData
-from ..wpageinfo import WebPageInfo
+from ..components.swapp_bakery import swappWebData
+from ..wappcore.wpageinfo import WebPageInfo
 
 from .citemaker import CiteResponseRecipe
 

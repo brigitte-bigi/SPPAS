@@ -44,7 +44,7 @@ from sppas.src.wkps.wio import sppasWJSON
 from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.agnostic import sppasCommNotifier
 from sppas.ui.swapp.main_settings import sppasWebAppSettings
-from sppas.ui.swapp.swapp_trace_store import swappTraceStore
+from sppas.ui.swapp.main_trace_store import swappTraceStore
 
 # -----------------------------------------------------------------------
 

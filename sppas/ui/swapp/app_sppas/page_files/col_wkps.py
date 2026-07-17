@@ -46,9 +46,9 @@ from whakerpy.htmlmaker import HTMLRadioBox
 from whakerpy.htmlmaker import HTMLInputText
 
 from sppas.ui import _
-from sppas.ui.swapp.wappsg import wapp_wkps
-from sppas.ui.swapp.htmltags import sppasHTMLButton
-from sppas.ui.swapp.htmltags import swappConfirmDialog
+from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
+from sppas.ui.swapp.components import sppasHTMLButton
+from sppas.ui.swapp.components import swappConfirmDialog
 
 # ---------------------------------------------------------------------------
 # List of displayed messages:

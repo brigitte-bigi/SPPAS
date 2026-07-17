@@ -49,13 +49,13 @@ from whakerpy.httpd import HTTPDHandlerUtils
 from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
-from sppas.ui.swapp.wappsg import wapp_settings
-from sppas.ui.swapp.wappsg import wapp_notify
-from sppas.ui.swapp.wappsg import wapp_trace
-from .swapp_trace_handler import swappTraceHandler
+from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.wappcore.wappsg import wapp_notify
+from sppas.ui.swapp.wappcore.wappsg import wapp_trace
+from .main_trace_handler import swappTraceHandler
 from .main_comm import sppasWappCommServer
 
-from .wapps import *
+from .wappcore.wapps import *
 
 # ---------------------------------------------------------------------------
 

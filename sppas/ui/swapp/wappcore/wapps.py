@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.wapps.py
+:filename: sppas.ui.swapp.wappcore.wapps.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Import the available SPPAS Web-based Applications.
@@ -44,18 +44,18 @@ from .wappinfo import WebApplicationInfo
 from .wpageinfo import WebPageInfo
 
 # Import all locally developed applications
-from .app_setup import SetupWebData
-from .app_dashboard import DashboardWebData
-from .app_sppas import MainWebData
-from .app_test.app_test import TestsWebData
+from ..app_setup import SetupWebData
+from ..app_dashboard import DashboardWebData
+from ..app_sppas import MainWebData
+from ..app_test.app_test import TestsWebData
 # Install all installed application -- the spin-offs ones
-from .spinoff import *
+from ..spinoff import *
 # Import all locally developed generic pages, and their single provider
-from .pages import swappPagesData
-from .pages import AboutResponseRecipe
-from .pages import CiteResponseRecipe
-from .pages import FeedbackResponseRecipe
-from .pages import TraceResponseRecipe
+from ..pages import swappPagesData
+from ..pages import AboutResponseRecipe
+from ..pages import CiteResponseRecipe
+from ..pages import FeedbackResponseRecipe
+from ..pages import TraceResponseRecipe
 
 # Determine if we're running in debug mode (log level lower than DEBUG)
 DEBUG_MODE = logging.getLogger().getEffectiveLevel() < 10
