@@ -41,34 +41,14 @@
 =================================  BUTTONS  ===================================
 */
 
-/* AGREEMENT */
-#agreement_dlg {
-    border: none;
+/* The dialogs baked into the Dashboard: agreement and Infos invite.
+   In the page flow: the native <dialog> is absolute (browser style) and
+   would float over the content and the menu. */
+#agreement_dialog,
+#trace_dialog {
+    position: static;
+    margin: 1rem auto;
 }
-
-#agree_button {
-    padding: 1em 2em;
-    width: fit-content;
-    width: -moz-fit-content;
-    font-size: 1rem;
-    font-variant: small-caps;
-    font-weight: bold;
-    border-radius: var(--card-border-radius);
-    text-transform: uppercase;
-    color: var(--app-button-fg-color);
-    border-color: var(--info-color);
-    background-image: var(--app-button-bg-color);
-    box-shadow: 0 0 1.5rem var(--shadow-color);
-    opacity: 1;
-}
-
-#agree_button:hover {
-    background-position: right center; /* change the direction of the change here */
-    text-decoration: none;
-    background-image: var(--buttons-bg-color);
-    color: var(--buttons-fg-color);
-}
-
 
 /*
 =================================  LINKS  ===================================

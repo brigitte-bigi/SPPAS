@@ -903,3 +903,29 @@ section.actions-panel {
 #trace_panels pre {
     overflow-x: auto;
 }
+
+/* ── Buttons of the alert dialogs: one single style, centered ── */
+
+dialog[role="alertdialog"] button {
+    align-self: center;
+    margin: 0 auto 1rem;
+    padding: 1em 2em;
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: 1rem;
+    font-variant: small-caps;
+    font-weight: bold;
+    border-radius: var(--card-border-radius);
+    text-transform: uppercase;
+    color: var(--buttons-fg-color);
+    border-color: var(--info-color);
+    background: var(--buttons-bg-color);
+    box-shadow: 0 0 1.5rem var(--shadow-color);
+    opacity: 1;
+}
+
+dialog[role="alertdialog"] button:hover {
+    text-decoration: none;
+    color: var(--buttons-fg-color);
+    background: var(--buttons-bg-color-hover);
+}
