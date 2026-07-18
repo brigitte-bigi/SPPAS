@@ -8,7 +8,7 @@ const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js
  * :filename: sppas.ui.swapp.statics.js.trace_manager.js
  * :author: Brigitte Bigi
  * :contact: contact@sppas.org
- * :summary: JS for the page trace.html
+ * :summary: JS for the page journal.html
  *
  * .. _This file is part of SPPAS: https://sppas.org/
  * ..
@@ -46,11 +46,11 @@ const { RequestManager } = await import(`${wexa_statics_js}/transport/request.js
 'use strict';
 
 // --------------------------------------------------------------------------
-// Class: TraceManager. Controls the page trace.html
+// Class: TraceManager. Controls the page journal.html
 // --------------------------------------------------------------------------
 
 /**
- * This class sends the heartbeat of *trace.html*.
+ * This class sends the heartbeat of *journal.html*.
  *
  * The page is the single tab displaying the traces: a periodic POST tells
  * the server that this tab is open. When the heartbeat stops, the server

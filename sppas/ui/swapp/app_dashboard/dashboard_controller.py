@@ -183,7 +183,7 @@ class DashboardController:
         # the socket state covers a wx launched elsewhere, and its Close.
         if self.__wx_running is True or wapp_wxstate.running is True:
             wx_enabled = False
-        # The Infos tab sends a heartbeat: absent, the view bakes the
+        # The Journal tab sends a heartbeat: absent, the view bakes the
         # dialog inviting the user to open it.
         trace_alive = wapp_trace.viewer_alive()
         self.__view.populate_tree_content(wapp_settings.license_agreement,

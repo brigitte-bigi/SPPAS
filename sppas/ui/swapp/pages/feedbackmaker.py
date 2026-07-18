@@ -100,7 +100,7 @@ class FeedbackResponseRecipe(swappBaseResponse):
     @classmethod
     def icon(cls) -> str:
         """Return the name of the image representing the page."""
-        return "mail"
+        return "link_feedback"
 
     # -----------------------------------------------------------------------
 

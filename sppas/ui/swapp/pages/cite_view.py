@@ -69,7 +69,7 @@ MSG_CITATION = """
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("How to cite")
 
 BODY_SCRIPT = """
-        window.Wexa.links.handleLinksWithParameters(['link-dashboard_button']);
+        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------
@@ -131,7 +131,7 @@ class CiteView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
-        self.append_dashboard_link_button(self._htree.body_nav)
+        self.append_trace_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------
 

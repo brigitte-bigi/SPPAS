@@ -56,12 +56,15 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 MSG_REFRESH = _("Refresh")
 MSG_SAVE = _("Save")
 MSG_CLEAR = _("Clear")
-MSG_MESSAGES = _("Messages")
-MSG_LOGS = _("Logs")
+MSG_API_TITLE = _("What SPPAS did, and why")
+MSG_UI_TITLE = _("How the interface is running")
+MSG_TITLE = _("The journal of SPPAS")
+# The long version of the message is in the "po" files.
+MSG_PURPOSE = _("This page displays the messages of SPPAS.")
 
 # ---------------------------------------------------------------------------
 
-MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Infos")
+MSG_HEADER = f"SPPAS {sg.__release__} » " + _("Journal")
 
 BODY_SCRIPT = f"""
         import {{ TraceManager }} from '/{wapp_settings.js}sppas.js';
@@ -74,7 +77,7 @@ BODY_SCRIPT = f"""
 
 
 class TraceView(swappBaseView):
-    """View class responsible for populating the *trace.html* page.
+    """View class responsible for populating the *journal.html* page.
 
     This class represents the **View** component of the "Traces" page.
     It receives an existing :class:`HTMLTree` instance and fills it with
@@ -158,11 +161,19 @@ class TraceView(swappBaseView):
         :param status_text: (str) The status of the last action, if any.
 
         """
+        # The title of the page: it says more than the short name "Journal".
+        _title = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_TITLE)
+        self._htree.body_main.append_child(_title)
+
+        # The purpose of the page
+        _purpose = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_PURPOSE)
+        self._htree.body_main.append_child(_purpose)
+
         # The actions, sent to the server with a native form POST
         _form = TagNode(self._htree.body_main.identifier, None, "form")
         _form.set_attribute("id", "trace_actions")
         _form.set_attribute("method", "post")
-        _form.set_attribute("action", "trace.html")
+        _form.set_attribute("action", "journal.html")
         self._htree.body_main.append_child(_form)
 
         # Refresh sends no event: the page is simply baked again.
@@ -207,7 +218,7 @@ class TraceView(swappBaseView):
         _api = TagNode(_panels.identifier, None, "section")
         _api.set_attribute("class", "width_50")
         _panels.append_child(_api)
-        _title = HTMLNode(_api.identifier, None, "h2", value=MSG_MESSAGES)
+        _title = HTMLNode(_api.identifier, None, "h3", value=MSG_API_TITLE)
         _api.append_child(_title)
         _content = HTMLNode(_api.identifier, None, "pre",
                             value=html.escape(api_text))
@@ -217,7 +228,7 @@ class TraceView(swappBaseView):
         _ui = TagNode(_panels.identifier, None, "section")
         _ui.set_attribute("class", "width_50")
         _panels.append_child(_ui)
-        _title = HTMLNode(_ui.identifier, None, "h2", value=MSG_LOGS)
+        _title = HTMLNode(_ui.identifier, None, "h3", value=MSG_UI_TITLE)
         _ui.append_child(_title)
         _content = HTMLNode(_ui.identifier, None, "pre",
                             value=html.escape(ui_text))

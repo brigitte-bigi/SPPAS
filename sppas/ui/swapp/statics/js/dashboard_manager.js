@@ -131,6 +131,13 @@ export default class DashboardManager extends BaseManager {
         if (traceDialogBtn) {
             traceDialogBtn.addEventListener('click', (e) => this.#openTraceTabFromDialog(e.currentTarget));
         }
+
+        // The menu button opens the same Infos tab: it also dismisses the
+        // dialog, whose invitation has no reason to stay once the tab is open.
+        const traceMenuBtn = document.getElementById('link-trace_button');
+        if (traceMenuBtn) {
+            traceMenuBtn.addEventListener('click', () => this.#hideTraceDialog());
+        }
     }
 
    // ----------------------------------------------------------------------
@@ -209,12 +216,21 @@ export default class DashboardManager extends BaseManager {
         const finalUrl = window.Wexa.accessibility.setUrlWithParameters(absolute);
         window.open(finalUrl, name);
 
+        this.#hideTraceDialog();
+    }
+
+    // ----------------------------------------------------------------------
+
+    /**
+     * Hide and close the Infos dialog, if it is baked in the page.
+     *
+     * @returns {void}
+     */
+    #hideTraceDialog() {
         const dlg = document.getElementById('trace_dialog');
         if (dlg != null) {
             dlg.classList.add("hidden-alert");
             DialogManager.close('trace_dialog');
-        } else {
-            WexaLogger.warn("No such dialog with ID 'trace_dialog'.");
         }
     }
 

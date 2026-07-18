@@ -332,23 +332,29 @@ msgstr "The feedback is anonymous: SPPAS does not insert any personal data in th
 msgid "Click the button below: the message is copied."
 msgstr "Click the button below: the message is copied. Choose your e-mail application if asked, then paste the message (Ctrl+V) in the e-mail body and send it."
 
-msgid "Infos"
+msgid "Journal"
 msgstr ""
 
 msgid "Refresh"
 msgstr ""
 
-msgid "Messages"
+msgid "What SPPAS did, and why"
 msgstr ""
 
-msgid "Logs"
+msgid "How the interface is running"
 msgstr ""
 
-msgid "Please check the Infos tab regularly."
-msgstr "Please check the Infos tab regularly. It contains important information about what SPPAS is doing and whether each operation has completed successfully."
+msgid "Please check the Journal tab regularly."
+msgstr "Please check the Journal tab regularly. It contains important information about what SPPAS is doing and whether each operation has completed successfully."
 
-msgid "Open the Infos tab"
+msgid "Open the Journal"
 msgstr ""
+
+msgid "The journal of SPPAS"
+msgstr ""
+
+msgid "This page displays the messages of SPPAS."
+msgstr "This page presents the messages issued by SPPAS: it lets you follow what it is currently doing, check that an operation completed as expected, or understand the reason of a failure."
 
 msgid "Minimal system information"
 msgstr ""

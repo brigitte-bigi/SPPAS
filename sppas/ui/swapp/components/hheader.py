@@ -40,14 +40,18 @@
 """
 
 from whakerpy.htmlmaker import HTMLNode
+from whakerpy.htmlmaker import TagNode
+from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLHeaderNode
 
 from sppas.ui import _
+from ..wappcore.wapputils import sppasImagesAccess
 
 # -----------------------------------------------------------------------
 
 
 MSG_SKIP = _("Skip to content")
+MSG_HOME = _("Home")
 
 # -----------------------------------------------------------------------
 
@@ -104,7 +108,25 @@ class SwappHeader(HTMLHeaderNode):
         if self.__nav is not None:
             self.append_child(self.__nav)
 
+        # The home button and the title: the logo, at the head position the
+        # users expect to be clickable, leads to the Dashboard. Same logo as
+        # sppas.org until the visual identity of SPPAS itself is decided.
+        _c = TagNode(self.identifier, None, "section")
+        _c.set_attribute("id", "link-title-header")
+        self.append_child(_c)
+
+        home_link = TagNode(_c.identifier, None, "a")
+        home_link.set_attribute("href", "index.html")
+        home_link.set_attribute("role", "button")
+        home_link.set_attribute("aria-label", MSG_HOME)
+        logo = EmptyNode(home_link.identifier, None, "img")
+        logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
+        logo.set_attribute("id", "home-link-logo")
+        logo.set_attribute("alt", MSG_HOME)
+        home_link.append_child(logo)
+        _c.append_child(home_link)
+
         # Application title
-        h1 = HTMLNode(self.identifier, None, "h1", value=self.__title,
+        h1 = HTMLNode(_c.identifier, None, "h1", value=self.__title,
                       attributes={"class": "fixed-almost-top"})
-        self.append_child(h1)
+        _c.append_child(h1)

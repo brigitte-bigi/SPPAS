@@ -82,7 +82,7 @@ MSG_LINK_SCRIPT = _("Write scripts")
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("About")
 
 BODY_SCRIPT = """
-        window.Wexa.links.handleLinksWithParameters(['link-dashboard_button']);
+        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------
@@ -145,7 +145,7 @@ class AboutView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
-        self.append_dashboard_link_button(self._htree.body_nav)
+        self.append_trace_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------
 

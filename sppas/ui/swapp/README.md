@@ -122,7 +122,7 @@ The store is fed by two producers:
 - the wx interface, through the communication socket (its python logging
   records are sent by a dedicated handler).
 
-The trace page lives in a single named tab (`sppas_infos`): the "Infos"
+The journal page (journal.html) lives in a single named tab (`sppas_infos`): the "Journal"
 button of every app menu reuses and reloads it. The page sends a periodic
 heartbeat (`TraceManager`), so the server knows the tab is open: when it
 is not, the Dashboard bakes a dialog inviting the user to open it -- its

@@ -198,7 +198,8 @@
 /* ── Page structure ──────────────────────────────────────── */
 
 body > header {
-    padding-top: 0;
+    padding-top: 1rem;
+    padding-left: var(--typography-spacing-horizontal);
     text-align: left !important;
     align-items: flex-start;
 }
@@ -575,6 +576,8 @@ section.actions-panel {
 
 .dark .app-background-img {
     filter: brightness(1.4);
+    border-radius: calc(3*var(--border-radius));
+    box-shadow: 0 0 0 100vw rgb(255, 255, 255) inset;
 }
 
 .app-content {
@@ -902,6 +905,46 @@ section.actions-panel {
 
 #trace_panels pre {
     overflow-x: auto;
+}
+
+/* ── Header: the skip link, the home button (logo, to the Dashboard)
+   and the title ── */
+
+.skip {
+    position: fixed;
+    top: var(--border-width);
+    left: var(--border-width);
+    width: calc(100% - 2 * (var(--border-width)));
+    text-align: center;
+    margin: auto;
+    border: none;
+    border-radius: 0;
+    height: 1rem;
+}
+
+#home-link-logo {
+    width: calc(4 * var(--font-size));
+    height: auto;
+    padding: var(--border-width);
+    filter: brightness(0) invert(1);
+}
+
+#link-title-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;     /* vertical */
+    justify-content: flex-start;
+    gap: 1.5rem;
+    font-size: calc(3 * var(--font-size));
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#link-title-header > a {
+    padding: 0;
+    margin: 0;
+    background: transparent;
 }
 
 /* ── Buttons of the alert dialogs: one single style, centered ── */

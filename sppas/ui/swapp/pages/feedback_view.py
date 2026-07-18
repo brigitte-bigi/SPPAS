@@ -80,7 +80,7 @@ BODY_SCRIPT = f"""
         const feedbackManager = new FeedbackManager();
         feedbackManager.handleFeedbackManagerOnLoad();
 
-        window.Wexa.links.handleLinksWithParameters(['link-dashboard_button']);
+        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------
@@ -142,7 +142,7 @@ class FeedbackView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
-        self.append_dashboard_link_button(self._htree.body_nav)
+        self.append_trace_link_button(self._htree.body_nav)
 
     # -----------------------------------------------------------------------
 

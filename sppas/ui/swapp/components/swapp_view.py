@@ -62,8 +62,7 @@ MSG_CONTRAST = _("Contrast")
 MSG_COLOR = _("Color")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
-MSG_DASHBOARD = _("Dashboard")
-MSG_INFOS = _("Infos")
+MSG_JOURNAL = _("Journal")
 MSG_FEEDBACK = _("Feedback")
 
 # Must be appended to the HTMLTree before sppas.js
@@ -167,6 +166,8 @@ class swappBaseView:
         application-specific resources.
 
         """
+        # The favicon: the same for all the pages and apps, on purpose. The
+        # SPPAS tab of the browser keeps one constant identity.
         self._htree.head.link(rel="logo icon", href=wapp_settings.icons + "sppas5.ico")
 
         # CSS SWAPP links
@@ -350,34 +351,6 @@ class swappBaseView:
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def append_dashboard_link_button(parent: HTMLNode) -> HTMLNode:
-        """Create and append the button to go back to the Dashboard.
-
-        The button must be registered with handleLinksWithParameters() in the
-        body script of the page, so the accessibility parameters are kept
-        when navigating back.
-
-        :param parent: (HTMLNode) the parent HTML node to append the button in
-        :return: (HTMLNode) the dashboard link button node
-
-        """
-        svg_dashboard = sppasImagesAccess.get_wexa_svg_icon("dashboard")
-        dashboard_image = svg_dashboard + "<span>" + MSG_DASHBOARD + "</span>"
-        _button = HTMLNode(parent.identifier, None, "button", value=dashboard_image)
-        _button.add_attribute("id", "link-dashboard_button")
-        _button.add_attribute("aria-label", "Dashboard")
-        _button.add_attribute("type", "button")
-        _button.add_attribute("data-href", "index.html")
-        # Going back to the Dashboard is a navigation, not an external link:
-        # without this target, the LinkController opens a new tab.
-        _button.add_attribute("data-target", "_self")
-        _button.add_attribute("class", "menuitem menu-svg-button")
-        parent.append_child(_button)
-        return _button
-
-    # -----------------------------------------------------------------------
-
-    @staticmethod
     def append_trace_link_button(parent: HTMLNode) -> HTMLNode:
         """Create and append the button opening the Traces page.
 
@@ -391,12 +364,12 @@ class swappBaseView:
 
         """
         svg_trace = sppasImagesAccess.get_wexa_svg_icon("info-square")
-        trace_image = svg_trace + "<span>" + MSG_INFOS + "</span>"
+        trace_image = svg_trace + "<span>" + MSG_JOURNAL + "</span>"
         _button = HTMLNode(parent.identifier, None, "button", value=trace_image)
         _button.add_attribute("id", "link-trace_button")
-        _button.add_attribute("aria-label", "Infos")
+        _button.add_attribute("aria-label", "Journal")
         _button.add_attribute("type", "button")
-        _button.add_attribute("data-href", "trace.html")
+        _button.add_attribute("data-href", "journal.html")
         _button.add_attribute("data-target", "sppas_infos")
         _button.add_attribute("class", "menuitem menu-svg-button")
         parent.append_child(_button)

@@ -207,7 +207,7 @@ class DashboardView(swappBaseView):
 
         :param agreement: (bool) The license agreement is already accepted.
         :param wx_enabled: (bool) Enable the card launching the wx interface.
-        :param trace_alive: (bool) The Infos tab gave a recent sign of life.
+        :param trace_alive: (bool) The Journal tab gave a recent sign of life.
 
         """
         # Create the new ones
@@ -215,7 +215,7 @@ class DashboardView(swappBaseView):
             wn = AgreementDialog(self._htree.body_main.identifier)
             self._htree.body_main.append_child(wn)
         elif trace_alive is False:
-            # The Infos tab is not open: invite the user to open it. The
+            # The Journal tab is not open: invite the user to open it. The
             # license dialog passes first, one dialog at a time.
             wn = TraceInfoDialog(self._htree.body_main.identifier)
             self._htree.body_main.append_child(wn)

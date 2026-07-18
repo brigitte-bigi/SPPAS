@@ -55,15 +55,15 @@ from .trace_view import TraceView
 # ---------------------------------------------------------------------------
 
 
-MSG_TITLE = f"SPPAS {sg.__release__} Infos"
-MSG_INFOS = _("Infos")
+MSG_TITLE = f"SPPAS {sg.__release__} Journal"
+MSG_JOURNAL = _("Journal")
 MSG_SAVED = _("Saved into: ")
 
 # ---------------------------------------------------------------------------
 
 
 class TraceResponseRecipe(swappBaseResponse):
-    """The trace.html HTTPD response bakery.
+    """The journal.html HTTPD response bakery.
 
     Displays the content of the shared trace store: what SPPAS did, and
     why, whatever the component which did it. It replaces the former wx
@@ -90,14 +90,14 @@ class TraceResponseRecipe(swappBaseResponse):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "trace.html"
+        return "journal.html"
 
     # -----------------------------------------------------------------------
 
     @classmethod
     def name(cls) -> str:
         """Return the short name of the page, displayed in link buttons."""
-        return MSG_INFOS
+        return MSG_JOURNAL
 
     # -----------------------------------------------------------------------
 
@@ -154,7 +154,7 @@ class TraceResponseRecipe(swappBaseResponse):
 
             if e == "handle_trace_save":
                 saved = wapp_trace.save()
-                logging.info(f"Traces saved into: {saved}")
+                logging.info(f"Journal saved into: {saved}")
                 self.__status_message = MSG_SAVED + saved
 
             elif e == "handle_trace_clear":

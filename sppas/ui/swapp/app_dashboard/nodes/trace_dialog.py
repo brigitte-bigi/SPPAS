@@ -2,7 +2,7 @@
 :filename: sppas.ui.swapp.app_dashboard.nodes.trace_dialog.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The dialog inviting the user to open the Infos tab.
+:summary: The dialog inviting the user to open the Journal tab.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -45,14 +45,14 @@ from sppas.ui import _
 # ---------------------------------------------------------------------------
 
 # The long version of the message is in the "po" files.
-MSG_CHECK = _("Please check the Infos tab regularly.")
-MSG_OPEN = _("Open the Infos tab")
+MSG_CHECK = _("Please check the Journal tab regularly.")
+MSG_OPEN = _("Open the Journal")
 
 # ---------------------------------------------------------------------------
 
 
 class TraceInfoDialog(HTMLNode):
-    """A dialog inviting the user to open -- and keep -- the Infos tab.
+    """A dialog inviting the user to open -- and keep -- the Journal tab.
 
     The dialog replaces the permanent log window of the wx interface: it
     is baked into the Dashboard whenever the trace page gives no sign of
@@ -74,6 +74,6 @@ class TraceInfoDialog(HTMLNode):
 
         open_button = HTMLNode(self.identifier, "trace_dialog_button", "button", value=MSG_OPEN)
         open_button.add_attribute("id", "trace_dialog_button")
-        open_button.add_attribute("data-href", "trace.html")
+        open_button.add_attribute("data-href", "journal.html")
         open_button.add_attribute("data-target", "sppas_infos")
         self.append_child(open_button)
