@@ -39,6 +39,7 @@
 """
 
 import os
+import re
 import logging
 
 from .wappsg import wapp_settings
@@ -131,6 +132,11 @@ class sppasImagesAccess:
             with open(filename, "r") as f:
                 lines = f.readlines()
             svg = "\n".join(lines)
+            # Clean any XML namespace: a prefixed tag like <ns0:svg> is
+            # valid XML but not valid inline HTML -- the icon is invisible.
+            svg = re.sub(r"<\?xml[^>]*\?>", "", svg)
+            svg = re.sub(r"<(/?)[A-Za-z0-9_]+:", r"<\1", svg)
+            svg = re.sub(r"\sxmlns:[A-Za-z0-9_]+=", " xmlns=", svg)
 
         # if something went wrong
         if len(svg.strip()) == 0:
