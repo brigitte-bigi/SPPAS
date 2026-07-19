@@ -260,6 +260,9 @@ msgstr "Droite"
 msgid "Panels to display"
 msgstr "Panneaux à afficher"
 
+msgid "Desktop"
+msgstr "Bureau"
+
 msgid "Explore Applications:"
 msgstr "Explorer les applications :"
 

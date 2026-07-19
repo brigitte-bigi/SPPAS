@@ -72,7 +72,6 @@ from .page_plugins import sppasPluginsPanel
 
 MSG_CONFIRM = msg("Confirm exit?", "ui")
 MSG_ACTION_EXIT = msg('Close', "ui")
-MSG_ACTION_ABOUT = msg('About', "ui")
 MSG_ACTION_SETTINGS = msg('Settings', "ui")
 
 MENU_BUTTONS = {
@@ -669,12 +668,9 @@ class sppasActionsPanel(sppasPanel):
         sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         exit_btn = self._create_button(MSG_ACTION_EXIT, "exit")
-        about_btn = self._create_button(MSG_ACTION_ABOUT, "about")
         settings_btn = self._create_button(MSG_ACTION_SETTINGS, "settings")
 
         sizer.Add(settings_btn, 1, wx.ALL | wx.EXPAND, 0)
-        sizer.Add(self.VertLine(), 0, wx.ALL | wx.EXPAND, 0)
-        sizer.Add(about_btn, 1, wx.ALL | wx.EXPAND, 0)
         sizer.Add(self.VertLine(), 0, wx.ALL | wx.EXPAND, 0)
         sizer.Add(exit_btn, 4, wx.ALL | wx.EXPAND, 0)
 

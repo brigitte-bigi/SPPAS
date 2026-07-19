@@ -347,6 +347,9 @@ msgstr ""
 msgid "Panels to display"
 msgstr ""
 
+msgid "Desktop"
+msgstr ""
+
 msgid "Journal"
 msgstr ""
 

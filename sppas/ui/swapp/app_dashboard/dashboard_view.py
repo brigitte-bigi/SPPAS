@@ -64,6 +64,7 @@ MSG_APPS_STABLE = _("Explore Applications:")
 MSG_APPS_DEVEL = _("Under-development applications:")
 MSG_APP_NOT_ADDED = _("The application {app} is not added to the Dashboard.")
 MSG_DESCR_WX = _("Launches the graphical interface for speech annotation and analysis.")
+MSG_DESKTOP = _("Desktop")
 MSG_WKP = _("Workspace: ")
 
 # ---------------------------------------------------------------------------
@@ -252,11 +253,13 @@ class DashboardView(swappBaseView):
         apps = AppsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(apps)
 
-        # Add SPPAS wx app, at first then other APPS
-        # ------------------------------------------
+        # Add the wx interface app, at first then other APPS
+        # ----------------------------------------------------
+        # Named "Desktop", not "SPPAS": SPPAS 5 is the whole product, this
+        # card launches one specific component of it -- the wx interface.
         icon = sppasImagesAccess.get_image_filename("sppas_logo_v3")
         apps.create_app_card(
-            sg.__name__,
+            MSG_DESKTOP,
             icon,
             text=MSG_DESCR_WX,
             enable=wx_enabled,

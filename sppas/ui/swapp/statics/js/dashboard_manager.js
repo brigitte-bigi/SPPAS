@@ -328,8 +328,8 @@ export default class DashboardManager extends BaseManager {
             case 'agree_button':
                 this.#sendAgreement();
                 break;
-            case 'sppas_button':
-                this.#sendSPPASLaunch(btn);
+            case 'desktop_button':
+                this.#sendDesktopLaunch(btn);
                 break;
             case 'exit-menu':
                 this.#submitExitForm()
@@ -376,8 +376,8 @@ export default class DashboardManager extends BaseManager {
 
     // ----------------------------------------------------------------------
 
-    async #sendSPPASLaunch(btn) {
-        // Disable the button so that SPPAS can be launched only once.
+    async #sendDesktopLaunch(btn) {
+        // Disable the button so that the wx interface can be launched only once.
         btn.setAttribute("disabled", "")
         // Send the event to the server so that it can launch the app.
         const events = {'event_bake': 'handle_start_sppas'};
