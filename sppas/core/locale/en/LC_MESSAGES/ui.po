@@ -332,6 +332,9 @@ msgstr "The feedback is anonymous: SPPAS does not insert any personal data in th
 msgid "Click the button below: the message is copied."
 msgstr "Click the button below: the message is copied. Choose your e-mail application if asked, then paste the message (Ctrl+V) in the e-mail body and send it."
 
+msgid "Workspace: "
+msgstr ""
+
 msgid "Journal"
 msgstr ""
 

@@ -66,16 +66,23 @@ wapp_trace = swappTraceStore()
 
 
 class sppasWxAppState:
-    """Shared running state of the wx interface.
+    """Shared state reported by the wx interface interlocutor.
 
-    The state is updated by the communication server: True from the HELLO
-    of the wxapp interlocutor to its BYE. It allows any web application to
-    know whether the wx interface is currently running.
+    The state is updated by the communication server, from the messages of
+    the wxapp interlocutor: "running" from its HELLO to its BYE, allowing
+    any web application to know whether the wx interface is running;
+    "workspace_name" from its WKP_CHANGED messages, the display name of its
+    current workspace at the time it was sent.
+
+    The name is not an identifier: a workspace is renamed by moving its
+    file, and swapp does not track the same workspace across a rename by
+    matching names -- it only displays the last one wx reported.
 
     """
 
     def __init__(self):
         self.running = False
+        self.workspace_name = ""
 
 
 # Instantiate the shared state of the wx interface

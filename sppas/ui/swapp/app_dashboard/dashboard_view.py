@@ -64,6 +64,7 @@ MSG_APPS_STABLE = _("Explore Applications:")
 MSG_APPS_DEVEL = _("Under-development applications:")
 MSG_APP_NOT_ADDED = _("The application {app} is not added to the Dashboard.")
 MSG_DESCR_WX = _("Launches the graphical interface for speech annotation and analysis.")
+MSG_WKP = _("Workspace: ")
 
 # ---------------------------------------------------------------------------
 
@@ -202,12 +203,15 @@ class DashboardView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def populate_tree_content(self, agreement: bool = False, wx_enabled: bool = True,
-                              trace_alive: bool = True):
+                              trace_alive: bool = True,
+                              wkp_name: str = "", wkp_path: str = ""):
         """Populate the tree content.
 
         :param agreement: (bool) The license agreement is already accepted.
         :param wx_enabled: (bool) Enable the card launching the wx interface.
         :param trace_alive: (bool) The Journal tab gave a recent sign of life.
+        :param wkp_name: (str) Name of the current workspace.
+        :param wkp_path: (str) Path of its file, or an empty string.
 
         """
         # Create the new ones
@@ -223,7 +227,23 @@ class DashboardView(swappBaseView):
         # Add dialogs for messages
         self.append_alert_dialogs(self._htree.body_main)
 
-        # Create the section node
+        # The current workspace: a label, the name, and the path on hover.
+        # It will become the button opening the "Files" app.
+        if len(wkp_name) > 0:
+            _wkp = TagNode(self._htree.body_main.identifier, None, "p")
+            _wkp.set_attribute("id", "workspace_info")
+            self._htree.body_main.append_child(_wkp)
+            _s = HTMLNode(_wkp.identifier, None, "strong", value=MSG_WKP)
+            _wkp.append_child(_s)
+            _s = HTMLNode(_wkp.identifier, None, "span", value=wkp_name)
+            _s.set_attribute("id", "workspace_name")
+            if len(wkp_path) > 0:
+                _s.set_attribute("title", wkp_path)
+            _wkp.append_child(_s)
+
+        # The applications section
+        h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_APPS_STABLE)
+        self._htree.body_main.append_child(h2)
         apps = AppsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(apps)
 

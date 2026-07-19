@@ -245,6 +245,9 @@ msgstr "En savoir plus sur le Web :"
 msgid "Find out more:"
 msgstr "En savoir plus :"
 
+msgid "Workspace: "
+msgstr "Workspace : "
+
 msgid "Explore Applications:"
 msgstr "Explorer les applications :"
 

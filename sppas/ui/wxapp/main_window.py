@@ -333,14 +333,21 @@ class sppasMainWindow(sppasDialog):
     def _send_workspace(self, wkp):
         """Send the workspace to the communication server of the other UI.
 
+        The serialized workspace carries an internal identifier of its own
+        (a uuid, see sppasWorkspace), unrelated to its display name: the
+        name is fetched from the workspaces panel and sent alongside.
+
         :param wkp: (sppasWorkspace)
 
         """
         wjson = sppasWJSON()
         wjson.set(wkp)
+        wkpslist = self.FindWindow("wkpslist")
+        wkp_name = wkpslist.get_wkp_name() if wkpslist is not None else ""
         settings = wx.GetApp().settings
         client = sppasCommClient(settings.shost, settings.sport)
-        request = client.format_request(sppasCommKeys.WKP_CHANGED, wjson.serialize())
+        value = {"name": wkp_name, "workspace": wjson.serialize()}
+        request = client.format_request(sppasCommKeys.WKP_CHANGED, value)
         try:
             client.request(request)
             logging.debug("Workspace sent to the communication server.")

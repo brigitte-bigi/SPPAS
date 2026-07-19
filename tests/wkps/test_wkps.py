@@ -117,3 +117,36 @@ class TestSppasWorkspaces(unittest.TestCase):
         # Delete a workspace
         wkps.delete(i)
         self.assertFalse(os.path.exists(fn))
+
+    # -----------------------------------------------------------------------
+
+    def test_update(self):
+        """Re-scan the workspaces folder: files appear or disappear on disk."""
+        wkps = sppasWkps()
+        wlen = len(wkps)
+
+        # A file appears on disk, created by another process (simulated by
+        # writing it directly, bypassing wkps' own list): unknown to this
+        # instance until update() is called.
+        fn = os.path.join(paths.wkps, "external.wjson")
+        other = sppasWkps()
+        other.new("external")
+        with self.assertRaises(ValueError):
+            wkps.index("external")
+
+        wkps.update()
+        self.assertEqual(wkps.index("external"), wlen)
+        self.assertEqual(len(wkps), wlen + 1)
+
+        # The file disappears from disk, removed by another process.
+        other.delete(other.index("external"))
+        self.assertFalse(os.path.exists(fn))
+        self.assertIn("external", list(wkps))
+
+        wkps.update()
+        with self.assertRaises(ValueError):
+            wkps.index("external")
+        self.assertEqual(len(wkps), wlen)
+
+        # "Blank" always stays first.
+        self.assertEqual(wkps.index("Blank"), 0)

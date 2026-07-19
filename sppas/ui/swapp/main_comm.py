@@ -140,8 +140,14 @@ class sppasWappCommServer(sppasCommServer):
             logging.info("Interlocutor un-registered.")
 
         if key == sppasCommKeys.WKP_CHANGED:
+            # The serialized workspace carries its own internal identifier
+            # (a uuid, see sppasWorkspace), unrelated to its display name:
+            # the sender sends the name alongside, in the same envelope.
+            # The name is not used as an identifier -- it is only stored
+            # for display, exactly as reported by the interlocutor.
+            wapp_wxstate.workspace_name = value["name"]
             wjson = sppasWJSON()
-            wjson.parse(value)
+            wjson.parse(value["workspace"])
             wapp_wkps.data = wjson
             logging.info("Workspace received and stored into the shared state.")
             return self.format_message(sppasCommKeys.ACK, "Workspace stored.")

@@ -50,6 +50,7 @@ from sppas.core.config import paths
 from sppas.core.preinstall.installer import quote
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_trace
+from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
 from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
 
 # ---------------------------------------------------------------------------
@@ -186,8 +187,24 @@ class DashboardController:
         # The Journal tab sends a heartbeat: absent, the view bakes the
         # dialog inviting the user to open it.
         trace_alive = wapp_trace.viewer_alive()
+
+        # The current workspace. The wx interlocutor, when connected, is
+        # the source of truth: its WKP_CHANGED messages report the name of
+        # its current workspace, not an identifier -- swapp does not try
+        # to resolve it against its own local workspace list. Before any
+        # wx connected, the local state is displayed instead.
+        wkp_name = wapp_wxstate.workspace_name
+        wkp_path = ""
+        if len(wkp_name) == 0:
+            wkp_name = wapp_wkps.get_wkp_name()
+            try:
+                wkp_path = wapp_wkps.get_wkp_filename()
+            except Exception:
+                wkp_path = ""
+
         self.__view.populate_tree_content(wapp_settings.license_agreement,
-                                          wx_enabled, trace_alive)
+                                          wx_enabled, trace_alive,
+                                          wkp_name, wkp_path)
 
         for app_name in self.__model.get_names(visible_only=True):
             app_info = self.__model.get_bakery_by_name(app_name)

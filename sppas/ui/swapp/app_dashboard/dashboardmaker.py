@@ -48,6 +48,8 @@ from sppas.core.config import sg
 
 from ..components.swapp_response import swappBaseResponse
 from ..wappcore.wappinfo import WebApplicationInfo
+from ..wappcore.wappsg import wapp_wkps
+from ..wappcore.wappsg import wapp_wxstate
 from ..components.hstatusnode import HTMLTreeError410
 
 from .dashboard_view import DashboardView
@@ -154,6 +156,22 @@ class DashboardResponseRecipe(swappBaseResponse):
         logging.debug(f" >>>>> Page Application Dashboard -- Process events: {events} <<<<<< ")
         self._data = dict()
         self._status.code = 200
+
+        # The periodic request of the JS: the displayed workspace name is
+        # updated without reloading the page. No re-bake. See
+        # populate_view() for the source of the displayed name.
+        if "workspace_name" in events:
+            wkp_name = wapp_wxstate.workspace_name
+            wkp_path = ""
+            if len(wkp_name) == 0:
+                wkp_name = wapp_wkps.get_wkp_name()
+                try:
+                    wkp_path = wapp_wkps.get_wkp_filename()
+                except Exception:
+                    wkp_path = ""
+            self._data["workspace_name"] = wkp_name
+            self._data["workspace_path"] = wkp_path
+            return False
 
         # Accessibility events can be received in the same post
         if "accessibility_color" in events:

@@ -89,7 +89,8 @@ class sppasWkps(object):
     def set_workspaces(self):
         """Fix the list of existing workspaces in the software.
 
-        Reset the current list of workspaces.
+        Append the workspaces found on disk to the current list. It does
+        not clear the list first: see update() to re-scan from scratch.
 
         """
         for fn in os.listdir(paths.wkps):
@@ -97,7 +98,45 @@ class sppasWkps(object):
             if ext_observed.lower() == self.ext:
                 # remove path and extension to set the name of the workspace
                 wkp_name = os.path.basename(fn_observed)
-                # append in the list
+                # append in the list, unless already known
+                if wkp_name not in self.__wkps:
+                    self.__wkps.append(wkp_name)
+                    logging.info('Workspace added: {:s}'.format(wkp_name))
+
+    # ------------------------------------------------------------------------
+
+    def update(self):
+        """Re-scan the workspaces folder and update the list accordingly.
+
+        The list of workspaces is built once, at instantiation. A workspace
+        created, renamed or deleted by another process -- typically, the wx
+        interface, running in its own process with its own sppasWkps
+        instance -- is invisible until this method is called: it aligns
+        the list on the current content of the workspaces folder.
+
+        Only "Blank" is guaranteed to remain at index 0: a workspace file
+        deleted on disk since the last scan is removed from the list, one
+        appearing is appended. The index of an unaffected workspace does
+        not change: the update is unordered on the workspaces found on
+        disk, but "Blank" always stays first.
+
+        """
+        found = set()
+        for fn in os.listdir(paths.wkps):
+            fn_observed, ext_observed = os.path.splitext(fn)
+            if ext_observed.lower() == self.ext:
+                found.add(os.path.basename(fn_observed))
+
+        # Remove the workspaces no longer on disk, "Blank" excepted: it has
+        # no file of its own.
+        for wkp_name in list(self.__wkps):
+            if wkp_name != "Blank" and wkp_name not in found:
+                self.__wkps.remove(wkp_name)
+                logging.info('Workspace removed: {:s}'.format(wkp_name))
+
+        # Append the ones not yet known.
+        for wkp_name in found:
+            if wkp_name not in self.__wkps:
                 self.__wkps.append(wkp_name)
                 logging.info('Workspace added: {:s}'.format(wkp_name))
 

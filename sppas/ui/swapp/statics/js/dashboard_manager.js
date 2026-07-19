@@ -138,6 +138,49 @@ export default class DashboardManager extends BaseManager {
         if (traceMenuBtn) {
             traceMenuBtn.addEventListener('click', () => this.#hideTraceDialog());
         }
+
+        // The displayed workspace name follows the server state: the wx
+        // interface can change it at any time.
+        const workspaceName = document.getElementById('workspace_name');
+        if (workspaceName) {
+            setInterval(() => this.#refreshWorkspaceName(), 3000);
+        }
+    }
+
+    // ----------------------------------------------------------------------
+
+    /**
+     * Ask the server for the current workspace and update the displayed name.
+     *
+     * A failed request is only logged: the server may simply be shutting
+     * down.
+     *
+     * @private
+     * @async
+     * @returns {Promise<void>} Resolves when the name has been updated,
+     * or when the failure has been logged.
+     */
+    async #refreshWorkspaceName() {
+        const nameSpan = document.getElementById('workspace_name');
+        if (nameSpan === null) {
+            return;
+        }
+
+        const pageUri = window.location.pathname.substring(1) || 'index.html';
+        try {
+            const response = await this._requestManager.send_post_request(
+                {workspace_name: true}, "application/json", pageUri);
+            if (response && typeof response.workspace_name === 'string') {
+                nameSpan.textContent = response.workspace_name;
+                if (typeof response.workspace_path === 'string' && response.workspace_path.length > 0) {
+                    nameSpan.setAttribute('title', response.workspace_path);
+                } else {
+                    nameSpan.removeAttribute('title');
+                }
+            }
+        } catch (error) {
+            WexaLogger.debug(`Workspace name not refreshed: ${error}`);
+        }
     }
 
    // ----------------------------------------------------------------------

@@ -130,6 +130,38 @@ class sppasWkpsManager(object):
 
     # -----------------------------------------------------------------------
 
+    def update(self):
+        """Re-scan the workspaces folder and align the current workspace.
+
+        See sppasWkps.update(): a workspace created, renamed or deleted by
+        another process is invisible until this is called. If the current
+        workspace was deleted meanwhile, the manager falls back to "Blank".
+
+        """
+        current_name = self.__wkps[self.__current]
+        self.__wkps.update()
+        try:
+            self.__current = self.__wkps.index(current_name)
+        except ValueError:
+            self.__current = 0
+            self.load_data()
+
+    # -----------------------------------------------------------------------
+
+    def get_wkp_filename(self, index=None):
+        """Return the filename of the current workspace.
+
+        :param index: (int) Index of the workspace to get the filename
+        :returns: (str)
+        :raises: IndexError, WkpFileError
+
+        """
+        if index is None:
+            index = self.__current
+        return self.__wkps.check_filename(index)
+
+    # -----------------------------------------------------------------------
+
     def switch_to(self, index):
         """Set the current workspace at the given index.
 
