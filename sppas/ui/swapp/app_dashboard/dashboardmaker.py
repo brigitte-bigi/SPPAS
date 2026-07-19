@@ -50,6 +50,7 @@ from ..components.swapp_response import swappBaseResponse
 from ..wappcore.wappinfo import WebApplicationInfo
 from ..wappcore.wappsg import wapp_wkps
 from ..wappcore.wappsg import wapp_wxstate
+from ..wappcore.wappsg import wapp_trace
 from ..components.hstatusnode import HTMLTreeError410
 
 from .dashboard_view import DashboardView
@@ -157,9 +158,9 @@ class DashboardResponseRecipe(swappBaseResponse):
         self._data = dict()
         self._status.code = 200
 
-        # The periodic request of the JS: the displayed workspace name is
-        # updated without reloading the page. No re-bake. See
-        # populate_view() for the source of the displayed name.
+        # The periodic request of the JS: the displayed workspace name and
+        # the Journal dialog are updated without reloading the page. No
+        # re-bake. See populate_view() for the source of the displayed name.
         if "workspace_name" in events:
             wkp_name = wapp_wxstate.workspace_name
             wkp_path = ""
@@ -171,6 +172,7 @@ class DashboardResponseRecipe(swappBaseResponse):
                     wkp_path = ""
             self._data["workspace_name"] = wkp_name
             self._data["workspace_path"] = wkp_path
+            self._data["trace_alive"] = wapp_trace.viewer_alive()
             return False
 
         # Accessibility events can be received in the same post

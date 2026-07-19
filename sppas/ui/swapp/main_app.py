@@ -49,9 +49,11 @@ from whakerpy.httpd import HTTPDHandlerUtils
 from sppas.core.config import cfg
 from sppas.core.coreutils import sppasKeyError
 from sppas.core.coreutils import sppasEnableFeatureError
+from sppas.ui.agnostic import sppasCommKeys
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_notify
 from sppas.ui.swapp.wappcore.wappsg import wapp_trace
+from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
 from .main_trace_handler import swappTraceHandler
 from .main_comm import sppasWappCommServer
 
@@ -284,6 +286,13 @@ class sppasWebApp:
             # Stop the server
             self.__server.shutdown()
         finally:
+            # The wx interface, if running, does not survive the web server
+            # it depends on either: announce this shutdown too, while the
+            # socket can still reach it -- the same BYE it sends when it
+            # is the one closing.
+            if wapp_wxstate.running is True:
+                wapp_notify.notify(sppasCommKeys.BYE, None)
+
             # The HTTP server is no longer serving -- whatever the exit path
             # (KeyboardInterrupt or shutdown by the handler on the 410 event):
             # the communication socket must not survive it.

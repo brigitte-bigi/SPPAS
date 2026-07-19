@@ -61,10 +61,23 @@ class SwappHeader(HTMLHeaderNode):
 
     """
 
-    def __init__(self, parent_id: str, title: str = "SPPAS Application"):
+    def __init__(self, parent_id: str, title: str = "SPPAS Application",
+                 home_target: str = ""):
+        """Create the header node.
+
+        :param home_target: (str) Empty by default: the home button
+            replaces the content of the current tab, the right behavior
+            for an ordinary page. A page living in its own persistent tab
+            -- the Journal -- passes the window name of the Dashboard, so
+            that going "home" switches to that tab (opened, or reused if
+            it already self-named itself on load) instead of turning its
+            own tab into the Dashboard.
+
+        """
         super(SwappHeader, self).__init__(parent_id)
         self.set_attribute("id", "header-content")
         self.__title = title
+        self.__home_target = home_target
         self.__nav = None
         self.__create_content()
 
@@ -119,6 +132,8 @@ class SwappHeader(HTMLHeaderNode):
         home_link.set_attribute("href", "index.html")
         home_link.set_attribute("role", "button")
         home_link.set_attribute("aria-label", MSG_HOME)
+        if len(self.__home_target) > 0:
+            home_link.set_attribute("data-named-target", self.__home_target)
         logo = EmptyNode(home_link.identifier, None, "img")
         logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
         logo.set_attribute("id", "home-link-logo")

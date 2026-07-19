@@ -374,6 +374,13 @@ class sppasMainWindow(sppasDialog):
             evt.SetEventObject(self)
             evt.SetWorkspace(wjson)
             wx.PostEvent(self.FindWindow("content"), evt)
+
+        elif key == sppasCommKeys.BYE:
+            # The web server announces its own shutdown: this interface
+            # does not survive it either.
+            logging.info("The web server closed. Closing this interface too.")
+            self.exit(interactive=False)
+
         else:
             logging.warning("Unexpected message received: key={:s}."
                             "".format(sppasCommKeys.name_of(key)))

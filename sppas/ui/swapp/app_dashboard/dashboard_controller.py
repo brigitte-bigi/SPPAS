@@ -170,20 +170,20 @@ class DashboardController:
         """Populate the dashboard view with data from the model.
 
         The method instructs the view to create the page content according
-        to the model data and the current agreement state. The wx card is
-        disabled while the wx interface is running: only one instance is
-        allowed.
+        to the model data and the current agreement state. Only the Launch
+        button of the wx card is disabled while the wx interface is
+        running: only one instance is allowed, and the rest of the card
+        stays exactly as it was right after the click that launched it.
 
         """
         wx_enabled = cfg.feature_installed("wxpython")
-        logging.debug(f"Dashboard wx card state: feature={wx_enabled}, "
-                      f"subprocess_running={self.__wx_running}, "
-                      f"socket_running={wapp_wxstate.running}")
         # Two sources are needed: the subprocess flag covers the launches of
         # this dashboard, including the delay before the HELLO of wx arrives;
         # the socket state covers a wx launched elsewhere, and its Close.
-        if self.__wx_running is True or wapp_wxstate.running is True:
-            wx_enabled = False
+        wx_busy = self.__wx_running is True or wapp_wxstate.running is True
+        logging.debug(f"Dashboard wx card state: feature={wx_enabled}, "
+                      f"subprocess_running={self.__wx_running}, "
+                      f"socket_running={wapp_wxstate.running}")
         # The Journal tab sends a heartbeat: absent, the view bakes the
         # dialog inviting the user to open it.
         trace_alive = wapp_trace.viewer_alive()
@@ -203,7 +203,7 @@ class DashboardController:
                 wkp_path = ""
 
         self.__view.populate_tree_content(wapp_settings.license_agreement,
-                                          wx_enabled, trace_alive,
+                                          wx_enabled, wx_busy, trace_alive,
                                           wkp_name, wkp_path)
 
         for app_name in self.__model.get_names(visible_only=True):

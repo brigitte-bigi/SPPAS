@@ -82,6 +82,12 @@ export default class DashboardManager extends BaseManager {
      * @returns {void}
      */
     handleDashboardManagerOnLoad() {
+        // Self-name this tab, whatever opened it -- including the very
+        // first one, launched by the OS browser command, which no
+        // window.open() call ever named. The Journal's home button reuses
+        // this name to switch to this tab instead of opening a duplicate.
+        window.name = 'sppas_dashboard';
+
         WexaLogger.debug("Attach Dashboard listeners")
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.attachDashboardListeners());
@@ -166,20 +172,50 @@ export default class DashboardManager extends BaseManager {
             return;
         }
 
+        // RequestManager catches its own network errors and resolves with
+        // the Error object instead of rejecting: the guard below already
+        // discards it, since it never has a workspace_name string.
         const pageUri = window.location.pathname.substring(1) || 'index.html';
-        try {
-            const response = await this._requestManager.send_post_request(
-                {workspace_name: true}, "application/json", pageUri);
-            if (response && typeof response.workspace_name === 'string') {
-                nameSpan.textContent = response.workspace_name;
-                if (typeof response.workspace_path === 'string' && response.workspace_path.length > 0) {
-                    nameSpan.setAttribute('title', response.workspace_path);
-                } else {
-                    nameSpan.removeAttribute('title');
-                }
+        const response = await this._requestManager.send_post_request(
+            {workspace_name: true}, "application/json", pageUri);
+
+        if (response instanceof Error) {
+            WexaLogger.debug(`Workspace name not refreshed: ${response}`);
+            return;
+        }
+        if (response && typeof response.workspace_name === 'string') {
+            nameSpan.textContent = response.workspace_name;
+            if (typeof response.workspace_path === 'string' && response.workspace_path.length > 0) {
+                nameSpan.setAttribute('title', response.workspace_path);
+            } else {
+                nameSpan.removeAttribute('title');
             }
-        } catch (error) {
-            WexaLogger.debug(`Workspace name not refreshed: ${error}`);
+        }
+        if (response && typeof response.trace_alive === 'boolean') {
+            this.#toggleTraceDialog(response.trace_alive);
+        }
+    }
+
+    // ----------------------------------------------------------------------
+
+    /**
+     * Show or hide the Infos dialog, following the Journal tab liveness
+     * reported by the periodic poll -- no page reload needed.
+     *
+     * @private
+     * @param {boolean} traceAlive - True when the Journal tab is open.
+     * @returns {void}
+     */
+    #toggleTraceDialog(traceAlive) {
+        const dlg = document.getElementById('trace_dialog');
+        if (dlg === null) {
+            return;
+        }
+        if (traceAlive === true) {
+            this.#hideTraceDialog();
+        } else if (dlg.classList.contains('hidden-alert')) {
+            dlg.classList.remove('hidden-alert');
+            DialogManager.open('trace_dialog', true);
         }
     }
 

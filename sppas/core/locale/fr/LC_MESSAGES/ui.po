@@ -248,6 +248,18 @@ msgstr "En savoir plus :"
 msgid "Workspace: "
 msgstr "Workspace : "
 
+msgid "Left"
+msgstr "Gauche"
+
+msgid "Both"
+msgstr "Les deux"
+
+msgid "Right"
+msgstr "Droite"
+
+msgid "Panels to display"
+msgstr "Panneaux à afficher"
+
 msgid "Explore Applications:"
 msgstr "Explorer les applications :"
 

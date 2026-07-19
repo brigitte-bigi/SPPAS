@@ -180,6 +180,6 @@ class TraceResponseRecipe(swappBaseResponse):
         self.__view.update_accessibility()
         self.__view.populate_tree_content(
             wapp_trace.get_header(),
-            wapp_trace.serialize_records(origin=swappTraceStore.API_ORIGIN),
-            wapp_trace.serialize_records(origin=swappTraceStore.UI_ORIGIN),
+            wapp_trace.get_records(origin=swappTraceStore.API_ORIGIN),
+            wapp_trace.get_records(origin=swappTraceStore.UI_ORIGIN),
             self.__status_message)

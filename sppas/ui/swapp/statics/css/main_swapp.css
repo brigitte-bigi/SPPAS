@@ -907,6 +907,29 @@ section.actions-panel {
     overflow-x: auto;
 }
 
+/* ── Each line of the journal is colored by its logging level ── */
+
+.log-debug {
+    color: var(--fg-color-alt);
+}
+
+.log-info {
+    color: var(--info-color);
+}
+
+.log-warning {
+    color: var(--warning-color);
+}
+
+.log-error {
+    color: var(--error-color);
+}
+
+.log-critical {
+    color: var(--error-color);
+    font-weight: bold;
+}
+
 /* ── Header: the skip link, the home button (logo, to the Dashboard)
    and the title ── */
 

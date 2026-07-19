@@ -190,6 +190,24 @@ class swappTraceStore:
 
     # -----------------------------------------------------------------------
 
+    @staticmethod
+    def format_record(record: dict) -> str:
+        """Return one record formatted as a single line of plain text.
+
+        :param record: (dict) A record, as stored and returned by this class.
+        :return: (str) The formatted line, without a trailing newline.
+
+        """
+        when = datetime.fromtimestamp(record["created"])
+        return "{:s} [{:s}] ({:s}/{:s}) {:s}".format(
+            when.strftime("%Y-%m-%d %H:%M:%S"),
+            record["levelname"],
+            record["source"],
+            record["origin"],
+            record["message"])
+
+    # -----------------------------------------------------------------------
+
     def serialize_records(self, min_level: int = 0, origin: str | None = None) -> str:
         """Return the formatted records as text, without the header.
 
@@ -198,15 +216,7 @@ class swappTraceStore:
         :return: (str) The formatted records, one per line.
 
         """
-        lines = list()
-        for record in self.get_records(min_level, origin):
-            when = datetime.fromtimestamp(record["created"])
-            lines.append("{:s} [{:s}] ({:s}/{:s}) {:s}".format(
-                when.strftime("%Y-%m-%d %H:%M:%S"),
-                record["levelname"],
-                record["source"],
-                record["origin"],
-                record["message"]))
+        lines = [self.format_record(r) for r in self.get_records(min_level, origin)]
         return "\n".join(lines) + "\n"
 
     # -----------------------------------------------------------------------

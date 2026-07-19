@@ -203,12 +203,15 @@ class DashboardView(swappBaseView):
     # -----------------------------------------------------------------------
 
     def populate_tree_content(self, agreement: bool = False, wx_enabled: bool = True,
-                              trace_alive: bool = True,
+                              wx_busy: bool = False, trace_alive: bool = True,
                               wkp_name: str = "", wkp_path: str = ""):
         """Populate the tree content.
 
         :param agreement: (bool) The license agreement is already accepted.
-        :param wx_enabled: (bool) Enable the card launching the wx interface.
+        :param wx_enabled: (bool) The wxpython feature is installed.
+        :param wx_busy: (bool) The wx interface is already running elsewhere:
+            only its Launch button is disabled, the card stays otherwise
+            identical to what a click on it already showed, client-side.
         :param trace_alive: (bool) The Journal tab gave a recent sign of life.
         :param wkp_name: (str) Name of the current workspace.
         :param wkp_path: (str) Path of its file, or an empty string.
@@ -218,10 +221,12 @@ class DashboardView(swappBaseView):
         if agreement is False:
             wn = AgreementDialog(self._htree.body_main.identifier)
             self._htree.body_main.append_child(wn)
-        elif trace_alive is False:
-            # The Journal tab is not open: invite the user to open it. The
-            # license dialog passes first, one dialog at a time.
+        else:
+            # Always baked, so the periodic poll can show or hide it live,
+            # without reloading the page -- see dashboard_manager.js.
             wn = TraceInfoDialog(self._htree.body_main.identifier)
+            if trace_alive is True:
+                wn.add_attribute("class", "hidden-alert")
             self._htree.body_main.append_child(wn)
 
         # Add dialogs for messages
@@ -254,7 +259,8 @@ class DashboardView(swappBaseView):
             sg.__name__,
             icon,
             text=MSG_DESCR_WX,
-            enable=wx_enabled
+            enable=wx_enabled,
+            busy=wx_busy
         )
 
         # Other sections

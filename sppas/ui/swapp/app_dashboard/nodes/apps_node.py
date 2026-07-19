@@ -69,14 +69,20 @@ class AppsNode(HTMLNode):
 
     # -----------------------------------------------------------------------
 
-    def create_app_card(self, name: str, icon_name: str, text: str, link: str = "", enable: bool = True):
+    def create_app_card(self, name: str, icon_name: str, text: str, link: str = "",
+                        enable: bool = True, busy: bool = False):
         """A specific card to represent the card of an app to launch.
 
         :param name: (str) The short name of the application.
         :param icon_name: (str) Name of an image representing the application
         :param text: (str) Text description of the application
         :param link: (str) Link to the application
-        :param enable: (bool) Enable or disable the node.
+        :param enable: (bool) The feature is installed: False dims the
+            whole card, matching what a missing feature already looks like.
+        :param busy: (bool) The app is already running elsewhere: only its
+            Launch button is disabled, exactly as the click that launched
+            it already did, client-side -- a later re-bake of this same
+            page must render the identical result, not a different one.
 
         """
         ident = name.lower().replace(" ", "_")
@@ -140,5 +146,7 @@ class AppsNode(HTMLNode):
                 _b = HTMLNode(content.identifier, ident + "_button", "button", value=MSG_LAUNCH)
                 _b.add_attribute("class", "app-button")
                 _b.add_attribute("id", ident + "_button")
+                if busy is True:
+                    _b.add_attribute("disabled", None)
 
         content.append_child(_b)

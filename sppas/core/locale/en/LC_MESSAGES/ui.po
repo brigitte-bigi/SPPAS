@@ -335,6 +335,18 @@ msgstr "Click the button below: the message is copied. Choose your e-mail applic
 msgid "Workspace: "
 msgstr ""
 
+msgid "Left"
+msgstr ""
+
+msgid "Both"
+msgstr ""
+
+msgid "Right"
+msgstr ""
+
+msgid "Panels to display"
+msgstr ""
+
 msgid "Journal"
 msgstr ""
 

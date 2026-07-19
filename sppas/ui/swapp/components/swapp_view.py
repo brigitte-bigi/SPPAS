@@ -200,8 +200,21 @@ class swappBaseView:
         delegates additional customization to `_populate_body_header()`.
 
         """
-        self._htree.body_header = SwappHeader(self._htree.identifier, title)
+        self._htree.body_header = SwappHeader(self._htree.identifier, title, self._home_target())
         self._populate_body_header(*args, **kwargs)
+
+    # -----------------------------------------------------------------------
+
+    def _home_target(self) -> str:
+        """Return the window name the header's home button switches to.
+
+        Empty by default: the home button replaces the content of the
+        current tab. Override in a page living in its own persistent tab,
+        so that going "home" switches to that named tab instead of
+        turning its own tab into the Dashboard -- see the Journal page.
+
+        """
+        return ""
 
     # -----------------------------------------------------------------------
 

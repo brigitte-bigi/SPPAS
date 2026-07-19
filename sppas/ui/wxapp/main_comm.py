@@ -77,8 +77,9 @@ class sppasWxCommServer(sppasCommServer):
     def _prepare_response(self, key: int, value) -> str:
         """Override. Propagate the received message and acknowledge it.
 
-        The protocol-level messages (ping, hello, bye) are answered by the
-        parent class. Any other message is posted to the top window as a
+        The protocol-level messages (ping, hello) are answered by the
+        parent class. Any other message -- including a BYE, sent by swapp
+        to announce its own shutdown -- is posted to the top window as a
         sppasCommMessageEvent.
 
         :param key: (int) One of the sppasCommKeys constants, sent by the client.
@@ -86,7 +87,7 @@ class sppasWxCommServer(sppasCommServer):
         :return: (str) The response to the client, in the shared JSON envelope.
 
         """
-        if key in (sppasCommKeys.PING, sppasCommKeys.HELLO, sppasCommKeys.BYE):
+        if key in (sppasCommKeys.PING, sppasCommKeys.HELLO):
             return super(sppasWxCommServer, self)._prepare_response(key, value)
 
         window = self.__app.GetTopWindow()
