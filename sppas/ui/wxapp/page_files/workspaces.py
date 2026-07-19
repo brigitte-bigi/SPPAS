@@ -463,6 +463,11 @@ class WorkspacesPanel(sppasPanel):
         except Exception as e:
             message = WKP_ACT_RENAME_ERROR.format(new_name, str(e))
             Error(message)
+            return
+
+        # A rename does not change the loaded content, only its name: the
+        # other panels of the window do not need it, but the other UI does.
+        self.notify()
 
 # ---------------------------------------------------------------------------
 # Panel to display the existing workspaces

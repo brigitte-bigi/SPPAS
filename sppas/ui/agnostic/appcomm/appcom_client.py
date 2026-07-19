@@ -77,10 +77,17 @@ class sppasCommClient(sppasCommunication):
 
     # -----------------------------------------------------------------------
 
-    def request(self, data: str) -> str:
+    def request(self, data: str, timeout: float = 3.) -> str:
         """Send a request to the server and return its response.
 
+        The companion process (server) is optional: a caller on a GUI
+        thread must never block indefinitely on it. A timed out socket
+        raises socket.timeout, caught below like any other socket error
+        and turned into sppasCommServerError -- the existing, expected
+        way a caller learns "no server to talk to".
+
         :param data: (str) The data to send to the server.
+        :param timeout: (float) Seconds before giving up on the server.
         :return: (str) The response from the server.
 
         """
@@ -88,6 +95,7 @@ class sppasCommClient(sppasCommunication):
         try:
             # Create a socket to communicate with the server
             client_socket = socket.socket()
+            client_socket.settimeout(timeout)
 
             # Connect to the server
             client_socket.connect((self.host, self.port))
