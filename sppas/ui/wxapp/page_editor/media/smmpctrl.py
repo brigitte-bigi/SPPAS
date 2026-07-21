@@ -41,7 +41,7 @@ The main class to control a multi media player.
 
 Requires the following libraries:
 
- - simpleaudio, installed by the audioplay feature;
+ - sounddevice, installed by the audioplay feature;
  - opencv, installed by the videoplay feature.
 
 """

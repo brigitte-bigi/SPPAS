@@ -50,11 +50,11 @@ sys.path.append(SPPAS)
 
 import audioopy.aio
 try:
-    import pyaudio
+    import sounddevice
     PLAYER = 1
 except ImportError:
     try:
-        import simpleaudio
+        import pyaudio
         PLAYER = 2
     except ImportError:
         PLAYER = 0
@@ -111,7 +111,7 @@ if args.ef and args.es:
 if PLAYER == 0:
     print("None of the supported audio player backend libraries is installed.")
     sys.exit(1)
-print("Player:            {:d} (1=PyAudio, 2=SimpleAudio)".format(PLAYER))
+print("Player:            {:d} (1=sounddevice, 2=PyAudio)".format(PLAYER))
 
 # ----------------------------------------------------------------------------
 # Open the sound file and prepare playing infos...
@@ -154,10 +154,27 @@ frames = audio.read_frames(end-begin)
 audio.close()
 
 # ----------------------------------------------------------------------------
-# Create an interface to PortAudio or SimpleAudio, play and close
+# Create an interface to PortAudio (sounddevice or PyAudio), play and close
 # ----------------------------------------------------------------------------
 
 if PLAYER == 1:
+    # Open a sounddevice RawOutputStream to write the raw frames of the audio to.
+    widths = {1: "uint8", 2: "int16", 3: "int24", 4: "int32"}
+    stream = sounddevice.RawOutputStream(samplerate=fps, channels=nc, dtype=widths[sp])
+    stream.start()
+
+    # Play the sound by writing the audio data to the stream
+    chunk = fps // 10  # a chunk every 100 ms.
+    i = 0
+    while i < len(frames):
+        stream.write(frames[i:i+chunk])
+        i += chunk
+
+    # Close
+    stream.stop()
+    stream.close()
+
+elif PLAYER == 2:
     # Create a PyAudio instance.
     p = pyaudio.PyAudio()
 
@@ -176,10 +193,3 @@ if PLAYER == 1:
     stream.stop_stream()
     stream.close()
     p.terminate()
-
-elif PLAYER == 2:
-    # Create a SimpleAudio object, send frames and play
-    player = simpleaudio.play_buffer(frames, nc, sp, fps)
-
-    # Wait for playback to finish before exiting
-    player.wait_done()

@@ -46,9 +46,9 @@ from sppas.core.config import sppasAppConfig
 from sppas.ui.wxapp.main_settings import WxAppSettings
 
 try:
-    import sppas.ui.wxapp.players.audiosaplayer as audiosaplayer
+    import sppas.ui.wxapp.players.audiosdplayer as audiosdplayer
 except ModuleNotFoundError:
-    audiosaplayer = None
+    audiosdplayer = None
 try:
     import sppas.ui.wxapp.players.audiopyplayer as audiopyplayer
 except ModuleNotFoundError:
@@ -73,8 +73,8 @@ class TestPanel(wx.Choicebook):
             p = audiopyplayer.TestPanel(self)
             self.AddPage(p, p.GetName())
 
-        if audiosaplayer is not None:
-            p = audiosaplayer.TestPanel(self)
+        if audiosdplayer is not None:
+            p = audiosdplayer.TestPanel(self)
             self.AddPage(p, p.GetName())
 
         p = videoplayer.TestPanel(self)

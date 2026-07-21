@@ -447,7 +447,7 @@ class Installer:
                         out_msg.append(out_install)
                 except sppasInstallationError as e:
                     # Try with an alternative package --
-                    # like, for example, PyAudio is an alternative to simpleaudio.
+                    # like, for example, PyAudio is an alternative to sounddevice.
                     try:
                         out_install = self.__install_pypis(fid, alt=True)
                         if len(out_install) > 0:

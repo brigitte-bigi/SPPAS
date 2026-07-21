@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.wxapp.players.audiosaplayer.py
+:filename: sppas.ui.wxapp.players.audiosdplayer.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: An audio player based on the library "simpleaudio".
+:summary: An audio player based on the library "sounddevice".
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2022  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -40,10 +40,10 @@
 Description:
 ============
 
-A simple audio player based on simpleaudio library.
-https://simpleaudio.readthedocs.io/en/latest/index.html
+A simple audio player based on sounddevice library.
+https://python-sounddevice.readthedocs.io
 
-Notice that the simpleplayer library only allows to play/stop; seek, tell
+Notice that the sounddevice stream only allows to play/stop; seek, tell
 or pause are not supported. There are then implemented here with wx, so a
 wx.App() must be created in order to use this player.
 
@@ -59,7 +59,7 @@ Example:
 
 import os
 import logging
-import simpleaudio as sa
+import sounddevice as sd
 import datetime
 import wx
 
@@ -76,7 +76,7 @@ from .baseplayer import sppasBasePlayer
 
 
 class sppasAudioPlayer(sppasBasePlayer):
-    """An audio player based on simpleaudio library and wx.
+    """An audio player based on sounddevice library and wx.
 
     Load/play/pause/stop/seek throw the audio stream of a given file.
 
@@ -85,8 +85,12 @@ class sppasAudioPlayer(sppasBasePlayer):
     def __init__(self, owner):
         super(sppasAudioPlayer, self).__init__(owner)
 
-        # Delay in seconds to update the position value in the stream & to notify
-        self._time_delay = 0.01    # but it will be 15ms under windows
+        # Delay in seconds to update the position value in the stream
+        # and to notify.
+        if wx.Platform == "__WXMSW__":
+            self._time_delay = 0.015
+        else:
+            self._time_delay = 0.010
 
         # Loaded frames of the audio stream
         self._frames = b("")
@@ -97,6 +101,8 @@ class sppasAudioPlayer(sppasBasePlayer):
         """Re-initialize all known data."""
         sppasBasePlayer.reset(self)
         self._frames = b("")
+        if self._player is not None:
+            self.stop()
 
     # -----------------------------------------------------------------------
 
@@ -143,26 +149,61 @@ class sppasAudioPlayer(sppasBasePlayer):
         """
         try:
             frames = self._extract_frames()
-            # Ask simpleaudio library to play a buffer of frames
+            # Ask sounddevice library to play a buffer of frames
             if len(frames) > 0:
-                self._player = sa.play_buffer(
-                    frames,
-                    self._media.get_nchannels(),
-                    self._media.get_sampwidth(),
-                    self._media.get_framerate())
-                # Check if the audio is really playing
-                if self._player.is_playing() is True:
-                    self._start_datenow = datetime.datetime.now()
-                    return True
+                # Open a RawOutputStream object to write the raw frames of the audio to.
+                self._player = sd.RawOutputStream(
+                    samplerate=self._media.get_framerate(),
+                    channels=self._media.get_nchannels(),
+                    dtype=self._dtype_from_sampwidth(self._media.get_sampwidth()))
+                self._player.start()
 
+                # Play the sound by writing the audio data to the stream
+                # Send a chunk of frames.
+                chunk = self._media.get_framerate() // 10
+
+                # reposition in stream since it was asked to start playing the frames
+                cur_time_value = datetime.datetime.now()
+                # since how many time we started "play_process" but we did not played...
+                time_delta = cur_time_value - self._start_datenow
+                delta = time_delta.total_seconds()
+                # how many frames this delta is representing
+                position = round(delta * float(self._media.get_framerate()))
+
+                # Check if the stream is really ready then play
+                if self._player.active is True and position < len(frames):
+                    while self._ms == PlayerState().playing:
+                        # if we reached the end of the frames
+                        if position >= len(frames):
+                            self.stop()
+                            break
+                        try:
+                            end_at = min(position + chunk, len(frames))
+                            # really play the frames now!!!
+                            self._player.write(frames[position:end_at])
+                            position += chunk
+                            # if the state changed during the frames were playing
+                            if self._ms != PlayerState().playing:
+                                break
+                        except sd.PortAudioError:
+                            logging.error("The audio stream player was unexpectedly interrupted.")
+                            self.stop()
+                            self._player = None
+                            return False
+
+                    return True
+                else:
+                    self._player = None
+                    return False
             else:
                 logging.warning("No frames to play in the given period "
                                 "for audio {:s}.".format(self._filename))
 
         except Exception as e:
+            self.stop()
             logging.error("An error occurred when attempted to play "
                           "the audio stream of {:s} with the "
-                          "simpleaudio library: {:s}".format(self._filename, str(e)))
+                          "sounddevice library: {:s}".format(self._filename, str(e)))
 
         self._start_datenow = None
         return False
@@ -176,14 +217,12 @@ class sppasAudioPlayer(sppasBasePlayer):
 
         """
         if self._player is not None:
-            if self._player.is_playing():
+            if self._ms == PlayerState().playing:
                 # set our state
                 self._ms = PlayerState().paused
                 # stop the thread
                 self._th.join()
-                # stop playing
-                self._player.stop()
-                # seek at the exact moment we stopped to play
+                # seek at the exact moment we asked to stop to play
                 self._update_now()
                 return True
 
@@ -192,8 +231,11 @@ class sppasAudioPlayer(sppasBasePlayer):
     # -----------------------------------------------------------------------
 
     def _stop(self):
-        """Really stop the player."""
-        self._player.stop()
+        """Really stops the player."""
+        if self._player is not None:
+            self._player.stop()
+            self._player.close()
+            self._player = None
 
     # -----------------------------------------------------------------------
 
@@ -279,6 +321,19 @@ class sppasAudioPlayer(sppasBasePlayer):
 
     # -----------------------------------------------------------------------
     # Override base class
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def _dtype_from_sampwidth(sampwidth):
+        """Return the sounddevice dtype matching the given sample width.
+
+        :param sampwidth: (int) Number of bytes of a sample
+        :return: (str) A dtype supported by sounddevice
+
+        """
+        widths = {1: "uint8", 2: "int16", 3: "int24", 4: "int32"}
+        return widths[sampwidth]
+
     # -----------------------------------------------------------------------
 
     def _extract_frames(self):
@@ -367,12 +422,7 @@ class sppasAudioPlayer(sppasBasePlayer):
 
         # Nothing to do if we are not playing (probably paused).
         if self._ms == PlayerState().playing:
-            if self._player.is_playing() is False:
-                # the audio stream reached the end of the stream and it stopped
-                self.stop()
-            else:
-                # the audio stream is currently playing
-                self.reposition_stream()
+            self.reposition_stream()
 
             # Send the wx.EVT_TIMER event
             wx.Timer.Notify(self)
@@ -384,9 +434,10 @@ class sppasAudioPlayer(sppasBasePlayer):
 
 
 class TestPanel(wx.Panel):
+
     def __init__(self, parent):
         super(TestPanel, self).__init__(
-            parent, -1, style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN, name="Audio SaPlayer")
+            parent, -1, style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN, name="Audio SdPlayer")
 
         # The player!
         self.ap = sppasAudioPlayer(owner=self)
@@ -427,7 +478,7 @@ class TestPanel(wx.Panel):
     # ----------------------------------------------------------------------
 
     def _do_load_file(self):
-        self.ap.load(os.path.join(paths.samples, "samples-fra", "F_F_B003_P8.wav"))
+        self.ap.load(os.path.join(paths.samples, "samples-eng", "oriana2.WAV"))
 
     # ----------------------------------------------------------------------
 

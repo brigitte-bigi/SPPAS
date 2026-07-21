@@ -40,7 +40,7 @@
 The SPPAS Multi Media Player System
 ===================================
 
-Requires simpleaudio or pyaudio library to play the audio file streams.
+Requires sounddevice or pyaudio library to play the audio file streams.
 Raise a FeatureException at init if 'audioplay' feature is not enabled.
 
 A player to play several media files really synchronously: during the

@@ -76,7 +76,7 @@ from .baseplayer import sppasBasePlayer
 
 
 class sppasAudioPlayer(sppasBasePlayer):
-    """An audio player based on simpleaudio library and wx.
+    """An audio player based on PyAudio library and wx.
 
     Load/play/pause/stop/seek throw the audio stream of a given file.
 

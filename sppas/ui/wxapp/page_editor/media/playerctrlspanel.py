@@ -42,7 +42,7 @@ Some methods must be overridden to be able to play/pause/stop/...
 Can play audio and video, based on our customs audioplayer/videoplayer.
 Requires the following libraries:
 
- - simpleaudio, installed by the audioplay feature;
+ - sounddevice, installed by the audioplay feature;
  - opencv, installed by the videoplay feature.
 
 """

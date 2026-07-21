@@ -39,7 +39,7 @@
 
 Requires the following dependencies to play audio or video:
 
-* simpleaudio - https://pypi.org/project/simpleaudio/
+* sounddevice - https://pypi.org/project/sounddevice/
 * opencv - https://opencv.org/
 
 Either the FeatureError or PackageError will be raised if a class
@@ -70,10 +70,10 @@ class sppasAudioPlayer(object):
 
 cfg.set_feature("audioplay", False)
 try:
-    import simpleaudio
+    import sounddevice
     cfg.set_feature("audioplay", True)
-    from .audiosaplayer import sppasAudioPlayer
-    logging.info("Audio player is using simpleaudio library.")
+    from .audiosdplayer import sppasAudioPlayer
+    logging.info("Audio player is using sounddevice library.")
 except ImportError:
     try:
         import pyaudio

@@ -391,7 +391,7 @@ class DepsFeature(Feature):
         """Set the pip_test field for Python module dependency checking.
 
         :param value: (str) The modules or alternatives to check, as defined
-            in features.ini (e.g., 'wx' or 'pyaudio|simpleaudio').
+            in features.ini (e.g., 'wx' or 'sounddevice|pyaudio').
 
         """
         self.__pip_test = str(value).strip()
