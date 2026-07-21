@@ -17,7 +17,7 @@
 [project]
     name = "sppas"
     # The version must be PEP 440 compliant
-    version = "5.0.0"
+    version = "5.0.1"
     authors = [
         {name="Brigitte Bigi", email="contact@sppas.org"},
     ]
@@ -27,7 +27,7 @@
     # This is a one-line description or tagline of what SPPAS does.
     description = "Automatic annotation and analysis of audio/video speech recordings."
     readme = "README.md"
-    requires-python = ">=3.9,<=3.13"
+    requires-python = ">=3.9,<=3.15"
     license = "AGPL-3.0-or-later"
     license-files = ["LICENSE"]
     keywords = ["python", "annotation", "artificial intelligence", "computational linguistics", "corpus linguistics", "information analysis"]
@@ -41,8 +41,8 @@
     # See 'sppas/etc/features.ini' for the list of features dependencies.
     dependencies = [
         "certifi",
-        "AudiooPy == 0.6",
-        "WhakerPy == 2.1"
+        "AudiooPy >= 0.6",
+        "WhakerPy == 2.3"
     ]
 
 [project.urls]
