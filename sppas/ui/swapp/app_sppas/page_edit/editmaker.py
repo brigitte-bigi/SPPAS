@@ -85,6 +85,8 @@ class EditResponseRecipe(BaseResponseRecipe):
 
         self._htree.head.link(rel="stylesheet", link_type="text/css",
                               href=wapp_settings.statics + "css/main_swapp.css")
+        self._htree.head.link(rel="stylesheet", link_type="text/css",
+                              href=wapp_settings.statics + "css/main_swapp_theme.css")
         # Add this page style
         # self._htree.add_css_link(os.path.join(wapp_settings.css, "page_home.css"))
         self._htree.head.link(rel="stylesheet", link_type="text/css",

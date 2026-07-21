@@ -172,6 +172,7 @@ class swappBaseView:
 
         # CSS SWAPP links
         self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp.css", link_type="text/css")
+        self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp_theme.css", link_type="text/css")
         # Application CSS
         self._populate_head_css()
 

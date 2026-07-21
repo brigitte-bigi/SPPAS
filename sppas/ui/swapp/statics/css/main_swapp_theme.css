@@ -1,0 +1,96 @@
+/*
+:filename: statics/css/main_swapp_theme.css
+:author:   Brigitte Bigi
+:contact:  contact@sppas.org
+:summary:  Colors and light/dark/contrast theme of the SPPAS web application.
+:note:     Must be loaded AFTER main_swapp.css so its declarations win the
+           cascade (same convention as wexa_theme.css after wexa.css, and
+           acs-theme.css after acs.css). A downstream project supplies its
+           own theme instead; it never loads this file.
+*/
+
+/* ── SPPAS color tokens ─────────────────────────────────── */
+
+:root {
+    --logo-color: rgb(70, 100, 150);
+    --sppas-color1: rgb(100, 160, 220); /* soft blue */
+    --sppas-color2: rgb(20, 40, 70);    /* desaturated navy */
+}
+
+/* ── Light mode ───────────────────────────────────────────── */
+
+/* was: :root:not([data-theme=dark]), [data-theme=light] */
+:root:not(.dark), .light {
+    --bg-color: rgb(249, 250, 251);
+    --bg-color-alt: rgb(235, 235, 240);
+    --fg-color: rgb(17, 17, 20);
+    --fg-color-alt: rgb(28, 28, 32);
+
+    --header-bg-color: linear-gradient(323deg, rgb(10, 40, 90) 0%, rgb(0, 0, 50) 100%);
+    --header-fg-color: rgb(220, 230, 255);
+    --footer-bg-color: linear-gradient(to bottom,
+        var(--bg-color) 0%,
+        var(--bg-color-alt) 30%,
+        rgb(200, 200, 250) 40%,
+        rgb(50, 80, 150) 80%,
+        rgb(20, 100, 110) 100%);
+    --footer-fg-color: rgb(20, 10, 50);
+    --nav-bg-color: transparent;
+    --nav-fg-color: rgb(220, 230, 255);
+
+    --progress-bg-color: rgb(0, 0, 35);
+    --buttons-bg-color: linear-gradient(120deg, rgb(210 217 250) 0%, rgb(235 235 240) 50%, rgb(195 219 241) 100%);
+    --buttons-bg-color-hover: linear-gradient(300deg, rgb(210 217 250) 0%, rgb(235 235 240) 50%, rgb(195 219 241) 100%);
+    --buttons-fg-color: rgb(20, 25, 30);
+
+    --border-color: rgb(204, 213, 224);
+    --a-color: rgb(0, 70, 100);
+    --link-color: rgb(42, 111, 190);
+    --li-color: rgb(20, 100, 110);
+    --blockquote-border-color: rgb(20, 100, 110);
+
+    --card-bg-color: rgb(238, 233, 242);
+    --card-fg-color: rgb(10, 40, 90);
+}
+
+/* ── Dark mode ────────────────────────────────────────────── */
+
+@media screen {
+    .dark {
+        --bg-color: rgb(10, 10, 30);
+        --bg-color-alt: rgb(25, 25, 45);
+        --fg-color: rgb(226, 232, 240);
+        --fg-color-alt: rgb(250, 250, 255);
+
+        --header-bg-color: linear-gradient(323deg, rgb(70, 15, 70) 0%, rgb(49, 5, 92) 70%, rgb(30, 0, 70) 100%);
+        --header-fg-color: rgb(240, 230, 210);
+        --footer-bg-color: linear-gradient(to bottom,
+            var(--bg-color) 0%,
+            rgb(35, 0, 75) 30%,
+            rgb(70, 15, 70) 50%,
+            rgb(100, 50, 90) 70%,
+            rgb(130, 60, 130) 100%);
+        --footer-fg-color: rgb(243, 248, 250);
+        --nav-bg-color: var(--sppas-color2);
+        --nav-fg-color: rgb(240, 230, 210);
+
+        --buttons-bg-color: linear-gradient(120deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
+        --buttons-bg-color-hover: linear-gradient(300deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
+        --buttons-fg-color: rgb(243, 248, 250);
+
+        --border-color: rgb(100, 120, 170);
+        --a-color: rgb(42, 111, 190);
+        --li-color: rgb(130, 60, 130);
+        --blockquote-border-color: rgb(130, 60, 130);
+        --progress-bg-color: rgb(247, 230, 190);
+
+        --card-bg-color: rgb(30, 0, 70);
+        --card-fg-color: rgb(240, 230, 210);
+    }
+}
+
+/* ── Contrast mode ────────────────────────────────────────── */
+
+.contrast:not(.dark) {
+    --a-color: rgb(0, 70, 100);
+}

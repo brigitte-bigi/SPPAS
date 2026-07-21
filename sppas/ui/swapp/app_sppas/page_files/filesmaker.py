@@ -111,6 +111,7 @@ class FilesResponseRecipe(BaseResponseRecipe):
         # self._htree.add_css_link(os.path.join(wapp_settings.css, "title.css"))
         # self._htree.add_css_link(os.path.join(wapp_settings.css, "modal.css"))
         self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/main_swapp.css")
+        self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/main_swapp_theme.css")
         self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/page_files.css")
         self._htree.head.link(rel="stylesheet", link_type="text/css", href=wapp_settings.css + "/menubar.css")
 
