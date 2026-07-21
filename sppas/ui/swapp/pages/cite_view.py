@@ -47,7 +47,7 @@ from whakerpy.htmlmaker import EmptyNode
 from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp import sppasImagesAccess
-from sppas.ui.swapp.components.swapp_view import swappBaseView
+from sppas.ui.swapp.wappbase.wappview import swappBaseView
 
 # ---------------------------------------------------------------------------
 

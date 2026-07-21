@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.components.__init__.py
+:filename: sppas.ui.swapp.widgets.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: All the shared bricks of the swapp package.
+:summary: The reusable HTML node widgets of the swapp package.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -38,31 +38,19 @@
 
 """
 
-# The HTML node widgets
-from .hcheckbox import sppasHTMLCheckboxNode
-from .hbutton import sppasHTMLButton
-from .hbutton import LinkButtonNode
-from .hbutton import MenuLinkButtonNode
-from .dialog import sppasHTMLModalDialog
-from .messages import swappConfirmDialog
-from .messages import swappInformationDialog
-from .messages import swappWarnDialog
-from .messages import swappErrorDialog
-from .messages import swappYesNoDialog
-from .hheader import SwappHeader
-from .hfooter import SwappFooter
-
-# The higher-level components
-from .view import ViewBarNode
-from .view import ViewManager
-from .view import BaseViewNode
-from .progress import ProgressBar
-from .annot_param import AnnotParamDialog
-
-# The base classes of the apps and the pages -- kept last: importing them
-# triggers the import of the whole swapp package.
-from .swapp_view import swappBaseView
-from .swapp_bakery import swappWebData
+from .inputs.hcheckbox import sppasHTMLCheckboxNode
+from .buttons.hbutton import sppasHTMLButton
+from .buttons.hbutton import LinkButtonNode
+from .buttons.hbutton import MenuLinkButtonNode
+from .dialogs.hdialog import sppasHTMLModalDialog
+from .dialogs.hmessages import swappConfirmDialog
+from .dialogs.hmessages import swappInformationDialog
+from .dialogs.hmessages import swappWarnDialog
+from .dialogs.hmessages import swappErrorDialog
+from .dialogs.hmessages import swappYesNoDialog
+from .layout.hheader import SwappHeader
+from .layout.hfooter import SwappFooter
+from .feedback.progress import ProgressBar
 
 # ---------------------------------------------------------------------------
 
@@ -80,11 +68,5 @@ __all__ = (
     "swappYesNoDialog",
     "SwappHeader",
     "SwappFooter",
-    "BaseViewNode",
-    "ViewBarNode",
-    "ViewManager",
-    "AnnotParamDialog",
-    "ProgressBar",
-    "swappBaseView",
-    "swappWebData"
+    "ProgressBar"
 )

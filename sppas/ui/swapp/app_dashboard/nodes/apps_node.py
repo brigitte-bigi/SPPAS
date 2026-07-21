@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import EmptyNode
 
 from sppas.ui import _
-from sppas.ui.swapp.components import LinkButtonNode
+from sppas.ui.swapp.widgets import LinkButtonNode
 
 # ---------------------------------------------------------------------------
 

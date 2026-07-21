@@ -46,7 +46,7 @@ from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.core.coreutils import info
 from sppas.ui.swapp.wappcore.wexc import sppasHTMLIncompleteFieldset
-from sppas.ui.swapp.components import sppasHTMLCheckboxNode
+from sppas.ui.swapp.widgets import sppasHTMLCheckboxNode
 
 from ..wappcore.wappsg import wapp_settings
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.components.swapp_response.py
+:filename: sppas.ui.swapp.wappbase.wapphead.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: SPPAS Web-Based application ResponseRecipe.

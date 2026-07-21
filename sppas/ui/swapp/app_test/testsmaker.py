@@ -57,8 +57,8 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
 from sppas.ui.swapp.wappcore.wappsg import notify_wkp_changed
 from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
-from sppas.ui.swapp.components import sppasHTMLButton
-from sppas.ui.swapp.components.swapp_response import swappBaseResponse
+from sppas.ui.swapp.widgets import sppasHTMLButton
+from sppas.ui.swapp.wappbase.wappresponse import swappBaseResponse
 
 # ---------------------------------------------------------------------------
 

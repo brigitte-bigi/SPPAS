@@ -46,7 +46,7 @@ from whakerpy.htmlmaker import HTMLTree
 from sppas.core.config import sg
 from sppas.ui import _
 
-from ..components.swapp_response import swappBaseResponse
+from ..wappbase.wappresponse import swappBaseResponse
 
 from .about_view import AboutView
 

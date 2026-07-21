@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.components.hstatusnode.py
+:filename: sppas.ui.swapp.widgets.feedback.hstatusnode.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A set of nodes to represent the HTTPD response status.
@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import HTMLTree
 from whakerpy.httpd import HTTPDStatus
 from sppas.ui import _
 
-from ..wappcore.wappsg import wapp_settings
+from ...wappcore.wappsg import wapp_settings
 
 # ---------------------------------------------------------------------------
 

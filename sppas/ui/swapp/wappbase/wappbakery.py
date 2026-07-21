@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.components.swapp_bakery.py
+:filename: sppas.ui.swapp.wappbase.wappbakery.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Bakery for any SPPAS web-based application.

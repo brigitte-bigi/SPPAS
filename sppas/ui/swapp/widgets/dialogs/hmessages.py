@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.components.messages.py
+:filename: sppas.ui.swapp.widgets.dialogs.hmessages.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Modal dialogs for messages in swapp.
@@ -43,7 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
 
-from .dialog import sppasHTMLModalDialog
+from .hdialog import sppasHTMLModalDialog
 
 # ----------------------------------------------------------------------------
 

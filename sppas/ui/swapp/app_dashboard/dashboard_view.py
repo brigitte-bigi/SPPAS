@@ -46,7 +46,7 @@ from whakerpy.htmlmaker import HTMLNode
 from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp import sppasImagesAccess
-from sppas.ui.swapp.components.swapp_view import swappBaseView
+from sppas.ui.swapp.wappbase.wappview import swappBaseView
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 
 from .nodes.agree_node import AgreementDialog

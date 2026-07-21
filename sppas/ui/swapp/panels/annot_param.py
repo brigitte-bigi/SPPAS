@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: spas.ui.swapp.components.card.py
+:filename: sppas.ui.swapp.panels.annot_param.py
 :author: Brigitte Bigi
 :contributor: Florian Lopitaux
 :contact: contact@sppas.org

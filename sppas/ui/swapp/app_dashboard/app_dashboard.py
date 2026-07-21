@@ -43,7 +43,7 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
-from ..components.swapp_bakery import swappWebData
+from ..wappbase.wappbakery import swappWebData
 
 from .dashboardmaker import DashboardResponseRecipe
 

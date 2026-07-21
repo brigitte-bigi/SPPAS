@@ -42,7 +42,7 @@
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
-from sppas.ui.swapp.components.swapp_response import BaseResponseRecipe
+from sppas.ui.swapp.wappbase.wappresponse import BaseResponseRecipe
 
 # ---------------------------------------------------------------------------
 

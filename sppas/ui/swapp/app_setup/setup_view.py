@@ -44,7 +44,7 @@ from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 from sppas.core.config import sg
 
-from ..components.swapp_view import swappBaseView
+from ..wappbase.wappview import swappBaseView
 from ..wappcore.wappsg import wapp_settings
 
 from .basefieldset import SetupBaseFieldset

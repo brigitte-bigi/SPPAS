@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.components.hheader.py
+:filename: sppas.ui.swapp.widgets.layout.hheader.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Default header node for any SPPAS Web APPlication.
@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import EmptyNode
 from whakerpy.htmlmaker import HTMLHeaderNode
 
 from sppas.ui import _
-from ..wappcore.wapputils import sppasImagesAccess
+from ...wappcore.wapputils import sppasImagesAccess
 
 # -----------------------------------------------------------------------
 

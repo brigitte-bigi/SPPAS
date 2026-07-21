@@ -40,7 +40,7 @@
 
 from whakerpy.htmlmaker import HTMLNode
 
-from sppas.ui.swapp.components import sppasHTMLButton
+from sppas.ui.swapp.widgets import sppasHTMLButton
 
 # ---------------------------------------------------------------------------
 

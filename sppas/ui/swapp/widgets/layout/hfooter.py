@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.components.hfooter.py
+:filename: sppas.ui.swapp.widgets.layout.hfooter.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Default footer node for any SPPAS Web APPlication.

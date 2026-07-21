@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.components.hcheckbox.py
+:filename: sppas.ui.swapp.widgets.inputs.hcheckbox.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A checkbox node for a custom input of type checkbox.
