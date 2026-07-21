@@ -15,9 +15,12 @@ package.
   (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `wappinfo.py` and
   `wpageinfo.py` (their entry classes), `wappsg.py` (the shared globals),
   `wapputils.py` and `wexc.py`;
-- `components/` holds ALL the shared bricks: the base classes of the apps
-  (`swapp_bakery.py`, `swapp_response.py`, `swapp_view.py`, `swapp_head.py`),
-  the HTML node widgets and the higher-level components;
+- `widgets/` holds the reusable HTML node widgets, grouped by role:
+  `buttons/`, `dialogs/`, `inputs/`, `layout/`, `feedback/`;
+- `wappbase/` holds the base classes common to every app: `wappbakery.py`,
+  `wappresponse.py`, `wappview.py`, `wapphead.py`;
+- `panels/` holds the composite panels, assembled from widgets and shared
+  across apps;
 - each app is an `app_*` directory, like each wx page is a `page_*` one;
 - `pages/` holds the generic pages;
 - `statics/` and `whakerexa/` hold the front-end resources; `spinoff/`
@@ -66,7 +69,7 @@ Examples: Agreement, error and information alert dialogs.
 ### How apps are served
 
 Each app is a module named `app_*`. It declares a `WebData` class, derived
-from `swappWebData` (see `components/swapp_bakery.py`), which answers two
+from `swappWebData` (see `wappbase/wappbakery.py`), which answers two
 questions: `is_page(page_name)` and `bake_response(page_name)`.
 
 All the `WebData` classes are registered in the `WEB_APPLICATIONS` list of

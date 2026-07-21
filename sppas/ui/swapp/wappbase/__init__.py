@@ -41,7 +41,6 @@
 from .wappview import swappBaseView
 from .wappbakery import swappWebData
 from .wappresponse import swappBaseResponse
-from .wappresponse import BaseResponseRecipe
 from .wapphead import swappHeadNode
 
 # ---------------------------------------------------------------------------
@@ -51,6 +50,5 @@ __all__ = (
     "swappBaseView",
     "swappWebData",
     "swappBaseResponse",
-    "BaseResponseRecipe",
     "swappHeadNode"
 )
