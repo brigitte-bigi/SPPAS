@@ -46,6 +46,10 @@ from sppas.core.config import sppasAppConfig
 from sppas.ui.wxapp.main_settings import WxAppSettings
 
 try:
+    import sppas.ui.wxapp.players.audiomaplayer as audiomaplayer
+except ModuleNotFoundError:
+    audiomaplayer = None
+try:
     import sppas.ui.wxapp.players.audiosdplayer as audiosdplayer
 except ModuleNotFoundError:
     audiosdplayer = None
@@ -68,6 +72,10 @@ class TestPanel(wx.Choicebook):
             self,
             parent,
             style=wx.BORDER_NONE | wx.TAB_TRAVERSAL | wx.WANTS_CHARS)
+
+        if audiomaplayer is not None:
+            p = audiomaplayer.TestPanel(self)
+            self.AddPage(p, p.GetName())
 
         if audiopyplayer is not None:
             p = audiopyplayer.TestPanel(self)

@@ -39,6 +39,7 @@
 
 Requires the following dependencies to play audio or video:
 
+* miniaudio - https://pypi.org/project/miniaudio/
 * sounddevice - https://pypi.org/project/sounddevice/
 * opencv - https://opencv.org/
 
@@ -70,19 +71,25 @@ class sppasAudioPlayer(object):
 
 cfg.set_feature("audioplay", False)
 try:
-    import sounddevice
+    import miniaudio
     cfg.set_feature("audioplay", True)
-    from .audiosdplayer import sppasAudioPlayer
-    logging.info("Audio player is using sounddevice library.")
+    from .audiomaplayer import sppasAudioPlayer
+    logging.info("Audio player is using miniaudio library.")
 except ImportError:
     try:
-        import pyaudio
+        import sounddevice
         cfg.set_feature("audioplay", True)
-        from .audiopyplayer import sppasAudioPlayer
-        logging.info("Audio player is using PyAudio library.")
+        from .audiosdplayer import sppasAudioPlayer
+        logging.info("Audio player is using sounddevice library.")
     except ImportError:
-        logging.error("Audio player is disabled.")
-        pass
+        try:
+            import pyaudio
+            cfg.set_feature("audioplay", True)
+            from .audiopyplayer import sppasAudioPlayer
+            logging.info("Audio player is using PyAudio library.")
+        except ImportError:
+            logging.error("Audio player is disabled.")
+            pass
 
 # ---------------------------------------------------------------------------
 # Update features & prepare base classes for exceptions: Video
