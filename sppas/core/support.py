@@ -49,6 +49,7 @@ from urllib.error import URLError
 
 from .config import paths
 from .config import cfg
+from .config import vocab_defaults
 from .preinstall import Features
 from .preinstall import DepsFeatureChecker
 
@@ -98,6 +99,16 @@ class sppasSupportDirectories:
             logging.info(f" - The directory {paths.resources} to store resources is created.")
         else:
             logging.debug(f" - The resources folder {paths.resources} is OK.")
+
+        # Create the default fallback vocab files if they are missing
+        vocab_dir = os.path.join(paths.resources, "vocab")
+        os.makedirs(vocab_dir, exist_ok=True)
+        for filename, content in vocab_defaults.files.items():
+            vocab_file = os.path.join(vocab_dir, filename)
+            if os.path.exists(vocab_file) is False:
+                with open(vocab_file, "w", encoding="utf-8") as fp:
+                    fp.write(content)
+                logging.info(f" - The default vocab file {vocab_file} is created.")
 
         if os.path.exists(paths.logs) is False:
             os.makedirs(paths.logs, exist_ok=True)

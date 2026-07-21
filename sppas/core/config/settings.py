@@ -693,6 +693,195 @@ class sppasExtensionsSettings:
             raise AttributeError(f"{self.__class__.__name__} object is immutable")
         super().__delattr__(key)
 
+class sppasVocabSettings:
+    """Default content of the fallback resource files of the 'vocab' folder.
+
+    These files are created in the 'vocab' resources folder if they are
+    missing (see 'sppasSupportDirectories'). To avoid any duplication, the
+    file names and part of their content are derived from existing settings:
+
+        - the undetermined language code comes from 'annots.UNDETERMINED'
+        - the unknown-word symbol comes from 'symbols.unk'
+
+    :example:
+    >>> with sppasVocabSettings() as settings:
+    >>>     for filename, content in settings.files.items():
+    >>>         print(filename)
+
+    """
+
+    def __init__(self):
+        """Create the sppasVocabSettings dictionary."""
+        self._is_frozen = False
+        self.__dict__ = dict(
+            files=sppasVocabSettings.__default_files()
+        )
+        self._is_frozen = True
+
+    # -----------------------------------------------------------------------
+
+    def __enter__(self):
+        return self
+
+    # -----------------------------------------------------------------------
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
+
+    # -----------------------------------------------------------------------
+
+    def __setattr__(self, key, value):
+        """Override to prevent any attribute setter."""
+        if getattr(self, "_is_frozen", False):
+            raise AttributeError(f"{self.__class__.__name__} object is immutable")
+        super().__setattr__(key, value)
+
+    # -----------------------------------------------------------------------
+
+    def __delattr__(self, key):
+        """Override to prevent any attribute deletion."""
+        if getattr(self, "_is_frozen", False):
+            raise AttributeError(f"{self.__class__.__name__} object is immutable")
+        super().__delattr__(key)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __default_files():
+        """Return a dict matching a file name to its default content."""
+        undetermined = annots.UNDETERMINED
+        return {
+            "Punctuations.txt": sppasVocabSettings.__punctuations(),
+            undetermined + ".vocab": sppasVocabSettings.__und_vocab(),
+            undetermined + ".stp": sppasVocabSettings.__und_stp(),
+        }
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __punctuations():
+        """Return the default content of the punctuation marks file."""
+        marks = [
+            ' ̥',
+            '!',
+            '"',
+            '#',
+            '$',
+            '%',
+            '&',
+            "'",
+            '(',
+            '(*',
+            ')',
+            '**',
+            '***',
+            '****',
+            '+-',
+            '+/',
+            ',',
+            '-',
+            '-+',
+            '--',
+            '.',
+            '.*',
+            '.,',
+            '..',
+            '..,',
+            '...',
+            '...,',
+            '....',
+            '....,',
+            '.....,',
+            '.........',
+            '/',
+            '/ ̥',
+            ':',
+            ';',
+            '<',
+            '<<',
+            '=',
+            '>',
+            '>>',
+            '?',
+            '[',
+            '\\',
+            ']',
+            '^',
+            '_',
+            '`',
+            '|',
+            '~',
+            '£',
+            'ª',
+            '«',
+            '³',
+            '·',
+            '»',
+            '»_',
+            '¿',
+            '——',
+            '‖',
+            '‘',
+            '“',
+            '”',
+            '„',
+            '…',
+            '……',
+            '⁚⁚',
+            '€',
+            '⋅',
+            '◦',
+            '❰',
+            '❱',
+            '、',
+            '。',
+            '《',
+            '》',
+            '・',
+            '！',
+            '＃',
+            '％',
+            '＆',
+            '{',
+            '}',
+            '（',
+            '）',
+            '＋',
+            '，',
+            '－',
+            '／',
+            '：',
+            '；',
+            '＝',
+            '？',
+            '［',
+            '］',
+            '｀',
+            '｛',
+            '｜',
+            '｝',
+            '～',
+            '￥',
+            '–',
+            '— ',
+        ]
+        return "\n".join(marks) + "\n"
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __und_vocab():
+        """Return the default vocabulary of the undetermined language."""
+        letters = [chr(code) for code in range(ord('a'), ord('z') + 1)]
+        return "\n".join(letters)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __und_stp():
+        """Return the default stop-words of the undetermined language."""
+        return symbols.unk
+
 # ---------------------------------------------------------------------------
 # Create an instance of each of the global settings
 # ---------------------------------------------------------------------------
@@ -703,3 +892,4 @@ paths = sppasPathSettings()
 symbols = sppasSymbolSettings()
 separators = sppasSeparatorSettings()
 annots = sppasAnnotationsSettings()
+vocab_defaults = sppasVocabSettings()

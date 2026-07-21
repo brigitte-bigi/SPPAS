@@ -59,6 +59,7 @@ from .settings import paths
 from .settings import symbols
 from .settings import separators
 from .settings import annots
+from .settings import vocab_defaults
 from .settings import sppasExtensionsSettings
 
 # SPPAS Application configuration.
@@ -99,6 +100,7 @@ __all__ = (
     "symbols",
     "separators",
     "annots",
+    "vocab_defaults",
     "get_language",
     "set_language",
     "sppasExecProcess",
