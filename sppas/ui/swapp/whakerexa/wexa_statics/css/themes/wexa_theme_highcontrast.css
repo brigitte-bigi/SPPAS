@@ -1,0 +1,283 @@
+/*
+ :filename: wexa_statics/css/extras/wexa_theme_highcontrast.css
+ :author: Brigitte Bigi
+ :contact: contact@sppas.org
+ :summary: High-contrast theme for Whakerexa — OS-style, no gradients, maximum legibility.
+
+ -------------------------------------------------------------------------
+
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+ Laboratoire Parole et Langage, Aix-en-Provence, France
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+ This banner notice must not be removed.
+
+ -------------------------------------------------------------------------
+
+ Load AFTER wexa.css:
+   <link rel="stylesheet" href="wexa.css">
+   <link rel="stylesheet" href="extras/wexa_theme_highcontrast.css">
+
+ Architecture:
+   - CSS variable declarations are unlayered (outside any @layer) so they
+     win over all wexa.css @layer rules regardless of load order.
+   - Decoration overrides (element rules) are inside @layer theme.
+
+ HighContrast theme — inspired by OS high-contrast modes (Windows HC Black/White).
+   - Light mode: white background, black text, dark-blue links (WCAG AAA >= 14:1).
+   - Dark mode:  black background, white text, yellow links (WCAG AAA >= 19:1).
+   - No gradients. No border-radius. Flat colors and sharp borders throughout.
+
+ Variable conventions used in this file:
+   [override] -- variable already defined in wexa.css, value changed for this theme
+   [new]      -- variable that does not exist in wexa.css, created for this theme
+*/
+
+
+/* =========================================================================
+   CSS variables -- unlayered, win over all @layer rules in wexa.css
+   ========================================================================= */
+
+/* ======================================================================
+   Typography -- base (normal mode)
+   ====================================================================== */
+
+:root:not(.contrast) {
+    --border-radius:           0;
+    --border-width:            2px;
+    --blockquote-border-width: 4px;
+    --card-border-width:       2px;
+}
+
+/* ======================================================================
+   Contrast mode -- theming overrides (border shape is a design choice)
+   ====================================================================== */
+
+.contrast {
+    --border-radius: 0;
+    --border-width:  5px;
+}
+
+/* ======================================================================
+   Light mode -- white / black / dark-blue  (WCAG AAA)
+   ====================================================================== */
+
+:root:not(.dark) {
+    --body-bg-color:         rgb(245, 245, 245);
+    --bg-color:              rgb(255, 255, 255);
+    --bg-color-alt:          rgb(240, 240, 240);
+    --fg-color:              rgb(0, 0, 0);
+    --fg-color-alt:          rgb(26, 26, 26);
+
+    --border-color:          green;
+    --border-color-alt:      rgb(51, 201, 51);
+
+    --a-color:               rgb(0, 0, 139);
+    --link-color:            rgb(0, 0, 139);
+    --li-color:              rgb(0, 0, 139);
+
+    --buttons-bg-color:      rgb(0, 0, 0);
+    --buttons-fg-color:      rgb(255, 255, 255);
+
+    --header-bg-color:       rgb(20, 20, 20);
+    --header-fg-color:       rgb(255, 255, 255);
+    --nav-bg-color:          rgb(255, 255, 255);
+    --nav-fg-color:          rgb(0, 0, 0);
+    --footer-bg-color:       rgb(200, 200, 200);
+    --footer-fg-color:       rgb(20, 20, 20);
+
+    --card-bg-color:         rgb(240, 240, 240);
+    --card-fg-color:         rgb(0, 0, 0);
+
+    --h1-color:              rgb(0, 0, 0);
+    --h2-color:              rgb(0, 0, 0);
+    --h3-color:              rgb(0, 0, 0);
+    --h4-color:              rgb(0, 0, 0);
+    --h5-color:              rgb(0, 0, 0);
+    --h6-color:              rgb(0, 0, 0);
+
+    --blockquote-border-color: rgb(0, 0, 0);
+    --blockquote-footer-color: rgb(51, 51, 51);
+
+    --table-border-color:             rgb(0, 0, 0);
+    --table-head-bg-color:            rgb(0, 0, 0);
+    --table-head-fg-color:            rgb(255, 255, 255);
+    --table-caption-bg-color:         rgb(240, 240, 240);
+    --table-caption-fg-color:         rgb(0, 0, 0);
+    --table-row-stripped-bg-color:    rgb(240, 240, 240);
+
+    --inputs-bg-color:       rgb(255, 255, 255);
+    --progress-bg-color:     rgb(240, 240, 240);
+    --progress-fg-color:     rgb(0, 0, 0);
+    --shadow-color:          rgba(0, 0, 0, 0.6);
+
+}
+
+/* ======================================================================
+   Dark mode -- black / white / yellow  (WCAG AAA)
+   ====================================================================== */
+
+:root.dark {
+    --body-bg-color: rgb(40, 40, 40);
+}
+
+.dark {
+        --bg-color:              rgb(0, 0, 0);
+        --bg-color-alt:          rgb(26, 26, 26);
+        --fg-color:              rgb(255, 255, 255);
+        --fg-color-alt:          rgb(240, 240, 240);
+
+        --border-color:          orange;
+        --border-color-alt:      rgb(204, 64, 64);
+
+        --a-color:               rgb(255, 255, 0);
+        --link-color:            rgb(255, 255, 0);
+        --li-color:              orange;
+
+        --buttons-bg-color:      rgb(255, 255, 255);
+        --buttons-fg-color:      rgb(0, 0, 0);
+
+        --header-bg-color:       rgb(26, 26, 26);
+        --header-fg-color:       rgb(245, 245, 105);
+        --nav-bg-color:          rgb(0, 0, 0);
+        --nav-fg-color:          rgb(255, 255, 0);
+        --footer-bg-color:       rgb(26, 26, 26);
+        --footer-fg-color:       rgb(255, 255, 255);
+
+        --card-bg-color:         rgb(26, 26, 26);
+        --card-fg-color:         rgb(255, 255, 255);
+
+        --h1-color:              rgb(255, 255, 255);
+        --h2-color:              rgb(255, 255, 255);
+        --h3-color:              rgb(255, 255, 255);
+        --h4-color:              rgb(255, 255, 255);
+        --h5-color:              rgb(255, 255, 255);
+        --h6-color:              rgb(255, 255, 255);
+
+        --blockquote-border-color: rgb(255, 255, 0);
+        --blockquote-footer-color: rgb(204, 204, 204);
+
+        --table-border-color:             rgb(255, 255, 255);
+        --table-head-bg-color:            rgb(255, 255, 255);
+        --table-head-fg-color:            rgb(0, 0, 0);
+        --table-caption-bg-color:         rgb(26, 26, 26);
+        --table-caption-fg-color:         rgb(255, 255, 255);
+        --table-row-stripped-bg-color:    rgb(26, 26, 26);
+
+        --inputs-bg-color:       rgb(0, 0, 0);
+        --progress-bg-color:     rgb(26, 26, 26);
+        --progress-fg-color:     rgb(255, 255, 255);
+        --shadow-color:          rgba(255, 255, 255, 0.3);
+
+}
+
+
+/* =========================================================================
+   Decoration overrides -- inside @layer theme
+   ========================================================================= */
+
+@layer theme {
+
+    /* -- Slides accent colors — flat, no gradients --------------------------- */
+
+    :root:not(.dark) {
+        --custom-color1: rgb(20, 19, 37);
+        --custom-color2: rgb(255, 255, 0);
+    }
+
+    .dark {
+        --custom-color1: rgb(232, 217, 123);
+        --custom-color2: rgb(17, 15, 61);
+    }
+
+    /* -- Blockquote: flat background ---------------------------------------- */
+
+    blockquote {
+        background: var(--bg-color-alt);
+    }
+
+    /* -- Article: flat card, bordered, no gradient --------------------------- */
+
+    article {
+        background-color: var(--card-bg-color);
+        background-image: none;
+        border: var(--border-width) solid var(--border-color);
+        box-shadow: 3px 3px 0 var(--border-color);
+        border-radius: 0;
+    }
+
+    article * {
+        background-color: transparent;
+    }
+
+    article > footer {
+        margin-top: var(--typography-spacing-vertical);
+        padding-top: var(--typography-spacing-vertical);
+        border-top: var(--border-width) solid var(--border-color);
+    }
+
+    /* -- Reset button: inverted of primary ----------------------------------- */
+
+    button[type=reset],
+    input[type=reset] {
+        background-color: var(--bg-color);
+        color: var(--fg-color);
+        border-color: var(--border-color);
+    }
+
+    /* -- Buttons inside nav: transparent bg, nav colors --------------------- */
+
+    nav :is(button, [role="button"], .menuitem) {
+        background-color: transparent;
+        color: var(--nav-fg-color);
+        border-color: var(--nav-fg-color);
+    }
+
+}
+
+
+/* =========================================================================
+   Slides — unlayered overrides (beat @layer theme from slides.css)
+   No gradients in highcontrast: flat border and flat background.
+   ========================================================================= */
+
+.slide h1 {
+    border-image: none;
+    border-bottom: 0.35rem solid var(--custom-color2);
+}
+
+.slide > h2 {
+    background: var(--custom-color2);
+    color: var(--custom-color1);
+}
+
+
+/* =========================================================================
+   Layout
+   ========================================================================= */
+
+li.enumerate-cards-item {
+    box-shadow: none;
+    border: var(--border-color) solid var(--border-width);
+    border-radius: none;
+}
+
+
+.cta-button {
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: none;
+}

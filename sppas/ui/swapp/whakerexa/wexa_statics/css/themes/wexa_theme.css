@@ -1,0 +1,219 @@
+/*
+ :filename: wexa_statics/css/extras/wexa_theme.css
+ :author: Brigitte Bigi
+ :contact: contact@sppas.org
+ :summary: Main theme for Whakerexa — navy, teal, elegant.
+
+ -------------------------------------------------------------------------
+
+ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+ Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+ Laboratoire Parole et Langage, Aix-en-Provence, France
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+ This banner notice must not be removed.
+
+ -------------------------------------------------------------------------
+
+ Load AFTER wexa.css:
+   <link rel="stylesheet" href="wexa.css">
+   <link rel="stylesheet" href="extras/wexa_theme.css">
+*/
+
+/* =========================================================================
+   Light mode — CSS variable overrides (unlayered)
+   ========================================================================= */
+
+:root:not(.dark) {
+
+    --bg-color:     transparent;
+    --bg-color-alt: transparent;
+    --body-bg-color: radial-gradient(at left center, rgba(229, 238, 252, 1.0), rgba(212, 220, 255, 1.0));
+
+}
+
+
+/* =========================================================================
+   Dark mode — CSS variable overrides (unlayered)
+   ========================================================================= */
+
+:root.dark {
+
+    --bg-color: transparent;
+    --body-bg-color: radial-gradient(at left center, rgba(10, 15, 26, 1.0), rgba(16, 13, 64, 1.0));
+}
+
+
+/* =========================================================================
+   Decoration overrides — inside @layer theme
+   ========================================================================= */
+
+@layer theme {
+
+    /* ======================================================================
+       Slides accent colors — override slides.css defaults
+       ====================================================================== */
+
+    :root {
+        --custom-color1: rgb(17, 25, 53);
+        --custom-color2: rgb(130, 189, 215);
+    }
+
+    .dark {
+        --custom-color2: rgb(15, 20, 40);
+        --custom-color1: rgb(132, 203, 234);
+    }
+
+    /* ======================================================================
+       Sizing variables — in @layer so unlayered page CSS (e.g. slides.css)
+       can override without specificity games.
+       ====================================================================== */
+
+    :root:not(.contrast) {
+        --border-radius: 5px;
+    }
+
+    .contrast {
+        --border-radius: 5px;
+    }
+
+    /* ======================================================================
+       Links — animated fill from bottom (signature feature)
+       Scoped to main content only; menu items are excluded.
+       ====================================================================== */
+
+    main a:not(.menuitem):not(:has(img)) {
+        background-image: linear-gradient(var(--buttons-bg-color), var(--buttons-bg-color));
+        background-size: 100% 0%;
+        background-repeat: no-repeat;
+        background-position: bottom;
+        transition: background-size 0.32s ease, color 0s linear 0.32s;
+        border-radius: calc(var(--border-radius) / 2);
+    }
+
+    main a:not(.menuitem):not(:has(img)):hover,
+    main a:not(.menuitem):not(:has(img)):focus-visible {
+        color: var(--buttons-fg-color);
+        background-size: 100% 100%;
+        transition: background-size 0.32s ease, color 0s;
+        text-decoration: none;
+    }
+
+    /* ======================================================================
+       Progress 
+       ====================================================================== */
+
+    progress {
+        border: 0;
+    }
+
+    /* ======================================================================
+       details / summary — restrained button-like style
+       ====================================================================== */
+
+    details > summary {
+        cursor: pointer;
+        padding: calc(0.5 * var(--typography-spacing-vertical)) var(--typography-spacing-horizontal);
+        border: var(--border-width) solid var(--border-color);
+        border-radius: var(--border-radius);
+        background-color: var(--bg-color-alt);
+        color: var(--fg-color);
+        font-weight: var(--font-weight-semibold);
+    }
+
+    details > summary:hover {
+        background-color: var(--bg-color);
+        border-color: var(--a-color);
+        color: var(--a-color);
+    }
+
+    /* ======================================================================
+       Reset button — secondary style
+       ====================================================================== */
+
+    button[type=reset],
+    input[type=reset] {
+        background-color: var(--bg-color-alt);
+        color: var(--fg-color);
+        border-color: var(--border-color);
+    }
+
+    /* ======================================================================
+       Forms — full-width inputs
+       ====================================================================== */
+
+    button[type=submit],
+    button[type=reset],
+    input:not([type=checkbox],[type=radio],[type=range],[type=file]),
+    select,
+    textarea {
+        width: 100%;
+    }
+
+    /* ======================================================================
+       Layout — grid panel top-aligned
+       ====================================================================== */
+
+    .grid-panel {
+        align-items: start;
+    }
+
+}
+
+
+/* =========================================================================
+   Side nav decoration — unlayered (beat @layer theme from menu.css layer-less rules)
+   ========================================================================= */
+
+/* ── Active item: tinted pill ─────────────────────────────────────────── */
+
+:root:not(.dark) nav.nav-wexa.side :is([role="menuitem"], .menuitem)[aria-current] {
+    background-color: rgba(8, 92, 148, 0.12);
+    border-radius: var(--border-radius);
+}
+
+.dark nav.nav-wexa.side :is([role="menuitem"], .menuitem)[aria-current] {
+    background-color: rgba(72, 162, 218, 0.18);
+    border-radius: var(--border-radius);
+}
+
+/* ── Hover: light tint ────────────────────────────────────────────────── */
+
+:root:not(.dark) nav.nav-wexa.side :is([role="menuitem"], .menuitem):hover,
+:root:not(.dark) nav.nav-wexa.side :is([role="menuitem"], .menuitem):focus-visible {
+    background-color: rgba(8, 92, 148, 0.07);
+    border-radius: var(--border-radius);
+}
+
+.dark nav.nav-wexa.side :is([role="menuitem"], .menuitem):hover,
+.dark nav.nav-wexa.side :is([role="menuitem"], .menuitem):focus-visible {
+    background-color: rgba(72, 162, 218, 0.10);
+    border-radius: var(--border-radius);
+}
+
+
+/* ======================================================================
+    Panel-item alternating backgrounds — explicit semi-transparent values
+    so nested elements (transparent via --bg-color) don't accumulate.
+    ====================================================================== */
+
+main > .panel-item:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+main > .panel-item:nth-child(even) {
+    background-color: rgba(230, 230, 230, 0.25);
+}

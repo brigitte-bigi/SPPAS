@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>SortaTable • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/sortatable.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../wexa_statics/css/toggleselect.css" type="text/css" media="screen" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa > Extras > SortaTable</p>
+</header>
+
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>SortaTable</h1>
+        <p>
+            <code>SortaTable</code> makes any HTML table's columns sortable by click.
+            It requires <code>sortatable.css</code> for button styling and
+            <code>sortatable.js</code> for behavior.
+            <strong>Requires JavaScript.</strong>
+        </p>
+
+        <h2>HTML structure</h2>
+        <p>
+            The table must have a unique <code>id</code>.
+            Each sortable column's <code>&lt;th&gt;</code> must contain a
+            <code>&lt;button class="sortatable" data-sort="columnId"&gt;</code>.
+            The <code>data-sort</code> value is the column identifier used by the JS API.
+            Columns without a sort button are not sortable.
+        </p>
+
+        <article class="card-doc" aria-label="SortaTable — HTML structure">
+            <div class="card-view">
+                <p>See the demos below for live examples.</p>
+            </div>
+            <pre class="dark"><code>&lt;table id="my-table"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;&lt;button class="sortatable" data-sort="firstname"&gt;First Name&lt;/button&gt;&lt;/th&gt;
+            &lt;th&gt;&lt;button class="sortatable" data-sort="lastname"&gt;Last Name&lt;/button&gt;&lt;/th&gt;
+            &lt;th&gt;Description&lt;/th&gt; &lt;!-- not sortable --&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;John&lt;/td&gt;&lt;td&gt;Connor&lt;/td&gt;&lt;td&gt;Resistance leader&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </article>
+
+        <h2>API</h2>
+        <p>
+            Instantiate with the table <code>id</code>, then call
+            <code>attachSortListeners()</code> to wire the header buttons.
+            Call <code>sort(columnId, ascending)</code> to apply an initial sort
+            programmatically.
+        </p>
+
+        <article class="card-doc" aria-label="SortaTable — API">
+            <div class="card-view">
+                <p>See the demos below for live examples.</p>
+            </div>
+            <pre class="dark"><code>const sortatable = new SortaTable("my-table");
+sortatable.attachSortListeners();
+
+// Optional: sort a column on load
+sortatable.sort("lastname", true);  // ascending
+sortatable.sort("lastname", false); // descending</code></pre>
+        </article>
+
+        <h2>CSS classes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Applied by</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>.sortatable</code></td>
+                    <td>Author (HTML)</td>
+                    <td>Styles the sort button; adds a neutral indicator after the label</td>
+                </tr>
+                <tr>
+                    <td><code>.sort-asc</code></td>
+                    <td>JavaScript</td>
+                    <td>Replaces indicator with an upward arrow (ascending order active)</td>
+                </tr>
+                <tr>
+                    <td><code>.sort-desc</code></td>
+                    <td>JavaScript</td>
+                    <td>Replaces indicator with a downward arrow (descending order active)</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Sorting demos</h2>
+
+        <h3>Sorted on load</h3>
+        <p>
+            Table sorted by last name (ascending) when the page loads.
+            All three columns are sortable.
+        </p>
+
+        <article class="card-doc" aria-label="SortaTable — sorted on load">
+            <div class="card-view">
+                <table id="music-legends-table">
+                    <thead>
+                        <tr>
+                            <th><button class="sortatable" data-sort="firstname">First Name</button></th>
+                            <th><button class="sortatable" data-sort="lastname">Last Name</button></th>
+                            <th><button class="sortatable" data-sort="date">Date of Birth</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Elvis</td><td>Presley</td><td>1935-01-08</td></tr>
+                        <tr><td>Aretha</td><td>Franklin</td><td>1942-03-25</td></tr>
+                        <tr><td>Freddie</td><td>Mercury</td><td>1946-09-05</td></tr>
+                        <tr><td>Michael</td><td>Jackson</td><td>1958-08-29</td></tr>
+                        <tr><td>Bob</td><td>Dylan</td><td>1941-05-24</td></tr>
+                        <tr><td>Jimi</td><td>Hendrix</td><td>1942-11-27</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre class="dark"><code>const sortatable = new SortaTable("music-legends-table");
+sortatable.attachSortListeners();
+sortatable.sort("lastname", true); // ascending on load</code></pre>
+        </article>
+
+        <h3>No initial sort — non-sortable column</h3>
+        <p>
+            Table with no initial sort. The last column (Description) has no
+            <code>&lt;button class="sortatable"&gt;</code> — it is not sortable.
+        </p>
+
+        <article class="card-doc" aria-label="SortaTable — no initial sort">
+            <div class="card-view">
+                <table id="terminator-dates-table">
+                    <thead>
+                        <tr>
+                            <th><button class="sortatable" data-sort="name">Name</button></th>
+                            <th><button class="sortatable" data-sort="event">Event</button></th>
+                            <th><button class="sortatable" data-sort="date">Date</button></th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Sarah</td><td>Connor</td><td>1984-05-12</td><td>Terminator's target</td></tr>
+                        <tr><td>John</td><td>Connor</td><td>2029-07-11</td><td>Leader of the human resistance</td></tr>
+                        <tr><td>Kyle</td><td>Reese</td><td>1984-05-12</td><td>Sent back to protect Sarah Connor</td></tr>
+                        <tr><td>Skynet</td><td>Activation</td><td>1997-08-29</td><td>Skynet becomes self-aware</td></tr>
+                        <tr><td>Judgment Day</td><td>Event</td><td>1997-08-29</td><td>Skynet launches a nuclear attack</td></tr>
+                        <tr><td>T-800</td><td>Arrival</td><td>1984-05-12</td><td>Sent to kill Sarah Connor</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre class="dark"><code>const sortatable = new SortaTable("terminator-dates-table");
+sortatable.attachSortListeners(); // no initial sort</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Column visibility — ToggleSelector</h2>
+        <p>
+            <code>ToggleSelector</code> manages a checkbox list that controls which
+            table columns are visible. It requires <code>toggleselect.css</code>.
+            <strong>Requires JavaScript.</strong>
+        </p>
+        <p>
+            Build a <code>&lt;details&gt;</code> element containing one
+            <code>&lt;input type="checkbox" data-toggle="columnId"&gt;</code> per column
+            to control. The <code>data-toggle</code> value must match the column's
+            <code>data-sort</code> attribute in the table header (or the
+            <code>data-sort</code> attribute on a non-sortable <code>&lt;th&gt;</code>).
+        </p>
+        <p>
+            The toggle <code>&lt;button data-toggle&gt;</code> (no value) inside
+            <code>&lt;summary&gt;</code> calls <code>toggleSelector.toggleSelection(event)</code>
+            to select/deselect all checkboxes and update its icon.
+            The Apply button calls
+            <code>sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes())</code>
+            to apply the current checkbox state to the table.
+        </p>
+
+        <article class="card-doc" aria-label="ToggleSelector — API">
+            <div class="card-view">
+                <p>See the demo below for a live example.</p>
+            </div>
+            <pre class="dark"><code>// iconsPath: folder containing the toggle button icons
+// detailsId: id of the &lt;details&gt; element
+const toggleSelector = new ToggleSelector("../wexa_statics/icons/", "my-details");
+
+// Apply current checkbox state to the table
+sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
+        </article>
+
+        <h3>Demo</h3>
+
+        <article class="card-doc" aria-label="SortaTable + ToggleSelector — column visibility">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <div class="flex-panel" style="justify-content: start; margin-bottom: 1rem;">
+                    <details class="flex-item width_30" id="toggable-details">
+                        <summary class="summary-choice">
+                            <span>Columns visibility:</span>
+                            <button class="accordion-action" data-toggle
+                                    onclick="toggleSelector.toggleSelection(event);"
+                                    onkeydown="toggleSelector.toggleSelection(event);"
+                                    aria-label="Toggle columns visibility">
+                                <img src="" alt="" />
+                            </button>
+                        </summary>
+                        <main>
+                            <ul>
+                                <li class="check-item">
+                                    <input id="event_input" type="checkbox"
+                                           aria-labelledby="event_label"
+                                           checked="checked" data-toggle="event"/>
+                                    <label for="event_input" id="event_label">Show/Hide event</label>
+                                </li>
+                                <li class="check-item">
+                                    <input id="date_input" type="checkbox"
+                                           aria-labelledby="date_label"
+                                           data-toggle="date"/>
+                                    <label for="date_input" id="date_label">Show/Hide date</label>
+                                </li>
+                                <li class="check-item">
+                                    <input id="descr_input" type="checkbox"
+                                           aria-labelledby="descr_label"
+                                           checked="checked" data-toggle="description"/>
+                                    <label for="descr_input" id="descr_label">Show/Hide description</label>
+                                </li>
+                            </ul>
+                        </main>
+                    </details>
+                    <button class="flex-item"
+                            onclick="sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());">
+                        Apply
+                    </button>
+                </div>
+                <table id="toggable-table">
+                    <thead>
+                        <tr>
+                            <th><button class="sortatable" data-sort="name">Name</button></th>
+                            <th><button class="sortatable" data-sort="event">Event</button></th>
+                            <th><button class="sortatable" data-sort="date">Date</button></th>
+                            <th data-sort="description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Sarah</td><td>Connor</td><td>1984-05-12</td><td>The primary target of the Terminator.</td></tr>
+                        <tr><td>John</td><td>Connor</td><td>2029-07-11</td><td>Leader of the human resistance.</td></tr>
+                        <tr><td>Kyle</td><td>Reese</td><td>1984-05-12</td><td>Sent back to protect Sarah Connor.</td></tr>
+                        <tr><td>Skynet</td><td>Activation</td><td>1997-08-29</td><td>Skynet becomes self-aware.</td></tr>
+                        <tr><td>Judgment Day</td><td>Event</td><td>1997-08-29</td><td>Skynet launches a nuclear attack.</td></tr>
+                        <tr><td>T-800</td><td>Arrival</td><td>1984-05-12</td><td>Sent to kill Sarah Connor.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre class="dark"><code>&lt;details id="toggable-details"&gt;
+    &lt;summary class="summary-choice"&gt;
+        &lt;span&gt;Columns visibility:&lt;/span&gt;
+        &lt;button class="accordion-action" data-toggle
+                onclick="toggleSelector.toggleSelection(event);"
+                onkeydown="toggleSelector.toggleSelection(event);"
+                aria-label="Toggle columns visibility"&gt;
+            &lt;img src="" alt="" /&gt;
+        &lt;/button&gt;
+    &lt;/summary&gt;
+    &lt;main&gt;
+        &lt;ul&gt;
+            &lt;li class="check-item"&gt;
+                &lt;input id="event_input" type="checkbox"
+                       data-toggle="event" checked /&gt;
+                &lt;label for="event_input"&gt;Show/Hide event&lt;/label&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/main&gt;
+&lt;/details&gt;
+&lt;button onclick="sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());"&gt;
+    Apply
+&lt;/button&gt;
+
+&lt;!-- Non-sortable column: data-sort on the th itself --&gt;
+&lt;th data-sort="description"&gt;Description&lt;/th&gt;
+
+const sortatable3 = new SortaTable("toggable-table");
+sortatable3.attachSortListeners();
+const toggleSelector = new ToggleSelector("../wexa_statics/icons/", "toggable-details");
+sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    function bootSortaTableDemos(SortaTable, ToggleSelector) {
+        const sortatable1 = new SortaTable("music-legends-table");
+        sortatable1.attachSortListeners();
+        sortatable1.sort("lastname", true);
+
+        const sortatable2 = new SortaTable("terminator-dates-table");
+        sortatable2.attachSortListeners();
+
+        const sortatable3 = new SortaTable("toggable-table");
+        sortatable3.attachSortListeners();
+
+        const toggleSelector = new ToggleSelector("../wexa_statics/icons/", "toggable-details");
+        sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());
+
+        window.sortatable3 = sortatable3;
+        window.toggleSelector = toggleSelector;
+    }
+</script>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+                if (window.Wexa && window.Wexa.SortaTable && window.Wexa.ToggleSelector) {
+                    bootSortaTableDemos(window.Wexa.SortaTable, window.Wexa.ToggleSelector);
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    import { SortaTable } from '../wexa_statics/js/extras/sortatable.js';
+    import { ToggleSelector } from '../wexa_statics/js/toggleselect.js';
+
+    const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+
+    bootSortaTableDemos(SortaTable, ToggleSelector);
+</script>
+
+</body>
+</html>

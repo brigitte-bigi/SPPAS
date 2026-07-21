@@ -1,0 +1,98 @@
+/*
+:filename: wexa_statics/css/togglegroup.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: style for a segmented "toggle group" of mutually-exclusive choices
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+Markup contract:
+  <section class="toggle-group" role="radiogroup" aria-label="...">
+      <label class="menuitem" for="opt-1"><input type="radio" name="g" id="opt-1"> A</label>
+      <label class="menuitem" for="opt-2"><input type="radio" name="g" id="opt-2"> B</label>
+  </section>
+
+Each item is a plain ".menuitem" (border/colors from wexa.css). This file
+flattens the inner edges so the group reads as one connected control instead
+of separate pills, hides the native radio input, and highlights the checked
+item — the label remains the visible/clickable control throughout.
+
+*/
+
+
+.toggle-group {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+/* The label is the visible control; the native radio stays functional
+   for keyboard/assistive tech but is not painted on screen */
+.toggle-group input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Flatten inner edges; overlap borders by one width to avoid a double seam */
+.toggle-group > .menuitem {
+    border-radius: 0;
+    margin-left: calc(-1 * var(--border-width));
+}
+
+.toggle-group > .menuitem:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    margin-left: 0;
+}
+
+.toggle-group > .menuitem:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* Active item: same treatment as a hovered/current button (wexa.css) —
+   plain --buttons-bg-color is already the resting color of every item,
+   so the checked state needs the hover shade to actually stand out */
+.toggle-group > .menuitem:has(:checked) {
+    background: var(--buttons-bg-color-hover);
+    color: var(--buttons-fg-color);
+}
+
+/* Bring the highlighted item's border above its neighbours' overlap */
+.toggle-group > .menuitem:hover,
+.toggle-group > .menuitem:has(:focus-visible),
+.toggle-group > .menuitem:has(:checked) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Inside nav.nav-wexa.top/.bottom, menu.css sets a gap on every direct
+   "> section" — a plain class cannot out-specify that selector, so the
+   reset is repeated here at matching specificity. */
+nav.nav-wexa.top > section.toggle-group,
+nav.nav-wexa.bottom > section.toggle-group {
+    gap: 0;
+}

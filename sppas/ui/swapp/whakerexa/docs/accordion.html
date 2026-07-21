@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Accordion • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa > Utilities > Accordion</p>
+</header>
+
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+    <h1>Accordion</h1>
+    <p>
+        The accordion pattern uses the native HTML <code>&lt;details&gt;</code> and
+        <code>&lt;summary&gt;</code> elements. No JavaScript is required.
+        Clicking the summary toggles the body open or closed.
+        Multiple accordions can coexist on the same page independently.
+    </p>
+    <p>
+        Do not add <code>role="button"</code> to <code>&lt;summary&gt;</code> —
+        it already carries that implicit ARIA role and the redundant attribute
+        can confuse assistive technologies.
+    </p>
+
+        <h2>Simple accordion</h2>
+        <p>
+            Place any content inside <code>&lt;details&gt;</code>.
+            The <code>&lt;summary&gt;</code> acts as the clickable header.
+        </p>
+
+        <article class="card-doc" aria-label="Accordion — simple">
+            <div class="card-view" style="flex-direction: column; align-items: stretch; width: 100%;">
+                <details>
+                    <summary>Who is Sarah Connor?</summary>
+                    <p>Sarah Jeanette Connor is a fictional character and the main protagonist
+                        of the Terminator franchise, portrayed by Linda Hamilton.</p>
+                </details>
+                <details>
+                    <summary>I have keys but no doors. What am I?</summary>
+                    <p>A keyboard.</p>
+                </details>
+            </div>
+            <pre class="dark"><code>&lt;details&gt;
+    &lt;summary&gt;Question&lt;/summary&gt;
+    &lt;p&gt;Answer&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Accordion with action button</h2>
+        <p>
+            A <code>&lt;button&gt;</code> placed inside <code>&lt;summary&gt;</code>
+            floats to the right automatically. The body can contain any semantic
+            structure — <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>,
+            <code>&lt;footer&gt;</code>.
+        </p>
+
+        <article class="card-doc" aria-label="Accordion — with button in summary">
+            <div class="card-view" style="flex-direction: column; align-items: stretch; width: 100%;">
+                <details>
+                    <summary>
+                        Summary text.
+                        <button>action</button>
+                    </summary>
+                    <header>Header inside details.</header>
+                    <main>
+                        <p>Content in the main part of the details element.</p>
+                        <p>Content in the main part of the details element.</p>
+                    </main>
+                    <footer>Footer inside details.</footer>
+                </details>
+            </div>
+            <pre class="dark"><code>&lt;details&gt;
+    &lt;summary&gt;
+        Summary text.
+        &lt;button&gt;action&lt;/button&gt;
+    &lt;/summary&gt;
+    &lt;header&gt;...&lt;/header&gt;
+    &lt;main&gt;&lt;p&gt;Content&lt;/p&gt;&lt;/main&gt;
+    &lt;footer&gt;...&lt;/footer&gt;
+&lt;/details&gt;</code></pre>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+/*
+:filename: wexa_statics/css/toggleselect.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: style for accordion toggleselect components
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+*/
+
+.summary-choice {
+    border: none;
+    background: var(--bg-color);
+    color: var(--fg-color);
+    height: 2rem;
+}
+
+.summary-choice span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.toggleselect-action {
+    padding: 0.5rem;
+    height: 3rem;
+    border: var(--border-width) solid var(--buttons-bg-color);
+}
+
+.accordion-action {
+    background: transparent;
+}
+
+summary button.accordion-action, summary a[role=button].accordion-action {
+    flex: 1;
+    max-width: 2.5rem;
+    border: none;
+    position: relative;
+    margin: 0;
+    display: block;
+    height: 100%;
+}
+
+summary button.accordion-action img, summary a[role=button].accordion-action img{
+    max-height: 100%;
+}

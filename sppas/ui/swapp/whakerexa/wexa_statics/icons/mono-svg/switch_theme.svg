@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+  <!-- Outer circle -->
+  <circle cx="16" cy="16" r="13"/>
+  <!-- Diagonal half fill -->
+  <clipPath id="cut">
+    <polygon points="0,32 32,0 32,32"/>
+  </clipPath>
+  <circle cx="16" cy="16" r="13" fill="currentColor" clip-path="url(#cut)" stroke="none"/>
+</svg>

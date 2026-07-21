@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="framework, html, css, javascript" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+    <link rel="stylesheet" href="wexa_statics/css/wexa.css" type="text/css" />
+    <link id="wexa-theme" rel="stylesheet" href="wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="wexa_statics/css/layout.css" type="text/css" />
+    <link rel="stylesheet" href="wexa_statics/css/menu.css" type="text/css" />
+    <link rel="stylesheet" href="wexa_statics/css/button.css" type="text/css" />
+
+    <style>
+        /* wexa uses @layer — these unlayered rules win automatically, no !important needed */
+        :root {
+            --header-height:   20rem;
+            --header-slidein:  none;
+            --nav-min-height:  0;
+            --nav-min-width:   max(calc(4rem / var(--size-divisor)), 3rem);
+            --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
+            --nav-item-width-v-expanded:  calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
+            --appmenu-position: left;
+            --appmenu-align:    left top;
+            --card-max-width:  18rem;
+        }
+        :root:not(.dark) {
+            --nav-item-min-height: 2.5rem;
+            --nav-item-height:     2.5rem;
+            --nav-item-max-height: 2.5rem;
+        }
+        .card-header > svg {
+            height: 2rem;
+            width:  2rem;
+        }
+        .panel-item {
+            padding: 2rem;
+        }
+        header .flex-panel {
+            margin-top: 1.5rem;
+        }
+        #footer-content p img {
+            height: 3.5rem;
+        }
+    </style>
+
+    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = 'wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   'wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       'wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', 'wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        t.setDefault('wexa_theme');
+                        window.themes = t;
+                    }
+                });
+            } else {
+                s.type = 'module';
+                s.src = 'wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from './wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+        themes.register('wexa_theme',   'wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       'wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', 'wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        themes.setDefault('wexa_theme');
+        window.themes = themes;
+    </script>
+
+    <script>
+        (function () {
+            function initMenu() {
+                if (!window.Wexa || !window.Wexa.MenuManager) return false;
+                const m = new window.Wexa.MenuManager();
+                window.mainmenu = m;
+                m.initSideMenu();
+                m.initMobileToggle();
+                m.registerSubmenu('appmenu-framework',    'submenu-toggle-framework');
+                m.registerSubmenu('appmenu-components',   'submenu-toggle-components');
+                m.registerSubmenu('appmenu-extras',       'submenu-toggle-extras');
+                return true;
+            }
+            function start() {
+                const t = setInterval(function () {
+                    if (initMenu()) clearInterval(t);
+                }, 20);
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', start, { once: true });
+            } else {
+                start();
+            }
+        })();
+    </script>
+
+</head>
+
+<body>
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">
+        Skip to main content
+    </a>
+    <button id="menu-button" aria-controls="nav-content" aria-expanded="false"
+            aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6"  x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
+    <input type="checkbox" id="mobile" role="button"
+           aria-label="Menu" aria-haspopup="true" aria-expanded="false">
+
+    <nav id="header-nav-content" aria-label="Accessibility navigation">
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+    <h1>Whakerexa</h1>
+    <h2>A minimal toolkit for clean, accessible HTML</h2>
+    <p class="flex-panel">
+        <a class="cta-button" id="cta-quickstart" data-href="docs/quick-start.html" data-target="_self">Quick start</a>
+        <a class="cta-button" id="cta-browsedocs" data-href="docs/accessibility.html" data-target="_self">Accessibility</a>
+    </p>
+</header>
+
+<nav id="nav-content" class="nav-wexa side collapsible" aria-label="Main navigation">
+
+    <section>
+        <button aria-label="Pin menu"
+                id="pin-menu" type="button"
+                aria-controls="nav-content"
+                aria-pressed="true"
+                title="Pin menu"
+                class="menuitem menu-pin">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                aria-label="Pushpin">
+                <path d="M9 3h6l-1 8H10L9 3z"/>
+                <path d="M7 13h10"/>
+                <path d="M12 13v9"/>
+            </svg>
+        </button>
+    </section>
+
+
+    <!-- Framework -->
+    <section>
+    <button class="menuitem" id="submenu-toggle-framework"
+            aria-haspopup="true" aria-controls="appmenu-framework">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="3" width="18" height="26" rx="2"/>
+            <line x1="11" y1="3"  x2="11" y2="29"/>
+            <line x1="15" y1="10" x2="20" y2="10"/>
+            <line x1="15" y1="16" x2="20" y2="16"/>
+            <line x1="15" y1="22" x2="20" y2="22"/>
+        </svg>
+        <span>Framework</span>
+    </button>
+    </section>
+
+    <!-- Components -->
+    <section>
+    <button class="menuitem" id="submenu-toggle-components"
+            aria-haspopup="true" aria-controls="appmenu-components">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3"  y="3"  width="11" height="11" rx="2"/>
+            <rect x="18" y="3"  width="11" height="11" rx="2"/>
+            <rect x="3"  y="18" width="11" height="11" rx="2"/>
+            <rect x="18" y="18" width="11" height="11" rx="2"/>
+        </svg>
+        <span>Components</span>
+    </button>
+    </section>
+
+    <!-- Extras -->
+    <section>
+    <button class="menuitem" id="submenu-toggle-extras"
+            aria-haspopup="true" aria-controls="appmenu-extras">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="16,3 19,13 29,13 21,19 24,29 16,23 8,29 11,19 3,13 13,13"/>
+        </svg>
+        <span>Extras</span>
+    </button>
+    </section>
+
+    <section>
+    <a class="menuitem" id="nav-bundle" data-href="docs/wexa.bundle.html" data-target="_self">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10L16 3L29 10V22L16 29L3 22z"/>
+            <line x1="3"  y1="10" x2="16" y2="17"/>
+            <line x1="29" y1="10" x2="16" y2="17"/>
+            <line x1="16" y1="17" x2="16" y2="29"/>
+            <line x1="9.5" y1="6.5" x2="22.5" y2="13.5"/>
+        </svg>
+        <span>Bundle</span>
+    </a>
+    </section>
+
+    <!-- Submenus -->
+    <aside id="appmenu-framework" class="appmenu" aria-label="Framework submenu">
+        <nav>
+            <section>
+            <p class="nav-section-label">Getting started:</p>
+            <a class="menuitem" id="nav-wexa"          data-href="docs/wexa.html"           data-target="_self">Wexa CSS</a>
+            <a class="menuitem" id="nav-quickstart"    data-href="docs/quick-start.html"    data-target="_self">Quick start</a>
+            <a class="menuitem" id="nav-architecture"  data-href="docs/architecture.html"   data-target="_self">Architecture</a>
+            <a class="menuitem" id="nav-accessibility" data-href="docs/accessibility.html"  data-target="_self">Accessibility</a>
+            </section>
+            <section>
+            <p class="nav-section-label">Customization:</p>
+            <a class="menuitem" id="nav-cssvariables"  data-href="docs/css-variables.html"  data-target="_self">CSS Variables</a>
+            <a class="menuitem" id="nav-colors"        data-href="docs/colors.html"         data-target="_self">Colors</a>
+            <a class="menuitem" id="nav-themes"        data-href="docs/themes.html"         data-target="_self">Themes</a>
+            </section>
+        </nav>
+    </aside>
+
+    <aside id="appmenu-components" class="appmenu" aria-label="Components submenu">
+        <nav>
+            <section>
+            <p class="nav-section-label">Navigation:</p>
+            <a class="menuitem" id="nav-menu"          data-href="docs/menu.html"         data-target="_self">Menus</a>
+            <a class="menuitem" id="nav-menu-side"     data-href="docs/menu-side.html"    data-target="_self">Side menu</a>
+            <a class="menuitem" id="nav-menu-bottom"   data-href="docs/menu-bottom.html"  data-target="_self">Bottom/Top menus</a>
+            </section>
+            <section>
+            <p class="nav-section-label">Layout:</p>
+            <a class="menuitem" id="nav-containers"    data-href="docs/layout.html"       data-target="_self">Containers</a>
+            </section>
+            <section>
+            <p class="nav-section-label">Content:</p>
+            <a class="menuitem" id="nav-typography"    data-href="docs/typography.html"   data-target="_self">Typography</a>
+            <a class="menuitem" id="nav-code"          data-href="docs/code.html"         data-target="_self">Code</a>
+            <a class="menuitem" id="nav-tables"        data-href="docs/tables.html"       data-target="_self">Tables</a>
+            </section>
+            <section>
+            <p class="nav-section-label">Forms:</p>
+            <a class="menuitem" id="nav-inputs"        data-href="docs/inputs.html"       data-target="_self">Inputs</a>
+            <a class="menuitem" id="nav-button"        data-href="docs/button.html"       data-target="_self">Button</a>
+            <a class="menuitem" id="nav-switch"        data-href="docs/switch.html"       data-target="_self">Switch</a>
+            <a class="menuitem" id="nav-progressbar"   data-href="docs/progressbar.html"  data-target="_self">Progress bar</a>
+            </section>
+            <section>
+            <p class="nav-section-label">Utilities:</p>
+            <a class="menuitem" id="nav-accordion"     data-href="docs/accordion.html"    data-target="_self">Accordion</a>
+            <a class="menuitem" id="nav-dialog"        data-href="docs/dialog.html"       data-target="_self">Dialogs</a>
+            <a class="menuitem" id="nav-links"         data-href="docs/links.html"        data-target="_self">Links</a>
+            </section>
+        </nav>
+    </aside>
+
+    <aside id="appmenu-extras" class="appmenu" aria-label="Extras submenu">
+        <nav>
+            <section>
+            <a class="menuitem" id="nav-sortatable"    data-href="docs/sortatable.html"   data-target="_self">Sortable table</a>
+            <a class="menuitem" id="nav-book"          data-href="docs/book.html"         data-target="_self">Book</a>
+            <a class="menuitem" id="nav-autotoc"       data-href="docs/autotoc.html"      data-target="_self">Auto ToC</a>
+            <a class="menuitem" id="nav-keypiano"      data-href="docs/keypiano.html"     data-target="_self">KeyPiano</a>
+            <a class="menuitem" id="nav-slides"        data-href="docs/slides.html"       data-target="_self">Slides</a>
+            </section>
+        </nav>
+    </aside>
+
+</nav>
+
+<main id="main-content">
+
+    <!-- ================================================================ -->
+    <!-- Section 1 — Features                                              -->
+    <!-- ================================================================ -->
+
+    <section class="panel-item">
+
+        <h2 class="center">What Whakerexa gives you</h2>
+
+        <div class="cards-panel">
+
+            <article class="card">
+                <div class="card-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="5" y="2" width="22" height="28" rx="2"/>
+                        <line x1="10" y1="10" x2="22" y2="10"/>
+                        <line x1="10" y1="16" x2="22" y2="16"/>
+                        <line x1="10" y1="22" x2="18" y2="22"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3>Semantic HTML first</h3>
+                    <p>Wexa styles tags directly. No <code>.btn</code>, no <code>.container</code>, no utility class soup — your markup stays readable.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-wexa" data-href="docs/wexa.html" data-target="_self">See it →</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="8"  y1="6"  x2="8"  y2="26"/>
+                        <line x1="16" y1="4"  x2="16" y2="26"/>
+                        <line x1="24" y1="8"  x2="24" y2="26"/>
+                        <line x1="4"  y1="14" x2="12" y2="14"/>
+                        <line x1="12" y1="10" x2="20" y2="10"/>
+                        <line x1="20" y1="18" x2="28" y2="18"/>
+                        <circle cx="8"  cy="14" r="2" fill="currentColor" stroke="none"/>
+                        <circle cx="16" cy="10" r="2" fill="currentColor" stroke="none"/>
+                        <circle cx="24" cy="18" r="2" fill="currentColor" stroke="none"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3>CSS Variables</h3>
+                    <p>Every color, size and spacing is a variable. Redefine a handful and the whole design follows — themes included.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-cssvariables" data-href="docs/css-variables.html" data-target="_self">Explore →</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="6"  width="26" height="5" rx="1"/>
+                        <rect x="3" y="13" width="26" height="5" rx="1"/>
+                        <rect x="3" y="20" width="26" height="5" rx="1"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3>@layer architecture</h3>
+                    <p>Your CSS wins over wexa defaults automatically. No <code>!important</code>, no specificity fights — just write your rules.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-architecture" data-href="docs/architecture.html" data-target="_self">Learn more →</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="16" cy="8" r="3"/>
+                        <path d="M8 15h16"/>
+                        <path d="M16 15v10"/>
+                        <path d="M10 25l2-6"/>
+                        <path d="M22 25l-2-6"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3>Accessibility built in</h3>
+                    <p>Light, dark and contrast modes. Skip links, ARIA roles, keyboard navigation — from the ground up, not as an afterthought.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-accessibility" data-href="docs/accessibility.html" data-target="_self">See modes →</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3"  y="3"  width="11" height="11" rx="2"/>
+                        <rect x="18" y="3"  width="11" height="11" rx="2"/>
+                        <rect x="3"  y="18" width="11" height="11" rx="2"/>
+                        <rect x="18" y="18" width="11" height="11" rx="2"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3>Modular ES6 JS</h3>
+                    <p>Import only what you need. Or use the single-file bundle for offline and <code>file://</code> environments. No build step.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-bundle" data-href="docs/wexa.bundle.html" data-target="_self">Bundle docs →</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                         fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="4" width="28" height="18" rx="2"/>
+                        <line x1="16" y1="22" x2="16" y2="28"/>
+                        <line x1="10" y1="28" x2="22" y2="28"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3>Slides</h3>
+                    <p>A full accessible presentation framework. Keyboard control, handout and memo modes, themes — runs in any browser.</p>
+                </div>
+                <div class="card-footer">
+                    <a id="card-nav-slides" data-href="docs/slides.html" data-target="_self">See slides →</a>
+                </div>
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- Section 2 — This page is Whakerexa                               -->
+    <!-- ================================================================ -->
+
+    <section class="panel-item">
+
+        <div class="flex-panel">
+
+            <div class="flex-item width_60">
+                <h2>This page is built with Whakerexa</h2>
+                <p>
+                    The documentation does not just describe the framework — it uses it.
+                    The side navigation, the cards above, the accessibility controls in the header,
+                    the themes/colors/contrast toggle: all of it is Whakerexa, with no custom JavaScript
+                    beyond initialization and no CSS written for this page alone.
+                </p>
+                <p>
+                    Each page in the docs is a live example.
+                    Open its HTML source and you see exactly how it is done.
+                </p>
+            </div>
+
+            <div class="flex-item flex-border-left">
+                <p><strong>What you are looking at right now:</strong></p>
+                <ul>
+                    <li>Side navigation — <code>menu.css</code> + <code>MenuManager</code></li>
+                    <li>Feature cards — <code>layout.css</code> cards-panel</li>
+                    <li>Light / dark / contrast — <code>wexa.css</code> @layer</li>
+                    <li>Accessibility controls — <code>AccessibilityManager</code></li>
+                    <li>CSS theme switcher — <code>ThemeManager</code></li>
+                    <li>CTA buttons — <code>button.css</code> .cta-button</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- Section 3 — Start                                                 -->
+    <!-- ================================================================ -->
+
+    <section class="panel-item">
+
+        <h2>Start in three steps</h2>
+
+        <ol class="enumerate-cards">
+            <li class="enumerate-cards-item">
+                Download — <a href="https://github.com/brigitte-bigi/Whakerexa" class="external-link">github.com/brigitte-bigi/Whakerexa</a> &nbsp;·&nbsp; Unzip. Done.
+            </li>
+            <li class="enumerate-cards-item">
+                Link the CSS — <code>&lt;link rel="stylesheet" href="wexa_statics/css/wexa.css"&gt;</code> and whichever extras you need.
+            </li>
+            <li class="enumerate-cards-item">
+                Write semantic HTML. Wexa styles tags directly — no class required for buttons, tables, headings or forms.
+            </li>
+        </ol>
+
+        <p>
+            Need more? See the <a id="start-quickstart" data-href="docs/quick-start.html" data-target="_self">Quick start</a>
+            or browse individual component pages from the menu.
+        </p>
+
+        <details>
+            <summary>ES6 modules vs bundle — which to use?</summary>
+            <p>
+                Modules (<code>wexa.js</code>) require an HTTP server — run <code>python -m http.server 8000</code>
+                then open <code>http://localhost:8000/</code>.
+                The bundle (<code>wexa.bundle.js</code>) works directly from disk on <code>file://</code>.
+                This index auto-loads the right one.
+            </p>
+        </details>
+
+    </section>
+
+</main>
+
+
+<footer id="footer-content">
+    <section>
+        <p class="center">
+            <a href="index.html" aria-label="Whakerexa — home">
+                <img src="wexa_statics/logos/whakerexa.png" alt="Whakerexa">
+            </a>
+        </p>
+        <p class="center">This site respects your privacy. No tracking, no cookies.</p>
+        <p class="copyright">
+            Copyright @ 2023-2026 <a href="https://sppas.org/bigi/" class="external-link">Brigitte Bigi</a>,
+            CNRS - Laboratoire Parole et Langage, Aix-en-Provence, France
+        </p>
+    </section>
+</footer>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters([
+            'nav-wexa', 'nav-quickstart', 'nav-architecture', 'nav-themes',
+            'nav-cssvariables', 'nav-colors', 'nav-accessibility',
+            'nav-containers',
+            'nav-typography', 'nav-code', 'nav-tables',
+            'nav-inputs', 'nav-button', 'nav-switch', 'nav-progressbar',
+            'nav-menu', 'nav-menu-side', 'nav-menu-bottom',
+            'nav-accordion', 'nav-dialog', 'nav-links', 'nav-autotoc', 'nav-book', 'nav-sortatable',
+            'nav-keypiano', 'nav-slides', 'nav-bundle',
+            'card-nav-wexa', 'card-nav-cssvariables', 'card-nav-architecture',
+            'card-nav-accessibility', 'card-nav-bundle', 'card-nav-slides',
+            'start-quickstart',
+            'cta-quickstart', 'cta-browsedocs'
+        ]);
+    });
+</script>
+
+</body>
+</html>

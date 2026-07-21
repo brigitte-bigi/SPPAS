@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Book • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Book</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="description" class="chapter">
+            <h1> Description </h1>
+
+            <section class="ssection"><h2>Overview</h2>
+                <p><b>book.css</b> is a CSS framework designed to make HTML content resemble a book.
+                    It includes features for implementing chapters, sections, and subsections, along
+                    with an auto-numbering function.
+                </p>
+
+                <p>Not convinced? Take a look at the source code of this page!</p>
+
+            </section>
+
+            <section class="ssection"><h2>The custom classes</h2>
+
+                <p><b>book.css</b> has a built-in feature that automatically assigns numbers to chapters,
+                    sections, or subsections without manual intervention. Let's show how to do it! </p>
+
+                <p>Add the following classes into your document, and book.css does the rest: </p>
+                <ol>
+                    <li><code>chapter</code></li>
+                    <li><code>ssection</code></li>
+                    <li><code>subssection</code></li>
+                </ol>
+
+                <p>Example of use:</p>
+                <pre class="dark">&lt;section class="chapter"&gt;
+&lt;h1&gt; Chapter title &lt;/h1&gt;
+    &lt;section class="ssection"&gt;
+    &lt;h2&gt; Section title &lt;/h2&gt;
+        &lt;section class="subssection"&gt;
+        &lt;h3&gt; Sub-Section title &lt;/h3&gt;
+        &lt;section&gt;
+    &lt;section&gt;
+&lt;section&gt;
+                </pre>
+                <p>The <code>&lt;section&gt;</code> element is used here instead of the nonsensical
+                    <code>&lt;div&gt;</code>. Both will be displayed the same way, but screen readers interpret
+                    a <code>section</code> in a more appropriate manner, unlike a <code>div</code>!</p>
+                <p>The &lt;section&gt; element in HTML is semantic and indicates a thematic grouping of content,
+                    making it useful for screen readers to understand the structure and context of the content.
+                    This can assist users who rely on screen readers to navigate and understand web pages more
+                    effectively. It is then perfectly suitable to indicate the chapters and sections. Fot the
+                    <code>h3</code> level, the <code>section</code> can effectively be replaced by <code>article</code>.
+                </p>
+                <p>Notice that a proper semantic markup, including correct usage of "section", "article",
+                    "header", "footer", etc., can significantly enhance accessibility for users of assistive
+                    technologies like screen readers.</p>
+            </section>
+
+            <section class="ssection"><h2>The variables</h2>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Description</th>
+                        <th>Default</th>
+                        <th>Customization Example</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><code>--numbers-bg-color</code></td>
+                        <td>Background color of generated section number badges.</td>
+                        <td><code>rgb(140, 40, 40)</code></td>
+                        <td><code>--numbers-bg-color: rgb(25, 128, 180);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>--numbers-fg-color</code></td>
+                        <td>Foreground (text) color of generated section number badges.</td>
+                        <td><code>rgb(250, 248, 252)</code></td>
+                        <td><code>--numbers-fg-color: rgb(255, 255, 255);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>--toc-width</code></td>
+                        <td>Width reserved for the table of contents (left margin of the document).</td>
+                        <td><code>0</code></td>
+                        <td><code>--toc-width: 16rem;</code></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </section>
+
+            <section class="ssection"><h2>Table of Contents navigation</h2>
+
+                <p><b>book.css</b> provides a fixed side navigation panel styled with the class
+                    <code>book-toc</code>. Its width is controlled by the <code>--toc-width</code>
+                    variable (default <code>0</code>; set it to something like <code>16rem</code>
+                    to reveal the panel). The body left margin adjusts automatically via
+                    <code>margin-left: var(--toc-width)</code> on <code>html</code>.</p>
+
+                <p>The minimal HTML structure for a side ToC panel is:</p>
+                <pre class="dark">&lt;nav class="book-toc" aria-label="Table of contents"&gt;
+    &lt;h1&gt;Document title&lt;/h1&gt;
+    &lt;ul id="toc"&gt;&lt;/ul&gt;
+&lt;/nav&gt;</pre>
+
+                <p>The list can be filled manually, or automatically from the document headings
+                    using the <code>Wexa.Book</code> JavaScript class — see
+                    <a href="autotoc.html">autotoc.html</a> for a live demonstration.</p>
+
+                <p><b>Coexistence with menu.css.</b> Since version 3.0, all base <code>nav</code>
+                    resets in <code>menu.css</code> are scoped to <code>nav.nav-wexa</code>.
+                    Loading both <code>menu.css</code> and <code>book.css</code> on the same page
+                    (as this page does) is therefore safe: the ToC <code>nav.book-toc</code>
+                    element is unaffected by the menu reset rules.</p>
+            </section>
+
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="demo" class="chapter">
+            <h1>La Ville Sans Nom</h1>
+
+            <section class="ssection"><h2>La ville et ses habitants</h2>
+
+                <article class="subssection"><h3>Géographie de l’incertitude</h3>
+                    <p class="font-sans">
+                        Dans une ville sans nom posée entre deux reliefs indécis, les habitants avaient cessé depuis longtemps de distinguer ce qui relevait du souvenir, de l’invention ou de l’habitude. Chaque matin, les rues semblaient réarrangées selon une logique que personne ne contestait mais que personne ne comprenait non plus. Les façades changeaient subtilement de teinte, les fenêtres apparaissaient parfois décalées d’un étage, et les portes donnaient sur des pièces dont la fonction variait selon l’heure. On acceptait cela comme un fait naturel, au même titre que la gravité ou le vent.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Langues et silences</h3>
+                    <p class="font-serif">
+                        En este entorno, la comunicación se había convertido en una mezcla constante de idiomas superpuestos. Les phrases commençaient en français, se poursuivaient en español, puis glissaient vers un latin approximatif utilisé autrefois dans des documents administratifs oubliés. Les conversations n’avaient pas pour but d’être comprises immédiatement, mais de créer une texture sonore stable dans laquelle chacun pouvait se reconnaître. Même les silences étaient codés différemment selon les quartiers, certains étant perçus comme des réponses complètes, d’autres comme des questions ouvertes.
+                    </p>
+                </article>
+
+            </section>
+
+            <section class="ssection"><h2>Savoirs instables</h2>
+
+                <article class="subssection"><h3>La bibliothèque centrale</h3>
+                    <p class="font-serif">
+                        Il existait aussi une bibliothèque centrale dont les rayonnages ne cessaient de s’étendre sans intervention humaine. Les livres s’y réorganisaient seuls, modifiant parfois leur propre contenu entre deux consultations. Un même ouvrage pouvait contenir une histoire de navigation maritime le matin, puis un traité de botanique le soir, sans que personne ne puisse déterminer à quel moment la transformation avait eu lieu. Les lecteurs expérimentés ne lisaient plus les textes de manière linéaire, mais par fragments, cherchant des cohérences temporaires plutôt que des vérités stables.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Archives vivantes</h3>
+                    <p class="font-serif">
+                        En paralelo, una serie de archivos vivientes almacenaban información sin soporte matériel stable. Les documents n’étaient pas stockés mais maintenus dans un état de disponibilité latente, accessibles uniquement lorsqu’un lecteur formulait une intention suffisamment précise. Cela produisait des variations constantes dans les connaissances disponibles, car deux personnes ne pouvaient jamais accéder exactement au même contenu au même moment. Les historiens ont tenté de reconstruire des versions cohérentes du passé, mais leurs travaux divergeaient systématiquement après quelques heures de consultation.
+                    </p>
+                </article>
+
+            </section>
+
+            <section class="ssection"><h2>La couche invisible</h2>
+
+                <article class="subssection"><h3>Comportements émergents</h3>
+                    <p class="font-mono">
+                        The computational layer beneath the city was never officially acknowledged, yet its effects were observable everywhere. Data streams intersected with physical events in ways that could not be fully separated. A delay in information propagation could alter the outcome of a conversation; a misaligned timestamp could shift the position of an object. Engineers stopped trying to correct these anomalies and instead documented them as “emergent behaviors." Some even suggested that reality itself had become a distributed system with inconsistent synchronization.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Signal encodé</h3>
+                    <p class="font-mono">
+                        01010100 01101000 01100101 00100000 01100010 01110101 01101001 01101100 01100100 01101001 01101110 01100111 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01110011 01110100 01100001 01110100 01101001 01100011 00101100 00100000 01101110 01101111 01110010 00100000 01101001 01110011 00100000 01101001 01110100 00100000 01100110 01101001 01101110 01101001 01110011 01101000 01100101 01100100
+                    </p>
+                </article>
+
+            </section>
+
+            <section class="ssection"><h2>Nuit, temps et économie</h2>
+
+                <article class="subssection"><h3>Observations nocturnes</h3>
+                    <p class="font-sans">
+                        夜になると、街の構造はさらに曖昧になる。 Les lampadaires projetaient des ombres qui ne correspondaient pas toujours aux objets présents, et certains habitants affirmaient avoir vu des versions alternatives d’eux-mêmes traverser les places sans interaction. Ces phénomènes étaient décrits dans des rapports internes jamais diffusés publiquement, car leur simple lecture semblait modifier légèrement la perception de l’environnement. Les autorités locales avaient donc adopté une politique de non-interprétation, laissant les événements exister sans explication officielle.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Architecture attentionnelle</h3>
+                    <p class="font-sans">
+                        In the peripheral districts, architecture followed a principle of gradual uncertainty. Buildings were not constructed but “stabilized," and their form depended on collective attention rather than structural design. When a building was frequently observed, it became more coherent; when neglected, it slowly dissolved into ambiguous geometry. Residents adapted by developing routines of observation, ensuring that essential infrastructure remained sufficiently “real" to function. Over time, this created a social economy of attention where perception itself became a resource.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Contrats probabilistes</h3>
+                    <p class="font-sans">
+                        The economy of the city had adapted to these instabilities without collapsing. Transactions were no longer based solely on fixed values but on probabilistic agreements that accounted for potential future shifts in meaning. Contracts included clauses that anticipated reinterpretation, and disputes were resolved by examining not the facts, but the stability of narratives over time. This approach, initially considered impractical, became the only viable method for maintaining social coordination in a system where certainty could not be guaranteed.
+                    </p>
+                </article>
+
+            </section>
+
+            <section class="ssection"><h2>Persistance</h2>
+
+                <article class="subssection"><h3>Dissolution du temps</h3>
+                    <p class="font-sans">
+                        最後に、街の中心部では時間の概念そのものが緩やかに解体されつつあった。 Certains événements se produisaient avant leur cause apparente, et d’autres semblaient rester en suspens jusqu’à ce qu’un observateur décide de les interpréter. Cette flexibilité temporelle n’était pas perçue comme une anomalie mais comme une extension naturelle des capacités du système urbain. Les habitants vivaient donc dans une continuité relative, suffisante pour fonctionner, mais jamais assez stable pour être totalement décrite.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Équilibre distribué</h3>
+                    <p class="font-sans">
+                        Ultimately, the city did not require coherence in the classical sense. Its stability came from redundancy, overlapping contradictions, and the continuous recalibration of meaning through usage. What appeared as chaos from the outside functioned internally as a form of distributed equilibrium, where every inconsistency was compensated by another. No central authority controlled this process; it emerged from the accumulation of countless local adjustments.
+                    </p>
+                </article>
+
+                <article class="subssection"><h3>Continuité relative</h3>
+                    <p class="font-serif">
+                        Et pourtant, malgré cette complexité, les habitants continuaient à vivre, à parler, à travailler, et à oublier. Chaque jour réécrivait légèrement le précédent, sans rupture visible. La mémoire collective agissait comme un filtre adaptatif, supprimant les incohérences trop fortes et conservant uniquement ce qui permettait la continuité minimale de l’expérience. Ainsi, la ville persistait, non pas comme une structure stable, mais comme un processus en cours.
+                    </p>
+                </article>
+
+            </section>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                            t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                            t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        window.themes = t;
+                    }
+                });
+            } else {
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+            themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+            themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        window.themes = themes;
+    </script>
+
+    </body>
+</html>

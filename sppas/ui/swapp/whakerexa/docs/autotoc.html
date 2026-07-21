@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Auto ToC • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="book, toc, table of contents, web, css, html5, framework, accessibility"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+            --toc-aside-width: 2rem;
+            --toc-width:       18rem;
+        }
+
+        :root:not(.dark) {
+
+            /* Main colors */
+            --bg-color: rgb(240, 250, 250);
+            --blockquote-border-color: rgb(80, 25, 40);
+            --border-color: rgb(60, 60, 90);
+            --border-color-alt: rgba(28, 28, 28, 0.5);
+            --focus-border-color: rgba(0, 191, 255, 0.8);
+            --columns-sep-color-light: rgb(225, 225, 245);
+            --columns-sep-color-dark: rgb(45, 45, 60);
+
+            --body-bg-color:rgba(250, 250, 245, 0.85);
+            --nav-bg-color: rgba(250, 250, 245, 0.85);
+        }
+
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Book &gt; Auto ToC</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+    <main id="main-content">
+
+        <aside class="book-toc-aside" aria-label="Table of contents">
+            <h1>Table of Contents</h1>
+            <p><a href="index.html">Whakerexa</a></p>
+            <ul id="toc"></ul>
+        </aside>
+
+        <section id="description" class="chapter">
+            <h1>Description</h1>
+
+            <section class="ssection"><h2>Overview</h2>
+                <p><b>book.css</b> is a CSS framework designed to make HTML content resemble a book.
+                    It includes features for implementing chapters, sections, and subsections, along
+                    with an auto-numbering function.</p>
+                <p>This page demonstrates the <b>auto-generated Table of Contents</b>:
+                    the <code>Book</code> JavaScript class scans heading elements inside a
+                    container and builds the side panel automatically.</p>
+            </section>
+
+            <section class="ssection"><h2>How to use</h2>
+                <p>Three steps: set the CSS variable, add the nav placeholder, call the JS API.</p>
+
+                <article class="card-doc" aria-label="CSS — enable the ToC panel">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Set <code>--toc-width</code> in your stylesheet to reveal the panel.</p>
+                    </div>
+                    <pre class="dark"><code>:root {
+    --toc-width: 18rem;
+}</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="HTML — ToC placeholder">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Add a <code>nav.book-toc</code> element with a <code>ul#toc</code> inside.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;nav class="book-toc" aria-label="Table of contents"&gt;
+    &lt;h1&gt;Document title&lt;/h1&gt;
+    &lt;ul id="toc"&gt;&lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="JavaScript — Book API">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Instantiate <code>Book</code> with the id of the content container,
+                            then call <code>fill_table()</code>.</p>
+                    </div>
+                    <pre class="dark"><code>const book = new Book("main-content");
+
+// optionally adjust which headings are tracked:
+book.add_html_tags("h5", "h6");    // include h5, h6
+book.delete_html_tags("h4");       // exclude h4
+
+// fill the ToC — numbered headings only (default):
+book.fill_table();
+// or include all headings:
+book.fill_table(false);</code></pre>
+                </article>
+
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="demo" class="chapter">
+            <h1>Chapter two title</h1>
+
+            <!-- Should not be automatically added into the ToC -->
+            <section>
+                <h1>Non-numbered Heading 1, not in ToC</h1>
+                <h2>Non-numbered Heading 2, not in ToC</h2>
+                <h3>Non-numbered Heading 3, not in ToC</h3>
+            </section>
+
+            <!-- ------------------------------------------------------------- -->
+            <section class="ssection"><h2>First numbered section of chapter two</h2>
+                <section class="subssection"><h3>First numbered subsection</h3>
+                    <h4>Hello, I'm h4!</h4>
+                    <h4>And me too</h4>
+                </section>
+                <section class="subssection"><h3>Second numbered subsection</h3>
+                </section>
+            </section>
+            <section class="ssection"><h2>Second numbered section of chapter two</h2>
+                <section class="subssection"><h3>First numbered subsection</h3>
+                </section>
+                <section class="subssection"><h3>Second numbered subsection</h3>
+                </section>
+            </section>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+<script>
+    function bootBookDemo(Book) {
+        const book = new Book("main-content");
+        book.fill_table();
+    }
+</script>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    window.themes = t;
+                }
+                if (window.Wexa && window.Wexa.Book) {
+                    bootBookDemo(window.Wexa.Book);
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    import { Book } from '../wexa_statics/js/extras/book.js';
+    const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+    bootBookDemo(Book);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Architecture — Whakerexa</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+</head>
+<body>
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa &gt; Getting started &gt; Architecture</p>
+</header>
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8" />
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Architecture</h1>
+
+        <h2>Overview</h2>
+
+        <p><b>wexa.css</b> is a CSS framework intended to be as simple as possible to make
+            <mark><dfn title="usable by everyone, regardless of disability, device, or context">accessible</dfn></mark> web content, and to minimize the use of CSS classes for enhancing the
+            readability of HTML code, like it should always be! <b>wexa.css</b> is the main
+            CSS framework of <a class="external-link" href="https://github.com/brigitte-bigi/Whakerexa">Whakerexa</a>.
+        </p>
+        <p>It was designed to be easily <mark>customizable</mark>, allowing users to adjust
+            properties such as fonts, colors, borders, etc., effortlessly. Most of the properties
+            are stored into variables which makes possible to re-define them, then to obtain a
+            custom different style. Fonts, colors, borders, etc., can be overridden by re-defining
+            the corresponding variables, enabling users to achieve a unique style.</p>
+
+        <h2>CSS Cascade Architecture</h2>
+
+        <p><b>wexa.css</b> is built on CSS Cascade Layers
+            (<a class="external-link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/@layer"><code>@layer</code></a>):
+        </p>
+
+        <article class="card-doc" aria-label="CSS layer declaration">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <ul>
+                    <li><code>reset</code> — universal margin, padding, box-sizing defaults.</li>
+                    <li><code>base</code> — structural rules, scrollbar, focus outlines, disabled states, typography defaults.</li>
+                    <li><code>theme</code> — light and dark color palettes, animation variables.</li>
+                    <li><code>accessibility</code> — contrast mode (WCAG 1.4.12 spacing and ContrastFont), enforced with <code>!important</code> only in that context.</li>
+                </ul>
+                <p>Any CSS you write outside of a layer <strong>automatically wins</strong> over all wexa rules,
+                    regardless of selector specificity. A plain <code>header { background: blue }</code> in your
+                    own stylesheet overrides wexa without needing <code>!important</code> or complex selectors.</p>
+                <p>To create a custom theme, use <code>@layer theme { }</code> in a stylesheet loaded after
+                    <code>wexa.css</code> — your values override the defaults within that layer.</p>
+            </div>
+            <pre class="dark"><code>@layer reset, base, theme, accessibility;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Custom classes</h2>
+
+        <p>When using standard HTML5, accessibility is increased. Only three significant
+            classes are introduced in <code>wexa.css</code>, specifically for accessibility:</p>
+        <ol>
+            <li><code>dark</code></li>
+            <li><code>contrast</code></li>
+            <li><code>external-link</code></li>
+        </ol>
+        <p>The other classes allow changing the font or the font-weight of any element:</p>
+        <ul>
+            <li><code>font-sans</code> — default font family</li>
+            <li><code>font-serif</code></li>
+            <li><code>font-mono</code> — used by <code>code</code> element</li>
+            <li><code>font-pre</code> — used by <code>pre</code> element</li>
+            <li><code>font-weight-thin</code></li>
+            <li><code>font-weight-normal</code> — default font weight</li>
+            <li><code>font-weight-semibold</code></li>
+            <li><code>font-weight-bold</code> — used by <code>b</code> element</li>
+            <li><code>font-weight-black</code> — used by <code>strong</code> element</li>
+        </ul>
+
+        <h3>The <code>dark</code> class</h3>
+
+        <article class="card-doc" aria-label="dark class demo">
+            <div class="card-view">
+                <section class="dark" style="padding: 1rem; width: 100%;">
+                    <p>As said in its name, the <code>dark</code> class turns the content into dark colors.
+                        Only colors are changed.</p>
+                    <blockquote><p>Dark blockquote example</p><cite>Made by me!</cite></blockquote>
+                </section>
+            </div>
+            <pre class="dark"><code>&lt;section class="dark"&gt;
+    &lt;p&gt;Only colors are changed.&lt;/p&gt;
+    &lt;blockquote&gt;&lt;p&gt;Dark blockquote example&lt;/p&gt;&lt;/blockquote&gt;
+&lt;/section&gt;</code></pre>
+        </article>
+
+        <h3>The <code>contrast</code> class</h3>
+
+        <article class="card-doc" aria-label="contrast class demo">
+            <div class="card-view">
+                <section class="contrast" style="padding: 1rem; width: 100%;">
+                    <p>This is a high contrast section. Font, font weight, font size, spacing and a few other
+                        properties are changed to make it easier to read. A <a href="#">link</a> is slightly
+                        colored differently.</p>
+                    <blockquote>Contrast blockquote example</blockquote>
+                </section>
+            </div>
+            <pre class="dark"><code>&lt;section class="contrast"&gt;
+    &lt;p&gt;High contrast section.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </article>
+
+        <h3>The <code>external-link</code> class</h3>
+
+        <article class="card-doc" aria-label="external-link class demo">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>When specified on <code>&lt;a&gt;</code>, <code>external-link</code> adds a small icon
+                    indicating the link redirects to an external page. Example:<br>
+                    "You can find <a class="external-link" href="https://github.com/brigitte-bigi/Whakerexa">Whakerexa</a>
+                    on GitHub."
+                </p>
+            </div>
+            <pre class="dark"><code>&lt;a class="external-link" href="https://github.com/..."&gt;Whakerexa&lt;/a&gt;</code></pre>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    window.addEventListener('load', () => {
+        Wexa.links.handleLinksWithParameters(['btn-back']);
+    });
+</script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+<script>
+    (function () {
+        const usingFile = (window.location.protocol === 'file:');
+        const s = document.createElement('script');
+        if (usingFile) {
+            s.src = '../wexa_statics/js/wexa.bundle.js';
+            s.addEventListener('load', function () {
+                if (window.Wexa && window.Wexa.ThemeManager) {
+                    const t = new window.Wexa.ThemeManager();
+                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                    t.setDefault('wexa_theme');
+                    window.themes = t;
+                }
+            });
+        } else {
+            s.type = 'module';
+            s.src = '../wexa_statics/js/wexa.js';
+        }
+        document.head.appendChild(s);
+    })();
+</script>
+<script type="module">
+    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+    const themes = new ThemeManager();
+    themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+    themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+    window.themes = themes;
+</script>
+
+</body>
+</html>
