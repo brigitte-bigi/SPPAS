@@ -290,8 +290,11 @@ class swappBaseView:
         :param parent: (HTMLNode) the parent HTML node to append the button in
 
         """
-        # The 'menu' button for a responsive #nav-content must be outside 'nav'
-        menu_button = HTMLNode(parent.identifier, None, "button")
+        # The 'menu' button for a responsive #nav-content must be outside 'nav'.
+        # It carries the inline "menu" SVG icon, styled by menu.css
+        # (#menu-button > svg); without it the button would render empty.
+        svg_menu = sppasImagesAccess.get_wexa_svg_icon("menu")
+        menu_button = HTMLNode(parent.identifier, None, "button", value=svg_menu)
         menu_button.add_attribute("id", "menu-button")
         menu_button.add_attribute("name", "menu-button")
         menu_button.add_attribute("aria-label", "Menu")
