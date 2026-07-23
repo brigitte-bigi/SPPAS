@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.widgets.dialogs.hmessages.py
+:filename: sppas.ui.swapp.nodes.dialogs.hmessages.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Modal dialogs for messages in swapp.

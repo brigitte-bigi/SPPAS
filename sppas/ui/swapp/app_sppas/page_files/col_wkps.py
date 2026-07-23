@@ -47,8 +47,8 @@ from whakerpy.htmlmaker import HTMLInputText
 
 from sppas.ui import _
 from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
-from sppas.ui.swapp.widgets import sppasHTMLButton
-from sppas.ui.swapp.widgets import swappConfirmDialog
+from sppas.ui.swapp.nodes import sppasHTMLButton
+from sppas.ui.swapp.nodes import swappConfirmDialog
 
 # ---------------------------------------------------------------------------
 # List of displayed messages:

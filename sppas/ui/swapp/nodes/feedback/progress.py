@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.widgets.feedback.progress.py
+:filename: sppas.ui.swapp.nodes.feedback.progress.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Class to create a progress bar HTMLNode.

@@ -45,7 +45,7 @@ from whakerpy.htmlmaker import HTMLHr
 from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 
-from ..widgets import ProgressBar
+from ..nodes import ProgressBar
 
 from .basefieldset import SetupBaseFieldset
 

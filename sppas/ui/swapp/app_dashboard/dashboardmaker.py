@@ -51,7 +51,7 @@ from ..wappcore.wappinfo import WebApplicationInfo
 from ..wappcore.wappsg import wapp_wkps
 from ..wappcore.wappsg import wapp_wxstate
 from ..wappcore.wappsg import wapp_trace
-from ..widgets.feedback.hstatusnode import HTMLTreeError410
+from ..nodes.feedback.hstatusnode import HTMLTreeError410
 
 from .dashboard_view import DashboardView
 from .dashboard_model import DashboardModel

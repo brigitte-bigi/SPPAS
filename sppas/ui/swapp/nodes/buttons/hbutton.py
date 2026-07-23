@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.widgets.buttons.hbutton.py
+:filename: sppas.ui.swapp.nodes.buttons.hbutton.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A button node with easy access to icons.

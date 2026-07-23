@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.widgets.feedback.hstatusnode.py
+:filename: sppas.ui.swapp.nodes.feedback.hstatusnode.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A set of nodes to represent the HTTPD response status.

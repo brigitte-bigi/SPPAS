@@ -48,7 +48,7 @@ from sppas.core.coreutils import msg
 from sppas.core.coreutils import info
 from sppas.core.preinstall import Installer
 
-from sppas.ui.swapp.widgets import sppasHTMLCheckboxNode
+from sppas.ui.swapp.nodes import sppasHTMLCheckboxNode
 
 from .basefieldset import SetupBaseFieldset
 

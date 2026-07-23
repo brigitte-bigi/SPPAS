@@ -49,10 +49,10 @@ from sppas.core.config import get_language
 from sppas.ui import _
 
 from ..wappcore.wapputils import sppasImagesAccess
-from ..widgets.buttons.hbutton import sppasHTMLButton
+from ..nodes.buttons.hbutton import sppasHTMLButton
 from ..wappcore.wappsg import wapp_settings
-from ..widgets.layout.hheader import SwappHeader
-from ..widgets.layout.hfooter import SwappFooter
+from ..nodes.layout.hheader import SwappHeader
+from ..nodes.layout.hfooter import SwappFooter
 
 # ---------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 """
-:filename: sppas.ui.swapp.widgets.dialogs.hdialog.py
+:filename: sppas.ui.swapp.nodes.dialogs.hdialog.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Base class for modal dialogs for SPPAS web-based apps.

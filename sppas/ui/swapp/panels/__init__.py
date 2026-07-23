@@ -2,7 +2,7 @@
 :filename: sppas.ui.swapp.panels.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Composite panels assembled from widgets, shared across apps.
+:summary: Composite panels assembled from nodes, shared across apps.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..

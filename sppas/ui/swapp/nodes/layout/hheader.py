@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.widgets.layout.hheader.py
+:filename: sppas.ui.swapp.nodes.layout.hheader.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: Default header node for any SPPAS Web APPlication.

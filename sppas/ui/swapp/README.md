@@ -15,11 +15,11 @@ package.
   (the `WEB_APPLICATIONS` and `WEB_PAGES` registries), `wappinfo.py` and
   `wpageinfo.py` (their entry classes), `wappsg.py` (the shared globals),
   `wapputils.py` and `wexc.py`;
-- `widgets/` holds the reusable HTML node widgets, grouped by role:
+- `nodes/` holds the reusable HTML nodes, grouped by role:
   `buttons/`, `dialogs/`, `inputs/`, `layout/`, `feedback/`;
 - `wappbase/` holds the base classes common to every app: `wappbakery.py`,
   `wappresponse.py`, `wappview.py`, `wapphead.py`;
-- `panels/` holds the composite panels, assembled from widgets and shared
+- `panels/` holds the composite panels, assembled from nodes and shared
   across apps;
 - each app is an `app_*` directory, like each wx page is a `page_*` one;
 - `pages/` holds the generic pages;

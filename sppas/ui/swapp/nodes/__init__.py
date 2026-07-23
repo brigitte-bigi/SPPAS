@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.widgets.__init__.py
+:filename: sppas.ui.swapp.nodes.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: The reusable HTML node widgets of the swapp package.
+:summary: The reusable HTML nodes of the swapp package.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..

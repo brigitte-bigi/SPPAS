@@ -42,7 +42,7 @@ from __future__ import annotations
 from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
-from sppas.ui.swapp.widgets import sppasHTMLButton
+from sppas.ui.swapp.nodes import sppasHTMLButton
 
 # ---------------------------------------------------------------------------
 
