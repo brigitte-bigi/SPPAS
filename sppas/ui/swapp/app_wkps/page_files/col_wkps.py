@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.app_sppas.page_files.col_wkps.py
+:filename: sppas.ui.swapp.app_wkps.page_files.col_wkps.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The column "Workspaces" of the page "Files" for SPPAS Web UI.

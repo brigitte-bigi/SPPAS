@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-:filename: sppas.ui.swapp.app_sppas.page_files.filesmaker.py
+:filename: sppas.ui.swapp.app_wkps.page_files.filesmaker.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: The page "Files" of the SPPAS Web UI.
@@ -70,7 +70,7 @@ class FilesResponseRecipe(BaseResponseRecipe):
     @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
-        return "files.html"
+        return "workspaces.html"
 
     @staticmethod
     def title() -> str:
@@ -90,7 +90,7 @@ class FilesResponseRecipe(BaseResponseRecipe):
     # -----------------------------------------------------------------------
 
     def __init__(self, name="Files", tree=None, title="Files"):
-        super(FilesResponseRecipe, self).__init__(name, tree, title)
+        super(FilesResponseRecipe, self).__init__(name, tree)
 
     # -----------------------------------------------------------------------
 

@@ -46,7 +46,7 @@ from .wpageinfo import WebPageInfo
 # Import all locally developed applications
 from ..app_setup import SetupWebData
 from ..app_dashboard import DashboardWebData
-from ..app_sppas import MainWebData
+from ..app_wkps import WkpsWebData
 from ..app_test.app_test import TestsWebData
 # Install all installed application -- the spin-offs ones
 from ..spinoff import *
@@ -66,7 +66,7 @@ WEB_APPLICATIONS = [
     WebApplicationInfo('Dashboard', DashboardWebData, True),
     WebApplicationInfo('Setup', SetupWebData, True),
     WebApplicationInfo('Test', TestsWebData, DEBUG_MODE),
-    # WebApplicationInfo('Main', MainWebData, DEBUG_MODE),
+    WebApplicationInfo('Wkps', WkpsWebData, DEBUG_MODE),
 ]
 
 # Add all discovered spin-off applications

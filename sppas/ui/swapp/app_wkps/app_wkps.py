@@ -1,8 +1,8 @@
 """
-:filename: sppas.ui.swapp.app_sppas.app_files.py
+:filename: sppas.ui.swapp.app_wkps.app_wkps.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Bakery for the web-based application for tests.
+:summary: Bakery for the web-based application to manage the workspaces.
 
 .. _This file is part of SPPAS: https://sppas.org/
 ..
@@ -43,31 +43,49 @@ import logging
 
 from whakerpy.httpd import BaseResponseRecipe
 
+from sppas.ui import _
+from sppas.ui.swapp import sppasImagesAccess
 from ..wappbase.wappbakery import swappWebData
 
 from .page_files.filesmaker import FilesResponseRecipe
 
 # ---------------------------------------------------------------------------
 
+MSG_NAME = _("Files")
+MSG_DESCR = _("Organizes the files of SPPAS into workspaces.")
 
-class MainWebData(swappWebData):
+# ---------------------------------------------------------------------------
+
+
+class WkpsWebData(swappWebData):
     """Parse the JSON file, store data and create the bakery system.
 
     """
 
     def __init__(self, json_filename: str | None = None) -> None:
-        """Create a MainWebData instance.
+        """Create a WkpsWebData instance.
 
         """
-        super(MainWebData, self).__init__(json_filename)
-        # Filename of the default page. The only one of the Tests application.
+        super(WkpsWebData, self).__init__(json_filename)
+        # Filename of the default page. The only one of this application.
         self._default = FilesResponseRecipe.page()
 
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def name():
-        return "Main SPPAS"
+    def description() -> str:
+        """Return a short description of the application."""
+        return MSG_DESCR
+
+    @staticmethod
+    def name() -> str:
+        """Return the page short name."""
+        return MSG_NAME
+
+    @staticmethod
+    def icon() -> str:
+        """Return the page icon name."""
+        return sppasImagesAccess.get_image_filename("app_wkps")
 
     # -----------------------------------------------------------------------
 
