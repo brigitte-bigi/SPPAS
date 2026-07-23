@@ -69,10 +69,14 @@ class AppsNode(HTMLNode):
 
     # -----------------------------------------------------------------------
 
-    def create_app_card(self, name: str, icon_name: str, text: str, link: str = "",
+    def create_app_card(self, ident: str, name: str, icon_name: str, text: str, link: str = "",
                         enable: bool = True, busy: bool = False):
         """A specific card to represent the card of an app to launch.
 
+        :param ident: (str) Stable technical identifier of the card, used to
+            build the ids of its HTML nodes. It must be locale-independent:
+            the JS references these ids (e.g. "desktop_button"), so it is
+            never derived from the translated name.
         :param name: (str) The short name of the application.
         :param icon_name: (str) Name of an image representing the application
         :param text: (str) Text description of the application
@@ -85,7 +89,7 @@ class AppsNode(HTMLNode):
             page must render the identical result, not a different one.
 
         """
-        ident = name.lower().replace(" ", "_")
+        ident = ident.lower().replace(" ", "_")
         article = HTMLNode(self.identifier, ident+"_article", "article")
         article.add_attribute("class", "app")
         if enable is False:

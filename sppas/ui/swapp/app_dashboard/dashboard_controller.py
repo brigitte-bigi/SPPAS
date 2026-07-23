@@ -218,6 +218,7 @@ class DashboardController:
                     # All requested features must be enabled
                     enabled = all(cfg.feature_installed(item) for item in fids)
                 self.__view.append_app_card(
+                    app_name,
                     bakery.name(),
                     bakery.icon(),
                     bakery.description(),

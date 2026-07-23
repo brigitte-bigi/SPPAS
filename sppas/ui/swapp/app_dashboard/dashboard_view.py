@@ -121,9 +121,10 @@ class DashboardView(swappBaseView):
     # Getters/Setters
     # -----------------------------------------------------------------------
 
-    def append_app_card(self, name: str, icon_name: str, text: str, link: str, enable: bool = True):
+    def append_app_card(self, ident: str, name: str, icon_name: str, text: str, link: str, enable: bool = True):
         """Append an application card to its section.
 
+        :param ident: (str) Stable, locale-independent identifier of the card.
         :param name: (str) The short name of the application.
         :param icon_name: (str) Name of an image representing the application
         :param text: (str) Text description of the application
@@ -132,7 +133,7 @@ class DashboardView(swappBaseView):
 
         """
         apps_node = self._htree.body_main.get_child(AppsNode.ID)
-        apps_node.create_app_card(name, icon_name, text, link, enable)
+        apps_node.create_app_card(ident, name, icon_name, text, link, enable)
 
     # -----------------------------------------------------------------------
 
@@ -259,6 +260,7 @@ class DashboardView(swappBaseView):
         # card launches one specific component of it -- the wx interface.
         icon = sppasImagesAccess.get_image_filename("sppas_logo_v3")
         apps.create_app_card(
+            "desktop",
             MSG_DESKTOP,
             icon,
             text=MSG_DESCR_WX,
