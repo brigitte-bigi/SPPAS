@@ -75,13 +75,33 @@
                 <tbody>
                 <tr>
                     <td><code>--card-bg-color</code></td>
-                    <td>Card background</td>
+                    <td>Card background — undeclared, so the fallback is resolved on the card itself</td>
                     <td><code>var(--bg-color-alt)</code></td>
                 </tr>
                 <tr>
                     <td><code>--card-fg-color</code></td>
-                    <td>Card text color</td>
+                    <td>Card text color — undeclared, so the fallback is resolved on the card itself</td>
                     <td><code>var(--fg-color)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--panel-bg-color</code></td>
+                    <td>Reference background of odd <code>.panel-item</code> sections</td>
+                    <td><code>var(--bg-color)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--panel-fg-color</code></td>
+                    <td>Reference text color of odd <code>.panel-item</code> sections</td>
+                    <td><code>var(--fg-color)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--panel-bg-color-alt</code></td>
+                    <td>Reference background of even <code>.panel-item</code> sections</td>
+                    <td><code>var(--bg-color-alt)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--panel-fg-color-alt</code></td>
+                    <td>Reference text color of even <code>.panel-item</code> sections</td>
+                    <td><code>var(--fg-color-alt)</code></td>
                 </tr>
                 <tr>
                     <td><code>--card-padding</code></td>
@@ -337,6 +357,36 @@
         &lt;div class="card-footer"&gt;...&lt;/div&gt;
     &lt;/article&gt;
 &lt;/section&gt;</code></pre>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Alternating section backgrounds</h2>
+            <p>Direct <code>.panel-item</code> children of <code>&lt;main&gt;</code> alternate their background.
+                Odd sections use <code>--bg-color</code>, even sections use <code>--bg-color-alt</code>.</p>
+            <p>The two colors are <b>swapped</b>, not overwritten: inside an even section,
+                <code>--bg-color-alt</code> takes the value of the page background.
+                Nested elements that build their contrast on that pair — cards, code blocks —
+                therefore stay visible in both cases.</p>
+            <p>The card below sits in an <b>odd</b> section.</p>
+            <article class="card">
+                <div class="card-body">
+                    <p>Card on an odd section — background is <code>--bg-color-alt</code>.</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <section class="panel-item">
+            <h2>Alternating backgrounds — even section</h2>
+            <p>Same markup, in an <b>even</b> section. The card keeps a background distinct
+                from the section: both must remain readable.</p>
+            <article class="card">
+                <div class="card-body">
+                    <p>Card on an even section — background is the swapped <code>--bg-color-alt</code>,
+                        that is the page background color.</p>
+                </div>
             </article>
         </section>
 

@@ -501,18 +501,32 @@ This banner notice must not be removed.
 
     :root {
         --card-box-shadow:   -0.1rem 0.1rem 0.4rem 0.1rem var(--shadow-color);
-        --card-bg-color:     var(--bg-color-alt);
-        --card-fg-color:     var(--fg-color);
         --columns-sep-color: rgba(128, 128, 128, 0.5);
+
+        /* Neutral aliases: capture the root pair so panels can swap it */
+        --panel-bg-color:     var(--bg-color);
+        --panel-fg-color:     var(--fg-color);
+        --panel-bg-color-alt: var(--bg-color-alt);
+        --panel-fg-color-alt: var(--fg-color-alt);
     }
 
     /* ------------------------------------------------------------------ */
-    /* Alternating panel-item colors                                        */
+    /* Alternating panel-item colors: the whole pair is swapped, so nested  */
+    /* elements keep a valid contrast between main and alternate colors.    */
     /* ------------------------------------------------------------------ */
 
+    main > .panel-item:nth-child(odd) {
+        --bg-color:     var(--panel-bg-color);
+        --fg-color:     var(--panel-fg-color);
+        --bg-color-alt: var(--panel-bg-color-alt);
+        --fg-color-alt: var(--panel-fg-color-alt);
+    }
+
     main > .panel-item:nth-child(even) {
-        --bg-color: var(--bg-color-alt);
-        --fg-color: var(--fg-color-alt);
+        --bg-color:     var(--panel-bg-color-alt);
+        --fg-color:     var(--panel-fg-color-alt);
+        --bg-color-alt: var(--panel-bg-color);
+        --fg-color-alt: var(--panel-fg-color);
     }
 
     /* ------------------------------------------------------------------ */
@@ -532,13 +546,14 @@ This banner notice must not be removed.
     }
 
     /* ------------------------------------------------------------------ */
-    /* Card colors                                                          */
+    /* Card colors: resolved on the card itself, not on :root, so that a    */
+    /* panel-level redefinition of --bg-color-alt is honored.               */
     /* ------------------------------------------------------------------ */
 
     .card {
         border: var(--card-border-width) solid var(--border-color-alt);
-        background: var(--card-bg-color);
-        color: var(--card-fg-color);
+        background: var(--card-bg-color, var(--bg-color-alt));
+        color: var(--card-fg-color, var(--fg-color));
         box-shadow: var(--card-box-shadow);
     }
 

@@ -216,7 +216,7 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - `layout.css` alternates `panel-item` section backgrounds via `main > .panel-item:nth-child(even)`, which redefines `--bg-color` and `--fg-color`. Some child elements (cards, code blocks, etc.) do not inherit these redefined variables and render with the wrong background color.
 
 
-## Version 3.1 - stable
+## Version 3.1
 
 - Extra Book. Added `abstract` class.
 - Extra Book. Added `aside.book-toc-aside`: toggleable ToC panel, auto-injected toggle button, new variable `--toc-aside-width`.
@@ -233,13 +233,17 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - New `togglegroup.css`. Generic segmented "toggle group" component for mutually-exclusive choices, composable with `.menuitem`. Documented in `docs/button.html`.
 
 
-## Version 3.2 - devel
+## Version 3.2 - stable
 
 - index.html. Fixed missing `./` in the `theme_manager.js` module import path.
 - ThemeManager. Fixed `next()`: resumes after the default theme instead of the first registered one.
 - OnLoadManager. Now registers its own `load` listener on first `addLoadFunction()` call.
 - wexa.js. Removed the now-redundant manual `window.onload` wiring.
-- New `.wrap-panel` / `.wrap-item` in layout.css. Space-driven flex wrap container: items keep their natural size, no forced single-column collapse on narrow screens. Documented in `docs/layout.html`.
-- AccessibilityManager. New `data-named-target` attribute on plain `<a>` links: opens or switches to the tab that claimed this window name (`window.name`) instead of navigating the current tab. Documented in `docs/accessibility.html`.
+- New `.wrap-panel` / `.wrap-item` in layout.css. Space-driven flex wrap container.
+- AccessibilityManager. New `data-named-target` attribute on plain `<a>` links.
+- LinkController. Fixed named targets: the window name is now honored.
+- Icons. New `info-square` icon, and removed the XML namespaces of the mono-svg icons.
+- layout.css. Bug corrected. Alternating `panel-item` sections now swap the whole color pair. 
+- New variables `--panel-bg-color`, `--panel-fg-color`, `--panel-bg-color-alt`, `--panel-fg-color-alt`. Documented in `docs/layout.html`.
 
 
