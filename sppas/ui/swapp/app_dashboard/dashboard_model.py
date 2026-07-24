@@ -124,6 +124,8 @@ class DashboardModel:
 
         """
         for web_app in applications:
+            if isinstance(web_app, WebApplicationInfo) is True and web_app.show is False:
+                continue
             success = self.append(web_app)
             if success is False:
                 logging.error("The application {app} is not added to the "

@@ -234,23 +234,23 @@ class DashboardView(swappBaseView):
         # Add dialogs for messages
         self.append_alert_dialogs(self._htree.body_main)
 
-        # The current workspace: a label, the name, and the path on hover.
-        # It will become the button opening the "Files" app.
-        if len(wkp_name) > 0:
-            _wkp = TagNode(self._htree.body_main.identifier, None, "p")
-            _wkp.set_attribute("id", "workspace_info")
-            self._htree.body_main.append_child(_wkp)
-            _s = HTMLNode(_wkp.identifier, None, "strong", value=MSG_WKP)
-            _wkp.append_child(_s)
-            _s = HTMLNode(_wkp.identifier, None, "span", value=wkp_name)
-            _s.set_attribute("id", "workspace_name")
-            if len(wkp_path) > 0:
-                _s.set_attribute("title", wkp_path)
-            _wkp.append_child(_s)
-
         # The applications section
         h2 = HTMLNode(self._htree.body_main.identifier, None, "h2", value=MSG_APPS_STABLE)
         self._htree.body_main.append_child(h2)
+
+        # The current workspace: a label, the name, and the path on hover.
+        # It only concerns the applications, so it belongs to their section.
+        # It will become the button opening the "Files" app.
+        if len(wkp_name) > 0:
+            _wkp = TagNode(self._htree.body_main.identifier, None, "p")
+            self._htree.body_main.append_child(_wkp)
+            _s = HTMLNode(_wkp.identifier, None, "b", value=MSG_WKP)
+            _wkp.append_child(_s)
+            _s = HTMLNode(_wkp.identifier, None, "span", value=wkp_name)
+            if len(wkp_path) > 0:
+                _wkp.set_value("title", wkp_path)
+            _wkp.append_child(_s)
+
         apps = AppsNode(self._htree.body_main.identifier)
         self._htree.body_main.append_child(apps)
 
