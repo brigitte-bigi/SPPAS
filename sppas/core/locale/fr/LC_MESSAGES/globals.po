@@ -176,6 +176,9 @@ msgstr "Le package {package} n'a pas pu être importé. L'installation de la fon
 msgid ":ERROR 0540: "
 msgstr "Le package {package} nécessite une mise à jour. Une ré-installation de la fonctionnalité {name} est requise pour pouvoir l'utiliser."
 
+msgid ":ERROR 0600: "
+msgstr "Fichier ou dossier introuvable : {name}"
+
 msgid ":ERROR 0610: "
 msgstr "L'extension du fichier {:s} est inconnue"
 
