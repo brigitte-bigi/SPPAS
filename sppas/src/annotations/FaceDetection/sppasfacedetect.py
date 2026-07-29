@@ -290,13 +290,19 @@ class sppasFaceDetection(sppasBaseAnnotation):
     def set_enable_model(self, model_name, value=True):
         """Enable or disable the use of a detection model.
 
+        The options are fixed before the models are loaded, so this method
+        is invoked a first time when no model is loaded yet: enabling can't
+        be done and it's not an error. The models are then enabled from the
+        options by 'load_resources()'. The warning is consequently reported
+        only if some models were already loaded.
+
         :param model_name: (str) model filename without path (model basename).
         :param value: (bool) True to enable.
 
         """
         value = bool(value)
         success = self.__fdi.enable_recognizer(model_name, value)
-        if success is False and value is True:
+        if success is False and value is True and self.__fdi.get_nb_recognizers() > 0:
             self.logfile.print_message(
                 "Model {:s} can't be enabled.".format(model_name),
                 indent=2, status=annots.warning)
