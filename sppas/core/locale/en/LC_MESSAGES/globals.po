@@ -57,13 +57,13 @@ msgid "Automatic generation of Cued Speech"
 msgstr "Automatic generation of Cued Speech. "
 
 msgid "Support of American English Language"
-msgstr "[already included] Support of American English Language. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."
+msgstr "Support of American English Language. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."
 
 msgid "Support of French Language"
-msgstr "[already included] Support of French Language. It includes a vocabulary, a pronunciation dictionary, an acoustic model, syllabification rules, etc."
+msgstr "Support of French Language. It includes a vocabulary, two pronunciation dictionaries, an acoustic model, syllabification rules, etc."
 
 msgid "Support of Quebec French Language"
-msgstr "[already included] Support of Quebec French Language. It includes a pronunciation dictionary, and an acoustic model."
+msgstr "Support of Quebec French Language. It includes a pronunciation dictionary, and an acoustic model."
 
 msgid "Support of Bengali Language"
 msgstr "Support of Bengali Language. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."
@@ -90,7 +90,7 @@ msgid "Support of Japanese Language"
 msgstr "Support of Japanese Language. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."
 
 msgid "Support of Korean Language"
-msgstr "Support of Korean Language [under devel]. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."
+msgstr "[under devel] Support of Korean Language. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."
 
 msgid "Support of Min Nan Language"
 msgstr "Support of Min Nan Language. It includes a vocabulary, a pronunciation dictionary, and an acoustic model."

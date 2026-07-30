@@ -60,7 +60,7 @@ msgid "Support of American English Language"
 msgstr "Prise en charge de l’anglais américain. Inclut un vocabulaire, un dictionnaire de prononciation et un modèle acoustique."
 
 msgid "Support of French Language"
-msgstr "Prise en charge du français. Inclut un vocabulaire, un dictionnaire de prononciation, un modèle acoustique, des règles de syllabification, etc."
+msgstr "Prise en charge du français. Inclut un vocabulaire, deux dictionnaires de prononciation, un modèle acoustique, des règles de syllabification, etc."
 
 msgid "Support of Quebec French Language"
 msgstr "Prise en charge du français québécois. Inclut un dictionnaire de prononciation et un modèle acoustique."
