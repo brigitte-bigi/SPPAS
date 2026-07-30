@@ -1,75 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="">
 
         <head>
             
-            <title>SPPAS doc</title>
+            <title>sppas doc</title>
 
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-            <meta name="description" content="Python Class Documentation of sppasHandPose. " />
+            <meta name="description" content="Python Class Documentation of sppasHandPose. SPPAS integration of the automatic Mediapipe Hand & Body Pose annotations." />
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/extras/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
 
-            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <!-- Whakerexa JS loader: bundle on file://, ES6 modules on http(s) -->
             <script>
             (function () {
               const usingFile = (window.location.protocol === 'file:');
-              const s = document.createElement('script');
-            
-              if (usingFile) {
-                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
-              } else {
-                s.type = 'module';
-                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              if (usingFile === false) {
+                return;
               }
-            
+              const s = document.createElement('script');
+              s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+
               s.onload = function () {
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
                 });
               };
-            
+
               document.head.appendChild(s);
             })();
             </script>
 
+            <!-- The Book extra is not part of the 'wexa.js' API: it is imported apart -->
+            <script type="module">
+              if (window.location.protocol !== 'file:') {
+                await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
+                const book = new Book("main-content");
+                book.fill_table(false);
+              }
+            </script>
+
        </head>
        
-       <body class="light">
+       <body>
         <header>
 
             <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
                 Go to main content
             </a>
-            <nav>
-                <ul>
-                    <li>
-                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
-                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
-                        </button>
-                    </li>
-                    <li>
-                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
-                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
-                        </button>
-                    </li>
-                </ul>
+            <nav class="nav-wexa top" aria-label="Accessibility">
+                <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
+                <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
             </nav>
         
-    <h1>SPPAS 5.0</h1>
+    <h1>sppas 5.0.1</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="side-nav">
-    <h1>SPPAS 5.0</h1>
+    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
+    <h1>sppas 5.0.1</h1>
     <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     <ul>
@@ -90,13 +88,596 @@
 <h2>Class sppasHandPose</h2>
 
 <section>
+<h3 id="#description_sppasHandPose">Description</h3>
+    <article class="docstring">
+<p><em>SPPAS integration of the automatic Mediapipe Hand &amp; Body Pose annotations.</em></p>
+
+<p>Requires an image/video.</p>
+
+    </article>
+</section>
+<section>
 <h3 id="#constructor_sppasHandPose">Constructor</h3>
+<h4>__init__</h4>
+
+    <article class="docstring">
+<p><em>Create a new sppasHandPose instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
     <details>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="k">raise</span> <span class="n">sppasEnableFeatureError</span><span class="p">(</span><span class="s1">&#39;mediapipe&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasHandPose instance.</span>
+
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasHandPose</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;handpose.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span> <span class="o">=</span> <span class="n">MediaPipeHandPoseDetector</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span> <span class="o">=</span> <span class="n">sppasHandsSightsImageWriter</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__hdv</span> <span class="o">=</span> <span class="n">VideoHandPoseDetector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span> <span class="o">=</span> <span class="n">sppasSightsVideoWriter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasHandPose">Public functions</h3>
+<h4>load_resources</h4>
+
+    <article class="docstring">
+<p><em>Fix the model files.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>args</strong>: (<em>str</em>) Filenames of the hand and the pose landmarker models.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix the model files.</span>
+
+<span class="sd">        :param args: (str) Filenames of the hand and the pose landmarker models.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p><em>Fix all options.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: (sppasOption)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+
+<span class="sd">        :param options: (sppasOption)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;hand&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enable_hand</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;pose&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enable_pose</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_out_csv</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;tag&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_img_tag</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;folder&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_out_folder</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>enable_hand</h4>
+
+    <article class="docstring">
+<p><em>The result includes hand detection.</em></p>
+
+<p>If set to False, pose detection is automatically enabled.
+If set to True, pose detection remains the same.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Enable hand detection</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_hand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The result includes hand detection.</span>
+
+<span class="sd">        If set to False, pose detection is automatically enabled.</span>
+<span class="sd">        If set to True, pose detection remains the same.</span>
+
+<span class="sd">        :param value: (bool) Enable hand detection</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>enable_pose</h4>
+
+    <article class="docstring">
+<p><em>The result includes pose detection.</em></p>
+
+<p>If set to False, hand detection is automatically enabled.
+If set to True, hand detection remains the same.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Enable pose detection</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">enable_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The result includes pose detection.</span>
+
+<span class="sd">        If set to False, hand detection is automatically enabled.</span>
+<span class="sd">        If set to True, hand detection remains the same.</span>
+
+<span class="sd">        :param value: (bool) Enable pose detection</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_out_csv</h4>
+
+    <article class="docstring">
+<p><em>The result includes a CSV file.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>out_csv</strong>: (<em>bool</em>) Create a CSV file with the coordinates</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_csv</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The result includes a CSV file.</span>
+
+<span class="sd">        :param out_csv: (bool) Create a CSV file with the coordinates</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">out_csv</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">out_csv</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">csv</span><span class="o">=</span><span class="n">out_csv</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;csv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_csv</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">xra</span><span class="o">=</span><span class="ow">not</span> <span class="n">out_csv</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;xra&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">out_csv</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_img_tag</h4>
+
+    <article class="docstring">
+<p><em>Draw the landmark points to the image.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Tag the images</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_img_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draw the landmark points to the image.</span>
+
+<span class="sd">        :param value: (bool) Tag the images</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_out_folder</h4>
+
+    <article class="docstring">
+<p><em>The result includes a folder with image files -- if video input.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>out_folder</strong>: (<em>bool</em>) Create a folder with image files when detecting</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_out_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_folder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The result includes a folder with image files -- if video input.</span>
+
+<span class="sd">        :param out_folder: (bool) Create a folder with image files when detecting</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">out_folder</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">out_folder</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">out_folder</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;folder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_folder</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>image_hand_sights</h4>
+
+    <article class="docstring">
+<p><em>Get the image, detect hands and write results.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>image_file</strong>: (<em>str</em>) Image filename</li>
+<li><strong>output</strong>: (<em>str</em>) The output name for the image</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of <em>list</em>) the sights of all detected hands or created filenames</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">image_hand_sights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_file</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the image, detect hands and write results.</span>
+
+<span class="sd">        :param image_file: (str) Image filename</span>
+<span class="sd">        :param output: (str) The output name for the image</span>
+
+<span class="sd">        :return: (list of list) the sights of all detected hands or created filenames</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">sppasImage</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">image_file</span><span class="p">)</span>
+    <span class="n">all_hands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="o">.</span><span class="n">detect_hands</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1"> hands found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">hand_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="p">)):</span>
+                <span class="n">sights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="o">.</span><span class="n">get_hand_sights</span><span class="p">(</span><span class="n">hand_idx</span><span class="p">)</span>
+                <span class="n">all_hands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sights</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;No hand found&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="o">.</span><span class="n">detect_poses</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">sights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdi</span><span class="o">.</span><span class="n">get_pose_sights</span><span class="p">()</span>
+            <span class="n">all_hands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sights</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;No hand found&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_hands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s1">&#39;IMAGE&#39;</span><span class="p">)</span>
+        <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__img_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">all_hands</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_files</span>
+    <span class="k">return</span> <span class="n">all_hands</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>video_hand_sights</h4>
+
+    <article class="docstring">
+<p><em>Get the video, detect hands and write results.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>video_file</strong>: (<em>str</em>) Video filename</li>
+<li><strong>output</strong>: (<em>str</em>) The output name for the video</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of <em>list</em>) the sights of all detected hands or created filenames</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">video_hand_sights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_file</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the video, detect hands and write results.</span>
+
+<span class="sd">        :param video_file: (str) Video filename</span>
+<span class="sd">        :param output: (str) The output name for the video</span>
+<span class="sd">        :return: (list of list) the sights of all detected hands or created filenames</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">result_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__hdv</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">HandPoseMode</span><span class="p">()</span><span class="o">.</span><span class="n">HAND</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__hdv</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">HandPoseMode</span><span class="p">()</span><span class="o">.</span><span class="n">BOTH</span><span class="p">)</span>
+        <span class="n">result_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdv</span><span class="o">.</span><span class="n">video_hand_sights</span><span class="p">(</span><span class="n">video_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hdv</span><span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">HandPoseMode</span><span class="p">()</span><span class="o">.</span><span class="n">POSE</span><span class="p">)</span>
+        <span class="n">result_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hdv</span><span class="o">.</span><span class="n">video_hand_sights</span><span class="p">(</span><span class="n">video_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return the media.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em>)</li>
+</ul>
+
+<h5>Raises</h5>
+
+<p>NoInputError</p>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>) Names of the expected file</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the media.</span>
+
+<span class="sd">        :param input_files: (list)</span>
+<span class="sd">        :raise: NoInputError</span>
+<span class="sd">        :return: (str) Names of the expected file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_extensions</span><span class="p">()</span>
+    <span class="n">media_ext</span> <span class="o">=</span> <span class="n">ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">fe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">media</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fe</span> <span class="ow">in</span> <span class="n">media_ext</span><span class="p">:</span>
+            <span class="n">media</span> <span class="o">=</span> <span class="n">filename</span>
+    <span class="k">if</span> <span class="n">media</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Neither a video nor an image was found.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">NoInputError</span>
+    <span class="k">return</span> <span class="n">media</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on an input.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) Input file is an image or a video</li>
+<li><strong>output</strong>: (<em>str</em>) the output file name</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of po<em>int</em>s or filenames) detected sights of hands or created filenames</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+
+<span class="sd">        :param input_files: (list of str) Input file is an image or a video</span>
+<span class="sd">        :param output: (str) the output file name</span>
+<span class="sd">        :return: (list of points or filenames) detected sights of hands or created filenames</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">media_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">media_file</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_image_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="s1">&#39;IMAGE&#39;</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">set_video_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_extensions</span><span class="p">[</span><span class="s1">&#39;VIDEO&#39;</span><span class="p">])</span>
+    <span class="n">result_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">video_extensions</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video_hand_sights</span><span class="p">(</span><span class="n">media_file</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__video_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">raise</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">image_extensions</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_hand_sights</span><span class="p">(</span><span class="n">media_file</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">raise</span>
+    <span class="k">return</span> <span class="n">result_files</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation uses in an output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-hands&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_patterns</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_extensions</h4>
+
+    <article class="docstring">
+<p><em>Extensions that the annotation expects for its input filename.</em></p>
+
+<p>Priority is given to video files, then image files.</p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.</span>
+
+<span class="sd">        Priority is given to video files, then image files.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">out_ext</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;VIDEO&#39;</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">img_ext</span> <span class="ow">in</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;IMAGE&#39;</span><span class="p">):</span>
+        <span class="n">out_ext</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_ext</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">out_ext</span><span class="p">]</span>
 </code></pre></div>
 
     </details>

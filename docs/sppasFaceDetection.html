@@ -1,75 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="">
 
         <head>
             
-            <title>SPPAS doc</title>
+            <title>sppas doc</title>
 
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
             <meta name="description" content="Python Class Documentation of sppasFaceDetection. SPPAS integration of the automatic face detection systems." />
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/extras/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
 
-            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <!-- Whakerexa JS loader: bundle on file://, ES6 modules on http(s) -->
             <script>
             (function () {
               const usingFile = (window.location.protocol === 'file:');
-              const s = document.createElement('script');
-            
-              if (usingFile) {
-                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
-              } else {
-                s.type = 'module';
-                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              if (usingFile === false) {
+                return;
               }
-            
+              const s = document.createElement('script');
+              s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+
               s.onload = function () {
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
                 });
               };
-            
+
               document.head.appendChild(s);
             })();
             </script>
 
+            <!-- The Book extra is not part of the 'wexa.js' API: it is imported apart -->
+            <script type="module">
+              if (window.location.protocol !== 'file:') {
+                await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
+                const book = new Book("main-content");
+                book.fill_table(false);
+              }
+            </script>
+
        </head>
        
-       <body class="light">
+       <body>
         <header>
 
             <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
                 Go to main content
             </a>
-            <nav>
-                <ul>
-                    <li>
-                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
-                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
-                        </button>
-                    </li>
-                    <li>
-                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
-                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
-                        </button>
-                    </li>
-                </ul>
+            <nav class="nav-wexa top" aria-label="Accessibility">
+                <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
+                <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
             </nav>
         
-    <h1>SPPAS 5.0</h1>
+    <h1>sppas 5.0.1</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="side-nav">
-    <h1>SPPAS 5.0</h1>
+    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
+    <h1>sppas 5.0.1</h1>
     <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     <ul>
@@ -104,6 +102,8 @@ portrait is enabled.</p>
 </section>
 <section>
 <h3 id="#constructor_sppasFaceDetection">Constructor</h3>
+<h4>__init__</h4>
+
     <article class="docstring">
 <p><em>Create a new automatic annotation instance.</em></p>
 
@@ -547,6 +547,12 @@ View Source
     <article class="docstring">
 <p><em>Enable or disable the use of a detection model.</em></p>
 
+<p>The options are fixed before the models are loaded, so this method
+is invoked a first time when no model is loaded yet: enabling can't
+be done and it's not an error. The models are then enabled from the
+options by 'load_resources()'. The warning is consequently reported
+only if some models were already loaded.</p>
+
 <h5>Parameters</h5>
 
 <ul>
@@ -564,13 +570,19 @@ View Source
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_enable_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enable or disable the use of a detection model.</span>
 
+<span class="sd">        The options are fixed before the models are loaded, so this method</span>
+<span class="sd">        is invoked a first time when no model is loaded yet: enabling can&#39;t</span>
+<span class="sd">        be done and it&#39;s not an error. The models are then enabled from the</span>
+<span class="sd">        options by &#39;load_resources()&#39;. The warning is consequently reported</span>
+<span class="sd">        only if some models were already loaded.</span>
+
 <span class="sd">        :param model_name: (str) model filename without path (model basename).</span>
 <span class="sd">        :param value: (bool) True to enable.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">enable_recognizer</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">success</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fdi</span><span class="o">.</span><span class="n">get_nb_recognizers</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s2">&quot;Model </span><span class="si">{:s}</span><span class="s2"> can&#39;t be enabled.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_name</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
 </code></pre></div>
 

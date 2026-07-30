@@ -1,75 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="">
 
         <head>
             
-            <title>SPPAS doc</title>
+            <title>sppas doc</title>
 
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
             <meta name="description" content="Python Class Documentation of sppasAppConfig. Configuration for SPPAS application." />
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
-            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/extras/book.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
 
-            <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+            <!-- Whakerexa JS loader: bundle on file://, ES6 modules on http(s) -->
             <script>
             (function () {
               const usingFile = (window.location.protocol === 'file:');
-              const s = document.createElement('script');
-            
-              if (usingFile) {
-                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
-              } else {
-                s.type = 'module';
-                s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js';
+              if (usingFile === false) {
+                return;
               }
-            
+              const s = document.createElement('script');
+              s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+
               s.onload = function () {
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
                 });
               };
-            
+
               document.head.appendChild(s);
             })();
             </script>
 
+            <!-- The Book extra is not part of the 'wexa.js' API: it is imported apart -->
+            <script type="module">
+              if (window.location.protocol !== 'file:') {
+                await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
+                const book = new Book("main-content");
+                book.fill_table(false);
+              }
+            </script>
+
        </head>
        
-       <body class="light">
+       <body>
         <header>
 
             <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
                 Go to main content
             </a>
-            <nav>
-                <ul>
-                    <li>
-                        <button id="btn-contrast" role="menuitem" class="print-off" onclick="window.Wexa.accessibility.switch_contrast_scheme()" aria-label="Contrast">
-                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/contrast_switcher.jpg" alt="Contrast" id="img-contrast"/>
-                        </button>
-                    </li>
-                    <li>
-                        <button id="btn-theme" class="print-off" role="menuitem" onclick="window.Wexa.accessibility.switch_color_scheme()" aria-label="Theme" >
-                            <img class="nav-item-img" src="../sppas/ui/swapp/whakerexa/wexa_statics/icons/theme_switcher.png" alt="Theme" id="img-theme"/>
-                        </button>
-                    </li>
-                </ul>
+            <nav class="nav-wexa top" aria-label="Accessibility">
+                <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
+                <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
             </nav>
         
-    <h1>SPPAS 5.0</h1>
+    <h1>sppas 5.0.1</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="side-nav">
-    <h1>SPPAS 5.0</h1>
+    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
+    <h1>sppas 5.0.1</h1>
     <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     <ul>
@@ -91,301 +89,301 @@
 
         <section class="cards-panel">
         <article class="card">
-            <header><span>1</span></header>
-            <main>
+            <div class="card-header"><span>1</span></div>
+            <div class="card-body">
                 <h3>sppasPythonError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasPythonError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>2</span></header>
-            <main>
+            <div class="card-header"><span>2</span></div>
+            <div class="card-body">
                 <h3>sppasError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>3</span></header>
-            <main>
+            <div class="card-header"><span>3</span></div>
+            <div class="card-body">
                 <h3>sppasTypeError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasTypeError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>4</span></header>
-            <main>
+            <div class="card-header"><span>4</span></div>
+            <div class="card-body">
                 <h3>sppasIndexError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasIndexError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>5</span></header>
-            <main>
+            <div class="card-header"><span>5</span></div>
+            <div class="card-body">
                 <h3>sppasValueError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasValueError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>6</span></header>
-            <main>
+            <div class="card-header"><span>6</span></div>
+            <div class="card-body">
                 <h3>sppasKeyError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasKeyError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>7</span></header>
-            <main>
+            <div class="card-header"><span>7</span></div>
+            <div class="card-body">
                 <h3>sppasOSError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasOSError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>8</span></header>
-            <main>
+            <div class="card-header"><span>8</span></div>
+            <div class="card-body">
                 <h3>sppasSystemOSError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasSystemOSError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>9</span></header>
-            <main>
+            <div class="card-header"><span>9</span></div>
+            <div class="card-body">
                 <h3>sppasInstallationError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasInstallationError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>10</span></header>
-            <main>
+            <div class="card-header"><span>10</span></div>
+            <div class="card-body">
                 <h3>sppasPermissionError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasPermissionError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>11</span></header>
-            <main>
+            <div class="card-header"><span>11</span></div>
+            <div class="card-body">
                 <h3>sppasEnableFeatureError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasEnableFeatureError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>12</span></header>
-            <main>
+            <div class="card-header"><span>12</span></div>
+            <div class="card-body">
                 <h3>sppasPackageFeatureError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasPackageFeatureError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>13</span></header>
-            <main>
+            <div class="card-header"><span>13</span></div>
+            <div class="card-body">
                 <h3>sppasPythonFeatureError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasPythonFeatureError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>14</span></header>
-            <main>
+            <div class="card-header"><span>14</span></div>
+            <div class="card-body">
                 <h3>sppasPackageUpdateFeatureError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasPackageUpdateFeatureError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>15</span></header>
-            <main>
+            <div class="card-header"><span>15</span></div>
+            <div class="card-body">
                 <h3>sppasIOError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasIOError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>16</span></header>
-            <main>
+            <div class="card-header"><span>16</span></div>
+            <div class="card-body">
                 <h3>NegativeValueError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="NegativeValueError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>17</span></header>
-            <main>
+            <div class="card-header"><span>17</span></div>
+            <div class="card-body">
                 <h3>RangeBoundsException</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="RangeBoundsException.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>18</span></header>
-            <main>
+            <div class="card-header"><span>18</span></div>
+            <div class="card-body">
                 <h3>IntervalRangeException</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="IntervalRangeException.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>19</span></header>
-            <main>
+            <div class="card-header"><span>19</span></div>
+            <div class="card-body">
                 <h3>IndexRangeException</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="IndexRangeException.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>20</span></header>
-            <main>
+            <div class="card-header"><span>20</span></div>
+            <div class="card-body">
                 <h3>LanguageNotFoundError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="LanguageNotFoundError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>21</span></header>
-            <main>
+            <div class="card-header"><span>21</span></div>
+            <div class="card-body">
                 <h3>IOExtensionError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="IOExtensionError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>22</span></header>
-            <main>
+            <div class="card-header"><span>22</span></div>
+            <div class="card-body">
                 <h3>NoDirectoryError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="NoDirectoryError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>23</span></header>
-            <main>
+            <div class="card-header"><span>23</span></div>
+            <div class="card-body">
                 <h3>sppasOpenError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasOpenError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>24</span></header>
-            <main>
+            <div class="card-header"><span>24</span></div>
+            <div class="card-body">
                 <h3>sppasReadError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasReadError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>25</span></header>
-            <main>
+            <div class="card-header"><span>25</span></div>
+            <div class="card-body">
                 <h3>sppasWriteError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasWriteError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>26</span></header>
-            <main>
+            <div class="card-header"><span>26</span></div>
+            <div class="card-body">
                 <h3>sppasExtensionReadError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasExtensionReadError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>27</span></header>
-            <main>
+            <div class="card-header"><span>27</span></div>
+            <div class="card-body">
                 <h3>sppasExtensionWriteError</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasExtensionWriteError.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>28</span></header>
-            <main>
+            <div class="card-header"><span>28</span></div>
+            <div class="card-body">
                 <h3>sppasUnicode</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasUnicode.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>29</span></header>
-            <main>
+            <div class="card-header"><span>29</span></div>
+            <div class="card-body">
                 <h3>ISO639</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="ISO639.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>30</span></header>
-            <main>
+            <div class="card-header"><span>30</span></div>
+            <div class="card-body">
                 <h3>LanguageInfo</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="LanguageInfo.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>31</span></header>
-            <main>
+            <div class="card-header"><span>31</span></div>
+            <div class="card-body">
                 <h3>sppasLogFile</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasLogFile.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>32</span></header>
-            <main>
+            <div class="card-header"><span>32</span></div>
+            <div class="card-body">
                 <h3>sppasTrash</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasTrash.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         <article class="card">
-            <header><span>33</span></header>
-            <main>
+            <div class="card-header"><span>33</span></div>
+            <div class="card-body">
                 <h3>sppasBaseProgress</h3>
-            </main>
-            <footer>
+            </div>
+            <div class="card-footer">
                 <a role="button" href="sppasBaseProgress.html">Read me →</a>
-            </footer>
+            </div>
         </article>
         </section>
     </section>    </main>
