@@ -42,11 +42,7 @@
     --header-slidein: animDisabled;
 }
 
-html {
-    margin-left: calc(var(--toc-width) + 1rem);
-}
-
-.light {
+:root:not(.dark) {
     --nav-bg-color: rgb(30, 30, 60);
     --nav-fg-color: rgb(230, 230, 230);
     --footer-bg-color: rgb(30, 30, 60);
@@ -88,7 +84,7 @@ article, details {
 }
 
 
-.card header span {
+.card .card-header span {
     font-size: 250%;
     position: relative;
     padding-top: 1rem;
@@ -99,70 +95,21 @@ article, details {
     text-align: center;
 }
 
+/* 'layout.css' makes the background of all the children of a card transparent,
+   so the colors of the button of the footer are restored here. */
+
+.card .card-footer a[role=button] {
+    background-color: var(--buttons-bg-color);
+    color: var(--buttons-fg-color);
+}
+
+.card .card-footer a[role=button]:hover {
+    background-color: var(--buttons-bg-color-hover);
+}
+
 /* =======================================================================
                               BOOK NAVIGATION
   ======================================================================== */
 
-/* nav buttons used to browse throw modules/classes */
-
-nav.side-nav > ul, nav.side-nav > hr, nav.side-nav > h1, nav.side-nav > h2 {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-}
-
-nav.side-nav h1 {
-    font-size: 130%;
-    font-weight: var(--font-weight-black);
-}
-
-nav.side-nav h2 {
-    font-size: 120%;
-    font-weight: var(--font-weight-bold);
-}
-
-nav.side-nav a[role=button], nav.side-nav button {
-    width: calc(0.75*var(--toc-width));
-    height: calc(3*var(--font-size));
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 0.5rem;
-}
-
-
-/* =======================================================================
-                              PRINTING
-  ======================================================================== */
-
-@media print {
-    html {
-        margin-left: unset;
-    }
-
-    body > header {
-        display: none;
-    }
-    body > nav {
-        display: none;
-    }
-    body > footer {
-        display: none;
-    }
-
-    nav.side-nav {
-        display: none;
-        /* Migrate to a top nav for printing or small screens
-        color: inherit;
-        width: 100%;
-        position: absolute;
-        padding-top: 1rem;
-        padding-bottom: 0.3rem;
-        margin: 0 auto;
-        font-size: 90%;
-        overflow: unset; */
-    }
-
-    #toc-content {
-        margin-left: 1rem;
-    }
-}
+/* The layout of 'nav.book-toc', of its titles and of its browsing buttons is
+   given by 'extras/book.css', and the printed layout by 'print.css'. */
