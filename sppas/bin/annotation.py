@@ -18,7 +18,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -58,25 +58,22 @@ from sppas.ui.term.terminalcontroller import TerminalController
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
+def get_args_from_cmd(parameters):
+    """Get args from the command-line interface with ArgumentParser.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters (parse sppasui.json)
-    # -----------------------------------------------------------------------
+    The languages and the annotations to be activated are added to the
+    arguments, so the parser requires the annotation parameters.
 
-    parameters = sppasParam()
-    manager = sppasAnnotationsManager()
+    :param parameters: (sppasParam) Parameters of the annotations
+    :return: (Namespace) The parsed arguments
 
+    """
     all_langs = list()
     all_langs.append("und")
     for i in range(parameters.get_step_numbers()):
         a = parameters.get_step(i)
         all_langs.extend(a.get_langlist())
     all_langs = list(set(all_langs))
-
-    # ----------------------------------------------------------------------------
-    # Verify and extract args:
-    # ----------------------------------------------------------------------------
 
     parser = ArgumentParser(
         usage="%(prog)s -I file|folder [options]",
@@ -139,7 +136,21 @@ if __name__ == "__main__":
     if len(sys.argv) <= 1:
         sys.argv.append('-h')
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+# ---------------------------------------------------------------------------
+
+
+def annotation():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters (parse sppasui.json)
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam()
+    manager = sppasAnnotationsManager()
+
+    args = get_args_from_cmd(parameters)
 
     # ----------------------------------------------------------------------------
     # Automatic annotations configuration
@@ -192,8 +203,7 @@ if __name__ == "__main__":
                     x += 1
     print("")
     if x == 0:
-        print('No annotation enabled. Nothing to do.')
-        sys.exit(1)
+        sys.exit("No annotation enabled. Nothing to do.")
 
     # Get files from arguments
     # -------------------------------
@@ -233,3 +243,9 @@ if __name__ == "__main__":
         print('{:s}\n'.format(sep))
 
     p.close()
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    annotation()

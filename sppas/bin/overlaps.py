@@ -18,7 +18,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -58,20 +58,18 @@ from sppas.src.annotations import sppasAnnotationsManager
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
+def get_args_from_cmd(parameters, ann_step_idx):
+    """Get args from the command-line interface with ArgumentParser.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters
-    # -----------------------------------------------------------------------
+    The arguments of the options of the annotation are added to the ones of
+    the files, so the parser requires the annotation parameters.
 
-    parameters = sppasParam(["overlaps.json"])
-    ann_step_idx = parameters.activate_annotation("overlaps")
+    :param parameters: (sppasParam) Parameters of the annotations
+    :param ann_step_idx: (int) Index of the activated annotation
+    :return: (Namespace) The parsed arguments
+
+    """
     ann_options = parameters.get_options(ann_step_idx)
-
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
-
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
         description=
@@ -153,6 +151,38 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # Mutual exclusion of inputs
+    # --------------------------
+
+    if args.i and args.W:
+        parser.error("argument -W: not allowed with argument -i")
+
+    if args.i and args.I:
+        parser.error("argument -I: not allowed with argument -i")
+
+
+    # Required combinations of inputs
+    # -------------------------------
+
+    if not (args.W or args.I) and args.i and not args.s:
+        parser.error("option -s is required with option -i")
+
+    return args
+
+# ---------------------------------------------------------------------------
+
+
+def overlaps():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam(["overlaps.json"])
+    ann_step_idx = parameters.activate_annotation("overlaps")
+
+    args = get_args_from_cmd(parameters, ann_step_idx)
+
     # -----------------------------------------------------------------------
     # The automatic annotation is here:
     # -----------------------------------------------------------------------
@@ -171,18 +201,6 @@ if __name__ == "__main__":
         if a not in ('W', 'i', 'I', 'o', 's', 'e', 'log', 'quiet'):
             parameters.set_option_value(ann_step_idx, a, str(arguments[a]))
             o = parameters.get_step(ann_step_idx).get_option_by_key(a)
-
-    if args.i and args.W:
-        parser.print_usage()
-        print("{:s}: error: argument -W: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
-
-    if args.i and args.I:
-        parser.print_usage()
-        print("{:s}: error: argument -I: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
 
     if args.W or args.I:
 
@@ -206,10 +224,6 @@ if __name__ == "__main__":
 
     elif args.i:
 
-        if not args.s:
-            print("argparse.py: error: option -s is required with option -i")
-            sys.exit(1)
-
         # Perform the annotation on a single file
         # ---------------------------------------
 
@@ -232,3 +246,9 @@ if __name__ == "__main__":
 
         if not args.quiet:
             print("No file was given to be annotated. Nothing to do!")
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    overlaps()

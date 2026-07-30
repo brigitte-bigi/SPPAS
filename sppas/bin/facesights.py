@@ -18,7 +18,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -60,23 +60,18 @@ from sppas.src.wkps import sppasWkpRW
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
+def get_args_from_cmd(parameters, ann_step_idx):
+    """Get args from the command-line interface with ArgumentParser.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters
-    # -----------------------------------------------------------------------
+    The arguments of the options of the annotation are added to the ones of
+    the files, so the parser requires the annotation parameters.
 
-    parameters = sppasParam(["facesights.json"])
-    ann_step_idx = parameters.activate_annotation("facesights")
-    if ann_step_idx == -1:
-        print("The automatic annotation can't be enabled.")
-        sys.exit(1)
+    :param parameters: (sppasParam) Parameters of the annotations
+    :param ann_step_idx: (int) Index of the activated annotation
+    :return: (Namespace) The parsed arguments
+
+    """
     ann_options = parameters.get_options(ann_step_idx)
-
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
-
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
         description=
@@ -169,16 +164,38 @@ if __name__ == "__main__":
     # --------------------------
 
     if args.i and args.W:
-        parser.print_usage()
-        print("{:s}: error: argument -W: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -W: not allowed with argument -i")
 
     if args.i and args.I:
-        parser.print_usage()
-        print("{:s}: error: argument -I: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        raise SystemExit(1)
+        parser.error("argument -I: not allowed with argument -i")
+
+
+    # Required combinations of inputs
+    # -------------------------------
+
+    if args.i and not args.c:
+        parser.error("option -c is required with option -i")
+    if args.i and not args.r:
+        parser.error("option -r is required with option -i")
+
+    return args
+
+# ---------------------------------------------------------------------------
+
+
+def facesights():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam(["facesights.json"])
+    ann_step_idx = parameters.activate_annotation("facesights")
+    if ann_step_idx == -1:
+        print("The automatic annotation can't be enabled.")
+        sys.exit(1)
+
+    args = get_args_from_cmd(parameters, ann_step_idx)
 
     # -----------------------------------------------------------------------
     # The automatic annotation is here:
@@ -199,13 +216,6 @@ if __name__ == "__main__":
             parameters.set_option_value(ann_step_idx, a, str(arguments[a]))
 
     if args.i:
-
-        if not args.c:
-            print("argparse.py: error: option -c is required with option -i")
-            raise SystemExit(1)
-        if not args.r:
-            print("argparse.py: error: option -r is required with option -i")
-            raise SystemExit(1)
 
         # Perform the annotation on a single file
         # ---------------------------------------
@@ -244,3 +254,9 @@ if __name__ == "__main__":
         # Perform the annotation
         process = sppasAnnotationsManager()
         process.annotate(parameters)
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    facesights()

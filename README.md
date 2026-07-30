@@ -97,6 +97,23 @@ For example, full automatic speech segmentation:
 $ sppasseg -w audio.wav -l eng -e .TextGrid
 ```
 
+Each automatic annotation has its own command, named after its script of
+`sppas/bin/` with the `sppas` prefix: `sppasnormalize`, `sppasphonetize`,
+`sppasalignment`, `sppassyllabify`, `sppasmomel`, `sppasintsint`,
+`sppassearchipus`, `sppasfillipus`, `sppasrms`, `sppasiva`, `sppastga`,
+`sppasstopwords`, `sppasselfrepetition`, `sppasotherrepetition`,
+`sppasreoccurrences`, `sppasspklexrep`, `sppasoverlaps`, `sppasformants`,
+`sppasanonymize`, `sppasstt`, `sppasfacedetection`, `sppasfacesights`,
+`sppasfaceidentity` and `sppashandpose`. The command `sppasannotation`
+runs several of them at once, and `sppastrsconvert` and `sppastrsmerge`
+export and merge annotated files.
+
+Each command prints its own help:
+
+```
+$ sppasnormalize --help
+```
+
 Additional scripts for data processing and analysis are available in `sppas/scripts/`.
 
 

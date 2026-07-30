@@ -18,7 +18,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -60,28 +60,24 @@ from sppas.src.wkps import sppasWkpRW
 # ---------------------------------------------------------------------------
 
 
-all_output_formats = list()
-for f in sppasFiles.get_outformat_extensions("VIDEO"):
-    all_output_formats.append(f)
-for f in sppasFiles.get_outformat_extensions("IMAGE"):
-    all_output_formats.append(f)
+def get_args_from_cmd(parameters, ann_step_idx):
+    """Get args from the command-line interface with ArgumentParser.
 
-if __name__ == "__main__":
+    The arguments of the options of the annotation are added to the ones of
+    the files, so the parser requires the annotation parameters.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters
-    # -----------------------------------------------------------------------
+    :param parameters: (sppasParam) Parameters of the annotations
+    :param ann_step_idx: (int) Index of the activated annotation
+    :return: (Namespace) The parsed arguments
 
-    parameters = sppasParam(["handpose.json"])
-    ann_step_idx = parameters.activate_annotation("handpose")
-    if ann_step_idx == -1:
-        print("The automatic annotation can't be enabled.")
-        sys.exit(1)
+    """
     ann_options = parameters.get_options(ann_step_idx)
 
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
+    all_output_formats = list()
+    for f in sppasFiles.get_outformat_extensions("VIDEO"):
+        all_output_formats.append(f)
+    for f in sppasFiles.get_outformat_extensions("IMAGE"):
+        all_output_formats.append(f)
 
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
@@ -163,16 +159,29 @@ if __name__ == "__main__":
     # --------------------------
 
     if args.i and args.W:
-        parser.print_usage()
-        print("{:s}: error: argument -W: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -W: not allowed with argument -i")
 
     if args.i and args.I:
-        parser.print_usage()
-        print("{:s}: error: argument -I: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
+        parser.error("argument -I: not allowed with argument -i")
+
+    return args
+
+# ---------------------------------------------------------------------------
+
+
+def handpose():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam(["handpose.json"])
+    ann_step_idx = parameters.activate_annotation("handpose")
+    if ann_step_idx == -1:
+        print("The automatic annotation can't be enabled.")
         sys.exit(1)
+
+    args = get_args_from_cmd(parameters, ann_step_idx)
 
     # -----------------------------------------------------------------------
     # The automatic annotation is here:
@@ -236,3 +245,9 @@ if __name__ == "__main__":
 
         # Perform the annotation
         process.annotate(parameters)
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    handpose()

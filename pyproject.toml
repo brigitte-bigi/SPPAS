@@ -41,8 +41,8 @@
     # See 'sppas/etc/features.ini' for the list of features dependencies.
     dependencies = [
         "certifi",
-        "AudiooPy == 1.0",
-        "WhakerPy == 2.4"
+        "AudiooPy >= 0.6, < 2.0",
+        "WhakerPy >= 2.3, < 3.0"
     ]
 
 [project.urls]
@@ -52,14 +52,41 @@
 
 [project.scripts]
     # See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#console-scripts
+    sppasalignment = "sppas.bin.alignment:alignment"
+    sppasannotation = "sppas.bin.annotation:annotation"
+    sppasanonymize = "sppas.bin.anonymize:anonymize"
+    sppasfacedetection = "sppas.bin.facedetection:facedetection"
+    sppasfaceidentity = "sppas.bin.faceidentity:faceidentity"
+    sppasfacesights = "sppas.bin.facesights:facesights"
+    sppasfillipus = "sppas.bin.fillipus:fillipus"
+    sppasformants = "sppas.bin.formants:formants"
+    sppashandpose = "sppas.bin.handpose:handpose"
+    sppasintsint = "sppas.bin.intsint:intsint"
+    sppasiva = "sppas.bin.iva:iva"
+    sppasmomel = "sppas.bin.momel:momel"
+    sppasnormalize = "sppas.bin.normalize:normalize"
+    sppasotherrepetition = "sppas.bin.otherrepetition:otherrepetition"
+    sppasoverlaps = "sppas.bin.overlaps:overlaps"
+    sppasphonetize = "sppas.bin.phonetize:phonetize"
+    sppasreoccurrences = "sppas.bin.reoccurrences:reoccurrences"
+    sppasrms = "sppas.bin.rms:rms"
+    sppassearchipus = "sppas.bin.searchipus:searchipus"
     sppasseg = "sppas.scripts.sppasseg:sppasseg"
+    sppasselfrepetition = "sppas.bin.selfrepetition:selfrepetition"
     sppassetup = "sppas.bin.sppassetup:sppassetup"
+    sppasspklexrep = "sppas.bin.spklexrep:spklexrep"
+    sppasstopwords = "sppas.bin.stopwords:stopwords"
+    sppasstt = "sppas.bin.stt:stt"
+    sppassyllabify = "sppas.bin.syllabify:syllabify"
+    sppastga = "sppas.bin.tga:tga"
+    sppastrsconvert = "sppas.bin.trsconvert:trsconvert"
+    sppastrsmerge = "sppas.bin.trsmerge:trsmerge"
 
 [project.optional-dependencies]
     docs = [
         "pygments",
         "markdown2",
-        "ClammingPy >= 3.0"]
+        "ClammingPy >= 3.0, < 4.0"]
     tests = [
         "coverage ~=7.3.0",
         "python-dotenv ~=1.0.0"]

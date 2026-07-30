@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -63,20 +63,18 @@ from sppas.src.wkps import sppasWkpRW
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
+def get_args_from_cmd(parameters, ann_step_idx):
+    """Get args from the command-line interface with ArgumentParser.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters
-    # -----------------------------------------------------------------------
+    The arguments of the options of the annotation are added to the ones of
+    the files, so the parser requires the annotation parameters.
 
-    parameters = sppasParam(["alignment.json"])
-    ann_step_idx = parameters.activate_annotation("alignment")
+    :param parameters: (sppasParam) Parameters of the annotations
+    :param ann_step_idx: (int) Index of the activated annotation
+    :return: (Namespace) The parsed arguments
+
+    """
     ann_options = parameters.get_options(ann_step_idx)
-
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
-
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
         description=
@@ -180,22 +178,38 @@ if __name__ == "__main__":
     # --------------------------
 
     if args.i and args.W:
-        parser.print_usage()
-        print("{:s}: error: argument -W: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -W: not allowed with argument -i")
 
     if args.i and args.I:
-        parser.print_usage()
-        print("{:s}: error: argument -I: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        raise SystemExit(1)
+        parser.error("argument -I: not allowed with argument -i")
 
     if args.R and not args.r:
-        parser.print_usage()
-        print("{:s}: error: argument -R: not allowed without argument -r"
-              "".format(os.path.basename(PROGRAM)))
-        raise SystemExit(1)
+        parser.error("argument -R: not allowed without argument -r")
+
+
+    # Required combinations of inputs
+    # -------------------------------
+
+    if (args.I or args.W) and not args.l:
+        parser.error("option -l is required with option -I")
+    if not (args.I or args.W) and (args.i or args.p) and not args.p:
+        parser.error("option -p is required with option -i")
+
+    return args
+
+# ---------------------------------------------------------------------------
+
+
+def alignment():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam(["alignment.json"])
+    ann_step_idx = parameters.activate_annotation("alignment")
+
+    args = get_args_from_cmd(parameters, ann_step_idx)
 
     # -----------------------------------------------------------------------
     # The automatic annotation is here:
@@ -216,10 +230,6 @@ if __name__ == "__main__":
             parameters.set_option_value(ann_step_idx, a, str(arguments[a]))
 
     if args.I or args.W:
-
-        if not args.l:
-            print("argparse.py: error: option -l is required with option -I")
-            sys.exit(1)
 
         # Fix input files
         # ---------------
@@ -250,9 +260,6 @@ if __name__ == "__main__":
 
         # Perform the annotation on a single file
         # ---------------------------------------
-        if not args.p:
-            print("argparse.py: error: option -p is required with option -i")
-            sys.exit(1)
 
         ann = sppasAlign(log=None)
         if args.r:
@@ -285,3 +292,9 @@ if __name__ == "__main__":
                     e = here + float(end)
                     print("{} {} {:s}".format(b, e, phone))
                 here = here + (0.01 * aligned[-1][1])
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    alignment()

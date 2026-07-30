@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -59,20 +59,18 @@ from sppas.src.wkps import sppasWkpRW
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
+def get_args_from_cmd(parameters, ann_step_idx):
+    """Get args from the command-line interface with ArgumentParser.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters
-    # -----------------------------------------------------------------------
+    The arguments of the options of the annotation are added to the ones of
+    the files, so the parser requires the annotation parameters.
 
-    parameters = sppasParam(["lexrep.json"])
-    ann_step_idx = parameters.activate_annotation("spklexrep")
+    :param parameters: (sppasParam) Parameters of the annotations
+    :param ann_step_idx: (int) Index of the activated annotation
+    :return: (Namespace) The parsed arguments
+
+    """
     ann_options = parameters.get_options(ann_step_idx)
-
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
-
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
         description=
@@ -169,16 +167,35 @@ if __name__ == "__main__":
     # --------------------------
 
     if args.i and args.W:
-        parser.print_usage()
-        print("{:s}: error: argument -W: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -W: not allowed with argument -i")
 
     if args.i and args.I:
-        parser.print_usage()
-        print("{:s}: error: argument -I: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -I: not allowed with argument -i")
+
+
+    # Required combinations of inputs
+    # -------------------------------
+
+    if args.i and not args.s:
+        parser.error("option -s is required with option -i")
+    if not args.i and (args.W or args.I) and not args.l:
+        parser.error("option -l is required with option -I or -W")
+
+    return args
+
+# ---------------------------------------------------------------------------
+
+
+def spklexrep():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam(["lexrep.json"])
+    ann_step_idx = parameters.activate_annotation("spklexrep")
+
+    args = get_args_from_cmd(parameters, ann_step_idx)
 
     # -----------------------------------------------------------------------
     # The automatic annotation is here:
@@ -201,10 +218,6 @@ if __name__ == "__main__":
 
     if args.i:
 
-        if not args.s:
-            print("argparse.py: error: option -s is required with option -i")
-            sys.exit(1)
-
         # Perform the annotation on a single file
         # ---------------------------------------
 
@@ -224,10 +237,6 @@ if __name__ == "__main__":
                         a.get_best_tag().get_content()))
 
     elif args.W or args.I:
-
-        if not args.l:
-            print("argparse.py: error: option -l is required with option -I or -W")
-            sys.exit(1)
 
         # Fix input files
         # ---------------
@@ -255,3 +264,9 @@ if __name__ == "__main__":
 
         if not args.quiet:
             print("No file was given to be annotated. Nothing to do!")
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    spklexrep()

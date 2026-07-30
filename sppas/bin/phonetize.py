@@ -18,7 +18,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -66,20 +66,18 @@ from sppas.src.wkps import sppasWkpRW
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
+def get_args_from_cmd(parameters, ann_step_idx):
+    """Get args from the command-line interface with ArgumentParser.
 
-    # -----------------------------------------------------------------------
-    # Fix initial annotation parameters
-    # -----------------------------------------------------------------------
+    The arguments of the options of the annotation are added to the ones of
+    the files, so the parser requires the annotation parameters.
 
-    parameters = sppasParam(["phonetize.json"])
-    ann_step_idx = parameters.activate_annotation("phonetize")
+    :param parameters: (sppasParam) Parameters of the annotations
+    :param ann_step_idx: (int) Index of the activated annotation
+    :return: (Namespace) The parsed arguments
+
+    """
     ann_options = parameters.get_options(ann_step_idx)
-
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
-
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
         description=
@@ -181,16 +179,39 @@ if __name__ == "__main__":
     # --------------------------
 
     if args.i and args.W:
-        parser.print_usage()
-        print("{:s}: error: argument -W: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -W: not allowed with argument -i")
 
     if args.i and args.I:
-        parser.print_usage()
-        print("{:s}: error: argument -I: not allowed with argument -i"
-              "".format(os.path.basename(PROGRAM)))
-        sys.exit(1)
+        parser.error("argument -I: not allowed with argument -i")
+
+
+    # Required combinations of inputs
+    # -------------------------------
+
+    if args.i and not args.r:
+        parser.error("option -r is required with option -i")
+    if not args.i and (args.W or args.I) and not args.l:
+        parser.error("option -l is required with option -I or -W")
+    if not args.i and not (args.W or args.I) and not args.phonunk:
+        parser.error("option -unk is required")
+    if not args.i and not (args.W or args.I) and not args.r:
+        parser.error("option -r is required")
+
+    return args
+
+# ---------------------------------------------------------------------------
+
+
+def phonetize():
+
+    # -----------------------------------------------------------------------
+    # Fix initial annotation parameters
+    # -----------------------------------------------------------------------
+
+    parameters = sppasParam(["phonetize.json"])
+    ann_step_idx = parameters.activate_annotation("phonetize")
+
+    args = get_args_from_cmd(parameters, ann_step_idx)
 
     # -----------------------------------------------------------------------
     # The automatic annotation is here:
@@ -216,10 +237,6 @@ if __name__ == "__main__":
         # Perform the annotation on a single file
         # ---------------------------------------
 
-        if not args.r:
-            print("argparse.py: error: option -r is required with option -i")
-            sys.exit(1)
-
         ann = sppasPhon(log=None)
         ann.load_resources(args.r, args.m)
         ann.fix_options(parameters.get_options(ann_step_idx))
@@ -241,10 +258,6 @@ if __name__ == "__main__":
                             serialize_labels(a.get_labels(), " ")))
 
     elif args.W or args.I:
-
-        if not args.l:
-            print("argparse.py: error: option -l is required with option -I or -W")
-            sys.exit(1)
 
         # Fix input files
         # ---------------
@@ -277,14 +290,6 @@ if __name__ == "__main__":
         # an argument 'unk' must exists (which is in the options).
         # -------------------------------
 
-        if not args.phonunk:
-            print("argparse.py: error: option -unk is required")
-            sys.exit(1)
-
-        if not args.r:
-            print("argparse.py: error: option -r is required")
-            sys.exit(1)
-
         pdict = sppasDictPron(args.r, nodump=False)
         mapping = sppasMapping()
         if args.m:
@@ -292,3 +297,9 @@ if __name__ == "__main__":
         phonetizer = sppasDictPhonetizer(pdict, mapping)
         for line in sys.stdin:
             print("{:s}".format(phonetizer.phonetize(line, args.phonunk)))
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    phonetize()

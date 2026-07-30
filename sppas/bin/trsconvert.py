@@ -18,7 +18,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -60,11 +60,8 @@ from sppas.src.anndata import sppasXRA
 # ---------------------------------------------------------------------------
 
 
-if __name__ == "__main__":
-
-    # -----------------------------------------------------------------------
-    # Verify and extract args:
-    # -----------------------------------------------------------------------
+def get_args_from_cmd():
+    """Get args from the command-line interface with ArgumentParser."""
 
     parser = ArgumentParser(
         usage="%(prog)s [files] [options]",
@@ -131,7 +128,14 @@ if __name__ == "__main__":
     if len(sys.argv) <= 1:
         sys.argv.append('-h')
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+# ---------------------------------------------------------------------------
+
+
+def trsconvert():
+
+    args = get_args_from_cmd()
 
     # Redirect all messages to logging
     # --------------------------------
@@ -239,3 +243,9 @@ if __name__ == "__main__":
         x = sppasXRA()
         x.set(trs_output)
         x.write(sys.stdout)
+
+# ---------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    trsconvert()
