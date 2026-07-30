@@ -17,7 +17,7 @@
 [project]
     name = "sppas"
     # The version must be PEP 440 compliant
-    version = "5.0.1"
+    version = "5.0.2"
     authors = [
         {name="Brigitte Bigi", email="contact@sppas.org"},
     ]
@@ -41,8 +41,8 @@
     # See 'sppas/etc/features.ini' for the list of features dependencies.
     dependencies = [
         "certifi",
-        "AudiooPy >= 0.6",
-        "WhakerPy == 2.3"
+        "AudiooPy == 1.0",
+        "WhakerPy == 2.4"
     ]
 
 [project.urls]
