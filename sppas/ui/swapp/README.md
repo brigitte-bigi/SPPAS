@@ -132,6 +132,11 @@ is not, the Dashboard bakes a dialog inviting the user to open it -- its
 single button opens the named tab. The user either has the tab, or has
 the message telling to open it.
 
+Above the header of the store, the page displays the update state of the
+source code, read from `cfg.update_info` like the About page does: a
+warning if a newer version exists on PyPI, an information if the installed
+one is up to date.
+
 Each record keeps its "source" (`swapp` or `wxapp`) and its "origin": the
 useful/important messages of the API (`sppas/core`, `sppas/src`) are
 distinguished from the secondary messages of the interfaces (`sppas/ui`),

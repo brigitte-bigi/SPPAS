@@ -45,6 +45,7 @@ from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
 
+from sppas.core.config import cfg
 from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp.wappbase.wappview import swappBaseView
@@ -71,6 +72,10 @@ MSG_SESSION_ENDED = _("Session ended")
 MSG_CLOSE_TAB = _("You can close this tab. [...]")
 # The long version of the message is in the "po" files.
 MSG_PURPOSE = _("This page displays the messages of SPPAS.")
+# Le code source « sppas » est à jour.
+MSG_UP_TO_DATE = _("The « sppas » source code is up to date.")
+# Une mise à jour du code source « sppas » est disponible. Lancez Setup pour l’installer.
+MSG_UPDATE = _("An update of the « sppas » source code is available. Run Setup to install it.")
 
 # The CSS class of a record, by Python logging level name.
 LOG_LEVEL_CLASS = {
@@ -259,6 +264,17 @@ class TraceView(swappBaseView):
             _status.set_attribute("class", "status-message")
             _status.set_attribute("role", "status")
             self._htree.body_main.append_child(_status)
+
+        # The update state of the source code, as displayed by the About
+        # page. It is colored with the levels of the journal: a warning if
+        # a newer version exists, an information if the code is up to date.
+        if cfg.update_info.get('update') is True:
+            _update = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_UPDATE)
+            _update.set_attribute("class", "status-message log-warning")
+        else:
+            _update = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_UP_TO_DATE)
+            _update.set_attribute("class", "status-message log-info")
+        self._htree.body_main.append_child(_update)
 
         # The header of the store, once, above the two panels.
         # The values are escaped: they are plain text and could contain
