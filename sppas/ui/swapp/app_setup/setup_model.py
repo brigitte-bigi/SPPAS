@@ -44,6 +44,7 @@ import traceback
 import logging
 from threading import Thread
 
+from sppas.core import cfg
 from sppas.core.preinstall import sppasInstallerDeps
 
 # ---------------------------------------------------------------------------
@@ -97,6 +98,10 @@ class SetupModel:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             logging.error(repr(traceback.format_exception(exc_type, exc_value, exc_traceback)))
             self.__installer = None
+        else:
+            # The 'sppas' feature updates the installed 'sppas' package: it is
+            # enabled only if a newer version is available on the pypi repository.
+            self.__installer.enable("sppas", cfg.update_info.get('update'))
 
     # -----------------------------------------------------------------------
 

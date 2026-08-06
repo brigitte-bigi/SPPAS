@@ -180,8 +180,6 @@ class SetupFeatureTypeFieldset(SetupBaseFieldset):
         )
         if disabled is True:
             checkable.add_input_attribute("disabled", None)
-        elif fid == "sppas":
-            checkable.check(True)
         else:
             checkable.check(self._installer.enable(fid))
         # -------------------------------
