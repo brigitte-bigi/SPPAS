@@ -1,10 +1,11 @@
+# -*- coding: UTF-8 -*-
 """
-:filename: sppas.src.annotations.imports.py
+:filename: sppas.src.annotations.VowelFilter.__init__.py
 :author: Brigitte Bigi
 :contact: contact@sppas.org
-:summary: Import of all automatic annotations.
+:summary: Filtering of the erroneous formant values of a corpus.
 
-.. _This file is part of SPPAS: <https://sppas.org/>
+.. _This file is part of SPPAS: https://sppas.org/
 ..
     ---------------------------------------------------------------------
 
@@ -36,45 +37,28 @@
 
     ---------------------------------------------------------------------
 
+This package is filtering the erroneous formant values of a set of files,
+with the Mahalanobis distance of the tokens to the mean values of their
+vowel class, as proposed by:
+
+    | M. Lancien, J. Stuart-Smith, M. Adda-Decker (2023).
+    | Using Mahalanobis distance to filter erroneous vowel features in
+    | less-resourced languages: application to Quebec French.
+    | In Proceedings of the 20th International Congress of Phonetic
+    | Sciences, Prague, Czech Republic.
+
+No required other package.
+
 """
 
-# STANDALONE
-from .Activity import sppasActivity
-from .Align import sppasAlign
-from .FillIPUs import sppasFillIPUs
-from .Intsint import sppasIntsint
-from .LexMetric import sppasLexMetric
-from .Momel import sppasMomel
-from .Phon import sppasPhon
-from .RMS import sppasRMS
-from .Formants import sppasFormants
-from .VowelFilter import sppasVowelFilter
-from .SearchIPUs import sppasSearchIPUs
-from .SelfRepet import sppasSelfRepet
-from .StopWords import sppasStopWords
-from .Syll import sppasSyll
-from .TextNorm import sppasTextNorm
-from .TGA import sppasTGA
-from .IVA import sppasIVA
-from .Anonym import sppasAnonym
-from .SpeechToText import sppasSpeechToText
+from .vowel_classifier import VowelClassifier
+from .vowel_profiles import VowelProfiles
+from .vowel_filter import VowelFilterEstimator
+from .sppasvowelfilter import sppasVowelFilter
 
-# INTERACTIONS
-from .OtherRepet import sppasOtherRepet
-from .ReOccurrences import sppasReOcc
-from .Overlaps import sppasOverActivity
-
-# SPEAKER
-from .SpkLexRep import sppasLexRep
-
-# Annotations on either an image or a video:
-from .FaceDetection import sppasFaceDetection
-from .FaceSights import sppasFaceSights
-from .FaceSights import ImageFaceLandmark
-from .HandPose import sppasHandPose
-
-# Annotations on a video:
-from .FaceIdentity import sppasFaceIdentifier
-
-# Spin-offs: Annotations which are developed elsewhere and can be installed
-from .spinoff import *
+__all__ = (
+    "VowelClassifier",
+    "VowelProfiles",
+    "VowelFilterEstimator",
+    "sppasVowelFilter"
+)

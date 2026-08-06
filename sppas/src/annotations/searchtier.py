@@ -276,6 +276,27 @@ class sppasFindTier:
     # -----------------------------------------------------------------------
 
     @staticmethod
+    def formants(trs, formant_name="F1"):
+        """Return the tier with the values of the given formant.
+
+        :param trs: (sppasTranscription)
+        :param formant_name: (str) Name of the formant, i.e. "F1" or "F2"
+        :return: (sppasTier or None)
+
+        """
+        tier = trs.find(formant_name, case_sensitive=False)
+        if tier is not None:
+            return tier
+
+        for a_tier in trs:
+            if formant_name.lower() in a_tier.get_name().lower():
+                return a_tier
+
+        return None
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
     def pitch_anchors(trs):
         """Return the tier with pitch anchors, like momel result.
 

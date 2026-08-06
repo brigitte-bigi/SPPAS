@@ -42,6 +42,7 @@
 import unittest
 
 from sppas.src.calculus.stats.central import fsum, fmult, fmin, fmax, fmean, fgeometricmean, fharmonicmean
+from sppas.src.calculus.stats.variability import lvariance, lcovariance
 from sppas.src.calculus.stats.frequency import freq, percent, percentile, quantile
 from sppas.src.calculus.stats.linregress import tga_linear_regression, tansey_linear_regression
 from sppas.src.calculus.stats.linregress import gradient_descent, gradient_descent_linear_regression, compute_error_for_line_given_points
@@ -84,6 +85,23 @@ class TestStats(unittest.TestCase):
 
     def test_variability(self):
         pass
+
+    def test_covariance(self):
+        self.assertEqual(list(), lcovariance([[1., 2.]]))
+
+        # The covariance of a dimension with itself is its variance
+        vectors = [[1., 10.], [2., 30.], [3., 20.], [4., 60.]]
+        matrix = lcovariance(vectors)
+        self.assertEqual(2, len(matrix))
+        self.assertEqual(lvariance([v[0] for v in vectors]), matrix[0][0])
+        self.assertEqual(lvariance([v[1] for v in vectors]), matrix[1][1])
+
+        # The matrix is symmetric
+        self.assertEqual(matrix[0][1], matrix[1][0])
+        self.assertEqual(round(matrix[0][1], 3), 17.5)
+
+        with self.assertRaises(ValueError):
+            lcovariance([[1., 2.], [3.]])
 
     def test_linear_regression(self):
         points = list()

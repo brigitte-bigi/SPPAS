@@ -81,6 +81,7 @@
     sppastga = "sppas.bin.tga:tga"
     sppastrsconvert = "sppas.bin.trsconvert:trsconvert"
     sppastrsmerge = "sppas.bin.trsmerge:trsmerge"
+    sppasvowelfilter = "sppas.bin.vowelfilter:vowelfilter"
 
 [project.optional-dependencies]
     docs = [

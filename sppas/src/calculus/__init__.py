@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -54,14 +54,14 @@ from .scoring.kappa import sppasKappa
 from .scoring.ubpa import ubpa
 
 from .geometry.circle import observed_angle
-from .geometry.distances import squared_euclidian, euclidian, manathan, minkowski, chi_squared
+from .geometry.distances import squared_euclidian, euclidian, manathan, minkowski, chi_squared, mahalanobis
 from .geometry.linear_fct import linear_fct, ylinear_fct, linear_values, slope, intercept, slope_intercept
 from .stats.central import fsum, fmult, fmin, fmax, fmean, fmedian, fgeometricmean, fharmonicmean
 from .stats.frequency import freq, percent, percentile, quantile
 from .stats.linregress import tga_linear_regression, tansey_linear_regression
 from .stats.linregress import gradient_descent, gradient_descent_linear_regression, compute_error_for_line_given_points
 from .stats.moment import lmoment, lvariation, lskew, lkurtosis
-from .stats.variability import lvariance, lstdev, lz, rPVI, nPVI
+from .stats.variability import lvariance, lcovariance, lstdev, lz, rPVI, nPVI
 from .infotheory import sppasKullbackLeibler
 from .infotheory import sppasEntropy
 from .infotheory import find_ngrams
@@ -75,6 +75,7 @@ __all__ = (
     "manathan",
     "minkowski",
     "chi_squared",
+    "mahalanobis",
     "linear_fct",
     "ylinear_fct",
     "linear_values",
@@ -103,6 +104,7 @@ __all__ = (
     "lskew",
     "lkurtosis",
     "lvariance",
+    "lcovariance",
     "lstdev",
     "lz",
     "rPVI",

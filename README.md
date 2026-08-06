@@ -103,7 +103,7 @@ Each automatic annotation has its own command, named after its script of
 `sppassearchipus`, `sppasfillipus`, `sppasrms`, `sppasiva`, `sppastga`,
 `sppasstopwords`, `sppasselfrepetition`, `sppasotherrepetition`,
 `sppasreoccurrences`, `sppasspklexrep`, `sppasoverlaps`, `sppasformants`,
-`sppasanonymize`, `sppasstt`, `sppasfacedetection`, `sppasfacesights`,
+`sppasvowelfilter`, `sppasanonymize`, `sppasstt`, `sppasfacedetection`, `sppasfacesights`,
 `sppasfaceidentity` and `sppashandpose`. The command `sppasannotation`
 runs several of them at once, and `sppastrsconvert` and `sppastrsmerge`
 export and merge annotated files.

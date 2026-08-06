@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -81,6 +81,43 @@ def lvariance(items):
     mn = fmean(items)
 
     return fsum(pow(i-mn, 2) for i in items) / (len(items))
+
+# ----------------------------------------------------------------------------
+
+
+def lcovariance(vectors):
+    """Calculate the covariance matrix of the data vectors, for a population.
+
+    It means that the estimation is using N for the denominator, like the
+    lvariance function does. Each vector is an observation and all of them
+    must have the same number of values, i.e. the dimension of the space.
+    The value at row i and column j of the returned matrix is the covariance
+    of the dimensions i and j.
+
+    :param vectors: (list) list of lists of data values
+    :raises: ValueError: Vectors are not all of the same dimension
+    :returns: (list) 2D list of float values
+
+    """
+    if len(vectors) < 2:
+        return list()
+
+    dimension = len(vectors[0])
+    for vector in vectors:
+        if len(vector) != dimension:
+            raise ValueError("Expected vectors of dimension {:d}. Got {:d} instead."
+                             "".format(dimension, len(vector)))
+
+    means = [fmean([vector[i] for vector in vectors]) for i in range(dimension)]
+
+    matrix = list()
+    for i in range(dimension):
+        row = list()
+        for j in range(dimension):
+            row.append(fsum((v[i]-means[i]) * (v[j]-means[j]) for v in vectors) / len(vectors))
+        matrix.append(row)
+
+    return matrix
 
 # ----------------------------------------------------------------------------
 

@@ -1,0 +1,52 @@
+{
+  "id": "vowelfilter",
+  "name": "VowelFilter",
+  "descr": "Filter the erroneous F1/F2 formant values of a set of files. The distributions of the duration, F1 and F2 values are estimated on all the given files, for each vowel class and each estimation method, then the values too far from the expected ones are discarded. . Proposed by M. Lancien et al. 2023.",
+  "required": "formants",
+  "api": "sppasVowelFilter",
+  "devel": 50,
+
+  "resources": [
+  ],
+
+  "anntype": [
+    "STANDALONE"
+  ],
+
+  "options": [
+    {
+      "id": "inputpattern1",
+      "type": "str",
+      "value": "-formants",
+      "text": "Pattern of the input file with F1 and F2 values."
+    },
+    {
+      "id": "inputpattern2",
+      "type": "str",
+      "value": "-syll",
+      "text": "Pattern of the input file with time-aligned syllables."
+    },
+    {
+      "id": "outputpattern",
+      "type": "str",
+      "value": "-vfilter",
+      "text": "Pattern of the output file with the filtered F1 and F2 values."
+    },
+    {
+      "id": "threshold",
+      "type": "float",
+      "value": 3.0,
+      "text": "Maximum number of standard deviations between a token and the mean values of its class."
+    },
+    {
+      "id": "coda",
+      "type": "bool",
+      "value": false,
+      "text": "Add the position of the vowel in its syllable to the class, with the time-aligned syllables."
+    }
+  ],
+
+  "refs": {
+    "lancien2023icphs": "https://www.internationalphoneticassociation.org/icphs-proceedings/ICPhS2023/full_papers/337.pdf"
+  }
+}
