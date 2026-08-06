@@ -284,13 +284,13 @@ class sppasFindTier:
         :return: (sppasTier or None)
 
         """
-        tier = trs.find(formant_name, case_sensitive=False)
-        if tier is not None:
-            return tier
+        _tier = trs.find(formant_name, case_sensitive=False)
+        if _tier is not None:
+            return _tier
 
-        for a_tier in trs:
-            if formant_name.lower() in a_tier.get_name().lower():
-                return a_tier
+        for tier in trs:
+            if formant_name.lower() in tier.get_name().lower():
+                return tier
 
         return None
 

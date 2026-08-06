@@ -147,18 +147,18 @@ class VowelFilterEstimator:
         :return: (int) Number of added tokens
 
         """
-        method_names = VowelFilterEstimator.get_method_names(tier_f1)
-        classifier = VowelClassifier(syll_tier)
+        _method_names = VowelFilterEstimator.get_method_names(tier_f1)
+        _classifier = VowelClassifier(syll_tier)
 
-        nb_tokens = 0
-        for class_name, vectors in self.__get_tokens(tier_f1, tier_f2, classifier, method_names):
+        _nb_tokens = 0
+        for class_name, vectors in self.__get_tokens(tier_f1, tier_f2, _classifier, _method_names):
             for i, vector in enumerate(vectors):
                 if vector is None:
                     continue
-                self.__profiles.add_token(class_name, method_names[i], vector)
-                nb_tokens += 1
+                self.__profiles.add_token(class_name, _method_names[i], vector)
+                _nb_tokens += 1
 
-        return nb_tokens
+        return _nb_tokens
 
     # -----------------------------------------------------------------------
 
@@ -186,27 +186,24 @@ class VowelFilterEstimator:
         :return: (sppasTier, sppasTier, sppasTier) Filtered F1, F2 and distances
 
         """
-        method_names = VowelFilterEstimator.get_method_names(tier_f1)
-        classifier = VowelClassifier(syll_tier)
-
-        new_f1 = VowelFilterEstimator.__create_tier("F1", tier_f1)
-        new_f2 = VowelFilterEstimator.__create_tier("F2", tier_f2)
-        distances_tier = VowelFilterEstimator.__create_tier("MahalanobisDist", tier_f1)
+        _method_names = VowelFilterEstimator.get_method_names(tier_f1)
+        _classifier = VowelClassifier(syll_tier)
+        _new_f1, _new_f2, _distances_tier = VowelFilterEstimator.__create_tiers(tier_f1, tier_f2)
 
         self.__nb_values = 0
         self.__nb_filtered = 0
 
-        tokens = self.__get_tokens(tier_f1, tier_f2, classifier, method_names)
-        for i, (class_name, vectors) in enumerate(tokens):
+        _tokens = self.__get_tokens(tier_f1, tier_f2, _classifier, _method_names)
+        for i, (class_name, vectors) in enumerate(_tokens):
             if len(vectors) == 0:
                 continue
 
-            values_f1, values_f2, distances = self.__filter_token(class_name, vectors, method_names)
+            _values_f1, _values_f2, _distances = self.__filter_token(class_name, vectors, _method_names)
             VowelFilterEstimator.__append_annotations(
-                new_f1, new_f2, distances_tier, tier_f1[i], tier_f2[i],
-                values_f1, values_f2, distances)
+                _new_f1, _new_f2, _distances_tier, tier_f1[i], tier_f2[i],
+                _values_f1, _values_f2, _distances)
 
-        return new_f1, new_f2, distances_tier
+        return _new_f1, _new_f2, _distances_tier
 
     # -----------------------------------------------------------------------
 
@@ -222,24 +219,24 @@ class VowelFilterEstimator:
         :return: (tuple) Name of the method of each value
 
         """
-        names = list()
+        _names = list()
         i = 0
-        name = tier.get_meta("formants_estimator_method_0", default="")
-        while len(name) > 0:
-            names.append(name)
+        _name = tier.get_meta("formants_estimator_method_0", default="")
+        while len(_name) > 0:
+            _names.append(_name)
             i += 1
-            name = tier.get_meta("formants_estimator_method_{:d}".format(i), default="")
+            _name = tier.get_meta("formants_estimator_method_{:d}".format(i), default="")
 
-        if len(names) == 0:
+        if len(_names) == 0:
             # The tier was not created by the Formants annotation. The number
             # of values of an annotation is then the number of methods.
             for ann in tier:
-                labels = ann.get_labels()
-                if len(labels) > 0:
-                    names = ["method_{:d}".format(j) for j in range(len(labels[0]))]
+                _labels = ann.get_labels()
+                if len(_labels) > 0:
+                    _names = ["method_{:d}".format(j) for j in range(len(_labels[0]))]
                     break
 
-        return tuple(names)
+        return tuple(_names)
 
     # -----------------------------------------------------------------------
     # Private
@@ -254,39 +251,45 @@ class VowelFilterEstimator:
         :return: (list, list, list) F1 values, F2 values and distances
 
         """
-        values_f1 = list()
-        values_f2 = list()
-        distances = list()
+        _values_f1 = list()
+        _values_f2 = list()
+        _distances = list()
 
         for i, vector in enumerate(vectors):
-            if vector is None:
-                # The method didn't estimate any value for this token.
-                values_f1.append(0)
-                values_f2.append(0)
-                distances.append(-1.)
-                continue
+            _f1, _f2, _distance = self.__filter_value(class_name, method_names[i], vector)
+            _values_f1.append(_f1)
+            _values_f2.append(_f2)
+            _distances.append(_distance)
 
-            self.__nb_values += 1
-            distance = self.__profiles.get_distance(class_name, method_names[i], vector)
+        return _values_f1, _values_f2, _distances
 
-            if distance is None:
-                # No distribution to compare this token with.
-                values_f1.append(int(vector[1]))
-                values_f2.append(int(vector[2]))
-                distances.append(-1.)
+    # -----------------------------------------------------------------------
 
-            elif distance > self.__threshold:
-                self.__nb_filtered += 1
-                values_f1.append(0)
-                values_f2.append(0)
-                distances.append(round(distance, 3))
+    def __filter_value(self, class_name: str, method_name: str, vector: list) -> tuple:
+        """Return the kept values and the distance of a token of a method.
 
-            else:
-                values_f1.append(int(vector[1]))
-                values_f2.append(int(vector[2]))
-                distances.append(round(distance, 3))
+        :param class_name: (str) Name of the vowel class of the token
+        :param method_name: (str) Name of the method the features come from
+        :param vector: (list) Feature vector of the method, or None
+        :return: (int, int, float) F1 value, F2 value and distance
 
-        return values_f1, values_f2, distances
+        """
+        if vector is None:
+            # The method didn't estimate any value for this token.
+            return 0, 0, -1.
+
+        self.__nb_values += 1
+        _distance = self.__profiles.get_distance(class_name, method_name, vector)
+
+        if _distance is None:
+            # No distribution to compare this token with.
+            return int(vector[1]), int(vector[2]), -1.
+
+        if _distance > self.__threshold:
+            self.__nb_filtered += 1
+            return 0, 0, round(_distance, 3)
+
+        return int(vector[1]), int(vector[2]), round(_distance, 3)
 
     # -----------------------------------------------------------------------
 
@@ -312,44 +315,95 @@ class VowelFilterEstimator:
                              "Got {:d} and {:d} instead."
                              "".format(len(tier_f1), len(tier_f2)))
 
-        tokens = list()
+        _tokens = list()
 
         for ann_f1, ann_f2 in zip(tier_f1, tier_f2):
-            labels_f1 = ann_f1.get_labels()
-            labels_f2 = ann_f2.get_labels()
-            if len(labels_f1) == 0 or len(labels_f2) == 0:
-                tokens.append(("", list()))
-                continue
+            _vectors = VowelFilterEstimator.__get_vectors(ann_f1, ann_f2, len(method_names))
+            if len(_vectors) == 0:
+                _tokens.append(("", list()))
+            else:
+                _tokens.append((classifier.get_class(ann_f1), _vectors))
 
-            # Two methods sharing the same value are stored into a single
-            # tag, so that no value can be assigned to its method.
-            if len(labels_f1[0]) != len(method_names) or len(labels_f2[0]) != len(method_names):
-                logging.warning("Ignored the token at {:s}: {:d} values instead of the "
-                                "{:d} expected ones."
-                                "".format(str(ann_f1.get_location()),
-                                          len(labels_f1[0]), len(method_names)))
-                tokens.append(("", list()))
-                continue
+        return _tokens
 
-            class_name = classifier.get_class(ann_f1)
-            begin = ann_f1.get_lowest_localization().get_midpoint()
-            end = ann_f1.get_highest_localization().get_midpoint()
-            duration = end - begin
+    # -----------------------------------------------------------------------
 
-            vectors = list()
-            for (tag_f1, score_f1), (tag_f2, score_f2) in zip(labels_f1[0], labels_f2[0]):
-                f1 = tag_f1.get_typed_content()
-                f2 = tag_f2.get_typed_content()
-                # A value of zero is the one the Formants annotation is
-                # assigning when a method didn't estimate any value.
-                if f1 == 0 or f2 == 0:
-                    vectors.append(None)
-                else:
-                    vectors.append([duration, float(f1), float(f2)])
+    @staticmethod
+    def __is_valid_token(ann_f1, ann_f2, nb_methods: int) -> bool:
+        """Return True if each value of a token can be assigned to its method.
 
-            tokens.append((class_name, vectors))
+        :param ann_f1: (sppasAnnotation) Annotation with the F1 values
+        :param ann_f2: (sppasAnnotation) Annotation with the F2 values
+        :param nb_methods: (int) Expected number of values
+        :return: (bool)
 
-        return tokens
+        """
+        _labels_f1 = ann_f1.get_labels()
+        _labels_f2 = ann_f2.get_labels()
+        if len(_labels_f1) == 0 or len(_labels_f2) == 0:
+            return False
+
+        # Two methods sharing the same value are stored into a single tag,
+        # so that no value can be assigned to its method.
+        if len(_labels_f1[0]) != nb_methods or len(_labels_f2[0]) != nb_methods:
+            logging.warning("Ignored the token at {:s}: {:d} values instead of the "
+                            "{:d} expected ones."
+                            "".format(str(ann_f1.get_location()),
+                                      len(_labels_f1[0]), nb_methods))
+            return False
+
+        return True
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __get_vectors(ann_f1, ann_f2, nb_methods: int) -> list:
+        """Return the feature vector of each method of a token.
+
+        An empty list is returned if the values of the token can't be
+        assigned to their method.
+
+        :param ann_f1: (sppasAnnotation) Annotation with the F1 values
+        :param ann_f2: (sppasAnnotation) Annotation with the F2 values
+        :param nb_methods: (int) Expected number of values
+        :return: (list) Feature vector of each method, or None
+
+        """
+        if VowelFilterEstimator.__is_valid_token(ann_f1, ann_f2, nb_methods) is False:
+            return list()
+
+        _labels_f1 = ann_f1.get_labels()
+        _labels_f2 = ann_f2.get_labels()
+        _duration = (ann_f1.get_highest_localization().get_midpoint() -
+                     ann_f1.get_lowest_localization().get_midpoint())
+
+        _vectors = list()
+        for (tag_f1, score_f1), (tag_f2, score_f2) in zip(_labels_f1[0], _labels_f2[0]):
+            _f1 = tag_f1.get_typed_content()
+            _f2 = tag_f2.get_typed_content()
+            # A value of zero is the one the Formants annotation is
+            # assigning when a method didn't estimate any value.
+            if _f1 == 0 or _f2 == 0:
+                _vectors.append(None)
+            else:
+                _vectors.append([_duration, float(_f1), float(_f2)])
+
+        return _vectors
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __create_tiers(tier_f1: sppasTier, tier_f2: sppasTier) -> tuple:
+        """Return the three tiers of the result, with the source metadata.
+
+        :param tier_f1: (sppasTier) Tier with F1 values
+        :param tier_f2: (sppasTier) Tier with F2 values
+        :return: (sppasTier, sppasTier, sppasTier) F1, F2 and distances
+
+        """
+        return (VowelFilterEstimator.__create_tier("F1", tier_f1),
+                VowelFilterEstimator.__create_tier("F2", tier_f2),
+                VowelFilterEstimator.__create_tier("MahalanobisDist", tier_f1))
 
     # -----------------------------------------------------------------------
 
@@ -362,13 +416,13 @@ class VowelFilterEstimator:
         :return: (sppasTier)
 
         """
-        tier = sppasTier(tier_name)
+        _tier = sppasTier(tier_name)
         for key in source_tier.get_meta_keys():
-            if tier.get_meta(key, default=None) is None:
-                tier.set_meta(key, source_tier.get_meta(key))
-        tier.set_media(source_tier.get_media())
+            if _tier.get_meta(key, default=None) is None:
+                _tier.set_meta(key, source_tier.get_meta(key))
+        _tier.set_media(source_tier.get_media())
 
-        return tier
+        return _tier
 
     # -----------------------------------------------------------------------
 
@@ -382,23 +436,23 @@ class VowelFilterEstimator:
         of the methods has a value to store.
 
         """
-        nb_kept = 0
+        _nb_kept = 0
         for value_f1, value_f2 in zip(values_f1, values_f2):
             if value_f1 != 0 and value_f2 != 0:
-                nb_kept += 1
-        if nb_kept == 0:
+                _nb_kept += 1
+        if _nb_kept == 0:
             return
 
-        phoneme = ann_f1.get_labels()[0].get_key()
+        _phoneme = ann_f1.get_labels()[0].get_key()
 
-        label_f1 = sppasLabel([sppasTag(v, "int") for v in values_f1])
-        label_f1.set_key(phoneme)
-        new_f1.create_annotation(ann_f1.get_location().copy(), [label_f1])
+        _label_f1 = sppasLabel([sppasTag(v, "int") for v in values_f1])
+        _label_f1.set_key(_phoneme)
+        new_f1.create_annotation(ann_f1.get_location().copy(), [_label_f1])
 
-        label_f2 = sppasLabel([sppasTag(v, "int") for v in values_f2])
-        label_f2.set_key(phoneme)
-        new_f2.create_annotation(ann_f2.get_location().copy(), [label_f2])
+        _label_f2 = sppasLabel([sppasTag(v, "int") for v in values_f2])
+        _label_f2.set_key(_phoneme)
+        new_f2.create_annotation(ann_f2.get_location().copy(), [_label_f2])
 
-        label_distances = sppasLabel([sppasTag(d, "float") for d in distances])
-        label_distances.set_key(phoneme)
-        distances_tier.create_annotation(ann_f1.get_location().copy(), [label_distances])
+        _label_distances = sppasLabel([sppasTag(d, "float") for d in distances])
+        _label_distances.set_key(_phoneme)
+        distances_tier.create_annotation(ann_f1.get_location().copy(), [_label_distances])

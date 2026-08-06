@@ -102,22 +102,22 @@ def lcovariance(vectors):
     if len(vectors) < 2:
         return list()
 
-    dimension = len(vectors[0])
+    _dimension = len(vectors[0])
     for vector in vectors:
-        if len(vector) != dimension:
+        if len(vector) != _dimension:
             raise ValueError("Expected vectors of dimension {:d}. Got {:d} instead."
-                             "".format(dimension, len(vector)))
+                             "".format(_dimension, len(vector)))
 
-    means = [fmean([vector[i] for vector in vectors]) for i in range(dimension)]
+    _means = [fmean([vector[i] for vector in vectors]) for i in range(_dimension)]
 
-    matrix = list()
-    for i in range(dimension):
-        row = list()
-        for j in range(dimension):
-            row.append(fsum((v[i]-means[i]) * (v[j]-means[j]) for v in vectors) / len(vectors))
-        matrix.append(row)
+    _matrix = list()
+    for i in range(_dimension):
+        _row = list()
+        for j in range(_dimension):
+            _row.append(fsum((v[i]-_means[i]) * (v[j]-_means[j]) for v in vectors) / len(vectors))
+        _matrix.append(_row)
 
-    return matrix
+    return _matrix
 
 # ----------------------------------------------------------------------------
 

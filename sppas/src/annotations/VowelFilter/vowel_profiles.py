@@ -98,10 +98,10 @@ class VowelProfiles:
         if len(vector) == 0:
             raise ValueError("A non-empty vector of features was expected.")
 
-        key = (class_name, method_name)
-        if key not in self.__vectors:
-            self.__vectors[key] = list()
-        self.__vectors[key].append(vector)
+        _key = (class_name, method_name)
+        if _key not in self.__vectors:
+            self.__vectors[_key] = list()
+        self.__vectors[_key].append(vector)
 
     # -----------------------------------------------------------------------
 
@@ -118,30 +118,45 @@ class VowelProfiles:
         self.__profiles = dict()
 
         for key in self.__vectors:
-            class_name, method_name = key
-            vectors = self.__vectors[key]
-
-            if len(vectors) < VowelProfiles.MIN_TOKENS:
-                logging.info(f"No profile for the class {class_name} of the method "
-                             f"{method_name}: {len(vectors)} tokens only.")
+            _class_name, _method_name = key
+            _profile = VowelProfiles.__estimate_profile(self.__vectors[key])
+            if _profile is None:
+                logging.info(f"No profile for the class {_class_name} of the "
+                             f"method {_method_name}.")
                 continue
 
-            dimension = len(vectors[0])
-            mean = [fmean([vector[i] for vector in vectors]) for i in range(dimension)]
-            covariance = lcovariance(vectors)
-
-            # A singular covariance matrix can't be inverted, so no distance
-            # can be estimated with such a profile.
-            try:
-                mahalanobis(mean, mean, covariance)
-            except VectorsError:
-                logging.info(f"No profile for the class {class_name} of the method "
-                             f"{method_name}: the covariance matrix is singular.")
-                continue
-
-            self.__profiles[key] = (mean, covariance)
+            self.__profiles[key] = _profile
 
         return len(self.__profiles)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __estimate_profile(vectors: list) -> tuple:
+        """Return the mean vector and the covariance matrix of the vectors.
+
+        Nothing is returned if there's not enough vectors or if their
+        covariance matrix is singular, i.e. it can't be inverted.
+
+        :param vectors: (list) Feature vectors of the tokens of a class
+        :return: (tuple|None) Mean vector and covariance matrix
+
+        """
+        if len(vectors) < VowelProfiles.MIN_TOKENS:
+            logging.info("{:d} tokens only.".format(len(vectors)))
+            return None
+
+        _dimension = len(vectors[0])
+        _mean = [fmean([vector[i] for vector in vectors]) for i in range(_dimension)]
+        _covariance = lcovariance(vectors)
+
+        try:
+            mahalanobis(_mean, _mean, _covariance)
+        except VectorsError:
+            logging.info("The covariance matrix is singular.")
+            return None
+
+        return _mean, _covariance
 
     # -----------------------------------------------------------------------
 
@@ -158,16 +173,16 @@ class VowelProfiles:
         :return: (float|None) Distance to the profile, or None if no profile
 
         """
-        key = (class_name, method_name)
-        if key not in self.__profiles:
+        _key = (class_name, method_name)
+        if _key not in self.__profiles:
             return None
 
-        mean, covariance = self.__profiles[key]
-        if len(vector) != len(mean):
+        _mean, _covariance = self.__profiles[_key]
+        if len(vector) != len(_mean):
             raise ValueError("Expected a vector of dimension {:d}. Got {:d} instead."
-                             "".format(len(mean), len(vector)))
+                             "".format(len(_mean), len(vector)))
 
-        return mahalanobis(vector, mean, covariance)
+        return mahalanobis(vector, _mean, _covariance)
 
     # -----------------------------------------------------------------------
 
@@ -179,22 +194,22 @@ class VowelProfiles:
         :return: (int)
 
         """
-        key = (class_name, method_name)
-        if key not in self.__vectors:
+        _key = (class_name, method_name)
+        if _key not in self.__vectors:
             return 0
 
-        return len(self.__vectors[key])
+        return len(self.__vectors[_key])
 
     # -----------------------------------------------------------------------
 
     def get_class_names(self) -> tuple:
         """Return the sorted names of the classes with at least one token."""
-        names = list()
+        _names = list()
         for class_name, method_name in self.__vectors:
-            if class_name not in names:
-                names.append(class_name)
+            if class_name not in _names:
+                _names.append(class_name)
 
-        return tuple(sorted(names))
+        return tuple(sorted(_names))
 
     # -----------------------------------------------------------------------
 

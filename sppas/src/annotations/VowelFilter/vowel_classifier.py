@@ -104,18 +104,18 @@ class VowelClassifier:
         :return: (str) Name of the class of the vowel
 
         """
-        labels = ann.get_labels()
-        if len(labels) == 0:
+        _labels = ann.get_labels()
+        if len(_labels) == 0:
             return ""
 
-        phoneme = labels[0].get_key()
-        if phoneme is None:
+        _phoneme = _labels[0].get_key()
+        if _phoneme is None:
             return ""
 
         if self.__syll_tier is None:
-            return phoneme
+            return _phoneme
 
-        return phoneme + self.__coda_symbol(ann)
+        return _phoneme + self.__coda_symbol(ann)
 
     # -----------------------------------------------------------------------
 
@@ -129,15 +129,15 @@ class VowelClassifier:
         :return: (str) Symbol of the position, or an empty string
 
         """
-        begin = ann.get_lowest_localization().get_midpoint()
-        end = ann.get_highest_localization().get_midpoint()
+        _begin = ann.get_lowest_localization().get_midpoint()
+        _end = ann.get_highest_localization().get_midpoint()
 
-        index = self.__syll_tier.mindex(sppasPoint((begin + end) / 2.), bound=0)
-        if index == -1:
+        _index = self.__syll_tier.mindex(sppasPoint((_begin + _end) / 2.), bound=0)
+        if _index == -1:
             return ""
 
-        syllable = self.__syll_tier[index]
-        if syllable.get_highest_localization().get_midpoint() <= end:
+        _syllable = self.__syll_tier[_index]
+        if _syllable.get_highest_localization().get_midpoint() <= _end:
             return VowelClassifier.OPEN_SYMBOL
 
         return VowelClassifier.CODA_SYMBOL
