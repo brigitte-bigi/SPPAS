@@ -235,7 +235,7 @@ class TestVowelFilterEstimator(unittest.TestCase):
         tier_f1, tier_f2 = create_tiers(tokens, "burg")
 
         estimator = VowelFilterEstimator()
-        profiles = VowelProfiles()
+        profiles = VowelProfiles(len(tokens) + 1)
         estimator.collect(profiles, tier_f1, tier_f2)
         self.assertEqual(0, profiles.estimate())
 

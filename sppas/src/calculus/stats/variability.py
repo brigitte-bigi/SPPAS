@@ -85,6 +85,34 @@ def lvariance(items):
 # ----------------------------------------------------------------------------
 
 
+def lunbiasedcovariance(vectors):
+    """Calculate the covariance matrix of the data vectors, for a sample.
+
+    It means that the estimation is using N-1 for the denominator, like the
+    lunbiasedvariance function does. Each vector is an observation and all of
+    them must have the same number of values.
+
+    :param vectors: (list) list of lists of data values
+    :raises: ValueError: Vectors are not all of the same dimension
+    :returns: (list) 2D list of float values
+
+    """
+    if len(vectors) < 2:
+        return list()
+
+    # The sum of the products is the one of the population covariance, only
+    # the denominator differs: N-1 instead of N.
+    _ratio = float(len(vectors)) / float(len(vectors) - 1)
+
+    _matrix = list()
+    for row in lcovariance(vectors):
+        _matrix.append([value * _ratio for value in row])
+
+    return _matrix
+
+# ----------------------------------------------------------------------------
+
+
 def lcovariance(vectors):
     """Calculate the covariance matrix of the data vectors, for a population.
 

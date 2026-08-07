@@ -102,6 +102,9 @@ class sppasVowelFilter(sppasBaseAnnotation):
             if "threshold" == key:
                 self.set_threshold(opt.get_value())
 
+            elif "min_occ" == key:
+                self.set_min_occ(opt.get_value())
+
             elif "coda" == key:
                 self.set_coda(opt.get_value())
 
@@ -117,6 +120,9 @@ class sppasVowelFilter(sppasBaseAnnotation):
 
     def get_threshold(self) -> float:
         return self._options['threshold']
+
+    def get_min_occ(self) -> int:
+        return self._options['min_occ']
 
     def get_coda(self) -> bool:
         return self._options['coda']
@@ -136,6 +142,21 @@ class sppasVowelFilter(sppasBaseAnnotation):
 
     # -----------------------------------------------------------------------
 
+    def set_min_occ(self, value: int) -> None:
+        """Set the number of occurrences a vowel class requires.
+
+        A class with less occurrences has no estimated distribution, so that
+        none of its tokens is discarded.
+
+        :param value: (int) Number of occurrences, at least 2
+        :raises: TypeError: Given value is not an integer.
+        :raises: ValueError: Given value is lower than the lowest accepted one.
+
+        """
+        self._options['min_occ'] = VowelProfiles.check_min_tokens(value)
+
+    # -----------------------------------------------------------------------
+
     def set_coda(self, value: bool) -> None:
         """Set whether the syllable position is part of the vowel class.
 
@@ -148,7 +169,7 @@ class sppasVowelFilter(sppasBaseAnnotation):
     # The vowel filtering is here
     # ----------------------------------------------------------------------
 
-    def convert(self, tier_f1, tier_f2, syll_tier=None, profiles=None):
+    def convert(self, tier_f1, tier_f2, syll_tier=None, profiles=None, file_id=""):
         """Discard the erroneous formant values of a pair of tiers.
 
         A value is discarded by assigning it a zero, like the Formants
@@ -159,10 +180,11 @@ class sppasVowelFilter(sppasBaseAnnotation):
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
         :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
         :param profiles: (VowelProfiles) Estimated distributions, or None
+        :param file_id: (str) Identifier of the file the tiers come from
         :return: (sppasTier, sppasTier, sppasTier) Filtered F1, F2 and distances
 
         """
-        return self.__filter.filter(profiles, tier_f1, tier_f2, syll_tier)
+        return self.__filter.filter(profiles, tier_f1, tier_f2, syll_tier, file_id)
 
     # -----------------------------------------------------------------------
 
@@ -214,19 +236,15 @@ class sppasVowelFilter(sppasBaseAnnotation):
         _profiles = kwargs.get("profiles", None)
         if _profiles is None:
             self.logfile.print_message(
-                "No estimated distributions: no formant value can be discarded.",
+                "No estimated distributions: no value can be discarded.",
                 indent=2, status=annots.warning)
-
         _formants_filename, _syll_filename = self.get_inputs(input_files)
         _pairs, _syll_tier = self.__read_tiers(_formants_filename, _syll_filename)
 
         # Create the transcription result
         _trs_output = sppasTranscription(self.name)
         _trs_output.set_meta('annotation_result_of', _formants_filename)
-        for tier_f1, tier_f2 in _pairs:
-            for filtered_tier in self.convert(tier_f1, tier_f2, _syll_tier, _profiles):
-                _trs_output.append(filtered_tier)
-            self.__print_filtered(tier_f1)
+        self.__append_filtered(_trs_output, _pairs, _syll_tier, _profiles, _formants_filename)
 
         # Save in a file
         if output is not None:
@@ -296,7 +314,7 @@ class sppasVowelFilter(sppasBaseAnnotation):
         :return: (VowelProfiles) The estimated distributions
 
         """
-        _profiles = VowelProfiles()
+        _profiles = VowelProfiles(self._options['min_occ'])
         for input_files in file_names:
             try:
                 _inputs = self._fix_inputs(input_files)
@@ -307,15 +325,44 @@ class sppasVowelFilter(sppasBaseAnnotation):
                 continue
 
             for tier_f1, tier_f2 in _pairs:
-                self.__filter.collect(_profiles, tier_f1, tier_f2, _syll_tier)
+                self.__filter.collect(_profiles, tier_f1, tier_f2, _syll_tier,
+                                      _formants_filename)
 
+        self.__print_profiles(_profiles)
+
+        return _profiles
+
+    # -----------------------------------------------------------------------
+
+    def __print_profiles(self, profiles: VowelProfiles) -> None:
+        """Estimate the distributions and print the result in the user log.
+
+        :param profiles: (VowelProfiles) The collected tokens
+
+        """
         self.logfile.print_message(
             "Estimated {:d} distributions of {:d} vowel classes."
-            "".format(_profiles.estimate(), len(_profiles.get_class_names())),
+            "".format(profiles.estimate(), len(profiles.get_class_names())),
             indent=1, status=annots.info)
         self.logfile.print_newline()
 
-        return _profiles
+    # -----------------------------------------------------------------------
+
+    def __append_filtered(self, trs_output, pairs: list, syll_tier: sppasTier,
+                          profiles: VowelProfiles, file_id: str) -> None:
+        """Add the filtered tiers of each pair of tiers to the result.
+
+        :param trs_output: (sppasTranscription) The result the tiers are added to
+        :param pairs: (list) List of (F1 tier, F2 tier)
+        :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
+        :param profiles: (VowelProfiles) Estimated distributions, or None
+        :param file_id: (str) Identifier of the file the tiers come from
+
+        """
+        for tier_f1, tier_f2 in pairs:
+            for filtered_tier in self.convert(tier_f1, tier_f2, syll_tier, profiles, file_id):
+                trs_output.append(filtered_tier)
+            self.__print_filtered(tier_f1)
 
     # -----------------------------------------------------------------------
 

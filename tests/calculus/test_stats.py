@@ -42,7 +42,8 @@
 import unittest
 
 from sppas.src.calculus.stats.central import fsum, fmult, fmin, fmax, fmean, fgeometricmean, fharmonicmean
-from sppas.src.calculus.stats.variability import lvariance, lcovariance
+from sppas.src.calculus.stats.variability import lvariance, lunbiasedvariance
+from sppas.src.calculus.stats.variability import lcovariance, lunbiasedcovariance
 from sppas.src.calculus.stats.frequency import freq, percent, percentile, quantile
 from sppas.src.calculus.stats.linregress import tga_linear_regression, tansey_linear_regression
 from sppas.src.calculus.stats.linregress import gradient_descent, gradient_descent_linear_regression, compute_error_for_line_given_points
@@ -102,6 +103,21 @@ class TestStats(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             lcovariance([[1., 2.], [3.]])
+
+    def test_unbiased_covariance(self):
+        self.assertEqual(list(), lunbiasedcovariance([[1., 2.]]))
+
+        # The covariance of a dimension with itself is its variance
+        vectors = [[1., 10.], [2., 30.], [3., 20.], [4., 60.]]
+        matrix = lunbiasedcovariance(vectors)
+        self.assertEqual(round(lunbiasedvariance([v[0] for v in vectors]), 6),
+                         round(matrix[0][0], 6))
+        self.assertEqual(round(lunbiasedvariance([v[1] for v in vectors]), 6),
+                         round(matrix[1][1], 6))
+
+        # Same sum of products, but divided by N-1 instead of N
+        population = lcovariance(vectors)
+        self.assertEqual(round(population[0][1] * 4. / 3., 6), round(matrix[0][1], 6))
 
     def test_linear_regression(self):
         points = list()

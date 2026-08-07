@@ -61,7 +61,7 @@ from .stats.frequency import freq, percent, percentile, quantile
 from .stats.linregress import tga_linear_regression, tansey_linear_regression
 from .stats.linregress import gradient_descent, gradient_descent_linear_regression, compute_error_for_line_given_points
 from .stats.moment import lmoment, lvariation, lskew, lkurtosis
-from .stats.variability import lvariance, lcovariance, lstdev, lz, rPVI, nPVI
+from .stats.variability import lvariance, lcovariance, lunbiasedcovariance, lstdev, lz, rPVI, nPVI
 from .infotheory import sppasKullbackLeibler
 from .infotheory import sppasEntropy
 from .infotheory import find_ngrams
@@ -105,6 +105,7 @@ __all__ = (
     "lkurtosis",
     "lvariance",
     "lcovariance",
+    "lunbiasedcovariance",
     "lstdev",
     "lz",
     "rPVI",

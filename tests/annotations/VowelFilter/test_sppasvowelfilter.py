@@ -156,12 +156,19 @@ class TestSppasVowelFilter(unittest.TestCase):
         tokens = [(d, [f1], [f2]) for (d, f1, f2) in create_tokens(NB_TOKENS)]
         write_formants_file(self.expected_filename, tokens)
 
-        # A file with 4 expected tokens and an erroneous one: F1 and F2 are
-        # inverted, like a formant jump does.
+        # The same file, with an erroneous token: F1 and F2 are inverted,
+        # like a formant jump does.
         self.erroneous_filename = os.path.join(self.folder, "erroneous-formants.xra")
-        tokens = [(d, [f1], [f2]) for (d, f1, f2) in create_tokens(4)]
+        tokens = [(d, [f1], [f2]) for (d, f1, f2) in create_tokens(NB_TOKENS)]
         tokens.append((0.073, [1800.], [600.]))
         write_formants_file(self.erroneous_filename, tokens)
+
+        # A file with too few tokens to estimate the distribution of its
+        # class: a file is only compared to itself.
+        self.small_filename = os.path.join(self.folder, "small-formants.xra")
+        tokens = [(d, [f1], [f2]) for (d, f1, f2) in create_tokens(4)]
+        tokens.append((0.073, [1800.], [600.]))
+        write_formants_file(self.small_filename, tokens)
 
     # -----------------------------------------------------------------------
 
@@ -177,15 +184,23 @@ class TestSppasVowelFilter(unittest.TestCase):
         self.assertEqual("-vfilter", ann.get_output_pattern())
         self.assertEqual(["-formants", "-syll"], ann.get_input_patterns())
 
+        self.assertEqual(3, ann.get_min_occ())
+
         ann.set_threshold(2.5)
         self.assertEqual(2.5, ann.get_threshold())
         ann.set_coda(True)
         self.assertEqual(True, ann.get_coda())
+        ann.set_min_occ(5)
+        self.assertEqual(5, ann.get_min_occ())
 
         with self.assertRaises(ValueError):
             ann.set_threshold(0.)
         with self.assertRaises(TypeError):
             ann.set_threshold("2.5")
+        with self.assertRaises(ValueError):
+            ann.set_min_occ(1)
+        with self.assertRaises(TypeError):
+            ann.set_min_occ(3.5)
 
     # -----------------------------------------------------------------------
 
@@ -202,8 +217,8 @@ class TestSppasVowelFilter(unittest.TestCase):
         trs = ann.run([self.erroneous_filename])
 
         tier_f1 = trs.find("F1")
-        self.assertEqual(5, len(tier_f1))
-        self.assertEqual(1800, tier_f1[4].get_best_tag().get_typed_content())
+        self.assertEqual(NB_TOKENS + 1, len(tier_f1))
+        self.assertEqual(1800, tier_f1[NB_TOKENS].get_best_tag().get_typed_content())
 
         tier_dist = trs.find("MahalanobisDist")
         for ann_dist in tier_dist:
@@ -217,7 +232,8 @@ class TestSppasVowelFilter(unittest.TestCase):
                                           [self.erroneous_filename]])
         self.assertEqual(2, len(out_files))
 
-        # Only one method: the F1 and F2 tiers are the filtered ones
+        # Only one method: the F1 and F2 tiers are the filtered ones. All the
+        # values of the file with the expected ones only are kept.
         tier_f1, tier_f2, tier_dist = self.__read_result(out_files[0], "")
         self.assertEqual(NB_TOKENS, len(tier_f1))
         self.assertEqual(NB_TOKENS, len(tier_f2))
@@ -225,15 +241,30 @@ class TestSppasVowelFilter(unittest.TestCase):
 
         # The erroneous value is discarded, the expected ones are kept
         tier_f1, tier_f2, tier_dist = self.__read_result(out_files[1], "")
-        self.assertEqual(5, len(tier_f1))
-        self.assertEqual(0, tier_f1[4].get_best_tag().get_typed_content())
-        self.assertEqual(0, tier_f2[4].get_best_tag().get_typed_content())
-        self.assertGreater(tier_dist[4].get_best_tag().get_typed_content(), 3.)
+        self.assertEqual(NB_TOKENS + 1, len(tier_f1))
+        self.assertEqual(0, tier_f1[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertEqual(0, tier_f2[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertGreater(tier_dist[NB_TOKENS].get_best_tag().get_typed_content(), 3.)
 
-        for i, (duration, f1, f2) in enumerate(create_tokens(4)):
+        for i, (duration, f1, f2) in enumerate(create_tokens(NB_TOKENS)):
             self.assertEqual(int(f1), tier_f1[i].get_best_tag().get_typed_content())
             self.assertEqual(int(f2), tier_f2[i].get_best_tag().get_typed_content())
             self.assertEqual("a", tier_f1[i].get_labels()[0].get_key())
+
+    # -----------------------------------------------------------------------
+
+    def test_a_file_is_only_compared_to_itself(self):
+        # A file is a speech style of a speaker: its distributions are the
+        # ones of its own tokens. A file with too few tokens of a class is
+        # then not filtered, whatever the other files of the corpus.
+        ann = sppasVowelFilter()
+        out_files = ann.batch_processing([[self.expected_filename],
+                                          [self.small_filename]])
+        self.assertEqual(2, len(out_files))
+
+        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[1], "")
+        self.assertEqual(5, len(tier_f1))
+        self.assertEqual(1800, tier_f1[4].get_best_tag().get_typed_content())
 
     # -----------------------------------------------------------------------
 

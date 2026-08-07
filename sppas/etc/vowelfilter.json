@@ -39,6 +39,12 @@
       "text": "Maximum number of standard deviations between a token and the mean values of its class."
     },
     {
+      "id": "min_occ",
+      "type": "int",
+      "value": 3,
+      "text": "Minimum number of occurrences a vowel class requires to estimate its distribution. At least 2."
+    },
+    {
       "id": "coda",
       "type": "bool",
       "value": false,

@@ -224,4 +224,10 @@ def mahalanobis(x, y, covariance):
         for j in range(n):
             total += diff[i] * inv_cov[i][j] * diff[j]
 
+    # A covariance matrix is positive-definite, so its inverse is too and the
+    # total can't be negative. A negative one is the rounding errors of the
+    # inversion of a matrix which is singular in practice.
+    if total < 0.:
+        raise VectorsError
+
     return total ** 0.5
