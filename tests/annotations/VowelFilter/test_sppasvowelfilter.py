@@ -78,38 +78,64 @@ def create_tokens(nb_tokens):
 # ---------------------------------------------------------------------------
 
 
+def create_tier(tier_name, method_names):
+    """Return an empty tier with the metadata of the given methods."""
+    tier = sppasTier(tier_name)
+    for i, name in enumerate(method_names):
+        tier.set_meta("formants_estimator_method_{:d}".format(i), name)
+
+    return tier
+
+# ---------------------------------------------------------------------------
+
+
+def append_values(tier, location, values):
+    """Append an annotation with the given values of a vowel 'a'."""
+    label = sppasLabel([sppasTag(int(v), "int") for v in values])
+    label.set_key("a")
+    tier.create_annotation(location.copy(), [label])
+
+# ---------------------------------------------------------------------------
+
+
 def write_formants_file(filename, tokens, method_names=("burg",)):
     """Create a file with F1/F2 values, like the Formants annotation does.
 
-    Each token is a tuple with a duration and the F1 and F2 values of each
-    of the given methods.
+    The values of all the methods are stored into the F1 and F2 tiers. Each
+    method also has its own tiers, except if only one method is given: its
+    tiers would be identical to the F1 and F2 ones.
 
     :param filename: (str) Name of the file to write
     :param tokens: (list) List of (duration, F1 values, F2 values)
     :param method_names: (tuple) Name of the estimation methods
 
     """
-    tier_f1 = sppasTier("F1")
-    tier_f2 = sppasTier("F2")
-    for i, name in enumerate(method_names):
-        tier_f1.set_meta("formants_estimator_method_{:d}".format(i), name)
-        tier_f2.set_meta("formants_estimator_method_{:d}".format(i), name)
+    trs = sppasTranscription("Formants")
+    tier_f1 = create_tier("F1", method_names)
+    tier_f2 = create_tier("F2", method_names)
+    trs.append(tier_f1)
+    trs.append(tier_f2)
+
+    method_tiers = dict()
+    if len(method_names) > 1:
+        for name in method_names:
+            method_tiers[name] = (create_tier("F1-" + name, [name]),
+                                  create_tier("F2-" + name, [name]))
+            trs.append(method_tiers[name][0])
+            trs.append(method_tiers[name][1])
 
     for i, (duration, values_f1, values_f2) in enumerate(tokens):
         begin = 1. + (0.2 * i)
         location = sppasLocation(sppasInterval(sppasPoint(begin), sppasPoint(begin + duration)))
 
-        label_f1 = sppasLabel([sppasTag(int(v), "int") for v in values_f1])
-        label_f1.set_key("a")
-        tier_f1.create_annotation(location, [label_f1])
+        append_values(tier_f1, location, values_f1)
+        append_values(tier_f2, location, values_f2)
 
-        label_f2 = sppasLabel([sppasTag(int(v), "int") for v in values_f2])
-        label_f2.set_key("a")
-        tier_f2.create_annotation(location.copy(), [label_f2])
+        for j, name in enumerate(method_names):
+            if name in method_tiers:
+                append_values(method_tiers[name][0], location, [values_f1[j]])
+                append_values(method_tiers[name][1], location, [values_f2[j]])
 
-    trs = sppasTranscription("Formants")
-    trs.append(tier_f1)
-    trs.append(tier_f2)
     parser = sppasTrsRW(filename)
     parser.write(trs)
 
@@ -175,31 +201,29 @@ class TestSppasVowelFilter(unittest.TestCase):
                                           [self.erroneous_filename]])
         self.assertEqual(2, len(out_files))
 
-        # All the tokens of the expected values are kept
-        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[0])
+        # Only one method: the F1 and F2 tiers are the filtered ones
+        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[0], "")
         self.assertEqual(NB_TOKENS, len(tier_f1))
         self.assertEqual(NB_TOKENS, len(tier_f2))
         self.assertEqual(NB_TOKENS, len(tier_dist))
 
-        # The erroneous token is discarded. Only one method is enabled, so
-        # no value at all is remaining for this token: like the Formants
-        # annotation does, no annotation is created.
-        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[1])
-        self.assertEqual(4, len(tier_f1))
-        self.assertEqual(4, len(tier_f2))
+        # The erroneous value is discarded, the expected ones are kept
+        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[1], "")
+        self.assertEqual(5, len(tier_f1))
+        self.assertEqual(0, tier_f1[4].get_best_tag().get_typed_content())
+        self.assertEqual(0, tier_f2[4].get_best_tag().get_typed_content())
+        self.assertGreater(tier_dist[4].get_best_tag().get_typed_content(), 3.)
 
-        # The kept tokens are the expected ones, with their values unchanged
         for i, (duration, f1, f2) in enumerate(create_tokens(4)):
-            self.assertEqual(int(f1), tier_f1[i].get_labels()[0][0][0].get_typed_content())
-            self.assertEqual(int(f2), tier_f2[i].get_labels()[0][0][0].get_typed_content())
+            self.assertEqual(int(f1), tier_f1[i].get_best_tag().get_typed_content())
+            self.assertEqual(int(f2), tier_f2[i].get_best_tag().get_typed_content())
             self.assertEqual("a", tier_f1[i].get_labels()[0].get_key())
 
     # -----------------------------------------------------------------------
 
     def test_filtering_is_method_dependent(self):
         # Two methods: the 2nd one estimated an erroneous value of the last
-        # token, the 1st one estimated the expected values. The two methods
-        # can't share a value: it would be stored into a single tag.
+        # token, the 1st one estimated the expected values.
         filename = os.path.join(self.folder, "twomethods-formants.xra")
         tokens = [(d, [f1, f1 + 7.], [f2, f2 + 11.]) for (d, f1, f2) in create_tokens(NB_TOKENS)]
         tokens.append((0.073, [700., 1800.], [1300., 600.]))
@@ -209,33 +233,43 @@ class TestSppasVowelFilter(unittest.TestCase):
         out_files = ann.batch_processing([[filename]])
         self.assertEqual(1, len(out_files))
 
-        # The token is kept: one of its methods has an expected value
-        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[0])
+        # The value of the 1st method is kept, the one of the 2nd is discarded
+        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[0], "-burg")
         self.assertEqual(NB_TOKENS + 1, len(tier_f1))
+        self.assertEqual(700, tier_f1[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertEqual(1300, tier_f2[NB_TOKENS].get_best_tag().get_typed_content())
 
-        # The value of the 1st method is kept, the one of the 2nd is filtered
-        label_f1 = tier_f1[NB_TOKENS].get_labels()[0]
-        self.assertEqual(700, label_f1[0][0].get_typed_content())
-        self.assertEqual(0, label_f1[1][0].get_typed_content())
+        tier_f1, tier_f2, tier_dist = self.__read_result(out_files[0], "-autocorrelation")
+        self.assertEqual(0, tier_f1[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertEqual(0, tier_f2[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertGreater(tier_dist[NB_TOKENS].get_best_tag().get_typed_content(), 3.)
 
-        label_f2 = tier_f2[NB_TOKENS].get_labels()[0]
-        self.assertEqual(1300, label_f2[0][0].get_typed_content())
-        self.assertEqual(0, label_f2[1][0].get_typed_content())
+    # -----------------------------------------------------------------------
 
-        # One distance for each method, and the filtered one is the highest
-        label_dist = tier_dist[NB_TOKENS].get_labels()[0]
-        self.assertEqual(2, len(label_dist))
-        self.assertGreater(label_dist[1][0].get_typed_content(),
-                           label_dist[0][0].get_typed_content())
+    def test_reference_tiers_are_not_filtered(self):
+        # The F1 and F2 tiers are storing the values of both methods into
+        # alternative tags: they are neither filtered nor copied.
+        filename = os.path.join(self.folder, "twomethods-formants.xra")
+        tokens = [(d, [f1, f1 + 7.], [f2, f2 + 11.]) for (d, f1, f2) in create_tokens(NB_TOKENS)]
+        write_formants_file(filename, tokens, method_names=("burg", "autocorrelation"))
+
+        ann = sppasVowelFilter()
+        out_files = ann.batch_processing([[filename]])
+
+        parser = sppasTrsRW(out_files[0])
+        trs = parser.read()
+        self.assertIsNone(trs.find("F1"))
+        self.assertIsNone(trs.find("F2"))
+        self.assertEqual(6, len(trs))
 
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __read_result(filename):
-        """Return the three tiers of a file created by the annotation."""
+    def __read_result(filename, method_suffix):
+        """Return the three tiers of a method of a file created by the annotation."""
         parser = sppasTrsRW(filename)
         trs = parser.read()
 
-        return (trs.find("F1"),
-                trs.find("F2"),
-                trs.find("MahalanobisDist"))
+        return (trs.find("F1" + method_suffix),
+                trs.find("F2" + method_suffix),
+                trs.find("MahalanobisDist" + method_suffix))

@@ -226,8 +226,8 @@ def formants():
             trs = ann.run((args.i, args.t))
             methods = ann.get_enabled_method_names()
 
-            tier_f1 = trs.finf("F1")
-            tier_f2 = trs.finf("F2")
+            tier_f1 = trs.find("F1")
+            tier_f2 = trs.find("F2")
             # Print estimated values on stdout
             for f1, f2 in zip(tier_f1, tier_f2):
                 begin = f1.get_lowest_localization()

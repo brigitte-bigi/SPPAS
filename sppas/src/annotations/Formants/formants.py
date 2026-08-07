@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -341,25 +341,32 @@ class FormantsEstimator:
     # Workers
     # ------------------------------------------------------------------------
 
-    def estimate(self, audio_filename: str, palign_tier: sppasTier) -> tuple:
+    def estimate(self, audio_filename: str, palign_tier: sppasTier) -> list:
         """Estimate formants for the given sound in a time interval.
+
+        The estimated values of all the enabled methods are stored into the
+        F1 and F2 tiers. The values of each method are also stored into their
+        own tier, except if only one method is enabled: its tiers would be
+        identical to the F1 and F2 ones.
 
         :param audio_filename: (str) Filename of a mono-audio file
         :param palign_tier: (sppasTier) Tier with time-aligned phonemes
-        :return: (sppasTier, sppasTier) Estimated formants in two tiers
+        :return: (list of sppasTier) Estimated formants in tiers
         :raises: ValueError: No method enabled
 
         """
         if len(self.__methods) == 0:
             raise ValueError("At least one of the estimator methods has to be enabled.")
-        # Prepare data
-        t1 = self.__create_formant_tier("F1")
-        t2 = self.__create_formant_tier("F2")
         audio_pcm = audioopy.aio.open(audio_filename)
 
         # Estimate RMS threshold -- if auto mode
         if self.__min_rms_threshold == 0:
             self.__auto_min_threshold(audio_pcm)
+
+        # Prepare data -- the threshold is a metadata of the tiers
+        t1 = self.__create_formant_tier("F1")
+        t2 = self.__create_formant_tier("F2")
+        method_tiers = self.__create_method_tiers()
 
         # Instantiate the estimators -- or not, it depends of the estimator!
         estimators = dict()
@@ -385,7 +392,7 @@ class FormantsEstimator:
             if self.__out_type == "center":
                 # Estimate or get formants in this window only -- at the center
                 f1, f2 = self.__apply_methods(estimators, audio_pcm, center_start_time, center_end_time)
-                self.__append_annotations(t1, t2, phon, ann.get_location(), f1, f2)
+                self.__append_annotations(t1, t2, method_tiers, phon, ann.get_location(), f1, f2)
             else:
                 # Estimate of get_formants in all windows of the phoneme
                 start_time = center_start_time
@@ -404,7 +411,7 @@ class FormantsEstimator:
                     f1, f2 = self.__apply_methods(estimators, audio_pcm, start_time, end_time)
                     if self.__out_type == "all":
                         loc = sppasLocation(sppasInterval(sppasPoint(start_time), sppasPoint(end_time)))
-                        self.__append_annotations(t1, t2, phon, loc, f1, f2)
+                        self.__append_annotations(t1, t2, method_tiers, phon, loc, f1, f2)
                     else:
                         for i in range(len(self.__methods)):
                             sum_f1[i] += f1[i]
@@ -417,10 +424,16 @@ class FormantsEstimator:
                 if self.__out_type == "mean" and _nb > 0:
                     f1 = [v/_nb for v in sum_f1]
                     f2 = [v/_nb for v in sum_f2]
-                    self.__append_annotations(t1, t2, phon, ann.get_location(), f1, f2)
+                    self.__append_annotations(t1, t2, method_tiers, phon, ann.get_location(), f1, f2)
 
         audio_pcm.close()
-        return t1, t2
+
+        tiers = [t1, t2]
+        for name in self.__methods:
+            if name in method_tiers:
+                tiers.extend(method_tiers[name])
+
+        return tiers
 
     # ----------------------------------------------------------------------------
 
@@ -433,9 +446,55 @@ class FormantsEstimator:
         tier = sppasTier(tier_name)
         for i, m in enumerate(self.__methods):
             tier.set_meta("formants_estimator_method_%d" % i, m)
+        self.__set_options_metadata(tier, self.__methods)
+        return tier
+
+    # ----------------------------------------------------------------------------
+
+    def __create_method_tiers(self) -> dict:
+        """Return the two tiers of each method, indexed by the method name.
+
+        No tier is created if only one method is enabled: its tiers would be
+        identical to the F1 and F2 ones.
+
+        :return: (dict) Tuple of the F1 and F2 tiers of each method name
+
+        """
+        method_tiers = dict()
+        if len(self.__methods) == 1:
+            return method_tiers
+
+        for name in self.__methods:
+            tier_f1 = sppasTier("F1-" + name)
+            tier_f2 = sppasTier("F2-" + name)
+            for tier in (tier_f1, tier_f2):
+                tier.set_meta("formants_estimator_method_0", name)
+                self.__set_options_metadata(tier, [name])
+            method_tiers[name] = (tier_f1, tier_f2)
+
+        return method_tiers
+
+    # ----------------------------------------------------------------------------
+
+    def __set_options_metadata(self, tier: sppasTier, method_names: list) -> None:
+        """Add the options the given methods depend on to the metadata.
+
+        The LPC options are only used by the self-implemented methods, so
+        they are not added to a tier of a Praat-based method.
+
+        :param tier: (sppasTier) Tier to add the metadata to
+        :param method_names: (list) Names of the methods of the tier
+
+        """
         tier.set_meta("output_type", self.__out_type)
         tier.set_meta("win_length", str(round(2*self.__half_win_dur, 3)))
-        return tier
+        tier.set_meta("rms_threshold", str(self.__min_rms_threshold))
+
+        for name in method_names:
+            if "praat" not in name:
+                tier.set_meta("lpc_order", str(self.__order))
+                tier.set_meta("floor_freq", str(self.__floor_frequency))
+                break
 
     # ----------------------------------------------------------------------------
 
@@ -456,7 +515,7 @@ class FormantsEstimator:
 
     # ----------------------------------------------------------------------------
 
-    def __append_annotations(self, t1, t2, phon, loc, f1, f2):
+    def __append_annotations(self, t1, t2, method_tiers, phon, loc, f1, f2):
         """Append annotations to the given tiers.
 
         """
@@ -465,6 +524,15 @@ class FormantsEstimator:
         if (sum(f1) * sum(f2)) > 0:
             self.__append_annotation(t1, phon, loc, f1)
             self.__append_annotation(t2, phon, loc.copy(), f2)
+
+        # Add the value of a method to its own tiers, if it estimated one.
+        for i, name in enumerate(self.__methods):
+            if name not in method_tiers:
+                continue
+            if f1[i] > 0 and f2[i] > 0:
+                tier_f1, tier_f2 = method_tiers[name]
+                self.__append_annotation(tier_f1, phon, loc.copy(), [f1[i]])
+                self.__append_annotation(tier_f2, phon, loc.copy(), [f2[i]])
 
     # ----------------------------------------------------------------------------
 

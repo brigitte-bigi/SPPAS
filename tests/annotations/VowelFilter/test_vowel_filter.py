@@ -59,45 +59,52 @@ NB_TOKENS = 40
 # ---------------------------------------------------------------------------
 
 
-def create_tiers(tokens, method_names=("burg",)):
-    """Return the tiers with the F1 and F2 values of the given tokens.
+def create_tokens(nb_tokens):
+    """Return a list of (duration, F1, F2) of expected values of a vowel."""
+    tokens = list()
+    for i in range(nb_tokens):
+        tokens.append((0.070 + 0.001 * (i % 7),
+                       690. + 3. * (i % 11),
+                       1280. + 5. * (i % 13)))
 
-    :param tokens: (list) List of (duration, F1 values, F2 values)
-    :param method_names: (tuple) Name of the estimation methods
-    :return: (sppasTier, sppasTier)
-
-    """
-    tier_f1 = sppasTier("F1")
-    tier_f2 = sppasTier("F2")
-    for i, name in enumerate(method_names):
-        tier_f1.set_meta("formants_estimator_method_{:d}".format(i), name)
-
-    for i, (duration, values_f1, values_f2) in enumerate(tokens):
-        begin = 1. + (0.2 * i)
-        location = sppasLocation(sppasInterval(sppasPoint(begin), sppasPoint(begin + duration)))
-
-        label_f1 = sppasLabel([sppasTag(int(v), "int") for v in values_f1])
-        label_f1.set_key("a")
-        tier_f1.create_annotation(location, [label_f1])
-
-        label_f2 = sppasLabel([sppasTag(int(v), "int") for v in values_f2])
-        label_f2.set_key("a")
-        tier_f2.create_annotation(location.copy(), [label_f2])
-
-    return tier_f1, tier_f2
+    return tokens
 
 # ---------------------------------------------------------------------------
 
 
-def create_tokens(nb_tokens):
-    """Return a list of (duration, [F1], [F2]) of expected values of a vowel."""
-    tokens = list()
-    for i in range(nb_tokens):
-        tokens.append((0.070 + 0.001 * (i % 7),
-                       [690. + 3. * (i % 11)],
-                       [1280. + 5. * (i % 13)]))
+def create_tiers(tokens, method_name=None):
+    """Return the tiers with the F1 and F2 values of the given tokens.
 
-    return tokens
+    The tiers are the ones the Formants annotation is creating for a method,
+    or the F1 and F2 ones if no method name is given.
+
+    :param tokens: (list) List of (duration, F1, F2)
+    :param method_name: (str) Name of the estimation method, or None
+    :return: (sppasTier, sppasTier)
+
+    """
+    if method_name is None:
+        tier_f1 = sppasTier("F1")
+        tier_f2 = sppasTier("F2")
+    else:
+        tier_f1 = sppasTier("F1-" + method_name)
+        tier_f2 = sppasTier("F2-" + method_name)
+        tier_f1.set_meta("formants_estimator_method_0", method_name)
+        tier_f2.set_meta("formants_estimator_method_0", method_name)
+
+    for i, (duration, f1, f2) in enumerate(tokens):
+        begin = 1. + (0.2 * i)
+        location = sppasLocation(sppasInterval(sppasPoint(begin), sppasPoint(begin + duration)))
+
+        label_f1 = sppasLabel(sppasTag(int(f1), "int"))
+        label_f1.set_key("a")
+        tier_f1.create_annotation(location, [label_f1])
+
+        label_f2 = sppasLabel(sppasTag(int(f2), "int"))
+        label_f2.set_key("a")
+        tier_f2.create_annotation(location.copy(), [label_f2])
+
+    return tier_f1, tier_f2
 
 # ---------------------------------------------------------------------------
 
@@ -121,17 +128,19 @@ class TestVowelFilterEstimator(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
-    def test_get_method_names(self):
-        tier_f1, tier_f2 = create_tiers(create_tokens(2))
-        self.assertEqual(("burg",), VowelFilterEstimator.get_method_names(tier_f1))
+    def test_get_method_name(self):
+        tier_f1, tier_f2 = create_tiers(create_tokens(2), "burg")
+        self.assertEqual("burg", VowelFilterEstimator.get_method_name(tier_f1))
+        self.assertEqual("burg", VowelFilterEstimator.get_method_name(tier_f2))
 
-        # No metadata: the number of values is the number of methods
-        self.assertEqual(("method_0",), VowelFilterEstimator.get_method_names(tier_f2))
+        # The F1 and F2 tiers of a single method have no name of method
+        tier_f1, tier_f2 = create_tiers(create_tokens(2))
+        self.assertEqual("", VowelFilterEstimator.get_method_name(tier_f1))
 
     # -----------------------------------------------------------------------
 
     def test_collect(self):
-        tier_f1, tier_f2 = create_tiers(create_tokens(NB_TOKENS))
+        tier_f1, tier_f2 = create_tiers(create_tokens(NB_TOKENS), "burg")
         estimator = VowelFilterEstimator()
 
         self.assertEqual(NB_TOKENS, estimator.collect(tier_f1, tier_f2))
@@ -141,7 +150,7 @@ class TestVowelFilterEstimator(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_collect_invalid_tiers(self):
-        tier_f1, tier_f2 = create_tiers(create_tokens(NB_TOKENS))
+        tier_f1, tier_f2 = create_tiers(create_tokens(NB_TOKENS), "burg")
         tier_f2.pop(0)
 
         estimator = VowelFilterEstimator()
@@ -153,8 +162,8 @@ class TestVowelFilterEstimator(unittest.TestCase):
     def test_filter(self):
         tokens = create_tokens(NB_TOKENS)
         # An erroneous token: F1 and F2 are inverted
-        tokens.append((0.073, [1800.], [600.]))
-        tier_f1, tier_f2 = create_tiers(tokens)
+        tokens.append((0.073, 1800., 600.))
+        tier_f1, tier_f2 = create_tiers(tokens, "burg")
 
         estimator = VowelFilterEstimator()
         estimator.collect(tier_f1, tier_f2)
@@ -164,22 +173,61 @@ class TestVowelFilterEstimator(unittest.TestCase):
         self.assertEqual(NB_TOKENS + 1, estimator.get_nb_values())
         self.assertEqual(1, estimator.get_nb_filtered())
 
-        # Only one method: the erroneous token has no remaining value, so
-        # that no annotation is created for it.
-        self.assertEqual(NB_TOKENS, len(new_f1))
-        self.assertEqual(NB_TOKENS, len(new_f2))
-        self.assertEqual(NB_TOKENS, len(distances))
+        # The names of the tiers are the ones of the method
+        self.assertEqual("F1-burg", new_f1.get_name())
+        self.assertEqual("F2-burg", new_f2.get_name())
+        self.assertEqual("MahalanobisDist-burg", distances.get_name())
+
+        # The erroneous value is discarded, the expected ones are kept
+        self.assertEqual(NB_TOKENS + 1, len(new_f1))
+        self.assertEqual(0, new_f1[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertEqual(0, new_f2[NB_TOKENS].get_best_tag().get_typed_content())
+        self.assertEqual(1800, tier_f1[NB_TOKENS].get_best_tag().get_typed_content())
+
+        for i, (duration, f1, f2) in enumerate(create_tokens(NB_TOKENS)):
+            self.assertEqual(int(f1), new_f1[i].get_best_tag().get_typed_content())
+            self.assertEqual(int(f2), new_f2[i].get_best_tag().get_typed_content())
+
+        # The distance of the discarded value explains why it was discarded
+        self.assertGreater(distances[NB_TOKENS].get_best_tag().get_typed_content(),
+                           estimator.get_threshold())
 
         # The metadata of the source tiers are copied
         self.assertEqual("burg", new_f1.get_meta("formants_estimator_method_0"))
 
     # -----------------------------------------------------------------------
 
+    def test_filter_is_method_dependent(self):
+        # The same erroneous token, estimated by two methods: it is expected
+        # by the 2nd method, whose values are all higher.
+        tokens = create_tokens(NB_TOKENS)
+        tokens.append((0.073, 1800., 600.))
+        tier_f1, tier_f2 = create_tiers(tokens, "burg")
+
+        other_tokens = [(d, f1 + 1100., f2 - 690.) for (d, f1, f2) in create_tokens(NB_TOKENS)]
+        other_tokens.append((0.073, 1800., 600.))
+        other_f1, other_f2 = create_tiers(other_tokens, "praat_burg")
+
+        estimator = VowelFilterEstimator()
+        estimator.collect(tier_f1, tier_f2)
+        estimator.collect(other_f1, other_f2)
+        self.assertEqual(2, estimator.estimate())
+
+        new_f1, new_f2, distances = estimator.filter(tier_f1, tier_f2)
+        self.assertEqual(1, estimator.get_nb_filtered())
+        self.assertEqual(0, new_f1[NB_TOKENS].get_best_tag().get_typed_content())
+
+        new_f1, new_f2, distances = estimator.filter(other_f1, other_f2)
+        self.assertEqual(0, estimator.get_nb_filtered())
+        self.assertEqual(1800, new_f1[NB_TOKENS].get_best_tag().get_typed_content())
+
+    # -----------------------------------------------------------------------
+
     def test_filter_without_distributions(self):
         # Not enough tokens to estimate a distribution: nothing is filtered
         tokens = create_tokens(2)
-        tokens.append((0.073, [1800.], [600.]))
-        tier_f1, tier_f2 = create_tiers(tokens)
+        tokens.append((0.073, 1800., 600.))
+        tier_f1, tier_f2 = create_tiers(tokens, "burg")
 
         estimator = VowelFilterEstimator()
         estimator.collect(tier_f1, tier_f2)
@@ -188,4 +236,4 @@ class TestVowelFilterEstimator(unittest.TestCase):
         new_f1, new_f2, distances = estimator.filter(tier_f1, tier_f2)
         self.assertEqual(3, len(new_f1))
         self.assertEqual(0, estimator.get_nb_filtered())
-        self.assertEqual(-1., distances[2].get_labels()[0][0][0].get_typed_content())
+        self.assertEqual(-1., distances[2].get_best_tag().get_typed_content())

@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -274,13 +274,13 @@ class sppasFormants(sppasBaseAnnotation):
 
         """
         audio_filename, tier = self.get_inputs(input_files)
-        f1, f2 = self.__estimator.estimate(audio_filename, tier)
+        tiers = self.__estimator.estimate(audio_filename, tier)
 
         # Create the transcription result
         trs_output = sppasTranscription(self.name)
         trs_output.set_meta('annotation_result_of', input_files[0])
-        trs_output.append(f1)
-        trs_output.append(f2)
+        for formant_tier in tiers:
+            trs_output.append(formant_tier)
 
         # Save in a file
         if output is not None:

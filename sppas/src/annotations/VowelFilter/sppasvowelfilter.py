@@ -64,7 +64,8 @@ class sppasVowelFilter(sppasBaseAnnotation):
 
     Erroneous F1/F2 values are identified with the Mahalanobis distance of
     the tokens to the expected values of their vowel class, as proposed by
-    Lancien et al. (2023).
+    Lancien et al. (2023). Each pair of tiers created by the Formants
+    annotation for a method is filtered with its own distributions.
 
     Such distributions can't be estimated on a file independently of the
     others: they require all the tokens of a corpus. This annotation is then
@@ -212,8 +213,9 @@ class sppasVowelFilter(sppasBaseAnnotation):
 
             self.print_diagnosis(*_inputs)
             try:
-                _tiers = self.__read_tiers(_formants_filename, _syll_filename)
-                self.__filter.collect(_tiers[0], _tiers[1], _tiers[2])
+                _pairs, _syll_tier = self.__read_tiers(_formants_filename, _syll_filename)
+                for tier_f1, tier_f2 in _pairs:
+                    self.__filter.collect(tier_f1, tier_f2, _syll_tier)
             except Exception as e:
                 self.logfile.print_message(str(e), indent=2, status=annots.error)
                 continue
@@ -321,19 +323,21 @@ class sppasVowelFilter(sppasBaseAnnotation):
         :return: (str) Name of the created file
 
         """
-        _tier_f1, _tier_f2, _syll_tier = self.__read_tiers(formants_filename, syll_filename)
-        _new_f1, _new_f2, _distances_tier = self.__filter.filter(_tier_f1, _tier_f2, _syll_tier)
-
-        self.logfile.print_message(
-            "Filtered {:d} formant values among {:d}."
-            "".format(self.__filter.get_nb_filtered(), self.__filter.get_nb_values()),
-            indent=2, status=annots.info)
+        _pairs, _syll_tier = self.__read_tiers(formants_filename, syll_filename)
 
         _trs_output = sppasTranscription(self.name)
         _trs_output.set_meta('annotation_result_of', formants_filename)
-        _trs_output.append(_new_f1)
-        _trs_output.append(_new_f2)
-        _trs_output.append(_distances_tier)
+
+        for tier_f1, tier_f2 in _pairs:
+            _tiers = self.__filter.filter(tier_f1, tier_f2, _syll_tier)
+            for filtered_tier in _tiers:
+                _trs_output.append(filtered_tier)
+
+            self.logfile.print_message(
+                "{:s}: filtered {:d} formant values among {:d}."
+                "".format(tier_f1.get_name(), self.__filter.get_nb_filtered(),
+                          self.__filter.get_nb_values()),
+                indent=2, status=annots.info)
 
         _output_file = self.fix_out_file_ext(self.get_out_name(formants_filename))
         _parser = sppasTrsRW(_output_file)
@@ -350,20 +354,52 @@ class sppasVowelFilter(sppasBaseAnnotation):
         :param formants_filename: (str) Name of a file with formant values
         :param syll_filename: (str) Name of a file with syllables, or None
         :raises: NoTierInputError: A tier with formant values is missing
-        :return: (sppasTier, sppasTier, sppasTier)
+        :return: (list, sppasTier) Pairs of F1/F2 tiers and syllables tier
 
         """
         _parser = sppasTrsRW(formants_filename)
         _trs_input = _parser.read()
 
-        _tier_f1 = sppasFindTier.formants(_trs_input, "F1")
-        _tier_f2 = sppasFindTier.formants(_trs_input, "F2")
-        if _tier_f1 is None or _tier_f2 is None:
-            logging.error("Tiers with names 'F1' and 'F2' not found in {:s}."
+        _pairs = sppasVowelFilter.__get_formant_pairs(_trs_input)
+        if len(_pairs) == 0:
+            logging.error("No tier with formant values found in {:s}."
                           "".format(formants_filename))
             raise NoTierInputError
 
-        return _tier_f1, _tier_f2, sppasVowelFilter.__read_syll_tier(syll_filename)
+        return _pairs, sppasVowelFilter.__read_syll_tier(syll_filename)
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __get_formant_pairs(trs) -> list:
+        """Return the pairs of F1/F2 tiers to be filtered, one of each method.
+
+        The F1 and F2 tiers are storing the values of all the methods into
+        alternative tags of a single label, so that a value can't be assigned
+        to the method it comes from: they are used only if the Formants
+        annotation enabled one method, i.e. if it didn't create a tier for
+        each of them.
+
+        :param trs: (sppasTranscription) The read formant values
+        :return: (list) List of (F1 tier, F2 tier)
+
+        """
+        _pairs = list()
+        for tier in trs:
+            _name = tier.get_name()
+            if _name.startswith("F1-") is False:
+                continue
+            _tier_f2 = trs.find("F2-" + _name[3:], case_sensitive=False)
+            if _tier_f2 is not None:
+                _pairs.append((tier, _tier_f2))
+
+        if len(_pairs) == 0:
+            _tier_f1 = sppasFindTier.formants(trs, "F1")
+            _tier_f2 = sppasFindTier.formants(trs, "F2")
+            if _tier_f1 is not None and _tier_f2 is not None:
+                _pairs.append((_tier_f1, _tier_f2))
+
+        return _pairs
 
     # -----------------------------------------------------------------------
 
