@@ -55,6 +55,7 @@ from ..searchtier import sppasFindTier
 from ..autils import sppasFiles
 
 from .vowel_filter import VowelFilterEstimator
+from .vowel_profiles import VowelProfiles
 
 # ----------------------------------------------------------------------------
 
@@ -68,9 +69,8 @@ class sppasVowelFilter(sppasBaseAnnotation):
     annotation for a method is filtered with its own distributions.
 
     Such distributions can't be estimated on a file independently of the
-    others: they require all the tokens of a corpus. This annotation is then
-    pre-processing a set of files instead of annotating a file, so that it
-    only proposes the 'batch_processing' method.
+    others: they require all the tokens of a corpus. They are then estimated
+    by 'batch_processing' on all its files, and given to 'run'.
 
     """
 
@@ -82,9 +82,9 @@ class sppasVowelFilter(sppasBaseAnnotation):
         """
         super(sppasVowelFilter, self).__init__("vowelfilter.json", log)
 
-        # The filtering estimator. Its distributions are estimated on all
-        # the files to be filtered.
-        self.__filter = VowelFilterEstimator()
+        # The filtering estimator. The distributions it needs are estimated
+        # on all the files of the corpus, then given to its methods.
+        self.__filter = VowelFilterEstimator(self._options['threshold'])
 
     # -----------------------------------------------------------------------
     # Methods to fix options
@@ -144,113 +144,25 @@ class sppasVowelFilter(sppasBaseAnnotation):
         """
         self._options['coda'] = bool(value)
 
-    # -----------------------------------------------------------------------
-    # Apply the filtering on a set of files
-    # -----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
+    # The vowel filtering is here
+    # ----------------------------------------------------------------------
 
-    def batch_processing(self, file_names, progress=None):
-        """Filter the erroneous formant values of a bunch of files.
+    def convert(self, tier_f1, tier_f2, syll_tier=None, profiles=None):
+        """Discard the erroneous formant values of a pair of tiers.
 
-        The feature distributions are estimated on the tokens of all the
-        given files, then each file is filtered with these distributions.
+        A value is discarded by assigning it a zero, like the Formants
+        annotation is doing. No value is discarded if no distributions are
+        given: they are estimated on all the files of a corpus.
 
-        :param file_names: (list) List of inputs
-        :param progress: ProcessProgressTerminal() or ProcessProgressDialog()
-        :return: (list of str) List of created files
-
-        """
-        if len(file_names) == 0:
-            return list()
-        if len(self._options) > 0:
-            self.print_options()
-        if progress:
-            progress.update(0, "")
-
-        # First pass: collect the features of the vowels of all the files.
-        self.__filter = VowelFilterEstimator(self._options['threshold'])
-        _all_inputs = self.__collect_all(file_names)
-
-        # Estimate the distributions the filtering is based on.
-        self.__print_profiles(self.__filter.estimate())
-
-        # Second pass: filter each file with the estimated distributions.
-        _files_processed_success = self.__filter_all(_all_inputs, progress)
-        if progress:
-            progress.update(1, "")
-
-        return _files_processed_success
-
-    # -----------------------------------------------------------------------
-
-    def __print_profiles(self, nb_profiles: int) -> None:
-        """Print the number of estimated distributions in the user log.
-
-        :param nb_profiles: (int) Number of estimated distributions
+        :param tier_f1: (sppasTier) Tier with the F1 values of a method
+        :param tier_f2: (sppasTier) Tier with the F2 values of a method
+        :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
+        :param profiles: (VowelProfiles) Estimated distributions, or None
+        :return: (sppasTier, sppasTier, sppasTier) Filtered F1, F2 and distances
 
         """
-        self.logfile.print_message(
-            "Estimated {:d} distributions of {:d} vowel classes."
-            "".format(nb_profiles, len(self.__filter.get_class_names())),
-            indent=1, status=annots.info)
-
-    # -----------------------------------------------------------------------
-
-    def __collect_all(self, file_names: list) -> list:
-        """Add the vowels of all the given files to the estimator.
-
-        :param file_names: (list) List of inputs
-        :return: (list) The (formants, syllables) file names of each valid input
-
-        """
-        _all_inputs = list()
-        for input_files in file_names:
-            try:
-                _inputs = self._fix_inputs(input_files)
-                _formants_filename, _syll_filename = self.get_inputs(_inputs)
-            except Exception as e:
-                logging.critical(str(e))
-                continue
-
-            self.print_diagnosis(*_inputs)
-            try:
-                _pairs, _syll_tier = self.__read_tiers(_formants_filename, _syll_filename)
-                for tier_f1, tier_f2 in _pairs:
-                    self.__filter.collect(tier_f1, tier_f2, _syll_tier)
-            except Exception as e:
-                self.logfile.print_message(str(e), indent=2, status=annots.error)
-                continue
-
-            _all_inputs.append((_formants_filename, _syll_filename))
-
-        return _all_inputs
-
-    # -----------------------------------------------------------------------
-
-    def __filter_all(self, all_inputs: list, progress=None) -> list:
-        """Filter each of the given files with the estimated distributions.
-
-        :param all_inputs: (list) The (formants, syllables) file names
-        :param progress: ProcessProgressTerminal() or ProcessProgressDialog()
-        :return: (list of str) List of created files
-
-        """
-        _files_processed_success = list()
-        for i, (formants_filename, syll_filename) in enumerate(all_inputs):
-            if progress:
-                progress.set_fraction(round(float(i)/float(len(all_inputs)), 2))
-                progress.set_text(os.path.basename(formants_filename))
-
-            self.print_filename(formants_filename)
-            try:
-                _out_name = self.__filter_file(formants_filename, syll_filename)
-            except Exception as e:
-                self.logfile.print_message(str(e), indent=2, status=annots.error)
-            else:
-                _files_processed_success.append(_out_name)
-                self.logfile.print_message(_out_name, indent=1, status=annots.ok)
-            self.logfile.print_newline()
-
-        return _files_processed_success
+        return self.__filter.filter(profiles, tier_f1, tier_f2, syll_tier)
 
     # -----------------------------------------------------------------------
 
@@ -283,9 +195,74 @@ class sppasVowelFilter(sppasBaseAnnotation):
 
         return _formants_filename, _syll_filename
 
+    # ----------------------------------------------------------------------
+    # Apply the annotation on a given file
     # -----------------------------------------------------------------------
-    # Patterns and extensions of the files
+
+    def run(self, input_files, output=None, **kwargs):
+        """Run the automatic annotation process on an input.
+
+        Input file is a tuple with 2 files: the file with the formant values
+        and the optional one with the time-aligned syllables.
+
+        :param input_files: (list of str) (formants, time-aligned syllables)
+        :param output: (str) the output name
+        :param kwargs: (VowelProfiles) profiles=the estimated distributions
+        :return: (sppasTranscription)
+
+        """
+        _profiles = kwargs.get("profiles", None)
+        if _profiles is None:
+            self.logfile.print_message(
+                "No estimated distributions: no formant value can be discarded.",
+                indent=2, status=annots.warning)
+
+        _formants_filename, _syll_filename = self.get_inputs(input_files)
+        _pairs, _syll_tier = self.__read_tiers(_formants_filename, _syll_filename)
+
+        # Create the transcription result
+        _trs_output = sppasTranscription(self.name)
+        _trs_output.set_meta('annotation_result_of', _formants_filename)
+        for tier_f1, tier_f2 in _pairs:
+            for filtered_tier in self.convert(tier_f1, tier_f2, _syll_tier, _profiles):
+                _trs_output.append(filtered_tier)
+            self.__print_filtered(tier_f1)
+
+        # Save in a file
+        if output is not None:
+            _output_file = self.fix_out_file_ext(output)
+            _parser = sppasTrsRW(_output_file)
+            _parser.write(_trs_output)
+            return [_output_file]
+
+        return _trs_output
+
+    # ----------------------------------------------------------------------
+    # Apply the annotation on a set of files
     # -----------------------------------------------------------------------
+
+    def batch_processing(self, file_names, progress=None, **kwargs):
+        """Filter the erroneous formant values of a bunch of files.
+
+        The feature distributions are estimated on the tokens of all the
+        given files, then each file is annotated with these distributions.
+
+        :param file_names: (list) List of inputs
+        :param progress: ProcessProgressTerminal() or ProcessProgressDialog()
+        :return: (list of str) List of created files
+
+        """
+        if len(file_names) == 0:
+            return list()
+
+        # First pass: estimate the distributions on the whole set of files.
+        _profiles = self.__estimate_profiles(file_names)
+
+        # Then, annotate each file with these distributions.
+        return super(sppasVowelFilter, self).batch_processing(
+            file_names, progress, profiles=_profiles, **kwargs)
+
+    # ----------------------------------------------------------------------
 
     def get_output_pattern(self):
         """Pattern this annotation uses in an output filename."""
@@ -312,44 +289,53 @@ class sppasVowelFilter(sppasBaseAnnotation):
     # Private
     # -----------------------------------------------------------------------
 
-    def __filter_file(self, formants_filename: str, syll_filename: str) -> str:
-        """Filter the formant values of a file and save the result.
+    def __estimate_profiles(self, file_names: list) -> VowelProfiles:
+        """Return the feature distributions of the vowels of all the files.
 
-        The distributions are estimated on all the files of the corpus, so
-        that a file can't be filtered independently of the others.
-
-        :param formants_filename: (str) Name of a file with formant values
-        :param syll_filename: (str) Name of a file with syllables, or None
-        :return: (str) Name of the created file
+        :param file_names: (list) List of inputs
+        :return: (VowelProfiles) The estimated distributions
 
         """
-        _pairs, _syll_tier = self.__read_tiers(formants_filename, syll_filename)
+        _profiles = VowelProfiles()
+        for input_files in file_names:
+            try:
+                _inputs = self._fix_inputs(input_files)
+                _formants_filename, _syll_filename = self.get_inputs(_inputs)
+                _pairs, _syll_tier = self.__read_tiers(_formants_filename, _syll_filename)
+            except Exception as e:
+                logging.error(str(e))
+                continue
 
-        _trs_output = sppasTranscription(self.name)
-        _trs_output.set_meta('annotation_result_of', formants_filename)
+            for tier_f1, tier_f2 in _pairs:
+                self.__filter.collect(_profiles, tier_f1, tier_f2, _syll_tier)
 
-        for tier_f1, tier_f2 in _pairs:
-            _tiers = self.__filter.filter(tier_f1, tier_f2, _syll_tier)
-            for filtered_tier in _tiers:
-                _trs_output.append(filtered_tier)
+        self.logfile.print_message(
+            "Estimated {:d} distributions of {:d} vowel classes."
+            "".format(_profiles.estimate(), len(_profiles.get_class_names())),
+            indent=1, status=annots.info)
+        self.logfile.print_newline()
 
-            self.logfile.print_message(
-                "{:s}: filtered {:d} formant values among {:d}."
-                "".format(tier_f1.get_name(), self.__filter.get_nb_filtered(),
-                          self.__filter.get_nb_values()),
-                indent=2, status=annots.info)
+        return _profiles
 
-        _output_file = self.fix_out_file_ext(self.get_out_name(formants_filename))
-        _parser = sppasTrsRW(_output_file)
-        _parser.write(_trs_output)
+    # -----------------------------------------------------------------------
 
-        return _output_file
+    def __print_filtered(self, tier_f1: sppasTier) -> None:
+        """Print the result of the last filtered pair of tiers in the user log.
+
+        :param tier_f1: (sppasTier) The filtered tier with the F1 values
+
+        """
+        self.logfile.print_message(
+            "{:s}: filtered {:d} formant values among {:d}."
+            "".format(tier_f1.get_name(), self.__filter.get_nb_filtered(),
+                      self.__filter.get_nb_values()),
+            indent=2, status=annots.info)
 
     # -----------------------------------------------------------------------
 
     @staticmethod
     def __read_tiers(formants_filename: str, syll_filename: str) -> tuple:
-        """Return the tiers with formant values and the one with syllables.
+        """Return the pairs of tiers with formant values and the syllables.
 
         :param formants_filename: (str) Name of a file with formant values
         :param syll_filename: (str) Name of a file with syllables, or None

@@ -55,10 +55,14 @@ from .vowel_profiles import VowelProfiles
 class VowelFilterEstimator:
     """Estimator of the erroneous formant values of a corpus.
 
-    The tokens of all the files are collected, then their feature
-    distributions are estimated, then each file can be filtered: a formant
-    value is discarded if its token is further than a given number of
-    standard deviations from the expected values of its class.
+    The tokens of all the files are collected into feature distributions,
+    these latter are estimated, then each file can be filtered with them: a
+    formant value is discarded if its token is further than a given number
+    of standard deviations from the expected values of its class.
+
+    The distributions are given to the estimator instead of being one of its
+    members, so that a file can be filtered with the distributions of all the
+    files of its corpus.
 
     Estimating the distributions requires a large number of tokens: the
     Mahalanobis distance of a token among n ones can't be higher than
@@ -66,10 +70,11 @@ class VowelFilterEstimator:
     than the default threshold of 3 standard deviations.
 
     :example:
+    >>> profiles = VowelProfiles()
     >>> estimator = VowelFilterEstimator()
-    >>> estimator.collect(tier_f1, tier_f2)
-    >>> estimator.estimate()
-    >>> f1, f2, distances = estimator.filter(tier_f1, tier_f2)
+    >>> estimator.collect(profiles, tier_f1, tier_f2)
+    >>> profiles.estimate()
+    >>> f1, f2, distances = estimator.filter(profiles, tier_f1, tier_f2)
 
     """
 
@@ -79,9 +84,6 @@ class VowelFilterEstimator:
         :param threshold: (float) Maximum number of standard deviations
 
         """
-        # Feature distributions of all the collected tokens:
-        self.__profiles = VowelProfiles()
-
         # Maximum distance of a token to the profile of its class:
         self.__threshold = 3.
         self.set_threshold(threshold)
@@ -117,12 +119,6 @@ class VowelFilterEstimator:
 
     # -----------------------------------------------------------------------
 
-    def get_class_names(self) -> tuple:
-        """Return the names of the classes of the collected tokens."""
-        return self.__profiles.get_class_names()
-
-    # -----------------------------------------------------------------------
-
     def get_nb_values(self) -> int:
         """Return the number of estimated values of the last filtered tiers."""
         return self.__nb_values
@@ -137,9 +133,11 @@ class VowelFilterEstimator:
     # Workers
     # -----------------------------------------------------------------------
 
-    def collect(self, tier_f1: sppasTier, tier_f2: sppasTier, syll_tier: sppasTier = None) -> int:
+    def collect(self, profiles: VowelProfiles, tier_f1: sppasTier, tier_f2: sppasTier,
+                syll_tier: sppasTier = None) -> int:
         """Add the features of the vowels of a pair of tiers to the distributions.
 
+        :param profiles: (VowelProfiles) Distributions the tokens are added to
         :param tier_f1: (sppasTier) Tier with the F1 values of a method
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
         :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
@@ -154,29 +152,23 @@ class VowelFilterEstimator:
         for class_name, vector in self.__get_tokens(tier_f1, tier_f2, _classifier):
             if vector is None:
                 continue
-            self.__profiles.add_token(class_name, _method_name, vector)
+            profiles.add_token(class_name, _method_name, vector)
             _nb_tokens += 1
 
         return _nb_tokens
 
     # -----------------------------------------------------------------------
 
-    def estimate(self) -> int:
-        """Estimate the distributions of the collected tokens.
-
-        :return: (int) Number of estimated distributions
-
-        """
-        return self.__profiles.estimate()
-
-    # -----------------------------------------------------------------------
-
-    def filter(self, tier_f1: sppasTier, tier_f2: sppasTier, syll_tier: sppasTier = None) -> tuple:
+    def filter(self, profiles: VowelProfiles, tier_f1: sppasTier, tier_f2: sppasTier,
+               syll_tier: sppasTier = None) -> tuple:
         """Discard the erroneous formant values of a pair of tiers.
 
         A value is discarded by assigning it a zero, like the Formants
-        annotation is doing when a method didn't estimate any value.
+        annotation is doing when a method didn't estimate any value. No value
+        is discarded if no distributions are given: the tiers are the ones of
+        a file which was not compared to the other files of its corpus.
 
+        :param profiles: (VowelProfiles) Estimated distributions, or None
         :param tier_f1: (sppasTier) Tier with the F1 values of a method
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
         :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
@@ -196,7 +188,7 @@ class VowelFilterEstimator:
             if vector is None:
                 continue
 
-            _f1, _f2, _distance = self.__filter_value(class_name, _method_name, vector)
+            _f1, _f2, _distance = self.__filter_value(profiles, class_name, _method_name, vector)
             VowelFilterEstimator.__append_annotations(
                 _new_f1, _new_f2, _distances_tier, tier_f1[i], tier_f2[i], _f1, _f2, _distance)
 
@@ -226,9 +218,11 @@ class VowelFilterEstimator:
     # Private
     # -----------------------------------------------------------------------
 
-    def __filter_value(self, class_name: str, method_name: str, vector: list) -> tuple:
+    def __filter_value(self, profiles: VowelProfiles, class_name: str, method_name: str,
+                       vector: list) -> tuple:
         """Return the kept values and the distance of a token of a method.
 
+        :param profiles: (VowelProfiles) Estimated distributions, or None
         :param class_name: (str) Name of the vowel class of the token
         :param method_name: (str) Name of the method the features come from
         :param vector: (list) Feature vector of the method, or None
@@ -240,7 +234,9 @@ class VowelFilterEstimator:
             return 0, 0, -1.
 
         self.__nb_values += 1
-        _distance = self.__profiles.get_distance(class_name, method_name, vector)
+        _distance = None
+        if profiles is not None:
+            _distance = profiles.get_distance(class_name, method_name, vector)
 
         if _distance is None:
             # No distribution to compare this token with.

@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -337,7 +337,7 @@ class sppasBaseAnnotation(object):
     # Perform automatic annotation:
     # -----------------------------------------------------------------------
 
-    def run(self, input_files, output=None):
+    def run(self, input_files, output=None, **kwargs):
         """Run the automatic annotation process on a given input.
 
         The input is a list of files the annotation needs: audio, video,
@@ -349,6 +349,7 @@ class sppasBaseAnnotation(object):
 
         :param input_files: (list of str) The required and optional input(s)
         :param output: (str) The output name with or without extension
+        :param kwargs: The results an annotation estimated on all its inputs
         :returns: (sppasTranscription OR list of created file names)
 
         """
@@ -356,13 +357,14 @@ class sppasBaseAnnotation(object):
 
     # -----------------------------------------------------------------------
 
-    def run_for_batch_processing(self, input_files):
+    def run_for_batch_processing(self, input_files, **kwargs):
         """Perform the annotation on a file.
 
         This method is called by 'batch_processing'. It fixes the name of the
         output file, and call the run method.
 
         :param input_files: (list of str) the required input(s) for a run
+        :param kwargs: The results an annotation estimated on all its inputs
         :returns: created output file name or None
 
         """
@@ -382,7 +384,7 @@ class sppasBaseAnnotation(object):
 
         # Execute annotation
         try:
-            new_files = self.run(input_files, out_name)
+            new_files = self.run(input_files, out_name, **kwargs)
         except Exception as e:
             new_files = list()
             self.logfile.print_message(
@@ -394,7 +396,7 @@ class sppasBaseAnnotation(object):
 
     # -----------------------------------------------------------------------
 
-    def batch_processing(self, file_names, progress=None):
+    def batch_processing(self, file_names, progress=None, **kwargs):
         """Perform the annotation on a bunch of files.
 
         Can be used by an annotation manager to launch all the annotations on
@@ -407,6 +409,7 @@ class sppasBaseAnnotation(object):
 
         :param file_names: (list) List of inputs
         :param progress: ProcessProgressTerminal() or ProcessProgressDialog()
+        :param kwargs: The results an annotation estimated on all its inputs
         :return: (list of str) List of created files
 
         """
@@ -432,7 +435,7 @@ class sppasBaseAnnotation(object):
                     progress.set_fraction(round(float(i)/float(total), 2))
                     progress.set_text("{!s:s}".format(*inputs))
 
-                out_names = self.run_for_batch_processing(inputs)
+                out_names = self.run_for_batch_processing(inputs, **kwargs)
                 if out_names is None or (isinstance(out_names, (list, tuple)) and len(out_names) == 0):
                     self.logfile.print_message(info(1306, "annotations"), indent=1, status=annots.info)
                 else:

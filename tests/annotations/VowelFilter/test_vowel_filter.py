@@ -48,6 +48,7 @@ from sppas.src.anndata import sppasLabel
 from sppas.src.anndata import sppasTag
 
 from sppas.src.annotations.VowelFilter.vowel_filter import VowelFilterEstimator
+from sppas.src.annotations.VowelFilter.vowel_profiles import VowelProfiles
 
 # ---------------------------------------------------------------------------
 
@@ -142,10 +143,11 @@ class TestVowelFilterEstimator(unittest.TestCase):
     def test_collect(self):
         tier_f1, tier_f2 = create_tiers(create_tokens(NB_TOKENS), "burg")
         estimator = VowelFilterEstimator()
+        profiles = VowelProfiles()
 
-        self.assertEqual(NB_TOKENS, estimator.collect(tier_f1, tier_f2))
-        self.assertEqual(("a",), estimator.get_class_names())
-        self.assertEqual(1, estimator.estimate())
+        self.assertEqual(NB_TOKENS, estimator.collect(profiles, tier_f1, tier_f2))
+        self.assertEqual(("a",), profiles.get_class_names())
+        self.assertEqual(1, profiles.estimate())
 
     # -----------------------------------------------------------------------
 
@@ -154,8 +156,9 @@ class TestVowelFilterEstimator(unittest.TestCase):
         tier_f2.pop(0)
 
         estimator = VowelFilterEstimator()
+        profiles = VowelProfiles()
         with self.assertRaises(ValueError):
-            estimator.collect(tier_f1, tier_f2)
+            estimator.collect(profiles, tier_f1, tier_f2)
 
     # -----------------------------------------------------------------------
 
@@ -166,9 +169,10 @@ class TestVowelFilterEstimator(unittest.TestCase):
         tier_f1, tier_f2 = create_tiers(tokens, "burg")
 
         estimator = VowelFilterEstimator()
-        estimator.collect(tier_f1, tier_f2)
-        estimator.estimate()
-        new_f1, new_f2, distances = estimator.filter(tier_f1, tier_f2)
+        profiles = VowelProfiles()
+        estimator.collect(profiles, tier_f1, tier_f2)
+        profiles.estimate()
+        new_f1, new_f2, distances = estimator.filter(profiles, tier_f1, tier_f2)
 
         self.assertEqual(NB_TOKENS + 1, estimator.get_nb_values())
         self.assertEqual(1, estimator.get_nb_filtered())
@@ -209,15 +213,16 @@ class TestVowelFilterEstimator(unittest.TestCase):
         other_f1, other_f2 = create_tiers(other_tokens, "praat_burg")
 
         estimator = VowelFilterEstimator()
-        estimator.collect(tier_f1, tier_f2)
-        estimator.collect(other_f1, other_f2)
-        self.assertEqual(2, estimator.estimate())
+        profiles = VowelProfiles()
+        estimator.collect(profiles, tier_f1, tier_f2)
+        estimator.collect(profiles, other_f1, other_f2)
+        self.assertEqual(2, profiles.estimate())
 
-        new_f1, new_f2, distances = estimator.filter(tier_f1, tier_f2)
+        new_f1, new_f2, distances = estimator.filter(profiles, tier_f1, tier_f2)
         self.assertEqual(1, estimator.get_nb_filtered())
         self.assertEqual(0, new_f1[NB_TOKENS].get_best_tag().get_typed_content())
 
-        new_f1, new_f2, distances = estimator.filter(other_f1, other_f2)
+        new_f1, new_f2, distances = estimator.filter(profiles, other_f1, other_f2)
         self.assertEqual(0, estimator.get_nb_filtered())
         self.assertEqual(1800, new_f1[NB_TOKENS].get_best_tag().get_typed_content())
 
@@ -230,10 +235,11 @@ class TestVowelFilterEstimator(unittest.TestCase):
         tier_f1, tier_f2 = create_tiers(tokens, "burg")
 
         estimator = VowelFilterEstimator()
-        estimator.collect(tier_f1, tier_f2)
-        self.assertEqual(0, estimator.estimate())
+        profiles = VowelProfiles()
+        estimator.collect(profiles, tier_f1, tier_f2)
+        self.assertEqual(0, profiles.estimate())
 
-        new_f1, new_f2, distances = estimator.filter(tier_f1, tier_f2)
+        new_f1, new_f2, distances = estimator.filter(profiles, tier_f1, tier_f2)
         self.assertEqual(3, len(new_f1))
         self.assertEqual(0, estimator.get_nb_filtered())
         self.assertEqual(-1., distances[2].get_best_tag().get_typed_content())

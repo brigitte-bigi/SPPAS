@@ -195,6 +195,22 @@ class TestSppasVowelFilter(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
+    def test_run_without_profiles(self):
+        # A file can't be filtered alone: with no estimated distributions,
+        # no value is discarded, and no distance can be estimated.
+        ann = sppasVowelFilter()
+        trs = ann.run([self.erroneous_filename])
+
+        tier_f1 = trs.find("F1")
+        self.assertEqual(5, len(tier_f1))
+        self.assertEqual(1800, tier_f1[4].get_best_tag().get_typed_content())
+
+        tier_dist = trs.find("MahalanobisDist")
+        for ann_dist in tier_dist:
+            self.assertEqual(-1., ann_dist.get_best_tag().get_typed_content())
+
+    # -----------------------------------------------------------------------
+
     def test_batch_processing(self):
         ann = sppasVowelFilter()
         out_files = ann.batch_processing([[self.expected_filename],
