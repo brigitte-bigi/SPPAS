@@ -274,7 +274,7 @@ class sppasVowelFilter(sppasBaseAnnotation):
             return list()
 
         # First pass: estimate the distributions on the whole set of files.
-        _profiles = self.__estimate_profiles(file_names)
+        _profiles = self.__collect_profiles(file_names)
 
         # Then, annotate each file with these distributions.
         return super(sppasVowelFilter, self).batch_processing(
@@ -307,8 +307,11 @@ class sppasVowelFilter(sppasBaseAnnotation):
     # Private
     # -----------------------------------------------------------------------
 
-    def __estimate_profiles(self, file_names: list) -> VowelProfiles:
-        """Return the feature distributions of the vowels of all the files.
+    def __collect_profiles(self, file_names: list) -> VowelProfiles:
+        """Return the estimated feature distributions of all the given files.
+
+        The vowels of each file are added to the distributions, then these
+        latter are estimated by VowelProfiles.
 
         :param file_names: (list) List of inputs
         :return: (VowelProfiles) The estimated distributions
@@ -328,21 +331,22 @@ class sppasVowelFilter(sppasBaseAnnotation):
                 self.__filter.collect(_profiles, tier_f1, tier_f2, _syll_tier,
                                       _formants_filename)
 
-        self.__print_profiles(_profiles)
+        self.__print_profiles(_profiles.estimate(), _profiles.get_class_names())
 
         return _profiles
 
     # -----------------------------------------------------------------------
 
-    def __print_profiles(self, profiles: VowelProfiles) -> None:
-        """Estimate the distributions and print the result in the user log.
+    def __print_profiles(self, nb_profiles: int, class_names: tuple) -> None:
+        """Print the number of estimated distributions in the user log.
 
-        :param profiles: (VowelProfiles) The collected tokens
+        :param nb_profiles: (int) Number of estimated distributions
+        :param class_names: (tuple) Names of the collected vowel classes
 
         """
         self.logfile.print_message(
             "Estimated {:d} distributions of {:d} vowel classes."
-            "".format(profiles.estimate(), len(profiles.get_class_names())),
+            "".format(nb_profiles, len(class_names)),
             indent=1, status=annots.info)
         self.logfile.print_newline()
 
