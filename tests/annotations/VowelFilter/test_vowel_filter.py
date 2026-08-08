@@ -151,14 +151,15 @@ class TestVowelFilterEstimator(unittest.TestCase):
 
     # -----------------------------------------------------------------------
 
-    def test_collect_invalid_tiers(self):
+    def test_collect_unmatched_tiers(self):
+        # A token without both of its values is ignored: a method can be
+        # reliable for F1 and not for F2 of a given segment.
         tier_f1, tier_f2 = create_tiers(create_tokens(NB_TOKENS), "burg")
         tier_f2.pop(0)
 
         estimator = VowelFilterEstimator()
         profiles = VowelProfiles()
-        with self.assertRaises(ValueError):
-            estimator.collect(profiles, tier_f1, tier_f2)
+        self.assertEqual(NB_TOKENS - 1, estimator.collect(profiles, tier_f1, tier_f2))
 
     # -----------------------------------------------------------------------
 

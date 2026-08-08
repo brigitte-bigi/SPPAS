@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -93,6 +93,12 @@ class LPCFormantEstimator(BaseFormantEstimator):
 
     """
 
+    # Maximum bandwidth of a pole to be a formant, in Hz. A resonance of the
+    # vocal tract is narrow: a wider pole is modeling the spectral slope.
+    MAX_BANDWIDTH = 400.
+
+    # -----------------------------------------------------------------------
+
     def __init__(self, signal: np.array, sample_rate: int, *args, **kwargs):
         """Initialize an LPC-based formant estimator.
 
@@ -132,6 +138,45 @@ class LPCFormantEstimator(BaseFormantEstimator):
 
     def get_order(self) -> int:
         return self._order
+
+    # -----------------------------------------------------------------------
+
+    def _roots_to_formants(self, roots, floor_freq: float, formants: tuple) -> list:
+        """Return the frequencies of the given formants from the LPC roots.
+
+        Each root of the LPC polynomial is a pole of the modeled spectrum,
+        but only the resonances of the vocal tract are formants: a pole with
+        a large bandwidth is modeling the spectral slope or the noise, so it
+        is discarded. The rank of a formant is its position among the sorted
+        frequencies of the remaining poles.
+
+        :param roots: (list) Roots of the LPC polynomial
+        :param floor_freq: (float) Minimum frequency of a formant, in Hz
+        :param formants: (tuple) Ranks of the formants to be returned, i.e. (1, 2)
+        :return: (list) Estimated formant frequencies in Hz
+
+        """
+        estimated = list()
+        for root in roots:
+            # Only the poles of the upper complex half-plane are used: the
+            # conjugated ones are the same resonances.
+            if np.imag(root) < 0.01:
+                continue
+
+            frequency = np.arctan2(np.imag(root), np.real(root)) * (self._sample_rate / (2 * np.pi))
+            if frequency < floor_freq:
+                continue
+
+            bandwidth = -(self._sample_rate / np.pi) * np.log(np.abs(root))
+            if abs(bandwidth) > LPCFormantEstimator.MAX_BANDWIDTH:
+                continue
+
+            estimated.append(frequency)
+
+        estimated = sorted(estimated)
+
+        return [round(float(estimated[rank-1]), 3) for rank in formants
+                if rank <= len(estimated)]
 
 # ---------------------------------------------------------------------------
 

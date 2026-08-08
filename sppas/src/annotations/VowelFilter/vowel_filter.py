@@ -142,7 +142,6 @@ class VowelFilterEstimator:
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
         :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
         :param file_id: (str) Identifier of the file the tiers come from
-        :raises: ValueError: The tiers don't have the same number of annotations
         :return: (int) Number of added tokens
 
         """
@@ -150,9 +149,7 @@ class VowelFilterEstimator:
         _classifier = VowelClassifier(syll_tier)
 
         _nb_tokens = 0
-        for class_name, vector in self.__get_tokens(tier_f1, tier_f2, _classifier):
-            if vector is None:
-                continue
+        for class_name, vector, ann_f1, ann_f2 in self.__get_tokens(tier_f1, tier_f2, _classifier):
             profiles.add_token(file_id, class_name, _method_name, vector)
             _nb_tokens += 1
 
@@ -174,7 +171,6 @@ class VowelFilterEstimator:
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
         :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None
         :param file_id: (str) Identifier of the file the tiers come from
-        :raises: ValueError: The tiers don't have the same number of annotations
         :return: (sppasTier, sppasTier, sppasTier) Filtered F1, F2 and distances
 
         """
@@ -185,15 +181,11 @@ class VowelFilterEstimator:
         self.__nb_values = 0
         self.__nb_filtered = 0
 
-        _tokens = self.__get_tokens(tier_f1, tier_f2, _classifier)
-        for i, (class_name, vector) in enumerate(_tokens):
-            if vector is None:
-                continue
-
+        for class_name, vector, ann_f1, ann_f2 in self.__get_tokens(tier_f1, tier_f2, _classifier):
             _f1, _f2, _distance = self.__filter_value(
                 profiles, file_id, class_name, _method_name, vector)
             VowelFilterEstimator.__append_annotations(
-                _new_f1, _new_f2, _distances_tier, tier_f1[i], tier_f2[i], _f1, _f2, _distance)
+                _new_f1, _new_f2, _distances_tier, ann_f1, ann_f2, _f1, _f2, _distance)
 
         return _new_f1, _new_f2, _distances_tier
 
@@ -264,23 +256,25 @@ class VowelFilterEstimator:
         :param tier_f1: (sppasTier) Tier with the F1 values of a method
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
         :param classifier: (VowelClassifier) To get the class of the tokens
-        :raises: ValueError: The tiers don't have the same number of annotations
-        :return: (list) List of (class name, vector)
+        :return: (list) List of (class name, vector, F1 annotation, F2 annotation)
 
         """
-        if len(tier_f1) != len(tier_f2):
-            raise ValueError("Expected the same number of F1 and F2 values. "
-                             "Got {:d} and {:d} instead."
-                             "".format(len(tier_f1), len(tier_f2)))
-
         _tokens = list()
 
-        for ann_f1, ann_f2 in zip(tier_f1, tier_f2):
-            _vector = VowelFilterEstimator.__get_vector(ann_f1, ann_f2)
+        # A formant is estimated only if the method is reliable enough for
+        # it, so the tiers are matched by their localizations: a token
+        # without both of its values is ignored.
+        for ann_f1 in tier_f1:
+            _anns_f2 = tier_f2.find(ann_f1.get_lowest_localization(),
+                                    ann_f1.get_highest_localization())
+            if len(_anns_f2) != 1:
+                continue
+
+            _vector = VowelFilterEstimator.__get_vector(ann_f1, _anns_f2[0])
             if _vector is None:
-                _tokens.append(("", None))
-            else:
-                _tokens.append((classifier.get_class(ann_f1), _vector))
+                continue
+
+            _tokens.append((classifier.get_class(ann_f1), _vector, ann_f1, _anns_f2[0]))
 
         return _tokens
 

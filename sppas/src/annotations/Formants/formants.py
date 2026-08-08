@@ -380,8 +380,9 @@ class FormantsEstimator:
         """Return the LPC order, the derived one if it was not fixed.
 
         The order of an LPC analysis depends on the sample rate of the
-        analyzed signal: two poles are required for each formant of the
-        [0; sample_rate/2] range, plus two for the spectral slope.
+        analyzed signal: the [0; sample_rate/2] analyzed band is expected to
+        contain one formant for each of its kHz, two poles are required for
+        each of them, and two more model the spectral slope.
 
         :param sample_rate: (int) Sample rate to derive the order from
         :return: (int) The fixed order, or the derived one
@@ -392,7 +393,7 @@ class FormantsEstimator:
         if sample_rate <= 0:
             return FormantsEstimator.DEFAULT_ORDER
 
-        return 2 * (sample_rate // 1000) + 2
+        return 2 * (sample_rate // 2000) + 2
 
     def set_order(self, value: int) -> None:
         """Set the LPC order: 0 to derive it from the sample rate.

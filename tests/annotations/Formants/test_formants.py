@@ -142,9 +142,10 @@ class TestDerivedOrder(unittest.TestCase):
 
     def test_derived_order(self):
         estimator = FormantsEstimator()
-        # Two poles for each formant of the analyzed band, plus two ones
-        self.assertEqual(18, estimator.get_order(8000))
-        self.assertEqual(26, estimator.get_order(12000))
+        # Two poles for each formant of the analyzed band, plus two ones.
+        # The [0; sr/2] band is expected to have one formant for each kHz.
+        self.assertEqual(10, estimator.get_order(8000))
+        self.assertEqual(14, estimator.get_order(12000))
         self.assertEqual(FormantsEstimator.DEFAULT_ORDER, estimator.get_order(0))
 
     # -----------------------------------------------------------------------
@@ -159,7 +160,7 @@ class TestDerivedOrder(unittest.TestCase):
 
         # Zero restores the derived order
         estimator.set_order(0)
-        self.assertEqual(18, estimator.get_order(8000))
+        self.assertEqual(10, estimator.get_order(8000))
 
     # -----------------------------------------------------------------------
 
@@ -204,8 +205,11 @@ class TestEstimatedTiers(unittest.TestCase):
         tiers = estimator.estimate(self.audio_filename, self.palign_tier)
 
         self.assertEqual(["F1", "F2", "F3", "F4"], [tier.get_name() for tier in tiers])
-        self.assertEqual(len(tiers[0]), len(tiers[1]))
         self.assertGreater(len(tiers[0]), 0)
+
+        # A formant is stored only if the method estimated it, and the
+        # highest ones are the least often detected.
+        self.assertGreaterEqual(len(tiers[0]), len(tiers[3]))
 
     # -----------------------------------------------------------------------
 
@@ -225,9 +229,12 @@ class TestEstimatedTiers(unittest.TestCase):
         # The 1st value of a formant is the one of the 1st enabled method
         tier_f1 = tiers[0]
         tier_f1_burg = tiers[4]
-        self.assertEqual(len(tier_f1), len(tier_f1_burg))
-        for ann, ann_burg in zip(tier_f1, tier_f1_burg):
-            self.assertEqual(ann.get_labels()[0][0][0].get_typed_content(),
+        self.assertGreater(len(tier_f1_burg), 0)
+        for ann_burg in tier_f1_burg:
+            anns = tier_f1.find(ann_burg.get_lowest_localization(),
+                                ann_burg.get_highest_localization())
+            self.assertEqual(1, len(anns))
+            self.assertEqual(anns[0].get_labels()[0][0][0].get_typed_content(),
                              ann_burg.get_best_tag().get_typed_content())
 
     # -----------------------------------------------------------------------
@@ -238,9 +245,9 @@ class TestEstimatedTiers(unittest.TestCase):
         estimator.enable_method("autocorrelation", True)
         tiers = estimator.estimate(self.audio_filename, self.palign_tier)
 
-        # 12kHz for the single pass of burg: 2*kHz+2
-        self.assertEqual("26", tiers[4].get_meta("lpc_order"))
+        # 12kHz for the single pass of burg: 2*(kHz/2)+2
+        self.assertEqual("14", tiers[4].get_meta("lpc_order"))
         # 8kHz then 11kHz for the two passes of autocorrelation
-        self.assertEqual("18,24", tiers[8].get_meta("lpc_order"))
+        self.assertEqual("10,12", tiers[8].get_meta("lpc_order"))
         # The tiers of a formant have several methods, so no single order
         self.assertEqual("", tiers[0].get_meta("lpc_order", default=""))

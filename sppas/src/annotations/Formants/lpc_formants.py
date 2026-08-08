@@ -78,24 +78,12 @@ class AutocorrelationLPCFormantEstimator(LPCFormantEstimator):
         # LPC coefficients from autocorrelation
         a, _ = self._compute_lpc_coefficients(self._signal, self._order)
 
-        # Extract roots and filter complex half-plane
+        # Extract the roots and turn the resonant ones into formants
         roots = np.roots(a)
-        roots = [r for r in roots if np.imag(r) >= 0.01]
-
         if len(roots) == 0:
             return None
 
-        # Convert roots to formant frequencies
-        angles = np.arctan2(np.imag(roots), np.real(roots))
-        frequencies = sorted(angles * (self._sample_rate / (2 * np.pi)))
-
-        # Filter out unrealistic values
-        estimated = [f for f in frequencies if f >= floor_freq]
-
-        # Convert numpy.float64 to standard float values. The rank of a
-        # formant is its position among the sorted frequencies.
-        return [round(float(estimated[rank-1]), 3) for rank in formants
-                if rank <= len(estimated)]
+        return self._roots_to_formants(roots, floor_freq, formants)
 
     # -----------------------------------------------------------------------
 
@@ -185,19 +173,10 @@ class BurgLPCFormantEstimator(LPCFormantEstimator):
             return None
 
         roots = np.roots(a)
-        roots = [r for r in roots if np.imag(r) >= 0.01]
         if len(roots) == 0:
             return None
 
-        angles = np.arctan2(np.imag(roots), np.real(roots))
-        frequencies = sorted(angles * (self._sample_rate / (2 * np.pi)))
-
-        estimated = [f for f in frequencies if f >= floor_freq]
-
-        # Convert numpy.float64 to standard float values. The rank of a
-        # formant is its position among the sorted frequencies.
-        return [round(float(estimated[rank-1]), 3) for rank in formants
-                if rank <= len(estimated)]
+        return self._roots_to_formants(roots, floor_freq, formants)
 
     # -----------------------------------------------------------------------
 
