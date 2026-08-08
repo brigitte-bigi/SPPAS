@@ -242,14 +242,14 @@ class sppasFormants(sppasBaseAnnotation):
 
         # Check input tier
         if tier is None:
-            logging.error("Tier with name '{:s}' not found."
-                          "".format(self._options['tiername']))
+            logging.error("A tier with time-aligned phonemes was not found in "
+                          "the given files: {:s}.".format(str(input_files)))
             raise NoTierInputError
         if tier.is_interval() is False:
             logging.error("The tier should be of type: Interval.")
             raise AnnDataTypeError(tier.get_name(), 'IntervalTier')
         if tier.is_empty() is True:
-            raise EmptyInputError(self._options['tiername'])
+            raise EmptyInputError(tier.get_name())
 
         # Set the media to the input tier
         extm = os.path.splitext(audio_filename)[1].lower()[1:]
