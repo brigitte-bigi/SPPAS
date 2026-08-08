@@ -56,6 +56,12 @@
       "text": "Minimum frequency to consider for formants for self_implemented methods."
     },
     {
+      "id": "praat_max_freq",
+      "type": "float",
+      "value": 5500.0,
+      "text": "Highest frequency Praat-based methods are analyzing, in Hz. Usually 5500 for a female voice and 5000 for a male one."
+    },
+    {
       "id": "output_type",
       "type": "str",
       "value": "mean",

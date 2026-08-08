@@ -106,6 +106,9 @@ class sppasFormants(sppasBaseAnnotation):
             elif "floor_freq" == key:
                 self.set_floor_frequency(opt.get_value())
 
+            elif "praat_max_freq" == key:
+                self.set_praat_max_freq(opt.get_value())
+
             elif "output_type" == key:
                 self.set_output_type(opt.get_value())
 
@@ -133,6 +136,9 @@ class sppasFormants(sppasBaseAnnotation):
 
     def get_floor_freq(self) -> float:
         return self._options['floor_freq']
+
+    def get_praat_max_freq(self) -> float:
+        return self._options['praat_max_freq']
 
     def get_enabled_method_names(self) -> tuple:
         """Return the list of active method names.
@@ -192,6 +198,19 @@ class sppasFormants(sppasBaseAnnotation):
         """
         self.__estimator.set_floor_frequency(value)
         self._options['floor_freq'] = value
+
+    # -----------------------------------------------------------------------
+
+    def set_praat_max_freq(self, value: float) -> None:
+        """Set the highest frequency the Praat-based methods are analyzing.
+
+        :param value: (float) Frequency in Hz, ranging 1000 - 10000
+        :raises: TypeError: Given value is not a number.
+        :raises: ValueError: Given value is out of range.
+
+        """
+        self.__estimator.set_max_freq(value)
+        self._options['praat_max_freq'] = float(value)
 
     # -----------------------------------------------------------------------
 

@@ -55,6 +55,7 @@ from sppas.src.anndata import serialize_labels
 from .lpc_formants import LPCFormantEstimator
 from .lpc_formants import AutocorrelationLPCFormantEstimator
 from .lpc_formants import BurgLPCFormantEstimator
+from .praat_formants import BasePraatParselmouthFormantsEstimator
 from .praat_formants import PraatBurgFormantsEstimator
 from .praat_formants import PraatSLFormantsEstimator
 from .praat_formants import PraatKeepAllFormantsEstimator
@@ -288,6 +289,9 @@ class FormantsEstimator:
         # LPC order -- 0 to derive it from the sample rate of each pass
         self.__order = 0
 
+        # Highest frequency Praat is analyzing, in Hz
+        self.__max_freq = BasePraatParselmouthFormantsEstimator.MAX_FREQ
+
         # Returned result among "center", "mean", "all"
         self.__out_type = "center"
         self.set_output_type(out_type)
@@ -373,6 +377,31 @@ class FormantsEstimator:
             raise ValueError(f"Given value must range 50 - 500Hz. Got {value} instead.")
 
         self.__floor_frequency = value
+
+    # -----------------------------------------------------------------------
+
+    def get_max_freq(self) -> float:
+        """Return the highest frequency the Praat-based methods analyze."""
+        return self.__max_freq
+
+    def set_max_freq(self, value: float) -> None:
+        """Set the highest frequency the Praat-based methods are analyzing.
+
+        The usual value is 5500 Hz for a female voice and 5000 Hz for a male
+        one. It is the highest formant Praat is asked for, so it is limiting
+        the estimated ones.
+
+        :param value: (float) Frequency in Hz, ranging 1000 - 10000
+        :raises: TypeError: Given value is not a number.
+        :raises: ValueError: Given value is out of range.
+
+        """
+        if isinstance(value, (int, float)) is False:
+            raise TypeError(f"Given value {value} is not a number.")
+        if value < 1000. or value > 10000.:
+            raise ValueError(f"Given value must range 1000 - 10000Hz. Got {value} instead.")
+
+        self.__max_freq = float(value)
 
     # -----------------------------------------------------------------------
 
@@ -631,7 +660,7 @@ class FormantsEstimator:
         for name in self.__methods:
             estimator_class = self.__available_methods[name].get_estimator()
             if "praat" in name:
-                estimators[name] = estimator_class(audio_filename)
+                estimators[name] = estimator_class(audio_filename, max_freq=self.__max_freq)
             else:
                 estimators[name] = estimator_class
 
@@ -745,6 +774,8 @@ class FormantsEstimator:
             if "praat" not in name:
                 tier.set_meta("floor_freq", str(self.__floor_frequency))
                 break
+            tier.set_meta("praat_max_freq", str(self.__max_freq))
+            break
 
         # The LPC order depends on the sample rate of each analysis pass, so
         # it is a metadata of the tiers of a single method only.

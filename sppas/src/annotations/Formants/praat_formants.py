@@ -61,21 +61,32 @@ class BasePraatParselmouthFormantsEstimator(BaseFormantEstimator):
 
     """
 
+    # Highest frequency of the analyzed band, in Hz. The usual value is 5500
+    # for a female voice and 5000 for a male one.
+    MAX_FREQ = 5500.
+
+    # Number of formants Praat is asked for, in the analyzed band
+    NB_FORMANTS = 5
+
+    # -----------------------------------------------------------------------
+
     def __init__(self, signal: np.array | str | None = None, sample_rate: int = 16000, *args, **kwargs):
         """Initialize the estimator.
 
         :param signal: (np.array|str|None) The audio signal or its filename or None.
         :param sample_rate: (int) The sample rate of the audio in Hz.
+        :param max_freq: (float) Highest frequency of the analyzed band, in Hz.
         :raises: ImportError: If Parselmouth is not available.
 
         """
         super().__init__(signal, sample_rate)
+        _max_freq = float(kwargs.get("max_freq", BasePraatParselmouthFormantsEstimator.MAX_FREQ))
         try:
             sound = parselmouth.Sound(signal)
             self._formant_obj = parselmouth.praat.call(
                 sound,
                 self._praat_command(),
-                0.01, 5, 5500, 0.025, 50.
+                0.01, BasePraatParselmouthFormantsEstimator.NB_FORMANTS, _max_freq, 0.025, 50.
             )
 
         except Exception as e:
