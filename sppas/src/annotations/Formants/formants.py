@@ -772,12 +772,18 @@ class FormantsEstimator:
     def __append_annotation(tier: sppasTier, phon: str, location: sppasLocation, values: list):
         """Append annotation to the given location.
 
+        The estimated values are the alternative tags of the label. Each of
+        them is scored by the proportion of the methods proposing it: the
+        scores of two methods sharing a value are summed, so that the score
+        of an alternative is how much the methods agree on it.
+
         """
         if len(values) > 0:
             tags = list()
             for f in values:
                 tags.append(sppasTag(int(f), "int"))
-            label = sppasLabel(tags)
+            scores = [1./float(len(values))] * len(values)
+            label = sppasLabel(tags, scores)
             label.set_key(phon)
             tier.create_annotation(location, [label])
         else:
