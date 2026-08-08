@@ -39,7 +39,10 @@
 """
 
 import unittest
+import os
 
+from sppas.src.anndata import sppasTrsRW
+from sppas.src.annotations.searchtier import sppasFindTier
 from sppas.src.annotations.Formants.formants import FormantsPass
 from sppas.src.annotations.Formants.formants import MethodFormantsEstimator
 from sppas.src.annotations.Formants.formants import MethodFormantsFactory
@@ -159,3 +162,75 @@ class TestDerivedOrder(unittest.TestCase):
             estimator.set_order(12.5)
         with self.assertRaises(ValueError):
             estimator.set_order(5)
+
+# ---------------------------------------------------------------------------
+
+
+DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data")
+
+# ---------------------------------------------------------------------------
+
+
+class TestEstimatedTiers(unittest.TestCase):
+    """Test of the tiers the estimator is creating.
+
+    """
+
+    def setUp(self):
+        self.audio_filename = os.path.join(DATA, "F_F_B003-P8.wav")
+        parser = sppasTrsRW(os.path.join(DATA, "F_F_B003-P8-palign.TextGrid"))
+        self.palign_tier = sppasFindTier.aligned_phones(parser.read())
+
+    # -----------------------------------------------------------------------
+
+    def test_no_enabled_method(self):
+        estimator = FormantsEstimator()
+        with self.assertRaises(ValueError):
+            estimator.estimate(self.audio_filename, self.palign_tier)
+
+    # -----------------------------------------------------------------------
+
+    def test_a_tier_of_each_formant(self):
+        # One enabled method: no tier of the method is created
+        estimator = FormantsEstimator("mean")
+        estimator.enable_method("burg", True)
+        tiers = estimator.estimate(self.audio_filename, self.palign_tier)
+
+        self.assertEqual(["F1", "F2"], [tier.get_name() for tier in tiers])
+        self.assertEqual(len(tiers[0]), len(tiers[1]))
+        self.assertGreater(len(tiers[0]), 0)
+
+    # -----------------------------------------------------------------------
+
+    def test_a_tier_of_each_formant_and_method(self):
+        estimator = FormantsEstimator("mean")
+        estimator.enable_method("burg", True)
+        estimator.enable_method("autocorrelation", True)
+        tiers = estimator.estimate(self.audio_filename, self.palign_tier)
+
+        # The tiers of the formants, then the ones of each method
+        self.assertEqual(["F1", "F2", "F1-burg", "F2-burg",
+                          "F1-autocorrelation", "F2-autocorrelation"],
+                         [tier.get_name() for tier in tiers])
+
+        # The 1st value of a formant is the one of the 1st enabled method
+        tier_f1 = tiers[0]
+        tier_f1_burg = tiers[2]
+        self.assertEqual(len(tier_f1), len(tier_f1_burg))
+        for ann, ann_burg in zip(tier_f1, tier_f1_burg):
+            self.assertEqual(ann.get_labels()[0][0][0].get_typed_content(),
+                             ann_burg.get_best_tag().get_typed_content())
+
+    # -----------------------------------------------------------------------
+
+    def test_derived_order_of_each_method(self):
+        estimator = FormantsEstimator("mean")
+        estimator.enable_method("burg", True)
+        estimator.enable_method("autocorrelation", True)
+        tiers = estimator.estimate(self.audio_filename, self.palign_tier)
+
+        # 12kHz for burg and 8kHz for autocorrelation: 2*kHz+2
+        self.assertEqual("26", tiers[2].get_meta("lpc_order"))
+        self.assertEqual("18", tiers[4].get_meta("lpc_order"))
+        # The tiers of a formant have several methods, so no single order
+        self.assertEqual("", tiers[0].get_meta("lpc_order", default=""))

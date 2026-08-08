@@ -177,6 +177,36 @@ def get_args_from_cmd(parameters, ann_step_idx):
 # ---------------------------------------------------------------------------
 
 
+def print_formants(trs):
+    """Print the estimated values of each formant on stdout.
+
+    The tier of a formant is storing one value for each of the methods which
+    estimated it, so the values are separated by a pipe.
+
+    :param trs: (sppasTranscription) The result of the annotation
+
+    """
+    tiers = list()
+    for tier in trs:
+        if tier.get_name().startswith("F") is True and "-" not in tier.get_name():
+            tiers.append(tier)
+    if len(tiers) == 0:
+        return
+
+    for i, ann in enumerate(tiers[0]):
+        values = list()
+        for tier in tiers:
+            values.append("{:s}={:s}".format(
+                tier.get_name(), "|".join([tag.get_content() for tag, score in tier[i].get_labels()[0]])))
+
+        print("{:.3f} {:.3f} {:s} {:s}".format(
+            ann.get_lowest_localization().get_midpoint(),
+            ann.get_highest_localization().get_midpoint(),
+            str(ann.get_labels()[0].get_key()), " ".join(values)))
+
+# ---------------------------------------------------------------------------
+
+
 def formants():
 
     # Try to instantiate.
@@ -224,29 +254,8 @@ def formants():
             ann.run((args.i, args.t), output=args.o)
         else:
             trs = ann.run((args.i, args.t))
-            methods = ann.get_enabled_method_names()
-
-            tier_f1 = trs.find("F1")
-            tier_f2 = trs.find("F2")
-            # Print estimated values on stdout
-            for f1, f2 in zip(tier_f1, tier_f2):
-                begin = f1.get_lowest_localization()
-                end = f1.get_highest_localization()
-                label_f1 = f1.get_labels()[0]
-                label_f2 = f2.get_labels()[0]
-                phon = label_f1.get_key()
-                n = 0
-                for (tag1, score1), (tag2, score2) in zip(label_f1, label_f2):
-                    t1 = tag1.get_typed_content()
-                    t2 = tag2.get_typed_content()
-                    method_name = methods[n]
-                    n += 1
-
-                if not args.quiet:
-                    f1_str = "|".join([f.get_content() for f,s in label_f1])
-                    f2_str = "|".join([f.get_content() for f,s in label_f2])
-                    print("{:.3f} {:.3f} {} F1={} F2={}"
-                          "".format(begin.get_midpoint(), end.get_midpoint(), phon, f1_str, f2_str))
+            if not args.quiet:
+                print_formants(trs)
 
     elif args.W or args.I:
 

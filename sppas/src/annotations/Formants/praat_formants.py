@@ -83,23 +83,24 @@ class BasePraatParselmouthFormantsEstimator(BaseFormantEstimator):
 
     # -----------------------------------------------------------------------
 
-    def compute(self, start_time: float, end_time: float):
-        """Compute F1 and F2 using a Praat command via Parselmouth.
+    def compute(self, start_time: float, end_time: float, formants: tuple = (1, 2)):
+        """Compute the given formants using a Praat command via Parselmouth.
 
         :param start_time: (float) Start time of the analysis window (in seconds).
         :param end_time: (float) End time of the analysis window (in seconds).
-        :return: (list) Estimated formant frequencies [F1, F2] in Hz of the segment.
+        :param formants: (tuple) Ranks of the formants to be returned, i.e. (1, 2).
+        :return: (list) Estimated formant frequencies in Hz of the segment.
         :raises: RuntimeError: If Praat fails to process the audio.
 
         """
-        f1 = parselmouth.praat.call(
-            self._formant_obj, "Get mean", 1, start_time, end_time, "hertz"
-        )
-        f2 = parselmouth.praat.call(
-            self._formant_obj, "Get mean", 2, start_time, end_time, "hertz"
-        )
+        values = list()
+        for rank in formants:
+            value = parselmouth.praat.call(
+                self._formant_obj, "Get mean", rank, start_time, end_time, "hertz"
+            )
+            values.append(round(value, 3))
 
-        return [round(f1, 3), round(f2, 3)]
+        return values
 
     # -----------------------------------------------------------------------
 

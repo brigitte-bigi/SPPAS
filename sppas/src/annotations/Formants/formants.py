@@ -460,21 +460,31 @@ class FormantsEstimator:
             self.__auto_min_threshold(audio_pcm)
 
         # Prepare data -- the threshold is a metadata of the tiers
-        t1 = self.__create_formant_tier("F1")
-        t2 = self.__create_formant_tier("F2")
+        tiers = self.__create_formant_tiers()
         method_tiers = self.__create_method_tiers()
-
-        # Instantiate the estimators -- or not, it depends of the estimator!
-        estimators = dict()
-        for name in self.__methods:
-            method = self.__available_methods[name]
-            estimator_class = method.get_estimator()
-            if "praat" in name:
-                estimators[name] = estimator_class(audio_filename)
-            else:
-                estimators[name] = estimator_class
+        estimators = self.__create_estimators(audio_filename)
 
         # Estimate a formant value for each identified phoneme
+        self.__estimate_annotations(palign_tier, estimators, audio_pcm, tiers, method_tiers)
+
+        audio_pcm.close()
+
+        return self.__gather_tiers(tiers, method_tiers)
+
+    # ----------------------------------------------------------------------------
+
+    def __estimate_annotations(self, palign_tier: sppasTier, estimators: dict,
+                               audio_pcm: audioopy.AudioPCM, tiers: dict,
+                               method_tiers: dict) -> None:
+        """Estimate and store the formants of each phoneme of the tier.
+
+        :param palign_tier: (sppasTier) Tier with time-aligned phonemes
+        :param estimators: (dict) The instantiated estimators
+        :param audio_pcm: (AudioPCM) Audio object
+        :param tiers: (dict) Tier of each formant rank
+        :param method_tiers: (dict) Tier of each formant rank and method
+
+        """
         for ann in palign_tier:
 
             # Check if annotation is a phoneme
@@ -482,91 +492,219 @@ class FormantsEstimator:
             if len(phon) == 0 or ann.get_best_tag().get_content() in symbols.phone:
                 continue
 
-            # Determine time window around the phoneme center
-            center_start_time, center_end_time = self.__get_segment_times(ann)
+            self.__estimate_annotation(ann, phon, estimators, audio_pcm, tiers, method_tiers)
 
-            if self.__out_type == "center":
-                # Estimate or get formants in this window only -- at the center
-                f1, f2 = self.__apply_methods(estimators, audio_pcm, center_start_time, center_end_time)
-                self.__append_annotations(t1, t2, method_tiers, phon, ann.get_location(), f1, f2)
+    # ----------------------------------------------------------------------------
+
+    def __estimate_annotation(self, ann: sppasAnnotation, phon: str, estimators: dict,
+                              audio_pcm: audioopy.AudioPCM, tiers: dict, method_tiers: dict) -> None:
+        """Estimate and store the formants of one phoneme.
+
+        :param ann: (sppasAnnotation) Annotation of a time-aligned phoneme
+        :param phon: (str) The phoneme
+        :param estimators: (dict) The instantiated estimators
+        :param audio_pcm: (AudioPCM) Audio object
+        :param tiers: (dict) Tier of each formant rank
+        :param method_tiers: (dict) Tier of each formant rank and method
+
+        """
+        # Determine time window around the phoneme center
+        center_start_time, center_end_time = self.__get_segment_times(ann)
+
+        if self.__out_type == "center":
+            # Estimate or get formants in this window only -- at the center
+            values = self.__apply_methods(estimators, audio_pcm, center_start_time, center_end_time)
+            self.__append_annotations(tiers, method_tiers, phon, ann.get_location(), values)
+            return
+
+        # Estimate or get formants in all windows of the phoneme
+        values = self.__estimate_windows(ann, phon, estimators, audio_pcm, tiers, method_tiers)
+        if self.__out_type == "mean" and values is not None:
+            self.__append_annotations(tiers, method_tiers, phon, ann.get_location(), values)
+
+    # ----------------------------------------------------------------------------
+
+    def __estimate_windows(self, ann: sppasAnnotation, phon: str, estimators: dict,
+                           audio_pcm: audioopy.AudioPCM, tiers: dict, method_tiers: dict):
+        """Estimate the formants of each window of a phoneme.
+
+        Each window is stored if the output type is "all", or the mean values
+        of all the windows are returned if it is "mean".
+
+        :return: (dict|None) Mean value of each formant rank, or None
+
+        """
+        start_time = self.__get_first_window_time(ann)
+        end_time = start_time + (2 * self.__half_win_dur)
+        sums = self.__create_sums()
+        nb_windows = 0
+
+        while end_time < ann.get_highest_localization():
+            values = self.__apply_methods(estimators, audio_pcm, start_time, end_time)
+            if self.__out_type == "all":
+                loc = sppasLocation(sppasInterval(sppasPoint(start_time), sppasPoint(end_time)))
+                self.__append_annotations(tiers, method_tiers, phon, loc, values)
             else:
-                # Estimate of get_formants in all windows of the phoneme
-                start_time = center_start_time
-                too_far = False
-                while start_time > ann.get_lowest_localization():
-                    start_time -= 2 * self.__half_win_dur
-                    too_far = True
-                if too_far is True:
-                    start_time += 2 * self.__half_win_dur
-                end_time = start_time + (2 * self.__half_win_dur)
-                sum_f1 = [0.]*len(self.__methods)
-                sum_f2 = [0.]*len(self.__methods)
-                _nb = 0
-                while end_time < ann.get_highest_localization():
-                    # Estimate or get formants in this window
-                    f1, f2 = self.__apply_methods(estimators, audio_pcm, start_time, end_time)
-                    if self.__out_type == "all":
-                        loc = sppasLocation(sppasInterval(sppasPoint(start_time), sppasPoint(end_time)))
-                        self.__append_annotations(t1, t2, method_tiers, phon, loc, f1, f2)
-                    else:
-                        for i in range(len(self.__methods)):
-                            sum_f1[i] += f1[i]
-                            sum_f2[i] += f2[i]
-                        _nb += 1
-                    # prepare next loop
-                    start_time += 2 * self.__half_win_dur
-                    end_time = start_time + (2 * self.__half_win_dur)
+                FormantsEstimator.__add_values(sums, values)
+                nb_windows += 1
 
-                if self.__out_type == "mean" and _nb > 0:
-                    f1 = [v/_nb for v in sum_f1]
-                    f2 = [v/_nb for v in sum_f2]
-                    self.__append_annotations(t1, t2, method_tiers, phon, ann.get_location(), f1, f2)
+            # prepare next loop
+            start_time += 2 * self.__half_win_dur
+            end_time = start_time + (2 * self.__half_win_dur)
 
-        audio_pcm.close()
+        if nb_windows == 0:
+            return None
 
-        tiers = [t1, t2]
+        return FormantsEstimator.__mean_values(sums, nb_windows)
+
+    # ----------------------------------------------------------------------------
+
+    def __create_sums(self) -> dict:
+        """Return the summed value of each formant rank, initialized to zero."""
+        sums = dict()
+        for rank in self.__get_ranks():
+            sums[rank] = [0.] * len(self.__get_methods(rank))
+
+        return sums
+
+    # ----------------------------------------------------------------------------
+
+    @staticmethod
+    def __add_values(sums: dict, values: dict) -> None:
+        """Add the values of a window to the summed ones."""
+        for rank in values:
+            for i in range(len(values[rank])):
+                sums[rank][i] += values[rank][i]
+
+    # ----------------------------------------------------------------------------
+
+    @staticmethod
+    def __mean_values(sums: dict, nb_windows: int) -> dict:
+        """Return the mean value of each formant rank of all the windows."""
+        means = dict()
+        for rank in sums:
+            means[rank] = [v/nb_windows for v in sums[rank]]
+
+        return means
+
+    # ----------------------------------------------------------------------------
+
+    def __get_first_window_time(self, ann: sppasAnnotation) -> float:
+        """Return the start time of the first window of a phoneme."""
+        start_time, _ = self.__get_segment_times(ann)
+        too_far = False
+        while start_time > ann.get_lowest_localization():
+            start_time -= 2 * self.__half_win_dur
+            too_far = True
+        if too_far is True:
+            start_time += 2 * self.__half_win_dur
+
+        return start_time
+
+    # ----------------------------------------------------------------------------
+
+    def __create_estimators(self, audio_filename: str) -> dict:
+        """Return the instantiated estimator of each enabled method.
+
+        :param audio_filename: (str) Filename of a mono-audio file
+        :return: (dict) Estimator instance or class of each method name
+
+        """
+        estimators = dict()
         for name in self.__methods:
-            if name in method_tiers:
-                tiers.extend(method_tiers[name])
+            estimator_class = self.__available_methods[name].get_estimator()
+            if "praat" in name:
+                estimators[name] = estimator_class(audio_filename)
+            else:
+                estimators[name] = estimator_class
+
+        return estimators
+
+    # ----------------------------------------------------------------------------
+
+    def __get_ranks(self) -> tuple:
+        """Return the sorted ranks of the formants the enabled methods estimate."""
+        ranks = list()
+        for name in self.__methods:
+            for rank in self.__available_methods[name].get_formants():
+                if rank not in ranks:
+                    ranks.append(rank)
+
+        return tuple(sorted(ranks))
+
+    # ----------------------------------------------------------------------------
+
+    def __get_methods(self, rank: int) -> list:
+        """Return the enabled methods estimating the formant of the given rank.
+
+        :param rank: (int) Rank of a formant, i.e. 1 for F1
+        :return: (list) Names of the methods, in their enabling order
+
+        """
+        names = list()
+        for name in self.__methods:
+            if rank in self.__available_methods[name].get_formants():
+                names.append(name)
+
+        return names
+
+    # ----------------------------------------------------------------------------
+
+    def __gather_tiers(self, tiers: dict, method_tiers: dict) -> list:
+        """Return all the created tiers, the ones of the methods at the end."""
+        all_tiers = list()
+        for rank in sorted(tiers):
+            all_tiers.append(tiers[rank])
+        for name in self.__methods:
+            for rank in sorted(tiers):
+                if (rank, name) in method_tiers:
+                    all_tiers.append(method_tiers[(rank, name)])
+
+        return all_tiers
+
+    # ----------------------------------------------------------------------------
+
+    def __create_formant_tiers(self) -> dict:
+        """Return the tier of each estimated formant, with its metadata.
+
+        A tier is storing the values of all the enabled methods estimating
+        its formant.
+
+        :return: (dict) Tier of each formant rank
+
+        """
+        tiers = dict()
+        for rank in self.__get_ranks():
+            names = self.__get_methods(rank)
+            tier = sppasTier("F%d" % rank)
+            for i, m in enumerate(names):
+                tier.set_meta("formants_estimator_method_%d" % i, m)
+            self.__set_options_metadata(tier, names)
+            tiers[rank] = tier
 
         return tiers
 
     # ----------------------------------------------------------------------------
 
-    def __create_formant_tier(self, tier_name: str) -> sppasTier:
-        """Add metadata describing the estimator to the tier.
-
-        :param tier_name: (str) Name of the tier
-
-        """
-        tier = sppasTier(tier_name)
-        for i, m in enumerate(self.__methods):
-            tier.set_meta("formants_estimator_method_%d" % i, m)
-        self.__set_options_metadata(tier, self.__methods)
-        return tier
-
-    # ----------------------------------------------------------------------------
-
     def __create_method_tiers(self) -> dict:
-        """Return the two tiers of each method, indexed by the method name.
+        """Return the tier of each formant and method, with its metadata.
 
         No tier is created if only one method is enabled: its tiers would be
-        identical to the F1 and F2 ones.
+        identical to the ones of the formants.
 
-        :return: (dict) Tuple of the F1 and F2 tiers of each method name
+        :return: (dict) Tier of each (formant rank, method name)
 
         """
         method_tiers = dict()
         if len(self.__methods) == 1:
             return method_tiers
 
-        for name in self.__methods:
-            tier_f1 = sppasTier("F1-" + name)
-            tier_f2 = sppasTier("F2-" + name)
-            for tier in (tier_f1, tier_f2):
+        for rank in self.__get_ranks():
+            for name in self.__get_methods(rank):
+                tier = sppasTier("F%d-%s" % (rank, name))
                 tier.set_meta("formants_estimator_method_0", name)
                 self.__set_options_metadata(tier, [name])
-            method_tiers[name] = (tier_f1, tier_f2)
+                method_tiers[(rank, name)] = tier
 
         return method_tiers
 
@@ -630,24 +768,28 @@ class FormantsEstimator:
 
     # ----------------------------------------------------------------------------
 
-    def __append_annotations(self, t1, t2, method_tiers, phon, loc, f1, f2):
-        """Append annotations to the given tiers.
+    def __append_annotations(self, tiers: dict, method_tiers: dict, phon: str,
+                             loc: sppasLocation, values: dict) -> None:
+        """Append the estimated values of a phoneme to the given tiers.
+
+        :param tiers: (dict) Tier of each formant rank
+        :param method_tiers: (dict) Tier of each formant rank and method
+        :param phon: (str) The phoneme
+        :param loc: (sppasLocation) Where the values were estimated
+        :param values: (dict) Estimated value of each formant rank
 
         """
-        # Create annotations and add to the tiers only if at least
-        # one method returned a valid value.
-        if (sum(f1) * sum(f2)) > 0:
-            self.__append_annotation(t1, phon, loc, f1)
-            self.__append_annotation(t2, phon, loc.copy(), f2)
+        for rank in values:
+            # Create annotations and add to the tiers only if at least
+            # one method returned a valid value.
+            if sum(values[rank]) > 0:
+                self.__append_annotation(tiers[rank], phon, loc.copy(), values[rank])
 
-        # Add the value of a method to its own tiers, if it estimated one.
-        for i, name in enumerate(self.__methods):
-            if name not in method_tiers:
-                continue
-            if f1[i] > 0 and f2[i] > 0:
-                tier_f1, tier_f2 = method_tiers[name]
-                self.__append_annotation(tier_f1, phon, loc.copy(), [f1[i]])
-                self.__append_annotation(tier_f2, phon, loc.copy(), [f2[i]])
+            # Add the value of a method to its own tier, if it estimated one.
+            for i, name in enumerate(self.__get_methods(rank)):
+                if (rank, name) in method_tiers and values[rank][i] > 0:
+                    self.__append_annotation(
+                        method_tiers[(rank, name)], phon, loc.copy(), [values[rank][i]])
 
     # ----------------------------------------------------------------------------
 
@@ -682,55 +824,62 @@ class FormantsEstimator:
 
     # ----------------------------------------------------------------------------
 
-    def __apply_methods(self, estimators: list, audio_pcm: audioopy.AudioPCM, start_time: float, end_time: float) -> tuple:
-        """Apply all active methods and return F1/F2 values.
+    def __apply_methods(self, estimators: dict, audio_pcm: audioopy.AudioPCM,
+                        start_time: float, end_time: float) -> dict:
+        """Apply all active methods and return the value of each formant.
 
+        The value of a formant is a list with the value of each of the
+        methods estimating it, in their enabling order. It is zero for a
+        method which didn't estimate any value.
+
+        :param estimators: (dict) The instantiated estimators
         :param audio_pcm: (AudioPCM) Audio object
         :param start_time: (float)
         :param end_time: (float)
-        :return: (tuple) List of estimated f1 values and list of estimated f2 values
+        :return: (dict) Estimated values of each formant rank
 
         """
-        f1 = list()
-        f2 = list()
-
+        by_method = dict()
         for name in self.__methods:
+            by_method[name] = self.__apply_passes(name, estimators, audio_pcm, start_time, end_time)
 
-            result = self.__apply_passes(name, estimators, audio_pcm, start_time, end_time)
-            if result is not None:
-                f1.append(result[0])
-                f2.append(result[1])
-            else:
-                f1.append(0)
-                f2.append(0)
+        values = dict()
+        for rank in self.__get_ranks():
+            values[rank] = [by_method[name].get(rank, 0) for name in self.__get_methods(rank)]
 
-        return f1, f2
+        return values
 
     # ----------------------------------------------------------------------------
 
-    def __apply_passes(self, name: str, estimators: list, audio_pcm: audioopy.AudioPCM,
-                       start_time: float, end_time: float) -> list:
+    def __apply_passes(self, name: str, estimators: dict, audio_pcm: audioopy.AudioPCM,
+                       start_time: float, end_time: float) -> dict:
         """Apply the passes of a method and return its estimated formants.
 
+        Each pass estimates the formants it declared, in their rank order.
+
         :param name: (str) Name of an enabled method
-        :param estimators: (list) The instantiated estimators
+        :param estimators: (dict) The instantiated estimators
         :param audio_pcm: (AudioPCM) Audio object
         :param start_time: (float)
         :param end_time: (float)
-        :return: (list|None) The estimated formant values
+        :return: (dict) Estimated value of each formant rank of the method
 
         """
-        result = None
+        values = dict()
         for a_pass in self.__available_methods[name].get_passes():
-            if 1 not in a_pass.get_formants():
-                continue
             if "praat" in name:
-                result = estimators[name].compute(start_time, end_time)
+                result = estimators[name].compute(start_time, end_time, a_pass.get_formants())
             else:
                 result = self.__estimate_formants(
                     audio_pcm, (start_time, end_time), estimators[name], a_pass.get_pipeline())
 
-        return result
+            for i, rank in enumerate(a_pass.get_formants()):
+                if result is not None and i < len(result):
+                    values[rank] = result[i]
+                else:
+                    values[rank] = 0
+
+        return values
 
     # ----------------------------------------------------------------------------
 
