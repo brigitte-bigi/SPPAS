@@ -3,7 +3,7 @@
   "name": "Formants",
 "descr": "Estimate the F1/F2 formant values of an audio file over phoneme intervals. Several methods can be enabled independently, including in-house implementations and ones derived from Praat (via Parselmouth).",  "required": "alignment",
   "api": "sppasFormants",
-  "devel": 50,
+  "devel": 80,
 
   "resources": [
   ],

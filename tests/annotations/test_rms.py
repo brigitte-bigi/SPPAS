@@ -81,25 +81,28 @@ class TestIntervalsRMS(unittest.TestCase):
         self.assertEqual(0, estimator.get_rms())
         self.assertEqual(list(), estimator.get_values())
 
+        # The expected values are the ones of audioopy 0.5: the volumes are
+        # float values instead of the truncated int ones of the previous
+        # releases, and the mean depends on the number of windows too.
         estimator.estimate(0., self.channel.get_duration())
-        self.assertEqual(359.631, round(estimator.get_mean(), 3))
-        self.assertEqual(696, round(estimator.get_rms(), 3))
+        self.assertEqual(360.118, round(estimator.get_mean(), 3))
+        self.assertEqual(696.02, round(estimator.get_rms(), 3))
 
         # only on silence (at the beginning)
         estimator.estimate(0., 0.7)
-        self.assertEqual(2, estimator.get_rms())
-        self.assertEqual(1.757, round(estimator.get_mean(), 3))
+        self.assertEqual(2.13, round(estimator.get_rms(), 3))
+        self.assertEqual(2.121, round(estimator.get_mean(), 3))
         estimator.estimate(0., 1.4)
-        self.assertEqual(2, estimator.get_rms())
-        self.assertEqual(1.757, round(estimator.get_mean(), 3))
+        self.assertEqual(2.15, round(estimator.get_rms(), 3))
+        self.assertEqual(2.137, round(estimator.get_mean(), 3))
 
         # only speech
         estimator.estimate(1.4, 2.4)
-        self.assertEqual(1069, estimator.get_rms())
-        self.assertEqual(633.21, round(estimator.get_mean(), 3))
+        self.assertEqual(1069.66, round(estimator.get_rms(), 3))
+        self.assertEqual(633.714, round(estimator.get_mean(), 3))
         estimator.estimate(2.4, 3.4)
-        self.assertEqual(1228, estimator.get_rms())
-        self.assertEqual(953.83, round(estimator.get_mean(), 3))
+        self.assertEqual(1228.61, round(estimator.get_rms(), 3))
+        self.assertEqual(954.319, round(estimator.get_mean(), 3))
 
     def test_sppasrms(self):
         rms = sppasRMS()
