@@ -189,41 +189,57 @@ class MethodFormantsFactory(object):
         """
         methods = dict()
 
-        # Autocorrelation LPC with 8kHz resampling
+        # Autocorrelation LPC. F1 and F2 are estimated with a 8kHz resampling,
+        # but F3 and F4 are out of the [0; 4kHz] band it is analyzing: they
+        # require a second pass with a higher resampling.
         methods["autocorrelation"] = MethodFormantsEstimator(
             AutocorrelationLPCFormantEstimator,
             [FormantsPass(
-                AudioProcessingPipeline([
-                    RmsComputer(),
-                    Resampler(target_sr=8000),
-                    PreEmphasizer(0.97),
-                    HammingWindow()
-                ]),
-                (1, 2))]
+                MethodFormantsFactory.create_pipeline(8000, 0.97),
+                (1, 2)),
+             FormantsPass(
+                MethodFormantsFactory.create_pipeline(11000, 0.97),
+                (3, 4))]
         )
 
-        # Burg LPC with 12kHz resampling
+        # Burg LPC with 12kHz resampling: the whole [0; 6kHz] band of the
+        # four formants is analyzed by a single pass.
         methods["burg"] = MethodFormantsEstimator(
             BurgLPCFormantEstimator,
             [FormantsPass(
-                AudioProcessingPipeline([
-                    RmsComputer(),
-                    Resampler(target_sr=12000),
-                    PreEmphasizer(0.99),
-                    HammingWindow()
-                ]),
-                (1, 2))]
+                MethodFormantsFactory.create_pipeline(12000, 0.99),
+                (1, 2, 3, 4))]
         )
 
-        # Praat-based estimators, no preprocessing pipeline required
+        # Praat-based estimators, no preprocessing pipeline required. They
+        # are asked for 5 formants up to 5500Hz, so the first four ones are
+        # reliable enough to be estimated.
         methods["praat_burg"] = MethodFormantsEstimator(
-            PraatBurgFormantsEstimator, [FormantsPass(None, (1, 2))])
+            PraatBurgFormantsEstimator, [FormantsPass(None, (1, 2, 3, 4))])
         methods["praat_keepall"] = MethodFormantsEstimator(
-            PraatKeepAllFormantsEstimator, [FormantsPass(None, (1, 2))])
+            PraatKeepAllFormantsEstimator, [FormantsPass(None, (1, 2, 3, 4))])
         methods["praat_sl"] = MethodFormantsEstimator(
-            PraatSLFormantsEstimator, [FormantsPass(None, (1, 2))])
+            PraatSLFormantsEstimator, [FormantsPass(None, (1, 2, 3, 4))])
 
         return methods
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def create_pipeline(target_sr: int, pre_emphasis: float) -> AudioProcessingPipeline:
+        """Return the audio processing pipeline of an LPC analysis pass.
+
+        :param target_sr: (int) Sample rate the signal is resampled to
+        :param pre_emphasis: (float) Coefficient of the pre-emphasis filter
+        :return: (AudioProcessingPipeline)
+
+        """
+        return AudioProcessingPipeline([
+            RmsComputer(),
+            Resampler(target_sr=target_sr),
+            PreEmphasizer(pre_emphasis),
+            HammingWindow()
+        ])
 
 # ---------------------------------------------------------------------------
 
@@ -871,7 +887,8 @@ class FormantsEstimator:
                 result = estimators[name].compute(start_time, end_time, a_pass.get_formants())
             else:
                 result = self.__estimate_formants(
-                    audio_pcm, (start_time, end_time), estimators[name], a_pass.get_pipeline())
+                    audio_pcm, (start_time, end_time), estimators[name],
+                    a_pass.get_pipeline(), a_pass.get_formants())
 
             for i, rank in enumerate(a_pass.get_formants()):
                 if result is not None and i < len(result):
@@ -887,13 +904,15 @@ class FormantsEstimator:
                             audio: audioopy.AudioPCM,
                             segment: tuple,
                             estimator_class,
-                            pipeline: AudioProcessingPipeline) -> tuple:
+                            pipeline: AudioProcessingPipeline,
+                            formants: tuple = (1, 2)) -> tuple:
         """Estimate formants for a given segment using a specified estimator and pipeline.
 
         :param audio: (AudioPCM) An AudiooPy-compatible object with read_frames/seek.
         :param segment: A tuple (start_time, end_time) in seconds.
         :param estimator_class: A formant estimator class (must implement compute()).
         :param pipeline: An audio preprocessing pipeline instance (must have .run()).
+        :param formants: (tuple) Ranks of the formants to be estimated, i.e. (1, 2).
         :return: A list of formant values (typically [F1, F2]), or None if skipped.
 
         """
@@ -910,4 +929,4 @@ class FormantsEstimator:
         if isinstance(estimator, LPCFormantEstimator):
             estimator.set_order(self.get_order(sr))
 
-        return estimator.compute(self.__floor_frequency)
+        return estimator.compute(self.__floor_frequency, formants)

@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -62,16 +62,17 @@ class AutocorrelationLPCFormantEstimator(LPCFormantEstimator):
 
     """
 
-    def compute(self, floor_freq: float = 90.):
-        """Estimate the first two formant frequencies (F1, F2).
+    def compute(self, floor_freq: float = 90., formants: tuple = (1, 2)):
+        """Estimate the frequencies of the given formants.
 
         The signal is pre-emphasized, windowed, LPC-analyzed, and the
         roots of the LPC polynomial are used to compute the resonant
         frequencies. Frequencies below 90 Hz are discarded.
 
         :param floor_freq: (float) Minimum frequency (in Hz) to consider a peak as a valid formant. Defaults to 90 Hz.
+        :param formants: (tuple) Ranks of the formants to be returned, i.e. (1, 2).
         :raises: ValueError: If LPC analysis fails or no valid roots are found.
-        :return: (list|None) Estimated formant frequencies in Hz, usually [F1, F2].
+        :return: (list|None) Estimated formant frequencies in Hz, i.e. [F1, F2].
 
         """
         # LPC coefficients from autocorrelation
@@ -89,10 +90,12 @@ class AutocorrelationLPCFormantEstimator(LPCFormantEstimator):
         frequencies = sorted(angles * (self._sample_rate / (2 * np.pi)))
 
         # Filter out unrealistic values
-        formants = [f for f in frequencies if f >= floor_freq]
+        estimated = [f for f in frequencies if f >= floor_freq]
 
-        # Convert numpy.float64 to standard float values
-        return [round(float(f), 3) for f in formants[:2]]
+        # Convert numpy.float64 to standard float values. The rank of a
+        # formant is its position among the sorted frequencies.
+        return [round(float(estimated[rank-1]), 3) for rank in formants
+                if rank <= len(estimated)]
 
     # -----------------------------------------------------------------------
 
@@ -163,8 +166,8 @@ class BurgLPCFormantEstimator(LPCFormantEstimator):
 
     """
 
-    def compute(self, floor_freq=90.):
-        """Estimate the first two formant frequencies (F1, F2).
+    def compute(self, floor_freq=90., formants: tuple = (1, 2)):
+        """Estimate the frequencies of the given formants.
 
         The signal is pre-emphasized, windowed, LPC-analyzed using
         the Burg method, and the roots of the LPC polynomial are used
@@ -172,6 +175,7 @@ class BurgLPCFormantEstimator(LPCFormantEstimator):
         discarded.
 
         :param floor_freq: (float) Minimum frequency (in Hz) to consider as formant.
+        :param formants: (tuple) Ranks of the formants to be returned, i.e. (1, 2).
         :raises: ValueError: If Burg algorithm fails or no roots are found.
         :return: (list|None) Estimated formant frequencies in Hz (float values).
 
@@ -188,10 +192,12 @@ class BurgLPCFormantEstimator(LPCFormantEstimator):
         angles = np.arctan2(np.imag(roots), np.real(roots))
         frequencies = sorted(angles * (self._sample_rate / (2 * np.pi)))
 
-        formants = [f for f in frequencies if f >= floor_freq]
+        estimated = [f for f in frequencies if f >= floor_freq]
 
-        # Convert numpy.float64 to standard float values
-        return [round(float(f), 3) for f in formants[:2]]
+        # Convert numpy.float64 to standard float values. The rank of a
+        # formant is its position among the sorted frequencies.
+        return [round(float(estimated[rank-1]), 3) for rank in formants
+                if rank <= len(estimated)]
 
     # -----------------------------------------------------------------------
 
