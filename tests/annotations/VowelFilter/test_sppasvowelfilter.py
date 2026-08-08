@@ -216,7 +216,7 @@ class TestSppasVowelFilter(unittest.TestCase):
         ann = sppasVowelFilter()
         trs = ann.run([self.erroneous_filename])
 
-        tier_f1 = trs.find("F1")
+        tier_f1 = trs.find("F1vf")
         self.assertEqual(NB_TOKENS + 1, len(tier_f1))
         self.assertEqual(1800, tier_f1[NB_TOKENS].get_best_tag().get_typed_content())
 
@@ -307,6 +307,7 @@ class TestSppasVowelFilter(unittest.TestCase):
         trs = parser.read()
         self.assertIsNone(trs.find("F1"))
         self.assertIsNone(trs.find("F2"))
+        self.assertIsNotNone(trs.find("F1vf-burg"))
         self.assertEqual(6, len(trs))
 
     # -----------------------------------------------------------------------
@@ -317,6 +318,6 @@ class TestSppasVowelFilter(unittest.TestCase):
         parser = sppasTrsRW(filename)
         trs = parser.read()
 
-        return (trs.find("F1" + method_suffix),
-                trs.find("F2" + method_suffix),
+        return (trs.find("F1vf" + method_suffix),
+                trs.find("F2vf" + method_suffix),
                 trs.find("MahalanobisDist" + method_suffix))

@@ -178,9 +178,10 @@ class TestVowelFilterEstimator(unittest.TestCase):
         self.assertEqual(NB_TOKENS + 1, estimator.get_nb_values())
         self.assertEqual(1, estimator.get_nb_filtered())
 
-        # The names of the tiers are the ones of the method
-        self.assertEqual("F1-burg", new_f1.get_name())
-        self.assertEqual("F2-burg", new_f2.get_name())
+        # The names of the created tiers are not the ones of the source
+        # tiers, so that both the files can be merged.
+        self.assertEqual("F1vf-burg", new_f1.get_name())
+        self.assertEqual("F2vf-burg", new_f2.get_name())
         self.assertEqual("MahalanobisDist-burg", distances.get_name())
 
         # The erroneous value is discarded, the expected ones are kept

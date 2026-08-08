@@ -411,11 +411,12 @@ class sppasVowelFilter(sppasBaseAnnotation):
     def __get_formant_pairs(trs) -> list:
         """Return the pairs of F1/F2 tiers to be filtered, one of each method.
 
-        The F1 and F2 tiers are storing the values of all the methods into
-        alternative tags of a single label, so that a value can't be assigned
-        to the method it comes from: they are used only if the Formants
-        annotation enabled one method, i.e. if it didn't create a tier for
-        each of them.
+        The F1 and F2 tiers are storing the values of all the methods as the
+        alternative tags of a label: they are the candidate values of the
+        formant, not the value of a given method. The tier of a method is
+        then required to filter it, and the F1 and F2 tiers are used only if
+        the Formants annotation enabled one method, i.e. if it didn't create
+        a tier for each of them.
 
         :param trs: (sppasTranscription) The read formant values
         :return: (list) List of (F1 tier, F2 tier)

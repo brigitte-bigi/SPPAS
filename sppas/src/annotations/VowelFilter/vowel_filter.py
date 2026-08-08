@@ -313,8 +313,9 @@ class VowelFilterEstimator:
     def __create_tiers(tier_f1: sppasTier, tier_f2: sppasTier) -> tuple:
         """Return the three tiers of the result, with the source metadata.
 
-        The filtered tiers are named like the source ones, and the tier of
-        the distances is named after the method of these latter.
+        A created tier is named after the source one and the filtering, so
+        that its name is not the one of any tier of the source file: both
+        the files can then be merged.
 
         :param tier_f1: (sppasTier) Tier with the F1 values of a method
         :param tier_f2: (sppasTier) Tier with the F2 values of a method
@@ -326,9 +327,30 @@ class VowelFilterEstimator:
         if len(_method_name) > 0 and tier_f1.get_name().startswith("F1-") is True:
             _dist_name = "MahalanobisDist-" + _method_name
 
-        return (VowelFilterEstimator.__create_tier(tier_f1.get_name(), tier_f1),
-                VowelFilterEstimator.__create_tier(tier_f2.get_name(), tier_f2),
+        return (VowelFilterEstimator.__create_tier(
+                    VowelFilterEstimator.__filtered_name(tier_f1.get_name()), tier_f1),
+                VowelFilterEstimator.__create_tier(
+                    VowelFilterEstimator.__filtered_name(tier_f2.get_name()), tier_f2),
                 VowelFilterEstimator.__create_tier(_dist_name, tier_f1))
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __filtered_name(tier_name: str) -> str:
+        """Return the name of the filtered tier of the given source one.
+
+        The "vf" suffix is added to the formant of the name, so that
+        "F1-burg" gives "F1vf-burg" and "F1" gives "F1vf".
+
+        :param tier_name: (str) Name of a tier with formant values
+        :return: (str) Name of the tier with its filtered values
+
+        """
+        _index = tier_name.find("-")
+        if _index == -1:
+            return tier_name + "vf"
+
+        return tier_name[:_index] + "vf" + tier_name[_index:]
 
     # -----------------------------------------------------------------------
 
