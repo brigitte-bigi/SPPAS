@@ -46,8 +46,8 @@
     {
       "id": "order",
       "type": "int",
-      "value": 12,
-      "text": "Order for self-implemented LPC methods. Usually ranging 6-20."
+      "value": 0,
+      "text": "Order for self-implemented LPC methods, 0=derived from the sample rate. Usually ranging 6-30."
     },
     {
       "id": "floor_freq",

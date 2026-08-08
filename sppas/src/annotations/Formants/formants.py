@@ -68,27 +68,82 @@ from .audio_segment_loader import SegmentLoader
 # ---------------------------------------------------------------------------
 
 
-class MethodFormantsEstimator(object):
-    """Represent a formants estimation method with its audio processing pipeline.
+class FormantsPass(object):
+    """Represent an analysis pass of a formants estimation method.
+
+    A pass is an audio processing pipeline and the formants which can be
+    reliably estimated with it. A method requires as many passes as the
+    formants it estimates require different pipelines: the resampling rate
+    of a pipeline is limiting the highest formant it can estimate.
 
     """
 
-    __slots__ = ("__estimator", "__pipeline")
+    __slots__ = ("__pipeline", "__formants")
 
-    def __init__(self, estimator: object, pipeline: AudioProcessingPipeline):
+    def __init__(self, pipeline: AudioProcessingPipeline, formants: tuple):
+        """Initialize the pass.
+
+        :param pipeline: (AudioProcessingPipeline or None)
+        :param formants: (tuple) Ranks of the estimated formants, i.e. (1, 2)
+        :raises: TypeError: The given pipeline is not a valid one.
+        :raises: ValueError: No formant is estimated by the pass.
+
+        """
+        if pipeline is not None and isinstance(pipeline, AudioProcessingPipeline) is False:
+            raise TypeError("Pipeline must be AudioProcessingPipeline or None.")
+        if len(formants) == 0:
+            raise ValueError("A pass must estimate at least one formant.")
+
+        self.__pipeline = pipeline
+        self.__formants = tuple(formants)
+
+    # -----------------------------------------------------------------------
+
+    def get_pipeline(self) -> AudioProcessingPipeline:
+        """Return the audio processing pipeline of the pass."""
+        return self.__pipeline
+
+    # -----------------------------------------------------------------------
+
+    def get_formants(self) -> tuple:
+        """Return the ranks of the formants estimated by the pass."""
+        return self.__formants
+
+    # -----------------------------------------------------------------------
+
+    def get_sample_rate(self) -> int:
+        """Return the sample rate the signal is analyzed with, or zero."""
+        if self.__pipeline is None:
+            return 0
+
+        return self.__pipeline.get_target_sr()
+
+# ---------------------------------------------------------------------------
+
+
+class MethodFormantsEstimator(object):
+    """Represent a formants estimation method with its analysis passes.
+
+    """
+
+    __slots__ = ("__estimator", "__passes")
+
+    def __init__(self, estimator: object, passes: list):
         """Initialize the method.
 
         :param estimator: (object) Instance of formants estimator.
-        :param pipeline: (AudioProcessingPipeline or None)
+        :param passes: (list) The FormantsPass instances of the method
+        :raises: TypeError: No estimator or an invalid pass is given.
 
         """
         if estimator is None:
             raise TypeError("Estimator instance required.")
-        if pipeline is not None and isinstance(pipeline, AudioProcessingPipeline) is False:
-            raise TypeError("Pipeline must be AudioProcessingPipeline or None.")
+        for a_pass in passes:
+            if isinstance(a_pass, FormantsPass) is False:
+                raise TypeError("A method requires FormantsPass instances.")
 
         self.__estimator = estimator
-        self.__pipeline = pipeline
+        self.__passes = list(passes)
 
     # -----------------------------------------------------------------------
 
@@ -98,8 +153,21 @@ class MethodFormantsEstimator(object):
 
     # -----------------------------------------------------------------------
 
-    def get_pipeline(self) -> AudioProcessingPipeline:
-        return self.__pipeline
+    def get_passes(self) -> list:
+        """Return the analysis passes of the method."""
+        return self.__passes
+
+    # -----------------------------------------------------------------------
+
+    def get_formants(self) -> tuple:
+        """Return the sorted ranks of all the formants the method estimates."""
+        _formants = list()
+        for a_pass in self.__passes:
+            for rank in a_pass.get_formants():
+                if rank not in _formants:
+                    _formants.append(rank)
+
+        return tuple(sorted(_formants))
 
 # ---------------------------------------------------------------------------
 
@@ -124,29 +192,36 @@ class MethodFormantsFactory(object):
         # Autocorrelation LPC with 8kHz resampling
         methods["autocorrelation"] = MethodFormantsEstimator(
             AutocorrelationLPCFormantEstimator,
-            AudioProcessingPipeline([
-                RmsComputer(),
-                Resampler(target_sr=8000),
-                PreEmphasizer(0.97),
-                HammingWindow()
-            ])
+            [FormantsPass(
+                AudioProcessingPipeline([
+                    RmsComputer(),
+                    Resampler(target_sr=8000),
+                    PreEmphasizer(0.97),
+                    HammingWindow()
+                ]),
+                (1, 2))]
         )
 
         # Burg LPC with 12kHz resampling
         methods["burg"] = MethodFormantsEstimator(
             BurgLPCFormantEstimator,
-            AudioProcessingPipeline([
-                RmsComputer(),
-                Resampler(target_sr=12000),
-                PreEmphasizer(0.99),
-                HammingWindow()
-            ])
+            [FormantsPass(
+                AudioProcessingPipeline([
+                    RmsComputer(),
+                    Resampler(target_sr=12000),
+                    PreEmphasizer(0.99),
+                    HammingWindow()
+                ]),
+                (1, 2))]
         )
 
         # Praat-based estimators, no preprocessing pipeline required
-        methods["praat_burg"] = MethodFormantsEstimator(PraatBurgFormantsEstimator, None)
-        methods["praat_keepall"] = MethodFormantsEstimator(PraatKeepAllFormantsEstimator, None)
-        methods["praat_sl"] = MethodFormantsEstimator(PraatSLFormantsEstimator, None)
+        methods["praat_burg"] = MethodFormantsEstimator(
+            PraatBurgFormantsEstimator, [FormantsPass(None, (1, 2))])
+        methods["praat_keepall"] = MethodFormantsEstimator(
+            PraatKeepAllFormantsEstimator, [FormantsPass(None, (1, 2))])
+        methods["praat_sl"] = MethodFormantsEstimator(
+            PraatSLFormantsEstimator, [FormantsPass(None, (1, 2))])
 
         return methods
 
@@ -167,6 +242,9 @@ class FormantsEstimator:
     # - mean: return the mean of all estimated values in the interval
     # - all: return all values estimated in the interval
     OUTPUT_TYPES = ("center", "mean", "all")
+
+    # LPC order used when it is neither fixed nor derivable from a sample rate
+    DEFAULT_ORDER = 12
 
     # -----------------------------------------------------------------------
 
@@ -191,8 +269,8 @@ class FormantsEstimator:
         # Do not return a formant value lower than this frequency:
         self.__floor_frequency = 70.0
 
-        # LPC order
-        self.__order = 12
+        # LPC order -- 0 to derive it from the sample rate of each pass
+        self.__order = 0
 
         # Returned result among "center", "mean", "all"
         self.__out_type = "center"
@@ -282,19 +360,37 @@ class FormantsEstimator:
 
     # -----------------------------------------------------------------------
 
-    def get_order(self) -> int:
-        """Return the LPC order."""
-        return self.__order
+    def get_order(self, sample_rate: int = 0) -> int:
+        """Return the LPC order, the derived one if it was not fixed.
+
+        The order of an LPC analysis depends on the sample rate of the
+        analyzed signal: two poles are required for each formant of the
+        [0; sample_rate/2] range, plus two for the spectral slope.
+
+        :param sample_rate: (int) Sample rate to derive the order from
+        :return: (int) The fixed order, or the derived one
+
+        """
+        if self.__order > 0:
+            return self.__order
+        if sample_rate <= 0:
+            return FormantsEstimator.DEFAULT_ORDER
+
+        return 2 * (sample_rate // 1000) + 2
 
     def set_order(self, value: int) -> None:
-        """Set the LPC order.
+        """Set the LPC order: 0 to derive it from the sample rate.
 
-        :param value: (int) Order value, between 6 and samplerate/100
+        :param value: (int) Order value, between 6 and samplerate/100, or 0
         :raises: TypeError: Given value is not an integer.
+        :raises: ValueError: Given value is not zero nor a valid order.
 
         """
         if isinstance(value, int) is False:
             raise TypeError(f"Given value {value} is not an integer.")
+        if value != 0 and value < 6:
+            raise ValueError(f"Given value must be 0 or at least 6. Got {value} instead.")
+
         self.__order = value
 
     # ------------------------------------------------------------------------
@@ -492,9 +588,28 @@ class FormantsEstimator:
 
         for name in method_names:
             if "praat" not in name:
-                tier.set_meta("lpc_order", str(self.__order))
                 tier.set_meta("floor_freq", str(self.__floor_frequency))
                 break
+
+        # The LPC order depends on the sample rate of each analysis pass, so
+        # it is a metadata of the tiers of a single method only.
+        if len(method_names) == 1 and "praat" not in method_names[0]:
+            tier.set_meta("lpc_order", self.__serialize_orders(method_names[0]))
+
+    # ----------------------------------------------------------------------------
+
+    def __serialize_orders(self, method_name: str) -> str:
+        """Return the LPC order of each analysis pass of the given method.
+
+        :param method_name: (str) Name of an enabled method
+        :return: (str) The orders, separated by a comma
+
+        """
+        _orders = list()
+        for a_pass in self.__available_methods[method_name].get_passes():
+            _orders.append(str(self.get_order(a_pass.get_sample_rate())))
+
+        return ",".join(_orders)
 
     # ----------------------------------------------------------------------------
 
@@ -581,15 +696,7 @@ class FormantsEstimator:
 
         for name in self.__methods:
 
-            method = self.__available_methods[name]
-            pipeline = method.get_pipeline()
-
-            if "praat" in name:
-                result = estimators[name].compute(start_time, end_time)
-            else:
-                estimator = estimators[name]
-                result = self.__estimate_formants(audio_pcm, (start_time, end_time), estimator, pipeline)
-
+            result = self.__apply_passes(name, estimators, audio_pcm, start_time, end_time)
             if result is not None:
                 f1.append(result[0])
                 f2.append(result[1])
@@ -598,6 +705,32 @@ class FormantsEstimator:
                 f2.append(0)
 
         return f1, f2
+
+    # ----------------------------------------------------------------------------
+
+    def __apply_passes(self, name: str, estimators: list, audio_pcm: audioopy.AudioPCM,
+                       start_time: float, end_time: float) -> list:
+        """Apply the passes of a method and return its estimated formants.
+
+        :param name: (str) Name of an enabled method
+        :param estimators: (list) The instantiated estimators
+        :param audio_pcm: (AudioPCM) Audio object
+        :param start_time: (float)
+        :param end_time: (float)
+        :return: (list|None) The estimated formant values
+
+        """
+        result = None
+        for a_pass in self.__available_methods[name].get_passes():
+            if 1 not in a_pass.get_formants():
+                continue
+            if "praat" in name:
+                result = estimators[name].compute(start_time, end_time)
+            else:
+                result = self.__estimate_formants(
+                    audio_pcm, (start_time, end_time), estimators[name], a_pass.get_pipeline())
+
+        return result
 
     # ----------------------------------------------------------------------------
 
@@ -626,6 +759,6 @@ class FormantsEstimator:
         # Instantiate the estimator and compute formants
         estimator = estimator_class(signal, sr, segment[0], segment[1])
         if isinstance(estimator, LPCFormantEstimator):
-            estimator.set_order(self.__order)
+            estimator.set_order(self.get_order(sr))
 
         return estimator.compute(self.__floor_frequency)

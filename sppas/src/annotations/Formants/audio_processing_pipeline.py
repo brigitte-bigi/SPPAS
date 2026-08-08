@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2025  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -58,6 +58,12 @@ class Resampler:
 
     def __init__(self, target_sr: int):
         self._target_sr = target_sr
+
+    # -----------------------------------------------------------------------
+
+    def get_target_sr(self) -> int:
+        """Return the sample rate the signal is resampled to."""
+        return self._target_sr
 
     # -----------------------------------------------------------------------
 
@@ -155,6 +161,20 @@ class AudioProcessingPipeline:
                 raise TypeError(f"Pipeline step {step.__class__.__name__} "
                                 f"must define an 'apply' method.")
         self._steps = steps
+
+    # -----------------------------------------------------------------------
+
+    def get_target_sr(self) -> int:
+        """Return the sample rate the pipeline is resampling to, or zero.
+
+        :return: (int) Target sample rate of the resampling step
+
+        """
+        for step in self._steps:
+            if isinstance(step, Resampler) is True:
+                return step.get_target_sr()
+
+        return 0
 
     # -----------------------------------------------------------------------
 
