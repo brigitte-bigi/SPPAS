@@ -63,7 +63,7 @@
     grid-row-gap: 1rem;
 
     border-radius: var(--card-border-radius);
-    background: linear-gradient(90deg, rgb(197, 208, 222) 0%, rgb(133, 199, 137) 60%, rgb(148, 132, 184) 100%);
+    background: var(--links-panel-bg-image);
 }
 
 .link-button {
@@ -112,92 +112,92 @@
 }
 
 #web_btn {
-    border: var(--border-width) solid rgb(87, 109, 159);
+    border: var(--border-width) solid var(--link-web-border-color);
 }
 
 #docu_btn {
-    border: var(--border-width) solid rgb(241, 211, 79);
+    border: var(--border-width) solid var(--link-docu-border-color);
 }
 
 #tuto_btn {
-    border: var(--border-width) solid rgb(0, 160, 40);
+    border: var(--border-width) solid var(--link-tuto-border-color);
 }
 
 #faq_btn {
-    border: var(--border-width) solid rgb(220, 120, 40);
+    border: var(--border-width) solid var(--link-faq-border-color);
 }
 
 #src_btn {
-    border: var(--border-width) solid rgb(50, 150, 150);
+    border: var(--border-width) solid var(--link-src-border-color);
 }
 
 #res_btn {
-    border: var(--border-width) solid rgb(40, 60, 150);
+    border: var(--border-width) solid var(--link-res-border-color);
 }
 
 #award_btn {
-    border: var(--border-width) solid rgb(60, 40, 150);
+    border: var(--border-width) solid var(--link-award-border-color);
 }
 
 
 :root:not(.dark) {
     #web_text {
-        background-color: rgb(120, 140, 190);
+        background-color: var(--link-web-bg-color);
     }
 
     #docu_text {
-        background-color: rgb(241, 211, 79);
+        background-color: var(--link-docu-bg-color);
     }
 
     #tuto_text {
-        background-color: rgb(100, 180, 100);
+        background-color: var(--link-tuto-bg-color);
     }
 
     #faq_text {
-        background-color: rgb(240, 150, 60);
+        background-color: var(--link-faq-bg-color);
     }
 
     #src_text {
-        background-color: rgb(50, 150, 150);
+        background-color: var(--link-src-bg-color);
     }
 
     #res_text {
-        background-color: rgb(110, 130, 230);
+        background-color: var(--link-res-bg-color);
     }
 
     #award_text {
-        background-color: rgb(130, 110, 230);
+        background-color: var(--link-award-bg-color);
     }
 
 }
 
 .dark {
     #web_text {
-        background-color: rgb(47, 69, 119);
+        background-color: var(--link-web-bg-color);
     }
 
     #docu_text {
-        background-color: rgb(110, 70, 10);
+        background-color: var(--link-docu-bg-color);
     }
 
     #tuto_text {
-        background-color: rgb(0, 90, 20);
+        background-color: var(--link-tuto-bg-color);
     }
 
     #faq_text {
-        background-color: rgb(120, 20, 0);
+        background-color: var(--link-faq-bg-color);
     }
 
     #src_text {
-        background-color: rgb(0, 90, 90);
+        background-color: var(--link-src-bg-color);
     }
 
     #res_text {
-        background-color: rgb(30, 50, 120);
+        background-color: var(--link-res-bg-color);
     }
 
     #award_text {
-        background-color: rgb(50, 30, 120);
+        background-color: var(--link-award-bg-color);
     }
 }
 

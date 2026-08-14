@@ -89,6 +89,24 @@
             <pre class="dark"><code>@layer reset, base, theme, accessibility;</code></pre>
         </article>
 
+        <h3>Sizes, and where the rule stops</h3>
+
+        <p>Every size is written as a coefficient of <code>--font-size</code>, never in
+            <code>rem</code> nor in <code>em</code>: a browser does not recompute those when the
+            contrast mode changes the size of the text, so a component written with them keeps
+            the dimensions of a mode it has left.</p>
+
+        <p>One place cannot follow that rule: the condition of a media query. It is evaluated
+            before any variable is resolved, so a breakpoint is a number of pixels and stays
+            calibrated on a text of 16. In contrast mode the text is written larger while the
+            breakpoints do not move, and a layout gets tight slightly before its threshold.
+            Container queries do not help: their <code>em</code> resolve against the same value
+            a browser does not recompute.</p>
+
+        <p>What decides a threshold in JavaScript has no such limit, and counts in font sizes:
+            the bibliography hides its two columns of digits under 38.75 of them, which is 620
+            pixels for a text of 16 and 698 for a text of 18.</p>
+
     </section>
 
     <!-- ============================================================ -->

@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-07-22 11:44:13
+// Bundle automatically generated on 2026-08-14 19:26:43
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -455,10 +455,13 @@ class NavigationLogic {
         const parts = hash.substring(1).split('.');
         const idx = parseInt(parts[0], 10);
         const stp = parts.length > 1 ? parseInt(parts[1], 10) : 0;
-        this._setPosition(
-            Number.isNaN(idx) ? 1 : idx,
-            Number.isNaN(stp) ? 0 : stp
-        );
+        // The address holds the reading and nothing else. A fragment that is
+        // not a position names a place in the document: it is an entry of the
+        // treatment that reaches a place, and the reading does not move for it.
+        if (Number.isNaN(idx) === true) {
+            return;
+        }
+        this._setPosition(idx, Number.isNaN(stp) ? 0 : stp);
     }
     // -----------------------------------------------------------------------
     // Private
@@ -863,10 +866,10 @@ class PresentationView {
     // -----------------------------------------------------------------------
     _renderSlide(newIndex, oldIndex) {
         const total = this._slides.length;
-        if (oldIndex >= 1 && oldIndex <= total) {
-            const prev = this._slides[oldIndex - 1];
-            if (prev instanceof HTMLElement) {
-                prev.removeAttribute('aria-selected');
+        for (let index = 0; index < total; index++) {
+            const slide = this._slides[index];
+            if (slide instanceof HTMLElement && index + 1 !== newIndex) {
+                slide.removeAttribute('aria-selected');
             }
         }
         if (newIndex >= 1 && newIndex <= total) {
@@ -1401,6 +1404,52 @@ window.Wexa.HelpDialog = HelpDialog;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
+// ---------------- extras/slides/slide_reaching.js ---------------
+'use strict';
+class SlideReaching {
+    // FIELDS
+    _data
+    _navigation
+    // CONSTRUCTOR
+    constructor(data, navigation) {
+        this._data = data;
+        this._navigation = navigation;
+    }
+    // ----------------------------------------------------------------------
+    // PUBLIC
+    // ----------------------------------------------------------------------
+    supportOf(place) {
+        if (typeof place !== 'string' || place === '') {
+            return 0;
+        }
+        const element = document.getElementById(place);
+        if (element === null) {
+            return 0;
+        }
+        const supports = this._data.slides;
+        for (let index = 0; index < supports.length; index++) {
+            if (supports[index].contains(element) === true) {
+                return index + 1;
+            }
+        }
+        return 0;
+    }
+    // ----------------------------------------------------------------------
+    reach(place) {
+        const rank = this.supportOf(place);
+        if (rank === 0) {
+            return 0;
+        }
+        this._navigation.goTo(rank);
+        return rank;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlideReaching = SlideReaching;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
 // ---------------- extras/slides/slides_assembler.js ---------------
 'use strict';
 class SlidesAssembler {
@@ -1411,6 +1460,7 @@ class SlidesAssembler {
         // ── 2. LOGIC ─────────────────────────────────────────────────────────
         this._navLogic  = new NavigationLogic(this._data);
         this._modeLogic = new ViewModeLogic(this._data);
+        this._reaching  = new SlideReaching(this._data, this._navLogic);
         // ── 3. VIEWS ─────────────────────────────────────────────────────────
         this._presentationView = new PresentationView(
             config.slides,
@@ -1489,6 +1539,23 @@ class SlidesAssembler {
         // ── 8. HASH CHANGE ───────────────────────────────────────────────────
         window.addEventListener('hashchange', () => {
             this._navLogic.updateFromHash(window.location.hash);
+        });
+        // ── 8b. RENVOI FOLLOWED ──────────────────────────────────────────────
+        // A renvoi names a place, never a position. The browser would write
+        // that name in the address, where the reading stands: the request is
+        // taken before it does, and the support carrying the place is asked
+        // for instead.
+        document.addEventListener('click', (event) => {
+            const link = event.target.closest('a[href^="#"]');
+            if (link === null) {
+                return;
+            }
+            const place = link.getAttribute('href').substring(1);
+            if (this._reaching.supportOf(place) === 0) {
+                return;
+            }
+            event.preventDefault();
+            this._reaching.reach(place);
         });
         // ── 9. INITIAL MODE ──────────────────────────────────────────────────
         this._initialMode = ViewModeLogic.DEFAULT;
@@ -1576,6 +1643,388 @@ class Slides {
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
 window.Wexa.Slides = Slides;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_errors.js ---------------
+'use strict';
+class PaginationError extends Error {
+}
+class MissingSlide extends PaginationError {
+}
+class UnmeasurableSlide extends PaginationError {
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.PaginationError = PaginationError;
+window.Wexa.MissingSlide = MissingSlide;
+window.Wexa.UnmeasurableSlide = UnmeasurableSlide;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_block.js ---------------
+'use strict';
+class SlideBlock {
+    // FIELDS
+    #element;
+    #place;
+    #height;
+    // CONSTRUCTOR
+    constructor(element, place) {
+        this.#element = element;
+        this.#place = place;
+        this.#height = 0;
+    }
+    // GETTERS
+    get element() {
+        return this.#element;
+    }
+    get place() {
+        return this.#place;
+    }
+    get height() {
+        return this.#height;
+    }
+    // SETTERS
+    set height(value) {
+        this.#height = value;
+    }
+    // PUBLIC METHODS
+    fitsIn(room) {
+        return this.#height <= room;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlideBlock = SlideBlock;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_layout.js ---------------
+'use strict';
+class SlideLayout {
+    // FIELDS
+    #parts;
+    // CONSTRUCTOR
+    constructor(parts) {
+        this.#parts = parts.map(part => [...part]);
+    }
+    // GETTERS
+    get parts() {
+        return this.#parts.map(part => [...part]);
+    }
+    // PUBLIC METHODS
+    count() {
+        return this.#parts.length;
+    }
+    oversized(room) {
+        const found = [];
+        this.#parts.forEach(part => {
+            part.forEach(block => {
+                if (block.fitsIn(room) === false) {
+                    found.push(block);
+                }
+            });
+        });
+        return found;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlideLayout = SlideLayout;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_block_reader.js ---------------
+'use strict';
+class SlideBlockReader {
+    // CONSTANTS
+    static KEPT_APART = 'h1, h2, h3, h4, h5, h6, [role="note"]';
+    static READ_AS_ROWS = 'TABLE';
+    static READ_AS_ITEMS = ['UL', 'OL'];
+    // PUBLIC METHODS
+    blocks(slide) {
+        const found = [];
+        Array.from(slide.children).forEach(child => {
+            this.#readChild(child).forEach(element => {
+                found.push(new SlideBlock(element, found.length + 1));
+            });
+        });
+        return found;
+    }
+    // PRIVATE METHODS
+    #readChild(child) {
+        if (child.matches(SlideBlockReader.KEPT_APART) === true) {
+            return [];
+        }
+        if (child.tagName === SlideBlockReader.READ_AS_ROWS) {
+            return this.#rowsOf(child);
+        }
+        if (SlideBlockReader.READ_AS_ITEMS.includes(child.tagName) === true) {
+            return Array.from(child.children);
+        }
+        if (this.#holdsParts(child) === true) {
+            const parts = [];
+            Array.from(child.children).forEach(held => {
+                this.#readChild(held).forEach(element => parts.push(element));
+            });
+            return parts;
+        }
+        return [child];
+    }
+    #holdsParts(child) {
+        return Array.from(child.children).some(held => {
+            return held.tagName === SlideBlockReader.READ_AS_ROWS
+                || SlideBlockReader.READ_AS_ITEMS.includes(held.tagName) === true;
+        });
+    }
+    #rowsOf(table) {
+        const bodies = Array.from(table.tBodies);
+        if (bodies.length === 0) {
+            return Array.from(table.rows);
+        }
+        const rows = [];
+        bodies.forEach(body => {
+            Array.from(body.rows).forEach(row => rows.push(row));
+        });
+        return rows;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlideBlockReader = SlideBlockReader;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_measure.js ---------------
+'use strict';
+class SlideMeasure {
+    // CONSTANTS
+    static TITLE = 'h1, h2, h3, h4, h5, h6';
+    static SLIDE = 'section.slide';
+    // PUBLIC METHODS
+    room(slide, blocks) {
+        if (slide === null || slide === undefined || typeof slide.matches !== 'function') {
+            throw new MissingSlide('The element to measure is not an element of the document.');
+        }
+        if (slide.matches(SlideMeasure.SLIDE) === false) {
+            throw new MissingSlide('The element to measure is not a slide.');
+        }
+        const box = slide.getBoundingClientRect();
+        if (box.height === 0) {
+            throw new UnmeasurableSlide('The slide has no height: it is not rendered.');
+        }
+        const style = window.getComputedStyle(slide);
+        const inside = box.height
+            - parseFloat(style.paddingTop)
+            - parseFloat(style.paddingBottom)
+            - parseFloat(style.borderTopWidth)
+            - parseFloat(style.borderBottomWidth);
+        return inside - this.#counterHeight(slide) - this.#aroundHeight(slide, blocks);
+    }
+    measure(blocks, slide) {
+        blocks.forEach(block => {
+            block.height = this.#heightOf(block.element);
+        });
+    }
+    // PRIVATE METHODS
+    #aroundHeight(slide, blocks) {
+        let held = 0;
+        Array.from(slide.children).forEach(child => {
+            held = held + this.#heightOf(child);
+        });
+        let laid = 0;
+        blocks.forEach(block => {
+            laid = laid + block.height;
+        });
+        return Math.max(0, held - laid);
+    }
+    #counterHeight(slide) {
+        const counter = window.getComputedStyle(slide, ':before');
+        const height = parseFloat(counter.height);
+        if (isNaN(height) === true) {
+            return 0;
+        }
+        return height;
+    }
+    #heightOf(element) {
+        const box = element.getBoundingClientRect();
+        const style = window.getComputedStyle(element);
+        return box.height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlideMeasure = SlideMeasure;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_paginator.js ---------------
+'use strict';
+class SlidePaginator {
+    // PUBLIC METHODS
+    paginate(blocks, room) {
+        if (blocks.length === 0) {
+            return new SlideLayout([[]]);
+        }
+        const parts = [];
+        let current = [];
+        let left = room;
+        blocks.forEach(block => {
+            const opensASlide = (current.length > 0 && block.fitsIn(left) === false);
+            if (opensASlide === true) {
+                parts.push(current);
+                current = [];
+                left = room;
+            }
+            current.push(block);
+            left = left - block.height;
+        });
+        parts.push(current);
+        return new SlideLayout(parts);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlidePaginator = SlidePaginator;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slide_composer.js ---------------
+'use strict';
+class SlideComposer {
+    // PUBLIC METHODS
+    compose(slide, layout) {
+        const parts = layout.parts;
+        const slides = [slide];
+        for (let rank = 1; rank < parts.length; rank++) {
+            const next = this.#buildSlide(slide);
+            this.#lay(next, parts[rank]);
+            slides[slides.length - 1].after(next);
+            slides.push(next);
+        }
+        return slides;
+    }
+    // PRIVATE METHODS
+    #buildSlide(source) {
+        const next = document.createElement(source.tagName);
+        next.className = source.className;
+        return next;
+    }
+    #lay(next, blocks) {
+        let group = [];
+        let parent = null;
+        blocks.forEach(block => {
+            const holder = block.element.parentElement;
+            if (holder !== parent && group.length > 0) {
+                this.#layGroup(next, parent, group);
+                group = [];
+            }
+            parent = holder;
+            group.push(block.element);
+        });
+        if (group.length > 0) {
+            this.#layGroup(next, parent, group);
+        }
+    }
+    #layGroup(next, parent, elements) {
+        if (parent === null) {
+            elements.forEach(element => next.appendChild(element));
+            return;
+        }
+        if (parent.tagName === 'TBODY') {
+            next.appendChild(this.#rebuildTable(parent, elements));
+            return;
+        }
+        if (parent.tagName === 'UL' || parent.tagName === 'OL') {
+            next.appendChild(this.#rebuildList(parent, elements));
+            return;
+        }
+        elements.forEach(element => next.appendChild(element));
+    }
+    #rebuildTable(body, rows) {
+        const source = body.closest('table');
+        const table = source.cloneNode(false);
+        const head = source.querySelector('thead');
+        if (head !== null) {
+            table.appendChild(head.cloneNode(true));
+        }
+        const next = document.createElement('tbody');
+        rows.forEach(row => next.appendChild(row));
+        table.appendChild(next);
+        return table;
+    }
+    #rebuildList(source, items) {
+        const list = source.cloneNode(false);
+        items.forEach(item => list.appendChild(item));
+        return list;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlideComposer = SlideComposer;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/slides/slides_pagination.js ---------------
+'use strict';
+class SlidesPagination {
+    // CONSTANTS
+    static SLIDES = 'section.slide';
+    // FIELDS
+    #reader;
+    #measure;
+    #paginator;
+    #composer;
+    // CONSTRUCTOR
+    constructor() {
+        this.#reader = new SlideBlockReader();
+        this.#measure = new SlideMeasure();
+        this.#paginator = new SlidePaginator();
+        this.#composer = new SlideComposer();
+    }
+    // PUBLIC METHODS
+    async run() {
+        try {
+            const written = Array.from(document.querySelectorAll(SlidesPagination.SLIDES));
+            written.forEach(slide => this.#layOut(slide));
+        } catch (error) {
+            if (error instanceof PaginationError) {
+                console.error('SlidesPagination: ' + error.message);
+                return;
+            }
+            throw error;
+        }
+    }
+    // PRIVATE METHODS
+    #layOut(slide) {
+        const blocks = this.#reader.blocks(slide);
+        if (blocks.length === 0) {
+            return;
+        }
+        this.#measure.measure(blocks, slide);
+        const room = this.#measure.room(slide, blocks);
+        const layout = this.#paginator.paginate(blocks, room);
+        this.#report(layout.oversized(room));
+        if (layout.count() === 1) {
+            return;
+        }
+        // The blocks are laid down once, in the order they were written. What
+        // was measured is what is shown, so what was decided holds: laying a
+        // slide out a second time would cut again on a difference of a pixel,
+        // and leave a slide holding one block.
+        this.#composer.compose(slide, layout);
+    }
+    #report(blocks) {
+        blocks.forEach(block => {
+            console.warn('SlidesPagination: a block is taller than the slide, and overflows.',
+                block.element);
+        });
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.SlidesPagination = SlidesPagination;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
@@ -1672,6 +2121,7 @@ class AccessibilityManager extends BaseManager {
     // -----------------------------------------------------------------------
     #activatedColor;
     #activatedContrast;
+    #colorModeSuspendedForPaper;
     // -----------------------------------------------------------------------
     // CONSTRUCTOR
     // -----------------------------------------------------------------------
@@ -1679,10 +2129,15 @@ class AccessibilityManager extends BaseManager {
         super();
         this.#activatedColor = "";
         this.#activatedContrast = "";
+        this.#colorModeSuspendedForPaper = false;
         OnLoadManager.addLoadFunction(this.#loadBodyClasses.bind(this));
         OnLoadManager.addLoadFunction(this.#setAllLinksCustom.bind(this));
         OnLoadManager.addLoadFunction(this.#setSubmitCustom.bind(this));
         OnLoadManager.addLoadFunction(this.#injectButtonIcons.bind(this));
+        // Paper is light. Held here rather than in every stylesheet, so that a
+        // theme never has to know that printing exists.
+        window.addEventListener('beforeprint', this.#leaveColorModeForPaper.bind(this));
+        window.addEventListener('afterprint', this.#restoreColorModeAfterPaper.bind(this));
     }
     // -----------------------------------------------------------------------
     // STATIC CONSTANTS
@@ -1783,6 +2238,22 @@ class AccessibilityManager extends BaseManager {
     }
     // -----------------------------------------------------------------------
     // PRIVATE METHODS
+    // -----------------------------------------------------------------------
+    #leaveColorModeForPaper() {
+        if (this.#activatedColor === "") {
+            return;
+        }
+        document.documentElement.classList.remove(AccessibilityManager.COLOR_MODE);
+        this.#colorModeSuspendedForPaper = true;
+    }
+    // -----------------------------------------------------------------------
+    #restoreColorModeAfterPaper() {
+        if (this.#colorModeSuspendedForPaper === false) {
+            return;
+        }
+        document.documentElement.classList.add(AccessibilityManager.COLOR_MODE);
+        this.#colorModeSuspendedForPaper = false;
+    }
     // -----------------------------------------------------------------------
     async #loadBodyClasses() {
         const params = new URLSearchParams(window.location.search);
@@ -2381,31 +2852,18 @@ window.Wexa.ProgressBar = ProgressBar;
 // --------------------------------------------------------------------------
 class ToggleSelector {
     // Define base path and icon names as member variables
-    static ICON_PATH = "./whakerkit/icons";
-    // Icon names for different states
     static ICONS = {
-        CHECKED: "checked.png",
-        UNCHECKED: "unchecked.png",
-        HALF_CHECKED: "half-checked.png",
-        HALF_UNCHECKED: "half-unchecked.png",
-        HALF_CHECKED_DARK: "half-checked-dark.png",
-        HALF_UNCHECKED_DARK: "half-unchecked-dark.png",
-        CHECKED_DARK: "checked-dark.png",
-        UNCHECKED_DARK: "unchecked-dark.png"
+        CHECKED: "checked",
+        UNCHECKED: "unchecked",
+        HALF: "half-checked"
     };
     // Define CSS selectors for buttons and checkboxes
     static BUTTON_SELECTOR = 'button.accordion-action';
     static CHECKBOX_SELECTOR = 'input[type="checkbox"]';
     // Fields
-    _iconPath;
     _detailsElt;
     // Constructor
-    constructor(icon_path, detailsId) {
-        if (icon_path) {
-            this._iconPath = icon_path;
-        } else {
-            this._iconPath = ToggleSelector.ICON_PATH;
-        }
+    constructor(detailsId) {
         // The <details> element which is manipulated in this class
         this._detailsElt = document.getElementById(detailsId);
         if (!this._detailsElt) {
@@ -2422,8 +2880,12 @@ class ToggleSelector {
     handleInputsOnLoad() {
         // Setup listeners for checkboxes
         this.setupCheckboxListeners();
-        // Update all toggle buttons to adjust colors with theme
-        this.updateAllToggleButtons();
+        // The icons are drawn once the framework knows where to read them: a
+        // page may instantiate this class before wexa.js has said so.
+        OnLoadManager.addLoadFunction(() => {
+            this.drawBoxes();
+            this.updateAllToggleButtons();
+        });
         // Attach event listener for click events on checkboxes
         document.addEventListener('click', (event) => {
             const target = event.target;
@@ -2433,7 +2895,35 @@ class ToggleSelector {
         });
     }
     // ----------------------------------------------------------------------
+    drawBoxes() {
+        this.getCheckboxes().forEach(checkbox => {
+            const label = this._detailsElt.querySelector('label[for="' + checkbox.id + '"]');
+            if (label === null) {
+                console.warn(`ToggleSelector: the checkbox "${checkbox.id}" has no label, its box is not drawn.`);
+                return;
+            }
+            let holder = label.querySelector('span.check-box');
+            if (holder === null) {
+                holder = document.createElement('span');
+                holder.className = 'check-box';
+                label.insertBefore(holder, label.firstChild);
+            }
+            holder.replaceChildren();
+            SVGIconsManager.inject(holder,
+                checkbox.checked === true ? ToggleSelector.ICONS.CHECKED : ToggleSelector.ICONS.UNCHECKED);
+        });
+    }
+    // ----------------------------------------------------------------------
     toggleSelection(event) {
+        // A key that is not the one acting on this button belongs to the page:
+        // preventing it would keep the focus from ever leaving.
+        if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') {
+            return;
+        }
+        // A click inside a summary opens or closes the disclosure: this button
+        // acts on the boxes, and on nothing else.
+        event.preventDefault();
+        event.stopPropagation();
         const checkboxes = this.getCheckboxes();
         const button = event.currentTarget;
         // Check if any of the checkboxes are already checked
@@ -2442,40 +2932,22 @@ class ToggleSelector {
         checkboxes.forEach(checkbox => {
             checkbox.checked = !anyChecked;
         });
-        // Update the button image based on the new state
+        // Update the button image and every box with the new state
         this.updateToggleButton(button, !anyChecked);
+        this.drawBoxes();
     }
     // ----------------------------------------------------------------------
-    updateToggleButton(button, anyChecked, oneChecked = false, check = false) {
-        // Get the image inside the button
-        const toggleImg = button.querySelector('img');
-        // Detect if dark mode is active
-        const isDarkMode = document.body.classList.contains('dark');
-        let imgSrc = ""; // Variable to hold the image source path
-        // Determine which image to display based on the checkbox states
-        if (oneChecked && check) {
-            imgSrc = isDarkMode ?
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED_DARK}` :
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_CHECKED}`;
-        } else if (oneChecked && !check) {
-            imgSrc = isDarkMode ?
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED_DARK}` :
-                `${this._iconPath}/${ToggleSelector.ICONS.HALF_UNCHECKED}`;
-        } else {
-            imgSrc = anyChecked
-                ? (isDarkMode ?
-                    `${this._iconPath}/${ToggleSelector.ICONS.CHECKED_DARK}` :
-                    `${this._iconPath}/${ToggleSelector.ICONS.CHECKED}`)
-                : (isDarkMode ?
-                    `${this._iconPath}/${ToggleSelector.ICONS.UNCHECKED_DARK}` :
-                    `${this._iconPath}/${ToggleSelector.ICONS.UNCHECKED}`);
+    updateToggleButton(button, anyChecked, oneChecked = false) {
+        let name = ToggleSelector.ICONS.UNCHECKED;
+        if (oneChecked === true) {
+            name = ToggleSelector.ICONS.HALF;
+        } else if (anyChecked === true) {
+            name = ToggleSelector.ICONS.CHECKED;
         }
-        // Update the image source
-        if (toggleImg) {
-            toggleImg.src = imgSrc;
-        } else {
-            console.error(`Image not found in button: ${button.id}`);
-        }
+        // inject() leaves an element that already holds an SVG untouched: what
+        // is drawn has to go before the new state can be drawn.
+        button.replaceChildren();
+        SVGIconsManager.inject(button, name);
     }
     // ----------------------------------------------------------------------
     setupCheckboxListeners() {
@@ -2488,10 +2960,9 @@ class ToggleSelector {
                 const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
                 // All are checked
                 const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-                // Log the state for debugging purposes
-                console.log(`Checkbox ${checkbox.id} changed. Any checked: ${anyChecked}, All checked: ${allChecked}`);
-                // Update button based on the state
+                // Update button and boxes based on the state
                 this.updateButtonState(button, anyChecked, allChecked);
+                this.drawBoxes();
             });
         });
     }
@@ -2500,9 +2971,9 @@ class ToggleSelector {
         if (allChecked) {
             this.updateToggleButton(button, anyChecked);
         } else if (anyChecked) {
-            this.updateToggleButton(button, anyChecked, true, true);
+            this.updateToggleButton(button, anyChecked, true);
         } else {
-            this.updateToggleButton(button, anyChecked, false, false);
+            this.updateToggleButton(button, anyChecked, false);
         }
     }
     // ----------------------------------------------------------------------
@@ -2808,13 +3279,20 @@ class Book {
             link.setAttribute('href', '#toc' + index);
             link.textContent = heading.textContent;
             let item = document.createElement('li');
-            item.setAttribute('class', heading.tagName.toLowerCase());
+            item.setAttribute('class', this.#class_of(heading));
             item.appendChild(link);
             this.#toc_element.appendChild(item);
             heading.parentNode.insertBefore(anchor, heading);
         });
     }
     // PRIVATE METHODS
+    #class_of(heading) {
+        const level = heading.tagName.toLowerCase();
+        if (heading.closest('.chapter.nonumber') === null) {
+            return level;
+        }
+        return level + ' nonumber';
+    }
     #setup_aside(aside) {
         if (!aside.id) aside.id = 'book-toc-aside';
         aside.setAttribute('aria-hidden', 'true');
@@ -2836,7 +3314,7 @@ class Book {
                 this.#toggle_button.focus();
             }
         });
-        aside.before(this.#toggle_button);
+        this.#placeToggleButton();
         // Browsers do not honour page-break on <aside> elements when printing.
         // Inserting a <section class="blank-page"> immediately after the aside
         // acts as the page-break carrier (print.css targets .blank-page).
@@ -2847,6 +3325,24 @@ class Book {
         aside.after(blankPage);
         const spacer = document.createElement('p');
         blankPage.after(spacer);
+    }
+    #placeToggleButton() {
+        const bar = document.querySelector('nav');
+        if (bar !== null) {
+            bar.appendChild(this.#toggle_button);
+            return;
+        }
+        const header = document.querySelector('header');
+        if (header !== null) {
+            header.appendChild(this.#toggle_button);
+            return;
+        }
+        const main = document.querySelector('main');
+        if (main !== null) {
+            main.prepend(this.#toggle_button);
+            return;
+        }
+        document.body.prepend(this.#toggle_button);
     }
     #get_headings(only_numerate_headings) {
         if (!(this.#headings_container instanceof HTMLElement)) return [];
@@ -3002,13 +3498,21 @@ class SortaTable {
         // Iterate over each row (including header)
         for (let i = 0; i < rows.length; i++) {
             const cell = rows[i].cells[columnIndex];
-            if (cell) {
-                // Toggle the 'hidden' class based on the show flag
-                if (show) {
-                    cell.classList.remove('hidden');
-                } else {
-                    cell.classList.add('hidden');
-                }
+            if (cell === undefined) {
+                continue;
+            }
+            // A cell spanning several columns belongs to none of them: a row
+            // holding one single cell across the whole table says something
+            // about the row above it, not about a column. Hiding a column
+            // takes away a column, and never that content. Requirement B25.
+            if (cell.colSpan > 1) {
+                continue;
+            }
+            // Toggle the 'hidden' class based on the show flag
+            if (show) {
+                cell.classList.remove('hidden');
+            } else {
+                cell.classList.add('hidden');
             }
         }
     }
@@ -3032,28 +3536,1858 @@ class SortaTable {
         const rows = Array.from(tableBody.getElementsByTagName('tr'));
         // Check if the attribute to sort by is 'date'
         const isDate = sortAttribute === 'date';
+        // Compare according to the language of the page: comparing character
+        // by character puts accented words after every other one, which is
+        // wrong in every language that uses them.
+        const collator = new Intl.Collator(this.#language(), {numeric: true, sensitivity: 'base'});
         // Sort the rows array using a custom comparator
         rows.sort((a, b) => {
-            // Fetch the text content of the cells in the current column
-            let aValue = a.cells[columnIndex].textContent.trim();
-            let bValue = b.cells[columnIndex].textContent.trim();
+            // Fetch the value to sort on for the cells in the current column
+            const aValue = SortaTable.#cellValue(a.cells[columnIndex]);
+            const bValue = SortaTable.#cellValue(b.cells[columnIndex]);
             // If the attribute is 'date', convert string to Date object
             if (isDate) {
-                aValue = new Date(aValue);
-                bValue = new Date(bValue);
+                const aDate = new Date(aValue);
+                const bDate = new Date(bValue);
+                if (aDate < bDate) return isAsc ? -1 : 1;
+                if (aDate > bDate) return isAsc ? 1 : -1;
+                return 0;
             }
-            // Determine the sort order based on the cell values and isAsc flag
-            if (aValue < bValue) return isAsc ? -1 : 1;
-            if (aValue > bValue) return isAsc ? 1 : -1;
-            return 0;
+            const order = collator.compare(aValue, bValue);
+            return isAsc ? order : -order;
         });
         // Re-append sorted rows back to the table body
         rows.forEach(row => tableBody.appendChild(row));
+    }
+    // ----------------------------------------------------------------------
+    static #cellValue(cell) {
+        // A row may not reach that far: one holding a content that spans the
+        // whole table has a single cell. It is sorted as an empty value, and
+        // whoever put it there is the one who knows where it belongs.
+        if (!cell) {
+            return '';
+        }
+        const declared = cell.getAttribute('data-sort-value');
+        if (declared !== null) {
+            return declared.trim();
+        }
+        return cell.textContent.trim();
+    }
+    // ----------------------------------------------------------------------
+    #language() {
+        const declaring = this._tableElt.closest('[lang]');
+        if (!declaring) {
+            return undefined;
+        }
+        return declaring.getAttribute('lang');
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
 window.Wexa.SortaTable = SortaTable;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/biberrors.js ---------------
+'use strict';
+class BibliographyError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'BibliographyError';
+    }
+}
+class MissingBibtexData extends BibliographyError {
+    constructor(message) {
+        super(message);
+        this.name = 'MissingBibtexData';
+    }
+}
+class MissingBibliographyPlace extends BibliographyError {
+    constructor(message) {
+        super(message);
+        this.name = 'MissingBibliographyPlace';
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.BibliographyError = BibliographyError;
+window.Wexa.MissingBibtexData = MissingBibtexData;
+window.Wexa.MissingBibliographyPlace = MissingBibliographyPlace;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/labels.js ---------------
+'use strict';
+class Labels {
+    // CONSTANTS
+    static FALLBACK = 'en';
+    // FIELDS
+    #labels;
+    // CONSTRUCTOR
+    constructor(labels) {
+        this.#labels = labels;
+    }
+    // GETTERS
+    get language() {
+        const declared = document.documentElement.getAttribute('lang');
+        if (declared === null) {
+            return Labels.FALLBACK;
+        }
+        const spoken = declared.split('-')[0].toLowerCase();
+        if (this.#labels.has(spoken) === false) {
+            return Labels.FALLBACK;
+        }
+        return spoken;
+    }
+    get isKnown() {
+        const declared = document.documentElement.getAttribute('lang');
+        if (declared === null) {
+            return false;
+        }
+        return this.#labels.has(declared.split('-')[0].toLowerCase());
+    }
+    // PUBLIC METHODS
+    text(name) {
+        return this.#labels.get(this.language)[name];
+    }
+    write(element, name) {
+        element.textContent = this.text(name);
+        this.declare(element);
+    }
+    declare(element) {
+        if (this.isKnown === false) {
+            element.setAttribute('lang', Labels.FALLBACK);
+        }
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.Labels = Labels;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibauthor.js ---------------
+'use strict';
+class Author {
+    // FIELDS
+    #place;
+    #firstName;
+    #particle;
+    #lastName;
+    #suffix;
+    // CONSTRUCTOR
+    constructor(place, firstName, particle, lastName, suffix) {
+        this.#place = place;
+        this.#firstName = firstName;
+        this.#particle = particle;
+        this.#lastName = lastName;
+        this.#suffix = suffix;
+    }
+    // GETTERS
+    get place() {
+        return this.#place;
+    }
+    get firstName() {
+        return this.#firstName;
+    }
+    get particle() {
+        return this.#particle;
+    }
+    get lastName() {
+        return this.#lastName;
+    }
+    get suffix() {
+        return this.#suffix;
+    }
+    // PUBLIC METHODS
+    text() {
+        const parts = [this.#firstName, this.#particle, this.#lastName, this.#suffix];
+        const written = parts.filter(part => part.length > 0);
+        return written.join(' ');
+    }
+    sortValue() {
+        if (this.#lastName.length === 0) {
+            return this.text();
+        }
+        const parts = [this.#firstName, this.#particle];
+        const given = parts.filter(part => part.length > 0);
+        if (given.length === 0) {
+            return this.#lastName;
+        }
+        return this.#lastName + ', ' + given.join(' ');
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.Author = Author;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/biblink.js ---------------
+'use strict';
+const LinkKind = Object.freeze({
+    PDF: 'pdf',
+    REPOSITORY: 'repository',
+    PUBLISHER: 'publisher',
+    OTHER: 'other'
+});
+class Link {
+    // CONSTANTS
+    static DEFAULT_REPOSITORY_HOSTS = ['hal.science', 'archives-ouvertes.fr', 'arxiv.org', 'zenodo.org'];
+    static PUBLISHER_MARKS = ['doi.org', '/doi/'];
+    // FIELDS
+    static #repositoryHosts = [...Link.DEFAULT_REPOSITORY_HOSTS];
+    #address;
+    // PUBLIC STATIC METHODS
+    static get repositoryHosts() {
+        return [...Link.#repositoryHosts];
+    }
+    static addRepositoryHosts(...hosts) {
+        hosts.forEach(host => {
+            if (typeof host !== 'string' || host.length === 0) {
+                console.error('Link.addRepositoryHosts: a host must be a string that is not empty.');
+                return;
+            }
+            const known = Link.#repositoryHosts.includes(host);
+            if (known === false) {
+                Link.#repositoryHosts.push(host);
+            }
+        });
+    }
+    static deleteRepositoryHosts(...hosts) {
+        hosts.forEach(host => {
+            const place = Link.#repositoryHosts.indexOf(host);
+            if (place === -1) {
+                console.warn(`Link.deleteRepositoryHosts: "${host}" was not known as an archive.`);
+                return;
+            }
+            Link.#repositoryHosts.splice(place, 1);
+        });
+    }
+    static resetRepositoryHosts() {
+        Link.#repositoryHosts = [...Link.DEFAULT_REPOSITORY_HOSTS];
+    }
+    // CONSTRUCTOR
+    constructor(address) {
+        this.#address = address;
+    }
+    // GETTERS
+    get address() {
+        return this.#address;
+    }
+    // PUBLIC METHODS
+    kind() {
+        const address = this.#address.toLowerCase();
+        if (address.endsWith('.pdf') === true) {
+            return LinkKind.PDF;
+        }
+        if (Link.#containsOneOf(address, Link.#repositoryHosts) === true) {
+            return LinkKind.REPOSITORY;
+        }
+        if (Link.#containsOneOf(address, Link.PUBLISHER_MARKS) === true) {
+            return LinkKind.PUBLISHER;
+        }
+        return LinkKind.OTHER;
+    }
+    // PRIVATE STATIC METHODS
+    static #containsOneOf(address, marks) {
+        return marks.some(mark => address.includes(mark));
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.Link = Link;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibreference.js ---------------
+'use strict';
+class Reference {
+    // FIELDS
+    #key;
+    #type;
+    #fields;
+    #authors;
+    #links;
+    #source;
+    // CONSTRUCTOR
+    constructor(key, type, fields, authors, links, source) {
+        this.#key = key;
+        this.#type = type;
+        this.#fields = new Map();
+        this.#authors = [...authors];
+        this.#links = [...links];
+        this.#source = source;
+        fields.forEach((value, name) => {
+            this.#fields.set(name.toLowerCase(), value);
+        });
+    }
+    // GETTERS
+    get key() {
+        return this.#key;
+    }
+    get type() {
+        return this.#type;
+    }
+    get authors() {
+        return [...this.#authors];
+    }
+    get links() {
+        return [...this.#links];
+    }
+    get source() {
+        return this.#source;
+    }
+    get sourceWithoutAbstract() {
+        return Reference.#withoutField(this.#source, 'abstract');
+    }
+    get abstract() {
+        return this.field('abstract');
+    }
+    // PUBLIC METHODS
+    field(name) {
+        const wanted = name.toLowerCase();
+        if (this.#fields.has(wanted) === false) {
+            return '';
+        }
+        return this.#fields.get(wanted);
+    }
+    // PRIVATE STATIC METHODS
+    static #withoutField(source, name) {
+        const start = source.search(new RegExp('[,{]\\s*' + name + '\\s*=', 'i'));
+        if (start === -1) {
+            return source;
+        }
+        // The comma or brace that opens the field is kept: it belongs to what
+        // comes before, and taking it away would join two fields into one.
+        let position = source.indexOf('=', start) + 1;
+        while (position < source.length && /\s/.test(source[position]) === true) {
+            position++;
+        }
+        const end = Reference.#endOfValue(source, position);
+        const before = source.substring(0, start + 1);
+        const after = source.substring(end);
+        // A field written last leaves the comma of the one before it hanging
+        // in front of the brace that closes the entry.
+        if (after.trim().startsWith('}') === true && before.trimEnd().endsWith(',') === true) {
+            return before.trimEnd().slice(0, -1) + after;
+        }
+        return before + after;
+    }
+    static #endOfValue(source, start) {
+        const opening = source[start];
+        let position = start;
+        let depth = 0;
+        while (position < source.length) {
+            const character = source[position];
+            if (character === '{') {
+                depth++;
+            } else if (character === '}') {
+                depth--;
+                if (depth === 0) {
+                    position++;
+                    break;
+                }
+            } else if (character === '"' && opening === '"' && position > start) {
+                position++;
+                break;
+            }
+            position++;
+        }
+        // The comma that follows goes too: the field before it already has one.
+        while (position < source.length && /[\s,]/.test(source[position]) === true) {
+            position++;
+        }
+        return position;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.Reference = Reference;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibcitedref.js ---------------
+'use strict';
+class CitedReference {
+    // FIELDS
+    #number;
+    #places;
+    // CONSTRUCTOR
+    constructor(number, places) {
+        this.#number = number;
+        this.#places = [...places];
+    }
+    // GETTERS
+    get number() {
+        return this.#number;
+    }
+    get places() {
+        return [...this.#places];
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.CitedReference = CitedReference;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibparser.js ---------------
+'use strict';
+class BibtexParser {
+    // CONSTANTS
+    static ACCENTS = new Map([
+        ["'", '́'],    // acute
+        ['`', '̀'],    // grave
+        ['^', '̂'],    // circumflex
+        ['"', '̈'],    // diaeresis
+        ['~', '̃'],    // tilde
+        ['=', '̄'],    // macron
+        ['.', '̇'],    // dot above
+        ['c', '̧'],    // cedilla
+        ['v', '̌'],    // caron
+        ['u', '̆'],    // breve
+        ['H', '̋'],    // double acute
+        ['r', '̊'],    // ring above
+        ['k', '̨']     // ogonek
+    ]);
+    static LETTERS = new Map([
+        ['\\AA', 'Å'], ['\\aa', 'å'], ['\\AE', 'Æ'], ['\\ae', 'æ'],
+        ['\\OE', 'Œ'], ['\\oe', 'œ'], ['\\ss', 'ß'],
+        ['\\O', 'Ø'], ['\\o', 'ø'], ['\\L', 'Ł'], ['\\l', 'ł'],
+        ['\\i', 'ı'], ['\\j', 'ȷ']
+    ]);
+    static ESCAPED = ['&', '%', '$', '#', '_'];
+    static LINK_FIELDS = ['url', 'note'];
+    // PUBLIC METHODS
+    parse(content) {
+        const references = new Map();
+        let inEntry = false;
+        let open = 0;
+        let buffer = '';
+        let previous = '';
+        for (let i = 0; i < content.length; i++) {
+            let character = content[i];
+            if (open !== 0 && character === '@' && BibtexParser.#startsALine(content, i) === true) {
+                console.warn('BibtexParser: a closing brace is missing, the entry is closed by force.');
+                character = '}';
+                i--;
+            }
+            if (open === 0 && character === '@') {
+                inEntry = true;
+            } else if (inEntry === true && character === '{' && previous !== '\\') {
+                open++;
+            } else if (inEntry === true && character === '}' && previous !== '\\') {
+                open--;
+                if (open === 0) {
+                    inEntry = false;
+                    this.#keepEntry(references, buffer);
+                    buffer = '';
+                }
+            }
+            if (inEntry === true) {
+                buffer += character;
+            }
+            previous = character;
+        }
+        // The last entry may have lost its closing brace at the end of the file.
+        if (open > 0) {
+            console.warn('BibtexParser: the last entry has no closing brace.');
+            this.#keepEntry(references, buffer);
+        }
+        return references;
+    }
+    // PRIVATE METHODS
+    #keepEntry(references, buffer) {
+        const reference = this.#parseEntry(buffer + '}');
+        if (reference === null) {
+            return;
+        }
+        if (references.has(reference.key) === true) {
+            console.warn(`BibtexParser: the key "${reference.key}" is used twice, the second entry wins.`);
+        }
+        references.set(reference.key, reference);
+    }
+    #parseEntry(source) {
+        const fields = new Map();
+        let entry = source.substring(0, source.length - 1);
+        while (entry.includes('=') === true) {
+            let position = entry.lastIndexOf('=');
+            while (position !== -1 && BibtexParser.#isSeparator(entry, position) === false) {
+                position = entry.lastIndexOf('=', position - 1);
+            }
+            if (position === -1) {
+                break;
+            }
+            const value = entry.substring(position + 1);
+            entry = entry.substring(0, position);
+            const comma = entry.lastIndexOf(',');
+            if (comma === -1) {
+                break;
+            }
+            const name = entry.substring(comma + 1).trim().toLowerCase();
+            entry = entry.substring(0, comma);
+            if (name.length > 0) {
+                fields.set(name, this.#cleanValue(value));
+            }
+        }
+        const brace = entry.indexOf('{');
+        if (brace === -1) {
+            console.warn('BibtexParser: an entry has no opening brace, it is left aside.');
+            return null;
+        }
+        const type = entry.substring(0, brace).trim().replace('@', '');
+        const key = entry.substring(brace + 1).trim();
+        if (key.length === 0) {
+            console.warn('BibtexParser: an entry has no key, it is left aside.');
+            return null;
+        }
+        let authors = [];
+        if (fields.has('author') === true) {
+            authors = this.#parseAuthors(fields.get('author'));
+        }
+        return new Reference(key, type, fields, authors, this.#readLinks(fields), source);
+    }
+    #cleanValue(value) {
+        let cleaned = value.trim();
+        if (cleaned.endsWith(',') === true) {
+            cleaned = cleaned.substring(0, cleaned.length - 1).trim();
+        }
+        cleaned = BibtexParser.#stripDelimiters(cleaned);
+        cleaned = cleaned.replace(/\s+/g, ' ').trim();
+        cleaned = this.#decodeLatex(cleaned);
+        // Braces that protected a case have done their work; what they
+        // protected is left untouched.
+        return cleaned.replace(/(^|[^\\])[{}]/g, '$1');
+    }
+    #decodeLatex(text) {
+        let converted = text;
+        BibtexParser.LETTERS.forEach((letter, command) => {
+            converted = converted.split(command + '{}').join(letter);
+            converted = converted.split(command + ' ').join(letter);
+            converted = converted.split(command).join(letter);
+        });
+        const accents = Array.from(BibtexParser.ACCENTS.keys()).map(BibtexParser.#escapeForRegExp).join('');
+        const pattern = new RegExp('\\\\([' + accents + '])\\s*\\{?([A-Za-z])\\}?', 'g');
+        converted = converted.replace(pattern, (whole, accent, letter) => {
+            return letter + BibtexParser.ACCENTS.get(accent);
+        });
+        BibtexParser.ESCAPED.forEach(character => {
+            converted = converted.split('\\' + character).join(character);
+        });
+        // Two hyphens are how LaTeX writes a range; one hyphen reads better.
+        converted = converted.split('--').join('-');
+        return converted.normalize('NFC');
+    }
+    #parseAuthors(value) {
+        const written = value.split(' and ');
+        const authors = [];
+        written.forEach((name, index) => {
+            const parts = BibtexParser.#splitName(name.trim());
+            authors.push(new Author(index + 1, parts.first, parts.particle, parts.last, parts.suffix));
+        });
+        return authors;
+    }
+    #readLinks(fields) {
+        const links = [];
+        BibtexParser.LINK_FIELDS.forEach(name => {
+            if (fields.has(name) === false) {
+                return;
+            }
+            const value = fields.get(name).trim();
+            if (value.startsWith('http') === true) {
+                links.push(new Link(value));
+            }
+        });
+        return links;
+    }
+    // PRIVATE STATIC METHODS
+    static #isSeparator(entry, position) {
+        if (position > 0 && entry[position - 1] === '\\') {
+            return false;
+        }
+        let open = 0;
+        for (let i = entry.length - 1; i >= position; i--) {
+            if (entry[i] === '{' && entry[i - 1] !== '\\') {
+                open++;
+            }
+            if (entry[i] === '}' && entry[i - 1] !== '\\') {
+                open--;
+            }
+        }
+        if (open !== 0) {
+            return false;
+        }
+        let tail = entry.trimEnd();
+        if (tail.endsWith(',') === true) {
+            tail = tail.substring(0, tail.length - 1).trimEnd();
+        }
+        if (tail.endsWith('"') === false) {
+            return true;
+        }
+        let found = 0;
+        for (let i = entry.length - 1; i >= position; i--) {
+            if (entry[i] === '"' && entry[i - 1] !== '\\') {
+                found++;
+            }
+            if (found === 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    static #stripDelimiters(value) {
+        if (value.startsWith('{') === true && value.endsWith('}') === true) {
+            return value.substring(1, value.length - 1);
+        }
+        if (value.startsWith('"') === true && value.endsWith('"') === true) {
+            return value.substring(1, value.length - 1);
+        }
+        return value;
+    }
+    static #splitName(name) {
+        const parts = name.split(',');
+        if (parts.length === 1) {
+            return BibtexParser.#splitFirstVonLast(name);
+        }
+        const vonLast = BibtexParser.#splitVonLast(parts[0].trim());
+        let suffix = '';
+        if (parts.length > 2) {
+            suffix = parts[1].trim();
+        }
+        return {
+            first: parts[parts.length - 1].trim(),
+            particle: vonLast.particle,
+            last: vonLast.last,
+            suffix: suffix
+        };
+    }
+    static #splitFirstVonLast(name) {
+        const words = name.split(/\s+/).filter(word => word.length > 0);
+        if (words.length === 1) {
+            return {first: '', particle: '', last: words[0], suffix: ''};
+        }
+        const lastLower = BibtexParser.#lastLowerCaseWord(words, words.length - 1);
+        if (lastLower === -1) {
+            return {
+                first: words.slice(0, words.length - 1).join(' '),
+                particle: '',
+                last: words[words.length - 1],
+                suffix: ''
+            };
+        }
+        const firstLower = BibtexParser.#firstLowerCaseWord(words, lastLower);
+        return {
+            first: words.slice(0, firstLower).join(' '),
+            particle: words.slice(firstLower, lastLower + 1).join(' '),
+            last: words.slice(lastLower + 1).join(' '),
+            suffix: ''
+        };
+    }
+    static #splitVonLast(text) {
+        const words = text.split(/\s+/).filter(word => word.length > 0);
+        if (words.length === 1) {
+            return {particle: '', last: words[0]};
+        }
+        const lastLower = BibtexParser.#lastLowerCaseWord(words, words.length - 1);
+        if (lastLower === -1) {
+            return {particle: '', last: words.join(' ')};
+        }
+        const firstLower = BibtexParser.#firstLowerCaseWord(words, lastLower);
+        return {
+            particle: words.slice(firstLower, lastLower + 1).join(' '),
+            last: words.slice(lastLower + 1).join(' ')
+        };
+    }
+    static #lastLowerCaseWord(words, limit) {
+        for (let i = limit - 1; i >= 0; i--) {
+            if (BibtexParser.#isLowerCase(words[i]) === true) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    static #firstLowerCaseWord(words, lastLower) {
+        let start = lastLower;
+        while (start > 0 && BibtexParser.#isLowerCase(words[start - 1]) === true) {
+            start--;
+        }
+        return start;
+    }
+    static #isLowerCase(word) {
+        let depth = 0;
+        for (const character of word) {
+            if (character === '{') {
+                depth++;
+            } else if (character === '}') {
+                depth--;
+            } else if (depth === 0 && /[A-Za-zÀ-ÖØ-öø-ÿ]/.test(character) === true) {
+                return character === character.toLowerCase();
+            }
+        }
+        return false;
+    }
+    static #startsALine(content, position) {
+        for (let i = position - 1; i >= 0; i--) {
+            const character = content[i];
+            if (character === '\n') {
+                return true;
+            }
+            if (character !== ' ' && character !== '\t' && character !== '\r') {
+                return false;
+            }
+        }
+        return true;
+    }
+    static #escapeForRegExp(character) {
+        return character.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.BibtexParser = BibtexParser;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibformatter.js ---------------
+'use strict';
+class ReferenceFormatter {
+    // CONSTANTS
+    static TEMPLATES = new Map([
+        ['article', [['author', 'year'], ['title'], ['journal', 'volume', 'number', 'pages']]],
+        ['inproceedings', [['author', 'year'], ['title'], ['booktitle', 'address', 'publisher', 'pages']]],
+        ['conference', [['author', 'year'], ['title'], ['booktitle', 'address', 'publisher', 'pages']]],
+        ['incollection', [['author', 'year'], ['title'], ['booktitle', 'editor', 'publisher', 'pages']]],
+        ['inbook', [['author', 'year'], ['chapter'], ['title', 'editor', 'publisher', 'pages']]],
+        ['book', [['author', 'year'], ['title'], ['editor', 'publisher', 'address']]],
+        ['techreport', [['author', 'year'], ['title'], ['institution', 'address']]],
+        ['phdthesis', [['author', 'year'], ['title'], ['type', 'school', 'address']]],
+        ['mastersthesis', [['author', 'year'], ['title'], ['type', 'school', 'address']]],
+        ['unpublished', [['author', 'year'], ['title'], ['note']]],
+        ['misc', [['author', 'year'], ['title'], ['howpublished']]]
+    ]);
+    static FALLBACK_TEMPLATE = [['author', 'year'], ['title'], ['howpublished']];
+    static REQUIRED = new Map([
+        ['article', ['author', 'title', 'journal', 'year']],
+        ['inproceedings', ['author', 'title', 'booktitle', 'year']],
+        ['conference', ['author', 'title', 'booktitle', 'year']],
+        ['incollection', ['author', 'title', 'booktitle', 'publisher', 'year']],
+        ['inbook', ['author', 'title', 'publisher', 'year']],
+        ['book', ['title', 'publisher', 'year']],
+        ['techreport', ['author', 'title', 'institution', 'year']],
+        ['phdthesis', ['author', 'title', 'school', 'year']],
+        ['mastersthesis', ['author', 'title', 'school', 'year']],
+        ['unpublished', ['author', 'title']],
+        ['misc', []]
+    ]);
+    static FALLBACK_REQUIRED = ['title'];
+    static SEPARATOR = ', ';
+    static TERMINATOR = '.';
+    static YEAR_OPENING = ' (';
+    static YEAR_CLOSING = ')';
+    static LINE_NAMES = ['authors', 'title', 'source'];
+    // PUBLIC METHODS
+    format(reference) {
+        const fragment = document.createDocumentFragment();
+        const required = this.#requiredFor(reference.type);
+        let written = 0;
+        this.#templateFor(reference.type).forEach((fields, order) => {
+            const line = this.#formatLine(reference, fields, required, order);
+            if (line === null) {
+                return;
+            }
+            fragment.appendChild(line);
+            written++;
+        });
+        if (written === 0) {
+            const line = document.createElement('span');
+            line.className = 'bib-line';
+            line.appendChild(this.#formatMissing('title'));
+            fragment.appendChild(line);
+        }
+        return fragment;
+    }
+    // PRIVATE METHODS
+    #formatLine(reference, fields, required, order) {
+        const line = document.createElement('span');
+        line.className = 'bib-line bib-line-' + ReferenceFormatter.LINE_NAMES[order];
+        let written = 0;
+        fields.forEach(name => {
+            const element = this.#formatField(reference, name, required.includes(name));
+            if (element === null) {
+                return;
+            }
+            // The year follows the authors in parentheses; every other field
+            // follows the one before it after a comma.
+            if (name === 'year' && written > 0) {
+                line.appendChild(document.createTextNode(ReferenceFormatter.YEAR_OPENING));
+                line.appendChild(element);
+                line.appendChild(document.createTextNode(ReferenceFormatter.YEAR_CLOSING));
+                written++;
+                return;
+            }
+            if (written > 0) {
+                line.appendChild(document.createTextNode(ReferenceFormatter.SEPARATOR));
+            }
+            line.appendChild(element);
+            written++;
+        });
+        if (written === 0) {
+            return null;
+        }
+        line.appendChild(document.createTextNode(ReferenceFormatter.TERMINATOR));
+        return line;
+    }
+    #formatField(reference, name, isRequired) {
+        let value = reference.field(name);
+        if (name === 'author') {
+            value = reference.authors.map(author => author.text()).join(ReferenceFormatter.SEPARATOR);
+        }
+        if (value.length > 0) {
+            const element = document.createElement('span');
+            element.className = 'bib-' + name;
+            element.textContent = value;
+            return element;
+        }
+        if (isRequired === true) {
+            return this.#formatMissing(name);
+        }
+        return null;
+    }
+    #formatMissing(name) {
+        const element = document.createElement('span');
+        element.className = 'bib-missing';
+        element.textContent = '[' + name + ']';
+        element.setAttribute('title', 'This reference has no ' + name + '.');
+        return element;
+    }
+    #templateFor(type) {
+        const wanted = type.toLowerCase();
+        if (ReferenceFormatter.TEMPLATES.has(wanted) === false) {
+            return ReferenceFormatter.FALLBACK_TEMPLATE;
+        }
+        return ReferenceFormatter.TEMPLATES.get(wanted);
+    }
+    #requiredFor(type) {
+        const wanted = type.toLowerCase();
+        if (ReferenceFormatter.REQUIRED.has(wanted) === false) {
+            return ReferenceFormatter.FALLBACK_REQUIRED;
+        }
+        return ReferenceFormatter.REQUIRED.get(wanted);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.ReferenceFormatter = ReferenceFormatter;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibcitedkey.js ---------------
+'use strict';
+class CitedKey {
+    // FIELDS
+    #place;
+    #writtenKey;
+    #reference;
+    #targetPage;
+    // CONSTRUCTOR
+    constructor(place, writtenKey, reference, targetPage) {
+        this.#place = place;
+        this.#writtenKey = writtenKey;
+        this.#reference = reference;
+        this.#targetPage = targetPage;
+    }
+    // GETTERS
+    get place() {
+        return this.#place;
+    }
+    get writtenKey() {
+        return this.#writtenKey;
+    }
+    get reference() {
+        return this.#reference;
+    }
+    get targetPage() {
+        return this.#targetPage;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.CitedKey = CitedKey;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibcitation.js ---------------
+'use strict';
+class Citation {
+    // CONSTANTS
+    static ID_PREFIX = 'cite-';
+    static OPENING = '[';
+    static CLOSING = ']';
+    static UNKNOWN = '?';
+    static UNBREAKABLE_SPACE = '\u00A0';
+    static CONTENT_SUFFIX = '-reference';
+    static LABELS = new Map([
+        ['en', {reference: 'Reference', missing: 'missing reference'}],
+        ['fr', {reference: 'Référence', missing: 'référence absente'}]
+    ]);
+    // FIELDS
+    #element;
+    #place;
+    #citedKeys;
+    #texts;
+    // CONSTRUCTOR
+    constructor(element, place, citedKeys) {
+        this.#element = element;
+        this.#place = place;
+        this.#citedKeys = [...citedKeys];
+        this.#texts = new Labels(Citation.LABELS);
+    }
+    // GETTERS
+    get element() {
+        return this.#element;
+    }
+    get place() {
+        return this.#place;
+    }
+    get citedKeys() {
+        return [...this.#citedKeys];
+    }
+    // PUBLIC METHODS
+    showNumber(number) {
+        this.#show(Citation.OPENING + String(number) + Citation.CLOSING,
+            this.#texts.text('reference') + ' ' + String(number));
+    }
+    showReference(number, content, target) {
+        this.showNumber(number);
+        const control = document.createElement('button');
+        control.type = 'button';
+        control.className = 'bib-disclosure-control bib-citation-control';
+        control.setAttribute('aria-expanded', 'false');
+        control.setAttribute('aria-controls', this.#element.id + Citation.CONTENT_SUFFIX);
+        control.setAttribute('aria-label', this.#element.getAttribute('aria-label'));
+        control.textContent = this.#element.textContent;
+        this.#texts.declare(control);
+        // On paper nothing opens, and a button is neither a link nor
+        // clickable in a PDF. The same number is written a second time, as a
+        // link to the bibliography, and each of the two shows where it serves.
+        const anchor = document.createElement('a');
+        anchor.className = 'bib-citation-anchor';
+        anchor.setAttribute('href', '#' + target);
+        anchor.textContent = control.textContent;
+        anchor.setAttribute('aria-label', control.getAttribute('aria-label'));
+        this.#texts.declare(anchor);
+        this.#element.textContent = '';
+        this.#element.removeAttribute('aria-label');
+        this.#element.appendChild(control);
+        this.#element.appendChild(anchor);
+        const opened = document.createElement('span');
+        opened.className = 'bib-citation-content';
+        opened.id = this.#element.id + Citation.CONTENT_SUFFIX;
+        opened.hidden = true;
+        opened.appendChild(content);
+        this.#element.after(opened);
+        return opened;
+    }
+    showMissing() {
+        this.#show(Citation.OPENING + Citation.UNKNOWN + Citation.CLOSING,
+            this.#texts.text('missing'));
+    }
+    // PRIVATE METHODS
+    #show(seen, spoken) {
+        if (this.#element.id === '') {
+            this.#element.id = Citation.ID_PREFIX + String(this.#place);
+        }
+        this.#element.textContent = seen;
+        this.#element.setAttribute('aria-label', spoken);
+        this.#texts.declare(this.#element);
+        this.#keepWithPreviousWord();
+    }
+    #keepWithPreviousWord() {
+        const before = this.#element.previousSibling;
+        if (before === null || before.nodeType !== Node.TEXT_NODE) {
+            return;
+        }
+        before.textContent = before.textContent.replace(/\s+$/, Citation.UNBREAKABLE_SPACE);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.Citation = Citation;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibtable.js ---------------
+'use strict';
+class BibliographyTable {
+    // CONSTANTS
+    static TABLE_ID = 'bibliography-table';
+    static ROW_PREFIX = 'bib-';
+    static UNCITED_SORT_VALUE = String(Number.MAX_SAFE_INTEGER);
+    static BACK_SEPARATOR = '-';
+    static LABELS = new Map([
+        ['en', {
+            number: 'No.', year: 'Year', reference: 'Reference',
+            abstract: 'Abstract', source: 'BibTeX', backTo: 'Back to citation',
+            pdf: 'PDF', repository: 'Open archive', publisher: 'Publisher', other: 'Link',
+            of: 'of'
+        }],
+        ['fr', {
+            number: 'N°', year: 'Année', reference: 'Référence',
+            abstract: 'Résumé', source: 'BibTeX', backTo: 'Retour à la citation',
+            pdf: 'PDF', repository: 'Archive ouverte', publisher: 'Éditeur', other: 'Lien',
+            of: 'de'
+        }]
+    ]);
+    // FIELDS
+    #formatter;
+    #texts;
+    // CONSTRUCTOR
+    constructor(formatter = new ReferenceFormatter()) {
+        this.#formatter = formatter;
+        this.#texts = new Labels(BibliographyTable.LABELS);
+    }
+    // PUBLIC METHODS
+    build(references, cited) {
+        const hasNumbers = cited.size > 0;
+        const columns = BibliographyTable.#columnCount(hasNumbers);
+        const table = document.createElement('table');
+        table.id = BibliographyTable.TABLE_ID;
+        table.className = 'bib-table';
+        table.appendChild(this.#buildHead(hasNumbers));
+        const body = document.createElement('tbody');
+        BibliographyTable.#inReadingOrder(references, cited).forEach(reference => {
+            const row = this.#buildRow(reference, cited.get(reference.key), hasNumbers);
+            body.appendChild(row);
+            this.#buildOpenedRows(reference, columns).forEach(opened => body.appendChild(opened));
+        });
+        table.appendChild(body);
+        BibliographyTable.stripe(table);
+        return table;
+    }
+    static stripe(table) {
+        let seen = 0;
+        table.querySelectorAll('tbody tr.bib-row').forEach(row => {
+            if (row.hidden === false) {
+                seen++;
+            }
+            const striped = row.hidden === false && seen % 2 === 0;
+            row.classList.toggle('bib-striped', striped);
+            const opened = table.querySelectorAll(`tr.bib-opened-row[data-opens="${row.id}"]`);
+            opened.forEach(content => content.classList.toggle('bib-striped', striped));
+        });
+    }
+    // PRIVATE METHODS
+    #buildHead(hasNumbers) {
+        const head = document.createElement('thead');
+        const row = document.createElement('tr');
+        if (hasNumbers === true) {
+            row.appendChild(this.#buildHeader('number', true));
+        }
+        row.appendChild(this.#buildHeader('year', true));
+        row.appendChild(this.#buildHeader('reference', true, 'author'));
+        head.appendChild(row);
+        return head;
+    }
+    #buildHeader(name, isSortable, sortName = name) {
+        const header = document.createElement('th');
+        header.setAttribute('scope', 'col');
+        header.className = 'bib-header bib-header-' + name;
+        if (isSortable === false) {
+            this.#texts.write(header, name);
+            return header;
+        }
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'sortatable';
+        button.setAttribute('data-sort', sortName);
+        this.#texts.write(button, name);
+        header.appendChild(button);
+        return header;
+    }
+    #buildRow(reference, cited, hasNumbers) {
+        const row = document.createElement('tr');
+        row.id = BibliographyTable.ROW_PREFIX + reference.key;
+        row.className = 'bib-row';
+        if (hasNumbers === true) {
+            const number = document.createElement('td');
+            number.className = 'bib-number';
+            number.setAttribute('data-sort-value', BibliographyTable.UNCITED_SORT_VALUE);
+            if (cited !== undefined) {
+                number.textContent = String(cited.number);
+                number.setAttribute('data-sort-value', String(cited.number));
+            }
+            row.appendChild(number);
+        }
+        const year = document.createElement('td');
+        year.className = 'bib-year';
+        year.textContent = reference.field('year');
+        row.appendChild(year);
+        row.appendChild(this.#buildReferenceCell(reference, cited));
+        return row;
+    }
+    #buildReferenceCell(reference, cited) {
+        const cell = document.createElement('td');
+        cell.className = 'bib-reference';
+        cell.setAttribute('data-sort-value', this.#sortValueOf(reference));
+        cell.appendChild(this.#formatter.format(reference));
+        cell.appendChild(this.#buildActions(reference, cited));
+        return cell;
+    }
+    #buildActions(reference, cited) {
+        const actions = document.createElement('div');
+        actions.className = 'bib-actions';
+        if (cited !== undefined) {
+            actions.appendChild(this.#backLinks(cited.places, cited.number));
+        }
+        reference.links.forEach(link => {
+            actions.appendChild(this.#buildLink(link, reference));
+        });
+        this.#openableOf(reference).forEach(opened => {
+            actions.appendChild(this.#buildControl(reference.key, opened.name));
+        });
+        return actions;
+    }
+    #sortValueOf(reference) {
+        const authors = reference.authors;
+        if (authors.length === 0) {
+            return reference.field('title');
+        }
+        return authors[0].sortValue();
+    }
+    #backLinks(places, number) {
+        const fragment = document.createDocumentFragment();
+        places.forEach((place, order) => {
+            if (place.id === '') {
+                return;
+            }
+            const mark = Citation.OPENING + String(number) + Citation.CLOSING;
+            const suffix = BibliographyTable.#suffixOf(order, places.length);
+            const link = document.createElement('a');
+            link.className = 'bib-backlink';
+            link.setAttribute('href', '#' + place.id);
+            link.textContent = mark + suffix;
+            link.setAttribute('aria-label', this.#texts.text('backTo') + ' ' + String(number) + suffix);
+            this.#texts.declare(link);
+            fragment.appendChild(link);
+        });
+        return fragment;
+    }
+    #openableOf(reference) {
+        const openable = [];
+        if (reference.abstract.length > 0) {
+            openable.push({name: 'abstract', text: reference.abstract});
+        }
+        openable.push({name: 'source', text: reference.sourceWithoutAbstract});
+        return openable;
+    }
+    #buildLink(link, reference) {
+        const element = document.createElement('a');
+        // Every address of a reference leaves the document: the reader is told
+        // so before following it, the way Whakerexa marks any outward link.
+        element.className = 'bib-link external-link';
+        element.setAttribute('href', link.address);
+        // A page holding twenty links all named "PDF" is a page where a name
+        // says nothing, so each one names its reference.
+        const label = BibliographyTable.#labelOf(link.kind());
+        element.setAttribute('aria-label', this.#nameOf(label, reference));
+        // On screen a reader needs to know what the link leads to; on paper
+        // they need the address, and the link is still one in a PDF. Both are
+        // written inside the link, and each shows where it serves.
+        const shown = document.createElement('span');
+        shown.className = 'bib-link-label';
+        this.#texts.write(shown, label);
+        const address = document.createElement('span');
+        address.className = 'bib-link-address';
+        address.textContent = link.address;
+        this.#texts.declare(address);
+        element.appendChild(shown);
+        element.appendChild(address);
+        return element;
+    }
+    #nameOf(label, reference) {
+        const title = reference.field('title');
+        if (title.length === 0) {
+            return this.#texts.text(label);
+        }
+        return this.#texts.text(label) + ' ' + this.#texts.text('of') + ' ' + title;
+    }
+    #buildControl(key, name) {
+        const control = document.createElement('button');
+        control.type = 'button';
+        control.className = 'bib-disclosure-control';
+        control.setAttribute('aria-expanded', 'false');
+        control.setAttribute('aria-controls', BibliographyTable.#contentId(key, name));
+        this.#texts.write(control, name);
+        return control;
+    }
+    #buildOpenedRows(reference, columns) {
+        return this.#openableOf(reference).map(opened => {
+            const row = document.createElement('tr');
+            row.id = BibliographyTable.#contentId(reference.key, opened.name);
+            row.className = 'bib-opened-row';
+            row.setAttribute('data-opens', BibliographyTable.ROW_PREFIX + reference.key);
+            row.hidden = true;
+            const cell = document.createElement('td');
+            cell.colSpan = columns;
+            cell.className = 'bib-disclosure-content bib-disclosure-' + opened.name;
+            cell.textContent = opened.text;
+            row.appendChild(cell);
+            return row;
+        });
+    }
+    // PRIVATE STATIC METHODS
+    static #inReadingOrder(references, cited) {
+        const ordered = Array.from(references.values());
+        ordered.sort((one, other) => {
+            const first = BibliographyTable.#numberOf(one, cited);
+            const second = BibliographyTable.#numberOf(other, cited);
+            if (first !== second) {
+                return first - second;
+            }
+            return Number(one.field('year')) - Number(other.field('year'));
+        });
+        return ordered;
+    }
+    static #numberOf(reference, cited) {
+        const owed = cited.get(reference.key);
+        if (owed === undefined) {
+            return Number.MAX_SAFE_INTEGER;
+        }
+        return owed.number;
+    }
+    static #suffixOf(order, total) {
+        if (total < 2) {
+            return '';
+        }
+        let letters = '';
+        let left = order;
+        while (left >= 0) {
+            letters = String.fromCharCode(97 + (left % 26)) + letters;
+            left = Math.floor(left / 26) - 1;
+        }
+        return BibliographyTable.BACK_SEPARATOR + letters;
+    }
+    static #columnCount(hasNumbers) {
+        if (hasNumbers === true) {
+            return 3;
+        }
+        return 2;
+    }
+    static #contentId(key, name) {
+        return BibliographyTable.ROW_PREFIX + key + '-' + name;
+    }
+    static #labelOf(kind) {
+        if (kind === LinkKind.PDF) {
+            return 'pdf';
+        }
+        if (kind === LinkKind.REPOSITORY) {
+            return 'repository';
+        }
+        if (kind === LinkKind.PUBLISHER) {
+            return 'publisher';
+        }
+        return 'other';
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.BibliographyTable = BibliographyTable;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibcite.js ---------------
+'use strict';
+class CitationIndex {
+    // CONSTANTS
+    static CITATION_SELECTOR = '[data-bibtex]';
+    static KEY_ATTRIBUTE = 'data-bibtex';
+    static LABELS = new Map([
+        ['en', {inBibliography: 'In the bibliography', abstract: 'Abstract'}],
+        ['fr', {inBibliography: 'Dans la bibliographie', abstract: 'Résumé'}]
+    ]);
+    // FIELDS
+    #citations;
+    #numbersByKey;
+    #placesByKey;
+    #formatter;
+    #texts;
+    // CONSTRUCTOR
+    constructor(formatter = new ReferenceFormatter()) {
+        this.#citations = [];
+        this.#numbersByKey = new Map();
+        this.#placesByKey = new Map();
+        this.#formatter = formatter;
+        this.#texts = new Labels(CitationIndex.LABELS);
+    }
+    // GETTERS
+    get citations() {
+        return [...this.#citations];
+    }
+    // PUBLIC METHODS
+    index(root, references) {
+        this.#citations = [];
+        this.#numbersByKey = new Map();
+        this.#placesByKey = new Map();
+        if (root === null) {
+            console.warn('CitationIndex: no text to read, the citations are not numbered.');
+            return;
+        }
+        const written = root.querySelectorAll(CitationIndex.CITATION_SELECTOR);
+        written.forEach((element, order) => {
+            const key = element.getAttribute(CitationIndex.KEY_ATTRIBUTE).trim();
+            const reference = references.get(key);
+            const cited = new CitedKey(1, key, this.#found(reference), '');
+            const citation = new Citation(element, order + 1, [cited]);
+            this.#citations.push(citation);
+            if (cited.reference === null) {
+                console.warn(`CitationIndex: the key "${key}" names no reference.`);
+                citation.showMissing();
+                return;
+            }
+            citation.showReference(this.#numberOf(key), this.#buildContent(cited.reference),
+                BibliographyTable.ROW_PREFIX + key);
+            this.#rememberPlace(key, element);
+        });
+    }
+    citedReferences() {
+        const cited = new Map();
+        this.#numbersByKey.forEach((number, key) => {
+            cited.set(key, new CitedReference(number, this.#placesOf(key)));
+        });
+        return cited;
+    }
+    // PRIVATE METHODS
+    #buildContent(reference) {
+        const content = document.createDocumentFragment();
+        content.appendChild(this.#formatter.format(reference));
+        content.appendChild(this.#buildBibliographyLink(reference.key));
+        reference.links.forEach(link => {
+            const address = document.createElement('a');
+            address.className = 'bib-link external-link';
+            address.setAttribute('href', link.address);
+            address.textContent = link.address;
+            content.appendChild(address);
+        });
+        if (reference.abstract.length > 0) {
+            content.appendChild(this.#buildPart('abstract', reference.abstract));
+        }
+        return content;
+    }
+    #buildBibliographyLink(key) {
+        const link = document.createElement('a');
+        link.className = 'bib-citation-link';
+        link.setAttribute('href', '#' + BibliographyTable.ROW_PREFIX + key);
+        this.#texts.write(link, 'inBibliography');
+        return link;
+    }
+    #buildPart(name, text) {
+        const part = document.createElement('span');
+        part.className = 'bib-citation-part bib-citation-' + name;
+        const title = document.createElement('b');
+        this.#texts.write(title, name);
+        part.appendChild(title);
+        const written = document.createElement('span');
+        written.className = 'bib-citation-text';
+        written.textContent = text;
+        part.appendChild(written);
+        return part;
+    }
+    #found(reference) {
+        if (reference === undefined) {
+            return null;
+        }
+        return reference;
+    }
+    #numberOf(key) {
+        if (this.#numbersByKey.has(key) === false) {
+            this.#numbersByKey.set(key, this.#numbersByKey.size + 1);
+        }
+        return this.#numbersByKey.get(key);
+    }
+    #rememberPlace(key, element) {
+        if (this.#placesByKey.has(key) === false) {
+            this.#placesByKey.set(key, []);
+        }
+        this.#placesByKey.get(key).push(element);
+    }
+    #placesOf(key) {
+        if (this.#placesByKey.has(key) === false) {
+            return [];
+        }
+        return [...this.#placesByKey.get(key)];
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.CitationIndex = CitationIndex;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibsource.js ---------------
+'use strict';
+class BibtexSource {
+    // FIELDS
+    #element;
+    #address;
+    // CONSTRUCTOR
+    constructor(elementId, address = '') {
+        this.#element = document.getElementById(elementId);
+        this.#address = address;
+    }
+    // GETTERS
+    get element() {
+        return this.#element;
+    }
+    get address() {
+        return this.#address;
+    }
+    // PUBLIC METHODS
+    async read() {
+        const written = this.#readFromPage();
+        if (written.trim().length > 0) {
+            return written;
+        }
+        const fetched = await this.#readFromAddress();
+        if (fetched.trim().length > 0) {
+            return fetched;
+        }
+        throw new MissingBibtexData('No BibTeX data, neither in the page nor at an address.');
+    }
+    // PRIVATE METHODS
+    #readFromPage() {
+        if (this.#element === null) {
+            return '';
+        }
+        return this.#element.textContent;
+    }
+    async #readFromAddress() {
+        if (this.#address.length === 0) {
+            return '';
+        }
+        const wanted = new URL(this.#address, window.location.href);
+        if (wanted.origin !== window.location.origin) {
+            console.error(`BibtexSource: "${this.#address}" is on another server, it is not read.`);
+            return '';
+        }
+        const manager = new RequestManager();
+        const answer = await manager.send_get_request(wanted.pathname.substring(1) + wanted.search);
+        if (manager.status !== 200) {
+            console.error(`BibtexSource: "${this.#address}" answered ${manager.status}.`);
+            return '';
+        }
+        return answer;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.BibtexSource = BibtexSource;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibdisclosure.js ---------------
+'use strict';
+class ReferenceDisclosure {
+    // CONSTANTS
+    static CLOSING_CONTROL = '.bib-disclosure-close';
+    // FIELDS
+    #control;
+    #content;
+    // CONSTRUCTOR
+    constructor(control, content) {
+        this.#control = control;
+        this.#content = content;
+        this.#control.addEventListener('click', () => this.toggle());
+        const closing = this.#content.querySelector(ReferenceDisclosure.CLOSING_CONTROL);
+        if (closing !== null) {
+            closing.addEventListener('click', () => this.close());
+        }
+    }
+    // GETTERS
+    get control() {
+        return this.#control;
+    }
+    get content() {
+        return this.#content;
+    }
+    get isOpen() {
+        return this.#control.getAttribute('aria-expanded') === 'true';
+    }
+    // PUBLIC METHODS
+    open() {
+        this.#control.setAttribute('aria-expanded', 'true');
+        this.#content.hidden = false;
+    }
+    close() {
+        this.#control.setAttribute('aria-expanded', 'false');
+        this.#content.hidden = true;
+        this.#control.focus();
+    }
+    toggle() {
+        if (this.isOpen === true) {
+            this.close();
+            return;
+        }
+        this.open();
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.ReferenceDisclosure = ReferenceDisclosure;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibcontrols.js ---------------
+'use strict';
+class BibliographyControls {
+    // CONSTANTS
+    static LABELS = new Map([
+        ['en', {
+            searchName: 'Search in references',
+            shownOne: 'reference shown', shownMany: 'references shown',
+            sortedBy: 'sorted by', ascending: 'ascending', descending: 'descending',
+            unsorted: 'back to the original order',
+            columns: 'Columns visibility:', apply: 'Apply'
+        }],
+        ['fr', {
+            searchName: 'Rechercher dans les références',
+            shownOne: 'référence affichée', shownMany: 'références affichées',
+            sortedBy: 'rangé par', ascending: 'ordre croissant', descending: 'ordre décroissant',
+            unsorted: 'retour à l\'ordre de départ',
+            columns: 'Colonnes visibles :', apply: 'Appliquer'
+        }]
+    ]);
+    static NARROW_WIDTH_IN_FONTS = 38.75;
+    // FIELDS
+    #table;
+    #texts;
+    #sorter;
+    #field;
+    #announcement;
+    #columns;
+    #selector;
+    #wasNarrow;
+    // CONSTRUCTOR
+    constructor(table) {
+        this.#table = table;
+        this.#texts = new Labels(BibliographyControls.LABELS);
+        const search = this.#buildSearch();
+        this.#field = search;
+        this.#announcement = this.#buildAnnouncement();
+        this.#columns = this.#buildColumns();
+        const panel = document.createElement('div');
+        panel.className = 'wrap-panel bib-controls';
+        search.classList.add('wrap-item');
+        this.#columns.classList.add('wrap-item');
+        panel.appendChild(search);
+        panel.appendChild(this.#columns);
+        this.#table.before(panel);
+        this.#table.before(this.#announcement);
+        this.#sorter = new SortaTable(this.#table.id);
+        this.#sorter.attachSortListeners();
+        this.#watchSortButtons();
+        this.#selector = new ToggleSelector(this.#columns.querySelector('details').id);
+        this.#wasNarrow = null;
+        this.#showColumnsTheWidthAllows();
+        // A device turned over changes the width without loading anything: the
+        // columns follow it, as they do when the page opens.
+        window.addEventListener('resize', () => this.#showColumnsTheWidthAllows());
+    }
+    // GETTERS
+    get field() {
+        return this.#field;
+    }
+    get announcement() {
+        return this.#announcement;
+    }
+    // PUBLIC METHODS
+    sortBy(column, isAscending = true) {
+        this.#sorter.sort(column, isAscending);
+        this.#putOpenedRowsBack();
+        BibliographyTable.stripe(this.#table);
+        this.#sayHowItIsSorted();
+    }
+    filter(word) {
+        const wanted = BibliographyControls.#simplify(word);
+        const rows = this.#table.querySelectorAll('tbody tr.bib-row');
+        let shown = 0;
+        rows.forEach(row => {
+            const found = BibliographyControls.#simplify(this.#textOf(row)).includes(wanted);
+            row.hidden = found === false;
+            // A content that was left open goes away with its reference, and
+            // comes back with it: nobody asked for it to be closed.
+            this.#openedRowsOf(row).forEach(opened => {
+                opened.hidden = found === false || this.#isOpen(opened) === false;
+            });
+            if (found === true) {
+                shown++;
+            }
+        });
+        BibliographyTable.stripe(this.#table);
+        this.#sayHowManyAreShown(shown);
+    }
+    // PRIVATE METHODS
+    #openedRowsOf(row) {
+        return Array.from(this.#table.querySelectorAll(`tr.bib-opened-row[data-opens="${row.id}"]`));
+    }
+    #isOpen(opened) {
+        const control = this.#table.querySelector(`[aria-controls="${opened.id}"]`);
+        if (control === null) {
+            return false;
+        }
+        return control.getAttribute('aria-expanded') === 'true';
+    }
+    #textOf(row) {
+        const texts = [row.textContent];
+        this.#openedRowsOf(row).forEach(opened => texts.push(opened.textContent));
+        return texts.join(' ');
+    }
+    #putOpenedRowsBack() {
+        const body = this.#table.querySelector('tbody');
+        body.querySelectorAll('tr.bib-row').forEach(row => {
+            let previous = row;
+            this.#openedRowsOf(row).forEach(opened => {
+                previous.after(opened);
+                previous = opened;
+            });
+        });
+    }
+    #buildSearch() {
+        const field = document.createElement('input');
+        field.type = 'search';
+        field.className = 'bib-search-field';
+        // What is searched is the reference, not the whole bibliography: the
+        // number and the year are not read by a search. The placeholder says it
+        // in the field; the name says it to whoever does not see the field, and
+        // stays when the placeholder gives way to the first letter typed.
+        field.setAttribute('aria-label', this.#texts.text('searchName'));
+        field.setAttribute('placeholder', this.#texts.text('searchName'));
+        field.addEventListener('input', () => this.filter(field.value));
+        return field;
+    }
+    #buildColumns() {
+        const group = document.createElement('div');
+        group.className = 'bib-columns';
+        const details = document.createElement('details');
+        details.className = 'flex-item';
+        details.id = this.#table.id + '-columns';
+        const summary = document.createElement('summary');
+        summary.className = 'summary-choice';
+        const title = document.createElement('span');
+        this.#texts.write(title, 'columns');
+        summary.appendChild(title);
+        const all = document.createElement('button');
+        all.type = 'button';
+        all.className = 'accordion-action';
+        all.setAttribute('data-toggle', '');
+        all.setAttribute('aria-label', this.#texts.text('columns'));
+        all.appendChild(document.createElement('img'));
+        all.addEventListener('click', event => this.#selector.toggleSelection(event));
+        all.addEventListener('keydown', event => this.#selector.toggleSelection(event));
+        summary.appendChild(all);
+        details.appendChild(summary);
+        const holder = document.createElement('div');
+        const list = document.createElement('ul');
+        this.#table.querySelectorAll('thead th').forEach((header, index) => {
+            const button = header.querySelector('button.sortatable');
+            const name = button === null ? header.getAttribute('data-sort') : button.getAttribute('data-sort');
+            if (name === null) {
+                return;
+            }
+            const item = document.createElement('li');
+            item.className = 'check-item';
+            const box = document.createElement('input');
+            box.type = 'checkbox';
+            box.id = this.#table.id + '-column-' + name;
+            box.checked = true;
+            box.setAttribute('data-toggle', name);
+            box.setAttribute('aria-labelledby', box.id + '-label');
+            const label = document.createElement('label');
+            label.id = box.id + '-label';
+            label.setAttribute('for', box.id);
+            label.textContent = header.textContent.trim();
+            item.appendChild(box);
+            item.appendChild(label);
+            list.appendChild(item);
+        });
+        holder.appendChild(list);
+        details.appendChild(holder);
+        const apply = document.createElement('button');
+        apply.type = 'button';
+        apply.className = 'flex-item';
+        apply.setAttribute('aria-label', this.#texts.text('apply'));
+        SVGIconsManager.inject(apply, 'valid');
+        apply.addEventListener('click', () => this.#applyColumns());
+        group.appendChild(details);
+        group.appendChild(apply);
+        return group;
+    }
+    #showColumnsTheWidthAllows() {
+        const font = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const isNarrow = window.innerWidth < BibliographyControls.NARROW_WIDTH_IN_FONTS * font;
+        if (isNarrow === this.#wasNarrow) {
+            return;
+        }
+        this.#wasNarrow = isNarrow;
+        this.#selector.getCheckboxes().forEach(box => {
+            box.checked = isNarrow === false || box.getAttribute('data-toggle') === 'author';
+        });
+        this.#applyColumns();
+    }
+    #applyColumns() {
+        this.#sorter.toggleColumnVisibility(this.#selector.getCheckboxes());
+    }
+    #buildAnnouncement() {
+        const region = document.createElement('p');
+        region.className = 'bib-announcement';
+        region.setAttribute('role', 'status');
+        region.setAttribute('aria-live', 'polite');
+        return region;
+    }
+    #watchSortButtons() {
+        this.#table.querySelectorAll('button.sortatable').forEach(button => {
+            button.addEventListener('click', () => {
+                this.#putOpenedRowsBack();
+                BibliographyTable.stripe(this.#table);
+                this.#sayHowItIsSorted();
+            });
+        });
+    }
+    #sayHowItIsSorted() {
+        const ascending = this.#table.querySelector('button.sortatable.sort-asc');
+        const descending = this.#table.querySelector('button.sortatable.sort-desc');
+        if (ascending !== null) {
+            this.#announce(`${this.#texts.text('sortedBy')} ${ascending.textContent}, `
+                + this.#texts.text('ascending'));
+            return;
+        }
+        if (descending !== null) {
+            this.#announce(`${this.#texts.text('sortedBy')} ${descending.textContent}, `
+                + this.#texts.text('descending'));
+            return;
+        }
+        this.#announce(this.#texts.text('unsorted'));
+    }
+    #sayHowManyAreShown(shown) {
+        if (shown === 1) {
+            this.#announce(`1 ${this.#texts.text('shownOne')}`);
+            return;
+        }
+        this.#announce(`${shown} ${this.#texts.text('shownMany')}`);
+    }
+    #announce(text) {
+        this.#announcement.textContent = text;
+        this.#texts.declare(this.#announcement);
+    }
+    // PRIVATE STATIC METHODS
+    static #simplify(text) {
+        return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.BibliographyControls = BibliographyControls;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- extras/book/bibbook.js ---------------
+'use strict';
+class BookBibliography {
+    // FIELDS
+    #source;
+    #parser;
+    #citationIndex;
+    #table;
+    #placeId;
+    #contentId;
+    #disclosures;
+    #controls;
+    // CONSTRUCTOR
+    constructor(dataId, placeId = 'bibliography', contentId = 'main-content', address = '') {
+        this.#source = new BibtexSource(dataId, address);
+        this.#parser = new BibtexParser();
+        this.#citationIndex = new CitationIndex();
+        this.#table = new BibliographyTable();
+        this.#placeId = placeId;
+        this.#contentId = contentId;
+        this.#disclosures = [];
+        this.#controls = null;
+    }
+    // GETTERS
+    get disclosures() {
+        return [...this.#disclosures];
+    }
+    get citationIndex() {
+        return this.#citationIndex;
+    }
+    get controls() {
+        return this.#controls;
+    }
+    // PUBLIC METHODS
+    async run() {
+        try {
+            const content = await this.#source.read();
+            const references = this.#parser.parse(content);
+            // The citations are numbered before anything else is looked for:
+            // they are in the text, and the text is there. A document with
+            // nowhere to put its bibliography still reads.
+            this.#citationIndex.index(document.getElementById(this.#contentId), references);
+            const place = document.getElementById(this.#placeId);
+            if (place === null) {
+                throw new MissingBibliographyPlace(`No element with id "${this.#placeId}".`);
+            }
+            const table = this.#table.build(references, this.#citationIndex.citedReferences());
+            // The identifier comes from the place, which is unique by
+            // definition: a page may hold more than one bibliography, and
+            // sorting one must not reach the other.
+            table.id = this.#placeId + '-table';
+            place.textContent = '';
+            place.appendChild(table);
+            // What opens is written in two places: in the table, and in the
+            // sentences that cite. Both are tied to what opens them the same way.
+            this.#disclosures = this.#buildDisclosures(
+                [place, document.getElementById(this.#contentId)]);
+            this.#controls = new BibliographyControls(place.querySelector('table'));
+        } catch (error) {
+            if (error instanceof BibliographyError) {
+                this.#report(error);
+                return;
+            }
+            throw error;
+        }
+    }
+    // PRIVATE METHODS
+    #buildDisclosures(roots) {
+        const disclosures = [];
+        const controls = new Set();
+        // One of the roots holds the other: the bibliography stands in the
+        // content of the document. A control met twice would be tied twice,
+        // and a click would open and close it in the same breath.
+        roots.forEach(root => {
+            if (root === null) {
+                return;
+            }
+            root.querySelectorAll('.bib-disclosure-control[aria-controls]').forEach(control => {
+                controls.add(control);
+            });
+        });
+        controls.forEach(control => {
+            const content = document.getElementById(control.getAttribute('aria-controls'));
+            if (content === null) {
+                console.error(`BookBibliography: the control of "${control.textContent}" opens nothing.`);
+                return;
+            }
+            disclosures.push(new ReferenceDisclosure(control, content));
+        });
+        return disclosures;
+    }
+    #report(error) {
+        console.error(`BookBibliography: ${error.message}`);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.BookBibliography = BookBibliography;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
@@ -3316,7 +5650,7 @@ SVGIconsManager.register('bell', "<svg xmlns=\"http://www.w3.org/2000/svg\" view
 SVGIconsManager.register('book-open', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z\"/>\n  <path d=\"M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z\"/>\n</svg>\n");
 SVGIconsManager.register('cadenas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <rect x=\"7\" y=\"15\" width=\"19\" height=\"13\" rx=\"3\" />\n  <path d=\"M11 15V9a5 5 0 0 1 11 0v5\" />\n</svg>");
 SVGIconsManager.register('cancel', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n\t<circle cx=\"16\" cy=\"16\" r=\"10\" />\n\t<line x1=\"10\" y1=\"22\" x2=\"22\" y2=\"10\" />\n</svg>");
-SVGIconsManager.register('checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\">\n  <g id=\"SVGRepo_bgCarrier\" stroke-width=\"2\" />\n  <g id=\"SVGRepo_tracerCarrier\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n  <g id=\"SVGRepo_iconCarrier\">\n    <path d=\"M11 17L14 20L21 12M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n  </g>\n</svg>");
+SVGIconsManager.register('checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z M11 17L14 20L21 12\" />\n</svg>\n");
 SVGIconsManager.register('color', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n\t<polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>");
 SVGIconsManager.register('compas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n\n  <!-- Compass ticks -->\n  <line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"4\"/>\n  <line x1=\"16\" y1=\"28\" x2=\"16\" y2=\"30\"/>\n  <line x1=\"2\" y1=\"16\" x2=\"4\" y2=\"16\"/>\n  <line x1=\"28\" y1=\"16\" x2=\"30\" y2=\"16\"/>\n\n  <!-- Needle (angled ~30\u00b0) -->\n  <polygon points=\"18 8 22 18 14 24 10 14\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"1\"/>\n</svg>\n\n");
 SVGIconsManager.register('congrats', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <circle cx=\"16\" cy=\"11\" r=\"8\" />\n  <path d=\"M11 19l-3 8 8-4 8 4-3-8\" />\n</svg>");
@@ -3331,6 +5665,7 @@ SVGIconsManager.register('feedback', "<svg xmlns=\"http://www.w3.org/2000/svg\" 
 SVGIconsManager.register('first', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n    <line x1=\"4\" y1=\"4\" x2=\"4\" y2=\"28\" />\n</svg>\n");
 SVGIconsManager.register('games', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <rect x=\"5\" y=\"11\" width=\"21\" height=\"11\" rx=\"3\" />\n  <circle cx=\"11\" cy=\"16\" r=\"1\" />\n  <circle cx=\"13\" cy=\"16\" r=\"1\" />\n  <circle cx=\"19\" cy=\"13\" r=\"1\" />\n  <circle cx=\"19\" cy=\"19\" r=\"1\" />\n</svg>");
 SVGIconsManager.register('goto', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path d=\"M6 8 H18 V18\" />\n    <polyline points=\"12 18 18 24 24 18\" />\n</svg>\n");
+SVGIconsManager.register('half-checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" />\n  <circle cx=\"16\" cy=\"16\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\" />\n</svg>\n");
 SVGIconsManager.register('heart-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" fill=\"none\">\n  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16 8C14 5 10 4 7 7C4 9 3 14 6 17C7 19 13 25 15 26C16 27 16 27 16 27C16 27 16 27 16 27C16 27 16 27 17 26C19 25 25 19 26 17C29 14 28 9 25 7C22 4 18 5 16 8Z\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</svg>");
 SVGIconsManager.register('help', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\" />\n  <path d=\"M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5\" />\n  <circle cx=\"16\" cy=\"23\" r=\"1\" />\n</svg>");
 SVGIconsManager.register('house', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 16L16 5l12 11\" />\n  <path d=\"M7 16v9a1 1 0 0 0 1 1h5v-7h5v7h5a1 1 0 0 0 1-1v-9\" />\n</svg>");
@@ -3359,6 +5694,7 @@ SVGIconsManager.register('sun-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000
 SVGIconsManager.register('switch_contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-label=\"Contrast switcher icon\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <!-- text x=\"16\" y=\"20\" font-size=\"13\" text-anchor=\"middle\" fill=\"currentColor\" font-family=\"Commissioner, sans-serif\">A</text -->\n  <!-- Letter A drawn with three lines -->\n  <line x1=\"13\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"19\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"14\" y1=\"18\" x2=\"18\" y2=\"18\"/>\n  \n  <!-- Plus sign (top-left) -->\n  <line x1=\"5.5\" y1=\"5.5\" x2=\"5.5\" y2=\"8.5\"/>\n  <line x1=\"4\" y1=\"7\" x2=\"7\" y2=\"7\"/>\n\n  <!-- Minus sign (bottom-right) -->\n  <line x1=\"25\" y1=\"25\" x2=\"28\" y2=\"25\"/>\n</svg>");
 SVGIconsManager.register('switch_theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n    <polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>\n");
 SVGIconsManager.register('theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"\n     stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n    <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n    <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n    <line x1=\"16\" y1=\"3\"  x2=\"16\" y2=\"8\"/>\n    <line x1=\"16\" y1=\"24\" x2=\"16\" y2=\"29\"/>\n    <line x1=\"3\"  y1=\"16\" x2=\"8\"  y2=\"16\"/>\n    <line x1=\"24\" y1=\"16\" x2=\"29\" y2=\"16\"/>\n</svg>\n");
+SVGIconsManager.register('unchecked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" />\n</svg>\n");
 SVGIconsManager.register('user', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n</svg>");
 SVGIconsManager.register('valid', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polyline points=\"7 17 12 23 25 9\" />\n</svg>");
 SVGIconsManager.register('video', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <rect x=\"4\" y=\"8\" width=\"20\" height=\"16\" rx=\"3\" />\n  <polygon points=\"21 13 28 9 28 23 21 19\" />\n</svg>");
@@ -3508,6 +5844,7 @@ class SlidesInitializer {
         await this.#injectBoilerplate();
         window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
         this.#registerThemes(window.Wexa.ThemeManager || null);
+        await this.#paginate(window.Wexa.SlidesPagination || null);
         const app = this.#buildConfig(window.Wexa.Slides);
         app.init();
         this.#ready(app);
@@ -3523,6 +5860,8 @@ class SlidesInitializer {
             const { ThemeManager } = await import(new URL('../theme_manager.js', this.#base).href);
             this.#registerThemes(ThemeManager);
         }
+        const { SlidesPagination } = await import(new URL('slides_pagination.js', this.#base).href);
+        await this.#paginate(SlidesPagination);
         const app = this.#buildConfig(slidesModule.default);
         app.init();
         this.#ready(app);
@@ -3690,6 +6029,21 @@ class SlidesInitializer {
             manager.setDefault(this.#defaultName);
         }
         window.themes = manager;
+    }
+    async #paginate(SlidesPagination) {
+        if (SlidesPagination === null || SlidesPagination === undefined) {
+            console.warn('SlidesInitializer: SlidesPagination not found. Slides are shown as they are written.');
+            return;
+        }
+        const pending = (window.Wexa && Array.isArray(window.Wexa.contentReady))
+            ? window.Wexa.contentReady
+            : [];
+        await Promise.allSettled(pending);
+        // A slide only has the height of a slide once the body wears the class
+        // of the view. Measured before that, it is as tall as what it holds,
+        // and nothing ever overflows. The class is the one app.init() sets.
+        document.body.classList.add(this.#mode + '-view');
+        await new SlidesPagination().run();
     }
     #buildConfig(SlidesClass) {
         return new SlidesClass({

@@ -79,6 +79,7 @@
 :root:not(.dark) {
     --body-bg-color:         rgb(245, 245, 245);
     --bg-color:              rgb(255, 255, 255);
+    --img-bg-color:          rgb(255, 255, 255);
     --bg-color-alt:          rgb(240, 240, 240);
     --fg-color:              rgb(0, 0, 0);
     --fg-color-alt:          rgb(26, 26, 26);
@@ -137,6 +138,7 @@
 
 .dark {
         --bg-color:              rgb(0, 0, 0);
+        --img-bg-color:          rgb(255, 255, 255);
         --bg-color-alt:          rgb(26, 26, 26);
         --fg-color:              rgb(255, 255, 255);
         --fg-color-alt:          rgb(240, 240, 240);
@@ -194,8 +196,10 @@
 
     /* -- Slides accent colors — flat, no gradients --------------------------- */
 
+    /* The accent of the light mode is the dark amber of the same family as the
+       yellow it pairs with: 11:1 on white, and told apart from a black title. */
     :root:not(.dark) {
-        --custom-color1: rgb(20, 19, 37);
+        --custom-color1: rgb(77, 58, 0);
         --custom-color2: rgb(255, 255, 0);
     }
 
@@ -210,9 +214,9 @@
         background: var(--bg-color-alt);
     }
 
-    /* -- Article: flat card, bordered, no gradient --------------------------- */
+    /* -- Card: flat, bordered, no gradient ---------------------------------- */
 
-    article {
+    article.card {
         background-color: var(--card-bg-color);
         background-image: none;
         border: var(--border-width) solid var(--border-color);
@@ -220,11 +224,11 @@
         border-radius: 0;
     }
 
-    article * {
+    article.card * {
         background-color: transparent;
     }
 
-    article > footer {
+    article.card > footer {
         margin-top: var(--typography-spacing-vertical);
         padding-top: var(--typography-spacing-vertical);
         border-top: var(--border-width) solid var(--border-color);
@@ -237,14 +241,6 @@
         background-color: var(--bg-color);
         color: var(--fg-color);
         border-color: var(--border-color);
-    }
-
-    /* -- Buttons inside nav: transparent bg, nav colors --------------------- */
-
-    nav :is(button, [role="button"], .menuitem) {
-        background-color: transparent;
-        color: var(--nav-fg-color);
-        border-color: var(--nav-fg-color);
     }
 
 }

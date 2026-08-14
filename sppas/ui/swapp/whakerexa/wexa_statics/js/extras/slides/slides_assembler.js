@@ -35,6 +35,7 @@
 import SlidesData          from './slides_data.js';
 import NavigationLogic     from './navigation_logic.js';
 import ViewModeLogic       from './viewmode_logic.js';
+import SlideReaching       from './slide_reaching.js';
 import PresentationView    from './presentation_view.js';
 import NoteView            from './note_view.js';
 import OverviewView        from './overview_view.js';
@@ -78,6 +79,7 @@ export default class SlidesAssembler {
         // ── 2. LOGIC ─────────────────────────────────────────────────────────
         this._navLogic  = new NavigationLogic(this._data);
         this._modeLogic = new ViewModeLogic(this._data);
+        this._reaching  = new SlideReaching(this._data, this._navLogic);
 
         // ── 3. VIEWS ─────────────────────────────────────────────────────────
         this._presentationView = new PresentationView(
@@ -173,6 +175,26 @@ export default class SlidesAssembler {
         // ── 8. HASH CHANGE ───────────────────────────────────────────────────
         window.addEventListener('hashchange', () => {
             this._navLogic.updateFromHash(window.location.hash);
+        });
+
+        // ── 8b. RENVOI FOLLOWED ──────────────────────────────────────────────
+        // A renvoi names a place, never a position. The browser would write
+        // that name in the address, where the reading stands: the request is
+        // taken before it does, and the support carrying the place is asked
+        // for instead.
+        document.addEventListener('click', (event) => {
+            const link = event.target.closest('a[href^="#"]');
+            if (link === null) {
+                return;
+            }
+
+            const place = link.getAttribute('href').substring(1);
+            if (this._reaching.supportOf(place) === 0) {
+                return;
+            }
+
+            event.preventDefault();
+            this._reaching.reach(place);
         });
 
         // ── 9. INITIAL MODE ──────────────────────────────────────────────────

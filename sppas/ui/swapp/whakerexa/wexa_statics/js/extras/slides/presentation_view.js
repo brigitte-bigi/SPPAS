@@ -111,6 +111,12 @@ export default class PresentationView {
     // -----------------------------------------------------------------------
 
     /**
+     * Mark the slide that is shown, and only that one.
+     *
+     * The mark is taken back from every other slide rather than from the one
+     * a remembered number designates: a number that no longer answers to what
+     * is drawn leaves two slides marked, and a stylesheet draws them both.
+     *
      * @private
      * @param {number} newIndex - 1-based
      * @param {number} oldIndex - 1-based (0 = none)
@@ -118,10 +124,10 @@ export default class PresentationView {
     _renderSlide(newIndex, oldIndex) {
         const total = this._slides.length;
 
-        if (oldIndex >= 1 && oldIndex <= total) {
-            const prev = this._slides[oldIndex - 1];
-            if (prev instanceof HTMLElement) {
-                prev.removeAttribute('aria-selected');
+        for (let index = 0; index < total; index++) {
+            const slide = this._slides[index];
+            if (slide instanceof HTMLElement && index + 1 !== newIndex) {
+                slide.removeAttribute('aria-selected');
             }
         }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
 <head>
 
@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" />
 	<link rel="stylesheet" href="../wexa_statics/css/togglegroup.css" type="text/css" />
 	<link rel="stylesheet" href="../wexa_statics/css/extras/slides.css">
+	<link rel="stylesheet" href="../wexa_statics/css/extras/bibbook.css" type="text/css" />
 
     <style>
         :root {
@@ -25,7 +26,7 @@
 
 </head>
 
-<body>
+<body id="main-content">
 
     <!-- ================================================================ -->
     <!-- Pop-ups -->
@@ -52,7 +53,7 @@
         </h2>
 
         <a href="https://github.com/brigitte-bigi/Whakerexa" target="_blank">
-            <img style="height: 30vh;" src="../wexa_statics/logos/whakerexa.webp" alt="https://github.com/brigitte-bigi/Whakerexa"/>
+            <img style="height: 30vh;" src="../wexa_statics/logos/whakerexa-512.webp" alt="https://github.com/brigitte-bigi/Whakerexa"/>
         </a>
 
     </section>
@@ -74,7 +75,10 @@
             <li>Four view modes: presentation, overview, handout, speaker notes</li>
             <li>Theming, dark mode, high-contrast accessibility built in</li>
             <li>Incremental reveals, logo overlay, fullscreen — all optional</li>
+            <li>Content taller than a slide laid out on as many slides as it takes</li>
         </ul>
+        <p>How the layout is designed, what it does not do and why:
+            <a href="slides-design.html" class="external-link">slides-design.html</a>.</p>
     </section>
 
     <!-- ---------------------------------------------------------------- -->
@@ -326,7 +330,7 @@ app.init();</code></pre>
 
         <!-- Direct child of .slide → centered, large -->
         <figure style="width: 40%;">
-            <img src="../wexa_statics/logos/whakerexa.webp" alt="Full-page example" />
+            <img src="../wexa_statics/logos/whakerexa-512.webp" alt="Full-page example" />
             <figcaption>Full-page figure with centered caption</figcaption>
         </figure>
     </section>
@@ -344,7 +348,7 @@ app.init();</code></pre>
             <li>
                 Text before the figure.
                 <figure style="width: 10%;">
-                    <img src="../wexa_statics/logos/whakerexa.webp" alt="Nested figure" />
+                    <img src="../wexa_statics/logos/whakerexa-128.webp" alt="Nested figure" />
                     <figcaption>Nested figure with normal flow</figcaption>
                 </figure>
                 Text after the figure.
@@ -545,6 +549,40 @@ app.init();</code></pre>
     <!-- ---------------------------------------------------------------- -->
 
     <section class="slide">
+        <h2>Content laid out on several slides</h2>
+        <p>A slide holding more than its height is laid out on as many slides as
+            it takes. Nothing is hidden, nothing is shrunk, and the cut is made
+            between two blocks: a row for a table, an item for a list, a child
+            otherwise. A table that is split keeps its head.</p>
+        <p>The slides that follow carry the same title, and say that they
+            continue this one. The design is in
+            <a href="slides-design.html" class="external-link">slides-design.html</a>.</p>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h3>A list longer than a slide</h3>
+        <ul>
+            <li>First item, written by the author in a single slide.</li>
+            <li>Second item.</li>
+            <li>Third item.</li>
+            <li>Fourth item.</li>
+            <li>Fifth item.</li>
+            <li>Sixth item.</li>
+            <li>Seventh item.</li>
+            <li>Eighth item.</li>
+            <li>Ninth item.</li>
+            <li>Tenth item.</li>
+            <li>Eleventh item.</li>
+            <li>Twelfth item.</li>
+            <li>Thirteenth item, and the last one written here.</li>
+        </ul>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
         <h2>Hash navigation</h2>
         <ul class="incremental">
             <li>Go to <code>#5.1</code> in the URL bar → slide 5, step 1.</li>
@@ -664,6 +702,26 @@ app.init();</code></pre>
     <!-- ---------------------------------------------------------------- -->
 
     <section class="slide">
+        <h3>Citing in a slide</h3>
+        <p>A citation is written in a sentence, and numbered in the order the
+            presentation reads it: the sizes of a corpus were measured for
+            Cued Speech <span data-bibtex="bigi2024jep"></span>, and the
+            annotation of a conversation was described the year after
+            <span data-bibtex="bigi2025icnlsp"></span>.</p>
+        <p>Following a number leads to the reference, on the slide the
+            bibliography stands on, and the reference leads back here.</p>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
+        <h3>A bibliography in a slide</h3>
+        <div id="bibliography"></div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <section class="slide">
         <h2>License</h2>
         <table role="presentation">
             <tr>
@@ -686,6 +744,161 @@ app.init();</code></pre>
             </tr>
         </table>
     </section>
+
+    <!-- ================================================================ -->
+    <!-- Bibliography data, read when the page opens                      -->
+    <!-- ================================================================ -->
+
+    <script type="text/plain" id="bibtex-data">
+@article{pakrashi2026,
+	TITLE = "Resources Creation of Bengali for SPPAS",
+	AUTHOR = {Moumita Pakrashi and Brigitte Bigi and Shakuntala Mahanta},
+	JOURNAL = "Journal of Information and Telecommunication",
+	PUBLISHER = "Elsevier",
+	YEAR = "2026",
+	URL = "https://www.tandfonline.com/doi/full/10.1080/24751839.2025.2611605",
+	NOTE = "https://hal.science/hal-05474165"
+}
+
+@inproceedings{tellier2025,
+	AUTHOR = {Marion Tellier and Gale Stam and Brigitte Bigi},
+	TITLE = {Can minimal training affect gesture production in L1/L2 interaction? A semi-longitudinal study with future teachers},
+	BOOKTITLE = "ISGS (International Society for Gesture Studies)",
+	ADDRES = "Nijmegen Netherlands",
+	PUBLISHER = "Max Planck Institute for Psycholinguistics",
+	YEAR = 2025,
+	NOTE = "https://hal.science/hal-05459929"
+}
+
+@inproceedings{bigi2025iclra,
+	TITLE = {{Spatial Analysis of Hand Positions in French Cued Speech (LfPC)}},
+	AUTHOR = {Brigitte Bigi},
+	BOOKTITLE = {16th International Conference on Linguistic Research and Application},
+	ADDRESS = {Paris, France},
+	note = "https://hal.science/hal-05368291",
+	YEAR = 2025
+}
+
+@inproceedings{bigi2025icnlsp,
+	TITLE = {{Bridging the Gap: Design and Evaluation of an Automated System for French Cued Speech}},
+	AUTHOR = {Brigitte Bigi},
+	note = {https://hal.science/hal-05242638},
+	url = {https://aclanthology.org/2025.icnlsp-1.2/},
+	editor = "Abbas, Mourad  and Yousef, Tariq  and Galke, Lukas",
+	booktitle = "Proceedings of the 8th International Conference on Natural Language and Speech Processing (ICNLSP-2025)",
+	publisher = "Association for Computational Linguistics",
+	pages = "8-18",
+	ADDRESS = {Odense, Denmark},
+	YEAR = 2025
+}
+
+@inproceedings{bigi2025ltc,
+	TITLE = {{French Cued Speech rhythm: first findings on the relationship between hand position and segments' duration}},
+	AUTHOR = {Mélanie Lancien and Brigitte Bigi},
+	booktitle = {11th Language & Technology Conference: Human Language Technologies as a Challenge for Computer Science and Linguistics},
+	address = {Poznań, Poland},
+	year = 2025,
+	note = "https://hal.science/hal-05368320"
+}
+
+@misc{bigi2025,
+	author       = {Brigitte Bigi},
+	title        = {Benchmarks techniques vs. science ouverte : à qui revient la parole ?},
+	year         = 2025,
+	doi          = {10.5281/zenodo.15881372},
+	url          = {https://doi.org/10.5281/zenodo.15881372}
+}
+
+@InProceedings{bigi2024jep,
+	author = {Brigitte Bigi and Núria Gala},
+	title = {Preuve de concept d'un système de génération automatique en Langue française Parlée Complétée},
+	booktitle= {XXXVe Journées d’Études sur la Parole (JEP)},
+	address= {Toulouse, France},
+	year = 2024,
+	pages = 512-520,
+	note = {https://inria.hal.science/hal-04623112}
+}
+
+@InProceedings{gala2024lrec,
+	author = {Núria Gala and Brigitte Bigi and Marie Bauer},
+	title = {Automatically Estimating Textual and Phonemic Complexity for Cued Speech: How to See the Sounds from French Texts},
+	booktitle= {The 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING)},
+	address = {Turin, Italy},
+	year = 2024,
+	pages = 1817-1824,
+	note = {https://hal.science/hal-04580180}
+}
+
+@misc{bigi2024acs14,
+	author = {Brigitte Bigi},
+	title = {Livrable WP1 - L4 : Détection des mains et du visage du locuteur},
+	address = {France},
+	year = 2024,
+	url = {https://auto-cuedspeech.org/wp1l4.html},
+	note = {https://hal.science/hal-04518632}
+}
+
+@InProceedings{pakrashi2023,
+	title = {Automatic Syllabification of Bengali in SPPAS},
+	author = {Moumita Pakrashi and Brigitte Bigi and Shakuntala Mahanta},
+	booktitle = {26th Conference of the Oriental Conference on Speech Database and Assessments},
+	address = {Igdtuw, Delhi, India},
+	pages = {PID:157},
+	year = {2023},
+	note = {https://hal.science/hal-04349654}
+}
+
+@InBook{ghio2023dunod,
+	chapter = {{Etudier le langage oral : les diff{\'e}rents types de donn{\'e}es recueillies}},
+	author = {Alain Ghio and Brigitte Bigi},
+	title = {{Introduction aux statistiques en sciences du langage}},
+	editor = {Clara Solier and Lucille Soulier and Nour Ezzedine},
+	publisher = {{Dunod}},
+	pages = {7-36},
+	year = {2023},
+	note = {https://hal.science/hal-04248428}
+}
+
+@inproceedings{welby23sigul,
+	author={Pauline Welby and Brigitte Bigi and Antoine Corral and Fabrice Wacalie and Guillaume Wattelez},
+	title={{A Visit to the Cliffs of Jokin: A Role for Phonetizers in Second Language Pronunciation and Word Learning, with an Example from the Languages of New Caledonia }},
+	year=2023,
+	booktitle={Proc. 2nd Annual Meeting of the ELRA/ISCA SIG on Under-resourced Languages (SIGUL 2023)},
+	pages={19--23},
+	doi={10.21437/SIGUL.2023-5},
+	url={https://www.isca-speech.org/archive/pdfs/sigul_2023/welby23_sigul.pdf},
+	note={https://amu.hal.science/hal-04381129}
+}
+    </script>
+
+    <!-- A content the program builds is awaited by the slides: measuring a
+         table that does not exist yet measures nothing. Whoever builds one
+         pushes its promise into window.Wexa.contentReady, before the slides
+         initializer is loaded. -->
+    <script>
+        (function () {
+            window.Wexa = window.Wexa || {};
+            window.Wexa.contentReady = window.Wexa.contentReady || [];
+
+            const usingFile = (window.location.protocol === 'file:');
+
+            const built = (async function () {
+                let BookBibliography = null;
+
+                if (usingFile === true) {
+                    await new Promise(resolve => window.addEventListener('load', resolve, {once: true}));
+                    BookBibliography = window.Wexa.BookBibliography;
+                } else {
+                    const module = await import('../wexa_statics/js/extras/book/bibbook.js');
+                    BookBibliography = module.BookBibliography;
+                }
+
+                await new BookBibliography('bibtex-data', 'bibliography', 'main-content').run();
+            })();
+
+            window.Wexa.contentReady.push(built);
+        })();
+    </script>
 
     <!-- ================================================================ -->
     <!-- Slides initializer — file:// uses bundle, http(s):// uses module -->

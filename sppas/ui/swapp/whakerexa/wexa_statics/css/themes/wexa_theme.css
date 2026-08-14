@@ -41,7 +41,18 @@
 
     --bg-color:     transparent;
     --bg-color-alt: transparent;
-    --body-bg-color: radial-gradient(at left center, rgba(229, 238, 252, 1.0), rgba(212, 220, 255, 1.0));
+    --img-bg-color: rgb(229, 238, 252);
+    /* The ground the page sits on, drawn along the diagonal it is read on: the
+       navy of the header at the top, the cream of the nav at the bottom. */
+    --body-bg-color: linear-gradient(160deg,
+        rgb(226, 236, 250) 0%,
+        rgb(230, 230, 236) 45%,
+        rgb(242, 233, 214) 100%);
+
+    /* A deep blue, and a cream on it: the pair reads on a light page, where
+       the nav is the one dark band. */
+    --nav-bg-color: rgb(20, 40, 70);
+    --nav-fg-color: rgb(240, 230, 210);
 
 }
 
@@ -53,7 +64,11 @@
 :root.dark {
 
     --bg-color: transparent;
-    --body-bg-color: radial-gradient(at left center, rgba(10, 15, 26, 1.0), rgba(16, 13, 64, 1.0));
+    --body-bg-color: linear-gradient(160deg,
+        rgb(10, 26, 58) 0%,
+        rgb(14, 38, 72) 45%,
+        rgb(16, 52, 62) 100%);
+    --img-bg-color: rgb(229, 238, 252);
 }
 
 

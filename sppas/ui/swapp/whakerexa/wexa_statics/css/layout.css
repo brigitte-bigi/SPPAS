@@ -63,6 +63,15 @@ This banner notice must not be removed.
         display: block;
     }
 
+    /* Centers the element and its text in a block, a flex line or a grid. */
+    .center {
+        align-self: center;
+        justify-self: center;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     /* ------------------------------------------------------------------ */
     /* Classes for sizes                                                    */
     /* ------------------------------------------------------------------ */
@@ -155,7 +164,7 @@ This banner notice must not be removed.
         margin: 0;
     }
 
-    @media only screen and (min-width: 820px) {
+    @media only screen and (min-width: 1024px) {
 
         .flex-panel {
             flex-direction: row;
@@ -173,7 +182,7 @@ This banner notice must not be removed.
 
     }
 
-    @media only screen and (max-width: 820px) {
+    @media only screen and (max-width: 1023.98px) {
 
         .flex-panel {
             flex-direction: column;
@@ -335,7 +344,7 @@ This banner notice must not be removed.
         background-color: transparent;
     }
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 1023.98px) {
         .card {
             max-width: 75%;
             overflow: auto;
@@ -345,7 +354,7 @@ This banner notice must not be removed.
         }
     }
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 1024px) {
         .card {
             max-width: var(--card-max-width);
         }
@@ -450,9 +459,16 @@ This banner notice must not be removed.
         width: calc(100% - 2 * var(--typography-spacing-horizontal));
     }
 
-    @media only screen and (max-width: 820px) {
+    @media only screen and (max-width: 1023.98px) {
+        /* The card stands up: its number above its text. */
         li.enumerate-cards-item {
-            max-width: min(80%, calc(100% - 2 * var(--typography-spacing-horizontal)));
+            flex-direction: column;
+            text-align: center;
+            max-width: calc(100% - 2 * var(--typography-spacing-horizontal));
+        }
+
+        li.enumerate-cards-item::before {
+            margin-left: 0;
         }
     }
 
@@ -533,13 +549,13 @@ This banner notice must not be removed.
     /* Border separator color for flex panels                              */
     /* ------------------------------------------------------------------ */
 
-    @media only screen and (min-width: 820px) {
+    @media only screen and (min-width: 1024px) {
         .flex-border-left {
             border-color: var(--columns-sep-color);
         }
     }
 
-    @media only screen and (max-width: 820px) {
+    @media only screen and (max-width: 1023.98px) {
         .flex-border-left {
             border-color: var(--columns-sep-color);
         }

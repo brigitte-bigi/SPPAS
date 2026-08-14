@@ -145,7 +145,7 @@ export class Book {
             link.textContent = heading.textContent;
 
             let item = document.createElement('li');
-            item.setAttribute('class', heading.tagName.toLowerCase());
+            item.setAttribute('class', this.#class_of(heading));
 
             item.appendChild(link);
             this.#toc_element.appendChild(item);
@@ -155,6 +155,28 @@ export class Book {
 
 
     // PRIVATE METHODS
+    /**
+     * Get the classes of an entry of the table of contents.
+     *
+     * The level of the heading tells how the entry is written and numbered,
+     * and book.css does both. Whether the chapter it belongs to is numbered
+     * is the one thing a stylesheet cannot see from the table of contents,
+     * so it is written here.
+     *
+     * @param heading {HTMLElement} The heading the entry leads to.
+     *
+     * @returns {string} The classes of the entry.
+     */
+    #class_of(heading) {
+        const level = heading.tagName.toLowerCase();
+
+        if (heading.closest('.chapter.nonumber') === null) {
+            return level;
+        }
+
+        return level + ' nonumber';
+    }
+
     /**
      * Inject a toggle button and manage open/close state for aside.book-toc-aside.
      *
@@ -184,7 +206,7 @@ export class Book {
             }
         });
 
-        aside.before(this.#toggle_button);
+        this.#placeToggleButton();
 
         // Browsers do not honour page-break on <aside> elements when printing.
         // Inserting a <section class="blank-page"> immediately after the aside
@@ -197,6 +219,43 @@ export class Book {
 
         const spacer = document.createElement('p');
         blankPage.after(spacer);
+    }
+
+    /**
+     * Put the button where a reader reaches it first.
+     *
+     * The button navigates the document, so it stands with what navigates it:
+     * last of the navigation bar. Beside the aside it commands, it came in the
+     * tabbing order at the place of a table of contents, which a book writes
+     * after its preface, while it is seen from the first second.
+     *
+     * Nothing of the framework is asked for: a nav, a header, a main and a body
+     * are what HTML gives every document. A document without a nav keeps the
+     * order all the same, end of the header, then start of the main, then start
+     * of the body.
+     *
+     * @returns {void}
+     */
+    #placeToggleButton() {
+        const bar = document.querySelector('nav');
+        if (bar !== null) {
+            bar.appendChild(this.#toggle_button);
+            return;
+        }
+
+        const header = document.querySelector('header');
+        if (header !== null) {
+            header.appendChild(this.#toggle_button);
+            return;
+        }
+
+        const main = document.querySelector('main');
+        if (main !== null) {
+            main.prepend(this.#toggle_button);
+            return;
+        }
+
+        document.body.prepend(this.#toggle_button);
     }
 
     /**

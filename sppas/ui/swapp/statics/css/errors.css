@@ -1,6 +1,6 @@
 body {
-    color: #444444;
-    background-color: #FFFFFF;
+    color: var(--error-page-fg-color);
+    background-color: var(--error-page-bg-color);
     width: 60%;
     margin: 2rem auto;
     padding: 1rem;
@@ -17,19 +17,34 @@ main {
 }
 
 footer {
-    color: #666666;
-    background: #f9f9f9;
+    color: var(--error-block-fg-color);
+    background: var(--error-block-bg-color);
     padding: 1rem 2rem;
-    border-top: 0.4rem #efefef solid;
+    border-top: 0.4rem var(--error-block-border-color) solid;
     font-size: 0.8em;
     text-align: center;
 }
 
 footer a {
-    color: #999999;
+    color: var(--error-footer-fg-color);
 }
 
-.status2xx { background-color: #304000; color: #FFFFFF; }
-.status3xx { background-color: #475076; color: #FFFFFF; }
-.status4xx { background-color: #F2E81A; color: #000000; }
-.status5xx { background-color: #C55042; color: #FFFFFF; }
+.status2xx {
+    background-color: var(--status-2xx-bg-color);
+    color: var(--status-2xx-fg-color);
+}
+
+.status3xx {
+    background-color: var(--status-3xx-bg-color);
+    color: var(--status-3xx-fg-color);
+}
+
+.status4xx {
+    background-color: var(--status-4xx-bg-color);
+    color: var(--status-4xx-fg-color);
+}
+
+.status5xx {
+    background-color: var(--status-5xx-bg-color);
+    color: var(--status-5xx-fg-color);
+}

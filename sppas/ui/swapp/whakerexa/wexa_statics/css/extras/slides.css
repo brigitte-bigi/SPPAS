@@ -46,6 +46,7 @@ Architecture:
     --slides-fontsize-divisor: 1;
 }
 
+/* Smartphone, portrait: 320 to 430px wide */
 @media screen and (max-width: 540px) {
     :root {
         --slides-size-divisor: 2.75;
@@ -53,6 +54,7 @@ Architecture:
     }
 }
 
+/* Large smartphone in portrait, narrow smartphone in landscape */
 @media screen and (min-width: 540px) {
     :root {
         --slides-size-divisor: 2.5;
@@ -60,6 +62,7 @@ Architecture:
     }
 }
 
+/* Smartphone, landscape: 640 to 932px wide */
 @media screen and (min-width: 620px) {
     :root {
         --slides-size-divisor: 1.75;
@@ -67,6 +70,7 @@ Architecture:
     }
 }
 
+/* Tablet, portrait: 768 to 834px wide. Mobile menu, larger text. */
 @media screen and (min-width: 768px) {
     :root {
         --slides-size-divisor: 1.5;
@@ -74,6 +78,7 @@ Architecture:
     }
 }
 
+/* Widest smartphone in landscape, up to 932px, and tablet in portrait */
 @media screen and (min-width: 896px) {
     :root {
         --slides-size-divisor: 1.25;
@@ -81,13 +86,15 @@ Architecture:
     }
 }
 
-@media screen and (min-width: 1100px) {
+/* Tablet in landscape, and computer: the desktop display starts here */
+@media screen and (min-width: 1024px) {
     :root {
         --slides-size-divisor: 1;
         --slides-fontsize-divisor: 1.15;
     }
 }
 
+/* Laptop */
 @media screen and (min-width: 1200px) {
     :root {
         --slides-size-divisor: 0.9;
@@ -95,6 +102,7 @@ Architecture:
     }
 }
 
+/* Wide desktop screen */
 @media screen and (min-width: 1400px) {
     :root {
         --slides-size-divisor: 0.8;
@@ -102,6 +110,7 @@ Architecture:
     }
 }
 
+/* Very wide desktop screen */
 @media screen and (min-width: 1600px) {
     :root {
         --slides-size-divisor: 0.75;
@@ -286,7 +295,7 @@ body > footer {
    ======================================================================= */
 
 .slide {
-    border: max(var(--border-width), 2px) solid var(--border-color);
+    border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
 }
 
@@ -456,7 +465,6 @@ body.note-view aside[for] {
 
 .overview-num {
     font-size: 75%;
-    opacity: 0.6;
     background-color: transparent;
     color: inherit;
 }
@@ -545,41 +553,37 @@ body.note-view aside[for] {
                         INCREMENTAL ELEMENTS
    ======================================================================= */
 
-/* @layer base sets background-color: var(--bg-color) on ALL elements (*).
-   Transparent backgrounds prevent a solid block behind dimmed items. */
+/* An item is shown or it is not, never half-shown: what is not reached yet
+   keeps its place and stays unseen. @layer base sets a background on ALL
+   elements, so each one clears it to leave no solid block behind. */
 body.presentation-view .incremental {
-    opacity: 0.15;
+    visibility: hidden;
     background-color: transparent;
 }
 
 body.presentation-view .incremental[active] {
-    opacity: 1;
-    background-color: transparent;
-}
-
-body.presentation-view .incremental > * {
-    opacity: 1;
+    visibility: visible;
     background-color: transparent;
 }
 
 body.presentation-view .incremental > *[aria-selected] {
     color: var(--fg-color);
-    opacity: 1;
+    visibility: visible;
     background-color: transparent;
 }
 
 body.presentation-view .incremental > *[aria-selected] ~ * {
-    opacity: 0.2;
+    visibility: hidden;
     background-color: transparent;
 }
 
 body.presentation-view .incremental-invisible {
-    opacity: 0.05;
+    visibility: hidden;
     background-color: transparent;
 }
 
 body.presentation-view .incremental-invisible > *[aria-selected] ~ * {
-    opacity: 0.05;
+    visibility: hidden;
     background-color: transparent;
 }
 
@@ -681,7 +685,7 @@ body.presentation-view {
         font-variant: normal;
         font-size: calc(var(--font-size) * 1.25);
         text-align: left;
-        letter-spacing: 2px;
+        letter-spacing: calc(var(--font-size) * 0.06);
         border-bottom: calc(var(--font-size) * 0.35) solid transparent;
         border-image: linear-gradient(0.25turn, var(--custom-color2), rgb(210, 210, 210), var(--custom-color1));
         border-image-slice: 1;
@@ -711,7 +715,7 @@ body.presentation-view {
         font-style: normal;
         font-variant: normal;
         text-align: left;
-        letter-spacing: 1px;
+        letter-spacing: calc(var(--font-size) * 0.03);
         border-bottom: var(--border-width) solid var(--border-color);
     }
 
@@ -721,7 +725,7 @@ body.presentation-view {
         font-style: normal;
         font-variant: normal;
         text-align: left;
-        letter-spacing: 1px;
+        letter-spacing: calc(var(--font-size) * 0.03);
         border-bottom: var(--border-width) solid var(--border-color);
     }
 
@@ -759,7 +763,7 @@ body.presentation-view {
 
     /* Notes column */
     body.note-view aside[for] {
-        border-left: max(var(--border-width), 2px) solid var(--border-color);
+        border-left: var(--border-width) solid var(--border-color);
         color: var(--fg-color);
     }
 

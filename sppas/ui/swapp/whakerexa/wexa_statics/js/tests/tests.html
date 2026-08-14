@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Unit tests • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../../css/wexa.css" type="text/css" media="all" />
+
+</head>
+
+<body>
+
+<main id="main-content">
+
+    <h1>Unit tests</h1>
+
+    <p>Open the console of the browser: every assertion writes there, in green when
+        it succeeds and in red when it fails.</p>
+
+    <p>This page has to be served over <code>http</code>. Opened as a
+        <code>file://</code> document, the browser refuses to load the modules, and
+        nothing runs. From the root of the repository:</p>
+
+    <pre>python3 -m http.server 8000</pre>
+
+    <p>then open
+        <code>http://localhost:8000/wexa_statics/js/tests/tests.html</code>.</p>
+
+    <h2>What is tested</h2>
+
+    <ul>
+        <li><code>Book</code>, the table of contents</li>
+        <li><code>Author</code></li>
+        <li><code>Link</code></li>
+        <li><code>Reference</code></li>
+        <li><code>BibtexParser</code></li>
+        <li><code>ReferenceFormatter</code></li>
+        <li><code>BibliographyTable</code>, and <code>CitedReference</code> with it</li>
+        <li><code>BibtexSource</code>, which reads <code>sample.bib</code></li>
+        <li><code>ReferenceDisclosure</code></li>
+        <li><code>BibliographyControls</code></li>
+        <li><code>CitedKey</code> and <code>Citation</code></li>
+        <li><code>CitationIndex</code></li>
+        <li><code>BookBibliography</code></li>
+    </ul>
+
+    <p>Of the slides, what is laid out on a paginated support:</p>
+
+    <ul>
+        <li><code>SlideBlock</code></li>
+        <li><code>SlideLayout</code></li>
+        <li><code>SlidePaginator</code>, which needs no rendering</li>
+        <li><code>SlideBlockReader</code></li>
+    </ul>
+
+</main>
+
+<!-- UnitTest is a plain class, loaded before anything uses it. -->
+<script src="UnitTest.js"></script>
+
+<script type="module">
+    // The tested classes are ES6 modules, the test files expect plain names.
+    // They are put on the global object before the test files are loaded, and
+    // the test files are imported afterwards so that the order is guaranteed.
+    import { Book } from '../extras/book.js';
+    import { Author } from '../extras/book/bibauthor.js';
+    import { Link, LinkKind } from '../extras/book/biblink.js';
+    import { Reference } from '../extras/book/bibreference.js';
+    import { BibtexParser } from '../extras/book/bibparser.js';
+    import { ReferenceFormatter } from '../extras/book/bibformatter.js';
+    import { CitedReference } from '../extras/book/bibcitedref.js';
+    import { BibliographyTable } from '../extras/book/bibtable.js';
+    import { BibtexSource } from '../extras/book/bibsource.js';
+    import { BibliographyError, MissingBibtexData } from '../extras/book/biberrors.js';
+    import { ReferenceDisclosure } from '../extras/book/bibdisclosure.js';
+    import { BibliographyControls } from '../extras/book/bibcontrols.js';
+    import { CitedKey } from '../extras/book/bibcitedkey.js';
+    import { Citation } from '../extras/book/bibcitation.js';
+    import { CitationIndex } from '../extras/book/bibcite.js';
+    import { BookBibliography } from '../extras/book/bibbook.js';
+    import { SortaTable } from '../extras/sortatable.js';
+
+    window.Book = Book;
+    window.Author = Author;
+    window.Link = Link;
+    window.LinkKind = LinkKind;
+    window.Reference = Reference;
+    window.BibtexParser = BibtexParser;
+    window.ReferenceFormatter = ReferenceFormatter;
+    window.CitedReference = CitedReference;
+    window.BibliographyTable = BibliographyTable;
+    window.BibtexSource = BibtexSource;
+    window.BibliographyError = BibliographyError;
+    window.MissingBibtexData = MissingBibtexData;
+    window.ReferenceDisclosure = ReferenceDisclosure;
+    window.BibliographyControls = BibliographyControls;
+    window.CitedKey = CitedKey;
+    window.Citation = Citation;
+    window.CitationIndex = CitationIndex;
+    window.BookBibliography = BookBibliography;
+    window.SortaTable = SortaTable;
+
+    await import('./bookTest.js');
+    await import('./bibauthorTest.js');
+    await import('./biblinkTest.js');
+    await import('./bibreferenceTest.js');
+    await import('./bibparserTest.js');
+    await import('./bibformatterTest.js');
+    await import('./bibtableTest.js');
+    await import('./bibsourceTest.js');
+    await import('./bibdisclosureTest.js');
+    await import('./bibcontrolsTest.js');
+    await import('./bibcitedkeyTest.js');
+    await import('./bibcitationTest.js');
+    await import('./bibciteTest.js');
+    await import('./bibbookTest.js');
+    await import('./sortatableTest.js');
+</script>
+
+<script type="module">
+    // The slides classes stand in their own script: a class that is not
+    // written yet stops this import, and leaves the bibliography tests alone.
+    import { SlideBlock } from '../extras/slides/slide_block.js';
+    import { SlideLayout } from '../extras/slides/slide_layout.js';
+    import { SlidePaginator } from '../extras/slides/slide_paginator.js';
+    import { SlideBlockReader } from '../extras/slides/slide_block_reader.js';
+    import SlidesData from '../extras/slides/slides_data.js';
+    import NavigationLogic from '../extras/slides/navigation_logic.js';
+    import ViewModeLogic from '../extras/slides/viewmode_logic.js';
+    import SlideReaching from '../extras/slides/slide_reaching.js';
+
+    window.SlideBlock = SlideBlock;
+    window.SlideLayout = SlideLayout;
+    window.SlidePaginator = SlidePaginator;
+    window.SlideBlockReader = SlideBlockReader;
+    window.SlidesData = SlidesData;
+    window.NavigationLogic = NavigationLogic;
+    window.ViewModeLogic = ViewModeLogic;
+    window.SlideReaching = SlideReaching;
+
+    await import('./slide_blockTest.js');
+    await import('./slide_layoutTest.js');
+    await import('./slide_paginatorTest.js');
+    await import('./slide_block_readerTest.js');
+    await import('./slides_dataTest.js');
+    await import('./viewmode_logicTest.js');
+    await import('./navigation_logicTest.js');
+    await import('./slide_reachingTest.js');
+</script>
+
+</body>
+</html>

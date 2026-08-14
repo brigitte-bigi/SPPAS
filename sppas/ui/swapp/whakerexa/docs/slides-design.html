@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Slides pagination design • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, slides, design"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Slides &gt; Pagination &gt; Design</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="slides.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="overview" class="chapter">
+            <h1>What this is</h1>
+
+            <section class="ssection"><h2>In short</h2>
+
+                <p>An author writes a slide. When its page opens, the browser measures what
+                    the slide holds, and lays it out on as many slides as it takes. Nothing is
+                    hidden, nothing is shrunk, and the written document is left alone.</p>
+
+                <p>This page is the design of that work: what it does, what it deliberately
+                    does not do, the decisions that explain the code where it surprises, and
+                    the classes that carry it. Read it before reporting a behaviour as a bug:
+                    several of them are choices.</p>
+            </section>
+
+            <section class="ssection"><h2>Where it comes from</h2>
+
+                <p>From one requirement of the bibliography: a bibliography is shown whole in
+                    a presentation. A bibliography is built for a page, where it has all the
+                    room it needs, and a slide has one screen.</p>
+
+                <p>Reading the operations of the bibliography showed that this is not the
+                    operation that composes references: it is the one that lays a composed
+                    document on surfaces of fixed height. Printing is the other case of it.
+                    On paper, the browser does the work. On a slide, nobody does.</p>
+
+                <p>So the work belongs to the slides, not to the bibliography, and it holds
+                    for any content that is too tall, a bibliography being only what revealed
+                    it.</p>
+            </section>
+
+            <section class="ssection"><h2>What it does not do</h2>
+
+                <ul>
+                    <li>It hides nothing, and shrinks nothing. A content that does not fit
+                        takes one slide more.</li>
+                    <li>It never cuts inside a block: a table row, a list item and a paragraph
+                        are laid down whole.</li>
+                    <li>It does not touch the document the author wrote.</li>
+                    <li>It asks nothing of the internet, and keeps nothing from one opening to
+                        the next.</li>
+                </ul>
+            </section>
+
+            <section class="ssection"><h2>Not in the first version</h2>
+
+                <p>Laying out again when the window is resized, or when the contrast mode
+                    changes the font sizes. The need is established, the first version lays
+                    out once, when the page opens.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="decisions" class="chapter">
+            <h1>Decisions</h1>
+
+            <section class="ssection"><h2>Where the cut is made</h2>
+
+                <p>Between two blocks. A block is the smallest part that can be laid down on
+                    its own: a row for a table, an item for a list, a child otherwise.</p>
+
+                <p>One class knows this, <code>SlideBlockReader</code>. Everywhere else, a
+                    block is a block.</p>
+
+                <p>A container that holds a table or a list is read through: what makes it
+                    tall is inside it, and a bibliography written in a slide is exactly that,
+                    a container holding a table. A container that holds neither stays whole:
+                    what was written side by side is not taken apart.</p>
+            </section>
+
+            <section class="ssection"><h2>A block taller than a slide</h2>
+
+                <p>It stays whole, on its own slide, and overflows. A message says it in the
+                    console, for whoever wrote it.</p>
+
+                <p>The program cannot cut inside a block without deciding in the author's
+                    place. An overflow is seen; an arbitrary cut is not.</p>
+            </section>
+
+            <section class="ssection"><h2>The title</h2>
+
+                <p>A title is not a block, and is never distributed: it stays on the slide
+                    the author wrote it on, and is not written again on the slides that
+                    continue it.</p>
+
+                <p>The notes written for a slide stay with the first one.</p>
+            </section>
+
+            <section class="ssection"><h2>The measure</h2>
+
+                <p>In the slide itself, at its width and its font sizes, and slide by slide. A
+                    height measured anywhere else is worth nothing: the font sizes of a slide
+                    are not those of a page.</p>
+
+                <p>A slide only has the height of a slide once the body wears the class of the
+                    view. The layout therefore comes after the view is set, and before the
+                    slides are counted: measured before, a slide is as tall as what it holds,
+                    and nothing ever overflows.</p>
+            </section>
+
+            <section class="ssection"><h2>When the work is done</h2>
+
+                <p>Once, when the page opens, after the contents the program builds, and
+                    before the slides are counted and the overview is built.</p>
+
+                <p>That is the only waiting point: measuring a table that does not exist yet
+                    measures nothing. Counting before laying out would give wrong numbers.</p>
+            </section>
+
+            <section class="ssection"><h2>A place reached, and what it does not touch</h2>
+
+                <p>On a page, reaching a place brings it under the eyes and leaves the
+                    reading there: the document is longer than the screen, so where the
+                    reader stands inside it has to be said. A slide is not longer than
+                    the screen. The support is shown whole, and the place is under the
+                    eyes as soon as that support is the one shown.</p>
+
+                <p>So nothing inside the support is touched: the place takes no focus,
+                    and the support is not scrolled. Moving to what is already seen
+                    gains nothing, and it costs the rendering: the supports are laid
+                    where they are by the view, and a browser going to a place inside
+                    one of them lays them over one another.</p>
+
+                <p>That is not the whole of it. The supports are laid over one another
+                    all the same when a renvoi of a bibliography is followed, and the
+                    cause has not been found. The two renvoi are not offered in a
+                    presentation, which Op3 says, and this is a requirement left
+                    unsatisfied rather than a decision.</p>
+            </section>
+
+            <section class="ssection"><h2>The author writes nothing more</h2>
+
+                <p>One slide of references, and the program makes of it what it takes. No
+                    attribute, no class, no cutting by hand.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="classes" class="chapter">
+            <h1>The classes</h1>
+
+            <section class="ssection"><h2>What carries the data</h2>
+
+                <p><code>SlideBlock</code> carries an element, its place in the order the
+                    content is written, and its height once measured. Its only question is
+                    whether it fits in a given room, which compares two numbers.</p>
+
+                <p><code>SlideLayout</code> carries the result: the blocks of each slide, in
+                    order. It says how many slides are asked for, and which blocks are taller
+                    than a slide on their own.</p>
+            </section>
+
+            <section class="ssection"><h2>What does the work</h2>
+
+                <ul>
+                    <li><code>SlideBlockReader</code> reads a written slide and gives its
+                        blocks, in order. It is the only one that knows what the smallest part
+                        is.</li>
+                    <li><code>SlideMeasure</code> measures. It is the only one that reads the
+                        rendering, and it decides nothing.</li>
+                    <li><code>SlidePaginator</code> lays out. It knows neither the document nor
+                        the browser: it receives heights and gives a <code>SlideLayout</code>
+                        back.</li>
+                    <li><code>SlideComposer</code> engenders the slides and moves the blocks.
+                        It is the only one that changes the document shown.</li>
+                    <li><code>SlidesPagination</code> does the work in order, and is the only
+                        one that catches an error.</li>
+                </ul>
+            </section>
+
+            <section class="ssection"><h2>Names</h2>
+
+                <p>Every class carries <code>Slide</code>. The code goes into a shared
+                    library, where <code>Block</code> or <code>Layout</code> would be claimed
+                    by any other part of it. No class carries the name of the support: in this
+                    layer, the support is a slide.</p>
+            </section>
+
+            <section class="ssection"><h2>What the classes promise</h2>
+
+                <ul>
+                    <li><code>SlidePaginator</code> knows neither the document nor the
+                        browser.</li>
+                    <li><code>SlideMeasure</code> is the only one that measures.</li>
+                    <li><code>SlideBlockReader</code> is the only one that knows what a
+                        smallest part is.</li>
+                    <li><code>SlideComposer</code> is the only one that changes the document
+                        shown.</li>
+                    <li>The document the author wrote is never modified.</li>
+                </ul>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="opening" class="chapter">
+            <h1>When the page opens</h1>
+
+            <section class="ssection"><h2>In order</h2>
+
+                <ol>
+                    <li>The assembly waits for the contents the program builds, the
+                        bibliography being one of them.</li>
+                    <li>The body wears the class of the view, so that a slide has the height
+                        of a slide.</li>
+                    <li>Each written slide is read: its blocks, in order.</li>
+                    <li>Each block is measured, then the room the slide leaves them: what it
+                        holds, minus the title, the head of a table, the margins of what holds
+                        them, and the line of the page counter.</li>
+                    <li>The blocks are laid out: one slide more as soon as the next one does
+                        not fit.</li>
+                    <li>What could not be laid down is said in the console.</li>
+                    <li>The slides that are missing are engendered, and the blocks are
+                        moved.</li>
+                    <li>The slides are counted, and the overview is built.</li>
+                </ol>
+
+                <p>Steps 2 to 5 happen even when nothing overflows. A presentation whose
+                    slides all fit is measured, laid out, and comes out unchanged.</p>
+            </section>
+
+            <section class="ssection"><h2>Nothing is kept</h2>
+
+                <p>The same content, in the same window, gives the same layout. Nothing is
+                    stored, and the written document is not modified: reopening the page does
+                    the whole work again.</p>
+            </section>
+
+            <section class="ssection"><h2>When something goes wrong</h2>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>What is missing</th>
+                        <th>What happens</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>A content the program builds does not build</td>
+                        <td>The layout is done on what exists</td>
+                    </tr>
+                    <tr>
+                        <td>A block is taller than a slide</td>
+                        <td>It stays whole, on its slide, and a message goes to the console</td>
+                    </tr>
+                    <tr>
+                        <td>JavaScript</td>
+                        <td>None of this happens: the slide keeps all its content, and
+                            overflows</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>An error in JavaScript must never do worse than the absence of JavaScript.
+                    That is the worst the layout is allowed to produce.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="modelling" class="chapter">
+            <h1>How this was designed</h1>
+
+            <section class="ssection"><h2>The way, and why it is written here</h2>
+
+                <p>Design first, then the tests, then the code. The design is a Merise
+                    analysis, from the communication between the actors down to where the code
+                    goes, then the UML diagrams that lead to it. It is written here, in full,
+                    so that whoever picks the work up has everything on one page.</p>
+
+                <p>The working notes are in <code>notes/slides/</code>. This chapter says the
+                    same thing, and is the one that is kept up to date.</p>
+            </section>
+
+            <section class="ssection"><h2>MCC: who exchanges what</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Actor</th><th>What it is</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>The author</td><td>Writes the slides and the data the program formats. She does not write the supports</td></tr>
+                    <tr><td>The reader</td><td>Asks for the page, then watches the presentation. He never asks for the layout</td></tr>
+                    <tr><td>The program</td><td>Runs in the browser of whoever opens the page, and lays the content out</td></tr>
+                    <tr><td>The browser</td><td>Renders the document. On paper it lays the content on the pages. On a slide it lays nothing</td></tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                    <tr><th>Flow</th><th>From</th><th>To</th><th>What</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>F1</td><td>The author</td><td>The document</td><td>The written content, in one piece</td></tr>
+                    <tr><td>F2</td><td>The reader</td><td>The program</td><td>The request for the page</td></tr>
+                    <tr><td>F3</td><td>The program</td><td>The document</td><td>The supports, and the content laid on them</td></tr>
+                    <tr><td>F4</td><td>The program</td><td>The author</td><td>What could not be laid down, in the console</td></tr>
+                    <tr><td>F5</td><td>The browser</td><td>The reader</td><td>The presentation shown</td></tr>
+                    <tr><td>F6</td><td>The browser</td><td>The paper</td><td>The document laid on the pages, when printing</td></tr>
+                    </tbody>
+                </table>
+
+                <p>No data leaves the document: nothing is asked of a server, nothing is
+                    stored, nothing is sent back.</p>
+            </section>
+
+            <section class="ssection"><h2>MCD: what the data are made of</h2>
+
+                <p>Four entities.</p>
+
+                <ul>
+                    <li><b>SUPPORT</b>, known by its rank in the document. It has a height and
+                        a width, both fixed. Paper and slide are two forms of it.</li>
+                    <li><b>WRITTEN CONTENT</b>, what the author writes in one piece. It has a
+                        title, when it has one.</li>
+                    <li><b>BLOCK</b>, which exists only inside a written content. It has its
+                        place in the order the content is written, and is the smallest part
+                        that can be laid down whole.</li>
+                    <li><b>READING</b>, where the reader stands: the support shown, and how far
+                        the reader has gone inside it. There is one, and only one, for a
+                        presentation being read.</li>
+                    <li><b>VIEW</b>, the way the supports are shown: one at a time, all at
+                        once, each with what is said about it, or all one after the other for
+                        the hand. There is one at a time, and the reading is kept whichever
+                        it is.</li>
+                    <li><b>NOTE</b>, what the author writes about a support and does not show
+                        to the audience. A support has one, or none.</li>
+                </ul>
+
+                <table>
+                    <thead>
+                    <tr><th>Association</th><th>Leg 1</th><th>Leg 2</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>is made of</td><td>WRITTEN CONTENT (1,n)</td><td>BLOCK (1,1)</td></tr>
+                    <tr><td>is laid on</td><td>BLOCK (1,1)</td><td>SUPPORT (0,n)</td></tr>
+                    <tr><td>is rendered by</td><td>WRITTEN CONTENT (1,n)</td><td>SUPPORT (1,1)</td></tr>
+                    <tr><td>stands at</td><td>READING (1,1)</td><td>SUPPORT (0,n)</td></tr>
+                    <tr><td>is shown in</td><td>READING (1,1)</td><td>VIEW (0,n)</td></tr>
+                    <tr><td>is said about</td><td>NOTE (1,1)</td><td>SUPPORT (0,1)</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Two things are computed, never stored: the height of a block, which is only
+                    known once it is laid in a support, and the number of supports a content
+                    takes.</p>
+
+                <p>Three rules the keys do not hold: the blocks are laid in the order they are
+                    written; the blocks of a support fit in its height, unless a block is
+                    taller than the support on its own; two blocks of a content never share a
+                    place.</p>
+
+                <p>Two rules more, for the reading: it stands at a support that exists, never
+                    outside the presentation; and a support that shows nothing of what a reader
+                    is looking for is never the one it stands at, which is what makes an
+                    internal link an event of its own.</p>
+            </section>
+
+            <section class="ssection"><h2>MCT: the three operations</h2>
+
+                <p><b>Op1, lay a written content on a paginated support.</b></p>
+
+                <p><i>Triggered when</i>: the document is rendered on a support of fixed
+                    height, and the written content is there, whole.</p>
+
+                <p><i>Does</i>: measures the blocks at the width of the support; lays them in
+                    the order they are written, as long as they fit; goes to the next support
+                    when the next block no longer fits.</p>
+
+                <table>
+                    <thead>
+                    <tr><th>Produces</th><th>When</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>The content laid on one or more supports</td><td>Always</td></tr>
+                    <tr><td>A message in the console</td><td>When a block is taller than the support on its own</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Op1 formats nothing and changes no content: it only lays it down.</p>
+
+                <table>
+                    <thead>
+                    <tr><th>Support</th><th>Who runs Op1</th><th>What is left to do</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Paper</td><td>The browser, when it prints</td><td>Nothing</td></tr>
+                    <tr><td>Slide</td><td>Nobody</td><td>Op1</td></tr>
+                    </tbody>
+                </table>
+
+                <p><b>Op2, move the reading.</b></p>
+
+                <p><i>Triggered when</i>: the reader asks to move — to the next support, to the
+                    previous one, to the first, to the last, or to a support named by rank.</p>
+
+                <p><i>Produces</i>: the reading stands at the support asked for, and that
+                    support is shown. A move asked for beyond the first or the last support
+                    produces nothing: the reading does not leave the presentation.</p>
+
+                <p><b>Op3, reach a place in the document.</b></p>
+
+                <p><i>Triggered when</i>: the reader follows a renvoi to a place written in the
+                    same document. Every renvoi, whoever wrote it: a table of contents, a note,
+                    and the two of a bibliography, which name a reference and the places it is
+                    cited in — Op7 of <a href="bibliography-design.html">the bibliography</a>
+                    produces such a request and nothing else.</p>
+
+                <p><i>Produces</i>: that place is shown and read. What it takes to show it
+                    depends on the support, and that is the only thing that does: on a page,
+                    the place is brought under the eyes; in a presentation, the support
+                    carrying it becomes the support the reading stands at, and nothing
+                    inside that support is touched, a support being shown whole; on paper,
+                    nothing is produced, everything being laid down already.</p>
+
+                <p><i>Not satisfied, and the bug is not found</i>: the two renvoi of a
+                    bibliography are not offered in a presentation. Following one lays the
+                    supports over one another and leaves them half drawn. What is asked for
+                    is right — the support carrying the place is the one the reading stands
+                    at, and nothing inside that support is touched — and what undoes the
+                    rendering has not been found, in either direction. The links are written
+                    as they are on a page, and hidden where a slide carries them, so showing
+                    them again is all it takes to look for it once more. C26 and C27 of
+                    <a href="bibliography-design.html">the bibliography</a> hold on a page and
+                    on paper, and not here.</p>
+
+                <p>Op3 is not Op2 with another trigger. Op2 receives a support and moves to it;
+                    Op3 receives a place and does not know, when it starts, which support
+                    carries it. In a presentation Op3 ends by asking Op2 for the support it
+                    found, which is the only tie between them.</p>
+
+                <p><b>Op4, change the view.</b></p>
+
+                <p><i>Triggered when</i>: the reader asks for another way of showing the
+                    supports.</p>
+
+                <p><i>Produces</i>: the supports shown that way, and the reading unchanged. A
+                    view that shows them all says which one the reading stands at; leaving it
+                    for one support at a time shows that one.</p>
+
+                <p><b>Op5, consult the shortcuts.</b></p>
+
+                <p><i>Triggered when</i>: the reader asks what can be asked for.</p>
+
+                <p><i>Produces</i>: the list of what the reader can ask, and the presentation
+                    untouched behind it. Closing it gives the reading back where it was.</p>
+
+                <p>What triggers a request is not part of these operations. The same request
+                    comes from a key, from a button, or from a finger drawn across the screen,
+                    and the operation is the same one: three ways in, one treatment. This is
+                    why what listens to a key knows nothing of the reading, and what holds the
+                    reading knows nothing of the keys.</p>
+
+                <p>Three requirements are not operations: nothing is kept from one opening to
+                    the next, the author writes nothing more than today, and a content laid on
+                    a support is never cut inside a block.</p>
+            </section>
+
+            <section class="ssection"><h2>MOT: where, when, and by whom</h2>
+
+                <p>In the browser of whoever opens the page. Three procedures. PF1 lays a
+                    written content on as many supports as it takes: once, when the page is
+                    asked for, with no human intervention. PF2 moves the reading, and PF3
+                    reaches a place in the document: both on a request from the reader, as
+                    often as asked.</p>
+
+                <table>
+                    <thead>
+                    <tr><th>PF</th><th>What it does</th><th>When</th><th>Where it comes out</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>PF1</td><td>Lays the content on the supports</td><td>Request for the page</td><td>Page and console</td></tr>
+                    <tr><td>PF2</td><td>Moves the reading</td><td>Request in the page</td><td>Page, and the position said in the address</td></tr>
+                    <tr><td>PF3</td><td>Reaches a place in the document</td><td>Request in the page</td><td>Page, through PF2 when the support is not the one shown</td></tr>
+                    <tr><td>PF4</td><td>Changes the view</td><td>Request in the page</td><td>Page</td></tr>
+                    <tr><td>PF5</td><td>Shows what can be asked for</td><td>Request in the page</td><td>Page</td></tr>
+                    </tbody>
+                </table>
+
+                <p>A request in the page comes from a key, a button or a finger. Which one it
+                    is changes nothing to the procedure: the way in is written apart from what
+                    it triggers, so that a way may be added without a treatment being
+                    touched.</p>
+
+                <p>Op1 measures, so it needs the contents the program builds to exist, the
+                    bibliography being one of them. It happens after them, and before the
+                    supports are counted.</p>
+
+                <p>What comes out: the supports and what they carry, in the page; the block
+                    taller than the support, in the console. Nothing is kept from one opening
+                    to the next.</p>
+            </section>
+
+            <section class="ssection"><h2>MLD: the tables</h2>
+
+                <ul>
+                    <li><b>WRITTEN_CONTENT</b> (<u>content_id</u>, title)</li>
+                    <li><b>BLOCK</b> (<u>content_id</u>, <u>place</u>, support_rank)</li>
+                    <li><b>SUPPORT</b> (<u>rank</u>, height, width)</li>
+                    <li><b>READING</b> (<u>rank_of_the_support</u>, step, view)</li>
+                    <li><b>NOTE</b> (<u>rank_of_the_support</u>, text)</li>
+                </ul>
+
+                <p>A block exists only in the content where it is written, so it carries its
+                    identifier, and its place tells it from the others. A support is known by
+                    its rank: two supports differ by nothing else.</p>
+
+                <p>Not in the tables: the height of a block, and the number of supports a
+                    content takes. Both are measured.</p>
+            </section>
+
+            <section class="ssection"><h2>MPD: where each table exists</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Table</th><th>In the source</th><th>While running</th><th>On screen</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>WRITTEN_CONTENT</td><td>a slide written by the author</td><td>the element itself</td><td>the first slide of the series</td></tr>
+                    <tr><td>BLOCK</td><td>what it holds: a child, a table row, a list item</td><td>that same element, in document order</td><td>laid in one of the slides</td></tr>
+                    <tr><td>SUPPORT</td><td>nothing</td><td>a slide, written or engendered</td><td>a slide</td></tr>
+                    <tr><td>READING</td><td>nothing</td><td>the rank and the step held by the program</td><td>the slide shown, and the position written in the address</td></tr>
+                    <tr><td>VIEW</td><td>nothing</td><td>a name held beside the reading</td><td>the way the supports are laid out</td></tr>
+                    <tr><td>NOTE</td><td>an aside written next to the slide it speaks of</td><td>that same element</td><td>nothing, unless the view asks for it</td></tr>
+                    </tbody>
+                </table>
+
+                <p>The reading is the only table written outside the program: it is said in the
+                    address of the page, after the sharp sign, as the rank of the support and
+                    the step inside it. That place holds the reading and nothing else, so that
+                    an address, once copied, opens the presentation where it was left. A place
+                    named in a renvoi is an entry of Op3 and is never written there: it would
+                    take the place of a reading that could no longer be read.</p>
+
+                <p>Nothing more is written in the source than today: that is what the
+                    requirement asks. The title stays on the slide it was written on.</p>
+
+                <p>Two choices the requirement does not determine: the cut is made between
+                    blocks, never inside one; a table that is split keeps its head on every
+                    support.</p>
+            </section>
+
+            <section class="ssection"><h2>MOpT: where the code goes</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Module</th><th>What it does</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>measure</td><td>Gives the room a support leaves, and the height of a block laid in it</td></tr>
+                    <tr><td>layout</td><td>Says which blocks go on which support, from heights it is given</td></tr>
+                    <tr><td>compose</td><td>Engenders the supports and puts the blocks in them</td></tr>
+                    <tr><td>navigation</td><td>Holds the reading and moves it, and says it in the address</td></tr>
+                    <tr><td>reaching</td><td>From a place named in a renvoi, finds the support carrying it and asks the navigation for it</td></tr>
+                    <tr><td>view</td><td>Holds which view is in force, and changes it</td></tr>
+                    <tr><td>showing</td><td>Draws the supports the way the view in force asks: one at a time, all at once, or each with its note</td></tr>
+                    <tr><td>ways in</td><td>Turns a key, a click or a swipe into the request it means, and knows nothing of what it triggers</td></tr>
+                    <tr><td>shortcuts</td><td>Shows what can be asked for, and gives the reading back when it closes</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Under <code>wexa_statics/js/extras/slides/</code>, one file per class. The
+                    layout module touches no document: it receives heights and gives a
+                    distribution back, which is what makes it testable. The navigation module
+                    is testable for the same reason: it reads and writes the reading, and
+                    nothing else.</p>
+            </section>
+
+            <section class="ssection"><h2>UML: the states of a written slide</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>State</th><th>What is true</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Written</td><td>It carries all its content. Nothing has been read or measured</td></tr>
+                    <tr><td>Read</td><td>Its blocks are known, in order. Nothing has moved</td></tr>
+                    <tr><td>Measured</td><td>Every block carries its height, measured in the slide</td></tr>
+                    <tr><td>Laid out</td><td>Which block goes on which slide is known. Nothing has moved yet</td></tr>
+                    <tr><td>Laid down</td><td>The missing slides exist, every block is on its own</td></tr>
+                    </tbody>
+                </table>
+
+                <p>No transition comes from the reader: everything is finished before he sees
+                    the presentation. Moving from one slide to another, changing view, opening
+                    a reference, printing: none of them changes a state.</p>
+            </section>
+
+            <section class="ssection"><h2>UML: the sequence when the page opens</h2>
+
+                <ol>
+                    <li>The browser asks the assembly to build the presentation.</li>
+                    <li>The assembly waits for the promise of the bibliography.</li>
+                    <li>It puts the class of the view on the body: a slide measured before
+                        that is as tall as what it holds.</li>
+                    <li>It asks <code>SlidesPagination.run()</code>, which gives a promise
+                        back.</li>
+                    <li><code>SlideBlockReader.blocks(slide)</code>, once per written
+                        slide.</li>
+                    <li><code>SlideMeasure.measure(blocks, slide)</code>, then
+                        <code>SlideMeasure.room(slide, blocks)</code>: the room left is what
+                        the slide holds, minus what surrounds the blocks.</li>
+                    <li><code>SlidePaginator.paginate(blocks, room)</code> gives the
+                        <code>SlideLayout</code>.</li>
+                    <li>The blocks taller than a slide are said in the console.</li>
+                    <li><code>SlideComposer.compose(slide, layout)</code>, when the layout asks
+                        for more than one slide, with the head of a table on each.</li>
+                    <li>The promise is kept, and the assembly counts the slides and builds the
+                        overview.</li>
+                </ol>
+
+                <p>The last step comes last on purpose: counting before laying out would give
+                    wrong numbers and an incomplete overview.</p>
+            </section>
+
+            <section class="ssection"><h2>The error policy</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Level</th><th>What happens</th><th>What the program does</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td>Nothing can be done: the slide does not exist, its room cannot be measured</td><td>An exception, caught by <code>SlidesPagination</code>, said in the console</td></tr>
+                    <tr><td>2</td><td>One slide is concerned: a block taller than it</td><td>No exception. The block stays whole and overflows</td></tr>
+                    <tr><td>3</td><td>The author has to know</td><td>No exception. A message in the console, and the work goes on</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Exceptions are raised at the lowest level and caught at the highest. Only
+                    <code>SlidesPagination</code> catches. No other class writes a
+                    <code>try</code>. Three of them exist: <code>PaginationError</code>, the
+                    mother, <code>MissingSlide</code> and <code>UnmeasurableSlide</code>.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="signatures" class="chapter">
+            <h1>The contracts, class by class</h1>
+
+            <section class="ssection"><h2>How to read them</h2>
+
+                <p><code>+</code> public, <code>-</code> private, <code>/</code> derived and
+                    never stored, <code>{readOnly}</code> does not change after construction,
+                    <code>{ordered}</code> the order matters. <i>pre</i> is what has to be true
+                    on the way in, and what the operation does not check; <i>post</i> is what
+                    the caller can count on. The types are the ones written in the JSDoc.</p>
+
+                <p>The attributes are set at construction, except the height of a block, which
+                    is measured afterwards: it is the only thing a data class learns later.</p>
+            </section>
+
+            <section class="ssection"><h2>The data classes</h2>
+
+                <table>
+                    <caption>SlideBlock</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>constructor</td><td>(element, place)</td><td>pre: element is not null, place is 1 or more. post: height is 0, nothing has measured yet</td></tr>
+                    <tr><td>get height</td><td>(): Number</td><td>post: 0 until something measures</td></tr>
+                    <tr><td>set height</td><td>(value: Number)</td><td>pre: value is 0 or more. Written by <code>SlideMeasure</code>, by nobody else</td></tr>
+                    <tr><td>fitsIn</td><td>(room: Number): Boolean</td><td>pre: room is 0 or more. post: true when height does not exceed room</td></tr>
+                    </tbody>
+                </table>
+
+                <p><code>fitsIn()</code> knows neither slide nor document: it compares two
+                    numbers.</p>
+
+                <table>
+                    <caption>SlideLayout</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>constructor</td><td>(parts)</td><td>pre: at least one part. A part is empty only if it is the only one: a slide holding nothing but its title has nothing to lay out. post: the object does not change any more</td></tr>
+                    <tr><td>get parts</td><td>(): SlideBlock[][]</td><td>post: in the order the content is written</td></tr>
+                    <tr><td>count</td><td>(): Number</td><td>post: 1 or more. 1 means nothing is to be engendered</td></tr>
+                    <tr><td>oversized</td><td>(room: Number): SlideBlock[]</td><td>post: the blocks that exceed room on their own. May be empty</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>The working classes</h2>
+
+                <table>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>SlideBlockReader.blocks</td><td>(slide: HTMLElement): SlideBlock[]</td><td>pre: slide is not null. post: in document order, place from 1 to n. Empty when the slide holds nothing but its title</td></tr>
+                    <tr><td>SlideMeasure.room</td><td>(slide: HTMLElement, blocks: SlideBlock[]): Number</td><td>pre: slide is a slide of the document, its blocks are measured. post: the height left to the blocks, everything that surrounds them deducted: the title, the head of a table, the margins of what holds them, and the line of the page counter. Raises MissingSlide or UnmeasurableSlide</td></tr>
+                    <tr><td>SlideMeasure.measure</td><td>(blocks: SlideBlock[], slide: HTMLElement): void</td><td>pre: the blocks are those of that slide. post: every block carries its height, measured in the slide</td></tr>
+                    <tr><td>SlidePaginator.paginate</td><td>(blocks: SlideBlock[], room: Number): SlideLayout</td><td>pre: every block carries its height, room is more than 0. post: every block is placed, once, in order; one part more as soon as the next block does not fit; a block taller than room is alone on its part; without a block, one empty part</td></tr>
+                    <tr><td>SlideComposer.compose</td><td>(slide: HTMLElement, layout: SlideLayout): HTMLElement[]</td><td>pre: the layout comes from the blocks of that slide. post: the slides, the original one first; every block in its own; nothing is lost</td></tr>
+                    <tr><td>SlideComposer.repeatHead</td><td>(table: HTMLTableElement, next: HTMLElement): void</td><td>pre: the table is split. post: every part carries the head</td></tr>
+                    <tr><td>SlidesPagination.run</td><td>(): Promise&lt;void&gt;</td><td>post: every written slide is laid down; never raises; kept when everything is done</td></tr>
+                    <tr><td>NavigationLogic.updateFromHash</td><td>(fragment: String): void</td><td>pre: none. post: the reading stands at the position the fragment holds; an empty fragment gives the first support; a fragment that is not a position leaves the reading where it is, being the name of a place and not a position. Never writes the address</td></tr>
+                    <tr><td>SlideReaching.supportOf</td><td>(place: String): Number</td><td>pre: none. post: the rank of the support carrying that place, 0 when no element bears that name or when it is carried by no support</td></tr>
+                    <tr><td>SlideReaching.reach</td><td>(place: String): Number</td><td>pre: none. post: the reading stands at the support carrying that place, which is shown whole; nothing inside that support is touched, neither what the keyboard stands on nor what is scrolled; 0 and nothing done when no support carries it</td></tr>
+                    </tbody>
+                </table>
+
+                <p>The title is never a block: it is repeated on every engendered slide, so it
+                    is not to be laid out. The notes stay with the first slide.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="tests" class="chapter">
+            <h1>What is tested, and where</h1>
+
+            <section class="ssection"><h2>Without a browser</h2>
+
+                <p><code>SlidePaginator</code> receives heights and gives a layout back, so
+                    every rule of the work is checked without opening anything: everything
+                    fits on one slide, one slide more as soon as the next block does not fit,
+                    no block lost or placed twice, a block taller than a slide left whole, and
+                    the same result twice.</p>
+            </section>
+
+            <section class="ssection"><h2>With a document</h2>
+
+                <p><code>SlideBlockReader</code> is checked on written markup: a table read
+                    row by row, its head left out, a list read item by item, the title and the
+                    notes left out.</p>
+
+                <p>The tests are in <code>wexa_statics/js/tests/</code>, one file per class,
+                    and are run by <code>tests.html</code>.</p>
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            Wexa.links.handleLinksWithParameters(['btn-back']);
+        });
+    </script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                            t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                            t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        window.themes = t;
+                    }
+                });
+            } else {
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+            themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+            themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        window.themes = themes;
+    </script>
+
+    </body>
+</html>

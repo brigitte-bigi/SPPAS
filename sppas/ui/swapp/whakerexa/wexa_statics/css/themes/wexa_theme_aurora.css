@@ -72,6 +72,7 @@
     /* ── @layer theme color overrides ──────────────────────────────── */
     --body-bg-color: rgb(248, 242, 255);
     --bg-color:     rgb(252, 250, 255);
+    --img-bg-color: rgb(252, 250, 255);
     --bg-color-alt: rgb(240, 236, 255);
     --fg-color:     rgb(28, 18, 60);
     --fg-color-alt: rgb(58, 44, 95);
@@ -123,9 +124,15 @@
    Dark mode — CSS variable overrides (unlayered)
    ========================================================================= */
 
+/* The dark mode holds two axes instead of one: the violet of Aurora for what is
+   read at length, plum and magenta for what frames it, and a cream that answers
+   them both. A single violet axis, which this mode used to be, has no warm
+   color to set its own off. */
+
 :root.dark {
     --body-bg-color: rgb(17, 11, 40);
     --bg-color: rgb(12, 8, 28);
+    --img-bg-color: rgb(250, 250, 255);
 }
 
 
@@ -136,48 +143,66 @@
 .dark {
 
         --bg-color-alt: rgb(22, 14, 50);
-        --fg-color:     rgb(218, 212, 248);
-        --fg-color-alt: rgb(182, 172, 222);
+        --fg-color:     rgb(228, 222, 240);
+        --fg-color-alt: rgb(250, 248, 255);
 
-        --border-color:     rgba(180, 145, 255, 0.2);
-        --border-color-alt: rgba(180, 145, 255, 0.12);
+        --border-color:     rgb(150, 120, 175);
+        --border-color-alt: rgba(150, 120, 175, 0.35);
 
-        --a-color:          rgb(165, 125, 255);
-        --li-color:         rgb(165, 125, 255);
-        --buttons-bg-color: rgb(120, 75, 235);
-        --buttons-fg-color: rgb(255, 255, 255);
+        /* A link is read, so it is written light: the blue the palette uses on
+           a light ground holds 3.8:1 on night blue, where a text asks for 4.5,
+           and its soft blue 7:1. This one holds 10:1. */
+        --a-color:          rgb(140, 190, 240);
+        /* The plum of the accents, lightened until it is seen: the deeper one
+           holds 2.7:1 on night blue, where a mark asks for 3:1. This one
+           holds 4.7:1, and keeps its hue. */
+        --li-color:         rgb(175, 95, 170);
+        --buttons-bg-color:       rgb(31, 3, 87);
+        --buttons-bg-color-hover: rgb(49, 2, 92);
+        --buttons-fg-color:       rgb(243, 248, 250);
 
-        --header-bg-color: linear-gradient(135deg, rgb(8, 4, 20) 0%, rgb(30, 12, 75) 55%, rgb(65, 22, 125) 100%);
-        --nav-bg-color:    rgba(0, 0, 0, 0.45);
-        --footer-bg-color: rgb(18, 11, 40);
-        --header-fg-color: rgb(218, 212, 248);
-        --nav-fg-color:    rgb(195, 178, 242);
-        --footer-fg-color: rgb(182, 172, 222);
+        --header-bg-color: linear-gradient(323deg, rgb(70, 15, 70) 0%, rgb(49, 5, 92) 70%, rgb(30, 0, 70) 100%);
+        --nav-bg-color:    rgb(30, 0, 70);
+        --footer-bg-color: linear-gradient(to bottom,
+            var(--bg-color) 0%,
+            rgb(35, 0, 75) 30%,
+            rgb(70, 15, 70) 50%,
+            rgb(100, 50, 90) 70%,
+            rgb(130, 60, 130) 100%);
+        --header-fg-color: rgb(240, 230, 210);
+        --nav-fg-color:    rgb(240, 230, 210);
+        --footer-fg-color: rgb(243, 248, 250);
 
-        --h1-color: rgb(218, 212, 248);
-        --h2-color: rgb(202, 194, 238);
-        --h3-color: rgb(186, 175, 228);
-        --h4-color: rgb(186, 175, 228);
-        --h5-color: rgb(170, 156, 218);
-        --h6-color: rgb(154, 138, 208);
+        /* What is written on a violet ground is written in cream. */
+        --card-bg-color: rgb(30, 0, 70);
+        --card-fg-color: rgb(240, 230, 210);
 
-        --blockquote-border-color: rgb(145, 108, 255);
-        --blockquote-footer-color: rgb(158, 138, 212);
+        /* The titles walk from the cream of the frames down to the plum of the
+           accents, which is what ties the two axes together. */
+        --h1-color: rgb(212, 175, 203);
+        --h2-color: rgb(220, 190, 205);
+        --h3-color: rgb(228, 205, 207);
+        --h4-color: rgb(228, 205, 207);
+        --h5-color: rgb(234, 218, 208);
+        --h6-color: rgb(240, 230, 210);
+
+        --blockquote-border-color: rgb(130, 60, 130);
+        --blockquote-footer-color: rgb(198, 165, 195);
         --blockquote-border-width: calc(0.25 * var(--font-size));
 
-        --table-border-color:           rgba(180, 145, 255, 0.15);
+        --table-border-color:           rgba(150, 120, 175, 0.3);
         --table-row-stripped-bg-color:  rgb(28, 18, 55);
-        --table-head-bg-color:          rgb(20, 12, 42);
-        --table-head-fg-color:          rgb(218, 212, 248);
-        --table-caption-bg-color:       rgb(20, 12, 42);
-        --table-caption-fg-color:       rgb(182, 172, 222);
+        --table-head-bg-color:          rgb(22, 14, 50);
+        --table-head-fg-color:          rgb(240, 230, 210);
+        --table-caption-bg-color:       rgb(22, 14, 50);
+        --table-caption-fg-color:       rgb(228, 222, 240);
 
         --inputs-bg-color: rgb(22, 14, 50);
 
-        --progress-bg-color: rgb(42, 28, 85);
-        --progress-fg-color: rgb(145, 108, 255);
+        --progress-bg-color: rgb(247, 230, 190);
+        --progress-fg-color: rgb(130, 60, 130);
 
-    --shadow-color: rgba(120, 80, 255, 0.28);
+    --shadow-color: rgba(130, 60, 130, 0.28);
 
 }
 
@@ -199,8 +224,8 @@
     }
 
     .dark {
-        --custom-color1: rgb(208, 197, 246);
-        --custom-color2: rgb(28, 11, 76);
+        --custom-color1: rgb(240, 230, 210);
+        --custom-color2: rgb(30, 0, 70);
     }
 
     /* ======================================================================

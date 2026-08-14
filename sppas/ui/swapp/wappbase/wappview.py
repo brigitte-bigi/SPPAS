@@ -41,6 +41,8 @@
 from __future__ import annotations
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
+from whakerpy.htmlmaker import TagNode
+from whakerpy.htmlmaker import EmptyNode
 
 from sppas.core.config import sg
 from sppas.core.config import cfg
@@ -60,8 +62,10 @@ from ..nodes.layout.hfooter import SwappFooter
 MSG_WEB = _("SPPAS website")
 MSG_CONTRAST = _("Contrast")
 MSG_COLOR = _("Color")
+MSG_THEME = _("Theme")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
+MSG_DASHBOARD = _("Dashboard")
 MSG_JOURNAL = _("Journal")
 MSG_FEEDBACK = _("Feedback")
 
@@ -79,6 +83,18 @@ JS_WEXA_ONLOAD = """
             window.menu.initMobileToggle();
         });
 """
+
+# The ThemeManager is an extra: it is imported by the pages needing it. The
+# theme of SPPAS is registered like any other, and declared as the default.
+JS_WEXA_THEMES = (
+    f"const ThemeManager = (await import(window.WEXA_JS_PATH + '/extras/theme_manager.js')).ThemeManager;"
+    f"window.themes = new ThemeManager();"
+    f"window.themes.register('swapp', '{wapp_settings.css}main_swapp_theme.css');"
+    f"window.themes.register('wexa_theme', '{wapp_settings.wexa_statics}css/themes/wexa_theme.css');"
+    f"window.themes.register('aurora', '{wapp_settings.wexa_statics}css/themes/wexa_theme_aurora.css');"
+    f"window.themes.register('highcontrast', '{wapp_settings.wexa_statics}css/themes/wexa_theme_highcontrast.css');"
+    f"window.themes.setDefault('swapp');"
+)
 
 # ---------------------------------------------------------------------------
 
@@ -170,9 +186,15 @@ class swappBaseView:
         # SPPAS tab of the browser keeps one constant identity.
         self._htree.head.link(rel="logo icon", href=wapp_settings.icons + "sppas5.ico")
 
-        # CSS SWAPP links
+        # CSS SWAPP links. The theme carries the id the ThemeManager swaps the
+        # href of: without it, a second link is created and themes accumulate.
         self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp.css", link_type="text/css")
-        self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp_theme.css", link_type="text/css")
+        theme_css = HTMLNode(self._htree.head.identifier, None, "link")
+        theme_css.add_attribute("id", "wexa-theme")
+        theme_css.add_attribute("rel", "stylesheet")
+        theme_css.add_attribute("href", wapp_settings.css + "main_swapp_theme.css")
+        theme_css.add_attribute("type", "text/css")
+        self._htree.head.append_child(theme_css)
         # Application CSS
         self._populate_head_css()
 
@@ -187,6 +209,11 @@ class swappBaseView:
         # JS local script for the Menu -- same for all apps sharing this head.
         script = HTMLNode(self._htree.head.identifier, None, "script",
                           value=JS_WEXA_ONLOAD, attributes={'type': "module"})
+        self._htree.head.append_child(script)
+
+        # JS local script for the CSS themes -- same for all apps.
+        script = HTMLNode(self._htree.head.identifier, None, "script",
+                          value=JS_WEXA_THEMES, attributes={'type': "module"})
         self._htree.head.append_child(script)
 
         # Application JS
@@ -322,6 +349,19 @@ class swappBaseView:
         :param parent: (HTMLNode) the parent HTML node to append the buttons in
 
         """
+        # CSS theme. The ThemeManager injects the icon before the label: the
+        # side menu of SPPAS shows the name of an item, the top nav of the
+        # documentation does not.
+        css_theme_button = HTMLNode(parent.identifier, None, "button",
+                                    value="<span>" + MSG_THEME + "</span>")
+        css_theme_button.add_attribute("id", "btn-css-theme")
+        css_theme_button.add_attribute("class", "menuitem")
+        css_theme_button.add_attribute("type", "button")
+        css_theme_button.add_attribute("aria-label", MSG_THEME)
+        css_theme_button.add_attribute("title", MSG_THEME)
+        css_theme_button.add_attribute("onclick", "window.themes && window.themes.next()")
+        parent.append_child(css_theme_button)
+
         # contrast
         svg_contrast = sppasImagesAccess.get_wexa_svg_icon("contrast")
         contrast_image = svg_contrast + "<span>" + MSG_CONTRAST + "</span>"
@@ -362,6 +402,41 @@ class swappBaseView:
         ic = _button.set_icon("sppas-logo-v5")
         ic.add_attribute("alt", "")
         _button.set_text(None, MSG_WEB)
+        parent.append_child(_button)
+        return _button
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def append_home_link_button(parent: HTMLNode, home_target: str = "") -> HTMLNode:
+        """Create and append the button leading to the Dashboard.
+
+        Same node as the home button of the header: an 'a' element, because
+        the named target is read by the AccessibilityManager of Whakerexa on
+        links only.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :param home_target: (str) Window name to switch to, empty to replace
+        the content of the current tab
+        :return: (HTMLNode) the home link button node
+
+        """
+        _button = TagNode(parent.identifier, "link-home_button", "a")
+        _button.set_attribute("href", "index.html")
+        _button.set_attribute("role", "button")
+        _button.set_attribute("aria-label", MSG_DASHBOARD)
+        _button.set_attribute("class", "menuitem menu-png-button")
+        if len(home_target) > 0:
+            _button.set_attribute("data-named-target", home_target)
+
+        logo = EmptyNode(_button.identifier, None, "img")
+        logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
+        logo.set_attribute("alt", "")
+        _button.append_child(logo)
+
+        text = HTMLNode(_button.identifier, None, "span", value=MSG_DASHBOARD)
+        _button.append_child(text)
+
         parent.append_child(_button)
         return _button
 

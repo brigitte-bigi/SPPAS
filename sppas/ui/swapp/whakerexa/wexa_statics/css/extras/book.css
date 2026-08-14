@@ -56,6 +56,16 @@ Architecture:
     html:has(aside.book-toc-aside.open) {
         margin-left: calc(var(--toc-aside-width) + var(--toc-width));
     }
+
+    /* A narrow screen has no width to lend to a column nobody reads: the
+       toggle and the panel stand over the text instead of pushing it. */
+    @media (max-width: 1023.98px) {
+        html,
+        html:has(aside.book-toc-aside),
+        html:has(aside.book-toc-aside.open) {
+            margin-left: 0;
+        }
+    }
 }
 
 body {
@@ -81,7 +91,6 @@ body {
     padding-bottom: 2rem;
     margin-bottom: 4rem;
     line-height: calc(4 * var(--font-size));
-    font-size: calc(3 * var(--font-size));
 
     /* a chapter title is a box for 2 items: number + title */
     display: inline-flex;
@@ -97,7 +106,6 @@ body {
     padding-bottom: 2rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    font-size: calc(3 * var(--font-size));
     margin-top: 0;
     margin-right: 1rem;
     margin-bottom: 4rem;
@@ -113,13 +121,10 @@ body {
     padding-right: 0;
 }
 
-.ssection h2 {
-    font-size: calc(1.6 * var(--font-size));
-}
-
+/* The size of a title belongs to wexa.css: the number takes the size of the
+   title it numbers. */
 .ssection h2::before {
     content: counter(chapter) "." counter(ssection) " ";
-    font-size: calc(1.6 * var(--font-size));
 }
 
 /* A new numbered sub-section in the section */
@@ -129,13 +134,8 @@ body {
     padding-right: 0;
 }
 
-.subssection h3 {
-    font-size: calc(1.4 * var(--font-size));
-}
-
 .subssection h3::before {
     content: counter(chapter) "." counter(ssection) "." counter(subssection) " ";
-    font-size: calc(1.4 * var(--font-size));
 }
 
 /* ----------------------------------------------------------------------- */
@@ -228,6 +228,48 @@ nav.book-toc li.h2 {
 nav.book-toc li.h3 {
     padding-left: 1.5rem;
 }
+
+/* An entry is read in two columns: what numbers it, and what it says. */
+nav.book-toc li.h1,
+nav.book-toc li.h2,
+nav.book-toc li.h3,
+nav.book-toc li.h4,
+nav.book-toc li.h5,
+nav.book-toc li.h6 {
+    display: grid;
+    grid-template-columns: var(--toc-number-width) 1fr;
+    column-gap: var(--typography-spacing-horizontal);
+    margin-bottom: 0.2rem;
+}
+
+/* The rule that opens this panel gives every child "margin: auto", which
+   centres each title in its column: an entry no longer lines up with the one
+   above it. Inside an entry, both columns start where they should. */
+nav.book-toc li > a {
+    margin: 0;
+    justify-self: start;
+}
+
+/* The width of the number is fixed for each level: a column as wide as its
+   content is a column of a different width at every line, and no two titles
+   ever start at the same place. */
+nav.book-toc li {
+    --toc-number-width: 1.5rem;
+}
+nav.book-toc li.h1 { --toc-number-width: 2rem; }
+nav.book-toc li.h2 { --toc-number-width: 2.2rem; }
+nav.book-toc li.h3 { --toc-number-width: 2.8rem; }
+
+nav.book-toc li::before {
+    margin: 0;
+    padding-right: 0;
+    justify-self: end;
+    text-align: right;
+    white-space: nowrap;
+}
+nav.book-toc li.h1::before { font-size: calc(1.2 * var(--font-size)); }
+nav.book-toc li.h2::before { font-size: var(--font-size); }
+nav.book-toc li.h3::before { font-size: calc(0.9 * var(--font-size)); }
 nav.book-toc li.h4 {
     padding-left: 2rem;
 }
@@ -238,13 +280,45 @@ nav.book-toc li.h6 {
     padding-left: 4rem;
 }
 
+/* The entries of the table of contents bear the same numbers as the titles
+   they lead to. They are counted here and nowhere else: a script counting
+   them a second time would be a second truth. An entry coming from a chapter
+   that bears "nonumber" carries it too, and is numbered by nobody. */
+nav.book-toc ul {
+    counter-reset: toc-chapter;
+}
+nav.book-toc li.h1 {
+    counter-increment: toc-chapter;
+    counter-reset: toc-ssection;
+}
+nav.book-toc li.h2 {
+    counter-increment: toc-ssection;
+    counter-reset: toc-subssection;
+}
+nav.book-toc li.h3 {
+    counter-increment: toc-subssection;
+}
+nav.book-toc li.nonumber {
+    counter-increment: none;
+}
+
+nav.book-toc li.h1::before {
+    content: counter(toc-chapter) ".";
+    padding-right: calc(0.4*var(--typography-spacing-horizontal));
+}
 nav.book-toc li.h2::before {
-    content: "■";
+    content: counter(toc-chapter) "." counter(toc-ssection);
     padding-right: calc(0.4*var(--typography-spacing-horizontal));
 }
 nav.book-toc li.h3::before {
-    content: "◇";
+    content: counter(toc-chapter) "." counter(toc-ssection) "." counter(toc-subssection);
     padding-right: calc(0.4*var(--typography-spacing-horizontal));
+}
+nav.book-toc li.h1.nonumber::before,
+nav.book-toc li.h2.nonumber::before,
+nav.book-toc li.h3.nonumber::before {
+    content: "";
+    padding-right: 0;
 }
 nav.book-toc li.h4::before {
     content: "-";
@@ -350,6 +424,12 @@ aside.book-toc-aside {
     body:has(aside.book-toc-aside.open) button.book-toc-toggle {
         left: 0;
     }
+
+    /* The button and the open table of contents shared a z-index, and the DOM
+       order settled it in favor of the aside. */
+    button.book-toc-toggle {
+        z-index: 11;
+    }
 }
 
 /* Inner content — mirrors nav.book-toc styles */
@@ -382,26 +462,89 @@ aside.book-toc-aside ul { display: initial; }
 
 aside.book-toc-aside a:not([role=button],[role=menuitem]) { display: initial; }
 
+/* An entry is read in two columns: what numbers it, and what it says. A
+   number in the flow of the text pushes the title around and breaks in two
+   when the panel is narrow. */
 aside.book-toc-aside li.h1,
 aside.book-toc-aside li.h2,
 aside.book-toc-aside li.h3,
 aside.book-toc-aside li.h4,
 aside.book-toc-aside li.h5,
 aside.book-toc-aside li.h6 {
-    display: block;
-    margin-bottom: 0.5rem;
+    display: grid;
+    grid-template-columns: var(--toc-number-width) 1fr;
+    column-gap: var(--typography-spacing-horizontal);
+    margin-bottom: 0.2rem;
     text-align: left;
 }
 
-aside.book-toc-aside li.h1 { margin-top: 1.5rem; margin-bottom: 1rem; padding-left: 0; }
-aside.book-toc-aside li.h2 { margin-top: 1rem; padding-left: 0.5rem; }
-aside.book-toc-aside li.h3 { padding-left: 1.5rem; }
-aside.book-toc-aside li.h4 { padding-left: 2rem; }
-aside.book-toc-aside li.h5 { padding-left: 3rem; }
-aside.book-toc-aside li.h6 { padding-left: 4rem; }
+/* The number of an entry is written in the size of the title it numbers:
+   the rule above sets every child of the panel to one size, and each level
+   gives its own back to the link only. */
+/* The rule that opens this panel gives every child "margin: auto", which
+   centres each title in its column: an entry no longer lines up with the one
+   above it. Inside an entry, both columns start where they should. */
+aside.book-toc-aside li > a {
+    margin: 0;
+    justify-self: start;
+}
 
-aside.book-toc-aside li.h2::before { content: "■"; padding-right: calc(0.4 * var(--typography-spacing-horizontal)); }
-aside.book-toc-aside li.h3::before { content: "◇"; padding-right: calc(0.4 * var(--typography-spacing-horizontal)); }
+/* The width of the number is fixed for each level: a column as wide as its
+   content is a column of a different width at every line, and no two titles
+   ever start at the same place. */
+aside.book-toc-aside li {
+    --toc-number-width: 1.5rem;
+}
+aside.book-toc-aside li.h1 { --toc-number-width: 2rem; }
+aside.book-toc-aside li.h2 { --toc-number-width: 2.2rem; }
+aside.book-toc-aside li.h3 { --toc-number-width: 2.8rem; }
+
+aside.book-toc-aside li::before {
+    margin: 0;
+    padding-right: 0;
+    justify-self: end;
+    text-align: right;
+    white-space: nowrap;
+}
+aside.book-toc-aside li.h1::before { font-size: calc(1.2 * var(--font-size)); }
+aside.book-toc-aside li.h2::before { font-size: var(--font-size); }
+aside.book-toc-aside li.h3::before { font-size: calc(0.9 * var(--font-size)); }
+
+/* One space between two entries, and a wider one before a chapter: a list
+   whose gaps change at every level is a list nobody follows. */
+aside.book-toc-aside li.h1 { margin-top: 1rem; padding-left: 0; }
+aside.book-toc-aside li.h2 { padding-left: 0.5rem; }
+aside.book-toc-aside li.h3 { padding-left: 1rem; }
+aside.book-toc-aside li.h4 { padding-left: 1.5rem; }
+aside.book-toc-aside li.h5 { padding-left: 2rem; }
+aside.book-toc-aside li.h6 { padding-left: 2.5rem; }
+
+/* The entries bear the same numbers as the titles they lead to, counted
+   here and nowhere else. Mirrors nav.book-toc. */
+aside.book-toc-aside ul { counter-reset: toc-chapter; }
+aside.book-toc-aside li.h1 { counter-increment: toc-chapter; counter-reset: toc-ssection; }
+aside.book-toc-aside li.h2 { counter-increment: toc-ssection; counter-reset: toc-subssection; }
+aside.book-toc-aside li.h3 { counter-increment: toc-subssection; }
+aside.book-toc-aside li.nonumber { counter-increment: none; }
+
+aside.book-toc-aside li.h1::before {
+    content: counter(toc-chapter) ".";
+    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+}
+aside.book-toc-aside li.h2::before {
+    content: counter(toc-chapter) "." counter(toc-ssection);
+    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+}
+aside.book-toc-aside li.h3::before {
+    content: counter(toc-chapter) "." counter(toc-ssection) "." counter(toc-subssection);
+    padding-right: calc(0.4 * var(--typography-spacing-horizontal));
+}
+aside.book-toc-aside li.h1.nonumber::before,
+aside.book-toc-aside li.h2.nonumber::before,
+aside.book-toc-aside li.h3.nonumber::before {
+    content: "";
+    padding-right: 0;
+}
 aside.book-toc-aside li.h4::before { content: "-"; padding-right: calc(0.4 * var(--typography-spacing-horizontal)); }
 aside.book-toc-aside li.h5::before { content: "□"; padding-right: calc(0.4 * var(--typography-spacing-horizontal)); }
 
@@ -449,8 +592,8 @@ aside.book-toc-aside li.h6 a {
 /* ----------------------------------------------------------------------- */
 
 .abstract {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: calc(2 * var(--typography-spacing-horizontal));
+    margin-right: calc(2 * var(--typography-spacing-horizontal));
     margin-top: var(--typography-spacing-vertical);
     margin-bottom: var(--typography-spacing-vertical);
     padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
@@ -541,12 +684,13 @@ aside.book-toc-aside li.h6 a {
         color: var(--custom-color1);
     }
 
-    /* Table of content: text color */
-    nav.book-toc *:not([role=button]) {
-        color: var(--nav-fg-color);
-    }
-
-    aside.book-toc-aside *:not([role=button]) {
+    /* Table of content: text color. The universal selector does not reach a
+       pseudo-element, and the number of an entry is one: it is given the
+       colour of the entry it numbers, and not the one of a link. */
+    nav.book-toc *:not([role=button]),
+    nav.book-toc li::before,
+    aside.book-toc-aside *:not([role=button]),
+    aside.book-toc-aside li::before {
         color: var(--nav-fg-color);
     }
 

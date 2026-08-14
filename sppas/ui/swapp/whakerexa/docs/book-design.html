@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Book design • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, book, design"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Book &gt; Design</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="overview" class="chapter">
+            <h1>What this is</h1>
+
+            <section class="ssection"><h2>In short</h2>
+
+                <p>An author writes a long document: chapters, sections, sub-sections, and a
+                    place for a table of contents. When the page opens, the titles are
+                    numbered, the table is filled from them, and each entry leads to the title
+                    it names.</p>
+
+                <p>This page is the design of that work. It is written for whoever changes the
+                    code, and it is read before reporting a behaviour as a bug: several of them
+                    are choices.</p>
+            </section>
+
+            <section class="ssection"><h2>Two domains, two letters</h2>
+
+                <p>The requirements are numbered in two families, as the bibliography numbers
+                    its own. <b>D</b> for the document — chapters, sections, abstract, what is
+                    numbered and how. <b>T</b> for the table of contents — what it holds, where
+                    it stands, and where it leads.</p>
+
+                <p>A document without a table is a document all the same, and a table is built
+                    from titles it did not write. That is why they are told apart.</p>
+            </section>
+
+            <section class="ssection"><h2>What it does not do</h2>
+
+                <ul>
+                    <li>It writes no title and moves none: it numbers what the author wrote,
+                        where it was written.</li>
+                    <li>It numbers nothing itself: the numbers are counted by the stylesheet,
+                        so a title carries no number in the source.</li>
+                    <li>It asks nothing of the internet, and keeps nothing from one opening to
+                        the next.</li>
+                    <li>It does not lay the document on pages: that is the printing, and the
+                        <a href="slides-design.html">slides pagination</a> for a presentation.</li>
+                </ul>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="requirements" class="chapter">
+            <h1>The requirements</h1>
+
+            <section class="ssection"><h2>The document</h2>
+
+                <table>
+                    <caption>What a long document has to do</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Requirement</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>D1</td><td>A long document is read as chapters.</td></tr>
+                    <tr><td>D2</td><td>The chapters are numbered, in the order they are read.</td></tr>
+                    <tr><td>D3</td><td>A chapter can be left out of the numbering, and the chapters after it keep their count.</td></tr>
+                    <tr><td>D4</td><td>Inside a chapter, the sections and the sub-sections are numbered too, and their numbers say which chapter they belong to.</td></tr>
+                    <tr><td>D5</td><td>A document can open on a summary, seen as one at a glance.</td></tr>
+                    <tr><td>D6</td><td>On paper, a chapter keeps its title with it.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>The table of contents</h2>
+
+                <table>
+                    <caption>What the table of contents has to do</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Requirement</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>T1</td><td>The table of contents gives what the document holds, in the order it is read.</td></tr>
+                    <tr><td>T2</td><td>The author chooses how deep the table goes.</td></tr>
+                    <tr><td>T3</td><td>Following an entry leads to the passage it names.</td></tr>
+                    <tr><td>T4</td><td>The table is read as a hierarchy: what belongs to what is seen without being read.</td></tr>
+                    <tr><td>T5</td><td>An entry bears the number of what it names, and names a chapter left out of the numbering without one.</td></tr>
+                    <tr><td>T6</td><td>The table can stand beside the document, and step aside when it is not used.</td></tr>
+                    <tr><td>T7</td><td>What brings it back is met before it is needed.</td></tr>
+                    <tr><td>T8</td><td>A document without a table is read all the same.</td></tr>
+                    <tr><td>T9</td><td>Where the reader stands in the document is seen even when the table is not: a panel that is closed shows no entry, and a long document read without it leaves the reader with no idea of the way already gone.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="design" class="chapter">
+            <h1>How this was designed</h1>
+
+            <section class="ssection"><h2>MCC: who exchanges what</h2>
+
+                <table>
+                    <caption>The actors</caption>
+                    <thead><tr><th>Actor</th><th>What it does</th></tr></thead>
+                    <tbody>
+                    <tr><td>The author</td><td>Writes the chapters, the sections and the place of the table. Runs nothing</td></tr>
+                    <tr><td>The reader</td><td>Reads, and follows an entry of the table</td></tr>
+                    <tr><td>The program</td><td>Fills the table and ties each entry to its title</td></tr>
+                    <tr><td>The browser</td><td>Counts the numbers, and lays the document on the pages when it prints</td></tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <caption>The flows</caption>
+                    <thead><tr><th>No.</th><th>From</th><th>To</th><th>What</th></tr></thead>
+                    <tbody>
+                    <tr><td>F1</td><td>The author</td><td>The document</td><td>The chapters, the sections, the place of the table</td></tr>
+                    <tr><td>F2</td><td>The document</td><td>The program</td><td>The titles, in the order they are written</td></tr>
+                    <tr><td>F3</td><td>The program</td><td>The document</td><td>The entries of the table, and an anchor before each title</td></tr>
+                    <tr><td>F4</td><td>The reader</td><td>The program</td><td>An entry followed, the panel opened or closed</td></tr>
+                    <tr><td>F5</td><td>The browser</td><td>The reader</td><td>The document, its numbers counted</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>MCD: what the data are made of</h2>
+
+                <p>Three entities.</p>
+
+                <ul>
+                    <li><b>DOCUMENT</b>, what the author wrote in one piece. It holds the
+                        chapters, and the place of the table when there is one.</li>
+                    <li><b>TITLE</b>, known by its place in the order of the document. It has a
+                        level, a text, and says whether what holds it is numbered.</li>
+                    <li><b>ENTRY</b>, what the table holds. It exists only for a title, and
+                        leads to it.</li>
+                </ul>
+
+                <table>
+                    <thead>
+                    <tr><th>Association</th><th>Leg 1</th><th>Leg 2</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>is made of</td><td>DOCUMENT (1,n)</td><td>TITLE (1,1)</td></tr>
+                    <tr><td>leads to</td><td>ENTRY (1,1)</td><td>TITLE (0,1)</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Two things are computed, never stored: the number of a title, which the
+                    stylesheet counts, and the depth of an entry, which its level gives.</p>
+
+                <p>Two rules the keys do not hold: the entries follow the order of the titles;
+                    a title has at most one entry.</p>
+            </section>
+
+            <section class="ssection"><h2>MCT: the three operations</h2>
+
+                <p><b>Op1, number the document.</b></p>
+
+                <p><i>Triggered when</i>: the document is rendered.</p>
+
+                <p><i>Produces</i>: every chapter, section and sub-section bearing its number,
+                    counted in the order they are written. A chapter left out of the numbering
+                    produces none, and does not spend a number.</p>
+
+                <p>Op1 is run by the browser, from the stylesheet. It is written as an
+                    operation because it produces something a reader sees, and because what
+                    the table shows of a number depends on it.</p>
+
+                <p><b>Op2, fill the table of contents.</b></p>
+
+                <p><i>Triggered when</i>: the page opens, and a place for the table is there.</p>
+
+                <p><i>Produces</i>: one entry per title of the levels asked for, in the order
+                    of the document, each saying its level and leading to its title. Without a
+                    place for the table, nothing is produced and nothing is said.</p>
+
+                <p><b>Op3, reach a title.</b></p>
+
+                <p><i>Triggered when</i>: the reader follows an entry.</p>
+
+                <p><i>Produces</i>: the title is shown and read. What it takes to show it
+                    depends on the support: on a page it is brought under the eyes, and in a
+                    presentation the support carrying it becomes the one shown — which is
+                    <a href="slides-design.html">the slides pagination</a>, where that treatment
+                    is modelled for every renvoi of a document.</p>
+
+                <p>Two requirements are not operations: a document without a table is displayed
+                    all the same, and the numbers are never written in the source.</p>
+            </section>
+
+            <section class="ssection"><h2>MOT: where, when, and by whom</h2>
+
+                <p>In the browser of whoever opens the page. Two moments: the request for the
+                    page, once, and a request inside the page, once per request.</p>
+
+                <table>
+                    <thead>
+                    <tr><th>PF</th><th>What it does</th><th>When</th><th>Where it comes out</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>PF1</td><td>Numbers the document</td><td>Request for the page</td><td>Page and paper</td></tr>
+                    <tr><td>PF2</td><td>Fills the table of contents</td><td>Request for the page</td><td>Page</td></tr>
+                    <tr><td>PF3</td><td>Reaches a title</td><td>Request in the page</td><td>Page</td></tr>
+                    </tbody>
+                </table>
+
+                <p>PF2 happens after the contents the program builds, a bibliography being one
+                    of them: a table filled before them would miss their titles.</p>
+            </section>
+
+            <section class="ssection"><h2>MLD: the tables</h2>
+
+                <ul>
+                    <li><b>DOCUMENT</b> (<u>document_id</u>, place_of_the_table)</li>
+                    <li><b>TITLE</b> (<u>document_id</u>, <u>place</u>, level, text, numbered)</li>
+                    <li><b>ENTRY</b> (<u>place_of_the_title</u>, level, numbered)</li>
+                </ul>
+
+                <p>A title exists only in the document where it is written, so it carries its
+                    identifier, and its place tells it from the others. An entry is known by
+                    the title it leads to: there is no entry without a title.</p>
+
+                <p>Not in the tables: the number of a title, and the depth of an entry. Both
+                    are computed.</p>
+            </section>
+
+            <section class="ssection"><h2>MPD: where each table exists</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Table</th><th>In the source</th><th>While running</th><th>On screen</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>DOCUMENT</td><td>the element holding the chapters</td><td>that same element</td><td>the document</td></tr>
+                    <tr><td>TITLE</td><td>a heading written in a chapter</td><td>that same element, in document order</td><td>the title, and its number counted by the stylesheet</td></tr>
+                    <tr><td>ENTRY</td><td>nothing</td><td>a list item holding a link</td><td>a line of the table of contents</td></tr>
+                    </tbody>
+                </table>
+
+                <p>An entry carries the level of its title as a class, and the mention that its
+                    chapter is left out of the numbering. That is the one thing a stylesheet
+                    cannot read from the table itself, the entry standing far from the chapter
+                    it belongs to.</p>
+
+                <p>An anchor is written before each title, and the entry leads to it rather
+                    than to the title: an anchor takes no room and changes nothing to what the
+                    author wrote.</p>
+            </section>
+
+            <section class="ssection"><h2>MOpT: where the code goes</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>numbering</td><td>Counts the chapters, the sections and the sub-sections, and writes their numbers</td><td>PF1</td></tr>
+                    <tr><td>table</td><td>Reads the titles and fills the table</td><td>PF2</td></tr>
+                    <tr><td>panel</td><td>Opens and closes the table standing beside the document, and puts what opens it in the navigation</td><td>PF2</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Written where each is: the table and the panel in
+                    <code>wexa_statics/js/extras/book.js</code>, the numbering in
+                    <code>wexa_statics/css/extras/book.css</code>. The numbering holds no
+                    treatment of its own: it counts what is written, and a stylesheet counts.</p>
+            </section>
+
+            <section class="ssection"><h2>UML, and where it is written</h2>
+
+                <p>One class, <code>Book</code>, which carries the table and the panel. The
+                    document and its titles are read where they are written, and are not
+                    carried by classes of their own: nothing is computed on them that would
+                    have to be kept.</p>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="signatures" class="chapter">
+            <h1>The contracts</h1>
+
+            <section class="ssection"><h2>How to read them</h2>
+
+                <p><i>pre</i> is what has to be true on the way in, and what the operation does
+                    not check; <i>post</i> is what the caller can count on. The types are the
+                    ones written in the JSDoc.</p>
+            </section>
+
+            <section class="ssection"><h2>Book</h2>
+
+                <table>
+                    <caption>Book</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>constructor</td><td>(id_headings, id_toc)</td><td>pre: none. post: a document whose place for the table is missing is left alone; a table standing in a panel gets what opens it, in the navigation of the page. Never raises</td></tr>
+                    <tr><td>set_html_tags</td><td>(tags: String): void</td><td>pre: the tags are those of headings. post: the levels taken by the table are those tags, h1 to h4 having been taken until then</td></tr>
+                    <tr><td>del_html_tags</td><td>(tags: String): void</td><td>post: those levels are no longer taken</td></tr>
+                    <tr><td>fill_table</td><td>(only_numerate_headings: Boolean): void</td><td>pre: none. post: one entry per title of the levels taken, in the order of the document, each saying its level and whether its chapter is numbered, and leading to an anchor written before its title. Nothing is produced when there is no place for the table</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <!-- ---------------------------------------------------------------- -->
+
+        <section id="tests" class="chapter">
+            <h1>What is tested, and where</h1>
+
+            <section class="ssection"><h2>With a document</h2>
+
+                <p><code>Book</code> reads a document and writes in it, so it is checked on
+                    written markup: the entries follow the order of the titles, an entry says
+                    the level of the title it names, a chapter left out of the numbering gives
+                    an entry that says so, and a document without a place for the table is left
+                    untouched.</p>
+
+                <p>The tests are in <code>wexa_statics/js/tests/</code>, one file per class, and
+                    are run by <code>tests.html</code>.</p>
+            </section>
+
+            <section class="ssection"><h2>What no test covers</h2>
+
+                <p>The numbering, which a stylesheet counts, and what a printed page does with
+                    a chapter. Both are read on a page, and neither is asserted.</p>
+            </section>
+        </section>
+
+    </main>
+
+    <!-- ---------------------------------------------------------------- -->
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            Wexa.links.handleLinksWithParameters(['btn-back']);
+        });
+    </script>
+
+    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                            t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                            t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        window.themes = t;
+                    }
+                });
+            } else {
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+            themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+            themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        window.themes = themes;
+    </script>
+
+    </body>
+</html>

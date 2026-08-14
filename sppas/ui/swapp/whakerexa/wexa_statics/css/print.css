@@ -41,10 +41,6 @@ This banner notice must not be removed.
    ----------------------------------------------------------------------- */
 
 @page {
-    /*margin-top:    var(--print-margin-top);
-    margin-right:  var(--print-margin-right);
-    margin-bottom: var(--print-margin-bottom);
-    margin-left:   var(--print-margin-left);*/
     @bottom-center {
         content: counter(page);
         font-size: 9pt;
@@ -67,7 +63,6 @@ This banner notice must not be removed.
 
     --bg-color: white;
     --fg-color: black;
-    --font-size: 11pt;
 
     --print-margin-top:    2.5cm;
     --print-margin-right:  2.5cm;
@@ -86,8 +81,8 @@ html, body {
    ----------------------------------------------------------------------- */
 
 body > header {
-    background: white;
-    color: black;
+    /*background: var(--bg-color);
+    color: black;*/
     border-bottom: 1pt solid black;
     padding: 0.5cm 0;
     margin-bottom: 1cm;
@@ -95,8 +90,8 @@ body > header {
 }
 
 body > header * {
-    background: transparent;
-    color: black;
+    /*background: transparent;
+    color: black;*/
 }
 
 body > header nav {
@@ -108,16 +103,16 @@ body > header nav {
    ----------------------------------------------------------------------- */
 
 body > footer {
-    background: white;
-    color: black;
+    /*background: white;
+    color: black;*/
     border-top: 1pt solid black;
     font-size: 10pt;
     margin-top: 1cm;
 }
 
 body > footer * {
-    background: transparent;
-    color: black;
+    /*background: transparent;
+    color: black;*/
 }
 
 body > footer nav {
@@ -197,15 +192,16 @@ body > header {
     page-break-after: always;
     break-after: always;
     border: none;
-    background: white;
-    color: black;
+    /*background: white;
+    color: black;*/
     margin: 0;
     padding: 0;
 }
 
 body > header * {
-    background: transparent;
+    /*background: transparent;
     color: black;
+     */
 }
 
 #toc-content {
@@ -226,7 +222,9 @@ body > header * {
     break-after: always;
 }
 
-.chapter > h1::before {
+.chapter > h1,
+.chapter > h1::before,
+.ssection h2 {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
 }
@@ -247,8 +245,8 @@ aside.book-toc-aside {
     margin: 0;
     font-size: 90%;
     overflow: unset;
-    background-color: white;
-    color: var(--a-color);
+    /*background-color: white;
+    color: var(--a-color);*/
     box-shadow: none;
     text-align: left;
     transform: none;
@@ -263,7 +261,11 @@ aside.book-toc-aside::after {
     break-after: always;
 }
 
+/* The universal selector does not reach a pseudo-element, and the number of
+   an entry of the table of contents is one. */
 nav.book-toc *:not([role=button]),
-aside.book-toc-aside *:not([role=button]) {
+nav.book-toc li::before,
+aside.book-toc-aside *:not([role=button]),
+aside.book-toc-aside li::before {
     color: var(--a-color);
 }

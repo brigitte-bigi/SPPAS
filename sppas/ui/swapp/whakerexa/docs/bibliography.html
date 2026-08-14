@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Bibliography • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, bibtex"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/bibbook.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Book &gt; Bibliography</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="description" class="chapter">
+            <h1>Description</h1>
+
+            <section class="ssection"><h2>Overview</h2>
+                <p>This page demonstrates a <b>bibliography inside a book</b>: references are cited
+                    in the running text, numbered in the order they appear, and gathered in a table
+                    at the end of the document.</p>
+
+                <p>A reference is numbered the first time it is cited. Every later citation of the
+                    same reference carries that same number. There is a single sequence of numbers
+                    for the whole document, and reloading the page gives the same numbers, because
+                    the order of the text does not change.</p>
+
+                <p>The bibliography itself does not depend on the citations: it lists what the
+                    BibTeX data contains. A page without any citation still gets its table — see
+                    <a href="publications.html">publications.html</a>.</p>
+
+                <p>How the bibliography is designed, what it does not do and why:
+                    <a href="bibliography-design.html">bibliography-design.html</a>.</p>
+
+            </section>
+
+            <section class="ssection"><h2>How to use</h2>
+                <p>Four steps: write the data, cite in the text, add the placeholder, call the JS API.</p>
+
+                <article class="card-doc" aria-label="HTML — the stylesheet a bibliography needs">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>One stylesheet, and one only. A bibliography is a table that sorts and
+                            whose columns are shown or hidden; <code>bibbook.css</code> brings what
+                            it is built with, so a page has nothing else to know.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;link rel="stylesheet" href="wexa_statics/css/extras/bibbook.css"&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="HTML — BibTeX data">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Put the BibTeX entries in a <code>pre</code> element. Keep it hidden, and
+                            reveal it when JavaScript is disabled, so that the data stays readable.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;noscript&gt;
+    &lt;style&gt; #bibtex { display: block; } &lt;/style&gt;
+&lt;/noscript&gt;
+
+&lt;pre id="bibtex" hidden&gt;
+@inproceedings{bigi2022lrec,
+    author = {Brigitte Bigi and Maryvonne Zimmermann and Carine André},
+    ...
+}
+&lt;/pre&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="HTML — a citation">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Cite with a <code>span</code> carrying a <code>data-bibtex</code> attribute.
+                            A <code>span</code> is allowed between two words of a sentence. Write a
+                            readable citation inside: it is replaced by the number, and it is what the
+                            reader gets when JavaScript is unavailable or has not loaded.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;p&gt;The corpus is described in
+    &lt;span data-bibtex="bigi2022lrec"&gt;Bigi et al., 2022&lt;/span&gt;.&lt;/p&gt;
+
+&lt;!-- with JavaScript:    The corpus is described in [1]. --&gt;
+&lt;!-- without JavaScript: The corpus is described in Bigi et al., 2022. --&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="HTML — bibliography placeholder">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Add an empty element where the table is to be placed.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;div id="bibliography"&gt;&lt;/div&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="JavaScript — BookBibliography API">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Instantiate <code>BookBibliography</code> with the id of the data, the id of
+                            the placeholder, and the id of the content to scan for citations. Then call
+                            <code>run()</code>, which returns a promise.</p>
+                    </div>
+                    <pre class="dark"><code>const biblio = new BookBibliography('bibtex', 'bibliography', 'main-content');
+biblio.run();</code></pre>
+                </article>
+            </section>
+
+            <section class="ssection"><h2>What a citation gives</h2>
+
+                <table>
+                    <caption>Reading a citation, on screen and with a screen reader</caption>
+                    <thead>
+                    <tr>
+                        <th>Case</th>
+                        <th>On screen</th>
+                        <th>Screen reader</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>The key names a reference</td>
+                        <td>The number, in square brackets.</td>
+                        <td>"Reference", then the number. Never the brackets.</td>
+                    </tr>
+                    <tr>
+                        <td>The key names nothing</td>
+                        <td><code>[?]</code>, and no number is given.</td>
+                        <td>"Missing reference".</td>
+                    </tr>
+                    <tr>
+                        <td>JavaScript does not run</td>
+                        <td>What is written inside the <code>span</code>.</td>
+                        <td>The same, as part of the sentence.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>A citation opens on demand: the full reference, its abstract, its BibTeX source and
+                    its links, without leaving the sentence and without scrolling the page. Several may
+                    stay open at once, and none closes on its own. Keys that name nothing are reported
+                    through <code>Wexa.logger</code>.</p>
+
+                <p>A link goes from a citation to its entry in the bibliography, and from that entry
+                    back to every place where it is cited.</p>
+            </section>
+
+            <section class="ssection"><h2>CSS classes</h2>
+
+                <p>Everything the bibliography writes carries a class, and
+                    <code>bibbook.css</code> only styles what a bibliography needs to be read:
+                    the rest is left to whoever writes the document. An unlayered rule of your
+                    own wins over the ones of the framework, so overriding any of these takes
+                    no <code>!important</code> and no complex selector.</p>
+
+                <h3>A reference</h3>
+
+                <p>A reference is written in three lines: who wrote it, what it is called, and
+                    where it came out. The three names never change, whatever the type of the
+                    entry, so a stylesheet can lay them out side by side, wrap them, or reorder
+                    them.</p>
+
+                <article class="card-doc" aria-label="CSS — laying out the three lines">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>The three lines, side by side rather than one under the other.</p>
+                    </div>
+                    <pre class="dark"><code>.bib-reference {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}</code></pre>
+                </article>
+
+                <table>
+                    <caption>What a reference is made of</caption>
+                    <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>On</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><code>.bib-line</code></td>
+                        <td><code>span</code></td>
+                        <td>One of the three lines of a reference. Displayed as a block.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-line-authors</code>, <code>.bib-line-title</code>,
+                            <code>.bib-line-source</code></td>
+                        <td><code>span.bib-line</code></td>
+                        <td>Which line it is: the signatories and the year, the title, where it came out.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-author</code>, <code>.bib-title</code>, <code>.bib-journal</code>, …</td>
+                        <td><code>span</code></td>
+                        <td>One field, named <code>bib-</code> followed by the name of the BibTeX field.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-missing</code></td>
+                        <td><code>span</code></td>
+                        <td>A field the type cannot do without, and that the entry does not have.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-actions</code></td>
+                        <td><code>div</code></td>
+                        <td>Under the reference: what leads to the publication, and what opens on demand.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-link</code></td>
+                        <td><code>a.external-link</code></td>
+                        <td>One address of the publication. What it says is read in the address itself.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-backlink</code></td>
+                        <td><code>a</code></td>
+                        <td>Back to one place of the text where the reference is cited.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h3>The table</h3>
+
+                <table>
+                    <caption>The table of the bibliography</caption>
+                    <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>On</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><code>.bib-table</code></td>
+                        <td><code>table</code></td>
+                        <td>The whole bibliography. Its <code>id</code> comes from the element it is put in.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-row</code></td>
+                        <td><code>tr</code></td>
+                        <td>One reference. Its <code>id</code> is <code>bib-</code> and the BibTeX key.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-striped</code></td>
+                        <td><code>tr</code></td>
+                        <td>One row out of two, counting the references alone. Applied by the code.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-opened-row</code></td>
+                        <td><code>tr</code></td>
+                        <td>A content that opens, across the whole table, right after its reference.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-number</code>, <code>.bib-year</code>, <code>.bib-reference</code></td>
+                        <td><code>td</code></td>
+                        <td>The three cells. The number column only exists when something is cited.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-controls</code>, <code>.bib-search-field</code>, <code>.bib-columns</code></td>
+                        <td><code>div</code>, <code>input</code>, <code>div</code></td>
+                        <td>The line written before the table: the field a word is searched from, and the columns to show.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-announcement</code></td>
+                        <td><code>p[role=status]</code></td>
+                        <td>What changed after a search or a sort, said as well as shown.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h3>What opens</h3>
+
+                <table>
+                    <caption>Contents that open on demand, and citations</caption>
+                    <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>On</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><code>.bib-disclosure-control</code></td>
+                        <td><code>button[aria-expanded]</code></td>
+                        <td>What opens and closes a content. It says itself whether it is open.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-disclosure-content</code></td>
+                        <td><code>td</code></td>
+                        <td>What it opens, with <code>.bib-disclosure-abstract</code> or
+                            <code>.bib-disclosure-source</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-citation-control</code></td>
+                        <td><code>button</code></td>
+                        <td>The number of a citation, inside the sentence.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-citation-content</code></td>
+                        <td><code>span</code></td>
+                        <td>The whole reference, read without leaving the sentence.</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bib-citation-link</code>, <code>.bib-citation-part</code>,
+                            <code>.bib-citation-text</code></td>
+                        <td><code>a</code>, <code>span</code></td>
+                        <td>Inside it: the link to the bibliography, a named part, what it says.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </section>
+
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="demo" class="chapter">
+            <h1>Demonstration</h1>
+
+            <section class="ssection"><h2>Citations in a running text</h2>
+
+                <p>The paragraphs below cite five keys. The first three are cited once each, in the
+                    order they appear, and take the numbers 1, 2 and 3. The fourth citation repeats
+                    the first key, and carries the number 1 again. The last one names a key that no
+                    entry defines.</p>
+
+                <p>A corpus of French Cued Speech is described in
+                    <span data-bibtex="bigi2022lrec">Bigi et al., 2022</span>, and the kinds of data
+                    collected when studying spoken language are discussed in
+                    <span data-bibtex="ghio2023dunod">Ghio &amp; Bigi, 2023</span>. Tools and
+                    principles for corpus annotation are gathered in
+                    <span data-bibtex="bigi2022tipa">Amoyal et al., 2022</span>.</p>
+
+                <p>The same corpus <span data-bibtex="bigi2022lrec">Bigi et al., 2022</span> is cited
+                    a second time here, and keeps its first number. Resources for a less-resourced
+                    language are presented in
+                    <span data-bibtex="pakrashi2026">Pakrashi et al., 2026</span>.</p>
+
+                <p>This last citation <span data-bibtex="missing2026key">Nobody, 2026</span> names a
+                    key that no entry defines: it stays visible, says that it is missing, and receives
+                    no number.</p>
+            </section>
+
+            <section class="ssection"><h2>Bibliography</h2>
+
+                <div id="bibliography"></div>
+
+            </section>
+
+        </section>
+
+    <noscript>
+        <style> #bibtex { display: block; } </style>
+    </noscript>
+
+    <pre id="bibtex" hidden>
+
+@article{pakrashi2026,
+	TITLE = "Resources Creation of Bengali for SPPAS",
+	AUTHOR = {Moumita Pakrashi and Brigitte Bigi and Shakuntala Mahanta},
+	JOURNAL = "Journal of Information and Telecommunication",
+	PUBLISHER = "Elsevier",
+	YEAR = "2026",
+	URL = "https://www.tandfonline.com/doi/full/10.1080/24751839.2025.2611605",
+	NOTE = "https://hal.science/hal-05474165",
+	ABSTRACT = {
+	The development of HLT (Human Language Technology) tools inevitably involves the need for
+	language resources. However, only a handful of languages possess such resources for free.
+	This paper presents the development of such speech tools for the Bengali language. It focuses
+	particularly on developing language resources for text normalisation, phonetization,
+	forced-alignment and syllabification of Bengali.
+	}
+}
+
+@InProceedings{bigi2022lrec,
+	author    = {Brigitte Bigi and Maryvonne Zimmermann and Carine André},
+	title     = {CLeLfPC: a Large Open Multi-Speaker Corpus of French Cued Speech},
+	booktitle = {Proceedings of The 13th Language Resources and Evaluation Conference},
+	year      = {2022},
+	address   = {Marseille, France},
+	publisher = {European Language Resources Association},
+	pages     = {987-994},
+	url = {http://www.lrec-conf.org/proceedings/lrec2022/pdf/2022.lrec-1.104.pdf},
+	note = {https://hal.archives-ouvertes.fr/hal-03794830},
+	abstract  = {Cued Speech is a communication system developed for deaf people to complement
+	speechreading at the phonetic level with hands. This paper describes CLeLfPC, a corpus of
+	French Cued Speech. It consists in about 4 hours of audio and HD video recordings of 23
+	participants.}
+}
+
+@InBook{ghio2023dunod,
+	chapter = {{Etudier le langage oral : les diff{\'e}rents types de donn{\'e}es recueillies}},
+	author = {Alain Ghio and Brigitte Bigi},
+	title = {{Introduction aux statistiques en sciences du langage}},
+	editor = {Clara Solier and Lucille Soulier and Nour Ezzedine},
+	publisher = {{Dunod}},
+	pages = {7-36},
+	year = {2023},
+	note = {https://hal.science/hal-04248428}
+}
+
+@Article{bigi2022tipa,
+	title = {Principes et outils pour l'annotation des corpus},
+	author = {Mary Amoyal and Roxane Bertrand and Brigitte Bigi and Auriane Boudin and Christine Meunier and Berthille Pallaud and Béatrice Priego-Valverde and Stéphane Rauzy and Marion Tellier},
+	journal = {Travaux interdisciplinaires sur la parole et le langage},
+	pages = {186-234},
+	year = {2022},
+	volume = {38},
+	publisher={OpenEdition},
+	url = {https://doi.org/10.4000/tipa.5424},
+	note = {https://hal.science/hal-03917814},
+}
+
+@techreport{bigi2015tutohk2,
+	author={Brigitte Bigi},
+	title={Methodology and software for the semi-automatic annotation of speech},
+	year = {2015},
+	institution = {Tutorial at Poly U, Hong Kong},
+	url = {http://sppas.org/bigi/Doc/2015-SPPAS-Tutorial-HongKong/pdf/SPPAS-tutorial-Handout.pdf},
+	howpublished = {Documentation}
+}
+
+@dataset{demo2026unknown,
+	title = {An entry with an unknown type and missing fields}
+}
+
+    </pre>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+
+	<script>
+		window.addEventListener('load', () => {
+			Wexa.links.handleLinksWithParameters(['btn-back']);
+		});
+	</script>
+
+	<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+	<script>
+		(function () {
+			const usingFile = (window.location.protocol === 'file:');
+			const s = document.createElement('script');
+			if (usingFile) {
+				s.src = '../wexa_statics/js/wexa.bundle.js';
+				s.addEventListener('load', function () {
+					if (window.Wexa && window.Wexa.ThemeManager) {
+						const t = new window.Wexa.ThemeManager();
+							t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+							t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+						t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+						window.themes = t;
+					}
+					if (window.Wexa && window.Wexa.BookBibliography) {
+						bootBibliographyDemo(window.Wexa.BookBibliography);
+					}
+				});
+			} else {
+				s.type = 'module';
+				s.src = '../wexa_statics/js/wexa.js';
+			}
+			document.head.appendChild(s);
+		})();
+	</script>
+	<script type="module">
+		import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+		const themes = new ThemeManager();
+			themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+			themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+		themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+		window.themes = themes;
+	</script>
+    <script>
+        function bootBibliographyDemo(BookBibliography) {
+            const biblio = new BookBibliography('bibtex', 'bibliography', 'main-content');
+            biblio.run();
+        }
+    </script>
+    <script type="module">
+        import { BookBibliography } from '../wexa_statics/js/extras/book/bibbook.js';
+        bootBibliographyDemo(BookBibliography);
+    </script>
+
+    </body>
+</html>

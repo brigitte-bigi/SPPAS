@@ -160,6 +160,114 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
+        <h2>Script blocks</h2>
+        <p>
+            Every family is cut into <code>unicode-range</code> subsets, one file per
+            script block. A block travels only when the page holds one of its
+            characters: an English or a French page never fetches the Greek or the
+            Cyrillic outlines, and no character is ever lost since the blocks cover
+            the whole font.
+        </p>
+        <p>
+            To watch it happen, open the network panel of the browser, filter it on
+            fonts and reload this page: besides the latin block every page needs,
+            the samples below pull the files facing them, and no other. A sample
+            rendered in another typeface than its neighbours means its subset
+            failed to load.
+        </p>
+        <p>
+            The accessible font follows the same rule. Press the contrast button of
+            the navigation bar: every family is replaced by <code>ContrastFont</code>,
+            and the samples above pull the AccessibleDfA subsets instead.
+        </p>
+        <p>
+            AccessibleDfA does not draw every script, though. It knows the latin
+            letters, the phonetic characters and a handful of Greek and Cyrillic
+            ones, and nothing more. A subset holds the characters the font really
+            draws, so the Greek and the Cyrillic samples fall back to the sans
+            family in contrast mode and stay readable, where a font announcing a
+            character it leaves empty would show nothing at all.
+        </p>
+
+        <article class="card-doc" aria-label="Script blocks — example">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                <table>
+                    <caption>Samples of one script block each, and the file they pull in either mode</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Block</th>
+                            <th scope="col">Sample</th>
+                            <th scope="col">Standard mode</th>
+                            <th scope="col">Contrast mode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">latin</th>
+                            <td class="font-sans">A a Z z 0 9 é ü ñ</td>
+                            <td><code>Commissioner-latin.woff2</code></td>
+                            <td><code>AccessibleDfA-Regular-latin.woff2</code></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">latin extended</th>
+                            <td class="font-sans">Ā ă ą Ć ď Ē ŵ Ź</td>
+                            <td><code>Commissioner-latin-ext.woff2</code></td>
+                            <td><code>AccessibleDfA-Regular-latin-ext.woff2</code></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">vietnamese</th>
+                            <td class="font-sans">Ạ ạ Ậ ậ Ệ ệ Ọ ọ</td>
+                            <td><code>Commissioner-vietnamese.woff2</code></td>
+                            <td><code>AccessibleDfA-Regular-vietnamese.woff2</code></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">greek</th>
+                            <td class="font-sans">Α β Γ δ Ω ω</td>
+                            <td><code>Commissioner-greek.woff2</code></td>
+                            <td><code>Commissioner-greek.woff2</code>, by fallback</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">cyrillic</th>
+                            <td class="font-sans">В Е М Н О Р С Т а е о р с х</td>
+                            <td><code>Commissioner-cyrillic.woff2</code></td>
+                            <td><code>AccessibleDfA-Regular-cyrillic.woff2</code></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">cyrillic extended</th>
+                            <td class="font-sans">Ѣ Ѳ Ҩ Ӂ Ԑ</td>
+                            <td><code>Commissioner-cyrillic-ext.woff2</code></td>
+                            <td><code>Commissioner-cyrillic-ext.woff2</code>, by fallback</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">other</th>
+                            <td class="font-sans">∅ ∂ ∆ ∏ ∑ √ ∞ ∫ ≈ ≠ ≤ ≥ ◊ ﬁ ﬂ</td>
+                            <td><code>Commissioner-other.woff2</code></td>
+                            <td><code>AccessibleDfA-Regular-other.woff2</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre class="dark"><code>@font-face {
+    font-family: SansFont;
+    src: url('../fonts/Commissioner-greek.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+0374-0375, U+037E, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE, U+03D7;
+}
+
+@font-face {
+    font-family: ContrastFont;
+    src: url('../fonts/AccessibleDfA-Regular-greek.woff2') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+    unicode-range: U+0374-0375, U+037A-037E, U+0384-03FF;
+}</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
         <h2>Font weights</h2>
         <p>
             Four weight classes are available: <code>.font-weight-thin</code>,

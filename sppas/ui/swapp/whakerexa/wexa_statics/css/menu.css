@@ -39,27 +39,31 @@ This banner notice must not be removed.
     /* Default behavior is an horizontal menu, with a min height and no
     min width. For a side menu, fix a min-height to 0 and the desired min
     width.  */
-    --nav-min-height: max(calc(4rem / var(--size-divisor)), 3rem);
+    --nav-min-height: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
     --nav-min-width: 0;
 
     /* All menu items */
-    --nav-item-min-height: max(calc(2rem / var(--size-divisor)), 2rem);
-    --nav-item-height: max(calc(2.5rem / var(--size-divisor)), 2.5rem);
-    --nav-item-max-height: max(calc(3rem / var(--size-divisor)), 3rem);
+    --nav-item-min-height: max(calc(var(--font-size) * 2 / var(--size-divisor)), calc(var(--font-size) * 2));
+    --nav-item-height: max(calc(var(--font-size) * 2.5 / var(--size-divisor)), calc(var(--font-size) * 2.5));
+    --nav-item-max-height: max(calc(var(--font-size) * 3 / var(--size-divisor)), calc(var(--font-size) * 3));
 
-    --nav-item-min-width-h: max(calc(6rem / var(--size-divisor)), 4rem);
-    --nav-item-width-h: max(calc(8rem / var(--size-divisor)), 6rem);
-    --nav-item-max-width-h: max(calc(15rem / var(--size-divisor)), 12rem);
+    /* An item gives up its own width before the row wraps. */
+    --nav-item-min-width-h: min-content;
+    --nav-item-width-h: max(calc(var(--font-size) * 8 / var(--size-divisor)), calc(var(--font-size) * 6));
+    --nav-item-max-width-h: max(calc(var(--font-size) * 15 / var(--size-divisor)), calc(var(--font-size) * 12));
 
     /* Vertical side widths */
-    --nav-expanded-width: max(calc(16rem / var(--size-divisor)), 14rem); /* open side */
+    --nav-expanded-width: max(calc(var(--font-size) * 16 / var(--size-divisor)), calc(var(--font-size) * 14)); /* open side */
+
+    /* A nav narrower than a third of a phone screen makes no sense. */
+    --nav-mobile-expanded-width: min(80vw, calc(var(--font-size) * 30));
     --nav-item-width-v-collapsed: var(--nav-min-width);
     --nav-item-width-v-expanded: var(--nav-expanded-width);
 
     --appmenu-position: left;
     --appmenu-align: left top;
 
-    --menu-button-size: max(calc(4rem / var(--size-divisor)), 3rem);
+    --menu-button-size: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
 }
 
 
@@ -67,9 +71,15 @@ This banner notice must not be removed.
                             OVERRIDES STYLE
   ======================================================================== */
 
+/* The bar keeps, above and below its items, the room the focus outline is
+   drawn in. Without it that room is what is left over when the bar is asked to
+   be taller than its items, so lowering the height of the bar takes the outline
+   away with it, and the bar clips what its items draw outside themselves. */
 nav.nav-wexa {
     min-height: var(--nav-min-height);
     min-width: var(--nav-min-width);
+    padding-top: var(--outline-size);
+    padding-bottom: var(--outline-size);
 }
 
 /* Required for a submenu positioning */
@@ -94,9 +104,9 @@ nav.nav-wexa input[type=checkbox] {
 nav#header-nav-content {
     position: absolute;
     bottom: auto;
-    top: 1rem;
+    top: calc(var(--font-size) * 1);
     left: auto;
-    right: 2rem;
+    right: calc(var(--font-size) * 2);
     background: transparent;
     box-shadow: none;
 }
@@ -137,8 +147,8 @@ nav.nav-wexa.top {
     right: 0;
     padding-left: var(--typography-spacing-horizontal);
     padding-right: var(--typography-spacing-horizontal);
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: var(--outline-size);
+    padding-bottom: var(--outline-size);
 }
 
 /* When the top menu is present, push down the page content */
@@ -155,8 +165,8 @@ nav.nav-wexa.bottom {
     right: 0;
     padding-left: var(--typography-spacing-horizontal);
     padding-right: var(--typography-spacing-horizontal);
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: var(--outline-size);
+    padding-bottom: var(--outline-size);
 }
 
 /* When the bottom menu is present, push up the page content */
@@ -227,7 +237,7 @@ body:has(nav.nav-wexa.side.collapsible.expanded[aria-pinned="true"]) {
    takes over visually and closes via the body click handler. */
 nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)),
 nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)),
-nav.nav-wexa.side.collapsible.expanded {
+nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) {
     width: var(--nav-expanded-width);
 }
 
@@ -245,10 +255,11 @@ nav.nav-wexa.side.collapsible.expanded {
     height:     var(--nav-item-height);
     max-height: var(--nav-item-max-height);
 
-    /* Horizontal defaults (used when not overridden) */
-    min-width: var(--nav-item-min-width-h);
-    width:     var(--nav-item-width-h);
-    max-width: var(--nav-item-max-width-h);
+    /* Horizontal defaults, used when not overridden. */
+    min-width:  var(--nav-item-min-width-h);
+    flex-basis: var(--nav-item-min-width-h);
+    width:      var(--nav-item-width-h);
+    max-width:  var(--nav-item-max-width-h);
 
     padding-left: calc(0.2 * var(--typography-spacing-horizontal));
     padding-right: calc(0.2 * var(--typography-spacing-horizontal));
@@ -270,8 +281,8 @@ nav.nav-wexa :is([role="menuitem"], .menuitem)[aria-current] {
 :is([role="menuitem"], .menuitem) > img,
 :is([role="menuitem"], .menuitem) > svg {
     display: block;
-    width: calc(1.8rem / var(--size-divisor));
-    height: calc(1.8rem / var(--size-divisor));
+    width: calc(var(--nav-item-height) * 0.9);
+    height: calc(var(--nav-item-height) * 0.9);
     cursor: pointer;
     margin: 0;
 }
@@ -353,15 +364,19 @@ nav.nav-wexa.side:not(.collapsible) :is([role="menuitem"], .menuitem) {
 
 /* ------------------ Expand side if collapsible --------------- */
 
-/* Collapsible — collapsed = icons only, labels hidden */
+/* Collapsible — collapsed = icons only, labels hidden. An open submenu
+   collapses the nav whatever opened it, so it collapses the items too. */
 nav.nav-wexa.side.collapsible:not(.expanded) > :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible:not(.expanded) > section > :is([role="menuitem"], .menuitem) {
+nav.nav-wexa.side.collapsible:not(.expanded) > section > :is([role="menuitem"], .menuitem),
+nav.nav-wexa.side.collapsible:has(aside.appmenu.open) > :is([role="menuitem"], .menuitem),
+nav.nav-wexa.side.collapsible:has(aside.appmenu.open) > section > :is([role="menuitem"], .menuitem) {
     min-width: var(--nav-item-width-v-collapsed);
     width:     var(--nav-item-width-v-collapsed);
     max-width: var(--nav-item-width-v-collapsed);
 }
 
-nav.nav-wexa.side.collapsible:not(.expanded) :is([role="menuitem"], .menuitem) span {
+nav.nav-wexa.side.collapsible:not(.expanded) :is([role="menuitem"], .menuitem) span,
+nav.nav-wexa.side.collapsible:has(aside.appmenu.open) :is([role="menuitem"], .menuitem) span {
     display: none;
 }
 
@@ -373,7 +388,7 @@ nav.nav-wexa.side.collapsible :is([role="menuitem"], .menuitem) {
 
 nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem),
 nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem),
-nav.nav-wexa.side.collapsible.expanded :is([role="menuitem"], .menuitem) {
+nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) {
     min-width: var(--nav-item-width-v-expanded);
     width:     var(--nav-item-width-v-expanded);
     max-width: var(--nav-item-width-v-expanded);
@@ -381,7 +396,7 @@ nav.nav-wexa.side.collapsible.expanded :is([role="menuitem"], .menuitem) {
 
 nav.nav-wexa.side.collapsible:hover:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span,
 nav.nav-wexa.side.collapsible:has(:is([role="menuitem"], .menuitem):focus-visible):not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span,
-nav.nav-wexa.side.collapsible.expanded :is([role="menuitem"], .menuitem) span {
+nav.nav-wexa.side.collapsible.expanded:not(:has(aside.appmenu.open)) :is([role="menuitem"], .menuitem) span {
     display: inline;
 }
 
@@ -409,7 +424,7 @@ nav.nav-wexa.side.collapsible.expanded :is([role="menuitem"], .menuitem) span {
 
 body > nav > * *:hover .submenu,
 body > nav > * *:focus-within .submenu {
-    box-shadow: 0 0.3rem 0.4rem 0.2rem var(--shadow-color);  /* same as 'nav' */
+    box-shadow: 0 calc(var(--font-size) * 0.3) calc(var(--font-size) * 0.4) calc(var(--font-size) * 0.2) var(--shadow-color);  /* same as 'nav' */
     position: absolute;
     display: flex;
     top: 100%;
@@ -459,41 +474,65 @@ body > nav > * *:focus-within .submenu {
     height: var(--menu-button-size);
 
     border-radius: 50%;
-    border: var(--border-width) solid var(--buttons-bg-color);
-    color: var(--buttons-fg-color);
+    /* A dark button outlined with its own color vanishes on a dark header. */
+    border: var(--border-width) solid var(--border-color);
+    color: var(--nav-fg-color);
     cursor: pointer;
 
     transition: background-color 0.2s ease, transform 0.1s ease;
 
-    background-color: var(--buttons-bg-color);
+    background-color: var(--nav-bg-color);
     padding: 0;
     z-index: 100;
 }
 
+/* The strokes are named here, and not left to the currentColor the icon
+   declares: that relay did not happen at rest, and the icon stayed the color it
+   had been given last, which no eye finds again on the white nav of the high
+   contrast theme. Why it held under the pointer and not at rest is not known.
+
+   This is written for this button alone. The same could be done for every icon
+   of a menu item, but not in one rule: an icon that is drawn asks for 'stroke',
+   an icon that is filled for 'fill', and giving 'fill' to one that declares
+   'fill: none' fills the shapes it draws with. */
 #menu-button > svg {
     width: 55%;
     height: 55%;
-    color: inherit;
+    stroke: var(--nav-fg-color);
 }
 
 #menu-button:hover {
-    background-color: var(--buttons-fg-color);
-    color: var(--buttons-bg-color);
+    background-color: var(--nav-fg-color);
+    color: var(--nav-bg-color);
     transform: scale(1.05);
+}
+
+#menu-button:hover > svg {
+    stroke: var(--nav-bg-color);
 }
 
 /* -------- mobile screen and print -------- */
 /* The code below is preserved but some is deprecated */
-@media screen and (max-width: 896px) {
+@media screen and (max-width: 1023.98px) {
     #menu-button {
         display: inline-flex;
     }
     nav.nav-wexa.side #pin-menu {
         display: none;
     }
+
+    /* A narrow screen leaves no room beside the title. */
+    nav#header-nav-content {
+        position: static;
+    }
 }
 
-@media all and (max-width: 896px) {
+@media all and (max-width: 1023.98px) {
+
+    /* Under the mobile border, the open side menu takes the mobile width */
+    :root {
+        --nav-expanded-width: var(--nav-mobile-expanded-width);
+    }
 
     /* Hide expanded side menu */
     nav.nav-wexa.side {
@@ -502,6 +541,7 @@ body > nav > * *:focus-within .submenu {
     nav.nav-wexa.side.expanded {
         display: flex;
     }
+
     /* Remove body left padding when side menu is hidden */
     body:has(nav.nav-wexa.side.collapsible) {
         padding-left: 0;
@@ -514,7 +554,7 @@ body > nav > * *:focus-within .submenu {
 
 /* ----------------------- 'nav' wide screens ---------------------- */
 
-@media only screen and (min-width: 896px) {
+@media only screen and (min-width: 1024px) {
     #menu-button {
         display: none;
     }
@@ -623,7 +663,7 @@ aside.appmenu[data-submenu-position="left"] {
     width: var(--nav-expanded-width);
     height: 100%;
     transition: left var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
-    box-shadow: 0.2rem 0 0.4rem var(--shadow-color);
+    box-shadow: calc(var(--font-size) * 0.2) 0 calc(var(--font-size) * 0.4) var(--shadow-color);
 }
 
 aside.appmenu[data-submenu-position="right"] {
@@ -633,7 +673,7 @@ aside.appmenu[data-submenu-position="right"] {
     width: var(--nav-expanded-width);
     height: 100%;
     transition: right var(--transition), visibility 0s 0.3s;  /* Transition only position and visibility */
-    box-shadow: 0 0.2rem 0.4rem var(--shadow-color);
+    box-shadow: 0 calc(var(--font-size) * 0.2) calc(var(--font-size) * 0.4) var(--shadow-color);
 }
 
 aside.appmenu[data-submenu-position="bottom"] {
@@ -765,7 +805,7 @@ nav.nav-wexa.bottom > :is([role="menuitem"], .menuitem) + section {
 }
 
 
-@media (min-width: 920px) {
+@media (min-width: 1024px) {
 
     nav.nav-wexa.side :is([role="menuitem"], .menuitem),
     nav.nav-wexa.top :is([role="menuitem"], .menuitem),
@@ -773,13 +813,13 @@ nav.nav-wexa.bottom > :is([role="menuitem"], .menuitem) + section {
     aside.appmenu nav :is([role="menuitem"], .menuitem) {
         flex-direction: row;
         align-items: center;
-        gap: 0.5rem;
+        gap: calc(var(--font-size) * 0.5);
         flex-grow: 1;
         width: auto;
     }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1023.98px) {
 
     nav.nav-wexa.side :is([role="menuitem"], .menuitem),
     nav.nav-wexa.top :is([role="menuitem"], .menuitem),
@@ -787,9 +827,10 @@ nav.nav-wexa.bottom > :is([role="menuitem"], .menuitem) + section {
     aside.appmenu nav :is([role="menuitem"], .menuitem) {
         flex-direction: row;
         align-items: center;
-        gap: 0.5rem;
-        width: 100%;
-        flex-grow: 1;
+        gap: calc(var(--font-size) * 0.5);
+        /* A mobile menu holds buttons of one fixed width, five to a row. */
+        flex: none;
+        width: calc((100% - 4 * calc(var(--font-size) / var(--size-divisor))) / 5);
         height: auto;
     }
 }

@@ -99,7 +99,7 @@
 
 /* ── Responsive: mobile nav width ────────────────────────── */
 
-@media screen and (max-width: 896px) {
+@media screen and (max-width: 1023.98px) {
     :root {
         --nav-expanded-width: clamp(
             calc(11rem / var(--size-divisor)),
@@ -147,29 +147,15 @@ body > main > h2 {
 
 /* ── Side navigation ─────────────────────────────────────── */
 
-/* was: nav#nav-content.nav-wexa.side:not(.dark) */
-:root:not(.dark) nav#nav-content.nav-wexa.side {
-    background: linear-gradient(180deg,
-        rgb(0, 0, 50) 0%,
-        rgb(10, 10, 60) 20%,
-        rgb(10, 40, 90) 40%,
-        rgb(70, 70, 140) 60%,
-        rgb(20, 100, 110) 100%);
-}
-
-.dark nav#nav-content.nav-wexa.side {
-    background: linear-gradient(180deg,
-        rgb(30, 0, 70) 0%,
-        rgb(35, 0, 75) 30%,
-        rgb(70, 15, 70) 50%,
-        rgb(100, 50, 90) 70%,
-        rgb(130, 60, 130) 100%);
+nav#nav-content.nav-wexa.side {
+    background-color: var(--nav-bg-color);
+    background-image: var(--nav-bg-image);
 }
 
 #nav-content [role='menuitem'],
 #nav-content .menuitem {
     color: var(--nav-fg-color);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--nav-item-bg-color);
     border-radius: 0.5rem;
     transition: background 0.25s ease, transform 0.15s ease, color 0.25s ease;
     border-width: calc(var(--border-width) / 2);
@@ -177,7 +163,7 @@ body > main > h2 {
 
 #nav-content [role='menuitem'][aria-pressed='true'],
 #nav-content .menuitem[aria-pressed='true'] {
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 0 0 2px var(--nav-item-pressed-shadow-color);
 }
 
 nav.nav-wexa button > span {
@@ -186,13 +172,13 @@ nav.nav-wexa button > span {
 
 #nav-content [role='menuitem']:hover,
 #nav-content .menuitem:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--nav-item-bg-color-hover);
     transform: translateX(3px);
     filter: brightness(1.3) saturate(1.1);
 }
 
 #nav-content .nav-current {
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--nav-item-bg-color-current);
     filter: brightness(0.8) saturate(0.9);
 }
 
@@ -215,14 +201,16 @@ main > .panel-item:nth-child(2n) .card-footer {
 /* ── Buttons ─────────────────────────────────────────────── */
 
 button:not(.menuitem), [role="button"]:not(.menuitem) {
-    background: var(--buttons-bg-color);
+    background-color: var(--buttons-bg-color);
+    background-image: var(--buttons-bg-image);
     padding: 0.6rem 1.2rem;
     border: var(--border-width) solid var(--border-color);
 }
 
 button:hover, [role='button']:hover {
     color: var(--buttons-fg-color);
-    background: var(--buttons-bg-color-hover);
+    background-color: var(--buttons-bg-color-hover);
+    background-image: var(--buttons-bg-image-hover);
 }
 
 /* ── Checkboxes ──────────────────────────────────────────── */
@@ -261,7 +249,8 @@ details summary {
     padding: 0.6rem 1rem;
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
-    background: var(--buttons-bg-color);
+    background-color: var(--buttons-bg-color);
+    background-image: var(--buttons-bg-image);
     color: var(--buttons-fg-color);
     font-weight: var(--font-weight-semibold);
 }
@@ -292,7 +281,7 @@ dialog[role=alertdialog].error {
 
 /* ── Mobile: header padding to clear the nav toggle button ── */
 
-@media only screen and (max-width: 896px) {
+@media only screen and (max-width: 1023.98px) {
     body > header {
         padding-left: var(--nav-item-min-width-h);
     }
@@ -326,7 +315,7 @@ dialog[role=alertdialog].error {
 }
 
 .footer-button:hover {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
 }
 
 .footer-button svg {
@@ -385,7 +374,7 @@ section.actions-panel {
 
 /* ── Logos ───────────────────────────────────────────────── */
 
-@media all and (min-width: 896px) {
+@media all and (min-width: 1024px) {
     .small-logo {
         max-height: 3.5rem;
         width: auto;
@@ -402,7 +391,7 @@ section.actions-panel {
     }
 }
 
-@media only screen and (max-width: 896px) {
+@media only screen and (max-width: 1023.98px) {
     .small-logo {
         height: auto;
         max-width: 3.5rem;
@@ -449,7 +438,7 @@ section.actions-panel {
     grid-row-gap: 1rem;
     place-items: center;
     border-radius: 1rem;
-    background: linear-gradient(120deg, rgb(22, 94, 122) 0%, rgb(167, 87, 199) 60%, rgb(245, 235, 162) 100%);
+    background: var(--apps-panel-bg-image);
 }
 
 .app {
@@ -463,13 +452,8 @@ section.actions-panel {
     transition: box-shadow 0.2s ease-in-out;
 }
 
-/* was: .app:not(.dark) — .dark is on :root, not on .app */
-:root:not(.dark) .app {
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-}
-
-.dark .app {
-    background: linear-gradient(0deg, rgba(0, 0, 45, 0.9) 0%, rgba(0, 0, 45, 0.7) 100%);
+.app {
+    background: var(--app-bg-image);
 }
 
 .app > * {
@@ -488,7 +472,7 @@ section.actions-panel {
     filter: brightness(0.9);
 }
 
-@media screen and (max-width: 896px) {
+@media screen and (max-width: 1023.98px) {
     .app-background-img {
         max-width: calc(10 * var(--font-size));
         max-height: calc(10 * var(--font-size));
@@ -498,7 +482,7 @@ section.actions-panel {
 .dark .app-background-img {
     filter: brightness(1.4);
     border-radius: calc(3*var(--border-radius));
-    box-shadow: 0 0 0 100vw rgb(255, 255, 255) inset;
+    box-shadow: 0 0 0 100vw var(--app-img-bg-color) inset;
 }
 
 .app-content {
@@ -534,6 +518,7 @@ section.actions-panel {
     width: fit-content;
     width: -moz-fit-content;
     line-height: 1em;
+    font-size: calc(var(--font-size) * 1.4);
 }
 
 .app-title::after {
@@ -570,18 +555,20 @@ section.actions-panel {
     font-weight: bold;
     border-radius: var(--border-radius);
     text-transform: uppercase;
-    box-shadow: 0 0 20px rgb(238, 238, 238);
+    box-shadow: 0 0 20px var(--app-button-shadow-color);
     font-size: calc(var(--font-size) * 1.125);
 }
 
 .app-button {
-    background: var(--buttons-bg-color) !important;
+    background-color: var(--buttons-bg-color) !important;
+    background-image: var(--buttons-bg-image) !important;
     transition: background-position .4s ease;
 }
 
 .app-button:hover {
     color: var(--buttons-fg-color);
-    background: var(--buttons-bg-color-hover) !important;
+    background-color: var(--buttons-bg-color-hover) !important;
+    background-image: var(--buttons-bg-image-hover) !important;
 }
 
 /* Hover/focus animation — only for pointer devices */
@@ -705,7 +692,7 @@ section.actions-panel {
     border: var(--border-width) solid var(--border-color);
     border-radius: 999px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 4px var(--toc-shadow-color);
 }
 
 .page-toc a * {
@@ -713,11 +700,11 @@ section.actions-panel {
 }
 
 .page-toc a:hover {
-    border-color: rgb(110, 168, 108);
+    border-color: var(--toc-border-color-hover);
 }
 
 .page-toc a:focus-visible {
-    outline: 4px solid rgb(130, 60, 130);
+    outline: 4px solid var(--toc-outline-color);
     outline-offset: 3px;
 }
 
@@ -728,8 +715,8 @@ section.actions-panel {
     align-self: stretch;
     font-size: 1.6rem;
     font-weight: 800;
-    color: rgb(255, 255, 255);
-    background: rgb(127, 195, 93);
+    color: var(--toc-num-fg-color);
+    background: var(--toc-num-bg-color);
 }
 
 .page-toc .toc-label {
@@ -743,14 +730,28 @@ section.actions-panel {
 
 .page-toc a:hover .toc-label,
 .page-toc a:focus-visible .toc-label {
-    color: rgb(130, 60, 130);
+    color: var(--toc-label-color-hover);
 }
 
-.page-toc li .toc-num { background: rgb(74, 127, 165); }
-.page-toc li:nth-child(2) .toc-num { background: rgb(91, 67, 168); }
-.page-toc li:nth-child(3) .toc-num { background: rgb(74, 141, 153); }
-.page-toc li:nth-child(4) .toc-num { background: rgb(175, 122, 85); }
-.page-toc li:nth-child(5) .toc-num { background: rgb(112, 145, 43); }
+.page-toc li .toc-num {
+    background: var(--toc-num-bg-color-1);
+}
+
+.page-toc li:nth-child(2) .toc-num {
+    background: var(--toc-num-bg-color-2);
+}
+
+.page-toc li:nth-child(3) .toc-num {
+    background: var(--toc-num-bg-color-3);
+}
+
+.page-toc li:nth-child(4) .toc-num {
+    background: var(--toc-num-bg-color-4);
+}
+
+.page-toc li:nth-child(5) .toc-num {
+    background: var(--toc-num-bg-color-5);
+}
 
 /* ── Illustrated content — image at left, content at right ── */
 /* The SPPAS way of organizing an illustration with its content,
@@ -802,11 +803,11 @@ section.actions-panel {
 }
 
 .green {
-    color: rgb(10, 200, 10);
+    color: var(--text-success-color);
 }
 
 .red {
-    color: rgb(200, 10, 10);
+    color: var(--text-error-color);
 }
 
 /* ── Inline status messages of the pages -- never a dialog ── */
@@ -906,7 +907,8 @@ dialog[role="alertdialog"] button {
     text-transform: uppercase;
     color: var(--buttons-fg-color);
     border-color: var(--info-color);
-    background: var(--buttons-bg-color);
+    background-color: var(--buttons-bg-color);
+    background-image: var(--buttons-bg-image);
     box-shadow: 0 0 1.5rem var(--shadow-color);
     opacity: 1;
 }
@@ -914,5 +916,6 @@ dialog[role="alertdialog"] button {
 dialog[role="alertdialog"] button:hover {
     text-decoration: none;
     color: var(--buttons-fg-color);
-    background: var(--buttons-bg-color-hover);
+    background-color: var(--buttons-bg-color-hover);
+    background-image: var(--buttons-bg-image-hover);
 }

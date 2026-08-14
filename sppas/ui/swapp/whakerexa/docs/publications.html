@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Publications • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, bibtex"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/bibbook.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Book &gt; Publications</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="description" class="chapter">
+            <h1>Description</h1>
+
+            <section class="ssection"><h2>Overview</h2>
+                <p>This page demonstrates a <b>publication list</b> built from BibTeX data written
+                    inside the page itself. Nothing is fetched from the internet: the data is read
+                    where it stands, parsed in the browser, and turned into a table.</p>
+
+                <p>There is <b>no citation</b> anywhere in this page. The bibliography does not need
+                    any: it lists what the BibTeX data contains. Because no reference is ever cited,
+                    the table has no number column and no back links to the text. The same code, used
+                    in a book with citations, adds both — see
+                    <a href="bibliography.html">bibliography.html</a>.</p>
+
+                <p>How the bibliography is designed, what it does not do and why:
+                    <a href="bibliography-design.html">bibliography-design.html</a>.</p>
+
+            </section>
+
+            <section class="ssection"><h2>How to use</h2>
+                <p>Three steps: write the data, add the placeholder, call the JS API.</p>
+
+                <article class="card-doc" aria-label="HTML — BibTeX data">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Put the BibTeX entries in a <code>pre</code> element. Keep it hidden, and
+                            reveal it when JavaScript is disabled, so that the data stays readable.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;noscript&gt;
+    &lt;style&gt; #bibtex { display: block; } &lt;/style&gt;
+&lt;/noscript&gt;
+
+&lt;pre id="bibtex" hidden&gt;
+@inproceedings{bigi2022lrec,
+    author = {Brigitte Bigi and Maryvonne Zimmermann and Carine André},
+    title  = {CLeLfPC: a Large Open Multi-Speaker Corpus of French Cued Speech},
+    ...
+}
+&lt;/pre&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="HTML — bibliography placeholder">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Add an empty element where the table is to be placed.</p>
+                    </div>
+                    <pre class="dark"><code>&lt;div id="bibliography"&gt;&lt;/div&gt;</code></pre>
+                </article>
+
+                <article class="card-doc" aria-label="JavaScript — BookBibliography API">
+                    <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                        <p>Instantiate <code>BookBibliography</code> with the id of the data, the id of
+                            the placeholder, and the id of the content to scan for citations. Then call
+                            <code>run()</code>, which returns a promise.</p>
+                    </div>
+                    <pre class="dark"><code>const biblio = new BookBibliography('bibtex', 'bibliography', 'main-content');
+biblio.run();</code></pre>
+                </article>
+            </section>
+
+            <section class="ssection"><h2>What the table shows</h2>
+
+                <table>
+                    <caption>Columns of the generated table</caption>
+                    <thead>
+                    <tr>
+                        <th>Column</th>
+                        <th>Content</th>
+                        <th>Present here</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Number</td>
+                        <td>The number given to a reference the first time it is cited.</td>
+                        <td>No: nothing is cited in this page.</td>
+                    </tr>
+                    <tr>
+                        <td>Year</td>
+                        <td>The publication year, used to sort.</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Reference</td>
+                        <td>The formatted reference. Every author is listed, never "et al."</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>More</td>
+                        <td>The abstract, the BibTeX source, and the links to the publication.</td>
+                        <td>Yes</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Entries are shown even when a field is missing or when the entry type is unknown to
+                    the formatter: what is missing is made visible rather than silently dropped. The
+                    last entry of the demonstration data below is there to show it.</p>
+
+                <p>Two entries sharing the same key are reported through <code>Wexa.logger</code>,
+                    and the second one replaces the first.</p>
+            </section>
+
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="demo" class="chapter">
+            <h1>Demonstration</h1>
+
+            <div id="bibliography"></div>
+
+        </section>
+
+    <noscript>
+        <style> #bibtex { display: block; } </style>
+    </noscript>
+
+    <pre id="bibtex" hidden>
+
+@article{pakrashi2026,
+	TITLE = "Resources Creation of Bengali for SPPAS",
+	AUTHOR = {Moumita Pakrashi and Brigitte Bigi and Shakuntala Mahanta},
+	JOURNAL = "Journal of Information and Telecommunication",
+	PUBLISHER = "Elsevier",
+	YEAR = "2026",
+	URL = "https://www.tandfonline.com/doi/full/10.1080/24751839.2025.2611605",
+	NOTE = "https://hal.science/hal-05474165",
+	ABSTRACT = {
+	The development of HLT (Human Language Technology) tools inevitably involves the need for
+	language resources. However, only a handful of languages possess such resources for free.
+	This paper presents the development of such speech tools for the Bengali language. It focuses
+	particularly on developing language resources for text normalisation, phonetization,
+	forced-alignment and syllabification of Bengali.
+	}
+}
+
+@InProceedings{bigi2022lrec,
+	author    = {Brigitte Bigi and Maryvonne Zimmermann and Carine André},
+	title     = {CLeLfPC: a Large Open Multi-Speaker Corpus of French Cued Speech},
+	booktitle = {Proceedings of The 13th Language Resources and Evaluation Conference},
+	year      = {2022},
+	address   = {Marseille, France},
+	publisher = {European Language Resources Association},
+	pages     = {987-994},
+	url = {http://www.lrec-conf.org/proceedings/lrec2022/pdf/2022.lrec-1.104.pdf},
+	note = {https://hal.archives-ouvertes.fr/hal-03794830},
+	abstract  = {Cued Speech is a communication system developed for deaf people to complement
+	speechreading at the phonetic level with hands. This paper describes CLeLfPC, a corpus of
+	French Cued Speech. It consists in about 4 hours of audio and HD video recordings of 23
+	participants.}
+}
+
+@InBook{ghio2023dunod,
+	chapter = {{Etudier le langage oral : les diff{\'e}rents types de donn{\'e}es recueillies}},
+	author = {Alain Ghio and Brigitte Bigi},
+	title = {{Introduction aux statistiques en sciences du langage}},
+	editor = {Clara Solier and Lucille Soulier and Nour Ezzedine},
+	publisher = {{Dunod}},
+	pages = {7-36},
+	year = {2023},
+	note = {https://hal.science/hal-04248428}
+}
+
+@Article{bigi2022tipa,
+	title = {Principes et outils pour l'annotation des corpus},
+	author = {Mary Amoyal and Roxane Bertrand and Brigitte Bigi and Auriane Boudin and Christine Meunier and Berthille Pallaud and Béatrice Priego-Valverde and Stéphane Rauzy and Marion Tellier},
+	journal = {Travaux interdisciplinaires sur la parole et le langage},
+	pages = {186-234},
+	year = {2022},
+	volume = {38},
+	publisher={OpenEdition},
+	url = {https://doi.org/10.4000/tipa.5424},
+	note = {https://hal.science/hal-03917814},
+}
+
+@techreport{bigi2015tutohk2,
+	author={Brigitte Bigi},
+	title={Methodology and software for the semi-automatic annotation of speech},
+	year = {2015},
+	institution = {Tutorial at Poly U, Hong Kong},
+	url = {http://sppas.org/bigi/Doc/2015-SPPAS-Tutorial-HongKong/pdf/SPPAS-tutorial-Handout.pdf},
+	howpublished = {Documentation}
+}
+
+@dataset{demo2026unknown,
+	title = {An entry with an unknown type and missing fields}
+}
+
+    </pre>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <script>
+        function bootBibliographyDemo(BookBibliography) {
+            const biblio = new BookBibliography('bibtex', 'bibliography', 'main-content');
+            biblio.run();
+        }
+    </script>
+
+    <script>
+        window.addEventListener('load', () => {
+            Wexa.links.handleLinksWithParameters(['btn-back']);
+        });
+    </script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                            t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                            t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        window.themes = t;
+                    }
+                    if (window.Wexa && window.Wexa.BookBibliography) {
+                        bootBibliographyDemo(window.Wexa.BookBibliography);
+                    }
+                });
+            } else {
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+            themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+            themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        window.themes = themes;
+    </script>
+    <script type="module">
+        import { BookBibliography } from '../wexa_statics/js/extras/book/bibbook.js';
+        bootBibliographyDemo(BookBibliography);
+    </script>
+
+    </body>
+</html>

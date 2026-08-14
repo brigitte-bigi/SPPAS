@@ -179,6 +179,7 @@ class DashboardView(swappBaseView):
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
 
+        self.append_home_link_button(self._htree.body_nav, self._home_target())
         self.append_trace_link_button(self._htree.body_nav)
         self.append_exit_button(self._htree.body_nav)
 

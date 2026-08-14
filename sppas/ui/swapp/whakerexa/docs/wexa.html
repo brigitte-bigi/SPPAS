@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
@@ -24,6 +25,15 @@
             const s = document.createElement('script');
             if (usingFile) {
                 s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        window.themes = t;
+                    }
+                });
             } else {
                 s.type = 'module';
                 s.src = '../wexa_statics/js/wexa.js';
@@ -38,7 +48,7 @@
 
     <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
     <h1>Wexa CSS framework</h1>
-    <img width="100rem" src="../wexa_statics/logos/whakerexa.png" alt=""/>
+    <img width="100rem" src="../wexa_statics/logos/whakerexa-128.webp" alt=""/>
 
 </header>
 
@@ -49,6 +59,10 @@
             <polyline points="20 24 12 16 20 8" />
         </svg>
     </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
     <button id="btn-contrast" class="menuitem accessibility"
             aria-label="contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
@@ -864,6 +878,15 @@
             This document is under the terms of the GNU Free Documentation License, v1.3.</a>
         </p>
     </footer>
+
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        window.themes = themes;
+    </script>
 
 </body>
 </html>

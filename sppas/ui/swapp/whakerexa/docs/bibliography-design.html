@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Bibliography design • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, bibtex, design"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<!-- ---------------------------------------------------------------- -->
+
+<body>
+
+    <header id="header-content">
+        <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+        <p>Whakerexa &gt; Extras &gt; Book &gt; Bibliography &gt; Design</p>
+    </header>
+
+    <nav class="nav-wexa top" aria-label="Page navigation">
+        <a class="menuitem" id="btn-back" data-href="bibliography.html" data-target="_self" aria-label="Back" title="Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <polyline points="20 24 12 16 20 8"/>
+            </svg>
+        </a>
+        <button id="btn-css-theme" class="menuitem" type="button"
+                aria-label="Switch CSS theme" title="Switch CSS theme"
+                onclick="window.themes && window.themes.next()">
+        </button>
+        <button id="btn-contrast" class="menuitem accessibility"
+                aria-label="contrast" aria-pressed="false"
+                onclick="Wexa.accessibility.switchContrastScheme()"></button>
+        <button id="btn-color" class="menuitem accessibility"
+                aria-label="color" aria-pressed="false"
+                onclick="Wexa.accessibility.switchColorScheme()"></button>
+    </nav>
+
+
+    <main id="main-content">
+
+        <section id="overview" class="chapter">
+            <h1>What this is</h1>
+
+            <section class="ssection"><h2>In short</h2>
+
+                <p>A document writes its BibTeX entries and its text. When its page opens, the
+                    browser reads the entries, numbers the citations of the text in the order
+                    they appear, and builds the bibliography. Nobody runs anything, and nothing
+                    is fetched from the internet.</p>
+
+                <p>This page is the design of that work: what it does, what it deliberately
+                    does not do, the decisions that explain the code where it surprises, and
+                    the classes that carry it. Read the section below before reporting a
+                    behaviour as a bug: several of them are choices.</p>
+            </section>
+
+            <section class="ssection"><h2>Two independent domains</h2>
+
+                <p>The bibliography lists what the BibTeX data holds. It does not depend on the
+                    citations: a page without a single citation gets its table all the same,
+                    which is what <a href="publications.html">publications.html</a> shows. The
+                    citations, on their side, are numbered even when the page says nowhere to
+                    put the bibliography.</p>
+
+                <p>What the text owes to a reference, its number and the places it is cited at,
+                    is handed to the table from the outside. The table never asks the citations
+                    anything.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="limits" class="chapter">
+            <h1>What it does not do</h1>
+
+            <section class="ssection"><h2>Left out on purpose</h2>
+
+                <p>These were written as requirements, then set aside. They are not missing:
+                    they were decided against.</p>
+
+                <table>
+                    <caption>Requirements that were dropped</caption>
+                    <thead>
+                    <tr><th>What</th><th>Why</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Show the type of a reference in a column</td>
+                        <td>The formatted reference already says what it is.</td>
+                    </tr>
+                    <tr>
+                        <td>Sort the types by importance</td>
+                        <td>No order of types is true for two readers.</td>
+                    </tr>
+                    <tr>
+                        <td>Count the publications by year and by type, and draw them</td>
+                        <td>A bibliography is read, not measured.</td>
+                    </tr>
+                    <tr>
+                        <td>Put a publication in the bibliography without citing it</td>
+                        <td>The BibTeX data decide what is listed; the text decides what is numbered.</td>
+                    </tr>
+                    <tr>
+                        <td>Say whether a reference is open access or not</td>
+                        <td>What an address leads to already says it.</td>
+                    </tr>
+                    <tr>
+                        <td>Mark a citation already consulted</td>
+                        <td>The numbers going up already tell a new reference from a known one.</td>
+                    </tr>
+                    <tr>
+                        <td>Report a citation written inside a title</td>
+                        <td>Dropped after the model was written.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>Not in the first version</h2>
+
+                <p>These are established requirements that the code does not write yet. A
+                    document that needs them will not get them by trying harder.</p>
+
+                <table>
+                    <caption>Requirements postponed</caption>
+                    <thead>
+                    <tr><th>What</th><th>What happens today</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>One citation bearing several references</td>
+                        <td>The whole attribute is read as one key. <code>data-bibtex="a, b"</code>
+                            names no reference, so the citation says it is missing and the console
+                            reports the key. Write one <code>span</code> per reference.</td>
+                    </tr>
+                    <tr>
+                        <td>A citation aiming at a page or a chapter</td>
+                        <td>Nothing reads it. <code>CitedKey</code> carries the field, and nothing
+                            fills it.</td>
+                    </tr>
+                    <tr>
+                        <td>Going from a citation to its reference, and back, in a presentation.
+                            C26 and C27</td>
+                        <td>Not shown to an audience. Following such a renvoi lays the slides
+                            over one another and leaves them half drawn, and the cause has not
+                            been found: the support reached is the right one, the reading stands
+                            at it, and nothing inside it is touched. Both links are written as
+                            they are on a page, and hidden by
+                            <code>bibbook.css</code> where a slide carries them. They hold on a
+                            page and on paper.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>Choices that look like limits</h2>
+
+                <ul>
+                    <li>Every author is written, whatever their number. Never "et al.": a
+                        bibliography that hides names hides people who did the work.</li>
+                    <li>Nothing is ever completed from the internet. An entry missing a field is
+                        shown with the field missing, and the missing field is made visible.</li>
+                    <li>An entry whose type nobody planned for is displayed by a fallback
+                        template rather than left out.</li>
+                    <li>A reference that no citation names has no number, and sorts after every
+                        reference that has one.</li>
+                </ul>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="requirements" class="chapter">
+            <h1>Requirements</h1>
+
+            <section class="ssection"><h2>The bibliography</h2>
+
+                <table>
+                    <caption>What the bibliography has to do</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Requirement</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>B1</td><td>The document reads its BibTeX data without going to the internet.</td></tr>
+                    <tr><td>B2</td><td>Every entry is cut apart: its type, its key, each of its fields. The authors are a list in the order they sign, each name split into given name, particle, family name and suffix.</td></tr>
+                    <tr><td>B3</td><td>Accents and symbols written in LaTeX become plain characters.</td></tr>
+                    <tr><td>B4</td><td>A reference missing a field is displayed all the same, and what is missing is seen.</td></tr>
+                    <tr><td>B6</td><td>A reference whose type the program does not know is displayed all the same.</td></tr>
+                    <tr><td>B9</td><td>Each type has its own display: which fields, in which order.</td></tr>
+                    <tr><td>B11</td><td>Every author is displayed, whatever their number. Never "et al.".</td></tr>
+                    <tr><td>B12</td><td>A link to the PDF, a link to an open archive and a link to the publisher are told apart.</td></tr>
+                    <tr><td>B13</td><td>The BibTeX entry can be seen as it is written in the file.</td></tr>
+                    <tr><td>B14</td><td>The abstract can be read, when the reference has one.</td></tr>
+                    <tr><td>B15</td><td>Reading an abstract does not lose your place in the bibliography.</td></tr>
+                    <tr><td>B16</td><td>The references can be sorted by year, or by author.</td></tr>
+                    <tr><td>B19</td><td>Only the references a word appears in can be kept.</td></tr>
+                    <tr><td>B20</td><td>Sorting, searching, and how the bibliography is built are said to whoever does not see the table: a status message, WCAG 4.1.3. Nothing of it is drawn.</td></tr>
+                    <tr><td>B21</td><td>On paper the references read, the addresses written in full.</td></tr>
+                    <tr><td>B22</td><td>Two entries sharing a key: the console says so, and the second replaces the first.</td></tr>
+                    <tr><td>B23</td><td>The bibliography is shown whole in a presentation. How this is done is <a href="slides-design.html">the slides pagination</a>.</td></tr>
+                    <tr><td>B24</td><td>A reference is read whole on a narrow screen: what numbers it and what dates it never take the width its text needs. The columns follow the width of the screen, at every moment and not only when the page opens.</td></tr>
+                    <tr><td>B25</td><td>What a reference opens, its abstract and its BibTeX source, is read whatever the columns show. Hiding a column takes away a column, never the content of a row that has none: B13 and B14 hold at every width.</td></tr>
+                    <tr><td>B26</td><td>In a presentation, what acts upon the bibliography is not shown: neither the search field nor the column selector. An audience reads what is on the screen and acts on nothing; what is read on its own stays, the sorting of a column being written as well as done.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>The citations</h2>
+
+                <table>
+                    <caption>What a citation has to do</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Requirement</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>C1</td><td>A citation is written between two words of a sentence, without breaking the paragraph.</td></tr>
+                    <tr><td>C2</td><td>A citation is not mistaken for the title of a work written in the text.</td></tr>
+                    <tr><td>C7</td><td>A citation bears a BibTeX key and names the reference having that key.</td></tr>
+                    <tr><td>C8</td><td>A citation whose key names nothing stays visible, and says it is missing.</td></tr>
+                    <tr><td>C9</td><td>An incomplete reference can still be consulted from the citation.</td></tr>
+                    <tr><td>C10</td><td>Keys naming no reference are said in the console before the author reads.</td></tr>
+                    <tr><td>C11</td><td>A reference is numbered the first time it is cited.</td></tr>
+                    <tr><td>C12</td><td>Later citations of the same reference bear that same number.</td></tr>
+                    <tr><td>C13</td><td>Numbers follow the order the citations appear in the text.</td></tr>
+                    <tr><td>C14</td><td>A single sequence of numbers for the whole document.</td></tr>
+                    <tr><td>C15</td><td>A citation shows nothing but its number.</td></tr>
+                    <tr><td>C16</td><td>A screen reader says "Reference" and the number. It does not say the brackets.</td></tr>
+                    <tr><td>C19</td><td>The number never goes alone to the next line.</td></tr>
+                    <tr><td>C21</td><td>The whole reference can be read without leaving the sentence.</td></tr>
+                    <tr><td>C22</td><td>The publication can be reached without leaving the sentence.</td></tr>
+                    <tr><td>C23</td><td>The abstract can be reached without leaving the sentence.</td></tr>
+                    <tr><td>C24</td><td>Reading can be stopped, and taken up where it was left.</td></tr>
+                    <tr><td>C25</td><td>The beginning and the end of a consultation are said, not only shown.</td></tr>
+                    <tr><td>C26</td><td>A link leads from a citation to its reference in the bibliography.</td></tr>
+                    <tr><td>C27</td><td>From a reference, a link leads to every place of the text where it is cited.</td></tr>
+                    <tr><td>C28</td><td>Consulting a reference does not scroll the page.</td></tr>
+                    <tr><td>C29</td><td>On paper the numbers and the bibliography stay. What is read on a screen only does not print.</td></tr>
+                    <tr><td>C30</td><td>Opening the page again gives the same numbers.</td></tr>
+                    <tr><td>C31</td><td>The bibliography exists before the table of contents is built.</td></tr>
+                    <tr><td>C32</td><td>Without JavaScript, the sentence stays readable.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="decisions" class="chapter">
+            <h1>Decisions</h1>
+
+            <section class="ssection"><h2>The numbers</h2>
+
+                <p>They follow the order the citations appear in the text, in a single sequence
+                    for the whole document. The bibliography is built in that order, so it is
+                    already the order it prints in.</p>
+
+                <p>Why: the column of numbers then gives what no other column gives, the place
+                    where a reference is first cited. Reading from one end to the other, the
+                    numbers go up, which tells a reader whether a reference is a new one without
+                    opening anything. An alphabetical order would give a sequence with no
+                    apparent logic.</p>
+            </section>
+
+            <section class="ssection"><h2>Where the columns give way</h2>
+
+                <p>On a narrow screen the number and the year are not shown, and the reference
+                    takes the whole width. Nothing else changes: the table stays a table, its
+                    columns stay columns, and the reader turns the two of them back on from the
+                    column selector the bibliography builds with its search field.</p>
+
+                <p>When: whenever the screen crosses that width, and not only when the page
+                    opens. A device is turned over and a window is resized without anything
+                    being loaded again, and the columns follow. Between two crossings, what the
+                    reader checked is left alone: the width decides the default, never the
+                    choice.</p>
+
+                <p>Why not stack the entry: laying a row out as blocks takes the roles of a
+                    table away from it, and a screen reader stops saying which cell it is
+                    reading and under which header. Hiding a column costs none of that, and the
+                    selector is the component the sortable table is built with.</p>
+
+                <p>Why at all: the number and the year are two characters and four characters,
+                    but a column asks for a share of the width all the same. Measured on a
+                    reference of 413 characters, they take 186 pixels out of 800, leaving 581 to
+                    the text, which reads in six lines. On a screen of 400 pixels they take 225
+                    and leave 185, which is a dozen characters a line and a reference thirty
+                    lines tall.</p>
+
+                <p>Where: at the step of the phone held sideways, and not at the mobile border
+                    of the framework. A tablet held upright has the width for the three columns,
+                    and hiding them there would waste it.</p>
+
+                <p>Counted in what: in font sizes, 38.75 of them, and never in pixels. That is
+                    620 pixels for a text of 16 and 698 for a text of 18, so the columns give way
+                    sooner in contrast mode, where the text is written larger. A media query
+                    could not do this, its condition being read before any variable is resolved;
+                    this threshold is held in JavaScript, which has no such limit.</p>
+
+                <p>What this is not: a feature withheld from a small screen. Everything the
+                    bibliography does on a wide screen, it does on a phone. Only the columns
+                    checked at the opening differ.</p>
+            </section>
+
+            <section class="ssection"><h2>The citation in the source</h2>
+
+                <p>A citation is a <code>span</code> bearing a <code>data-bibtex</code>
+                    attribute. Three consequences.</p>
+
+                <p>A <code>span</code> is allowed between two words of a sentence, which
+                    <code>details</code> is not: a browser closes the paragraph when it meets it,
+                    so it cannot stand inside a sentence. The attribute is what tells a citation
+                    from a <code>cite</code> element bearing the title of a work. And what is
+                    written inside the span is what a reader gets when JavaScript does not run,
+                    replaced by the number as soon as it does.</p>
+            </section>
+
+            <section class="ssection"><h2>What opens, and what closes</h2>
+
+                <p>Several contents may stay open at the same time, and none closes on its own:
+                    closing what nobody asked to close makes what is being read disappear.</p>
+
+                <p>The focus does not move when a content opens, so the page does not scroll; it
+                    comes back to the control when it closes, which matters when the closing came
+                    from inside the content. Whether a content is open is read on its control,
+                    which already declares it for a screen reader: keeping it a second time would
+                    make two truths possible.</p>
+            </section>
+
+            <section class="ssection"><h2>The addresses</h2>
+
+                <p>They come from the BibTeX fields, and they are optional. BibTeX has a single
+                    <code>URL</code> field; when a second address is needed, <code>NOTE</code>
+                    holds it. This is a habit of the house, not a standard, so what an address
+                    leads to is never read in the name of its field: it is read in the address
+                    itself.</p>
+
+                <p>Nothing is ever completed by going to the internet. Data that are well kept
+                    do not need it.</p>
+            </section>
+
+            <section class="ssection"><h2>The language</h2>
+
+                <p>Everything the program writes follows the language of the document. The
+                    language is read on the element, and is never written in the code. A text
+                    that cannot follow it says which language it is in, as WCAG 3.1.2 asks.</p>
+            </section>
+
+            <section class="ssection"><h2>What is said to whoever wrote the document</h2>
+
+                <p>In the console, and nowhere else: a key used twice, a key naming no
+                    reference. A reference that is never cited is not worth a message. The reader
+                    is told nothing: a bibliography that could not be built is not their doing.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="model" class="chapter">
+            <h1>The model</h1>
+
+            <section class="ssection"><h2>What the data are made of</h2>
+
+                <table>
+                    <caption>Entities</caption>
+                    <thead>
+                    <tr><th>Entity</th><th>What it carries</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Reference</td>
+                        <td>Known by its BibTeX key: its type, its fields, its abstract, and the
+                            entry as it was written.</td>
+                    </tr>
+                    <tr>
+                        <td>Author</td>
+                        <td>Only exists as part of a reference: its place among the signatories,
+                            its given name, particle, family name and suffix.</td>
+                    </tr>
+                    <tr>
+                        <td>Link</td>
+                        <td>Only exists as part of a reference: an address.</td>
+                    </tr>
+                    <tr>
+                        <td>Citation</td>
+                        <td>Known by itself: its place in the order the citations appear.</td>
+                    </tr>
+                    <tr>
+                        <td>CitedKey</td>
+                        <td>Only exists as part of a citation: its place in it, the key as
+                            written, and the page aimed at when there is one.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Two things are computed and never stored: the number of a reference, which is
+                    given at its first citation and does not exist for a reference nobody cites,
+                    and what an address leads to, which is read in the address.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="modelling" class="chapter">
+            <h1>How this was designed</h1>
+
+            <section class="ssection"><h2>The way, and why it is written here</h2>
+
+                <p>Design first, then the tests, then the code. The design is a Merise
+                    analysis, from the communication between the actors down to where the code
+                    goes, and the UML diagrams that lead to it. It is written here, in full, so
+                    that whoever picks the work up has everything on one page.</p>
+
+                <p>The working notes are in <code>notes/bibliography/</code>. This chapter says
+                    the same thing, and is the one that is kept up to date. The two domains,
+                    the bibliography and the citations, are not a starting point: they came out
+                    of the operations below.</p>
+            </section>
+
+            <section class="ssection"><h2>MCC: who exchanges what</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Actor</th><th>What it is</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>The author</td><td>Writes the BibTeX entries and the text that cites them. She runs nothing</td></tr>
+                    <tr><td>The reader</td><td>Asks for the page, then consults, sorts, searches, follows a link, prints</td></tr>
+                    <tr><td>The program</td><td>Runs in the browser of whoever opens the page</td></tr>
+                    <tr><td>The console</td><td>Where what the author has to know is said</td></tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <thead>
+                    <tr><th>Flow</th><th>From</th><th>To</th><th>What</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>F1</td><td>The author</td><td>The document</td><td>The BibTeX entries, in the page or in a file next to it</td></tr>
+                    <tr><td>F2</td><td>The author</td><td>The document</td><td>The text, and the citations written in its sentences</td></tr>
+                    <tr><td>F3</td><td>The reader</td><td>The program</td><td>The request for the page</td></tr>
+                    <tr><td>F4</td><td>The program</td><td>The document</td><td>The numbered citations and the bibliography</td></tr>
+                    <tr><td>F5</td><td>The program</td><td>The author</td><td>Duplicate keys, keys naming nothing, in the console</td></tr>
+                    <tr><td>F6</td><td>The reader</td><td>The program</td><td>A consultation, a sort, a search, a link, a move, a print</td></tr>
+                    <tr><td>F7</td><td>The program</td><td>The reader</td><td>What was asked, said as well as shown</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Nothing is ever asked of the internet: a document reads its own data.</p>
+            </section>
+
+            <section class="ssection"><h2>MCD: the associations</h2>
+
+                <p>The entities are in the chapter above. What ties them:</p>
+
+                <table>
+                    <thead>
+                    <tr><th>Association</th><th>Leg 1</th><th>Leg 2</th><th>Comes from</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>has for author</td><td>REFERENCE (0,n)</td><td>AUTHOR (1,1)</td><td>A reference without an author is shown all the same</td></tr>
+                    <tr><td>has for link</td><td>REFERENCE (0,n)</td><td>LINK (1,1)</td><td>A reference may have no link at all</td></tr>
+                    <tr><td>carries</td><td>CITATION (1,n)</td><td>CITED_KEY (1,1)</td><td>A citation carries at least one key</td></tr>
+                    <tr><td>names</td><td>CITED_KEY (0,1)</td><td>REFERENCE (0,n)</td><td>A key may name nothing, and a reference may never be cited</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>MCT: the eight operations</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Operation</th><th>Triggered when</th><th>Produces</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Op1, prepare the references</td><td>The BibTeX data are there</td><td>The references, and a console message per duplicate key</td></tr>
+                    <tr><td>Op2, number the citations and tie them to the references</td><td>The references are ready and the text is there</td><td>The numbered citations, and a console message per key naming nothing</td></tr>
+                    <tr><td>Op3, compose the bibliography</td><td>The references are ready</td><td>The bibliography</td></tr>
+                    <tr><td>Op4, consult a reference</td><td>A consultation is asked for</td><td>The reference, or "missing reference"; the start and the end are said</td></tr>
+                    <tr><td>Op5, sort or filter</td><td>A sort or a search is asked for</td><td>The bibliography sorted or filtered, and what changed is said</td></tr>
+                    <tr><td>Op6, reach a publication</td><td>A link is followed</td><td>The publication</td></tr>
+                    <tr><td>Op7, go from a citation to its reference, and back</td><td>The move is asked for</td><td>A request to reach a place in the document, named by the reference or by the place of the citation</td></tr>
+                    <tr><td>Op8, print</td><td>Printing is asked for</td><td>The printable document</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Op3 does not need Op2: that is where the two domains come from, and
+                    <code>publications.html</code> is the proof, a bibliography with no
+                    citation at all.</p>
+
+                <p>Op8 is not "print" in the strict sense: it removes what only makes sense on
+                    a screen, and the browser lays the document on the pages. Laying a composed
+                    document on surfaces of fixed height is an operation of its own, and the
+                    slides need it too, which is what
+                    <a href="slides-design.html">the slides pagination</a> is about.</p>
+
+                <p>Op7 shows nothing by itself. It knows which place is wanted, never what it
+                    takes to show it, that depending on the support the document is read on.
+                    It therefore produces a request, and the treatment that answers it,
+                    reaching a place in the document, is modelled where the supports are, in
+                    <a href="slides-design.html">the slides pagination</a>. C26 and C27 are
+                    held by the two together: this dossier names the place, that one shows it.
+                    The place named never travels in the address of the page, which holds
+                    where the reader stands and nothing else.</p>
+
+                <p>Op5 is the only operation a support can take away. What triggers it, a
+                    search or a choice of columns, is asked for by whoever reads and acts;
+                    an audience does neither. So Op3 composes the bibliography without what
+                    triggers Op5 when it composes it in a presentation, and Op5 is then never
+                    triggered. What is read on its own stays, the order of a sorted column
+                    being written in its header and not only drawn. B26.</p>
+
+                <p>Three requirements are not operations: the work gives the same result every
+                    time, the bibliography exists before the table of contents is built, and
+                    the sentence stays readable when no operation has run.</p>
+            </section>
+
+            <section class="ssection"><h2>MOT: where, when, and by whom</h2>
+
+                <p>In the browser of whoever opens the page. Two moments, and both are requests
+                    from the reader: the request for the page, once, and a request inside the
+                    page, once per request.</p>
+
+                <table>
+                    <thead>
+                    <tr><th>PF</th><th>What it does</th><th>When</th><th>Where it comes out</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>PF1</td><td>Prepares the references</td><td>Request for the page</td><td>Console</td></tr>
+                    <tr><td>PF2</td><td>Numbers the citations and ties them to the references</td><td>Request for the page</td><td>Page and console</td></tr>
+                    <tr><td>PF3</td><td>Composes the bibliography</td><td>Request for the page</td><td>Page</td></tr>
+                    <tr><td>PF4</td><td>Makes a reference consultable</td><td>Request in the page</td><td>Page</td></tr>
+                    <tr><td>PF5</td><td>Sorts or filters</td><td>Request in the page, which a presentation does not offer: what would ask for it is not composed there. B26</td><td>Page</td></tr>
+                    <tr><td>PF6</td><td>Leads to the publication</td><td>Request in the page</td><td>Outside site</td></tr>
+                    <tr><td>PF7</td><td>Names the place a citation or a reference leads to</td><td>Request in the page</td><td>A request handed to the procedure that reaches a place, whatever the support</td></tr>
+                    <tr><td>PF8</td><td>Prints</td><td>Request in the page</td><td>Paper</td></tr>
+                    </tbody>
+                </table>
+
+                <p>PF1 before PF2 and PF3. PF3 before the table of contents is built. PF2 is
+                    not needed by PF3. Nothing is kept from one opening to the next: everything
+                    starts again, and gives the same result.</p>
+            </section>
+
+            <section class="ssection"><h2>MLD: the tables</h2>
+
+                <ul>
+                    <li><b>REFERENCE</b> (<u>key</u>, type, BibTeX fields, abstract, bibtex_text)</li>
+                    <li><b>AUTHOR</b> (<u>key</u>, <u>place</u>, given_name, particle, family_name, suffix)</li>
+                    <li><b>LINK</b> (<u>key</u>, <u>address</u>)</li>
+                    <li><b>CITATION</b> (<u>citation_id</u>, place_in_the_text)</li>
+                    <li><b>CITED_KEY</b> (<u>citation_id</u>, <u>place_in_the_citation</u>, written_key, key, page_aimed_at)</li>
+                </ul>
+
+                <p>An author and a link exist only as part of a reference, so they carry its
+                    key. The key of a cited key may be empty: what is written may name no
+                    reference. Two rules the keys do not hold: a citation carries at least one
+                    key, and two citations never share a place in the text.</p>
+
+                <p>Not in the tables: the number of a reference, and what an address leads to.
+                    Both are computed.</p>
+            </section>
+
+            <section class="ssection"><h2>MPD: where each table exists</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Table</th><th>In the source</th><th>While running</th><th>On screen</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>REFERENCE</td><td>a BibTeX entry</td><td>an object</td><td>a row of the table</td></tr>
+                    <tr><td>AUTHOR</td><td>the <code>AUTHOR</code> field</td><td>a list held by the object</td><td>in the cell of the reference</td></tr>
+                    <tr><td>LINK</td><td>the <code>URL</code> and <code>NOTE</code> fields</td><td>a list held by the object</td><td>in the cell of the links</td></tr>
+                    <tr><td>CITATION</td><td>an element written in a paragraph</td><td>that same element, in document order</td><td>the number</td></tr>
+                    <tr><td>CITED_KEY</td><td>an attribute of that element</td><td>the keys read in it</td><td>nothing of its own</td></tr>
+                    </tbody>
+                </table>
+
+                <p>What the author writes is
+                    <code>&lt;span data-bibtex="bigi2022lrec"&gt;Bigi, 2022&lt;/span&gt;</code>:
+                    a span is allowed inside a sentence, the attribute carries the key and
+                    tells a citation from a <code>&lt;cite&gt;</code> holding a title, and what
+                    is written inside stays readable when no operation has run.</p>
+
+                <p>Everything the program writes follows the language of the document, read on
+                    the element and never written in the code, which is the WCAG 3.1.2
+                    criterion.</p>
+            </section>
+
+            <section class="ssection"><h2>MOpT: where the code goes</h2>
+
+                <table>
+                    <thead>
+                    <tr><th>Module</th><th>What it does</th><th>Procedure</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>reading</td><td>Takes the BibTeX data in the page, or asks for them</td><td>before PF1</td></tr>
+                    <tr><td>preparation</td><td>Splits the entries, converts LaTeX, keeps the addresses, spots duplicate keys</td><td>PF1</td></tr>
+                    <tr><td>bibliography</td><td>Builds the table</td><td>PF3</td></tr>
+                    <tr><td>citations</td><td>Numbers the citations and ties them to the references</td><td>PF2</td></tr>
+                    <tr><td>consultation</td><td>Opens, closes, announces</td><td>PF4</td></tr>
+                    <tr><td>sorting</td><td>Sorts, filters, announces</td><td>PF5</td></tr>
+                    <tr><td>assembly</td><td>Calls the others in order, before the table of contents</td><td>the order itself</td></tr>
+                    <tr><td>presentation</td><td>Says what each support shows of what the others built: a presentation shows no control, a printed page no button</td><td>the emission rules of PF3, PF5 and PF8</td></tr>
+                    </tbody>
+                </table>
+
+                <p>The presentation module holds no treatment: it takes nothing in and gives
+                    nothing back, it only says what of a built bibliography each support shows.
+                    That is why the same bibliography, built once, is read on a page, on a
+                    slide and on paper. PF6 and PF7 need no module at all: they are links.</p>
+
+                <p>Written where each is: the modules that treat under
+                    <code>wexa_statics/js/extras/book/</code>, the presentation module in
+                    <code>wexa_statics/css/extras/bibbook.css</code>.</p>
+            </section>
+
+            <section class="ssection"><h2>UML, and where it is written</h2>
+
+                <p>The class diagram is the chapter below, the sequence when the page opens and
+                    the states of a consultation are the two chapters after it. The classes
+                    that carry the data come from the MLD, those that do the work from the
+                    MOpT, one per module. The presentation module has none: it holds no
+                    treatment, so there is nothing for a class to do.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="classes" class="chapter">
+            <h1>The classes</h1>
+
+            <section class="ssection"><h2>What carries the data</h2>
+
+                <p>Their fields are private and set at construction. Nothing modifies them
+                    afterwards, and what they give back is either a string or a copy.</p>
+
+                <table>
+                    <caption>Data classes, under <code>js/extras/book/</code></caption>
+                    <thead>
+                    <tr><th>Class</th><th>File</th><th>What it is</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td><code>Reference</code></td><td><code>bibreference.js</code></td><td>One BibTeX entry, cut apart.</td></tr>
+                    <tr><td><code>Author</code></td><td><code>bibauthor.js</code></td><td>One signatory.</td></tr>
+                    <tr><td><code>Link</code></td><td><code>biblink.js</code></td><td>One address, and what it leads to.</td></tr>
+                    <tr><td><code>Citation</code></td><td><code>bibcitation.js</code></td><td>One place of the text where references are cited.</td></tr>
+                    <tr><td><code>CitedKey</code></td><td><code>bibcitedkey.js</code></td><td>One key written in a citation.</td></tr>
+                    <tr><td><code>CitedReference</code></td><td><code>bibcitedref.js</code></td><td>What a reference owes to the text: its number and its places.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>What does the work</h2>
+
+                <table>
+                    <caption>Working classes</caption>
+                    <thead>
+                    <tr><th>Class</th><th>File</th><th>What it does</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td><code>BibtexSource</code></td><td><code>bibsource.js</code></td><td>Takes the data. The only one that knows where they come from.</td></tr>
+                    <tr><td><code>BibtexParser</code></td><td><code>bibparser.js</code></td><td>Cuts the entries apart. Never raises.</td></tr>
+                    <tr><td><code>ReferenceFormatter</code></td><td><code>bibformatter.js</code></td><td>Displays a reference according to its type.</td></tr>
+                    <tr><td><code>BibliographyTable</code></td><td><code>bibtable.js</code></td><td>Builds the table. Knows nothing of the citations.</td></tr>
+                    <tr><td><code>CitationIndex</code></td><td><code>bibcite.js</code></td><td>Numbers the citations and ties them to references.</td></tr>
+                    <tr><td><code>ReferenceDisclosure</code></td><td><code>bibdisclosure.js</code></td><td>Opens and closes one content.</td></tr>
+                    <tr><td><code>BibliographyControls</code></td><td><code>bibcontrols.js</code></td><td>Sorts and searches, says what changed, and checks the columns the width has room for.</td></tr>
+                    <tr><td><code>BookBibliography</code></td><td><code>bibbook.js</code></td><td>Calls the others in order. The entry point.</td></tr>
+                    <tr><td><code>Labels</code></td><td><code>labels.js</code></td><td>Writes in the language of the document.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>Errors</h2>
+
+                <p>Three levels, and one place that catches.</p>
+
+                <table>
+                    <caption>What happens when something is wrong</caption>
+                    <thead>
+                    <tr><th>Level</th><th>What</th><th>What the program does</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Nothing can be done: no BibTeX data, nowhere to put the bibliography.</td>
+                        <td>An error, caught by <code>BookBibliography</code>, said in the console.
+                            The rest of the page does not move.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>One reference is concerned: an unreadable entry, a missing field, an
+                            unknown type.</td>
+                        <td>Nothing is raised. It is displayed with what it has, and what is
+                            missing is seen.</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>The author has to know: a key used twice, a key naming nothing.</td>
+                        <td>Nothing is raised. A message in the console, and the work goes on.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><code>run()</code> never raises, and is the only place in the program that
+                    writes <code>try</code>. An error that is not a <code>BibliographyError</code>
+                    is a mistake in the program, and has to be seen.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="sequence" class="chapter">
+            <h1>When the page opens</h1>
+
+            <section class="ssection"><h2>In order</h2>
+
+                <p>This is the only moment where the order matters. Everything else happens on a
+                    request from the reader.</p>
+
+                <table>
+                    <caption>What calls what</caption>
+                    <thead>
+                    <tr><th>No.</th><th>Who calls</th><th>Who answers</th><th>What is asked</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>1</td><td>The browser</td><td><code>BookBibliography</code></td><td><code>run()</code>, which gives back a promise</td></tr>
+                    <tr><td>2</td><td><code>BookBibliography</code></td><td><code>BibtexSource</code></td><td>The BibTeX data</td></tr>
+                    <tr><td>3</td><td><code>BookBibliography</code></td><td><code>BibtexParser</code></td><td>The references, by key</td></tr>
+                    <tr><td>4</td><td><code>BibtexParser</code></td><td>The console</td><td>The keys used twice</td></tr>
+                    <tr><td>5</td><td><code>BookBibliography</code></td><td><code>CitationIndex</code></td><td>The citations, numbered and made to show it</td></tr>
+                    <tr><td>6</td><td><code>CitationIndex</code></td><td>The console</td><td>The keys naming nothing</td></tr>
+                    <tr><td>7</td><td><code>BookBibliography</code></td><td><code>CitationIndex</code></td><td>The number and the places of each cited reference</td></tr>
+                    <tr><td>8</td><td><code>BookBibliography</code></td><td><code>BibliographyTable</code></td><td>The table</td></tr>
+                    <tr><td>9</td><td><code>BookBibliography</code></td><td><code>ReferenceDisclosure</code></td><td>One per content that opens, all closed</td></tr>
+                    <tr><td>10</td><td><code>BookBibliography</code></td><td><code>BibliographyControls</code></td><td>Sorting and searching, put on the table</td></tr>
+                    <tr><td>11</td><td><code>BibliographyControls</code></td><td>The column selector</td><td>The columns the width has room for, checked. The reader may check the others</td></tr>
+                    <tr><td>12</td><td>The browser</td><td>The table of contents</td><td>Built, and it sees the heading of the bibliography</td></tr>
+                    </tbody>
+                </table>
+
+                <p>The citations are numbered before the place of the bibliography is looked
+                    for: they are in the text, and the text is there. A document with nowhere to
+                    put its bibliography still reads.</p>
+
+                <p><code>read()</code> may ask a server for a file, so <code>run()</code> gives
+                    back a promise, and whatever builds the table of contents waits for it. That
+                    is what holds C31.</p>
+            </section>
+
+            <section class="ssection"><h2>Nothing is kept</h2>
+
+                <p>Everything starts again at every opening, and gives the same result: the
+                    order of the text does not change, so the numbers do not either.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="states" class="chapter">
+            <h1>Consulting a reference</h1>
+
+            <section class="ssection"><h2>Two states</h2>
+
+                <table>
+                    <caption>What is true in each state</caption>
+                    <thead>
+                    <tr><th>State</th><th>What is true</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Closed</td>
+                        <td>The control declares itself closed. The content is neither seen, nor
+                            reached by the keyboard, nor read by a screen reader.</td>
+                    </tr>
+                    <tr>
+                        <td>Open</td>
+                        <td>The control declares itself open. The content is seen, TAB goes
+                            through it, a screen reader reads it.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Activating the control opens it or closes it: clicking, Enter or Space, which
+                    a button answers to without anything being written for them. A control placed
+                    inside the content closes it too.</p>
+            </section>
+
+            <section class="ssection"><h2>What changes nothing</h2>
+
+                <ul>
+                    <li>Opening another content: several stay open at the same time.</li>
+                    <li>Sorting: it moves rows, it opens and closes nothing.</li>
+                    <li>Searching: a content left open comes back open with its reference.</li>
+                    <li>Printing: what opens on a screen does not print, and the state stays.</li>
+                </ul>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="contracts" class="chapter">
+            <h1>What the classes promise</h1>
+
+            <section class="ssection"><h2>Rules that hold everywhere</h2>
+
+                <p>These are worth more than any list of signatures: they say what a caller
+                    never has to check.</p>
+
+                <ul>
+                    <li>A field, a list or a map that is absent gives back an empty string, an
+                        empty array or an empty map, never <code>null</code>. The one exception is
+                        <code>CitedKey.reference</code>, because a key naming nothing is a case
+                        C8 asks to treat apart.</li>
+                    <li>The fields of a data class are private and set at construction. What they
+                        give back is a copy, so nothing outside can change what the BibTeX data
+                        say.</li>
+                    <li><code>BibtexParser.parse()</code> never raises: an unreadable entry is
+                        left aside and said in the console, and the others are parsed all the
+                        same.</li>
+                    <li><code>CitationIndex.index()</code> never raises, and starts again from
+                        nothing at every call.</li>
+                    <li><code>BookBibliography.run()</code> never raises, and is the only place
+                        that writes <code>try</code>.</li>
+                    <li><code>ReferenceDisclosure.open()</code> and <code>close()</code> have no
+                        precondition: calling either twice does nothing wrong.</li>
+                </ul>
+            </section>
+
+            <section class="ssection"><h2>Where a number comes from</h2>
+
+                <p>The number of a reference is nowhere in the data. It is given at the first
+                    citation, taken up by the later ones, and does not exist for a reference
+                    nobody cites. It travels from <code>CitationIndex</code> to
+                    <code>BibliographyTable</code> in one object, <code>CitedReference</code>,
+                    together with the places the reference is cited at, and it travels through
+                    <code>BookBibliography</code>: the table never speaks to the citations.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="signatures" class="chapter">
+            <h1>The contracts, class by class</h1>
+
+            <section class="ssection"><h2>How to read them</h2>
+
+                <p><code>+</code> public, <code>-</code> private, <code>/</code> derived and
+                    never stored, <code>{readOnly}</code> does not change after construction,
+                    <code>{ordered}</code> the order matters, <code>[0..1]</code> may be
+                    absent. <i>pre</i> is what has to be true on the way in, and what the
+                    operation does not check; <i>post</i> is what the caller can count on. The
+                    types are the ones written in the JSDoc.</p>
+            </section>
+
+            <section class="ssection"><h2>The data classes</h2>
+
+                <table>
+                    <caption>Reference</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>constructor</td><td>(key, type, fields, authors, links, source)</td><td>pre: key and type are not empty. post: the object does not change any more</td></tr>
+                    <tr><td>get authors</td><td>(): Author[]</td><td>post: in the order they sign</td></tr>
+                    <tr><td>get links</td><td>(): Link[]</td><td>post: may be empty</td></tr>
+                    <tr><td>get abstract</td><td>(): String</td><td>post: '' when there is none, never null</td></tr>
+                    <tr><td>field</td><td>(name: String): String</td><td>pre: name is not empty. post: '' when the field is missing, never null</td></tr>
+                    <tr><td>searchLink</td><td>(): Link</td><td>post: always a link, built from the title and the first author</td></tr>
+                    </tbody>
+                </table>
+
+                <p><code>field()</code> always giving a string is what lets
+                    <code>ReferenceFormatter</code> write no existence test at all.</p>
+
+                <table>
+                    <caption>Author, Link, Citation, CitedKey, CitedReference</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>Author.constructor</td><td>(place, firstName, particle, lastName, suffix)</td><td>pre: place is 1 or more. The four names may be empty, never null</td></tr>
+                    <tr><td>Author.text</td><td>(): String</td><td>post: the whole name, no extra space, never null</td></tr>
+                    <tr><td>Author.sortValue</td><td>(): String</td><td>post: family name first, then given name</td></tr>
+                    <tr><td>Link.constructor</td><td>(address: String)</td><td>pre: address is not empty</td></tr>
+                    <tr><td>Link./kind</td><td>(): LinkKind</td><td>post: one of pdf, repository, publisher, search, other, read in the address</td></tr>
+                    <tr><td>Citation.constructor</td><td>(element, place, citedKeys)</td><td>pre: citedKeys holds at least one</td></tr>
+                    <tr><td>Citation.showNumber</td><td>(number: Number): void</td><td>pre: number is 1 or more. post: the number in brackets, the accessible name "Reference" and the number, and a non-breaking space before it</td></tr>
+                    <tr><td>Citation.showMissing</td><td>(): void</td><td>post: [?] and the accessible name "missing reference". No number is given</td></tr>
+                    <tr><td>CitedKey.constructor</td><td>(place, writtenKey, reference, targetPage)</td><td>pre: writtenKey is not empty. reference is null when no reference bears that key</td></tr>
+                    <tr><td>CitedKey.get reference</td><td>(): Reference</td><td>post: may give null, the one exception to the no-null rule</td></tr>
+                    <tr><td>CitedReference</td><td>(number, places)</td><td>What <code>CitationIndex</code> gives and <code>BibliographyTable</code> receives, so that the two never talk to each other</td></tr>
+                    </tbody>
+                </table>
+
+                <p><code>other</code> exists in <code>LinkKind</code> so that an address
+                    nothing recognises is shown all the same, as a plain link. A reference is
+                    looked up before a <code>CitedKey</code> is built, never set afterwards.</p>
+            </section>
+
+            <section class="ssection"><h2>The working classes</h2>
+
+                <table>
+                    <caption>BibtexSource, BibtexParser, ReferenceFormatter</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>BibtexSource.constructor</td><td>(element, address)</td><td>pre: at least one of the two is given</td></tr>
+                    <tr><td>BibtexSource.read</td><td>(): Promise&lt;String&gt;</td><td>post: a text that is not empty, or raises MissingBibtexData</td></tr>
+                    <tr><td>BibtexSource.readFromPage</td><td>(): String</td><td>post: '' when the element is not there</td></tr>
+                    <tr><td>BibtexSource.readFromAddress</td><td>(): Promise&lt;String&gt;</td><td>post: '' when the request fails. Never goes to the internet, only to the given address</td></tr>
+                    <tr><td>BibtexParser.parse</td><td>(text: String): Map&lt;String, Reference&gt;</td><td>pre: text is not empty. post: a map, possibly empty. Never raises</td></tr>
+                    <tr><td>BibtexParser.parseEntry</td><td>(text: String): Reference [0..1]</td><td>post: null when the entry cannot be read, and it is said in the console</td></tr>
+                    <tr><td>BibtexParser.parseAuthors</td><td>(text: String): Author[]</td><td>post: in the order they sign. Empty when the field is missing</td></tr>
+                    <tr><td>BibtexParser.decodeLatex</td><td>(text: String): String</td><td>post: no known LaTeX notation left. What is not recognised stays as it is</td></tr>
+                    <tr><td>ReferenceFormatter.format</td><td>(reference: Reference): DocumentFragment</td><td>pre: reference is not null. post: never empty, even for an unknown type</td></tr>
+                    <tr><td>ReferenceFormatter.templateFor</td><td>(type: String): String[]</td><td>post: the fallback template when the type is unknown</td></tr>
+                    </tbody>
+                </table>
+
+                <p><code>BibtexSource</code> is the only class that knows where the data come
+                    from. <code>templates</code> says, for each type, which fields and in which
+                    order: changing a display is changing that map, and nothing else.</p>
+
+                <table>
+                    <caption>BibliographyTable, CitationIndex, ReferenceDisclosure, BibliographyControls, BookBibliography, SortaTable</caption>
+                    <thead><tr><th>Operation</th><th>Signature</th><th>Contract</th></tr></thead>
+                    <tbody>
+                    <tr><td>BibliographyTable.build</td><td>(references, cited): HTMLTableElement</td><td>pre: neither map is null, cited may be empty. post: one row per reference, each bearing an identifier; the number column exists only when cited is not empty; a caption and column heads declared as such</td></tr>
+                    <tr><td>BibliographyTable.buildRow</td><td>(reference, cited [0..1]): HTMLTableRowElement</td><td>post: the number, the year, the formatted reference, what can be opened. The reference cell carries the value it is sorted on</td></tr>
+                    <tr><td>BibliographyTable.backLinks</td><td>(places: HTMLElement[]): DocumentFragment</td><td>post: one numbered link per place. An empty fragment when the list is empty</td></tr>
+                    <tr><td>CitationIndex.index</td><td>(root, references): void</td><td>pre: root is not null. post: every citation shows its number or its absence; the numbers run from 1 to n without a gap, in document order; two citations of the same key bear the same number. Never raises</td></tr>
+                    <tr><td>CitationIndex.citedReferences</td><td>(): Map&lt;String, CitedReference&gt;</td><td>pre: index() has been called. post: empty when no citation was found</td></tr>
+                    <tr><td>ReferenceDisclosure.constructor</td><td>(control, content)</td><td>pre: both exist, and content follows control in document order</td></tr>
+                    <tr><td>ReferenceDisclosure./isOpen</td><td>(): Boolean</td><td>post: read on the control, never stored apart</td></tr>
+                    <tr><td>ReferenceDisclosure.open</td><td>(): void</td><td>pre: none. post: the content is visible, the control declares itself open, the start is said, and the focus has not moved</td></tr>
+                    <tr><td>ReferenceDisclosure.close</td><td>(): void</td><td>pre: none. post: the content is hidden, the control declares itself closed, the end is said, and the focus is on the control</td></tr>
+                    <tr><td>BibliographyControls.sortBy</td><td>(column: Number): void</td><td>pre: the column exists. post: the rows are sorted, the numbers have not moved, what changed is said</td></tr>
+                    <tr><td>BibliographyControls.filter</td><td>(word: String): void</td><td>pre: none. post: the rows the word does not appear in are hidden; an empty word gives them all back; what changed is said</td></tr>
+                    <tr><td>BookBibliography.run</td><td>(): Promise&lt;void&gt;</td><td>post: never raises. Every exception is caught and said in the console. The page stays readable whatever happens</td></tr>
+                    <tr><td>SortaTable.columnVisibility</td><td>(columnIndex: Number, show: Boolean): void</td><td>pre: none. post: only the cells belonging to that column are hidden or shown. A cell spanning several columns belongs to none of them and is never touched, so what a row opens stays readable. B25</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>How an error travels</h2>
+
+                <table>
+                    <thead><tr><th>Level</th><th>What happens</th><th>What the program does</th></tr></thead>
+                    <tbody>
+                    <tr><td>1</td><td>Nothing can be done: no BibTeX data, no place to put the bibliography</td><td>An exception, caught by <code>BookBibliography</code>, said in the console. The rest of the page does not move</td></tr>
+                    <tr><td>2</td><td>One reference is concerned: a badly written entry, a missing field, an unknown type</td><td>No exception. The reference is shown with what it has, and the lack is seen</td></tr>
+                    <tr><td>3</td><td>The author has to know: a duplicate key, a key naming nothing</td><td>No exception. A message in the console, and the work goes on</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Three exception classes: <code>BibliographyError</code>, the mother, raised
+                    by nobody; <code>MissingBibtexData</code>, raised by
+                    <code>BibtexSource.read()</code>; <code>MissingBibliographyPlace</code>,
+                    raised by <code>BookBibliography.run()</code>. No other exception is
+                    raised by the program.</p>
+
+                <p>One handler, on <code>run()</code>. It catches
+                    <code>BibliographyError</code>, so both of them in one gesture, writes the
+                    message in the console, and ends without undoing what was already built.
+                    Anything that is not a <code>BibliographyError</code> is a programming
+                    mistake, and has to be seen.</p>
+
+                <p>An error in JavaScript must never do worse than the absence of JavaScript:
+                    without it the sentence stays readable, and that stays true when the
+                    program stops.</p>
+            </section>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+
+        <section id="parsing" class="chapter">
+            <h1>How BibTeX is read</h1>
+
+            <section class="ssection"><h2>Four algorithms, and where they come from</h2>
+
+                <p>They come from <code>bib-list.js</code>, written in 2008. Its code is not
+                    reused; these four readings are, because they are right and they handle what
+                    a naive one gets wrong.</p>
+
+                <table>
+                    <caption>What the parser does</caption>
+                    <thead>
+                    <tr><th>What</th><th>How</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Cutting the entries</td>
+                        <td>Braces are counted, never matched by a regular expression. A brace
+                            preceded by a backslash does not count. An entry starts at an "@" met
+                            outside any brace and ends when the count is back to zero. An "@"
+                            starting a line while an entry is still open means a closing brace is
+                            missing: the entry is closed by force, and reading starts again there.</td>
+                    </tr>
+                    <tr>
+                        <td>Cutting one entry</td>
+                        <td>It is read backwards. The last equal sign is looked for, the value
+                            taken from there, then the last comma before it, which gives the name
+                            of the field. What is left at the beginning carries the type and the
+                            key. Reading backwards is what makes a value holding commas and equal
+                            signs cost nothing, and an abstract always holds some.</td>
+                    </tr>
+                    <tr>
+                        <td>Telling a real equal sign</td>
+                        <td>Braces are counted backwards from the end up to the equal sign: when
+                            the count is not zero, that sign sits inside a value. A value
+                            delimited by double quotes is checked apart, since its braces are
+                            balanced even when the sign belongs to an equation.</td>
+                    </tr>
+                    <tr>
+                        <td>Cutting the names</td>
+                        <td>Names are separated by " and ". Each follows one of the three forms
+                            BibTeX allows: "First von Last", "von Last, First", "von Last, Jr,
+                            First"; the number of commas says which. The particle is recognised by
+                            the case of the word, read on the first letter met outside braces,
+                            with a third caseless case for digits and punctuation, which belongs
+                            to the family name.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="ssection"><h2>What was not taken</h2>
+
+                <p><code>bib-list.js</code> converts LaTeX notations through a closed list of
+                    thirteen replacements, whose own comment admits it is incomplete, and produces
+                    HTML entities where plain characters are wanted. It also erases every brace,
+                    which loses the case a <code>{SPPAS}</code> protects.</p>
+
+                <p>Here, accents are converted by rule, an accent and a letter, and the braces
+                    that protect a case are removed without touching what they protect. A notation
+                    nobody knows is left as it was written rather than thrown away.</p>
+            </section>
+        </section>
+
+    </main>
+
+    <footer>
+        <p class="center">This site respects your privacy.</p>
+        <p class="center">We do not collect any information and do not use cookies.</p>
+        <hr>
+        <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+            Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+        <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+            This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+        </p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            Wexa.links.handleLinksWithParameters(['btn-back']);
+        });
+    </script>
+
+<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
+    <script>
+        (function () {
+            const usingFile = (window.location.protocol === 'file:');
+            const s = document.createElement('script');
+            if (usingFile) {
+                s.src = '../wexa_statics/js/wexa.bundle.js';
+                s.addEventListener('load', function () {
+                    if (window.Wexa && window.Wexa.ThemeManager) {
+                        const t = new window.Wexa.ThemeManager();
+                            t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+                            t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        window.themes = t;
+                    }
+                });
+            } else {
+                s.type = 'module';
+                s.src = '../wexa_statics/js/wexa.js';
+            }
+            document.head.appendChild(s);
+        })();
+    </script>
+    <script type="module">
+        import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
+        const themes = new ThemeManager();
+            themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
+            themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        window.themes = themes;
+    </script>
+
+    </body>
+</html>

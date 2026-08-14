@@ -37,6 +37,10 @@ This banner notice must not be removed.
     margin: 0;
     padding: 0.5rem;
     width: 100%;
+    /* A button is never narrower than what it says. Its box is the one of its
+       column, and a column drawn on its cells can be shorter than its header:
+       the column follows the button, instead of clipping the word. */
+    min-width: max-content;
     height: 100%;
     min-height: 1.5rem;
     font-weight: var(--font-weight-bold);
@@ -73,3 +77,24 @@ This banner notice must not be removed.
     border-color: currentColor transparent transparent transparent;
 }
 
+
+
+/* -----------------------------------------------------------------------
+   On paper
+   ----------------------------------------------------------------------- */
+
+@media print {
+
+    /* print.css hides every button, and a sort button is one. Its label is
+       also the header of its column: without it, the table loses its
+       headers. Sorting has nothing left to do, so only the label stays. */
+    .sortatable {
+        display: inline;
+        padding: 0;
+        text-align: left;
+    }
+
+    .sortatable::after {
+        display: none;
+    }
+}

@@ -75,7 +75,7 @@ class UnitTest {
      */
     static assert_values_equals(value_expected, value_to_compare, assertion_name) {
         if (value_to_compare !== value_expected) {
-            this.#print_assert_failed(value_to_compare, value_expected, assertion_name);
+            this.#print_assert_failed(value_expected, value_to_compare, assertion_name);
         } else {
             this.#print_assert_success(assertion_name);
         }
@@ -91,7 +91,7 @@ class UnitTest {
      */
     static assert_values_not_equals(first_value, second_value, assertion_name) {
         if (first_value === second_value) {
-            this.#print_assert_failed(first_value, second_value, assertion_name);
+            this.#print_assert_equality_failed(first_value, assertion_name);
         } else {
             this.#print_assert_success(assertion_name);
         }
@@ -110,7 +110,7 @@ class UnitTest {
         const second_object = JSON.stringify(object_expected);
 
         if (first_object !== second_object) {
-            this.#print_assert_failed(object_to_compare, object_expected, assertion_name);
+            this.#print_assert_failed(second_object, first_object, assertion_name);
         } else {
             this.#print_assert_success(assertion_name);
         }
@@ -129,7 +129,7 @@ class UnitTest {
         const second_object_stringify = JSON.stringify(second_object);
 
         if (first_object === second_object) {
-            this.#print_assert_failed(first_object_stringify, second_object_stringify, assertion_name);
+            this.#print_assert_equality_failed(first_object_stringify, assertion_name);
         } else {
             this.#print_assert_success(assertion_name);
         }
@@ -204,13 +204,24 @@ class UnitTest {
     /**
      * Print an assertion failed in the console.
      *
-     * @param value_expected the value expected
-     * @param value_compared the value tested
+     * @param value_expected the value the test expects
+     * @param value_obtained the value the test got
      * @param assertion_name the name of the test
      */
-    static #print_assert_failed(value_expected, value_compared, assertion_name) {
+    static #print_assert_failed(value_expected, value_obtained, assertion_name) {
         console.error("Assertion : " + assertion_name + " failed !"
-                + "\nValue expected : " + value_expected + ", value obtain : " + value_compared);
+                + "\nValue expected : " + value_expected + ", value obtained : " + value_obtained);
+    }
+
+    /**
+     * Print an assertion that expected two different values in the console.
+     *
+     * @param value the value both sides hold
+     * @param assertion_name the name of the test
+     */
+    static #print_assert_equality_failed(value, assertion_name) {
+        console.error("Assertion : " + assertion_name + " failed !"
+                + "\nBoth values are equal : " + value);
     }
 
     /**

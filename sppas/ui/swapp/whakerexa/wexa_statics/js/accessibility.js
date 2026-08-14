@@ -58,6 +58,7 @@ export class AccessibilityManager extends BaseManager {
 
     #activatedColor;
     #activatedContrast;
+    #colorModeSuspendedForPaper;
 
     // -----------------------------------------------------------------------
     // CONSTRUCTOR
@@ -77,11 +78,17 @@ export class AccessibilityManager extends BaseManager {
         super();
         this.#activatedColor = "";
         this.#activatedContrast = "";
+        this.#colorModeSuspendedForPaper = false;
 
         OnLoadManager.addLoadFunction(this.#loadBodyClasses.bind(this));
         OnLoadManager.addLoadFunction(this.#setAllLinksCustom.bind(this));
         OnLoadManager.addLoadFunction(this.#setSubmitCustom.bind(this));
         OnLoadManager.addLoadFunction(this.#injectButtonIcons.bind(this));
+
+        // Paper is light. Held here rather than in every stylesheet, so that a
+        // theme never has to know that printing exists.
+        window.addEventListener('beforeprint', this.#leaveColorModeForPaper.bind(this));
+        window.addEventListener('afterprint', this.#restoreColorModeAfterPaper.bind(this));
     }
 
     // -----------------------------------------------------------------------
@@ -254,6 +261,40 @@ export class AccessibilityManager extends BaseManager {
 
     // -----------------------------------------------------------------------
     // PRIVATE METHODS
+    // -----------------------------------------------------------------------
+
+    /**
+     * Leave the dark color mode while the document is being printed.
+     *
+     * A dark palette is meant for a screen: on paper it wastes ink and the
+     * colors chosen against a dark background lose their contrast. The class
+     * is removed for the print job only, so that no stylesheet has to guard
+     * its own dark rules against the print media.
+     *
+     * @returns {void}
+     */
+    #leaveColorModeForPaper() {
+        if (this.#activatedColor === "") {
+            return;
+        }
+        document.documentElement.classList.remove(AccessibilityManager.COLOR_MODE);
+        this.#colorModeSuspendedForPaper = true;
+    }
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Restore the dark color mode once the print job is over.
+     *
+     * @returns {void}
+     */
+    #restoreColorModeAfterPaper() {
+        if (this.#colorModeSuspendedForPaper === false) {
+            return;
+        }
+        document.documentElement.classList.add(AccessibilityManager.COLOR_MODE);
+        this.#colorModeSuspendedForPaper = false;
+    }
     // -----------------------------------------------------------------------
 
     /**

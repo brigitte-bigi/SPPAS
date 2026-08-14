@@ -96,6 +96,33 @@
 &lt;/table&gt;</code></pre>
         </article>
 
+        <h2>Sort value</h2>
+        <p>
+            A cell is sorted on the text it displays. When what is read and what
+            is sorted on differ, the cell carries its own value in a
+            <code>data-sort-value</code> attribute, which is then used instead.
+            A bibliography displays a whole reference, and is sorted on the family
+            name of its first author.
+        </p>
+
+        <article class="card-doc" aria-label="SortaTable — sort value">
+            <div class="card-view">
+                <p>Only the cells that need it carry the attribute.</p>
+            </div>
+            <pre class="dark"><code>&lt;td data-sort-value="Bigi, Brigitte"&gt;
+    Brigitte Bigi, A Large Open Corpus, 2022.
+&lt;/td&gt;</code></pre>
+        </article>
+
+        <h2>Language</h2>
+        <p>
+            Texts are compared according to the language of the page, read on the
+            closest element that declares a <code>lang</code> attribute. Comparing
+            character by character would put every accented word after all the
+            others, which is wrong in each language that uses them. Numbers written
+            inside a text are compared as numbers, so that 9 comes before 10.
+        </p>
+
         <h2>API</h2>
         <p>
             Instantiate with the table <code>id</code>, then call
@@ -244,9 +271,8 @@ sortatable.attachSortListeners(); // no initial sort</code></pre>
             <div class="card-view">
                 <p>See the demo below for a live example.</p>
             </div>
-            <pre class="dark"><code>// iconsPath: folder containing the toggle button icons
-// detailsId: id of the &lt;details&gt; element
-const toggleSelector = new ToggleSelector("../wexa_statics/icons/", "my-details");
+            <pre class="dark"><code>// detailsId: id of the &lt;details&gt; element
+const toggleSelector = new ToggleSelector("my-details");
 
 // Apply current checkbox state to the table
 sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
@@ -267,7 +293,7 @@ sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
                                 <img src="" alt="" />
                             </button>
                         </summary>
-                        <main>
+                        <div>
                             <ul>
                                 <li class="check-item">
                                     <input id="event_input" type="checkbox"
@@ -288,7 +314,7 @@ sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
                                     <label for="descr_input" id="descr_label">Show/Hide description</label>
                                 </li>
                             </ul>
-                        </main>
+                        </div>
                     </details>
                     <button class="flex-item"
                             onclick="sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());">
@@ -324,7 +350,7 @@ sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
             &lt;img src="" alt="" /&gt;
         &lt;/button&gt;
     &lt;/summary&gt;
-    &lt;main&gt;
+    &lt;div&gt;
         &lt;ul&gt;
             &lt;li class="check-item"&gt;
                 &lt;input id="event_input" type="checkbox"
@@ -332,7 +358,7 @@ sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
                 &lt;label for="event_input"&gt;Show/Hide event&lt;/label&gt;
             &lt;/li&gt;
         &lt;/ul&gt;
-    &lt;/main&gt;
+    &lt;/div&gt;
 &lt;/details&gt;
 &lt;button onclick="sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());"&gt;
     Apply
@@ -343,7 +369,7 @@ sortatable.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
 
 const sortatable3 = new SortaTable("toggable-table");
 sortatable3.attachSortListeners();
-const toggleSelector = new ToggleSelector("../wexa_statics/icons/", "toggable-details");
+const toggleSelector = new ToggleSelector("toggable-details");
 sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
         </article>
 
@@ -374,7 +400,7 @@ sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());</code></pre>
         const sortatable3 = new SortaTable("toggable-table");
         sortatable3.attachSortListeners();
 
-        const toggleSelector = new ToggleSelector("../wexa_statics/icons/", "toggable-details");
+        const toggleSelector = new ToggleSelector("toggable-details");
         sortatable3.toggleColumnVisibility(toggleSelector.getCheckboxes());
 
         window.sortatable3 = sortatable3;

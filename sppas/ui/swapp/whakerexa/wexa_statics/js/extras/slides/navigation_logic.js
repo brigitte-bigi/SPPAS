@@ -135,10 +135,14 @@ export default class NavigationLogic {
         const idx = parseInt(parts[0], 10);
         const stp = parts.length > 1 ? parseInt(parts[1], 10) : 0;
 
-        this._setPosition(
-            Number.isNaN(idx) ? 1 : idx,
-            Number.isNaN(stp) ? 0 : stp
-        );
+        // The address holds the reading and nothing else. A fragment that is
+        // not a position names a place in the document: it is an entry of the
+        // treatment that reaches a place, and the reading does not move for it.
+        if (Number.isNaN(idx) === true) {
+            return;
+        }
+
+        this._setPosition(idx, Number.isNaN(stp) ? 0 : stp);
     }
 
     // -----------------------------------------------------------------------

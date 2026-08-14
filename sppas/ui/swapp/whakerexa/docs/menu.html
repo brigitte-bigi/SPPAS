@@ -194,7 +194,7 @@
             <tbody>
                 <tr>
                     <td><code>--nav-min-height</code></td>
-                    <td><code>max(calc(4rem / var(--size-divisor)), 3rem)</code></td>
+                    <td><code>max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3))</code></td>
                     <td>Height of top/bottom nav bar</td>
                 </tr>
                 <tr>
@@ -203,8 +203,13 @@
                     <td>Collapsed width of side nav (set &gt; 0 for side menus)</td>
                 </tr>
                 <tr>
+                    <td><code>--nav-mobile-expanded-width</code></td>
+                    <td><code>min(80vw, calc(var(--font-size) * 30))</code></td>
+                    <td>Width proposed to <code>--nav-expanded-width</code> under the mobile border</td>
+                </tr>
+                <tr>
                     <td><code>--nav-expanded-width</code></td>
-                    <td><code>max(calc(16rem / var(--size-divisor)), 14rem)</code></td>
+                    <td><code>max(calc(var(--font-size) * 16 / var(--size-divisor)), calc(var(--font-size) * 14))</code></td>
                     <td>Side nav width when expanded or pinned</td>
                 </tr>
                 <tr>
@@ -219,12 +224,12 @@
                 </tr>
                 <tr>
                     <td><code>--nav-item-height</code></td>
-                    <td><code>max(calc(2.5rem / var(--size-divisor)), 2.5rem)</code></td>
+                    <td><code>max(calc(var(--font-size) * 2.5 / var(--size-divisor)), calc(var(--font-size) * 2.5))</code></td>
                     <td>Default height of any menu item</td>
                 </tr>
                 <tr>
                     <td><code>--menu-button-size</code></td>
-                    <td><code>max(calc(4rem / var(--size-divisor)), 3rem)</code></td>
+                    <td><code>max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3))</code></td>
                     <td>Size of the <code>#menu-button</code> hamburger button</td>
                 </tr>
             </tbody>

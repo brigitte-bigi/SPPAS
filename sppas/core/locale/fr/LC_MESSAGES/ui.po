@@ -622,6 +622,9 @@ msgstr "Installe des programmes tiers afin d'activer des fonctionnalit√©s suppl√
 # ---------------------------------------------------------------------------
 # Dashboard
 # ---------------------------------------------------------------------------
+msgid "Dashboard"
+msgstr "Dashboard"
+
 msgid "Launch"
 msgstr "Lancer"
 

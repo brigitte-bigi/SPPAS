@@ -271,6 +271,7 @@ export default class SlidesInitializer {
         await this.#injectBoilerplate();
         window.Wexa.accessibility = new window.Wexa.AccessibilityManager();
         this.#registerThemes(window.Wexa.ThemeManager || null);
+        await this.#paginate(window.Wexa.SlidesPagination || null);
         const app = this.#buildConfig(window.Wexa.Slides);
         app.init();
         this.#ready(app);
@@ -301,6 +302,9 @@ export default class SlidesInitializer {
             const { ThemeManager } = await import(new URL('../theme_manager.js', this.#base).href);
             this.#registerThemes(ThemeManager);
         }
+
+        const { SlidesPagination } = await import(new URL('slides_pagination.js', this.#base).href);
+        await this.#paginate(SlidesPagination);
 
         const app = this.#buildConfig(slidesModule.default);
         app.init();
@@ -557,6 +561,43 @@ export default class SlidesInitializer {
         }
 
         window.themes = manager;
+    }
+
+    /**
+     * Lay every written slide on as many slides as it takes.
+     *
+     * It happens here, and not later: the slides are counted and the overview
+     * is built from what section.slide gives, so counting before laying out
+     * would give wrong numbers and an incomplete overview.
+     *
+     * A page that builds content of its own — a bibliography, a table of
+     * contents — pushes its promise into window.Wexa.contentReady: measuring a
+     * table that does not exist yet measures nothing. A content that fails to
+     * build does not stop the layout: what exists is laid out all the same.
+     *
+     * @private
+     * @async
+     * @param {Function|null} SlidesPagination - SlidesPagination constructor, or null to skip.
+     * @returns {Promise<void>}
+     */
+    async #paginate(SlidesPagination) {
+        if (SlidesPagination === null || SlidesPagination === undefined) {
+            console.warn('SlidesInitializer: SlidesPagination not found. Slides are shown as they are written.');
+            return;
+        }
+
+        const pending = (window.Wexa && Array.isArray(window.Wexa.contentReady))
+            ? window.Wexa.contentReady
+            : [];
+
+        await Promise.allSettled(pending);
+
+        // A slide only has the height of a slide once the body wears the class
+        // of the view. Measured before that, it is as tall as what it holds,
+        // and nothing ever overflows. The class is the one app.init() sets.
+        document.body.classList.add(this.#mode + '-view');
+
+        await new SlidesPagination().run();
     }
 
     /**

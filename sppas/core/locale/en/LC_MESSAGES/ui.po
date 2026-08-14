@@ -290,6 +290,12 @@ msgstr "Display the name of the file"
 # ---------------------------------------------------------------------------
 # SWAPP
 # ---------------------------------------------------------------------------
+msgid "Dashboard"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
 msgid "Session ended"
 msgstr "Session ended"
 
