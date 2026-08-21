@@ -57,6 +57,8 @@
    ====================================================================== */
 
 :root:not(.contrast) {
+    --font-family-sans:        SansFont, system-ui, Arial, sans-serif;
+    --font-family-serif:       var(--font-family-sans);
     --border-radius:           0;
     --border-width:            2px;
     --blockquote-border-width: 4px;

@@ -356,7 +356,6 @@ class swappBaseView:
                                     value="<span>" + MSG_THEME + "</span>")
         css_theme_button.add_attribute("id", "btn-css-theme")
         css_theme_button.add_attribute("class", "menuitem")
-        css_theme_button.add_attribute("type", "button")
         css_theme_button.add_attribute("aria-label", MSG_THEME)
         css_theme_button.add_attribute("title", MSG_THEME)
         css_theme_button.add_attribute("onclick", "window.themes && window.themes.next()")

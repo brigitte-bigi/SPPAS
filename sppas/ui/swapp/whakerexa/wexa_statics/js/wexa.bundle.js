@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-08-14 19:26:43
+// Bundle automatically generated on 2026-08-16 14:55:34
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -3295,7 +3295,10 @@ class Book {
     }
     #setup_aside(aside) {
         if (!aside.id) aside.id = 'book-toc-aside';
-        aside.setAttribute('aria-hidden', 'true');
+        // A panel that is set aside is out of reach: 'inert' says it once, for
+        // the keyboard as for a screen reader. 'aria-hidden' would say it to
+        // the reader alone, and leave the links it holds declared as reachable.
+        aside.inert = true;
         const titleEl = aside.querySelector('h1, h2');
         const label = titleEl?.textContent?.trim() || 'Table of contents';
         this.#toggle_button = document.createElement('button');
@@ -3307,7 +3310,7 @@ class Book {
         this.#toggle_button.addEventListener('click', () => {
             const isOpen = aside.classList.toggle('open');
             this.#toggle_button.setAttribute('aria-expanded', String(isOpen));
-            aside.setAttribute('aria-hidden', String(!isOpen));
+            aside.inert = !isOpen;
             if (isOpen) {
                 aside.querySelector('a[href], button')?.focus();
             } else {

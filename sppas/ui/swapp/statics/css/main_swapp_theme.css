@@ -92,7 +92,7 @@
 /* ── Light mode ───────────────────────────────────────────── */
 
 /* was: :root:not([data-theme=dark]), [data-theme=light] */
-:root:not(.dark), .light {
+:root:not(.dark) {
     --bg-color: rgb(249, 250, 251);
     --bg-color-alt: rgb(235, 235, 240);
     --fg-color: rgb(17, 17, 20);

@@ -57,12 +57,6 @@
    Typography — normal mode
    ====================================================================== */
 
-:root:not(.contrast) {
-    --font-family-sans:   system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu,
-                          Cantarell, Helvetica, Arial, sans-serif;
-    --font-family-serif:  var(--font-family-sans);
-}
-
 /* ======================================================================
    Light mode — CSS variable overrides
    ====================================================================== */

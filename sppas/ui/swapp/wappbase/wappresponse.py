@@ -111,19 +111,19 @@ class swappBaseResponse(BaseResponseRecipe):
 
         The Whakerexa client attaches its own parameters (`wexa_*`) to every
         navigation URL, and WhakerPy turns the query string of a GET into
-        events. These parameters are not application events: the color and
-        contrast schemes are translated into the accessibility events every
-        recipe processes, and any other `wexa_*` parameter -- purely a
-        client-side matter -- is removed.
+        events. None of them is an application event: the color and contrast
+        schemes are restored by the AccessibilityManager of the client, and
+        every `wexa_*` parameter is removed here.
+
+        Turning them into accessibility events left a page with no content:
+        a recipe answers such an event with "nothing changed", which is true
+        of the POST it was written for -- the page is already displayed --
+        but not of a GET, which is a navigation and has a page to build.
 
         :param events: (dict) The requested events to be processed
         :param headers: (dict) The headers of the http request received
 
         """
-        if "wexa_color" in events:
-            events["accessibility_color"] = events.pop("wexa_color")
-        if "wexa_contrast" in events:
-            events["accessibility_contrast"] = events.pop("wexa_contrast")
         for event_name in list(events.keys()):
             if event_name.startswith("wexa_") is True:
                 events.pop(event_name)
