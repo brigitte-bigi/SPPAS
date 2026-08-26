@@ -64,6 +64,7 @@ MSG_THEME = _("Theme")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
 MSG_DASHBOARD = _("Dashboard")
+MSG_HELP = _("Help")
 MSG_JOURNAL = _("Journal")
 MSG_FEEDBACK = _("Feedback")
 
@@ -429,6 +430,38 @@ class swappBaseView:
         _button.add_attribute("class", "menuitem menu-svg-button")
         if len(home_target) > 0:
             _button.add_attribute("data-named-target", home_target)
+
+        parent.append_child(_button)
+        return _button
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def append_help_link_button(parent: HTMLNode, page: str = "") -> HTMLNode:
+        """Create and append the button opening the document of the app.
+
+        One document per app holds both its user manual and its conceptual
+        folder.
+
+        An app whose document is not written yet gets the button disabled:
+        the place of the help is the same everywhere, whether or not there
+        is something to read.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :param page: (str) Path of the document, empty while it is unwritten
+        :return: (HTMLNode) the help link button node
+
+        """
+        svg_help = sppasImagesAccess.get_wexa_svg_icon("help")
+        help_image = svg_help + "<span>" + MSG_HELP + "</span>"
+        _button = HTMLNode(parent.identifier, "link-help_button", "a", value=help_image)
+        _button.add_attribute("role", "button")
+        _button.add_attribute("aria-label", MSG_HELP)
+        _button.add_attribute("class", "menuitem menu-svg-button")
+        if len(page) > 0:
+            _button.add_attribute("href", page)
+        else:
+            _button.add_attribute("aria-disabled", "true")
 
         parent.append_child(_button)
         return _button

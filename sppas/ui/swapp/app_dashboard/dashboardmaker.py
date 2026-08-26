@@ -125,6 +125,20 @@ class DashboardResponseRecipe(swappBaseResponse):
     # -----------------------------------------------------------------------
 
     @classmethod
+    def help_page(cls) -> str:
+        """Return the name of the page serving the document of this app."""
+        return "app_dashboard.html"
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
+    def help_document(cls) -> str:
+        """Return the path of the document of this app, relative to swapp."""
+        return "app_dashboard/app_dashboard.htm"
+
+    # -----------------------------------------------------------------------
+
+    @classmethod
     def page(cls) -> str:
         """Override. Return the HTML page name."""
         return "index.html"

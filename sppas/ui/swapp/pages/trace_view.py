@@ -175,6 +175,7 @@ class TraceView(swappBaseView):
         # tab of the Dashboard -- see _home_target() -- instead of turning
         # this one into it.
         self.append_home_link_button(self._htree.body_nav, self._home_target())
+        self.append_help_link_button(self._htree.body_nav)
         self.__append_close_button(self._htree.body_nav, self._home_target())
 
     # -----------------------------------------------------------------------

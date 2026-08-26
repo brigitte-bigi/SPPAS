@@ -1,0 +1,297 @@
+<!-- ====================== USER MANUAL ============================ -->
+
+
+<section class="chapter">
+<h1>User manual</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Description</h2>
+
+		<p>
+			The Dashboard is the page SPPAS opens when it starts. It is the hall of the software:
+			it shows what can be launched, tells which workspace is in use, and gathers the ways
+			out -- towards the other applications, towards the pages of information, and towards
+			the web site. It carries no work of its own: nothing is annotated, converted or
+			analysed here.
+		</p>
+
+		<p>
+			The page is served under the name <code>index.html</code>. Closing its tab does not
+			stop SPPAS; leaving the session is an explicit action, taken from the menu.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the page shows</h2>
+
+		<section class="subssection">
+		<h3>The applications</h3>
+
+			<p>
+				Each application of SPPAS is shown as a card: a picture, its name, a short
+				description, and the button launching it. The first card, named Desktop, launches
+				the classic interface -- the one written with wxPython -- and not SPPAS as a whole:
+				SPPAS 5 is the product, that interface is one of its components.
+			</p>
+
+			<p>
+				A card is disabled when the feature it needs is not installed. The Desktop card
+				keeps its Launch button disabled while that interface is already running, and stays
+				otherwise unchanged.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The current workspace</h3>
+
+			<p>
+				Above the cards, the name of the workspace in use is displayed, with the path of
+				its file as a tooltip. It is shown for reading only: the workspace is chosen
+				elsewhere. The name is refreshed on its own, without reloading the page.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Information and links</h3>
+
+			<p>
+				Two sections follow the applications. The first leads to the pages of SPPAS itself:
+				About, how to cite the software, the Journal, and the form to send a feedback. The
+				second gathers seven links to the web: the site, the book, the tutorials, the
+				frequently asked questions, the source code, the resources and an award. Each of
+				these links carries a color of its own, which does not change with the theme.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the page asks</h2>
+
+		<section class="subssection">
+		<h3>The licence</h3>
+
+			<p>
+				At the very first opening, the page asks for the licence to be agreed. Nothing else
+				is shown until then. The answer is kept: the question is not asked again.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The Journal</h3>
+
+			<p>
+				The Journal lives in a tab of its own, where SPPAS writes what it did and why. When
+				that tab is closed, the Dashboard says so and offers to open it again. The message
+				appears and disappears on its own, the page being polled regularly.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 1.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The menu</h2>
+
+		<p>
+			The menu on the left is built by each application for itself. Four items are found in
+			all of them: the button switching the CSS theme, the two accessibility buttons --
+			contrast, and light or dark colors -- and the button pinning the menu open.
+		</p>
+
+		<p>
+			The Dashboard adds four of its own: the Dashboard button, which reloads the page here;
+			the Help button, opening this document; the Journal; and the button leaving SPPAS.
+			Leaving closes the session: the server stops, and the pages still open say so.
+		</p>
+
+	</section>
+
+</section>
+
+
+<!-- ====================== DEVELOPER MANUAL ======================= -->
+
+
+<section class="chapter">
+<h1>Developer manual</h1>
+
+<!-- =============================================================== -->
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.1 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>Organisation</h2>
+
+		<p>
+			The application lives in <code>sppas/ui/swapp/app_dashboard/</code>. It follows the
+			MVC pattern shared by every application of the swapp package.
+		</p>
+
+		<ul>
+			<li><code>app_dashboard.py</code> -- <code>DashboardWebData</code>, which parses the
+				JSON configuration and answers which page it can bake.</li>
+			<li><code>dashboardmaker.py</code> -- <code>DashboardResponseRecipe</code>, the bakery
+				of <code>index.html</code>: it receives the events and decides whether the page is
+				created again.</li>
+			<li><code>dashboard_controller.py</code> -- <code>DashboardController</code>, which
+				holds the answers to the events and fills the view from the model.</li>
+			<li><code>dashboard_view.py</code> -- <code>DashboardView</code>, which builds the HTML
+				tree and nothing else.</li>
+			<li><code>nodes/</code> -- the cards of the applications, the buttons of the links, and
+				the dialogs.</li>
+		</ul>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.2 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>What the page is made of</h2>
+
+		<section class="subssection">
+		<h3>The registries</h3>
+
+			<p>
+				The cards are not written in the page: they come from two registries. The
+				applications are declared in <code>WEB_APPLICATIONS</code>, the pages in
+				<code>WEB_PAGES</code>, as a list of <code>WebPageInfo(recipe, show)</code>. A page
+				declared with <code>show=True</code> gets its link in the section of information.
+				A spin-off adds its own entries through <code>SWAPP_PAGES</code>.
+			</p>
+
+			<p>
+				The menu is never fed from a registry: its list is fixed. The Dashboard is where
+				the whole set is shown, the menu is where the daily loop is.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The nodes</h3>
+
+			<p>
+				<code>AppsNode.create_app_card()</code> builds a card: an <code>article</code>
+				holding the picture, the title, the description and the launching button. The links
+				of the two other sections are built by <code>LinksNode</code> and
+				<code>AboutsNode</code>: an <code>a</code> element carrying the classes
+				<code>card</code> and <code>link-button</code> -- a link, not a button, since it
+				leads somewhere instead of doing something.
+			</p>
+
+		</section>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.3 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The events</h2>
+
+		<p>
+			<code>_process_events()</code> of the recipe answers four of them, and returns whether
+			the whole page must be created again.
+		</p>
+
+		<ul>
+			<li><code>workspace_name</code> -- the periodic request of the JavaScript. It returns
+				the name of the workspace, the path of its file and whether the Journal tab is
+				alive. The page is not baked again: the browser updates what changed.</li>
+			<li><code>handle_licence_agreement</code> -- the licence is agreed, the page is built
+				again without the dialog.</li>
+			<li><code>handle_start_sppas</code> -- the wx interface is launched. The answer is the
+				error, if any, or the state saying it started.</li>
+			<li><code>event_bake=close</code> -- leaving SPPAS. The page answers 410, Gone.</li>
+		</ul>
+
+		<p>
+			The accessibility parameters of Whakerexa never reach this method: the base recipe
+			removes every <code>wexa_</code> parameter, and the name of the CSS theme with them.
+			Both belong to the client alone.
+		</p>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.4 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The stylesheets</h2>
+
+		<p>
+			Four sheets are loaded, in this order.
+		</p>
+
+		<ul>
+			<li><code>main_swapp.css</code> -- the shape of every page: sizes, spacings, the side
+				menu, the cards. No color is written there.</li>
+			<li><code>main_swapp_identity.css</code> -- what identifies SPPAS whatever the theme:
+				the reading font, and the colors naming a destination, a status or a step. It is
+				never swapped.</li>
+			<li><code>main_swapp_theme.css</code> -- the theme, carrying the id
+				<code>wexa-theme</code>: the ThemeManager of Whakerexa swaps its <code>href</code>
+				to change the look of the page. It is the default theme, named
+				<code>swapp</code>.</li>
+			<li><code>app_dashboard.css</code> -- what belongs to this page alone: the panel of the
+				applications and the seven links.</li>
+		</ul>
+
+	</section>
+
+
+	<!-- ----------------------------------------------------------- -->
+	<!-- 2.5 -->
+	<!-- ----------------------------------------------------------- -->
+
+	<section class="ssection">
+	<h2>The scripts</h2>
+
+		<p>
+			<code>dashboard_manager.js</code> attaches what the page needs: the click on a card of
+			an application, the periodic request refreshing the workspace and the Journal dialog,
+			and the buttons of the dialogs. The links towards the internal pages are not handled
+			there: they are <code>a</code> elements, followed by <code>goToLink()</code> of
+			Whakerexa, which carries the accessibility parameters over to the page.
+		</p>
+
+	</section>
+
+</section>
