@@ -72,7 +72,9 @@ class TestTableExport(unittest.TestCase):
         weka = sppasTable()
         self.assertTrue(weka.multi_tiers_support())
         self.assertFalse(weka.no_tiers_support())
+        self.assertFalse(weka.empty_tier_support())
         self.assertTrue(weka.metadata_support())
+        self.assertFalse(weka.comments_support())
         self.assertTrue(weka.ctrl_vocab_support())
         self.assertFalse(weka.media_support())
         self.assertFalse(weka.hierarchy_support())
@@ -481,6 +483,16 @@ class TestWEKAFormats(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(TEMP)
+
+    # -----------------------------------------------------------------------
+
+    def test_members(self):
+        arff = sppasARFF()
+        self.assertFalse(arff.empty_tier_support())
+        self.assertTrue(arff.comments_support())
+        xrff = sppasXRFF()
+        self.assertFalse(xrff.empty_tier_support())
+        self.assertFalse(xrff.comments_support())
 
     # -----------------------------------------------------------------------
 

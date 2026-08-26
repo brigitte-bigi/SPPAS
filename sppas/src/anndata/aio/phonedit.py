@@ -98,6 +98,7 @@ class sppasBasePhonedit(sppasBaseIO):
 
         self._accept_multi_tiers = True
         self._accept_no_tiers = False
+        self._accept_empty_tier = True
         self._accept_metadata = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
@@ -505,7 +506,7 @@ class sppasSignaix(sppasBaseIO):
             tier = self[0]
 
         # we expect a not empty tier
-        if self.is_empty() is True:
+        if tier.is_empty() is True:
             raise AioEmptyTierError(".hz", tier.get_name())
 
         # we expect a tier with only sppasPoint

@@ -409,6 +409,7 @@ class sppasRawText(sppasBaseText):
 
         self.default_extension = "txt"
         self._accept_multi_tiers = False
+        self._accept_comments = True
 
     # -----------------------------------------------------------------------
 

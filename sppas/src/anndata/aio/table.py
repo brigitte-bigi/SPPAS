@@ -943,6 +943,7 @@ class sppasARFF(sppasTable):
 
         self.default_extension = "arff"
         self.software = "weka"
+        self._accept_comments = True
 
     # -----------------------------------------------------------------------
     # Write data

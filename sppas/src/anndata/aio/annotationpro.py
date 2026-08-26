@@ -172,6 +172,7 @@ class sppasANTX(sppasBaseIO):
 
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
+        self._accept_empty_tier = True
         self._accept_metadata = True
         self._accept_ctrl_vocab = False
         self._accept_media = True
@@ -689,6 +690,7 @@ class sppasANT(sppasBaseIO):
 
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
+        self._accept_empty_tier = True
         self._accept_metadata = True
         self._accept_ctrl_vocab = False
         self._accept_media = True

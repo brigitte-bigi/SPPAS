@@ -353,6 +353,7 @@ class sppasTextGrid(sppasBasePraat):
 
         self.default_extension = "TextGrid"
 
+        self._accept_empty_tier = True
         self._accept_point = True
         self._accept_interval = True
 
@@ -409,6 +410,9 @@ class sppasTextGrid(sppasBasePraat):
             if is_long is True:
                 cur_line += 1
             cur_line = self._parse_tier(lines, cur_line, is_long)
+
+        # the file can hold a tier with what a TextGrid can't hold otherwise
+        self.parse_do_not_edit_tier()
 
     # -----------------------------------------------------------------------
 
@@ -552,6 +556,10 @@ class sppasTextGrid(sppasBasePraat):
             # only empty tiers in the transcription
             raise AioNoTiersError("TextGrid")
 
+        # a TextGrid holds neither metadata, nor ctrl vocab, nor media: if
+        # the transcription has some, they are written into a tier of the file
+        do_not_edit = self.create_do_not_edit_tier()
+
         # we have to remove the hierarchy because instead we can't fill gaps
         hierarchy_backup = self.get_hierarchy().copy()
         for tier in self:
@@ -598,6 +606,10 @@ class sppasTextGrid(sppasBasePraat):
 
         # restore the hierarchy...
         self._hierarchy = hierarchy_backup
+
+        # the tier of the preserved information is a way to write, not data
+        if do_not_edit is not None:
+            self.pop(self.get_tier_index(do_not_edit.get_name()))
 
     # -----------------------------------------------------------------------
 
@@ -774,7 +786,7 @@ class sppasBaseNumericalTier(sppasBasePraat):
             tier = self[0]
 
         # we expect a not empty tier
-        if self.is_empty() is True:
+        if tier.is_empty() is True:
             raise AioEmptyTierError("Praat "+file_type, tier.get_name())
 
         # we expect a tier with only sppasPoint

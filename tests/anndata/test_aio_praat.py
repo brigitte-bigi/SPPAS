@@ -41,6 +41,7 @@
 
 import unittest
 import os
+import shutil
 
 from sppas.core.coreutils import u
 
@@ -59,10 +60,15 @@ from sppas.src.anndata.ann.annlabel import sppasLabel
 from sppas.src.anndata.ann.annotation import sppasAnnotation
 from sppas.src.anndata.tier import sppasTier
 from sppas.src.anndata.ann.annlocation import sppasLocation
+from sppas.src.anndata.ctrlvocab import sppasCtrlVocab
+from sppas.src.anndata.media import sppasMedia
+
+from sppas.src.utils.fileutils import sppasFileUtils
 
 # ---------------------------------------------------------------------------
 
 DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+TEMP = sppasFileUtils().set_random()
 
 # ---------------------------------------------------------------------------
 
@@ -75,7 +81,9 @@ class TestBasePraat(unittest.TestCase):
         txt = sppasBasePraat()
         self.assertTrue(txt.multi_tiers_support())
         self.assertFalse(txt.no_tiers_support())
+        self.assertFalse(txt.empty_tier_support())
         self.assertFalse(txt.metadata_support())
+        self.assertFalse(txt.comments_support())
         self.assertFalse(txt.ctrl_vocab_support())
         self.assertFalse(txt.media_support())
         self.assertFalse(txt.hierarchy_support())
@@ -262,7 +270,9 @@ class TestTextGrid(unittest.TestCase):
         tg = sppasTextGrid()
         self.assertTrue(tg.multi_tiers_support())
         self.assertFalse(tg.no_tiers_support())
+        self.assertTrue(tg.empty_tier_support())
         self.assertFalse(tg.metadata_support())
+        self.assertFalse(tg.comments_support())
         self.assertFalse(tg.ctrl_vocab_support())
         self.assertFalse(tg.media_support())
         self.assertFalse(tg.hierarchy_support())
@@ -633,6 +643,49 @@ class TestTextGrid(unittest.TestCase):
     # Writer
     # -----------------------------------------------------------------------
 
+    def test_write_read_do_not_edit(self):
+        """A TextGrid holds in a tier what it can't hold otherwise."""
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+        output = os.path.join(TEMP, "sample-do-not-edit.TextGrid")
+
+        trs = sppasTextGrid("sample")
+        trs.set_meta("annotator_name", "Brigitte Bigi")
+        tier = trs.create_tier("phonemes")
+        tier.set_meta("speaker_name", "Marie")
+        for begin, end, tag in ((1., 2., "a"), (2., 3., "b")):
+            tier.create_annotation(
+                sppasLocation(sppasInterval(sppasPoint(begin), sppasPoint(end))),
+                sppasLabel(sppasTag(tag)))
+        ctrl_vocab = sppasCtrlVocab("phones")
+        ctrl_vocab.add(sppasTag("a"))
+        ctrl_vocab.add(sppasTag("b"))
+        trs.add_ctrl_vocab(ctrl_vocab)
+        tier.set_ctrl_vocab(ctrl_vocab)
+        media = sppasMedia("sample.wav", mime_type="audio/wav")
+        trs.add_media(media)
+        tier.set_media(media)
+
+        trs.write(output)
+        # the tier was a way to write, not data of the transcription
+        self.assertEqual(1, len(trs))
+
+        txt = sppasTextGrid()
+        txt.read(output)
+        shutil.rmtree(TEMP)
+
+        self.assertEqual(1, len(txt))
+        self.assertEqual("Brigitte Bigi", txt.get_meta("annotator_name"))
+        tier = txt.find("phonemes")
+        self.assertEqual("Marie", tier.get_meta("speaker_name"))
+        self.assertEqual("phones", tier.get_ctrl_vocab().get_name())
+        self.assertTrue(tier.get_ctrl_vocab().contains(sppasTag("a")))
+        self.assertTrue(tier.get_ctrl_vocab().contains(sppasTag("b")))
+        self.assertEqual("sample.wav", tier.get_media().get_filename())
+        self.assertEqual("audio/wav", tier.get_media().get_mime_type())
+
+    # -----------------------------------------------------------------------
+
     def test_serialize_textgrid_header(self):
         """Create a string with the header of the textgrid."""
 
@@ -703,7 +756,9 @@ class TestNumerical(unittest.TestCase):
         tg = sppasBaseNumericalTier()
         self.assertFalse(tg.multi_tiers_support())
         self.assertFalse(tg.no_tiers_support())
+        self.assertFalse(tg.empty_tier_support())
         self.assertFalse(tg.metadata_support())
+        self.assertFalse(tg.comments_support())
         self.assertFalse(tg.ctrl_vocab_support())
         self.assertFalse(tg.media_support())
         self.assertFalse(tg.hierarchy_support())

@@ -143,6 +143,7 @@ class sppasTDF(sppasBaseText):
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
         self._accept_metadata = False
+        self._accept_comments = True
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False
