@@ -80,6 +80,62 @@ class sppasHTMLButton(HTMLButtonNode):
 # ---------------------------------------------------------------------------
 
 
+class sppasHTMLLink(HTMLNode):
+    """Represent a link element carrying the content of a button.
+
+    A card of the Dashboard leads to a page: it is a link, and it holds
+    what a button holds -- an icon and a text.
+
+    """
+
+    def __init__(self, parent, identifier, attributes=dict()):
+        """Create a link node.
+
+        """
+        super(sppasHTMLLink, self).__init__(parent, identifier, "a", attributes=attributes)
+
+        if "id" not in attributes:
+            self.add_attribute("id", self.identifier)
+
+    # -----------------------------------------------------------------------
+
+    def set_icon(self, icon_name, attributes=dict()):
+        """Set an icon to the link from its name in the app.
+
+        :param icon_name: (str) Name of an icon in the app.
+        :param attributes: (dict).
+
+        """
+        icon = sppasImagesAccess.get_image_filename(name=icon_name)
+        node = EmptyNode(self.identifier, None, "img")
+        node.set_attribute("src", icon)
+        node.set_attribute("alt", "")
+        for key in attributes:
+            node.set_attribute(key, attributes[key])
+        self.append_child(node)
+        return node
+
+    # -----------------------------------------------------------------------
+
+    def set_text(self, ident, text, attributes=dict()):
+        """Set a text to the link.
+
+        :param ident: (str) Identifier for the span text.
+        :param text: (str) Link text.
+        :param attributes: (dict)
+
+        """
+        node = HTMLNode(self.identifier, ident, "span", value=text, attributes=attributes)
+        if ident is not None:
+            node.set_attribute("id", ident)
+            self.set_attribute("aria-labelledby", node.identifier)
+        self.append_child(node)
+        return node
+
+
+# ---------------------------------------------------------------------------
+
+
 class LinkButtonNode(HTMLNode):
 
     def __init__(self, parent_id, identifier: str, target_page: str):

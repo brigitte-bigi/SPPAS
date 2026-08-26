@@ -51,7 +51,6 @@ from ...wappcore.wapputils import sppasImagesAccess
 
 
 MSG_SKIP = _("Skip to content")
-MSG_HOME = _("Home")
 
 # -----------------------------------------------------------------------
 
@@ -61,23 +60,13 @@ class SwappHeader(HTMLHeaderNode):
 
     """
 
-    def __init__(self, parent_id: str, title: str = "SPPAS Application",
-                 home_target: str = ""):
+    def __init__(self, parent_id: str, title: str = "SPPAS Application"):
         """Create the header node.
-
-        :param home_target: (str) Empty by default: the home button
-            replaces the content of the current tab, the right behavior
-            for an ordinary page. A page living in its own persistent tab
-            -- the Journal -- passes the window name of the Dashboard, so
-            that going "home" switches to that tab (opened, or reused if
-            it already self-named itself on load) instead of turning its
-            own tab into the Dashboard.
 
         """
         super(SwappHeader, self).__init__(parent_id)
         self.set_attribute("id", "header-content")
         self.__title = title
-        self.__home_target = home_target
         self.__nav = None
         self.__create_content()
 
@@ -121,25 +110,10 @@ class SwappHeader(HTMLHeaderNode):
         if self.__nav is not None:
             self.append_child(self.__nav)
 
-        # The home button and the title: the logo, at the head position the
-        # users expect to be clickable, leads to the Dashboard. Same logo as
-        # sppas.org until the visual identity of SPPAS itself is decided.
+        # The title of the page. The Dashboard is reached from the menu.
         _c = TagNode(self.identifier, None, "section")
         _c.set_attribute("id", "link-title-header")
         self.append_child(_c)
-
-        home_link = TagNode(_c.identifier, None, "a")
-        home_link.set_attribute("href", "index.html")
-        home_link.set_attribute("role", "button")
-        home_link.set_attribute("aria-label", MSG_HOME)
-        if len(self.__home_target) > 0:
-            home_link.set_attribute("data-named-target", self.__home_target)
-        logo = EmptyNode(home_link.identifier, None, "img")
-        logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
-        logo.set_attribute("id", "home-link-logo")
-        logo.set_attribute("alt", MSG_HOME)
-        home_link.append_child(logo)
-        _c.append_child(home_link)
 
         # Application title
         h1 = HTMLNode(_c.identifier, None, "h1", value=self.__title,

@@ -41,8 +41,6 @@
 from __future__ import annotations
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
-from whakerpy.htmlmaker import TagNode
-from whakerpy.htmlmaker import EmptyNode
 
 from sppas.core.config import sg
 from sppas.core.config import cfg
@@ -189,6 +187,7 @@ class swappBaseView:
         # CSS SWAPP links. The theme carries the id the ThemeManager swaps the
         # href of: without it, a second link is created and themes accumulate.
         self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp.css", link_type="text/css")
+        self._htree.head.link("stylesheet", wapp_settings.css + "main_swapp_identity.css", link_type="text/css")
         theme_css = HTMLNode(self._htree.head.identifier, None, "link")
         theme_css.add_attribute("id", "wexa-theme")
         theme_css.add_attribute("rel", "stylesheet")
@@ -228,18 +227,18 @@ class swappBaseView:
         delegates additional customization to `_populate_body_header()`.
 
         """
-        self._htree.body_header = SwappHeader(self._htree.identifier, title, self._home_target())
+        self._htree.body_header = SwappHeader(self._htree.identifier, title)
         self._populate_body_header(*args, **kwargs)
 
     # -----------------------------------------------------------------------
 
     def _home_target(self) -> str:
-        """Return the window name the header's home button switches to.
+        """Return the window name the Dashboard button of the menu switches to.
 
-        Empty by default: the home button replaces the content of the
-        current tab. Override in a page living in its own persistent tab,
-        so that going "home" switches to that named tab instead of
-        turning its own tab into the Dashboard -- see the Journal page.
+        Empty by default: the button replaces the content of the current
+        tab. Override in a page living in its own persistent tab, so that
+        going to the Dashboard switches to that named tab instead of
+        turning its own tab into it -- see the Journal page.
 
         """
         return ""
@@ -410,9 +409,10 @@ class swappBaseView:
     def append_home_link_button(parent: HTMLNode, home_target: str = "") -> HTMLNode:
         """Create and append the button leading to the Dashboard.
 
-        Same node as the home button of the header: an 'a' element, because
-        the named target is read by the AccessibilityManager of Whakerexa on
-        links only.
+        An 'a' element, because the named target is read by the
+        AccessibilityManager of Whakerexa on links only. The icon is the
+        inline mono SVG of the other items: it follows --nav-fg-color,
+        whatever the theme, which a PNG cannot do.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :param home_target: (str) Window name to switch to, empty to replace
@@ -420,21 +420,15 @@ class swappBaseView:
         :return: (HTMLNode) the home link button node
 
         """
-        _button = TagNode(parent.identifier, "link-home_button", "a")
-        _button.set_attribute("href", "index.html")
-        _button.set_attribute("role", "button")
-        _button.set_attribute("aria-label", MSG_DASHBOARD)
-        _button.set_attribute("class", "menuitem menu-png-button")
+        svg_home = sppasImagesAccess.get_wexa_svg_icon("dashboard")
+        home_image = svg_home + "<span>" + MSG_DASHBOARD + "</span>"
+        _button = HTMLNode(parent.identifier, "link-home_button", "a", value=home_image)
+        _button.add_attribute("href", "index.html")
+        _button.add_attribute("role", "button")
+        _button.add_attribute("aria-label", MSG_DASHBOARD)
+        _button.add_attribute("class", "menuitem menu-svg-button")
         if len(home_target) > 0:
-            _button.set_attribute("data-named-target", home_target)
-
-        logo = EmptyNode(_button.identifier, None, "img")
-        logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
-        logo.set_attribute("alt", "")
-        _button.append_child(logo)
-
-        text = HTMLNode(_button.identifier, None, "span", value=MSG_DASHBOARD)
-        _button.append_child(text)
+            _button.add_attribute("data-named-target", home_target)
 
         parent.append_child(_button)
         return _button

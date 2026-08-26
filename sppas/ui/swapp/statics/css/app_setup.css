@@ -105,7 +105,7 @@ ol.breadcrumb > li:before  {
 	flex: 1 1 0;
 	font-size: var(--breadcrumb-font-size);
 	line-height: var(--breacrumb-height);
-    color: var(--bg-color);
+    color: var(--breadcrumb-fg-color-inactive);
     background: var(--breadcrumb-bg-color-inactive);
 	position: relative;
     padding-left: 3rem;
@@ -126,7 +126,7 @@ ol.breadcrumb > li:before  {
 
 .breadcrumb li.active, .breadcrumb li.active:before {
     background: var(--breadcrumb-bg-color-active);
-    color: var(--fg-color);
+    color: var(--breadcrumb-fg-color-active);
 }
 
 
@@ -163,7 +163,7 @@ ol.breadcrumb > li:before  {
 
 .breadcrumb li.visited, .breadcrumb li.visited:before, .breadcrumb li.visited:after {
     background: var(--breadcrumb-bg-color-visited);
-    color: var(--fg-color-alt);
+    color: var(--breadcrumb-fg-color-visited);
 }
 
 

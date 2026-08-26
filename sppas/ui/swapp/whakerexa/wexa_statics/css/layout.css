@@ -545,6 +545,12 @@ This banner notice must not be removed.
         --fg-color-alt: var(--panel-fg-color);
     }
 
+    /* A panel carries the ground of the palette it swapped: what it holds
+       inherits the colours, and the panel itself is what is painted. */
+    main > .panel-item {
+        background-color: var(--bg-color);
+    }
+
     /* ------------------------------------------------------------------ */
     /* Border separator color for flex panels                              */
     /* ------------------------------------------------------------------ */

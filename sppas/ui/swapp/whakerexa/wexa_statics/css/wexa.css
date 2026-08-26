@@ -636,8 +636,6 @@ This banner notice must not be removed.
         --body-bg-color: rgb(255, 255, 255);
         --bg-color: rgb(242, 244, 251);
         --bg-color-alt: rgb(236, 239, 245);
-        /* Images keep a light background in every mode. */
-        --img-bg-color: var(--bg-color);
         --fg-color: rgb(18, 22, 38);
         --fg-color-alt: rgb(45, 55, 80);
         --border-color: rgb(117, 130, 155);
@@ -725,7 +723,6 @@ This banner notice must not be removed.
             /* Main colors */
             --bg-color: rgb(14, 18, 28);
             --bg-color-alt: rgb(18, 24, 42);
-            --img-bg-color: rgb(242, 244, 251);
             --fg-color: rgb(215, 225, 245);
             --fg-color-alt: rgb(168, 185, 218);
             --border-color: rgb(200, 227, 245);
@@ -797,13 +794,6 @@ This banner notice must not be removed.
             --question-color: rgb(200, 150, 255);
             --question-bg-color: rgb(40, 20, 60);
         }
-
-        /* An image is drawn for a light page, and cannot invert its colors. */
-        .dark img {
-            background-color: var(--img-bg-color);
-            padding: calc(0.3 * var(--typography-spacing-horizontal));
-            border-radius: var(--border-radius);
-        }
     }
 
     /* Contrast mode */
@@ -813,6 +803,15 @@ This banner notice must not be removed.
         --table-border-width:   2px;
         --dialog-border-width:  2px;
         --dialog-border-radius: 0.4rem;
+    }
+
+    /* Whoever changes the palette carries the ground of that palette. On the
+       root, that is the page; on an element, that is the element -- a passage
+       shown in the other mode is written on the ground of the mode it shows,
+       and not on the one of the page around it. */
+    .dark:not(:root),
+    .contrast:not(:root) {
+        background-color: var(--bg-color);
     }
 
 }
@@ -950,13 +949,17 @@ This banner notice must not be removed.
                                 HTML PAGE STYLING
     ======================================================================== */
 
+    /* An element is born without a ground of its own: what is seen behind it is
+       what its page, its panel or its banner is painted with. A ground given
+       here would have to be taken back everywhere a container carries one, and
+       that is what every 'background-color: transparent' of this framework used
+       to do. */
     * {
         margin: 0;
         padding: 0;
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
 
-        background-color: var(--bg-color);
         color: var(--fg-color);
 
         font-size: var(--font-size);
@@ -1076,18 +1079,36 @@ This banner notice must not be removed.
         color: var(--footer-fg-color);
     }
 
-    /* Elements inside */
-    /* All elements in any header/footer/nav must have same colors than the parent.
-    It also means that links won't be blue! */
+    /* A banner is written in one colour, its own: what it holds is not painted
+       one by one, it is given the colours to inherit from. A rule reaching
+       every child would also take away what a child is entitled to -- the
+       ground of an image, the ink of a marked word -- which belongs to
+       whoever wrote the page, never to the framework. */
 
-    body > header * {
-        color: var(--header-fg-color);
-        background-color: transparent;
+    body > header {
+        --fg-color:     var(--header-fg-color);
+        --fg-color-alt: var(--header-fg-color);
+        --a-color:      var(--header-fg-color);
+        --li-color:     var(--header-fg-color);
+        --h1-color:     var(--header-fg-color);
+        --h2-color:     var(--header-fg-color);
+        --h3-color:     var(--header-fg-color);
+        --h4-color:     var(--header-fg-color);
+        --h5-color:     var(--header-fg-color);
+        --h6-color:     var(--header-fg-color);
     }
 
-    body > footer * {
-        color: var(--footer-fg-color);
-        background-color: transparent;
+    body > footer {
+        --fg-color:     var(--footer-fg-color);
+        --fg-color-alt: var(--footer-fg-color);
+        --a-color:      var(--footer-fg-color);
+        --li-color:     var(--footer-fg-color);
+        --h1-color:     var(--footer-fg-color);
+        --h2-color:     var(--footer-fg-color);
+        --h3-color:     var(--footer-fg-color);
+        --h4-color:     var(--footer-fg-color);
+        --h5-color:     var(--footer-fg-color);
+        --h6-color:     var(--footer-fg-color);
     }
 
     body > header > *,
@@ -1120,10 +1141,25 @@ This banner notice must not be removed.
 
     }
 
+    /* A bar is written in one colour, as a banner is: what it holds inherits
+       it. Only the laying out is imposed, a bar being a row of items. */
+
+    nav,
+    [role=doc-toc] {
+        --fg-color:     var(--nav-fg-color);
+        --fg-color-alt: var(--nav-fg-color);
+        --a-color:      var(--nav-fg-color);
+        --li-color:     var(--nav-fg-color);
+        --h1-color:     var(--nav-fg-color);
+        --h2-color:     var(--nav-fg-color);
+        --h3-color:     var(--nav-fg-color);
+        --h4-color:     var(--nav-fg-color);
+        --h5-color:     var(--nav-fg-color);
+        --h6-color:     var(--nav-fg-color);
+    }
+
     nav *,
     [role=doc-toc] * {
-        color: var(--nav-fg-color);
-        background-color: transparent;
         display: flex;
     }
 
@@ -1650,8 +1686,15 @@ This banner notice must not be removed.
         max-width: 95%;
     }
 
+    /* An image is drawn for a page that is not the one it is read on, and
+       cannot answer for its own edges: it is laid on a ground of its own, in
+       every mode. Which ground it is belongs to the themes: the framework has
+       no colour whose meaning is the back of an image. */
     img {
         max-width: 100%;
+        background-color: var(--img-bg-color);
+        padding: calc(0.3 * var(--typography-spacing-horizontal));
+        border-radius: var(--border-radius);
     }
 
     :where(svg:not([fill])) {
@@ -2166,9 +2209,13 @@ This banner notice must not be removed.
         margin-top: var(--typography-spacing-vertical);
     }
 
-    /* Buttons inside a summary are floated right */
+    /* Actions inside a summary are floated right. A link is not a button:
+       it is named here by its own role, next to the button ones, and the
+       plain links of the summary text are left where they are. */
     summary button,
-    summary a[role=button] {
+    summary a,
+    summary [role=button],
+    summary [role=link] {
         float: right;
         margin: 0;
         padding: 0;
@@ -2179,6 +2226,16 @@ This banner notice must not be removed.
         vertical-align: center;
         max-height: 90%;
         width: auto;
+    }
+
+    /* An action drawn by an image: the max-height of the action bounds the
+       action, never what it holds, and an image keeps the size it is stored
+       at. It is given the height of the line it sits on, the very same one
+       the icons of an action already have. */
+    summary :is(button, a, [role=button], [role=link]) > img {
+        display: block;
+        width: auto;
+        height: calc(var(--font-size) * 1.4);
     }
 
     /* ── Aside ─────────────────────────────────────────────────────────── */

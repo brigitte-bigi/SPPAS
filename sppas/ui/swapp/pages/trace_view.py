@@ -50,11 +50,13 @@ from sppas.core.config import sg
 from sppas.ui import _
 from sppas.ui.swapp.wappbase.wappview import swappBaseView
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
+from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
 from sppas.ui.swapp.main_trace_store import swappTraceStore
 
 # ---------------------------------------------------------------------------
 
 
+MSG_CLOSE = _("Close")
 MSG_REFRESH = _("Refresh")
 MSG_SAVE = _("Save")
 MSG_CLEAR = _("Clear")
@@ -164,12 +166,46 @@ class TraceView(swappBaseView):
         """Override. Populate the nav area of the page.
 
         """
-        # No Dashboard button here: the page opens in its own tab, the app
-        # which opened it stays in the other one.
         _s = TagNode(self._htree.body_nav.identifier, None, "section")
         self.append_pin_button(_s)
         self.append_accessibility_buttons(_s)
         self._htree.body_nav.append_child(_s)
+
+        # The Journal has its own tab: its Dashboard button switches to the
+        # tab of the Dashboard -- see _home_target() -- instead of turning
+        # this one into it.
+        self.append_home_link_button(self._htree.body_nav, self._home_target())
+        self.__append_close_button(self._htree.body_nav, self._home_target())
+
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def __append_close_button(parent: HTMLNode, home_target: str) -> HTMLNode:
+        """Create and append the button closing the tab of the Journal.
+
+        The tab of the Dashboard is brought forward before this one closes,
+        so that closing the Journal lands the user where the Journal was
+        opened from. A browser only lets a script close what a script
+        opened: the button works in the tab opened by the Dashboard, and
+        does nothing in a tab the user opened by hand.
+
+        :param parent: (HTMLNode) the parent HTML node to append the button in
+        :param home_target: (str) Window name of the tab of the Dashboard
+        :return: (HTMLNode) the close button node
+
+        """
+        go_home = ("window.open(window.Wexa.accessibility.setUrlWithParameters('index.html'), "
+                   f"'{home_target}');")
+        svg_close = sppasImagesAccess.get_wexa_svg_icon("cancel")
+        close_image = svg_close + "<span>" + MSG_CLOSE + "</span>"
+        _button = HTMLNode(parent.identifier, None, "button", value=close_image)
+        _button.add_attribute("id", "close-tab_button")
+        _button.add_attribute("aria-label", MSG_CLOSE)
+        _button.add_attribute("type", "button")
+        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("onclick", go_home + " window.close()")
+        parent.append_child(_button)
+        return _button
 
     # -----------------------------------------------------------------------
 
@@ -233,11 +269,13 @@ class TraceView(swappBaseView):
         _purpose = HTMLNode(self._htree.body_main.identifier, None, "p", value=MSG_PURPOSE)
         self._htree.body_main.append_child(_purpose)
 
-        # The actions, sent to the server with a native form POST
+        # The actions, sent to the server with a native form POST.
+        # No 'action' attribute: the browser then posts to the URL of the page
+        # itself, query string included, so the accessibility parameters of
+        # Whakerexa -- which are propagated on links only -- are preserved.
         _form = TagNode(self._htree.body_main.identifier, None, "form")
         _form.set_attribute("id", "trace_actions")
         _form.set_attribute("method", "post")
-        _form.set_attribute("action", "journal.html")
         self._htree.body_main.append_child(_form)
 
         # Refresh sends no event: the page is simply baked again.

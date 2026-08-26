@@ -43,6 +43,7 @@ from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
 from sppas.ui.swapp.nodes import sppasHTMLButton
+from sppas.ui.swapp.nodes import sppasHTMLLink
 
 # ---------------------------------------------------------------------------
 
@@ -69,37 +70,37 @@ class BaseLinksNode(HTMLNode):
     # ----------------------------------------------------------------------
 
     def link_button(self, ident, icon_name, text, link):
-        """A specific button on which the ident is on the span text.
+        """A card leading to a page: a link, on which the ident is on the span text.
 
-        :return: (sppasHTMLButton)
+        :return: (sppasHTMLLink)
 
         """
-        button_node = sppasHTMLButton(self.identifier, identifier=ident+"_button")
+        link_node = sppasHTMLLink(self.identifier, identifier=ident+"_button")
 
         # - design
-        button_node.remove_attribute("class")  # just in case...
-        button_node.add_attribute("class", "link-button")
-        # - accessibility
-        button_node.add_attribute("role", "link")
-        # - link, managed by the JS class LinkController() of Whakerexa
-        button_node.add_attribute("data-href", link)
-        button_node.add_attribute("title", link)
+        link_node.remove_attribute("class")  # just in case...
+        link_node.add_attribute("class", "card")
+        link_node.add_attribute("class", "link-button")
+        # - link, followed by the browser and by goToLink() of Whakerexa,
+        #   which carries the accessibility parameters over to the page
+        link_node.add_attribute("href", link)
+        link_node.add_attribute("title", link)
         # - content
-        button_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
-        button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
+        link_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
+        link_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
-        self.append_child(button_node)
-        return button_node
+        self.append_child(link_node)
+        return link_node
 
     # ----------------------------------------------------------------------
 
     def page_button(self, ident, icon_name, text, link):
-        """A specific button to open an internal page of SPPAS.
+        """A card leading to an internal page of SPPAS.
 
-        The button is handled by the JS DashboardManager, which preserves
+        The link is followed by goToLink() of Whakerexa, which preserves
         the accessibility parameters when navigating to the page.
 
-        :return: (sppasHTMLButton)
+        :return: (sppasHTMLLink)
 
         """
         button_node = self.link_button(ident, icon_name, text, link)
@@ -121,6 +122,7 @@ class BaseLinksNode(HTMLNode):
 
         # - design
         button_node.remove_attribute("class")  # just in case...
+        button_node.add_attribute("class", "card")
         button_node.add_attribute("class", "link-button")
 
         # content

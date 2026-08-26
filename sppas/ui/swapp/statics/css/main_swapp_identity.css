@@ -1,0 +1,173 @@
+/*
+:filename: statics/css/main_swapp_identity.css
+:author:   Brigitte Bigi
+:contact:  contact@sppas.org
+:summary:  What identifies SPPAS itself: its reading font and the colors
+           naming one of its things, whatever the theme.
+:note:     Loaded on every page and never registered as a theme: a color
+           naming a destination, a status or a step does not belong to the
+           look of the page, no more than the font the user reads. Whakerexa
+           asks for that split -- see its docs/themes.html: what must always
+           be there stays statically linked, only the theme is swapped.
+*/
+
+/* ============================================================
+   Fonts
+   Whakerexa 3.3 leaves the reading font to the system. SPPAS keeps
+   Commissioner, cut into the same unicode-range subsets: a page loads
+   only the character blocks it displays.
+   ============================================================ */
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-latin.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2007-200B, U+2010, U+2012-2015, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2032-2033, U+2039-203A, U+2044, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-latin-ext.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+0100-0130, U+0134-0148, U+014A-0151, U+0154-017E, U+018F, U+0192, U+01A0-01A1, U+01AF-01B0, U+01C4-01CC, U+01E6-01E7, U+01EA-01EB, U+01FA-021B, U+022A-022D, U+0230-0233, U+0237, U+0259, U+0300-0304, U+0306-030C, U+030F, U+0311-0312, U+031B, U+0323-0324, U+0326-0328, U+032E, U+0331, U+1E08-1E09, U+1E0C-1E0F, U+1E14-1E17, U+1E1C-1E1D, U+1E20-1E21, U+1E24-1E25, U+1E2A-1E2B, U+1E2E-1E2F, U+1E36-1E37, U+1E3A-1E3B, U+1E42-1E49, U+1E4C-1E53, U+1E5A-1E5B, U+1E5E-1E69, U+1E6C-1E6F, U+1E78-1E7B, U+1E80-1E85, U+1E8E-1E8F, U+1E92-1E93, U+1E97, U+1E9E, U+1EF2-1EF9, U+20A1, U+20A3-20A4, U+20A6-20A7, U+20A9, U+20AB, U+20AD-20AE, U+20B1-20B2, U+20B4-20B5, U+20B8-20BA, U+20BC-20BD, U+2113;
+}
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-vietnamese.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+1EA0-1EF1;
+}
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-greek.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+0374-0375, U+037E, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03CE, U+03D7;
+}
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-cyrillic.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-cyrillic-ext.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+0462-0463, U+046A-046B, U+0472-0475, U+048A-048F, U+0492-04AF, U+04B2-04FF, U+0510-0513, U+051A-051D, U+0524-0529, U+052E-052F;
+}
+
+@font-face {
+    font-family: SansFont;
+    src: url('../../whakerexa/wexa_statics/fonts/Commissioner-other.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+02BE-02BF, U+02C7-02CC, U+02D8-02D9, U+02DB, U+02DD, U+2070, U+2075-2079, U+2080-2089, U+2126, U+212E, U+2202, U+2205-2206, U+220F, U+2211, U+2219-221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA, U+FB01-FB02;
+}
+
+
+/* ── Colors of the same value in every mode ───────────────── */
+
+:root {
+    /* The reading font of SPPAS, ahead of the system stack */
+    --font-family-sans: SansFont, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+    /* The seven links of the Dashboard: one color each, the border being
+       the same in both modes. */
+    --link-web-border-color: rgb(87, 109, 159);
+    --link-docu-border-color: rgb(241, 211, 79);
+    --link-tuto-border-color: rgb(0, 160, 40);
+    --link-faq-border-color: rgb(220, 120, 40);
+    --link-src-border-color: rgb(50, 150, 150);
+    --link-res-border-color: rgb(40, 60, 150);
+    --link-award-border-color: rgb(60, 40, 150);
+
+    /* Steps of the Setup: a pair per state, because a step is drawn on its
+       own ground, not on the one of the page. The arrow of a step is cut out
+       of its own color, so its shadow is the same in every mode. */
+    --breadcrumb-shadow-color: rgba(10, 10, 30, 0.5);
+    --breadcrumb-shadow-color-alt: rgba(240, 240, 255, 0.3);
+
+    /* Table of contents of a page */
+    --toc-shadow-color: rgba(0, 0, 0, 0.08);
+    --toc-border-color-hover: rgb(110, 168, 108);
+    --toc-outline-color: rgb(130, 60, 130);
+    --toc-label-color-hover: rgb(130, 60, 130);
+    --toc-num-fg-color: rgb(255, 255, 255);
+    --toc-num-bg-color: rgb(127, 195, 93);
+    --toc-num-bg-color-1: rgb(74, 127, 165);
+    --toc-num-bg-color-2: rgb(91, 67, 168);
+    --toc-num-bg-color-3: rgb(74, 141, 153);
+    --toc-num-bg-color-4: rgb(175, 122, 85);
+    --toc-num-bg-color-5: rgb(112, 145, 43);
+
+    /* Inline status words */
+    --text-success-color: rgb(10, 200, 10);
+    --text-error-color: rgb(200, 10, 10);
+
+    /* Error pages, served whatever the mode */
+    --error-page-fg-color: rgb(68, 68, 68);
+    --error-page-bg-color: rgb(255, 255, 255);
+    --error-block-fg-color: rgb(102, 102, 102);
+    --error-block-bg-color: rgb(249, 249, 249);
+    --error-block-border-color: rgb(239, 239, 239);
+    --error-footer-fg-color: rgb(153, 153, 153);
+    --status-2xx-bg-color: rgb(48, 64, 0);
+    --status-2xx-fg-color: rgb(255, 255, 255);
+    --status-3xx-bg-color: rgb(71, 80, 118);
+    --status-3xx-fg-color: rgb(255, 255, 255);
+    --status-4xx-bg-color: rgb(242, 232, 26);
+    --status-4xx-fg-color: rgb(0, 0, 0);
+    --status-5xx-bg-color: rgb(197, 80, 66);
+    --status-5xx-fg-color: rgb(255, 255, 255);
+}
+
+/* ── Light mode ───────────────────────────────────────────── */
+
+:root:not(.dark) {
+    --link-web-bg-color: rgb(120, 140, 190);
+    --link-docu-bg-color: rgb(241, 211, 79);
+    --link-tuto-bg-color: rgb(100, 180, 100);
+    --link-faq-bg-color: rgb(240, 150, 60);
+    --link-src-bg-color: rgb(50, 150, 150);
+    --link-res-bg-color: rgb(110, 130, 230);
+    --link-award-bg-color: rgb(130, 110, 230);
+
+    --breadcrumb-bg-color-inactive: rgb(20, 30, 80);
+    --breadcrumb-fg-color-inactive: rgb(235, 240, 250);
+    --breadcrumb-bg-color-active: rgb(220, 230, 255);
+    --breadcrumb-fg-color-active: rgb(15, 20, 55);
+    --breadcrumb-bg-color-visited: rgb(190, 200, 215);
+    --breadcrumb-fg-color-visited: rgb(15, 20, 55);
+
+}
+
+/* ── Dark mode ────────────────────────────────────────────── */
+
+@media screen {
+    .dark {
+        --link-web-bg-color: rgb(47, 69, 119);
+        --link-docu-bg-color: rgb(110, 70, 10);
+        --link-tuto-bg-color: rgb(0, 90, 20);
+        --link-faq-bg-color: rgb(120, 20, 0);
+        --link-src-bg-color: rgb(0, 90, 90);
+        --link-res-bg-color: rgb(30, 50, 120);
+        --link-award-bg-color: rgb(50, 30, 120);
+
+        --breadcrumb-bg-color-inactive: rgb(200, 130, 180);
+        --breadcrumb-fg-color-inactive: rgb(30, 10, 30);
+        --breadcrumb-bg-color-active: rgb(60, 0, 40);
+        --breadcrumb-fg-color-active: rgb(250, 235, 245);
+        --breadcrumb-bg-color-visited: rgb(80, 25, 80);
+        --breadcrumb-fg-color-visited: rgb(250, 235, 245);
+
+    }
+}
+
+/* ── Elements ────────────────────────────────────────────── */
+
+dialog {
+    background-color: var(--bg-color);
+}

@@ -294,15 +294,11 @@ dialog[role=alertdialog].error {
    Not present in wexa.css or layout.css.
    ============================================================ */
 
-/* ── Navigation: image and SVG buttons ───────────────────── */
-
-.menu-png-button img {
-    filter: brightness(0) invert(1);
-}
+/* ── Navigation: image and SVG buttons ─────────────────────
 
 .menu-svg-button {
     color: var(--nav-fg-color);
-}
+}*/
 
 /* ── Footer ──────────────────────────────────────────────── */
 
@@ -867,13 +863,6 @@ section.actions-panel {
     height: 1rem;
 }
 
-#home-link-logo {
-    width: calc(4 * var(--font-size));
-    height: auto;
-    padding: var(--border-width);
-    filter: brightness(0) invert(1);
-}
-
 #link-title-header {
     display: flex;
     flex-direction: row;
@@ -884,12 +873,6 @@ section.actions-panel {
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
-}
-
-#link-title-header > a {
-    padding: 0;
-    margin: 0;
-    background: transparent;
 }
 
 /* ── Buttons of the alert dialogs: one single style, centered ── */

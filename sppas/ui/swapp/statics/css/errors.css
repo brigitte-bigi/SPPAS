@@ -1,6 +1,6 @@
 body {
-    color: var(--error-page-fg-color);
-    background-color: var(--error-page-bg-color);
+    color: rgb(68, 68, 68);
+    background-color: rgb(255, 255, 255);
     width: 60%;
     margin: 2rem auto;
     padding: 1rem;
@@ -17,34 +17,34 @@ main {
 }
 
 footer {
-    color: var(--error-block-fg-color);
-    background: var(--error-block-bg-color);
+    color: rgb(102, 102, 102);
+    background: rgb(249, 249, 249);
     padding: 1rem 2rem;
-    border-top: 0.4rem var(--error-block-border-color) solid;
+    border-top: 0.4rem rgb(239, 239, 239) solid;
     font-size: 0.8em;
     text-align: center;
 }
 
 footer a {
-    color: var(--error-footer-fg-color);
+    color: rgb(153, 153, 153);
 }
 
 .status2xx {
-    background-color: var(--status-2xx-bg-color);
-    color: var(--status-2xx-fg-color);
+    background-color: rgb(48, 64, 0);
+    color: rgb(255, 255, 255);
 }
 
 .status3xx {
-    background-color: var(--status-3xx-bg-color);
-    color: var(--status-3xx-fg-color);
+    background-color: rgb(71, 80, 118);
+    color: rgb(255, 255, 255);
 }
 
 .status4xx {
-    background-color: var(--status-4xx-bg-color);
-    color: var(--status-4xx-fg-color);
+    background-color: rgb(242, 232, 26);
+    color: rgb(0, 0, 0);
 }
 
 .status5xx {
-    background-color: var(--status-5xx-bg-color);
-    color: var(--status-5xx-fg-color);
+    background-color: rgb(197, 80, 66);
+    color: rgb(255, 255, 255);
 }

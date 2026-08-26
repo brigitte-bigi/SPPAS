@@ -23,44 +23,9 @@
     --nav-item-bg-color-current: rgba(255, 255, 255, 0.18);
     --nav-item-pressed-shadow-color: rgba(255, 255, 255, 0.15);
 
-    /* Table of contents of a page */
-    --toc-shadow-color: rgba(0, 0, 0, 0.08);
-    --toc-border-color-hover: rgb(110, 168, 108);
-    --toc-outline-color: rgb(130, 60, 130);
-    --toc-label-color-hover: rgb(130, 60, 130);
-    --toc-num-fg-color: rgb(255, 255, 255);
-    --toc-num-bg-color: rgb(127, 195, 93);
-    --toc-num-bg-color-1: rgb(74, 127, 165);
-    --toc-num-bg-color-2: rgb(91, 67, 168);
-    --toc-num-bg-color-3: rgb(74, 141, 153);
-    --toc-num-bg-color-4: rgb(175, 122, 85);
-    --toc-num-bg-color-5: rgb(112, 145, 43);
-
-    /* Inline status words */
-    --text-success-color: rgb(10, 200, 10);
-    --text-error-color: rgb(200, 10, 10);
-
-    /* Error pages, served whatever the mode */
-    --error-page-fg-color: rgb(68, 68, 68);
-    --error-page-bg-color: rgb(255, 255, 255);
-    --error-block-fg-color: rgb(102, 102, 102);
-    --error-block-bg-color: rgb(249, 249, 249);
-    --error-block-border-color: rgb(239, 239, 239);
-    --error-footer-fg-color: rgb(153, 153, 153);
-    --status-2xx-bg-color: rgb(48, 64, 0);
-    --status-2xx-fg-color: rgb(255, 255, 255);
-    --status-3xx-bg-color: rgb(71, 80, 118);
-    --status-3xx-fg-color: rgb(255, 255, 255);
-    --status-4xx-bg-color: rgb(242, 232, 26);
-    --status-4xx-fg-color: rgb(0, 0, 0);
-    --status-5xx-bg-color: rgb(197, 80, 66);
-    --status-5xx-fg-color: rgb(255, 255, 255);
-
-    /* Setup: the caption of a table and the arrow of the breadcrumb */
+    /* Setup: the caption of a table */
     --table-caption-bg-color: rgb(230, 235, 245);
     --table-caption-fg-color: rgb(30, 30, 40);
-    --breadcrumb-shadow-color: rgba(10, 10, 30, 0.5);
-    --breadcrumb-shadow-color-alt: rgba(240, 240, 255, 0.3);
     --wizard-legend-bg-color: rgb(70, 80, 150);
     --wizard-legend-fg-color: rgb(245, 250, 255);
     --install-button-bg-color: rgba(65, 107, 45, 0.65);
@@ -68,16 +33,6 @@
     --select-disabled-bg-image: linear-gradient(to top, rgb(221, 221, 221), rgb(238, 238, 238) 33%);
     --scrollbar-thumb-color: rgb(102, 102, 102);
     --scrollbar-track-color: rgb(42, 34, 58);
-
-    /* The seven links of the Dashboard: one color each, the border being
-       the same in both modes. */
-    --link-web-border-color: rgb(87, 109, 159);
-    --link-docu-border-color: rgb(241, 211, 79);
-    --link-tuto-border-color: rgb(0, 160, 40);
-    --link-faq-border-color: rgb(220, 120, 40);
-    --link-src-border-color: rgb(50, 150, 150);
-    --link-res-border-color: rgb(40, 60, 150);
-    --link-award-border-color: rgb(60, 40, 150);
 
     --links-panel-bg-image: linear-gradient(90deg, rgb(197, 208, 222) 0%, rgb(133, 199, 137) 60%, rgb(148, 132, 184) 100%);
 
@@ -87,6 +42,7 @@
     /* An image of a card is drawn for a light page */
     --app-img-bg-color: rgb(255, 255, 255);
     --app-button-shadow-color: rgb(238, 238, 238);
+
 }
 
 /* ── Light mode ───────────────────────────────────────────── */
@@ -119,17 +75,6 @@
     --nav-fg-color: rgb(220, 230, 255);
     --app-bg-image: linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
 
-    --link-web-bg-color: rgb(120, 140, 190);
-    --link-docu-bg-color: rgb(241, 211, 79);
-    --link-tuto-bg-color: rgb(100, 180, 100);
-    --link-faq-bg-color: rgb(240, 150, 60);
-    --link-src-bg-color: rgb(50, 150, 150);
-    --link-res-bg-color: rgb(110, 130, 230);
-    --link-award-bg-color: rgb(130, 110, 230);
-
-    --breadcrumb-bg-color-inactive: rgb(20, 30, 80);
-    --breadcrumb-bg-color-active: rgb(220, 230, 255);
-    --breadcrumb-bg-color-visited: rgb(190, 200, 215);
     --wizard-fieldset-bg-image: linear-gradient(120deg, rgb(210, 210, 250) 0%, rgb(233, 233, 242) 50%, rgb(241, 223, 245) 100%);
 
 
@@ -151,6 +96,10 @@
 
     --card-bg-color: rgb(238, 233, 242);
     --card-fg-color: rgb(10, 40, 90);
+
+
+    --img-bg-color: rgba(250, 250, 250, 0.4);
+
 }
 
 /* ── Dark mode ────────────────────────────────────────────── */
@@ -181,17 +130,6 @@
         --nav-fg-color: rgb(240, 230, 210);
         --app-bg-image: linear-gradient(0deg, rgba(0, 0, 45, 0.9) 0%, rgba(0, 0, 45, 0.7) 100%);
 
-        --link-web-bg-color: rgb(47, 69, 119);
-        --link-docu-bg-color: rgb(110, 70, 10);
-        --link-tuto-bg-color: rgb(0, 90, 20);
-        --link-faq-bg-color: rgb(120, 20, 0);
-        --link-src-bg-color: rgb(0, 90, 90);
-        --link-res-bg-color: rgb(30, 50, 120);
-        --link-award-bg-color: rgb(50, 30, 120);
-
-        --breadcrumb-bg-color-inactive: rgb(200, 130, 180);
-        --breadcrumb-bg-color-active: rgb(60, 0, 40);
-        --breadcrumb-bg-color-visited: rgb(80, 25, 80);
         --wizard-fieldset-bg-image: linear-gradient(120deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
 
 
@@ -209,6 +147,8 @@
 
         --card-bg-color: rgb(30, 0, 70);
         --card-fg-color: rgb(240, 230, 210);
+
+        --img-bg-color: rgba(247, 244, 244, 0.75);
     }
 }
 

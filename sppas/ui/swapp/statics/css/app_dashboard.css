@@ -66,17 +66,11 @@
     background: var(--links-panel-bg-image);
 }
 
+/* A card of the framework, except that this one is clicked, its content
+   fills it up to its edges, and its border says where the link leads. */
 .link-button {
-    background-color: var(--card-bg-color);
-    color: inherit;
     cursor: pointer;
-    margin: 0.4rem;
     padding: 0;
-
-    /* Display elements inside the button: */
-    flex-direction: column;
-    box-shadow: var(--card-box-shadow);
-
     border: calc(var(--border-width)*1.5) solid var(--border-color);
 }
 
@@ -108,7 +102,7 @@
     width: 100%;
     vertical-align: middle;
     font-size: 1.125rem;
-    color: var(--fg-color);
+    color: var(--card-fg-color);
 }
 
 #web_btn {

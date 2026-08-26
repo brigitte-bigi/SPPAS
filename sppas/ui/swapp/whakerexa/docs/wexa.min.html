@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Wexa CSS — Whakerexa</title>
+    <title>Minified — Wexa CSS — Whakerexa</title>
     <meta charset="utf-8" />
     <meta name="color-scheme" content="light dark" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
-    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
-    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css.min/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css.min/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css.min/layout.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../wexa_statics/css.min/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../wexa_statics/css.min/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <script>
     window.addEventListener('load', () => {
@@ -28,9 +28,9 @@
                 s.addEventListener('load', function () {
                     if (window.Wexa && window.Wexa.ThemeManager) {
                         const t = new window.Wexa.ThemeManager();
-                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                        t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                        t.register('wexa_theme',   '../wexa_statics/css.min/themes/wexa_theme.css');
+                        t.register('aurora',       '../wexa_statics/css.min/themes/wexa_theme_aurora.css');
+                        t.register('highcontrast', '../wexa_statics/css.min/themes/wexa_theme_highcontrast.css');
                         window.themes = t;
                     }
                 });
@@ -54,7 +54,7 @@
 
 <nav class="nav-wexa top" aria-label="Page navigation">
 
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+    <a class="menuitem" id="btn-back" data-href="wexa.html" data-target="_self" aria-label="Back" title="Back">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <polyline points="20 24 12 16 20 8" />
         </svg>
@@ -63,8 +63,8 @@
             aria-label="Switch CSS theme" title="Switch CSS theme"
             onclick="window.themes && window.themes.next()">
     </button>
-    <a class="menuitem" id="btn-minified" href="wexa.min.html" data-target="_self"
-       aria-label="Same page, minified stylesheets" title="Same page, minified stylesheets">
+    <a class="menuitem" id="btn-minified" href="wexa.html" data-target="_self"
+       aria-label="Same page, stylesheets as written" title="Same page, stylesheets as written">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <polyline points="12 8 6 16 12 24"/>
             <polyline points="20 8 26 16 20 24"/>
@@ -889,9 +889,9 @@
     <script type="module">
         import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
         const themes = new ThemeManager();
-        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-        themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
+        themes.register('wexa_theme',   '../wexa_statics/css.min/themes/wexa_theme.css');
+        themes.register('aurora',       '../wexa_statics/css.min/themes/wexa_theme_aurora.css');
+        themes.register('highcontrast', '../wexa_statics/css.min/themes/wexa_theme_highcontrast.css');
         window.themes = themes;
     </script>
 

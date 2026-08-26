@@ -57,11 +57,11 @@ This banner notice must not be removed.
 
 /* The line keeps the hover of the framework, which surrounds it as the focus
    does. Only the button answers for itself, on top of it. */
-summary button.accordion-action:is(:hover, :active, :focus) {
+summary :is(button, a, [role=button], [role=link]).accordion-action:is(:hover, :active, :focus) {
     background: var(--buttons-bg-color-hover);
 }
 
-summary button.accordion-action:is(:hover, :active, :focus) svg * {
+summary :is(button, a, [role=button], [role=link]).accordion-action:is(:hover, :active, :focus) svg * {
     stroke: var(--buttons-fg-color);
 }
 
@@ -117,7 +117,7 @@ ul > li.check-item::before {
     content: none;
 }
 
-summary button.accordion-action, summary a[role=button].accordion-action {
+summary :is(button, a, [role=button], [role=link]).accordion-action {
     color: var(--fg-color);
     width: calc(var(--font-size) * 2);
     border: none;
@@ -129,8 +129,7 @@ summary button.accordion-action, summary a[role=button].accordion-action {
 
 /* The state of the whole list is drawn by an injected icon: it is given the
    size of a menu icon, and takes the color of the text around it. */
-summary button.accordion-action svg,
-summary a[role=button].accordion-action svg {
+summary :is(button, a, [role=button], [role=link]).accordion-action svg {
     width: calc(var(--font-size) * 1.4);
     height: calc(var(--font-size) * 1.4);
     display: block;
@@ -162,12 +161,12 @@ details:has(summary.summary-choice) > div > ul {
 /* wexa.css propagates the color of a button to everything it holds, so an icon
    injected in one is written in the color of a filled button. The drawing takes
    the color of the text, in the button as in the list. */
-summary button.accordion-action svg *,
+summary :is(button, a, [role=button], [role=link]).accordion-action svg *,
 li.check-item svg * {
     stroke: var(--fg-color);
 }
 
-summary button.accordion-action svg circle,
+summary :is(button, a, [role=button], [role=link]).accordion-action svg circle,
 li.check-item svg circle {
     fill: var(--fg-color);
     stroke: none;

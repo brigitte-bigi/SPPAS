@@ -41,7 +41,7 @@
 
     --bg-color:     transparent;
     --bg-color-alt: transparent;
-    --img-bg-color: rgb(229, 238, 252);
+    --img-bg-color: rgba(150, 170, 210, 0.5);
     /* The ground the page sits on, drawn along the diagonal it is read on: the
        navy of the header at the top, the cream of the nav at the bottom. */
     --body-bg-color: linear-gradient(160deg,
@@ -68,7 +68,7 @@
         rgb(10, 26, 58) 0%,
         rgb(14, 38, 72) 45%,
         rgb(16, 52, 62) 100%);
-    --img-bg-color: rgb(229, 238, 252);
+    --img-bg-color: rgba(150, 170, 210, 0.5);
 }
 
 

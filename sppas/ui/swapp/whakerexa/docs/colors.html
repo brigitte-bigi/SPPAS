@@ -95,11 +95,6 @@
                 <td><code>rgb(255, 255, 255)</code></td>
             </tr>
             <tr>
-                <th scope="row">img-bg-color</th>
-                <td><code>var(--bg-color)</code></td>
-                <td></td>
-                <td><code>rgb(242, 244, 251)</code></td>
-            </tr>
             <tr>
                 <th scope="row">border-color</th>
                 <td><code>rgb(60, 60, 90)</code></td>
@@ -487,6 +482,38 @@
             </tr>
             </tbody>
         </table>
+
+        <h2>Colors of the themes</h2>
+
+        <p>A theme may name a color the framework does not: one whose meaning belongs
+            to a way of drawing, not to the structure of a page. <code>wexa.css</code>
+            uses such a color where it applies, and defines none of them. A page that
+            loads no theme is drawn without it.</p>
+
+        <table role="grid">
+            <caption>Colors defined by the themes alone</caption>
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Variable name</th>
+                <th scope="col" style="width:25%">What it is</th>
+                <th scope="col" style="width:25%">wexa_theme</th>
+                <th scope="col">aurora</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">img-bg-color</th>
+                <td>What an image is laid on, in every mode</td>
+                <td><code>rgba(150, 170, 210, 0.5)</code></td>
+                <td><code>rgba(175, 160, 200, 0.5)</code> in light mode,
+                    <code>rgba(190, 175, 215, 0.5)</code> in dark mode</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>The <code>highcontrast</code> theme writes <code>rgb(255, 255, 255)</code> in
+            both modes: a ground that lets the page show through would lower the contrast
+            of what is drawn on it.</p>
 
     </section>
 

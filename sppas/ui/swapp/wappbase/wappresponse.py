@@ -120,6 +120,10 @@ class swappBaseResponse(BaseResponseRecipe):
         of the POST it was written for -- the page is already displayed --
         but not of a GET, which is a navigation and has a page to build.
 
+        The ThemeManager announces the CSS theme it applied under the name
+        "theme", without the prefix -- it is not an accessibility matter.
+        Nothing to do with it either: the client alone carries the theme.
+
         :param events: (dict) The requested events to be processed
         :param headers: (dict) The headers of the http request received
 
@@ -127,6 +131,9 @@ class swappBaseResponse(BaseResponseRecipe):
         for event_name in list(events.keys()):
             if event_name.startswith("wexa_") is True:
                 events.pop(event_name)
+
+        if "theme" in events:
+            events.pop("theme")
 
         return super(swappBaseResponse, self).bake(events, headers)
 

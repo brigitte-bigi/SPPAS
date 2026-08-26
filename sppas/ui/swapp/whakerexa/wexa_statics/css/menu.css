@@ -42,6 +42,14 @@ This banner notice must not be removed.
     --nav-min-height: max(calc(var(--font-size) * 4 / var(--size-divisor)), calc(var(--font-size) * 3));
     --nav-min-width: 0;
 
+    /* What a bar takes on the page. Its box is a border-box, so the room it
+       keeps for the outline of a focused item is already inside its minimum
+       height: the bar is that minimum, unless what it holds asks for more --
+       an item, and the two spaces the outline is drawn in. What is placed
+       under a bar is placed at this, never at the minimum alone. */
+    --nav-height: max(var(--nav-min-height),
+                      calc(var(--nav-item-height) + 2 * var(--outline-size)));
+
     /* All menu items */
     --nav-item-min-height: max(calc(var(--font-size) * 2 / var(--size-divisor)), calc(var(--font-size) * 2));
     --nav-item-height: max(calc(var(--font-size) * 2.5 / var(--size-divisor)), calc(var(--font-size) * 2.5));
@@ -153,7 +161,7 @@ nav.nav-wexa.top {
 
 /* When the top menu is present, push down the page content */
 body:has(nav.nav-wexa.top) {
-    padding-top: var(--nav-min-height);
+    padding-top: var(--nav-height);
 }
 
 /* -------- Fixed at the bottom of the page -------- */
