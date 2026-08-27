@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -168,6 +168,29 @@ class TestAIO(unittest.TestCase):
         self.assertFalse("PitchTier" in sppasTrsRW.annot_extensions())
         self.assertTrue("PitchTier" in sppasTrsRW.measure_extensions())
         self.assertTrue("tra" in sppasTrsRW.table_extensions())
+
+    # -----------------------------------------------------------------------
+
+    def test_IO_preserve_unsupported(self):
+        """The caller decides for the file it is about to write."""
+        parser = sppasTrsRW(os.path.join(DATA, "sample-1.2.xra"))
+        trs = parser.read(heuristic=True)
+
+        # the setting of the application is the default
+        self.assertTrue(parser.get_preserve_unsupported())
+
+        # a TextGrid holds neither metadata, nor ctrl vocab, nor media
+        output = os.path.join(TEMP, "sample-preserved.TextGrid")
+        parser.set_filename(output)
+        parser.write(trs)
+        with open(output, "r") as fp:
+            self.assertTrue("DoNotEdit" in fp.read())
+
+        # the same file, this time accepting the loss
+        parser.set_preserve_unsupported(False)
+        parser.write(trs)
+        with open(output, "r") as fp:
+            self.assertFalse("DoNotEdit" in fp.read())
 
     # -----------------------------------------------------------------------
 

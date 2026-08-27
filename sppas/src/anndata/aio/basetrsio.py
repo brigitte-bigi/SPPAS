@@ -122,6 +122,11 @@ class sppasBaseIO(sppasTranscription):
         self.software = "und"
         self.trs_type = "ANNOT"
 
+        # Preserve what this format can't hold. The setting of the
+        # application is the default; the caller can decide otherwise for
+        # the file it is about to write.
+        self._preserve_unsupported = cfg.interoperability
+
         self._accept_multi_tiers = False
         self._accept_no_tiers = False
         self._accept_empty_tier = False
@@ -343,6 +348,25 @@ class sppasBaseIO(sppasTranscription):
     # What a format can't hold
     # -----------------------------------------------------------------------
 
+    def get_preserve_unsupported(self):
+        """Return True if what this format can't hold is preserved."""
+        return self._preserve_unsupported
+
+    # -----------------------------------------------------------------------
+
+    def set_preserve_unsupported(self, value):
+        """Set whether what this format can't hold is preserved.
+
+        The default is the interoperability setting of the application. A
+        caller writing one file can decide otherwise for that file only.
+
+        :param value: (bool)
+
+        """
+        self._preserve_unsupported = bool(value)
+
+    # -----------------------------------------------------------------------
+
     def unsupported_entries(self):
         """Return the information this format can't hold.
 
@@ -476,14 +500,15 @@ class sppasBaseIO(sppasTranscription):
         The time span of the transcription is shared into intervals of equal
         duration, one for each annotation.
 
-        The tier is created only if the user is maintaining interoperability
-        -- the default --, if there's something to preserve, and if this
-        format is able to hold one tier more.
+        The tier is created only if the interoperability is maintained -- the
+        setting of the application, unless the caller decided otherwise for
+        this file --, if there's something to preserve, and if this format is
+        able to hold one tier more.
 
         :returns: (sppasTier) The created tier, or None
 
         """
-        if cfg.interoperability is False:
+        if self._preserve_unsupported is False:
             return None
         if self.multi_tiers_support() is False:
             return None

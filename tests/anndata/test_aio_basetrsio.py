@@ -148,14 +148,29 @@ class TestUnsupported(unittest.TestCase):
     # -----------------------------------------------------------------------
 
     def test_no_tier_if_loss_is_accepted(self):
-        """Nothing is preserved if the user turned interoperability off."""
+        """Nothing is preserved if the caller accepts the loss."""
+        # the setting of the application is the default
         self.assertTrue(cfg.interoperability)
+        self.assertTrue(self.trs.get_preserve_unsupported())
+
+        # the caller decides for the file it is about to write
+        self.trs.set_preserve_unsupported(False)
+        self.assertTrue(len(self.trs.unsupported_entries()) > 0)
+        self.assertIsNone(self.trs.create_unsupported_tier())
+
+        self.trs.set_preserve_unsupported(True)
+        self.assertIsNotNone(self.trs.create_unsupported_tier())
+
+    # -----------------------------------------------------------------------
+
+    def test_setting_is_the_default(self):
+        """A new reader-writer takes the setting of the application."""
         cfg.interoperability = False
         try:
-            self.assertTrue(len(self.trs.unsupported_entries()) > 0)
-            self.assertIsNone(self.trs.create_unsupported_tier())
+            self.assertFalse(sppasBaseIO().get_preserve_unsupported())
         finally:
             cfg.interoperability = True
+        self.assertTrue(sppasBaseIO().get_preserve_unsupported())
 
     # -----------------------------------------------------------------------
 

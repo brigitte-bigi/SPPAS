@@ -44,6 +44,7 @@ import logging
 import os
 from collections import OrderedDict
 
+from sppas.core.config import cfg
 from sppas.core.coreutils import IOExtensionError
 from sppas.core.coreutils import u
 from sppas.src.utils.datatype import sppasTime
@@ -201,6 +202,27 @@ class sppasTrsRW(object):
 
         """
         self.__filename = u(filename)
+        self.__preserve_unsupported = cfg.interoperability
+
+    # -----------------------------------------------------------------------
+
+    def get_preserve_unsupported(self) -> bool:
+        """Return True if what the format can't hold is preserved."""
+        return self.__preserve_unsupported
+
+    # -----------------------------------------------------------------------
+
+    def set_preserve_unsupported(self, value: bool) -> None:
+        """Set whether what the format can't hold is preserved.
+
+        The default is the interoperability setting of the application. It
+        is the way for an application to decide for one file only -- the
+        conversion the user is asking for, for example.
+
+        :param value: (bool)
+
+        """
+        self.__preserve_unsupported = bool(value)
 
     # -----------------------------------------------------------------------
 
@@ -311,6 +333,7 @@ class sppasTrsRW(object):
         """
         trs_rw = sppasTrsRW.create_trs_from_extension(self.__filename)
         trs_rw.set(transcription)
+        trs_rw.set_preserve_unsupported(self.__preserve_unsupported)
 
         # Add metadata about the file
         trs_rw.set_meta('file_writer', trs_rw.__class__.__name__)
