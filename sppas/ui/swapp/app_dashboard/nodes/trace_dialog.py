@@ -74,6 +74,7 @@ class TraceInfoDialog(HTMLNode):
 
         open_button = HTMLNode(self.identifier, "trace_dialog_button", "button", value=MSG_OPEN)
         open_button.add_attribute("id", "trace_dialog_button")
+        open_button.add_attribute("class", "action-button")
         open_button.add_attribute("data-href", "journal.html")
         open_button.add_attribute("data-target", "sppas_infos")
         self.append_child(open_button)

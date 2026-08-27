@@ -643,6 +643,9 @@ msgstr "Message :"
 msgid "Write the message here"
 msgstr "Écrivez le message ici"
 
+msgid "What to include"
+msgstr "Ce qui est joint"
+
 msgid "Technical information included in the message"
 msgstr "Informations techniques incluses dans le message"
 

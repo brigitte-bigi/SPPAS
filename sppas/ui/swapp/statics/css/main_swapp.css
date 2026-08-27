@@ -57,7 +57,6 @@
 :root {
     /* Header / footer */
     --header-slidein: animDisabled;
-    --footer-slidein: animDisabled;
     --header-height: max(calc(3rem / var(--size-divisor)), 2rem);
     --footer-height: max(calc(8rem / var(--size-divisor)), 7rem);
 
@@ -73,12 +72,8 @@
     --nav-item-width-v-collapsed: calc(var(--nav-min-width) - var(--typography-spacing-horizontal));
     --nav-item-width-v-expanded: calc(var(--nav-expanded-width) - var(--typography-spacing-horizontal));
 
-    --appmenu-position: left;
-    --appmenu-align: left top;
-
     /* Cards */
     --card-border-radius: 0.8rem;
-    --card-border-width: 0;
 
     /* SPPAS color tokens: see main_swapp_theme.css */
 }
@@ -245,6 +240,24 @@ button:hover, [role='button']:hover {
 
 button:active, [role='button']:active {
     transform: translateY(0);
+    box-shadow: none;
+}
+
+/* The button carrying an action -- launching an app, sending a message,
+   answering a box -- wears the colors of SPPAS, so that it is found before
+   anything else is read. One dressing for all of them: what a page adds is
+   where its button sits, never how it looks. */
+button.action-button {
+    background: var(--buttons-bg-color);
+    color: var(--buttons-fg-color);
+    padding: 1em 2em;
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: calc(var(--font-size) * 1.125);
+    font-variant: small-caps;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: var(--border-radius);
     box-shadow: none;
 }
 
@@ -460,15 +473,11 @@ section.actions-panel {
 
 /* ── Application cards ───────────────────────────────────── */
 
-/* A list of choices, not a list of sentences: wexa.css writes a square
-   before each item and indents it, both of which a card does not want. */
+/* The grid comes from .cards-panel of layout.css. What is written here is
+   what belongs to SPPAS: the ground, and the fact that a list of choices
+   wants neither the square wexa.css writes before an item nor its indent. */
 .apps-panel {
     padding: 1rem;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(12 * var(--font-size)), calc(18 * var(--font-size))));
-    grid-column-gap: 1rem;
-    grid-row-gap: 1rem;
     place-items: center;
     border-radius: 1rem;
     background: var(--apps-panel-bg-image);
@@ -478,15 +487,16 @@ section.actions-panel {
     content: none;
 }
 
+/* A card of layout.css, with two differences of its own: its children are
+   stacked in one cell instead of following each other, the image lying
+   under the text, and it fills its frame edge to edge. */
 .app {
     display: grid;
     place-items: center;
-    padding-inline-start: 0;
+    padding: 0;
     max-width: calc(16 * var(--font-size));
     height: calc(20 * var(--font-size));
     overflow: hidden;
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--card-box-shadow);
     transition: box-shadow 0.2s ease-in-out;
 }
 
@@ -576,29 +586,10 @@ section.actions-panel {
     max-height: calc(9 * var(--font-size));
 }
 
+/* Its look comes from .action-button: only its place is written here. */
 .app-button {
-    color: var(--buttons-fg-color);
     margin: 0 auto;
-    padding: 1em 2em;
-    width: fit-content;
-    width: -moz-fit-content;
     height: 2.5rem;
-    font-variant: small-caps;
-    font-weight: bold;
-    border-radius: var(--border-radius);
-    text-transform: uppercase;
-    font-size: calc(var(--font-size) * 1.125);
-}
-
-.app-button {
-    background-color: var(--buttons-bg-color) !important;
-    background-image: none !important;
-}
-
-.app-button:hover {
-    color: var(--buttons-fg-color);
-    background-color: var(--buttons-bg-color-hover) !important;
-    background-image: none !important;
 }
 
 /* Hover/focus animation — only for pointer devices */
@@ -947,21 +938,13 @@ dialog[role=alertdialog] > form {
 
 /* ── Buttons of the alert dialogs: one single style, centered ── */
 
+/* Its look comes from .action-button, its color from the kind of the box:
+   the round and the button then answer each other. */
 dialog[role="alertdialog"] button {
     align-self: center;
-    margin: 0 auto 1rem;
-    padding: 1em 2em;
-    width: fit-content;
-    width: -moz-fit-content;
-    font-size: 1rem;
-    font-variant: small-caps;
-    font-weight: bold;
-    border-radius: var(--card-border-radius);
-    text-transform: uppercase;
     color: var(--dialog-icon-color, rgb(255, 255, 255));
     border-color: var(--info-color);
     background-color: var(--info-color);
-    background-image: none;
     opacity: 1;
 }
 

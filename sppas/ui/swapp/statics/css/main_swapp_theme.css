@@ -75,10 +75,15 @@
     --wizard-fieldset-bg-image: linear-gradient(120deg, rgb(210, 210, 250) 0%, rgb(233, 233, 242) 50%, rgb(241, 223, 245) 100%);
 
 
+    /* A pair: wexa.css writes the legend of a fieldset with it. */
     --progress-bg-color: rgb(0, 0, 35);
-    --buttons-bg-color: rgb(235, 235, 240);
-    --buttons-bg-color-hover: rgb(210, 217, 250);
-    --buttons-fg-color: rgb(20, 25, 30);
+    --progress-fg-color: rgb(235, 240, 255);
+    /* A button is read against a page that is almost white and cards that
+       are barely tinted: it is the navy of the header that makes it a
+       surface of its own. */
+    --buttons-bg-color: rgb(10, 40, 90);
+    --buttons-bg-color-hover: rgb(20, 75, 140);
+    --buttons-fg-color: rgb(235, 240, 255);
 
     --border-color: rgb(204, 213, 224);
     --a-color: rgb(0, 70, 100);
@@ -125,15 +130,18 @@
         --wizard-fieldset-bg-image: linear-gradient(120deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
 
 
-        --buttons-bg-color: rgb(31, 3, 87);
-        --buttons-bg-color-hover: rgb(49, 2, 92);
-        --buttons-fg-color: rgb(243, 248, 250);
+        /* Turned over: the page is dark, so the button is the light one --
+           the cream already worn by the menu. */
+        --buttons-bg-color: rgb(240, 230, 210);
+        --buttons-bg-color-hover: rgb(255, 245, 225);
+        --buttons-fg-color: rgb(30, 0, 70);
 
         --border-color: rgb(100, 120, 170);
         --a-color: rgb(42, 111, 190);
         --li-color: rgb(130, 60, 130);
         --blockquote-border-color: rgb(130, 60, 130);
         --progress-bg-color: rgb(247, 230, 190);
+        --progress-fg-color: rgb(35, 25, 10);
 
         --card-bg-color: rgb(30, 0, 70);
         --card-fg-color: rgb(240, 230, 210);

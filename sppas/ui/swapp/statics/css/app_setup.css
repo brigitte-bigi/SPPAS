@@ -343,11 +343,6 @@ input[type=checkbox] {
     margin-left: 0;
 }
 
-.center {
-    margin: auto;
-    text-align: center;
-}
-
 .right-bottom {
     position: absolute;
     bottom: 0;

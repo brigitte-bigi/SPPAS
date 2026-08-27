@@ -65,6 +65,7 @@ class BaseLinksNode(HTMLNode):
     def __init__(self, parent_id, identifier: str):
         super(BaseLinksNode, self).__init__(parent_id, identifier, "section")
         self.add_attribute("id", self.identifier)
+        self.add_attribute("class", "cards-panel")
         self.add_attribute("class", "links-panel")
 
     # ----------------------------------------------------------------------

@@ -401,6 +401,12 @@
 			destination allows neither, <em>yes</em> has the same effect as <em>no</em>,
 			and the option is not offered.</p>
 
+			<p>The answer is not asked at each conversion: it is a setting of the
+			application, <code>interoperability</code>, true by default
+			<span class="api-ok">[API-OK]</span>. Maintaining interoperability is the
+			normal state; accepting the loss is the choice of a user who knows what he
+			gives up.</p>
+
 			<p>Where SPPAS writes what it preserves is a mechanism, not a decision. Users
 			divide into those who want their file and care for nothing else, and those who
 			want nothing lost; neither arbitrates between metadata and controlled
@@ -456,13 +462,17 @@
 			written is no longer what was annotated, and that is a decision only the user
 			can take.</p>
 
-			<p id="note-comments">(a) Requires a property <code>accept_comments</code>
-			<span class="api-ext">[API-EXT]</span>: the current API writes metadata as
-			comments when the format allows it, and forgets them otherwise, but does not
-			expose that capability.</p>
+			<p id="note-comments">(a) The property <code>accept_comments</code> states it,
+			read by <code>comments_support()</code>
+			<span class="api-ok">[API-OK]</span>. The API was already writing metadata as
+			comments when the format allows it, and forgetting them otherwise; it now
+			exposes that capability.</p>
 
-			<p id="note-astier">(b) Requires writing metadata, controlled vocabularies and
-			media as a tier <span class="api-ext">[API-EXT]</span>.</p>
+			<p id="note-astier">(b) Writing metadata, controlled vocabularies and media as
+			a tier is done by <code>create_unsupported_tier()</code>, and read back by
+			<code>parse_unsupported_tier()</code>
+			<span class="api-ok">[API-OK]</span>. The tier is named
+			<code>DoNotEdit</code>; see the annex for what it holds.</p>
 
 			<h4>Properties raising no question</h4>
 
@@ -472,8 +482,10 @@
 			<ul>
 				<li><code>no_tiers</code> — a file holding no tier at all cannot be
 				written.</li>
-				<li><code>empty_tier</code> <span class="api-ext">[API-EXT]</span> — a tier
-				holding no annotation is removed; see <a href="#chaining">3.3</a>.</li>
+				<li><code>empty_tier</code> <span class="api-ok">[API-OK]</span> — a tier
+				holding no annotation is removed where the destination refuses it, which
+				<code>empty_tier_support()</code> states beforehand; see
+				<a href="#chaining">3.3</a>.</li>
 				<li><code>interval</code> — intervals cannot be reduced to points. A file
 				holding intervals is refused. The converse is remediable, hence the
 				<code>point</code> option above.</li>
@@ -485,11 +497,12 @@
 
 			<h4>Extensions of the API required by this section</h4>
 
-			<ol>
-				<li><code>accept_empty_tier</code>, a boolean property of formats.</li>
-				<li><code>accept_comments</code>, a boolean property of formats.</li>
-				<li>Writing metadata, controlled vocabularies and media as a tier.</li>
-			</ol>
+			<p>None: the three extensions this section was stating are available
+			<span class="api-ok">[API-OK]</span>. They are
+			<code>empty_tier_support()</code>, <code>comments_support()</code>, and the
+			pair <code>create_unsupported_tier()</code> /
+			<code>parse_unsupported_tier()</code>. The annex states what they do and what
+			they cost.</p>
 
 		</section>
 
@@ -1233,17 +1246,18 @@
 <!-- =============================================================== -->
 
 	<section>
-	<h2>Annex: Extensions required of the SPPAS API</h2>
+	<h2>Annex: Extensions of the SPPAS API</h2>
 
-		<p>The model of Convert states requirements the current SPPAS API does not
-		cover. They are collected here for the implementer. Each remains inactive
-		until the API supports it; none invalidates the rest of the model, and Convert
-		is implementable without them, with the stated consequences.</p>
+		<p>The model of Convert stated three requirements the SPPAS API did not
+		cover. All three are available: they were added to
+		<code>sppas.src.anndata</code>, and this annex now states what they are, what
+		they hold, and what they cost. Nothing of the model is left waiting for the
+		API.</p>
 
 		<!-- ------------------------------------------------------- -->
 
 		<section class="subssection">
-		<h3>E1 — <code>accept_comments</code></h3>
+		<h3>E1 — <code>accept_comments</code> <span class="api-ok">[API-OK]</span></h3>
 
 			<table>
 			<tbody>
@@ -1264,10 +1278,11 @@
 				<td>The preservation option — section 3.2. Requirement [307].</td>
 			  </tr>
 			  <tr>
-				<th scope="row">Without it</th>
-				<td>Convert offers preservation where it may have no effect, or attempts
-				it blindly. The outcome is unchanged — the API does what it does — but the
-				user is asked a question whose answer may be void.</td>
+				<th scope="row">Available as</th>
+				<td><code>comments_support()</code> of any reader-writer. The formats
+				holding comments are <code>txt</code>, <code>ctm</code>,
+				<code>stm</code>, <code>arff</code> and <code>tdf</code>; every other
+				one answers False.</td>
 			  </tr>
 			</tbody>
 			</table>
@@ -1277,7 +1292,7 @@
 		<!-- ------------------------------------------------------- -->
 
 		<section class="subssection">
-		<h3>E2 — <code>accept_empty_tier</code></h3>
+		<h3>E2 — <code>accept_empty_tier</code> <span class="api-ok">[API-OK]</span></h3>
 
 			<table>
 			<tbody>
@@ -1298,11 +1313,14 @@
 				[602], [603].</td>
 			  </tr>
 			  <tr>
-				<th scope="row">Without it</th>
-				<td>Empty tiers are handled by retry rather than anticipation: the
-				typed exception is caught, the tiers removed, and the write attempted
-				once more. The outcome is the same; the path is less direct, and
-				chaining is harder to verify.</td>
+				<th scope="row">Available as</th>
+				<td><code>empty_tier_support()</code> of any reader-writer. The formats
+				holding an empty tier are the ones declaring their tiers apart from
+				their annotations: <code>xra</code>, <code>eaf</code>,
+				<code>antx</code>, <code>ant</code>, <code>tei</code>,
+				<code>mrk</code>, and <code>TextGrid</code> — which writes such a tier
+				as one interval with no text, adding an empty annotation rather than
+				removing the tier.</td>
 			  </tr>
 			  <tr>
 				<th scope="row">Note</th>
@@ -1319,7 +1337,8 @@
 		<!-- ------------------------------------------------------- -->
 
 		<section class="subssection">
-		<h3>E3 — Writing metadata, controlled vocabularies and media as a tier</h3>
+		<h3>E3 — Writing metadata, controlled vocabularies and media as a tier
+		<span class="api-ok">[API-OK]</span></h3>
 
 			<table>
 			<tbody>
@@ -1340,16 +1359,41 @@
 				<td>The preservation option — section 3.2.</td>
 			  </tr>
 			  <tr>
-				<th scope="row">Without it</th>
-				<td>Preserving relies on comments alone. Where the destination holds no
-				comments, the option has no effect and is not offered: the information is
-				lost, as it is today.</td>
+				<th scope="row">Available as</th>
+				<td><code>create_unsupported_tier()</code> and
+				<code>parse_unsupported_tier()</code>, with
+				<code>unsupported_entries()</code> and
+				<code>fill_unsupported_entry()</code> underneath — a reader holding the
+				information its own way, as a comment for instance, fills the objects
+				with the latter. Written by <code>TextGrid</code>, <code>csv</code> and
+				<code>mrk</code>: the formats holding several tiers but neither
+				metadata nor comments.</td>
 			  </tr>
 			  <tr>
-				<th scope="row">Open</th>
-				<td>What such a tier holds, how it is named, and whether reading it back
-				restores the information, are not settled here. E3 is stated as a need,
-				not as a design.</td>
+				<th scope="row">What it holds</th>
+				<td>A tier named <code>DoNotEdit</code>, whose first annotation holds the
+				keyword <code>Metadata</code>, then one annotation per key: the key, the
+				value, the nature — metadata, ctrl_vocab or media — and the name of the
+				tier it belongs to, one in each of its labels. The whole time span of the
+				transcription is shared into intervals of equal duration. Reading it
+				assigns the entries back to their object and removes the tier: it is a
+				way to write, not data.</td>
+			  </tr>
+			  <tr>
+				<th scope="row">Decided by</th>
+				<td>The user, once and for all, in the settings:
+				<code>interoperability</code> of <code>sppasAppConfig</code>, true by
+				default. Turned off, nothing is preserved and the tier is not written.
+				The tier is written only when there is something to preserve — what
+				SPPAS assigns to any object it creates does not count.</td>
+			  </tr>
+			  <tr>
+				<th scope="row">What it costs</th>
+				<td><code>csv</code> and <code>mrk</code> write the labels of an
+				annotation separated by a whitespace, so the whitespaces of the entries
+				are turned into underscores and stay so when read back: an assumed loss,
+				stated in the docstring of both. The descriptions of a controlled
+				vocabulary and of its tags are not preserved.</td>
 			  </tr>
 			</tbody>
 			</table>
@@ -1517,7 +1561,7 @@
 			  </dd>
 
 			  <dt>Empty tiers</dt>
-			  <dd>not held &mdash; removed</dd>
+			  <dd>held &mdash; written as one interval with no text</dd>
 
 			  <dt>Overlapping annotations</dt>
 			  <dd>not held &mdash; lost</dd>

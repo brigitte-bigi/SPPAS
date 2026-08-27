@@ -314,6 +314,9 @@ msgstr ""
 msgid "Write the message here"
 msgstr ""
 
+msgid "What to include"
+msgstr ""
+
 msgid "Technical information included in the message"
 msgstr ""
 

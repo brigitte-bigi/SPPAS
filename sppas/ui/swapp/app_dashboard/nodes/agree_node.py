@@ -69,4 +69,5 @@ class AgreementDialog(HTMLNode):
 
         agree_button = HTMLNode(self.identifier, "agree_button", "button", value=MSG_AGREE)
         agree_button.add_attribute("id", "agree_button")
+        agree_button.add_attribute("class", "action-button")
         self.append_child(agree_button)

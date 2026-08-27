@@ -63,6 +63,7 @@ MSG_SUBJECT = _("Subject: ")
 MSG_DESCRIBE = _("Write the message here")
 MSG_MESSAGE = _("Message:")
 MSG_INCLUDED = _("Technical information included in the message")
+MSG_REPORT = _("What to include")
 MSG_MINIMAL = _("Minimal system information")
 MSG_FULL = _("Full trace report")
 MSG_SEND = _("Send by e-mail")
@@ -204,30 +205,31 @@ class FeedbackView(swappBaseView):
         # The choice of the technical information to include: minimal
         # system information, or the full report of the trace store.
         # There is no "nothing" choice, on purpose.
-        _choice = TagNode(self._htree.body_main.identifier, None, "p")
+        # A group of radio buttons is a fieldset with its legend, and each
+        # button is written beside its label, not inside it: wexa.css hides
+        # a control put inside a label, which is how it dresses one as a
+        # button.
+        _choice = TagNode(self._htree.body_main.identifier, None, "fieldset")
         _choice.set_attribute("id", "feedback_choice")
         self._htree.body_main.append_child(_choice)
 
-        _label = TagNode(_choice.identifier, None, "label")
-        _choice.append_child(_label)
-        _radio = HTMLNode(_label.identifier, None, "input")
-        _radio.set_attribute("type", "radio")
-        _radio.set_attribute("name", "feedback_report")
-        _radio.set_attribute("value", "minimal")
-        _radio.set_attribute("checked", None)
-        _label.append_child(_radio)
-        _text = HTMLNode(_label.identifier, None, "span", value=MSG_MINIMAL)
-        _label.append_child(_text)
+        _legend = HTMLNode(_choice.identifier, None, "legend", value=MSG_REPORT)
+        _choice.append_child(_legend)
 
-        _label = TagNode(_choice.identifier, None, "label")
-        _choice.append_child(_label)
-        _radio = HTMLNode(_label.identifier, None, "input")
-        _radio.set_attribute("type", "radio")
-        _radio.set_attribute("name", "feedback_report")
-        _radio.set_attribute("value", "full")
-        _label.append_child(_radio)
-        _text = HTMLNode(_label.identifier, None, "span", value=MSG_FULL)
-        _label.append_child(_text)
+        for value, message in (("minimal", MSG_MINIMAL), ("full", MSG_FULL)):
+            ident = "feedback_report_" + value
+            _radio = HTMLNode(_choice.identifier, ident, "input")
+            _radio.set_attribute("id", ident)
+            _radio.set_attribute("type", "radio")
+            _radio.set_attribute("name", "feedback_report")
+            _radio.set_attribute("value", value)
+            if value == "minimal":
+                _radio.set_attribute("checked", None)
+            _choice.append_child(_radio)
+
+            _label = HTMLNode(_choice.identifier, None, "label", value=message)
+            _label.set_attribute("for", ident)
+            _choice.append_child(_label)
 
         # The technical information, visible in an accordion: the user
         # sees exactly what will be sent. One block for each choice, the
@@ -256,6 +258,7 @@ class FeedbackView(swappBaseView):
         _button = HTMLNode(self._htree.body_main.identifier, None, "button", value=MSG_SEND)
         _button.set_attribute("id", "feedback_send_button")
         _button.set_attribute("type", "button")
+        _button.set_attribute("class", "action-button")
         _button.set_attribute("data-to", _to)
         _button.set_attribute("data-subject", _subject)
         _button.set_attribute("data-msg-copied", MSG_COPIED)

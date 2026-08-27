@@ -69,6 +69,7 @@ class AppsNode(HTMLNode):
     def __init__(self, parent_id):
         super(AppsNode, self).__init__(parent_id, AppsNode.ID, "ul")
         self.add_attribute("id", self.identifier)
+        self.add_attribute("class", "cards-panel")
         self.add_attribute("class", "apps-panel")
 
     # -----------------------------------------------------------------------
@@ -95,6 +96,7 @@ class AppsNode(HTMLNode):
         """
         ident = ident.lower().replace(" ", "_")
         article = HTMLNode(self.identifier, ident+"_article", "li")
+        article.add_attribute("class", "card")
         article.add_attribute("class", "app")
         if enable is False:
             article.add_attribute("class", "app-disabled")
@@ -132,14 +134,14 @@ class AppsNode(HTMLNode):
         # Launch button
         if enable is False:
             _b = HTMLNode(content.identifier, ident + "_button", "button", value=MSG_LAUNCH)
-            _b.add_attribute("class", "app-button")
+            _b.add_attribute("class", "action-button app-button")
             _b.add_attribute("disabled", None)
         else:
             if link.endswith(".html"):
                 # The link is handled by the dashboard manager to propagate contrast&theme.
                 _b = LinkButtonNode(content.identifier, ident + "_button", link)
                 _b.set_value(MSG_LAUNCH)
-                _b.add_attribute("class", "app-button")
+                _b.add_attribute("class", "action-button app-button")
                 # Overrides role. It's a link, but it acts like a button (launch an app).
                 _b.add_attribute("role", "button")
                 # button = HTMLNode(content.identifier, ident + "_button", "a", value=MSG_LAUNCH, attributes={
@@ -152,7 +154,7 @@ class AppsNode(HTMLNode):
             else:
                 # The button is not a link, it's an action handled by the JS DashboardManager()
                 _b = HTMLNode(content.identifier, ident + "_button", "button", value=MSG_LAUNCH)
-                _b.add_attribute("class", "app-button")
+                _b.add_attribute("class", "action-button app-button")
                 _b.add_attribute("id", ident + "_button")
                 if busy is True:
                     _b.add_attribute("disabled", None)
