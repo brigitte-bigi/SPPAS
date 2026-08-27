@@ -41,6 +41,8 @@
 
 import unittest
 
+from sppas.core.config import cfg
+
 from sppas.src.anndata.aio.basetrsio import sppasBaseIO
 from sppas.src.anndata.ctrlvocab import sppasCtrlVocab
 from sppas.src.anndata.media import sppasMedia
@@ -142,6 +144,18 @@ class TestUnsupported(unittest.TestCase):
         self.assertEqual(1, len(entries))
         self.assertEqual(("metadata", "", "language_code_0", "fra"),
                          entries[0])
+
+    # -----------------------------------------------------------------------
+
+    def test_no_tier_if_loss_is_accepted(self):
+        """Nothing is preserved if the user turned interoperability off."""
+        self.assertTrue(cfg.interoperability)
+        cfg.interoperability = False
+        try:
+            self.assertTrue(len(self.trs.unsupported_entries()) > 0)
+            self.assertIsNone(self.trs.create_unsupported_tier())
+        finally:
+            cfg.interoperability = True
 
     # -----------------------------------------------------------------------
 

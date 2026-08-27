@@ -39,6 +39,8 @@
 
 """
 
+from sppas.core.config import cfg
+
 from ..transcription import sppasTranscription
 from ..anndataexc import AnnDataTypeError
 from ..anndataexc import CtrlVocabContainsError
@@ -465,12 +467,15 @@ class sppasBaseIO(sppasTranscription):
         The time span of the transcription is shared into intervals of equal
         duration, one for each annotation.
 
-        The tier is created only if there's something to preserve and if this
+        The tier is created only if the user is maintaining interoperability
+        -- the default --, if there's something to preserve, and if this
         format is able to hold one tier more.
 
         :returns: (sppasTier) The created tier, or None
 
         """
+        if cfg.interoperability is False:
+            return None
         if self.multi_tiers_support() is False:
             return None
         entries = self.unsupported_entries()

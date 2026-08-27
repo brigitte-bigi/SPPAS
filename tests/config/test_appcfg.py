@@ -60,6 +60,18 @@ class TestConfiguration(unittest.TestCase):
 
     # ---------------------------------------------------------------------------
 
+    def test_get_set_interoperability(self):
+        # It is preserving what a format can't hold, by default.
+        self.assertTrue(self.__configuration.interoperability)
+
+        self.__configuration.interoperability = False
+        self.assertFalse(self.__configuration.interoperability)
+
+        self.__configuration.set_interoperability(True)
+        self.assertTrue(self.__configuration.get_interoperability())
+
+    # ---------------------------------------------------------------------------
+
     def test_get_set_deps(self):
         self.__configuration.set_feature("first", True)
         y = self.__configuration.get_feature_ids()

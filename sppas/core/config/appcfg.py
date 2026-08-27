@@ -59,12 +59,14 @@ class sppasAppConfig(object):
     Members are:
 
         - log_level
+        - interoperability
         - features dictionary
 
     """
 
     APP_CONFIG_FILENAME = ".app~"
     DEFAULT_LOG_LEVEL = 15
+    DEFAULT_INTEROPERABILITY = True
 
     # -----------------------------------------------------------------------
 
@@ -83,6 +85,7 @@ class sppasAppConfig(object):
         # Create a default configuration
         self.__update_info = None
         self.__log_level = sppasAppConfig.DEFAULT_LOG_LEVEL
+        self.__interoperability = sppasAppConfig.DEFAULT_INTEROPERABILITY
         self.__feat_ids = dict()
 
         # Load the existing configuration file (if any)
@@ -119,6 +122,25 @@ class sppasAppConfig(object):
         self.__log_level = value
 
     log_level = property(get_log_level, set_log_level)
+
+    # -----------------------------------------------------------------------
+
+    def get_interoperability(self):
+        """Return True if a file is written without loss of information."""
+        return self.__interoperability
+
+    def set_interoperability(self, value):
+        """Set whether a file is written without loss of information.
+
+        When it is False, what a format can't hold is lost: it's the choice
+        of the user, the default is to preserve it.
+
+        :param value: (bool) Preserve what the destination format can't hold.
+
+        """
+        self.__interoperability = bool(value)
+
+    interoperability = property(get_interoperability, set_interoperability)
 
     # -----------------------------------------------------------------------
 
@@ -159,6 +181,9 @@ class sppasAppConfig(object):
                     self.save()
                 else:
                     self.__log_level = d.get("log_level", sppasAppConfig.DEFAULT_LOG_LEVEL)
+                    self.__interoperability = d.get(
+                        "interoperability",
+                        sppasAppConfig.DEFAULT_INTEROPERABILITY)
 
                     # Load the deps of the file without deleting the ones already in
                     # the dict: add or override the deps of the file to our dict.
@@ -177,6 +202,7 @@ class sppasAppConfig(object):
         with open(self.cfg_filename(), "w") as f:
             d = dict()
             d["log_level"] = self.__log_level
+            d["interoperability"] = self.__interoperability
             d["features"] = self.__feat_ids
             f.write(json.dumps(d, indent=2))
 
