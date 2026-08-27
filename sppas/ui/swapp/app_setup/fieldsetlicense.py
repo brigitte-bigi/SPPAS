@@ -16,7 +16,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2023  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -152,7 +152,7 @@ class SetupLicenseFieldset(SetupBaseFieldset):
 
         # --- The licenses agreement
         checkbox = sppasHTMLCheckboxNode(self.identifier, "check_license", MSG_ACCEPT_LICENSE, uri=uri)
-        if cfg.log_level < 10:
+        if cfg.log_level <= logging.DEBUG:
             checkbox.check()
         self.append_child(checkbox)
 

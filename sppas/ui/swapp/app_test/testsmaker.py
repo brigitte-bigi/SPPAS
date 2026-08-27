@@ -56,6 +56,8 @@ from sppas.ui.agnostic.filechooser.filechooser_mixin import FileChooserMixin
 from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
 from sppas.ui.swapp.wappcore.wappsg import notify_wkp_changed
+from sppas.ui.swapp.wappcore.wappsg import notify_show_page
+from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
 from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
 from sppas.ui.swapp.nodes import sppasHTMLButton
 from sppas.ui.swapp.wappbase.wappresponse import swappBaseResponse
@@ -118,6 +120,24 @@ window.Wexa.onload.addLoadFunction(() => {
         const response = await requestManager.send_post_request({socket_ping: true}, "application/json", PAGE_URI);
         alert(JSON.stringify(response["socket_response"]));
     };
+});
+
+window.Wexa.onload.addLoadFunction(() => {
+    const pages = ["page_files", "page_annotate", "page_analyze",
+                   "page_editor", "page_convert", "page_plugins"];
+    pages.forEach((page) => {
+        const button = document.getElementsByName("show_" + page)[0];
+        if (button === undefined) {
+            return;
+        }
+        button.onclick = async () => {
+            const requestManager = new window.Wexa.RequestManager();
+            const request = {};
+            request["show_" + page] = true;
+            const response = await requestManager.send_post_request(request, "application/json", PAGE_URI);
+            alert(JSON.stringify(response["socket_response"]));
+        };
+    });
 });
 
 window.Wexa.onload.addLoadFunction(() => {
@@ -256,6 +276,16 @@ class TestsResponseRecipe(swappBaseResponse):
                 response = client.request(request)
                 self._data = {"socket_response": response}
 
+            elif event_name.startswith("show_page_") is True:
+                # Ask the wx interface to show one of its pages. Without a
+                # running interface, the message is dropped by the notifier:
+                # the answer says so, which is what this test is about.
+                page_name = event_name[len("show_"):]
+                notify_show_page(page_name)
+                self._data = {"socket_response":
+                              "SHOW_PAGE {:s} sent. wx running: {}"
+                              "".format(page_name, wapp_wxstate.running)}
+
             elif event_name == "show_workspace":
                 wjson = sppasWJSON()
                 wjson.set(wapp_wkps.data)
@@ -314,6 +344,22 @@ class TestsResponseRecipe(swappBaseResponse):
         b = HTMLButtonNode(self._htree.body_main.identifier, "socket_ping")
         b.set_value("Send ping to socket server")
         self._htree.body_main.append_child(b)
+
+        # ---------------------
+
+        h2 = self.element("h2")
+        h2.set_value("Test the pages of the wx interface")
+
+        p = HTMLNode(self._htree.body_main.identifier, None, "p",
+                     value="Each button asks the wx interface to show one of "
+                           "its pages, and to come to the front.")
+        self._htree.body_main.append_child(p)
+
+        for page_name in ("page_files", "page_annotate", "page_analyze",
+                          "page_editor", "page_convert", "page_plugins"):
+            b = HTMLButtonNode(self._htree.body_main.identifier, "show_" + page_name)
+            b.set_value(page_name)
+            self._htree.body_main.append_child(b)
 
         # ---------------------
 

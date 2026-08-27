@@ -119,11 +119,11 @@ class SetupHomeFieldset(SetupBaseFieldset):
         # -- Agreements
         box = sppasHTMLCheckboxNode(self.identifier, "check_ref", MSG_ACCEPT_REF, self._uri)
         self.append_child(box)
-        if cfg.log_level < 0:
+        if cfg.log_level <= logging.DEBUG:
             box.check()
         box = sppasHTMLCheckboxNode(self.identifier, "check_prod", MSG_ACCEPT_PROD, self._uri)
         self.append_child(box)
-        if cfg.log_level < 10:
+        if cfg.log_level <= logging.DEBUG:
             box.check()
 
     # -----------------------------------------------------------------------

@@ -719,13 +719,13 @@ msgid "What SPPAS writes in the Journal"
 msgstr "Ce que SPPAS écrit dans le Journal"
 
 msgid "Debug"
-msgstr "Mise au point"
+msgstr "Debug"
 
 msgid "Info"
 msgstr "Information"
 
 msgid "From saying everything to reporting only what goes wrong. Debug adds the messages meant for the development: useful in a feedback message, cluttering the rest of the time."
-msgstr "De tout dire à ne signaler que ce qui cloche. La mise au point ajoute les messages destinés au développement : utiles dans un message de feedback, encombrants le reste du temps."
+msgstr "De tout dire à ne signaler que ce qui cloche. Le debug ajoute les messages destinés au développement : utiles dans un message de feedback, encombrants le reste du temps."
 
 msgid "What is set elsewhere"
 msgstr "Ce qui se règle ailleurs"

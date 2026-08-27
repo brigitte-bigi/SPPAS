@@ -67,15 +67,15 @@ MSG_SAVE = _("Save")
 
 # Ce que SPPAS écrit dans le Journal
 MSG_JOURNAL = _("What SPPAS writes in the Journal")
-# Mise au point
+# Debug
 MSG_LOG_DEBUG = _("Debug")
 # Information
 MSG_LOG_INFO = _("Info")
 # Avertissement
 MSG_LOG_WARNING = _("Warning")
-# De tout dire à ne signaler que ce qui cloche. La mise au point ajoute les
-# messages destinés au développement : utiles dans un message de feedback,
-# encombrants le reste du temps.
+# De tout dire à ne signaler que ce qui cloche. Le debug ajoute les messages
+# destinés au développement : utiles dans un message de feedback, encombrants
+# le reste du temps.
 MSG_LOG_SAYS = _("From saying everything to reporting only what goes wrong. Debug adds the messages meant for the development: useful in a feedback message, cluttering the rest of the time.")
 
 # Ce qui se règle ailleurs
@@ -102,10 +102,10 @@ class ConfigurationView(swappBaseView):
 
     """
 
-    # The levels of the logging system the user chooses between. A level
-    # is a threshold: the messages of a level greater or equal are passing.
-    # The standard messages being 10, 20, 30, 40 and 50, a threshold is
-    # read as the highest value of its ten.
+    # The levels of the logging system the user chooses between: the
+    # standard ones. A level is a threshold, the messages of a level
+    # greater or equal are passing, so a value is read as the highest
+    # threshold of its ten.
     LOG_LEVELS = (10, 20, 30)
 
     def __init__(self, tree: HTMLTree):

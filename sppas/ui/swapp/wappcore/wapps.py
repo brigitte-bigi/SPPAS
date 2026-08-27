@@ -59,7 +59,7 @@ from ..pages import FeedbackResponseRecipe
 from ..pages import TraceResponseRecipe
 
 # Determine if we're running in debug mode (log level lower than DEBUG)
-DEBUG_MODE = logging.getLogger().getEffectiveLevel() < 10
+DEBUG_MODE = logging.getLogger().getEffectiveLevel() <= logging.DEBUG
 
 # List of all known web applications (stable and in development).
 # The 'Dashboard' one is the default in the main_app.
