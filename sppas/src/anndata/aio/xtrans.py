@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -72,9 +72,12 @@ class sppasTDF(sppasBaseText):
     TDF does not support alternatives labels nor locations. Only the ones
     with the best score are saved.
     TDF can save several tiers.
+    TDF does not support empty tiers: a tier exists by its lines.
     TDF does not support controlled vocabularies.
     TDF does not support hierarchy.
     TDF does not support metadata.
+    TDF supports comments: the lines starting with ';;' are holding them, and
+    such a line of the form 'key=value' is holding a metadata.
     TDF supports media assignment.
     TDF supports intervals only.
     TDF does not support alternative tags.
@@ -142,6 +145,7 @@ class sppasTDF(sppasBaseText):
         # override all
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
+        self._accept_empty_tier = False
         self._accept_metadata = False
         self._accept_comments = True
         self._accept_ctrl_vocab = False

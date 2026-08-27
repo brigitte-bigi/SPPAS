@@ -117,7 +117,9 @@ class sppasAudacity(sppasBaseIO):
 
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
+        self._accept_empty_tier = False
         self._accept_metadata = True
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = True
         self._accept_hierarchy = False

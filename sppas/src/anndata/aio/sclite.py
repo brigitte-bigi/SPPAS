@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -102,6 +102,7 @@ class sppasBaseSclite(sppasBaseText):
         # override all
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
+        self._accept_empty_tier = False
         self._accept_metadata = False
         self._accept_comments = True
         self._accept_ctrl_vocab = False

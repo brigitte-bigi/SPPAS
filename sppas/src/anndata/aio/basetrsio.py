@@ -60,11 +60,11 @@ class sppasBaseIO(sppasTranscription):
 
     # Name of the tier a format is using to hold what it can't hold
     # otherwise, and keyword of its first annotation.
-    DO_NOT_EDIT_NAME = "DoNotEdit"
-    DO_NOT_EDIT_KEYWORD = "Metadata"
+    UNSUPPORTED_TIER_NAME = "DoNotEdit"
+    UNSUPPORTED_KEYWORD = "Metadata"
 
     # The natures of the information such a tier is holding.
-    DO_NOT_EDIT_TYPES = ("metadata", "ctrl_vocab", "media")
+    UNSUPPORTED_TYPES = ("metadata", "ctrl_vocab", "media")
 
     # The identifier of an object is re-generated at each reading: it is
     # never preserved. The other metadata SPPAS assigns by itself are
@@ -336,11 +336,11 @@ class sppasBaseIO(sppasTranscription):
     # What a format can't hold
     # -----------------------------------------------------------------------
 
-    def do_not_edit_entries(self):
+    def unsupported_entries(self):
         """Return the information this format can't hold.
 
         Each entry is a tuple (nature, owner, key, value): the nature is
-        one of DO_NOT_EDIT_TYPES, the owner is the name of the tier the
+        one of UNSUPPORTED_TYPES, the owner is the name of the tier the
         information belongs to -- or an empty string for the transcription
         itself -- and the key/value pair is the information.
 
@@ -390,13 +390,13 @@ class sppasBaseIO(sppasTranscription):
 
     # -----------------------------------------------------------------------
 
-    def fill_do_not_edit_entry(self, nature, owner, key, value):
+    def fill_unsupported_entry(self, nature, owner, key, value):
         """Fill the object an entry belongs to.
 
         This is what a reader has to call for each entry it found, whatever
         the way this format is holding them.
 
-        :param nature: (str) One of DO_NOT_EDIT_TYPES
+        :param nature: (str) One of UNSUPPORTED_TYPES
         :param owner: (str) Name of a tier, or an empty string
         :param key: (str) The key of the information
         :param value: (str) The value of the information
@@ -407,7 +407,7 @@ class sppasBaseIO(sppasTranscription):
         tags of this tier.
 
         """
-        if nature not in sppasBaseIO.DO_NOT_EDIT_TYPES:
+        if nature not in sppasBaseIO.UNSUPPORTED_TYPES:
             return False
         tier = None
         if len(owner) > 0:
@@ -452,11 +452,11 @@ class sppasBaseIO(sppasTranscription):
 
     # -----------------------------------------------------------------------
 
-    def create_do_not_edit_tier(self):
+    def create_unsupported_tier(self):
         """Create a tier with the information this format can't hold.
 
-        The tier is named DO_NOT_EDIT_NAME and its first annotation is
-        holding the keyword DO_NOT_EDIT_KEYWORD. Each of the next
+        The tier is named UNSUPPORTED_TIER_NAME and its first annotation is
+        holding the keyword UNSUPPORTED_KEYWORD. Each of the next
         annotations is holding one entry: the key, the value, the nature
         and the owner, in this order, one in each of its labels. The nature
         and the owner are labels because no format needing this tier is
@@ -473,7 +473,7 @@ class sppasBaseIO(sppasTranscription):
         """
         if self.multi_tiers_support() is False:
             return None
-        entries = self.do_not_edit_entries()
+        entries = self.unsupported_entries()
         if len(entries) == 0:
             return None
 
@@ -486,14 +486,14 @@ class sppasBaseIO(sppasTranscription):
         first = begin.get_midpoint()
         last = end.get_midpoint()
         nb = len(entries) + 1
-        tier = self.create_tier(sppasBaseIO.DO_NOT_EDIT_NAME)
+        tier = self.create_tier(sppasBaseIO.UNSUPPORTED_TIER_NAME)
         tier.create_annotation(
-            sppasBaseIO.__do_not_edit_location(first, last, nb, 0),
-            [sppasLabel(sppasTag(sppasBaseIO.DO_NOT_EDIT_KEYWORD))])
+            sppasBaseIO.__unsupported_location(first, last, nb, 0),
+            [sppasLabel(sppasTag(sppasBaseIO.UNSUPPORTED_KEYWORD))])
 
         for i, (nature, owner, key, value) in enumerate(entries):
             tier.create_annotation(
-                sppasBaseIO.__do_not_edit_location(first, last, nb, i+1),
+                sppasBaseIO.__unsupported_location(first, last, nb, i+1),
                 [sppasLabel(sppasTag(key)),
                  sppasLabel(sppasTag(value)),
                  sppasLabel(sppasTag(nature)),
@@ -503,7 +503,7 @@ class sppasBaseIO(sppasTranscription):
 
     # -----------------------------------------------------------------------
 
-    def parse_do_not_edit_tier(self):
+    def parse_unsupported_tier(self):
         """Fill the objects with the tier this format was holding them in.
 
         The tier is removed of the transcription: it was a way to write, not
@@ -512,23 +512,23 @@ class sppasBaseIO(sppasTranscription):
         :returns: (bool) The tier was found and its entries were assigned
 
         """
-        tier = self.find(sppasBaseIO.DO_NOT_EDIT_NAME)
+        tier = self.find(sppasBaseIO.UNSUPPORTED_TIER_NAME)
         if tier is None or len(tier) == 0:
             return False
-        keyword = sppasBaseIO.__do_not_edit_tag(tier[0], 0)
-        if keyword != sppasBaseIO.DO_NOT_EDIT_KEYWORD:
+        keyword = sppasBaseIO.__unsupported_tag(tier[0], 0)
+        if keyword != sppasBaseIO.UNSUPPORTED_KEYWORD:
             return False
 
         for i, ann in enumerate(tier):
             if i == 0:
                 continue
-            self.fill_do_not_edit_entry(
-                sppasBaseIO.__do_not_edit_tag(ann, 2),
-                sppasBaseIO.__do_not_edit_tag(ann, 3),
-                sppasBaseIO.__do_not_edit_tag(ann, 0),
-                sppasBaseIO.__do_not_edit_tag(ann, 1))
+            self.fill_unsupported_entry(
+                sppasBaseIO.__unsupported_tag(ann, 2),
+                sppasBaseIO.__unsupported_tag(ann, 3),
+                sppasBaseIO.__unsupported_tag(ann, 0),
+                sppasBaseIO.__unsupported_tag(ann, 1))
 
-        self.pop(self.get_tier_index(sppasBaseIO.DO_NOT_EDIT_NAME))
+        self.pop(self.get_tier_index(sppasBaseIO.UNSUPPORTED_TIER_NAME))
         return True
 
     # -----------------------------------------------------------------------
@@ -552,7 +552,7 @@ class sppasBaseIO(sppasTranscription):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __do_not_edit_location(first, last, nb, index):
+    def __unsupported_location(first, last, nb, index):
         """Return the location of the index-th annotation of nb, in a span.
 
         The interval bounds are evaluated from the bounds of the span, so
@@ -573,7 +573,7 @@ class sppasBaseIO(sppasTranscription):
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def __do_not_edit_tag(ann, index):
+    def __unsupported_tag(ann, index):
         """Return the content of the best tag of a label, or an empty string."""
         labels = ann.get_labels()
         if index >= len(labels):

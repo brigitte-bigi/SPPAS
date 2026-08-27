@@ -70,13 +70,13 @@ class TestBaseIO(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 
-class TestDoNotEdit(unittest.TestCase):
+class TestUnsupported(unittest.TestCase):
     """
-    The tier a format is using to hold what it can't hold otherwise.
+    The tier a format is using to hold what it does not support.
     """
     def setUp(self):
         """Create a transcription of a format holding nothing but tiers."""
-        self.trs = sppasBaseIO("trs-do-not-edit")
+        self.trs = sppasBaseIO("trs-unsupported")
         self.trs._accept_multi_tiers = True
         self.trs.set_meta("annotator_name", "Brigitte Bigi")
         self.tier = self.trs.create_tier("phonemes")
@@ -100,7 +100,7 @@ class TestDoNotEdit(unittest.TestCase):
 
     def test_entries(self):
         """The entries are the information the format can't hold."""
-        entries = self.trs.do_not_edit_entries()
+        entries = self.trs.unsupported_entries()
         natures = [nature for (nature, owner, key, value) in entries]
         self.assertTrue("metadata" in natures)
         self.assertEqual(2, natures.count("ctrl_vocab"))
@@ -120,8 +120,8 @@ class TestDoNotEdit(unittest.TestCase):
         self.trs._accept_metadata = True
         self.trs._accept_ctrl_vocab = True
         self.trs._accept_media = True
-        self.assertEqual(0, len(self.trs.do_not_edit_entries()))
-        self.assertIsNone(self.trs.create_do_not_edit_tier())
+        self.assertEqual(0, len(self.trs.unsupported_entries()))
+        self.assertIsNone(self.trs.create_unsupported_tier())
 
     # -----------------------------------------------------------------------
 
@@ -133,12 +133,12 @@ class TestDoNotEdit(unittest.TestCase):
         tier.create_annotation(
             sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(2.))),
             sppasLabel(sppasTag("a")))
-        self.assertEqual(0, len(trs.do_not_edit_entries()))
-        self.assertIsNone(trs.create_do_not_edit_tier())
+        self.assertEqual(0, len(trs.unsupported_entries()))
+        self.assertIsNone(trs.create_unsupported_tier())
 
         # but a value SPPAS did not assign is an information
         trs.set_meta("language_code_0", "fra")
-        entries = trs.do_not_edit_entries()
+        entries = trs.unsupported_entries()
         self.assertEqual(1, len(entries))
         self.assertEqual(("metadata", "", "language_code_0", "fra"),
                          entries[0])
@@ -148,15 +148,15 @@ class TestDoNotEdit(unittest.TestCase):
     def test_no_tier_of_a_mono_tier_format(self):
         """A format holding one tier only can\'t hold this one more."""
         self.trs._accept_multi_tiers = False
-        self.assertTrue(len(self.trs.do_not_edit_entries()) > 0)
-        self.assertIsNone(self.trs.create_do_not_edit_tier())
+        self.assertTrue(len(self.trs.unsupported_entries()) > 0)
+        self.assertIsNone(self.trs.create_unsupported_tier())
 
     # -----------------------------------------------------------------------
 
     def test_create_tier(self):
         """The created tier is holding the keyword, then the entries."""
-        entries = self.trs.do_not_edit_entries()
-        tier = self.trs.create_do_not_edit_tier()
+        entries = self.trs.unsupported_entries()
+        tier = self.trs.create_unsupported_tier()
 
         self.assertEqual("DoNotEdit", tier.get_name())
         self.assertEqual(len(entries) + 1, len(tier))
@@ -180,7 +180,7 @@ class TestDoNotEdit(unittest.TestCase):
 
     def test_parse_tier(self):
         """The entries of the tier are assigned back to the objects."""
-        self.trs.create_do_not_edit_tier()
+        self.trs.create_unsupported_tier()
 
         # a format read the file: the information is only in the tier
         other = sppasBaseIO()
@@ -189,12 +189,12 @@ class TestDoNotEdit(unittest.TestCase):
         for ann in self.trs.find("phonemes"):
             tier.create_annotation(ann.get_location().copy(),
                                    [l.copy() for l in ann.get_labels()])
-        do_not_edit = other.create_tier("DoNotEdit")
+        unsupported = other.create_tier("DoNotEdit")
         for ann in self.trs.find("DoNotEdit"):
-            do_not_edit.create_annotation(ann.get_location().copy(),
+            unsupported.create_annotation(ann.get_location().copy(),
                                           [l.copy() for l in ann.get_labels()])
 
-        self.assertTrue(other.parse_do_not_edit_tier())
+        self.assertTrue(other.parse_unsupported_tier())
 
         # the tier was a way to write, not data
         self.assertIsNone(other.find("DoNotEdit"))
@@ -213,13 +213,13 @@ class TestDoNotEdit(unittest.TestCase):
 
     def test_parse_no_tier(self):
         """Nothing is parsed if the tier is missing or not the expected one."""
-        self.assertFalse(self.trs.parse_do_not_edit_tier())
+        self.assertFalse(self.trs.parse_unsupported_tier())
 
         tier = self.trs.create_tier("DoNotEdit")
         tier.create_annotation(
             sppasLocation(sppasInterval(sppasPoint(1.), sppasPoint(2.))),
             sppasLabel(sppasTag("something else")))
-        self.assertFalse(self.trs.parse_do_not_edit_tier())
+        self.assertFalse(self.trs.parse_unsupported_tier())
         self.assertIsNotNone(self.trs.find("DoNotEdit"))
 
     # -----------------------------------------------------------------------
@@ -230,17 +230,17 @@ class TestDoNotEdit(unittest.TestCase):
         trs._accept_multi_tiers = True
         trs.create_tier("phonemes")
 
-        self.assertTrue(trs.fill_do_not_edit_entry(
+        self.assertTrue(trs.fill_unsupported_entry(
             "metadata", "", "annotator_name", "Brigitte Bigi"))
         self.assertEqual("Brigitte Bigi", trs.get_meta("annotator_name"))
 
-        self.assertTrue(trs.fill_do_not_edit_entry(
+        self.assertTrue(trs.fill_unsupported_entry(
             "media", "phonemes", "sample.wav", "audio/wav"))
         self.assertEqual("sample.wav",
                          trs.find("phonemes").get_media().get_filename())
 
         # an unknown nature, or an unknown owner, is assigned to nothing
-        self.assertFalse(trs.fill_do_not_edit_entry(
+        self.assertFalse(trs.fill_unsupported_entry(
             "unknown", "", "key", "value"))
-        self.assertFalse(trs.fill_do_not_edit_entry(
+        self.assertFalse(trs.fill_unsupported_entry(
             "metadata", "unknown tier", "key", "value"))

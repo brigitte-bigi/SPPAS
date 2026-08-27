@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -100,6 +100,7 @@ class sppasBasePhonedit(sppasBaseIO):
         self._accept_no_tiers = False
         self._accept_empty_tier = True
         self._accept_metadata = False
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False
@@ -440,7 +441,9 @@ class sppasSignaix(sppasBaseIO):
 
         self._accept_multi_tiers = False
         self._accept_no_tiers = False
+        self._accept_empty_tier = False
         self._accept_metadata = False
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False

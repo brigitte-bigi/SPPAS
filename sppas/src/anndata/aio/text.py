@@ -89,7 +89,9 @@ class sppasBaseText(sppasBaseIO):
 
         self._accept_multi_tiers = True
         self._accept_no_tiers = True
+        self._accept_empty_tier = False
         self._accept_metadata = False
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False
@@ -363,6 +365,7 @@ class sppasRawText(sppasBaseText):
 
     RawText does not support multiple tiers for writing (ok for reading).
     RawText accepts no tiers.
+    RawText does not support empty tiers: an empty tier is not written.
     RawText does not support alternatives labels nor locations. Only the ones
     with the best score are saved.
     RawText can save only one tier.

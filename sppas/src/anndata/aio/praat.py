@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -119,7 +119,9 @@ class sppasBasePraat(sppasBaseIO):
 
         self._accept_multi_tiers = True
         self._accept_no_tiers = False
+        self._accept_empty_tier = False
         self._accept_metadata = False
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False
@@ -284,12 +286,17 @@ class sppasTextGrid(sppasBasePraat):
 
     TextGrid supports multiple tiers in a file.
     TextGrid does not support empty files (file with no tiers).
+    TextGrid supports empty tiers: such a tier is written as one interval
+    with no text -- nothing is removed, an empty annotation is added.
     TextGrid does not support alternatives labels nor locations. Only the ones
     with the best score are saved.
     TextGrid does not support controlled vocabularies.
     TextGrid does not support hierarchy.
     TextGrid does not support metadata.
     TextGrid does not support media assignment.
+    TextGrid does not support comments. The metadata, the controlled
+    vocabularies and the media the file can't hold are written into a tier
+    named "DoNotEdit", and the reader is assigning them back to their object.
     TextGrid supports points and intervals.
     TextGrid does not support disjoint intervals.
     TextGrid does not support alternative tags (here called "text").
@@ -412,7 +419,7 @@ class sppasTextGrid(sppasBasePraat):
             cur_line = self._parse_tier(lines, cur_line, is_long)
 
         # the file can hold a tier with what a TextGrid can't hold otherwise
-        self.parse_do_not_edit_tier()
+        self.parse_unsupported_tier()
 
     # -----------------------------------------------------------------------
 
@@ -447,9 +454,7 @@ class sppasTextGrid(sppasBasePraat):
             # with the interval number between the brackets
             if is_long is True:
                 start_line += 1
-            ann, start_line = self._parse_annotation(lines,
-                                                     start_line,
-                                                     is_interval)
+            ann, start_line = self._parse_annotation(lines, start_line, is_interval)
             tier.add(ann)
 
         return start_line
@@ -558,7 +563,7 @@ class sppasTextGrid(sppasBasePraat):
 
         # a TextGrid holds neither metadata, nor ctrl vocab, nor media: if
         # the transcription has some, they are written into a tier of the file
-        do_not_edit = self.create_do_not_edit_tier()
+        unsupported = self.create_unsupported_tier()
 
         # we have to remove the hierarchy because instead we can't fill gaps
         hierarchy_backup = self.get_hierarchy().copy()
@@ -608,8 +613,8 @@ class sppasTextGrid(sppasBasePraat):
         self._hierarchy = hierarchy_backup
 
         # the tier of the preserved information is a way to write, not data
-        if do_not_edit is not None:
-            self.pop(self.get_tier_index(do_not_edit.get_name()))
+        if unsupported is not None:
+            self.pop(self.get_tier_index(unsupported.get_name()))
 
     # -----------------------------------------------------------------------
 
@@ -707,7 +712,9 @@ class sppasBaseNumericalTier(sppasBasePraat):
 
         self._accept_multi_tiers = False
         self._accept_no_tiers = False
+        self._accept_empty_tier = False
         self._accept_metadata = False
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False

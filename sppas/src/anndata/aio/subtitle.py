@@ -114,7 +114,9 @@ class sppasBaseSubtitles(sppasBaseIO):
 
         self._accept_multi_tiers = False
         self._accept_no_tiers = True
+        self._accept_empty_tier = False
         self._accept_metadata = False
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = False
         self._accept_hierarchy = False

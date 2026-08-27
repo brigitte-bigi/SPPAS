@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2021  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -174,6 +174,7 @@ class sppasANTX(sppasBaseIO):
         self._accept_no_tiers = True
         self._accept_empty_tier = True
         self._accept_metadata = True
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = True
         self._accept_hierarchy = False
@@ -692,6 +693,7 @@ class sppasANT(sppasBaseIO):
         self._accept_no_tiers = True
         self._accept_empty_tier = True
         self._accept_metadata = True
+        self._accept_comments = False
         self._accept_ctrl_vocab = False
         self._accept_media = True
         self._accept_hierarchy = False

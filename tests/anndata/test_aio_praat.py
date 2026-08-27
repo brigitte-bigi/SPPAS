@@ -17,7 +17,7 @@
     ##    ##  ##         ##         ##     ##  ##    ##         of speech
      ######   ##         ##         ##     ##   ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -643,7 +643,7 @@ class TestTextGrid(unittest.TestCase):
     # Writer
     # -----------------------------------------------------------------------
 
-    def test_write_read_do_not_edit(self):
+    def test_write_read_unsupported(self):
         """A TextGrid holds in a tier what it can't hold otherwise."""
         if os.path.exists(TEMP) is False:
             os.mkdir(TEMP)
