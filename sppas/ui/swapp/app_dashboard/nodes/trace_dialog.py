@@ -67,6 +67,7 @@ class TraceInfoDialog(HTMLNode):
         super(TraceInfoDialog, self).__init__(parent_id, TraceInfoDialog.ID, "dialog")
         self.add_attribute("id", self.identifier)
         self.add_attribute("role", "alertdialog")
+        self.add_attribute("aria-labelledby", "trace_dialog_p")
         self.add_attribute("class", "info")
 
         check_p = HTMLNode(self.identifier, "trace_dialog_p", "p", value=MSG_CHECK)

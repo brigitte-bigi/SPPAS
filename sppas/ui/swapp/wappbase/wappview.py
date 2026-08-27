@@ -67,6 +67,8 @@ MSG_DASHBOARD = _("Dashboard")
 MSG_HELP = _("Help")
 MSG_JOURNAL = _("Journal")
 MSG_FEEDBACK = _("Feedback")
+MSG_ERROR = _("Error")
+MSG_INFORMATION = _("Information")
 
 # Must be appended to the HTMLTree before sppas.js
 JS_INIT = (
@@ -573,6 +575,8 @@ class swappBaseView:
         dlg = HTMLNode(parent.identifier, "error_dialog", "dialog",)
         dlg.add_attribute("id", "error_dialog")
         dlg.add_attribute("role", "alertdialog")
+        # Its content is written by the JS: the name has to be given here.
+        dlg.add_attribute("aria-label", MSG_ERROR)
         dlg.add_attribute("class", "error hidden-alert")
         parent.append_child(dlg)
 
@@ -580,6 +584,7 @@ class swappBaseView:
         dlg = HTMLNode(parent.identifier, "info_dialog", "dialog",)
         dlg.add_attribute("id", "info_dialog")
         dlg.add_attribute("role", "alertdialog")
+        dlg.add_attribute("aria-label", MSG_INFORMATION)
         dlg.add_attribute("class", "info hidden-alert")
         parent.append_child(dlg)
 

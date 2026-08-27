@@ -62,6 +62,7 @@ class AgreementDialog(HTMLNode):
         super(AgreementDialog, self).__init__(parent_id, AgreementDialog.ID, "dialog")
         self.add_attribute("id", self.identifier)
         self.add_attribute("role", "alertdialog")
+        self.add_attribute("aria-labelledby", "agree_p")
         self.add_attribute("class", "info")
 
         agree_p = HTMLNode(self.identifier, "agree_p", "p", value=MSG_INFO)

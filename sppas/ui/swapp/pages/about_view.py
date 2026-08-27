@@ -42,12 +42,11 @@ from __future__ import annotations
 from whakerpy.htmlmaker import HTMLTree
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import TagNode
-from whakerpy.htmlmaker import EmptyNode
 
 from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
-from sppas.ui.swapp import sppasImagesAccess
+from sppas.ui.swapp.panels import BaseLinksNode
 from sppas.ui.swapp.wappbase.wappview import swappBaseView
 
 # ---------------------------------------------------------------------------
@@ -76,6 +75,13 @@ MSG_CREATING_RESOURCES = _("creating resources.")
 MSG_LINK_LICENSE = _("License information")
 MSG_LINK_LANG = _("List of languages")
 MSG_LINK_SCRIPT = _("Write scripts")
+
+# Site web
+# Téléchargement
+# Code source
+MSG_CARD_WEB = _("Website")
+MSG_CARD_DOWNLOAD = _("Download")
+MSG_CARD_SOURCE = _("Source code")
 
 # ---------------------------------------------------------------------------
 
@@ -111,9 +117,6 @@ class AboutView(swappBaseView):
             raise TypeError("AboutView: tree must be an instance of HTMLTree. Got {}".format(type(tree)))
         super().__init__(tree, MSG_HEADER)
 
-        # The SPPAS way of organizing an illustration with its content.
-        self._htree.body_main.add_attribute("class", "illustrated-content")
-
     # -----------------------------------------------------------------------
     # Populate the tree
     # -----------------------------------------------------------------------
@@ -121,7 +124,8 @@ class AboutView(swappBaseView):
     def _populate_head_css(self):
         """Override. Populate the `<head>` section of the HTML tree for CSS links.
 
-        No page-specific stylesheet: the page relies on the shared one only.
+        No page-specific stylesheet: the cards of the links it shows are
+        drawn by the shared one.
 
         """
         pass
@@ -165,22 +169,21 @@ class AboutView(swappBaseView):
         """Populate the tree content with the information about SPPAS.
 
         """
-        # At left: the SPPAS logo, in a link
-        _a = TagNode(self._htree.body_main.identifier, None, "a")
-        _a.set_attribute("class", "noborder")
-        _a.set_attribute("role", "button")
-        _a.set_attribute("target", "_blank")
-        _a.set_attribute("href", "https://sppas.org/")
-        self._htree.body_main.append_child(_a)
-        _logo = EmptyNode(_a.identifier, None, "img")
-        _logo.set_attribute("src", sppasImagesAccess.get_image_filename("sppas-logo-v5"))
-        _logo.set_attribute("alt", "logo SPPAS")
-        _a.append_child(_logo)
-
-        # At right: the information
+        # The information about SPPAS
         _content_section = TagNode(self._htree.body_main.identifier, None, "section")
         self._htree.body_main.append_child(_content_section)
         AboutView._append_content(_content_section)
+
+        # Then the cards of the places SPPAS is living in, the same panel
+        # as the one of the dashboard.
+        _links = BaseLinksNode(self._htree.body_main.identifier, "about_links_section")
+        _links.link_button("web", "sppas-logo-v5", MSG_CARD_WEB,
+                           link="https://sppas.org/")
+        _links.link_button("download", "badge-sourceforge", MSG_CARD_DOWNLOAD,
+                           link="https://sourceforge.net/projects/sppas/files/")
+        _links.link_button("source", "link_github", MSG_CARD_SOURCE,
+                           link="https://github.com/brigitte-bigi/sppas")
+        self._htree.body_main.append_child(_links)
 
     # -----------------------------------------------------------------------
 

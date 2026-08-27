@@ -59,7 +59,7 @@ from .nodes.apps_node import AppsNode
 
 
 MSG_LINKS = _("Learn more on the Web:")
-MSG_ABOUT = _("Find out more:")
+MSG_ABOUT = _("Information and configuration:")
 MSG_APPS_STABLE = _("Explore Applications:")
 MSG_APPS_DEVEL = _("Under-development applications:")
 MSG_APP_NOT_ADDED = _("The application {app} is not added to the Dashboard.")

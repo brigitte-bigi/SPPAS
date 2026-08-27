@@ -39,6 +39,8 @@
 
 :root{
     --breadcrumb-font-size: calc(var(--font-size) * 0.9);
+    /* the ends are clipped by the inner edge of the border of the tour */
+    --inner-radius: calc(var(--border-radius) - var(--border-width));
     --breacrumb-height: calc(var(--breadcrumb-font-size) * 3);
     --action-height: calc(var(--font-size) * 3);
 
@@ -81,9 +83,15 @@ label.focusable input[type="checkbox"] {
 ===============================  BREADCRUMB  =================================
 */
 
+/* wexa.css gives an 'ol' a margin below and its items a left indent: the
+   border would else be drawn away from the steps it surrounds. */
 .breadcrumb {
     overflow: hidden;
     display: inline-flex;
+    margin: 0;
+    padding: 0;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
 }
 
 /* Styling the list of wizard items like arrows.
@@ -103,6 +111,7 @@ ol.breadcrumb > li:before  {
 	display: block;
 	float: left;
 	flex: 1 1 0;
+	margin: 0;
 	font-size: var(--breadcrumb-font-size);
 	line-height: var(--breacrumb-height);
     color: var(--breadcrumb-fg-color-inactive);
@@ -116,11 +125,11 @@ ol.breadcrumb > li:before  {
 
 .breadcrumb li:first-child {
     padding-left: 1rem;
-    border-radius: 0.5rem 0 0 0.5rem;
+    border-radius: var(--inner-radius) 0 0 var(--inner-radius);
 }
 
 .breadcrumb li:last-child {
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 0 var(--inner-radius) var(--inner-radius) 0;
     padding-right: 1.5rem;
 }
 
@@ -272,7 +281,7 @@ ol.breadcrumb > li:before  {
     color: var(--fg-color-alt);
     background-color: var(--bg-color-alt);
     border: var(--outline-size) solid var(--border-color);
-    border-radius: 0.8rem;
+    border-radius: var(--card-border-radius);
     padding-left: 0.5rem;
     padding-right: 0.4rem;
     margin-right: 0.5rem;
@@ -305,7 +314,7 @@ ol.breadcrumb > li:before  {
     min-width: 10ch;
     max-width: 20ch;
     border: var(--border-width) solid var(--border-color);
-    border-radius: 0.25em;
+    border-radius: var(--border-radius);
     padding: 0.25em 0.5em;
     font-size: 1.1rem;
     cursor: pointer;

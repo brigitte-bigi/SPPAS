@@ -39,10 +39,12 @@
 """
 
 from .annot_param import AnnotParamDialog
+from .links_panel import BaseLinksNode
 
 # ---------------------------------------------------------------------------
 
 
 __all__ = (
     "AnnotParamDialog",
+    "BaseLinksNode",
 )

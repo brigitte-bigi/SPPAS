@@ -84,6 +84,11 @@
     --link-res-border-color: rgb(40, 60, 150);
     --link-award-border-color: rgb(60, 40, 150);
 
+    /* The About page leads to two of the same places, under other names:
+       downloading is the colour of the resources, the sources their own. */
+    --link-download-border-color: var(--link-res-border-color);
+    --link-source-border-color: var(--link-src-border-color);
+
     /* Steps of the Setup: a pair per state, because a step is drawn on its
        own ground, not on the one of the page. The arrow of a step is cut out
        of its own color, so its shadow is the same in every mode. */
@@ -127,13 +132,15 @@
 /* ── Light mode ───────────────────────────────────────────── */
 
 :root:not(.dark) {
-    --link-web-bg-color: rgb(120, 140, 190);
+    --link-web-bg-color: rgb(125, 145, 193);
     --link-docu-bg-color: rgb(241, 211, 79);
     --link-tuto-bg-color: rgb(100, 180, 100);
     --link-faq-bg-color: rgb(240, 150, 60);
-    --link-src-bg-color: rgb(50, 150, 150);
-    --link-res-bg-color: rgb(110, 130, 230);
-    --link-award-bg-color: rgb(130, 110, 230);
+    --link-src-bg-color: rgb(66, 158, 158);
+    --link-res-bg-color: rgb(120, 139, 232);
+    --link-award-bg-color: rgb(148, 130, 234);
+    --link-download-bg-color: var(--link-res-bg-color);
+    --link-source-bg-color: var(--link-src-bg-color);
 
     --breadcrumb-bg-color-inactive: rgb(20, 30, 80);
     --breadcrumb-fg-color-inactive: rgb(235, 240, 250);
@@ -155,13 +162,15 @@
         --link-src-bg-color: rgb(0, 90, 90);
         --link-res-bg-color: rgb(30, 50, 120);
         --link-award-bg-color: rgb(50, 30, 120);
+        --link-download-bg-color: var(--link-res-bg-color);
+        --link-source-bg-color: var(--link-src-bg-color);
 
-        --breadcrumb-bg-color-inactive: rgb(200, 130, 180);
-        --breadcrumb-fg-color-inactive: rgb(30, 10, 30);
-        --breadcrumb-bg-color-active: rgb(60, 0, 40);
-        --breadcrumb-fg-color-active: rgb(250, 235, 245);
-        --breadcrumb-bg-color-visited: rgb(80, 25, 80);
-        --breadcrumb-fg-color-visited: rgb(250, 235, 245);
+        --breadcrumb-bg-color-inactive: rgb(150, 180, 225);
+        --breadcrumb-fg-color-inactive: rgb(8, 20, 50);
+        --breadcrumb-bg-color-active: rgb(10, 30, 75);
+        --breadcrumb-fg-color-active: rgb(225, 236, 255);
+        --breadcrumb-bg-color-visited: rgb(35, 60, 110);
+        --breadcrumb-fg-color-visited: rgb(225, 236, 255);
 
     }
 }

@@ -702,3 +702,45 @@ msgstr "Rapport de traces complet"
 
 msgid "Saved into: "
 msgstr "Enregistré dans : "
+
+msgid "The choices SPPAS is remembering from one launch to the next one."
+msgstr "Les choix que SPPAS retient d'un lancement à l'autre."
+
+msgid "What SPPAS writes into the files"
+msgstr "Ce que SPPAS écrit dans les fichiers"
+
+msgid "Preserve what the destination format can't hold"
+msgstr "Conserver ce que le format de destination ne sait pas contenir"
+
+msgid "The metadata, the controlled vocabularies and the media are then written into a tier named DoNotEdit, which SPPAS reads back. Without it, they are lost."
+msgstr "Les métadonnées, les vocabulaires contrôlés et les médias sont alors écrits dans un tier nommé DoNotEdit, que SPPAS relit et réattribue. Sans cela, ils sont perdus."
+
+msgid "What SPPAS writes in the Journal"
+msgstr "Ce que SPPAS écrit dans le Journal"
+
+msgid "Debug"
+msgstr "Mise au point"
+
+msgid "Info"
+msgstr "Information"
+
+msgid "From saying everything to reporting only what goes wrong. Debug adds the messages meant for the development: useful in a feedback message, cluttering the rest of the time."
+msgstr "De tout dire à ne signaler que ce qui cloche. La mise au point ajoute les messages destinés au développement : utiles dans un message de feedback, encombrants le reste du temps."
+
+msgid "What is set elsewhere"
+msgstr "Ce qui se règle ailleurs"
+
+msgid "The display -- colors, contrast, text size -- is set in the bar of every page."
+msgstr "L'affichage — couleurs, contraste, taille du texte — se règle dans la barre de chaque page."
+
+msgid "The installed features are set in the Setup application."
+msgstr "Les composantes installées se règlent dans l'application Setup."
+
+msgid "The choices are saved."
+msgstr "Les choix sont enregistrés."
+
+msgid "Download"
+msgstr "Téléchargement"
+
+msgid "Information and configuration:"
+msgstr "Informations et configuration :"

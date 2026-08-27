@@ -41,6 +41,7 @@
 
 from .aboutmaker import AboutResponseRecipe
 from .citemaker import CiteResponseRecipe
+from .configurationmaker import ConfigurationResponseRecipe
 from .feedbackmaker import FeedbackResponseRecipe
 from .tracemaker import TraceResponseRecipe
 from .helpmaker import HelpResponseRecipe
@@ -51,6 +52,7 @@ from .pages_data import swappPagesData
 __all__ = (
     "AboutResponseRecipe",
     "CiteResponseRecipe",
+    "ConfigurationResponseRecipe",
     "FeedbackResponseRecipe",
     "TraceResponseRecipe",
     "HelpResponseRecipe",

@@ -39,11 +39,9 @@
 """
 
 from __future__ import annotations
-from whakerpy.htmlmaker import HTMLNode
 
 from sppas.ui import _
-from sppas.ui.swapp.nodes import sppasHTMLButton
-from sppas.ui.swapp.nodes import sppasHTMLLink
+from sppas.ui.swapp.panels import BaseLinksNode
 
 # ---------------------------------------------------------------------------
 
@@ -53,85 +51,11 @@ MSG_DOC = _("Book")
 MSG_RSC = _("Resources")
 MSG_TUTOS = _("Tutorials")
 MSG_FAQ = "F.A.Q."
-MSG_SRC = _("Source code")
 MSG_AUTH = _("The author")
 MSG_AWARD = _("Award")
 
 # ---------------------------------------------------------------------------
 
-
-class BaseLinksNode(HTMLNode):
-
-    def __init__(self, parent_id, identifier: str):
-        super(BaseLinksNode, self).__init__(parent_id, identifier, "section")
-        self.add_attribute("id", self.identifier)
-        self.add_attribute("class", "cards-panel")
-        self.add_attribute("class", "links-panel")
-
-    # ----------------------------------------------------------------------
-
-    def link_button(self, ident, icon_name, text, link):
-        """A card leading to a page: a link, on which the ident is on the span text.
-
-        :return: (sppasHTMLLink)
-
-        """
-        link_node = sppasHTMLLink(self.identifier, identifier=ident+"_button")
-
-        # - design
-        link_node.remove_attribute("class")  # just in case...
-        link_node.add_attribute("class", "card")
-        link_node.add_attribute("class", "link-button")
-        # - link, followed by the browser and by goToLink() of Whakerexa,
-        #   which carries the accessibility parameters over to the page
-        link_node.add_attribute("href", link)
-        link_node.add_attribute("title", link)
-        # - content
-        link_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
-        link_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
-
-        self.append_child(link_node)
-        return link_node
-
-    # ----------------------------------------------------------------------
-
-    def page_button(self, ident, icon_name, text, link):
-        """A card leading to an internal page of SPPAS.
-
-        The link is followed by goToLink() of Whakerexa, which preserves
-        the accessibility parameters when navigating to the page.
-
-        :return: (sppasHTMLLink)
-
-        """
-        button_node = self.link_button(ident, icon_name, text, link)
-        button_node.add_attribute("class", "page-button")
-        return button_node
-
-    # ----------------------------------------------------------------------
-
-    def dialog_button(self, ident, icon_name, text, dialog_name):
-        """A specific button which is used to open a modal dialog.
-
-		<button name="about-button" onclick="Wexa.dialog.open('about_dialog', true)">Open About</button>
-
-        :return: (sppasHTMLButton)
-
-        """
-        button_node = sppasHTMLButton(self.identifier, identifier=ident+"_button")
-        button_node.add_attribute("onclick", f"Wexa.dialog.open('{dialog_name}', true)")
-
-        # - design
-        button_node.remove_attribute("class")  # just in case...
-        button_node.add_attribute("class", "card")
-        button_node.add_attribute("class", "link-button")
-
-        # content
-        button_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
-        button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
-
-        self.append_child(button_node)
-        return button_node
 
 # ---------------------------------------------------------------------------
 
@@ -152,7 +76,6 @@ class LinksNode(BaseLinksNode):
         self.link_button("tuto", "link_tutovideo", MSG_TUTOS, link="https://sppas.org/tutorials.html")
         self.link_button("faq", "link_question", MSG_FAQ, link="https://sppas.org/faq.html")
         self.link_button("award", "link_sppas_award", MSG_AWARD, link='https://www.ouvrirlascience.fr/sppas-2/')
-        self.link_button("src", "badge-sourceforge", MSG_SRC, link="https://sourceforge.net/p/sppas/code/ci/master/tree/")
 
 # ---------------------------------------------------------------------------
 

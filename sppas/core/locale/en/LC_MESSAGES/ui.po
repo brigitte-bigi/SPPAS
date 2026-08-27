@@ -391,3 +391,45 @@ msgstr ""
 
 msgid "Saved into: "
 msgstr ""
+
+msgid "The choices SPPAS is remembering from one launch to the next one."
+msgstr ""
+
+msgid "What SPPAS writes into the files"
+msgstr ""
+
+msgid "Preserve what the destination format can't hold"
+msgstr ""
+
+msgid "The metadata, the controlled vocabularies and the media are then written into a tier named DoNotEdit, which SPPAS reads back. Without it, they are lost."
+msgstr ""
+
+msgid "What SPPAS writes in the Journal"
+msgstr ""
+
+msgid "Debug"
+msgstr ""
+
+msgid "Info"
+msgstr ""
+
+msgid "From saying everything to reporting only what goes wrong. Debug adds the messages meant for the development: useful in a feedback message, cluttering the rest of the time."
+msgstr ""
+
+msgid "What is set elsewhere"
+msgstr ""
+
+msgid "The display -- colors, contrast, text size -- is set in the bar of every page."
+msgstr ""
+
+msgid "The installed features are set in the Setup application."
+msgstr ""
+
+msgid "The choices are saved."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Information and configuration:"
+msgstr ""

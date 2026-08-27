@@ -54,6 +54,7 @@ from ..spinoff import *
 from ..pages import swappPagesData
 from ..pages import AboutResponseRecipe
 from ..pages import CiteResponseRecipe
+from ..pages import ConfigurationResponseRecipe
 from ..pages import FeedbackResponseRecipe
 from ..pages import TraceResponseRecipe
 
@@ -86,6 +87,7 @@ for cls in SPINOFF_SWAPPS:
 WEB_PAGES = [
     WebPageInfo(AboutResponseRecipe, True),
     WebPageInfo(CiteResponseRecipe, True),
+    WebPageInfo(ConfigurationResponseRecipe, True),
     WebPageInfo(FeedbackResponseRecipe, True),
     WebPageInfo(TraceResponseRecipe, False),
 ]
