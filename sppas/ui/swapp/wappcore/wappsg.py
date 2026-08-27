@@ -102,3 +102,20 @@ def notify_wkp_changed() -> None:
     wjson = sppasWJSON()
     wjson.set(wapp_wkps.data)
     wapp_notify.notify(sppasCommKeys.WKP_CHANGED, wjson.serialize())
+
+# -----------------------------------------------------------------------
+
+
+def notify_show_page(page_name: str) -> None:
+    """Ask the other UI to show one of its pages.
+
+    The page is named with the vocabulary of the wx interface -- the names
+    of its book: "page_files", "page_annotate", "page_analyze",
+    "page_editor", "page_convert", "page_plugins". Without any observer --
+    no local server, or no other UI -- nothing happens: it is up to the
+    caller to launch the interface instead.
+
+    :param page_name: (str) The name of the page to show
+
+    """
+    wapp_notify.notify(sppasCommKeys.SHOW_PAGE, page_name)

@@ -45,7 +45,7 @@ from sppas.core import sppasError
 # ---------------------------------------------------------------------------
 
 # Version of the communication protocol, announced in the HELLO message.
-COMM_PROTOCOL_VERSION = 1
+COMM_PROTOCOL_VERSION = 2
 
 # ---------------------------------------------------------------------------
 
@@ -72,6 +72,7 @@ class sppasCommKeys:
     # Application messages, sent in both directions
     WKP_CHANGED = 20   # the workspace changed. value = its serialized dict
     TRACE = 21         # a python logging record. value = its serialized dict
+    SHOW_PAGE = 22     # show a page of the interface. value = its name
 
     # -----------------------------------------------------------------------
 

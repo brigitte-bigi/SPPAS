@@ -374,6 +374,9 @@ class sppasMainWindow(sppasDialog):
             evt.SetWorkspace(wjson)
             wx.PostEvent(self.FindWindow("content"), evt)
 
+        elif key == sppasCommKeys.SHOW_PAGE:
+            self.request_page(event.GetValue())
+
         elif key == sppasCommKeys.BYE:
             # The web server announces its own shutdown: this interface
             # does not survive it either.
@@ -516,6 +519,31 @@ class sppasMainWindow(sppasDialog):
         next_page_name = self._pages[nextc]
         self.FindWindow("header").enable(next_page_name)
         self.show_page(next_page_name)
+
+    # -----------------------------------------------------------------------
+
+    def request_page(self, page_name):
+        """Show a page and ask for the attention of the user.
+
+        This is what the other UI asks for: the page is shown, the menu
+        follows, and the window asks to be seen. Raising a window is a
+        request the window manager is free to refuse -- Windows flashes
+        the taskbar button instead -- hence the call for attention.
+
+        :param page_name: (str) one of 'page_files', 'page_annotate', ...
+
+        """
+        if page_name not in self._pages:
+            logging.error("Unknown page to show: {:s}".format(str(page_name)))
+            return
+
+        self.FindWindow("header").enable(page_name)
+        self.show_page(page_name)
+
+        if self.IsIconized() is True:
+            self.Iconize(False)
+        self.Raise()
+        self.RequestUserAttention()
 
     # -----------------------------------------------------------------------
 
