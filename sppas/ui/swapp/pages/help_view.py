@@ -72,17 +72,20 @@ class HelpView(swappBaseView):
 
     """
 
-    def __init__(self, tree: HTMLTree, title: str):
+    def __init__(self, tree: HTMLTree, title: str, css: str = ""):
         """Initialize and populate the help view structure.
 
         :param tree: (HTMLTree) An existing HTML tree to populate.
         :param title: (str) Title of the documented app.
+        :param css: (str) Filename of the stylesheet of the documented app
         :raises: TypeError: tree is not an instance of HTMLTree
 
         """
         if isinstance(tree, HTMLTree) is False:
             raise TypeError("HelpView: tree must be an instance of HTMLTree. "
                             "Got {}".format(type(tree)))
+        # Set before the base view populates the head with it.
+        self.__css = css
         super().__init__(tree, title)
 
     # -----------------------------------------------------------------------
@@ -115,9 +118,16 @@ class HelpView(swappBaseView):
     def _populate_head_css(self, *args, **kwargs):
         """Override. The document is written with the Book extra.
 
+        The stylesheet of the documented app is loaded too: a document shows
+        the very elements of its app -- a card, a link -- and they are drawn
+        by that sheet, not by the shared one.
+
         """
         self._htree.head.link("stylesheet", wapp_settings.wexa_statics + "css/extras/book.css",
                               link_type="text/css")
+        if len(self.__css) > 0:
+            self._htree.head.link("stylesheet", wapp_settings.css + self.__css,
+                                  link_type="text/css")
 
     # -----------------------------------------------------------------------
 

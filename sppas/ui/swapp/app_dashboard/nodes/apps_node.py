@@ -54,7 +54,11 @@ MSG_LAUNCH = _("Launch")
 
 
 class AppsNode(HTMLNode):
-    """The section with applications of the dashboard application.
+    """The list of the applications of the dashboard application.
+
+    A list, because the Dashboard offers a choice between applications.
+    Not articles: a card means nothing outside the page, it is the way in
+    to an app, not a content standing by itself.
 
     """
 
@@ -63,7 +67,7 @@ class AppsNode(HTMLNode):
     # -----------------------------------------------------------------------
 
     def __init__(self, parent_id):
-        super(AppsNode, self).__init__(parent_id, AppsNode.ID, "section")
+        super(AppsNode, self).__init__(parent_id, AppsNode.ID, "ul")
         self.add_attribute("id", self.identifier)
         self.add_attribute("class", "apps-panel")
 
@@ -90,7 +94,7 @@ class AppsNode(HTMLNode):
 
         """
         ident = ident.lower().replace(" ", "_")
-        article = HTMLNode(self.identifier, ident+"_article", "article")
+        article = HTMLNode(self.identifier, ident+"_article", "li")
         article.add_attribute("class", "app")
         if enable is False:
             article.add_attribute("class", "app-disabled")

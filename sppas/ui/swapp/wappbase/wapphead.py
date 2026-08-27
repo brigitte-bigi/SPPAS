@@ -93,6 +93,9 @@ class swappHeadNode(HTMLHeadNode):
         self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/layout.css", link_type=CSS_MIME_TYPE)
         self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/button.css", link_type=CSS_MIME_TYPE)
         self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/menu.css", link_type=CSS_MIME_TYPE)
+        # Every page baking a message dialog needs it, and a sheet of the
+        # framework is loaded before the sheets of SPPAS, never after.
+        self.link(rel="stylesheet", href=wapp_settings.wexa_statics + "css/dialog.css", link_type=CSS_MIME_TYPE)
 
         print_css = HTMLNode(self.identifier, None, "link")
         print_css.add_attribute("rel", "stylesheet")

@@ -123,7 +123,6 @@ class SetupView(swappBaseView):
         """Override. Populate the `<head>` section of the HTML tree for CSS links.
 
         """
-        self._htree.head.link("stylesheet", wapp_settings.wexa_statics + "css/dialog.css", link_type="text/css")
         self._htree.head.link("stylesheet", wapp_settings.css + "app_setup.css", link_type="text/css")
 
     # -----------------------------------------------------------------------

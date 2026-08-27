@@ -39,9 +39,6 @@
     /* Panel gathering the cards of the applications */
     --apps-panel-bg-image: linear-gradient(120deg, rgb(22, 94, 122) 0%, rgb(167, 87, 199) 60%, rgb(245, 235, 162) 100%);
 
-    /* An image of a card is drawn for a light page */
-    --app-img-bg-color: rgb(255, 255, 255);
-    --app-button-shadow-color: rgb(238, 238, 238);
 
 }
 
@@ -79,13 +76,8 @@
 
 
     --progress-bg-color: rgb(0, 0, 35);
-    /* A color, because the framework paints a button with 'background-color':
-       a gradient given here makes every one of its declarations invalid. The
-       gradient of SPPAS is an image, laid over it by main_swapp.css. */
     --buttons-bg-color: rgb(235, 235, 240);
     --buttons-bg-color-hover: rgb(210, 217, 250);
-    --buttons-bg-image: linear-gradient(120deg, rgb(210, 217, 250) 0%, rgb(235, 235, 240) 50%, rgb(195, 219, 241) 100%);
-    --buttons-bg-image-hover: linear-gradient(300deg, rgb(210, 217, 250) 0%, rgb(235, 235, 240) 50%, rgb(195, 219, 241) 100%);
     --buttons-fg-color: rgb(20, 25, 30);
 
     --border-color: rgb(204, 213, 224);
@@ -135,8 +127,6 @@
 
         --buttons-bg-color: rgb(31, 3, 87);
         --buttons-bg-color-hover: rgb(49, 2, 92);
-        --buttons-bg-image: linear-gradient(120deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
-        --buttons-bg-image-hover: linear-gradient(300deg, rgb(1, 1, 59) 0%, rgb(31, 3, 87) 50%, rgb(49, 2, 92) 100%);
         --buttons-fg-color: rgb(243, 248, 250);
 
         --border-color: rgb(100, 120, 170);
@@ -156,4 +146,26 @@
 
 .contrast:not(.dark) {
     --a-color: rgb(0, 70, 100);
+}
+
+
+/* ── Accent pair ──────────────────────────────────────────── */
+
+/* The numbers of the chapters and of the sections of a document are drawn
+   with it, and so are the headings of a slide. Declared in @layer theme,
+   as the themes of Whakerexa do: a single document can then override it
+   without a fight over specificity. */
+
+@layer theme {
+
+    :root:not(.dark) {
+        --custom-color1: rgb(10, 40, 90);
+        --custom-color2: rgb(100, 160, 220);
+    }
+
+    .dark {
+        --custom-color1: rgb(200, 130, 180);
+        --custom-color2: rgb(30, 0, 70);
+    }
+
 }

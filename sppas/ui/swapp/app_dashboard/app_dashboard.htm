@@ -12,20 +12,27 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>Description</h2>
+	<h2>Overview</h2>
 
 		<p>
-			The Dashboard is the page SPPAS opens when it starts. It is the hall of the software:
-			it shows what can be launched, tells which workspace is in use, and gathers the ways
-			out -- towards the other applications, towards the pages of information, and towards
-			the web site. It carries no work of its own: nothing is annotated, converted or
-			analysed here.
+			This page is the one SPPAS opens when it starts. It is the entrance hall: nothing is
+			done here, everything starts from here.
 		</p>
 
 		<p>
-			The page is served under the name <code>index.html</code>. Closing its tab does not
-			stop SPPAS; leaving the session is an explicit action, taken from the menu.
+			The window is divided into four spaces, and you will find the same four in every
+			other page of SPPAS.
 		</p>
+
+		<ul>
+			<li><b>The header</b>, at the top: it says which page you are reading.</li>
+			<li><b>The menu</b>, along the left edge: a column of buttons, the same wherever you
+				are. It is how you go from one place to another.</li>
+			<li><b>The body</b>, in the middle: what the page is for. Here, the list of what you
+				can start.</li>
+			<li><b>The footer</b>, at the bottom: the SPPAS picture, who wrote the software, and
+				a button to climb back to the top of the page.</li>
+		</ul>
 
 	</section>
 
@@ -35,49 +42,58 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>What the page shows</h2>
+	<h2>The menu, on the left</h2>
 
-		<section class="subssection">
-		<h3>The applications</h3>
+		<p>
+			The menu shows only the drawings when it is narrow. Move the mouse over it and it
+			widens, and each drawing is given its name. Here is what each button does.
+		</p>
 
-			<p>
-				Each application of SPPAS is shown as a card: a picture, its name, a short
-				description, and the button launching it. The first card, named Desktop, launches
-				the classic interface -- the one written with wxPython -- and not SPPAS as a whole:
-				SPPAS 5 is the product, that interface is one of its components.
-			</p>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Pushpin"> <path d="M9 3h6l-1 8H10L9 3z"/> <path d="M7 13h10"/> <path d="M12 13v9"/> </svg> &nbsp; <b>Pin menu.</b> Click it and the menu stays wide open, without having
+			to move the mouse over it. Click it again and it goes back to its narrow shape.
+		</p>
 
-			<p>
-				A card is disabled when the feature it needs is not installed. The Desktop card
-				keeps its Launch button disabled while that interface is already running, and stays
-				otherwise unchanged.
-			</p>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <circle cx="16" cy="16" r="13"/> <circle cx="16" cy="16" r="5" fill="currentColor" stroke="none"/> <line x1="16" y1="3"  x2="16" y2="8"/> <line x1="16" y1="24" x2="16" y2="29"/> <line x1="3"  y1="16" x2="8"  y2="16"/> <line x1="24" y1="16" x2="29" y2="16"/> </svg> &nbsp; <b>Theme.</b> Changes the colors of the whole software. Click it
+			several times: each click tries the next set of colors, and the last one brings you
+			back to the colors of SPPAS.
+		</p>
 
-		</section>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 32 32" stroke-width="2" stroke-linecap="round"> <path d="M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z"/> <circle cx="16" cy="16" r="5" fill="currentColor" stroke="none"/> </svg> &nbsp; <b>Contrast.</b> Click it and the writing becomes bigger, more
+			spaced out and drawn with a font made to be read easily. Click it again to come back.
+		</p>
 
-		<section class="subssection">
-		<h3>The current workspace</h3>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"> <!-- Outer circle --> <circle cx="16" cy="16" r="13"/> <!-- Diagonal half fill --> <clipPath id="cut"> <polygon points="0,32 32,0 32,32"/> </clipPath> <circle cx="16" cy="16" r="13" fill="currentColor" clip-path="url(#cut)" stroke="none"/> </svg> &nbsp; <b>Color.</b> Switches between a light page, black writing on white,
+			and a dark page, white writing on black. A dark page is often more comfortable in a
+			room with little light.
+		</p>
 
-			<p>
-				Above the cards, the name of the workspace in use is displayed, with the path of
-				its file as a tooltip. It is shown for reading only: the workspace is chosen
-				elsewhere. The name is refreshed on its own, without reloading the page.
-			</p>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="5" y="5" width="8" height="21" rx="1" /> <rect x="19" y="5" width="8" height="8" rx="1" /> <rect x="19" y="19" width="8" height="8" rx="1" /> </svg> &nbsp; <b>Dashboard.</b> Brings you back to this page, wherever you
+			are. When you are lost, this is the button to click.
+		</p>
 
-		</section>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="16" cy="16" r="13" /> <path d="M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5" /> <circle cx="16" cy="23" r="1" /> </svg> &nbsp; <b>Help.</b> Opens the document explaining the page you are reading
+			-- the one you have under your eyes right now. A button drawn in a duller color, which
+			the mouse refuses to click, means that this page has no document yet.
+		</p>
 
-		<section class="subssection">
-		<h3>Information and links</h3>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H5V5h14v14z"/> <path d="M11 7h2v2h-2zm0 4h2v6h-2z"/> </svg> &nbsp; <b>Journal.</b> Opens a page where SPPAS writes what it is doing, and
+			why. Read it while an annotation is running to follow where it is, afterwards to see
+			what was produced and what was left aside, and the day something goes wrong to
+			understand what happened -- and to say it precisely when reporting a problem.
+		</p>
 
-			<p>
-				Two sections follow the applications. The first leads to the pages of SPPAS itself:
-				About, how to cite the software, the Journal, and the form to send a feedback. The
-				second gathers seven links to the web: the site, the book, the tutorials, the
-				frequently asked questions, the source code, the resources and an award. Each of
-				these links carries a color of its own, which does not change with the theme.
-			</p>
-
-		</section>
+		<p>
+			<svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"> <path d="M21 23l7-7-7-7" /> <path d="M28 16H12" /> <path d="M16 4H8a3 3 0 0 0-3 3v19a3 3 0 0 0 3 3h8" /> </svg> &nbsp; <b>Exit.</b> Stops SPPAS. The pages left open in the browser stay
+			readable, but nothing answers them any more: to work again, SPPAS has to be started
+			again from your computer.
+		</p>
 
 	</section>
 
@@ -87,26 +103,134 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>What the page asks</h2>
+	<h2>The body, in the middle</h2>
 
 		<section class="subssection">
-		<h3>The licence</h3>
+		<h3>The first time: the licence</h3>
 
 			<p>
-				At the very first opening, the page asks for the licence to be agreed. Nothing else
-				is shown until then. The answer is kept: the question is not asked again.
+				At the very first start, the page shows a text and waits for you to accept it.
+				It is the licence: what you are allowed to do with SPPAS, which is free and
+				open-source. Nothing else is shown until you have answered. The question is asked
+				once and never again.
+			</p>
+
+			<p>
+				The button to click looks like this one:
+			</p>
+
+			<p>
+				<button type="button" tabindex="-1" aria-hidden="true">I agree</button>
 			</p>
 
 		</section>
 
 		<section class="subssection">
-		<h3>The Journal</h3>
+		<h3>The box asking for the Journal</h3>
 
 			<p>
-				The Journal lives in a tab of its own, where SPPAS writes what it did and why. When
-				that tab is closed, the Dashboard says so and offers to open it again. The message
-				appears and disappears on its own, the page being polled regularly.
+				Once the licence is agreed, SPPAS watches whether the tab of the Journal is open.
+				As long as it is not, a box stays at the top of the page:
 			</p>
+
+			<p>
+				<b>Please check the Journal tab regularly.</b> &nbsp;
+				<button type="button" tabindex="-1" aria-hidden="true">Open the Journal</button>
+			</p>
+
+			<p>
+				Click that button and the Journal opens in its own tab. The box then goes away by
+				itself, without reloading anything, and it comes back the day that tab is closed.
+				It is not an error message: it says that SPPAS is writing what it does somewhere
+				nobody is reading.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>What you can start</h3>
+
+			<p>
+				Each rectangle is one part of SPPAS: a picture, a name, one line saying what it is
+				for, and a button to start it. Click the button and that part opens. Here is one,
+				drawn as you see it on the page:
+			</p>
+
+			<ul class="apps-panel">
+				<li class="app" aria-hidden="true">
+					<svg class="app-background-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="16" cy="16" r="13" /> <polygon points="21 11 18 18 11 21 14 14 21 11" /> </svg>
+					<div class="app-content | flow">
+						<div class="app-container | flow">
+							<p class="app-title">The name of the part</p>
+							<p class="app-description">One line saying what this part of SPPAS is for.</p>
+						</div>
+						<button type="button" tabindex="-1" class="app-button">Launch</button>
+					</div>
+				</li>
+			</ul>
+
+			<p>
+				The first one, <b>Desktop</b>, opens the desktop of SPPAS: the window where all its
+				features are gathered today. The other parts are being moved into the browser one
+				by one.
+			</p>
+
+			<p>
+				When a part cannot be started, its drawing is grey and its Launch button does not
+				answer: what this part needs is not installed on your computer. Run Setup to
+				install it.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>The name written above the rectangles</h3>
+
+			<p>
+				Above them, SPPAS writes the name of the current workspace. A workspace is the set
+				of files you are working on -- your recordings and everything SPPAS produces from
+				them.
+			</p>
+
+			<p>
+				It is written here for information only: this page does not let you change it.
+			</p>
+
+		</section>
+
+		<section class="subssection">
+		<h3>Below: knowing more, and the web</h3>
+
+			<p>
+				Two sets of rectangles follow, and they do not behave the same way.
+			</p>
+
+			<p>
+				Under <b>Find out more</b>, the rectangles open pages of SPPAS itself: what this
+				software is, how to name it in the bibliography of your report, the Journal, and a
+				form to write to the author. They take the place of this page: to come back, click
+				the Dashboard button of the menu.
+			</p>
+
+			<p>
+				Under <b>Learn more on the Web</b>, the rectangles lead to pages of the internet:
+				the site of SPPAS, its book, video tutorials, the questions users ask most often,
+				the source code, the resources for the languages, and a prize the software
+				received. Each of them opens a new tab in your browser: this page stays where it
+				is, and you come back to it by closing the tab that opened.
+			</p>
+
+			<p>
+				Here is the first of them, the one leading to the site of SPPAS. This one is only
+				an image of it: clicking it does nothing.
+			</p>
+
+			<section class="links-panel">
+				<a class="card link-button" title="https://sppas.org/" aria-hidden="true">
+					<img src="sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="" class="link-button-icon">
+					<span class="link-button-text" id="web_text">Website</span>
+				</a>
+			</section>
 
 		</section>
 
@@ -118,18 +242,16 @@
 	<!-- ----------------------------------------------------------- -->
 
 	<section class="ssection">
-	<h2>The menu</h2>
+	<h2>The header and the footer</h2>
 
 		<p>
-			The menu on the left is built by each application for itself. Four items are found in
-			all of them: the button switching the CSS theme, the two accessibility buttons --
-			contrast, and light or dark colors -- and the button pinning the menu open.
+			The header holds the name of the page. Nothing is to be clicked there.
 		</p>
 
 		<p>
-			The Dashboard adds four of its own: the Dashboard button, which reloads the page here;
-			the Help button, opening this document; the Journal; and the button leaving SPPAS.
-			Leaving closes the session: the server stops, and the pages still open say so.
+			The footer holds the picture of SPPAS, the name of who wrote it, and the year. At its
+			end, the button <svg width="1.6em" height="1.6em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <!-- upward arrow --> <polyline points="8 18 16 10 24 18" /> <!-- top baseline --> <line x1="8" y1="22" x2="24" y2="22" /> </svg> &nbsp; climbs back to the top of the page, which is handy on
+			a long one -- this document, for instance.
 		</p>
 
 	</section>

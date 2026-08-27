@@ -102,7 +102,8 @@ class DashboardWebData(swappWebData):
         if page_name == DashboardResponseRecipe.help_page():
             return HelpResponseRecipe(DashboardResponseRecipe.help_document(),
                                       DashboardResponseRecipe.help_page(),
-                                      MSG_HELP_TITLE)
+                                      MSG_HELP_TITLE,
+                                      "app_dashboard.css")
 
         # Any other page name
         return None

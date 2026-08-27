@@ -60,18 +60,20 @@ class HelpResponseRecipe(swappBaseResponse):
 
     """
 
-    def __init__(self, document: str, page: str, title: str,
+    def __init__(self, document: str, page: str, title: str, css: str = "",
                  tree: HTMLTree | None = None):
         """Create the ResponseRecipe for the document of an app.
 
         :param document: (str) Path of the document, relative to swapp
         :param page: (str) Name of the page serving the document
         :param title: (str) Title of the documented app
+        :param css: (str) Filename of the stylesheet of the documented app
 
         """
         self.__view = None
         self.__document = document
         self.__page = page
+        self.__css = css
 
         super(HelpResponseRecipe, self).__init__(page, tree, title)
 
@@ -93,7 +95,7 @@ class HelpResponseRecipe(swappBaseResponse):
 
         """
         super().create()
-        self.__view = HelpView(self._htree, self._title)
+        self.__view = HelpView(self._htree, self._title, self.__css)
 
     # -----------------------------------------------------------------------
     # Callbacks

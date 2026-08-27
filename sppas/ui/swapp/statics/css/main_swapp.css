@@ -222,17 +222,30 @@ main > .panel-item:nth-child(2n) .card-footer {
 
 /* ── Buttons ─────────────────────────────────────────────── */
 
+/* A flat surface, on a page where the background, the bar, the panels and
+   the cards are all gradients: what stands out here is the plain one. */
 button:not(.menuitem), [role="button"]:not(.menuitem) {
     background-color: var(--buttons-bg-color);
-    background-image: var(--buttons-bg-image);
+    background-image: none;
     padding: 0.6rem 1.2rem;
     border: var(--border-width) solid var(--border-color);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
+/* Two signals, never the color alone: it changes, and the button rises.
+   The move is seen without telling the hues apart, and it displaces
+   nothing around since the room taken stays the same. */
 button:hover, [role='button']:hover {
     color: var(--buttons-fg-color);
     background-color: var(--buttons-bg-color-hover);
-    background-image: var(--buttons-bg-image-hover);
+    background-image: none;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+button:active, [role='button']:active {
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 /* ── Checkboxes ──────────────────────────────────────────── */
@@ -272,7 +285,7 @@ details summary {
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     background-color: var(--buttons-bg-color);
-    background-image: var(--buttons-bg-image);
+    background-image: none;
     color: var(--buttons-fg-color);
     font-weight: var(--font-weight-semibold);
 }
@@ -447,6 +460,8 @@ section.actions-panel {
 
 /* ── Application cards ───────────────────────────────────── */
 
+/* A list of choices, not a list of sentences: wexa.css writes a square
+   before each item and indents it, both of which a card does not want. */
 .apps-panel {
     padding: 1rem;
     margin: auto;
@@ -459,9 +474,14 @@ section.actions-panel {
     background: var(--apps-panel-bg-image);
 }
 
+.apps-panel > .app::before {
+    content: none;
+}
+
 .app {
     display: grid;
     place-items: center;
+    padding-inline-start: 0;
     max-width: calc(16 * var(--font-size));
     height: calc(20 * var(--font-size));
     overflow: hidden;
@@ -479,15 +499,15 @@ section.actions-panel {
     grid-row: 1 / 2;
 }
 
+/* The ground of an image, its padding and its rounded corners are given by
+   wexa.css, to every image and in every mode: nothing to add here. */
 .app-background-img {
-    background-color: inherit;
     object-fit: cover;
+    border-radius: var(--card-border-radius);
     max-width: calc(14 * var(--font-size));
     max-height: calc(14 * var(--font-size));
     margin: 0;
     margin-bottom: calc(5 * var(--font-size));
-    padding: 0;
-    filter: brightness(0.9);
 }
 
 @media screen and (max-width: 1023.98px) {
@@ -495,12 +515,6 @@ section.actions-panel {
         max-width: calc(10 * var(--font-size));
         max-height: calc(10 * var(--font-size));
     }
-}
-
-.dark .app-background-img {
-    filter: brightness(1.4);
-    border-radius: calc(3*var(--border-radius));
-    box-shadow: 0 0 0 100vw var(--app-img-bg-color) inset;
 }
 
 .app-content {
@@ -573,20 +587,18 @@ section.actions-panel {
     font-weight: bold;
     border-radius: var(--border-radius);
     text-transform: uppercase;
-    box-shadow: 0 0 20px var(--app-button-shadow-color);
     font-size: calc(var(--font-size) * 1.125);
 }
 
 .app-button {
     background-color: var(--buttons-bg-color) !important;
-    background-image: var(--buttons-bg-image) !important;
-    transition: background-position .4s ease;
+    background-image: none !important;
 }
 
 .app-button:hover {
     color: var(--buttons-fg-color);
     background-color: var(--buttons-bg-color-hover) !important;
-    background-image: var(--buttons-bg-image-hover) !important;
+    background-image: none !important;
 }
 
 /* Hover/focus animation — only for pointer devices */
@@ -897,6 +909,42 @@ section.actions-panel {
     padding-bottom: 0;
 }
 
+/* ── Message dialogs: a sign, a sentence, a button ─────────── */
+
+/* dialog.css stacks a full-width colored band holding the sign, above the
+   text. A large flat area for one small character, on a page made of
+   cards: the sign comes down beside the sentence instead, in a round of
+   the color of its kind. */
+
+dialog[role=alertdialog] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--typography-spacing-horizontal);
+    padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
+}
+
+dialog[role=alertdialog]::before {
+    flex: none;
+    width: calc(2.4 * var(--font-size));
+    height: calc(2.4 * var(--font-size));
+    padding: 0;
+    border-radius: 50%;
+}
+
+/* The sentence takes the room left, and pushes the button to the end. */
+dialog[role=alertdialog] > p,
+dialog[role=alertdialog] > div {
+    flex: 1 1 min(20rem, 100%);
+    padding: 0;
+}
+
+dialog[role=alertdialog] > button,
+dialog[role=alertdialog] > form {
+    flex: none;
+    margin-top: 0;
+}
+
 /* ── Buttons of the alert dialogs: one single style, centered ── */
 
 dialog[role="alertdialog"] button {
@@ -910,17 +958,16 @@ dialog[role="alertdialog"] button {
     font-weight: bold;
     border-radius: var(--card-border-radius);
     text-transform: uppercase;
-    color: var(--buttons-fg-color);
+    color: var(--dialog-icon-color, rgb(255, 255, 255));
     border-color: var(--info-color);
-    background-color: var(--buttons-bg-color);
-    background-image: var(--buttons-bg-image);
-    box-shadow: 0 0 1.5rem var(--shadow-color);
+    background-color: var(--info-color);
+    background-image: none;
     opacity: 1;
 }
 
 dialog[role="alertdialog"] button:hover {
     text-decoration: none;
-    color: var(--buttons-fg-color);
-    background-color: var(--buttons-bg-color-hover);
-    background-image: var(--buttons-bg-image-hover);
+    color: var(--dialog-icon-color, rgb(255, 255, 255));
+    background-color: var(--info-color);
+    background-image: none;
 }
