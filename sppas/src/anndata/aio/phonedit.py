@@ -171,7 +171,14 @@ class sppasMRK(sppasBasePhonedit):
 
     The new MRK format includes sections for time slots.
 
+    MRK serializes the labels of an annotation separated by a whitespace,
+    so the whitespaces of the metadata, of the controlled vocabularies and
+    of the media written into the "DoNotEdit" tier are turned into
+    underscores: this is a loss, they are not turned back when reading.
+
     """
+
+    UNSUPPORTED_NO_WHITESPACE = True
 
     @staticmethod
     def detect(filename):
@@ -254,6 +261,9 @@ class sppasMRK(sppasBasePhonedit):
         for section_name in parser.sections():
             if "LBL_LEVEL_" in section_name:
                 self._parse_labels(parser.items(section_name))
+
+        # the file can hold a tier with what a MRK can't hold otherwise
+        self.parse_unsupported_tier()
 
     # -----------------------------------------------------------------------
 
@@ -352,6 +362,10 @@ class sppasMRK(sppasBasePhonedit):
         code_a = ord("A")
         last_modified = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
 
+        # a MRK holds neither metadata, nor ctrl vocab, nor media: if the
+        # transcription has some, they are written into a tier of the file
+        unsupported = self.create_unsupported_tier()
+
         with codecs.open(filename, mode="w", encoding="ISO-8859-1") as fp:
 
             for index_tier, tier in enumerate(self):
@@ -394,6 +408,10 @@ class sppasMRK(sppasBasePhonedit):
                     fp.write(" {:s} {:s}\n".format(str(b), str(e)))
 
             fp.close()
+
+        # the tier of the preserved information is a way to write, not data
+        if unsupported is not None:
+            self.pop(self.get_tier_index(unsupported.get_name()))
 
 # ---------------------------------------------------------------------------
 

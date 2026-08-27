@@ -68,6 +68,11 @@ class sppasBaseIO(sppasTranscription):
     # The natures of the information such a tier is holding.
     UNSUPPORTED_TYPES = ("metadata", "ctrl_vocab", "media")
 
+    # A format serializing the labels of an annotation separated by a
+    # whitespace has to declare it: the whitespaces of the entries are
+    # turned into underscores, and they stay so when read back.
+    UNSUPPORTED_NO_WHITESPACE = False
+
     # The identifier of an object is re-generated at each reading: it is
     # never preserved. The other metadata SPPAS assigns by itself are
     # preserved only if their value was changed.
@@ -464,6 +469,10 @@ class sppasBaseIO(sppasTranscription):
         and the owner are labels because no format needing this tier is
         writing the metadata of an annotation.
 
+        A format declaring UNSUPPORTED_NO_WHITESPACE gets the whitespaces
+        of the entries turned into underscores: it is the only way for such
+        a format to tell one label from the next one when reading back.
+
         The time span of the transcription is shared into intervals of equal
         duration, one for each annotation.
 
@@ -499,10 +508,10 @@ class sppasBaseIO(sppasTranscription):
         for i, (nature, owner, key, value) in enumerate(entries):
             tier.create_annotation(
                 sppasBaseIO.__unsupported_location(first, last, nb, i+1),
-                [sppasLabel(sppasTag(key)),
-                 sppasLabel(sppasTag(value)),
-                 sppasLabel(sppasTag(nature)),
-                 sppasLabel(sppasTag(owner))])
+                [sppasLabel(sppasTag(self.__unsupported_content(key))),
+                 sppasLabel(sppasTag(self.__unsupported_content(value))),
+                 sppasLabel(sppasTag(self.__unsupported_content(nature))),
+                 sppasLabel(sppasTag(self.__unsupported_content(owner)))])
 
         return tier
 
@@ -574,6 +583,19 @@ class sppasBaseIO(sppasTranscription):
         end = first + (duration * (index+1) / nb)
         return sppasLocation(sppasInterval(sppasPoint(begin),
                                            sppasPoint(end)))
+
+    # -----------------------------------------------------------------------
+
+    def __unsupported_content(self, content):
+        """Return the content of a tag this format is able to write.
+
+        :param content: (str) The key, value, nature or owner of an entry
+        :returns: (str)
+
+        """
+        if self.UNSUPPORTED_NO_WHITESPACE is False:
+            return content
+        return content.replace(" ", "_")
 
     # -----------------------------------------------------------------------
 

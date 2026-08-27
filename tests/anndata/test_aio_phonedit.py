@@ -41,18 +41,28 @@
 
 import unittest
 import os.path
+import shutil
 
 from sppas.core.coreutils import u
+
+from sppas.src.utils.fileutils import sppasFileUtils
 
 from sppas.src.anndata.aio.phonedit import sppasBasePhonedit
 from sppas.src.anndata.aio.phonedit import sppasMRK
 from sppas.src.anndata.aio.phonedit import sppasSignaix
 
 from sppas.src.anndata.ann.annlocation import sppasPoint
+from sppas.src.anndata.ann.annlocation import sppasLocation
+from sppas.src.anndata.ann.annlocation import sppasInterval
+from sppas.src.anndata.ann.annlabel import sppasLabel
+from sppas.src.anndata.ann.annlabel import sppasTag
+from sppas.src.anndata.ctrlvocab import sppasCtrlVocab
+from sppas.src.anndata.media import sppasMedia
 
 # ---------------------------------------------------------------------------
 
 DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+TEMP = sppasFileUtils().set_random()
 
 # ---------------------------------------------------------------------------
 
@@ -109,6 +119,47 @@ class TestMRK(unittest.TestCase):
         self.assertEqual(sppasPoint(3), sppasMRK.make_point("3000"))
         with self.assertRaises(TypeError):
             sppasMRK.make_point("3a")
+
+    # -----------------------------------------------------------------
+
+    def test_write_read_unsupported(self):
+        """MRK holds in a tier what it can't hold otherwise."""
+        if os.path.exists(TEMP) is False:
+            os.mkdir(TEMP)
+        output = os.path.join(TEMP, "sample-unsupported.mrk")
+
+        trs = sppasMRK("sample")
+        trs.set_meta("annotator_name", "Brigitte Bigi")
+        tier = trs.create_tier("phonemes")
+        for begin, end, tag in ((1., 2., "a"), (2., 3., "b")):
+            tier.create_annotation(
+                sppasLocation(sppasInterval(sppasPoint(begin), sppasPoint(end))),
+                sppasLabel(sppasTag(tag)))
+        ctrl_vocab = sppasCtrlVocab("phones")
+        ctrl_vocab.add(sppasTag("a"))
+        ctrl_vocab.add(sppasTag("b"))
+        trs.add_ctrl_vocab(ctrl_vocab)
+        tier.set_ctrl_vocab(ctrl_vocab)
+        media = sppasMedia("sample.wav", mime_type="audio/wav")
+        trs.add_media(media)
+        tier.set_media(media)
+
+        trs.write(output)
+        # the tier was a way to write, not data of the transcription
+        self.assertEqual(1, len(trs))
+
+        txt = sppasMRK()
+        txt.read(output)
+        shutil.rmtree(TEMP)
+
+        self.assertEqual(1, len(txt))
+        # MRK can't hold a whitespace in such a tier: it is an underscore
+        self.assertEqual("Brigitte_Bigi", txt.get_meta("annotator_name"))
+        tier = txt.find("phonemes")
+        self.assertEqual("phones", tier.get_ctrl_vocab().get_name())
+        self.assertTrue(tier.get_ctrl_vocab().contains(sppasTag("a")))
+        self.assertEqual("sample.wav", tier.get_media().get_filename())
+        self.assertEqual("audio/wav", tier.get_media().get_mime_type())
 
     # -----------------------------------------------------------------
 

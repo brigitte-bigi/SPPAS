@@ -589,7 +589,14 @@ class sppasRawText(sppasBaseText):
 class sppasCSV(sppasBaseText):
     """SPPAS CSV reader and writer.
 
+    CSV serializes the labels of an annotation separated by a whitespace,
+    so the whitespaces of the metadata, of the controlled vocabularies and
+    of the media written into the "DoNotEdit" tier are turned into
+    underscores: this is a loss, they are not turned back when reading.
+
     """
+
+    UNSUPPORTED_NO_WHITESPACE = True
 
     @staticmethod
     def detect(filename):
@@ -712,6 +719,9 @@ class sppasCSV(sppasBaseText):
 
             tier.create_annotation(location, label)
 
+        # the file can hold a tier with what a CSV can't hold otherwise
+        self.parse_unsupported_tier()
+
     # -----------------------------------------------------------------------
 
     def write(self, filename, signed=True):
@@ -729,6 +739,10 @@ class sppasCSV(sppasBaseText):
         if signed is True:
             enc = 'utf-8-sig'
 
+        # a CSV holds neither metadata, nor ctrl vocab, nor media: if the
+        # transcription has some, they are written into a tier of the file
+        unsupported = self.create_unsupported_tier()
+
         with codecs.open(filename, 'w', enc, buffering=8096) as fp:
             csvwriter = csv.writer(fp, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
             for tier in self._tiers:
@@ -744,3 +758,7 @@ class sppasCSV(sppasBaseText):
                         e = ann.get_highest_localization().get_midpoint()
                         csvwriter.writerow([name, b, e, content])
             fp.close()
+
+        # the tier of the preserved information is a way to write, not data
+        if unsupported is not None:
+            self.pop(self.get_tier_index(unsupported.get_name()))
