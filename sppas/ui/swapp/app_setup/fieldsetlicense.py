@@ -38,7 +38,6 @@
 
 """
 
-import logging
 from whakerpy.htmlmaker import HTMLNode
 from whakerpy.htmlmaker import HTMLHr
 
@@ -151,8 +150,12 @@ class SetupLicenseFieldset(SetupBaseFieldset):
             lilist.append_child(linode)
 
         # --- The licenses agreement
+        # Pre-checked at the log level of the author only -- 1, below any
+        # standard level and out of reach of the Configuration page: an
+        # engagement is taken by the user, never by the software.
+        AUTHOR_LOG_LEVEL = 1
         checkbox = sppasHTMLCheckboxNode(self.identifier, "check_license", MSG_ACCEPT_LICENSE, uri=uri)
-        if cfg.log_level <= logging.DEBUG:
+        if cfg.log_level <= AUTHOR_LOG_LEVEL:
             checkbox.check()
         self.append_child(checkbox)
 

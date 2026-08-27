@@ -117,13 +117,18 @@ class SetupHomeFieldset(SetupBaseFieldset):
         self.append_child(auth)
 
         # -- Agreements
+        # They are pre-checked at the log level of the author only -- 1, below
+        # any standard level and out of reach of the Configuration page: an
+        # engagement is taken by the user, never by the software, and this is
+        # what makes the tests bearable for the one who writes them.
+        AUTHOR_LOG_LEVEL = 1
         box = sppasHTMLCheckboxNode(self.identifier, "check_ref", MSG_ACCEPT_REF, self._uri)
         self.append_child(box)
-        if cfg.log_level <= logging.DEBUG:
+        if cfg.log_level <= AUTHOR_LOG_LEVEL:
             box.check()
         box = sppasHTMLCheckboxNode(self.identifier, "check_prod", MSG_ACCEPT_PROD, self._uri)
         self.append_child(box)
-        if cfg.log_level <= logging.DEBUG:
+        if cfg.log_level <= AUTHOR_LOG_LEVEL:
             box.check()
 
     # -----------------------------------------------------------------------
