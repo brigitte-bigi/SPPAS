@@ -401,11 +401,17 @@
 			destination allows neither, <em>yes</em> has the same effect as <em>no</em>,
 			and the option is not offered.</p>
 
-			<p>The answer is not asked at each conversion: it is a setting of the
-			application, <code>interoperability</code>, true by default
+			<p>The answer has a default no user has to look for: the setting of the
+			application, <code>interoperability</code>, true
 			<span class="api-ok">[API-OK]</span>. Maintaining interoperability is the
-			normal state; accepting the loss is the choice of a user who knows what he
-			gives up.</p>
+			normal state; accepting the loss is a choice.</p>
+
+			<p>That setting is a default, not the decision. It is global — it weighs on
+			the annotations as much as on the conversions — while its effect is seen
+			here, on a page a user reaches without ever opening the settings. Convert
+			therefore states the effective answer where it applies, and lets it be
+			changed for this conversion alone. Online, where no setting is kept for a
+			given user, the value of the page is the only one there is.</p>
 
 			<p>Where SPPAS writes what it preserves is a mechanism, not a decision. Users
 			divide into those who want their file and care for nothing else, and those who
@@ -616,6 +622,9 @@
 			<li>[306] The options are stated before any file is read.</li>
 			<li>[307] The system restricts the answers offered to those the destination
 			format allows.</li>
+			<li>[308] The system takes the answer of the preservation option from the
+			settings of the application, states it on the page, and lets the user
+			change it for this conversion without altering the settings.</li>
 			</ul>
 
 			<h4>[400] General options</h4>
@@ -1381,11 +1390,14 @@
 			  </tr>
 			  <tr>
 				<th scope="row">Decided by</th>
-				<td>The user, once and for all, in the settings:
-				<code>interoperability</code> of <code>sppasAppConfig</code>, true by
-				default. Turned off, nothing is preserved and the tier is not written.
-				The tier is written only when there is something to preserve — what
-				SPPAS assigns to any object it creates does not count.</td>
+				<td>The settings of the application give the default:
+				<code>interoperability</code> of <code>sppasAppConfig</code>, true. Each
+				reader-writer takes it when created and holds it as its own, so a caller
+				writing one file decides for that file only, with
+				<code>set_preserve_unsupported()</code> — of the format, or of
+				<code>sppasTrsRW</code>, which passes it on. The settings are left
+				untouched. The tier is written only when there is something to preserve:
+				what SPPAS assigns to any object it creates does not count.</td>
 			  </tr>
 			  <tr>
 				<th scope="row">What it costs</th>
