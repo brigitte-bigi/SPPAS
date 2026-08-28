@@ -38,11 +38,17 @@
 
 """
 
+import logging
+
 from sppas.src.wkps.appwkpm import sppasWkpsManager
 from sppas.src.wkps.wio import sppasWJSON
 
+from sppas.core.config import sppasHeartbeat
+
 from sppas.ui.agnostic import sppasCommKeys
+from sppas.ui.agnostic import sppasCommClient
 from sppas.ui.agnostic import sppasCommNotifier
+from sppas.ui.agnostic import sppasCommServerError
 from sppas.ui.swapp.main_settings import sppasWebAppSettings
 from sppas.ui.swapp.main_trace_store import swappTraceStore
 
@@ -69,10 +75,16 @@ class sppasWxAppState:
     """Shared state reported by the wx interface interlocutor.
 
     The state is updated by the communication server, from the messages of
-    the wxapp interlocutor: "running" from its HELLO to its BYE, allowing
-    any web application to know whether the wx interface is running;
-    "workspace_name" from its WKP_CHANGED messages, the display name of its
-    current workspace at the time it was sent.
+    the wxapp interlocutor: "running" says whether the wx interface gave a
+    recent sign of life, "workspace_name" comes from its WKP_CHANGED
+    messages, the display name of its current workspace at the time it was
+    sent.
+
+    "running" is not a flag somebody has to clear: it is the freshness of
+    the last sign of life. The wx interface announces itself periodically,
+    and a crash or a kill stops the signs -- which is the only report a
+    dead interface is able to make. Assigning True is a sign of life,
+    assigning False is the announced end.
 
     The name is not an identifier: a workspace is renamed by moving its
     file, and swapp does not track the same workspace across a rename by
@@ -80,9 +92,37 @@ class sppasWxAppState:
 
     """
 
+    # The wx interface signs every 30 seconds: three missed signs and it is
+    # considered gone.
+    HEARTBEAT_MAX_AGE = 90.
+
     def __init__(self):
-        self.running = False
+        self.__heartbeat = sppasHeartbeat(sppasWxAppState.HEARTBEAT_MAX_AGE)
         self.workspace_name = ""
+        # The port the interface is listening to, announced in its HELLO:
+        # it is what allows to ask it directly whether it is still there.
+        self.port = None
+
+    # -----------------------------------------------------------------------
+
+    def get_running(self) -> bool:
+        """Return True if the wx interface gave a recent sign of life."""
+        return self.__heartbeat.alive()
+
+    # -----------------------------------------------------------------------
+
+    def set_running(self, value: bool) -> None:
+        """Store a sign of life, or the announced end.
+
+        :param value: (bool) True is a sign of life, False the end
+
+        """
+        if bool(value) is True:
+            self.__heartbeat.ping()
+        else:
+            self.__heartbeat.forget()
+
+    running = property(get_running, set_running)
 
 
 # Instantiate the shared state of the wx interface
@@ -102,6 +142,36 @@ def notify_wkp_changed() -> None:
     wjson = sppasWJSON()
     wjson.set(wapp_wkps.data)
     wapp_notify.notify(sppasCommKeys.WKP_CHANGED, wjson.serialize())
+
+# -----------------------------------------------------------------------
+
+
+def wx_is_running() -> bool:
+    """Return True if the wx interface answers right now.
+
+    The periodic sign of life is what keeps the shared state fresh, but
+    waiting for it to fade is not an answer for a user in front of a
+    button: the interface is asked directly, and its silence is immediate.
+    Both UIs run on the same machine, so the question costs nothing.
+
+    :return: (bool) True if the wx interface answered
+
+    """
+    if wapp_wxstate.port is None:
+        return False
+
+    client = sppasCommClient(wapp_settings.shost, wapp_wxstate.port)
+    try:
+        client.request(client.format_request(sppasCommKeys.PING,
+                                             {"source": "swapp"}))
+    except sppasCommServerError:
+        logging.info("The wx interface does not answer any more.")
+        wapp_wxstate.running = False
+        wapp_wxstate.port = None
+        return False
+
+    wapp_wxstate.running = True
+    return True
 
 # -----------------------------------------------------------------------
 

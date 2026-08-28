@@ -77,6 +77,7 @@ from .sppaslang import set_language
 # Utility class to test or execute a subprocess and get its output.
 # No external requirement.
 from .process import sppasExecProcess
+from .heartbeat import sppasHeartbeat
 
 # ---------------------------------------------------------------------------
 # Create instances
@@ -104,6 +105,7 @@ __all__ = (
     "get_language",
     "set_language",
     "sppasExecProcess",
+    "sppasHeartbeat",
     "sppasLogSetup",
     "sppasAppConfig"
 )

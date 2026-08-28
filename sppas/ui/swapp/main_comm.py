@@ -120,6 +120,13 @@ class sppasWappCommServer(sppasCommServer):
         :return: (str) The response to the client, in the shared JSON envelope.
 
         """
+        if key == sppasCommKeys.PING:
+            # A ping is the sign of life of the interlocutor: the wx
+            # interface signs periodically, and its silence is the only
+            # report a crashed interface is able to make.
+            if isinstance(value, dict) is True and value.get("source", "") == "wxapp":
+                wapp_wxstate.running = True
+
         if key == sppasCommKeys.HELLO:
             if isinstance(value, dict) is True and "port" in value:
                 self.__interlocutor = value
@@ -128,6 +135,7 @@ class sppasWappCommServer(sppasCommServer):
                 # of a second wx instance: only one is allowed.
                 if value.get("source", "") == "wxapp":
                     wapp_wxstate.running = True
+                    wapp_wxstate.port = value["port"]
                 # The interlocutor starts with its own workspace: publish the
                 # shared one, so that both UIs work on the same data.
                 notify_wkp_changed()
@@ -137,6 +145,7 @@ class sppasWappCommServer(sppasCommServer):
         if key == sppasCommKeys.BYE:
             self.__interlocutor = None
             wapp_wxstate.running = False
+            wapp_wxstate.port = None
             logging.info("Interlocutor un-registered.")
 
         if key == sppasCommKeys.WKP_CHANGED:

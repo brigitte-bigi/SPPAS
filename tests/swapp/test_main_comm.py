@@ -45,6 +45,7 @@ from sppas.ui.agnostic import COMM_PROTOCOL_VERSION
 
 from sppas.ui.swapp.main_comm import sppasWappCommServer
 from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
+from sppas.ui.swapp.wappcore.wappsg import wx_is_running
 
 # ---------------------------------------------------------------------------
 
@@ -61,6 +62,7 @@ class TestInterlocutorGone(unittest.TestCase):
 
     def tearDown(self):
         wapp_wxstate.running = False
+        wapp_wxstate.port = None
 
     # -----------------------------------------------------------------------
 
@@ -92,6 +94,41 @@ class TestInterlocutorGone(unittest.TestCase):
 
         self.assertIsNone(self.server.get_interlocutor())
         self.assertFalse(wapp_wxstate.running)
+
+    def test_ping_is_a_sign_of_life(self):
+        """A ping of the wx interface keeps the shared state alive."""
+        wapp_wxstate.running = False
+        self.assertFalse(wapp_wxstate.running)
+
+        self.server._prepare_response(sppasCommKeys.PING, {"source": "wxapp"})
+        self.assertTrue(wapp_wxstate.running)
+
+    def test_ping_of_another_source(self):
+        """A ping of anything else says nothing about the wx interface."""
+        wapp_wxstate.running = False
+        self.server._prepare_response(sppasCommKeys.PING, {"source": "test.html"})
+        self.assertFalse(wapp_wxstate.running)
+
+    def test_asked_directly_without_a_port(self):
+        """Nothing was ever announced: there is nobody to ask."""
+        wapp_wxstate.port = None
+        self.assertFalse(wx_is_running())
+
+    def test_asked_directly_and_silent(self):
+        """An interface which does not answer is gone, right now.
+
+        This is what a user in front of the launch button needs: the
+        answer of the interface itself, not the fading of its last sign.
+
+        """
+        self.server._prepare_response(sppasCommKeys.HELLO, self.hello)
+        self.assertTrue(wapp_wxstate.running)
+        self.assertEqual(self.hello["port"], wapp_wxstate.port)
+
+        # Nothing is listening on the announced port
+        self.assertFalse(wx_is_running())
+        self.assertFalse(wapp_wxstate.running)
+        self.assertIsNone(wapp_wxstate.port)
 
     def test_push_without_interlocutor(self):
         """Without any interlocutor, a push is dropped and nothing raises."""

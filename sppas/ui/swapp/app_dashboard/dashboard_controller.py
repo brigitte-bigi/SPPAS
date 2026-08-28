@@ -52,6 +52,7 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_trace
 from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
 from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
+from sppas.ui.swapp.wappcore.wappsg import wx_is_running
 
 # ---------------------------------------------------------------------------
 
@@ -144,8 +145,10 @@ class DashboardController:
         :return: (str) Error message if any.
 
         """
-        if self.__wx_running is True or wapp_wxstate.running is True:
-            logging.warning("SPPAS wx interface is already running.")
+        if self.__wx_running is True or wx_is_running() is True:
+            logging.warning("SPPAS wx interface is already running: "
+                            "subprocess_running={}, socket_running={}."
+                            "".format(self.__wx_running, wapp_wxstate.running))
             return "SPPAS is already running."
 
         program = paths.ui + os.sep + os.path.join("wxapp", "__main__.py")
@@ -185,7 +188,9 @@ class DashboardController:
         # Two sources are needed: the subprocess flag covers the launches of
         # this dashboard, including the delay before the HELLO of wx arrives;
         # the socket state covers a wx launched elsewhere, and its Close.
-        wx_busy = self.__wx_running is True or wapp_wxstate.running is True
+        # The interface is asked directly: a user in front of the button
+        # does not wait for the periodic sign of life to fade away.
+        wx_busy = self.__wx_running is True or wx_is_running() is True
         logging.debug(f"Dashboard wx card state: feature={wx_enabled}, "
                       f"subprocess_running={self.__wx_running}, "
                       f"socket_running={wapp_wxstate.running}")

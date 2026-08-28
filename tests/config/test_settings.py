@@ -16,7 +16,7 @@
     ##    ## ##        ##        ##     ## ##    ##         of speech
      ######  ##        ##        ##     ##  ######
 
-    Copyright (C) 2011-2024  Brigitte Bigi, CNRS
+    Copyright (C) 2011-2026  Brigitte Bigi, CNRS
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
     This program is free software: you can redistribute it and/or modify
@@ -93,13 +93,13 @@ class TestPathSettings(unittest.TestCase):
 class TestGlobalSettings(unittest.TestCase):
     def test_init(self):
         settings = sppasGlobalSettings()
-        self.assertEqual(settings.__name__, "SPPAS")
-        self.assertEqual(len(settings.__dict__), 12)
+        self.assertEqual(settings.__name__, "sppas")
+        self.assertEqual(len(settings.__dict__), 14)
         self.assertEqual(settings._is_frozen, True)
 
     def test_enter(self):
         with sppasGlobalSettings() as settings:
-            self.assertEqual(len(settings.__dict__), 12)
+            self.assertEqual(len(settings.__dict__), 14)
 
     def test_immutable(self):
         settings = sppasGlobalSettings()

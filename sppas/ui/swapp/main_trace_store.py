@@ -43,6 +43,7 @@ import time
 import threading
 from datetime import datetime
 
+from sppas.core.config import sppasHeartbeat
 from sppas.core.coreutils import sppasLogFile
 
 # ---------------------------------------------------------------------------
@@ -82,7 +83,7 @@ class swappTraceStore:
         self.__header = sppasLogFile.get_header()
         self.__logfile = sppasLogFile(pattern="log")
         # Time of the last heartbeat of the trace page, or None if never.
-        self.__viewer_seen = None
+        self.__viewer = sppasHeartbeat(max_age=40.)
 
     # -----------------------------------------------------------------------
 
@@ -171,8 +172,7 @@ class swappTraceStore:
         single tab displaying the traces is currently open.
 
         """
-        with self.__lock:
-            self.__viewer_seen = time.time()
+        self.__viewer.ping()
 
     # -----------------------------------------------------------------------
 
@@ -183,10 +183,7 @@ class swappTraceStore:
         :return: (bool) True if the last heartbeat is younger than max_age.
 
         """
-        with self.__lock:
-            if self.__viewer_seen is None:
-                return False
-            return (time.time() - self.__viewer_seen) < max_age
+        return self.__viewer.alive(max_age)
 
     # -----------------------------------------------------------------------
 

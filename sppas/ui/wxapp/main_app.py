@@ -74,6 +74,11 @@ class sppasApp(wx.App):
 
     """
 
+    # The delay between two signs of life sent to the swapp UI, in
+    # milliseconds. The shared state considers the interface gone after
+    # three missed signs.
+    HEARTBEAT_DELAY = 30000
+
     def __init__(self):
         """Wx Application initialization.
 
@@ -116,6 +121,12 @@ class sppasApp(wx.App):
         # This catches events when the app is asked to activate
         # by some other process
         self.Bind(wx.EVT_ACTIVATE_APP, self.OnActivate)
+
+        # The periodic sign of life sent to the swapp UI. It is started
+        # when the handshake succeeded: without a swapp UI, there is
+        # nobody to sign to.
+        self.__heartbeat = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self._on_heartbeat, self.__heartbeat)
 
     # -----------------------------------------------------------------------
 
@@ -218,8 +229,28 @@ class sppasApp(wx.App):
             response = client.request(request)
             logging.info("Valid communication server. Connection established.")
             logging.debug(f"Server Response: {response}")
+            self.__heartbeat.Start(sppasApp.HEARTBEAT_DELAY)
         except sppasCommServerError:
             logging.info("No communication server. Connection not established.")
+
+    # -----------------------------------------------------------------------
+
+    def _on_heartbeat(self, event):
+        """Send a sign of life to the swapp UI.
+
+        This interface can stop without a word -- a crash, a kill --, and
+        the periodic sign is what allows swapp to notice it: its silence
+        is the report.
+
+        :param event: (wx.TimerEvent)
+
+        """
+        try:
+            client = sppasCommClient(self.settings.shost, self.settings.sport)
+            request = client.format_request(sppasCommKeys.PING, {"source": "wxapp"})
+            client.request(request)
+        except sppasCommServerError:
+            logging.debug("No communication server to sign to.")
 
     # -----------------------------------------------------------------------
 
@@ -259,6 +290,8 @@ class sppasApp(wx.App):
             else:
                 logging.error(traceback.format_exc())
         finally:
+            # Stop signing: this interface is leaving by the front door.
+            self.__heartbeat.Stop()
             # Stop receiving messages from the swapp UI.
             self.__comm_server.shutdown()
             # Announce the shutdown to the communication server, if any.

@@ -567,6 +567,13 @@ section.logos-panel {
     margin-right: auto;
 }
 
+/* .center centers a box by its automatic margins, which does nothing to a
+   flex container taking the whole width: what is centered here is what it
+   holds. */
+.toggle-group.center {
+    justify-content: center;
+}
+
 section.actions-panel {
     display: flex;
     flex-direction: row;
