@@ -64,6 +64,8 @@ MSG_INTEROPERABILITY = _("Preserve what the destination format can't hold")
 MSG_INTEROPERABILITY_SAYS = _("The metadata, the controlled vocabularies and the media are then written into a tier named DoNotEdit, which SPPAS reads back. Without it, they are lost.")
 # Enregistrer
 MSG_SAVE = _("Save")
+# Certains changements ne seront effectifs qu'au prochain démarrage de SPPAS.
+MSG_RESTART = _("Some of the changes only take effect the next time SPPAS starts.")
 
 # Ce que SPPAS écrit dans le Journal
 MSG_JOURNAL = _("What SPPAS writes in the Journal")
@@ -209,6 +211,10 @@ class ConfigurationView(swappBaseView):
         _save.set_attribute("name", "event_bake")
         _save.set_attribute("value", "handle_configuration_save")
         _form.append_child(_save)
+
+        _restart = HTMLNode(_form.identifier, None, "p", value=MSG_RESTART)
+        _restart.set_attribute("class", "details")
+        _form.append_child(_restart)
 
         self._append_elsewhere_section(self._htree.body_main)
 

@@ -433,3 +433,6 @@ msgstr ""
 
 msgid "Information and configuration:"
 msgstr ""
+
+msgid "Some of the changes only take effect the next time SPPAS starts."
+msgstr ""

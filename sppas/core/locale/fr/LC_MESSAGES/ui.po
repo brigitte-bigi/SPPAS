@@ -744,3 +744,6 @@ msgstr "Téléchargement"
 
 msgid "Information and configuration:"
 msgstr "Informations et configuration :"
+
+msgid "Some of the changes only take effect the next time SPPAS starts."
+msgstr "Certains changements ne seront effectifs qu'au prochain démarrage de SPPAS."
