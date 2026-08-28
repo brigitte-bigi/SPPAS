@@ -87,7 +87,7 @@
     docs = [
         "pygments",
         "markdown2",
-        "ClammingPy >= 3.0, < 4.0"]
+        "ClammingPy >= 3.1, < 4.0"]
     tests = [
         "coverage ~=7.3.0",
         "python-dotenv ~=1.0.0"]
