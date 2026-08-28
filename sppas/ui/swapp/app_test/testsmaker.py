@@ -57,7 +57,7 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 from sppas.ui.swapp.wappcore.wappsg import wapp_wkps
 from sppas.ui.swapp.wappcore.wappsg import notify_wkp_changed
 from sppas.ui.swapp.wappcore.wappsg import notify_show_page
-from sppas.ui.swapp.wappcore.wappsg import wapp_wxstate
+from sppas.ui.swapp.wappcore.wappsg import wx_is_running
 from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
 from sppas.ui.swapp.nodes import sppasHTMLButton
 from sppas.ui.swapp.wappbase.wappresponse import swappBaseResponse
@@ -281,10 +281,13 @@ class TestsResponseRecipe(swappBaseResponse):
                 # running interface, the message is dropped by the notifier:
                 # the answer says so, which is what this test is about.
                 page_name = event_name[len("show_"):]
+                # The interface is asked before the message is sent: the
+                # answer says whether there was anybody to send it to.
+                alive = wx_is_running()
                 notify_show_page(page_name)
                 self._data = {"socket_response":
-                              "SHOW_PAGE {:s} sent. wx running: {}"
-                              "".format(page_name, wapp_wxstate.running)}
+                              "SHOW_PAGE {:s} sent. wx answered: {}"
+                              "".format(page_name, alive)}
 
             elif event_name == "show_workspace":
                 wjson = sppasWJSON()
