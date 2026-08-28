@@ -145,10 +145,12 @@ class DashboardController:
         :return: (str) Error message if any.
 
         """
-        if self.__wx_running is True or wx_is_running() is True:
-            logging.warning("SPPAS wx interface is already running: "
-                            "subprocess_running={}, socket_running={}."
-                            "".format(self.__wx_running, wapp_wxstate.running))
+        # Only the answer of the interface can forbid a new launch: the
+        # flag of the subprocess belongs to the request which launched it,
+        # and that request may never come back -- a killed process leaves
+        # its blocking call waiting.
+        if wx_is_running() is True:
+            logging.warning("SPPAS wx interface is already running.")
             return "SPPAS is already running."
 
         program = paths.ui + os.sep + os.path.join("wxapp", "__main__.py")

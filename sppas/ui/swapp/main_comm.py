@@ -91,18 +91,22 @@ class sppasWappCommServer(sppasCommServer):
     # -----------------------------------------------------------------------
 
     def send(self, key: int, value) -> str:
-        """Send a message to the registered interlocutor.
+        """Send a message to the interface which announced itself.
+
+        The port is the one of the shared state: it is the single place
+        saying where the other UI listens, so that asking it whether it is
+        there and sending it a message never disagree.
 
         :param key: (int) One of the sppasCommKeys constants
         :param value: (any) A JSON-serializable object
-        :raises: sppasCommServerError: No interlocutor, or sending failed.
+        :raises: sppasCommServerError: Nobody to send to, or sending failed.
         :return: (str) The response of the interlocutor -- JSON envelope.
 
         """
-        if self.__interlocutor is None:
-            raise sppasCommServerError("No registered interlocutor to send to.")
+        if wapp_wxstate.port is None:
+            raise sppasCommServerError("No interface announced itself to send to.")
 
-        client = sppasCommClient(self.host, self.__interlocutor["port"])
+        client = sppasCommClient(self.host, wapp_wxstate.port)
         request = client.format_request(key, value)
         return client.request(request)
 
@@ -195,7 +199,6 @@ class sppasWappCommServer(sppasCommServer):
             # An interlocutor which does not answer any more is gone: it
             # crashed, or it was killed. Un-register it, so that the state
             # it left behind does not outlive it.
-            if self.__interlocutor is not None:
-                self.__interlocutor = None
+            if wapp_wxstate.running is True:
                 wapp_wxstate.running = False
-                logging.info("Interlocutor un-registered: it does not answer.")
+                logging.info("The interface does not answer any more.")

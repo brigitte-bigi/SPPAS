@@ -92,8 +92,10 @@ class TestInterlocutorGone(unittest.TestCase):
         # Nothing is listening on the announced port: the push fails
         self.server.push(sppasCommKeys.SHOW_PAGE, "page_files")
 
-        self.assertIsNone(self.server.get_interlocutor())
         self.assertFalse(wapp_wxstate.running)
+        # the announced address stays: a silence is not a reason to forget
+        # where to ask again
+        self.assertEqual(self.hello["port"], wapp_wxstate.port)
 
     def test_ping_is_a_sign_of_life(self):
         """A ping of the wx interface keeps the shared state alive."""
@@ -128,7 +130,7 @@ class TestInterlocutorGone(unittest.TestCase):
         # Nothing is listening on the announced port
         self.assertFalse(wx_is_running())
         self.assertFalse(wapp_wxstate.running)
-        self.assertIsNone(wapp_wxstate.port)
+        self.assertEqual(self.hello["port"], wapp_wxstate.port)
 
     def test_push_without_interlocutor(self):
         """Without any interlocutor, a push is dropped and nothing raises."""

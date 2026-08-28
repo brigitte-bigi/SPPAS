@@ -41,6 +41,7 @@
 from __future__ import annotations
 import logging
 import socket
+import threading
 
 from .appcom_base import sppasCommunication
 from .appcom_base import sppasCommKeys
@@ -81,12 +82,27 @@ class sppasCommServer(sppasCommunication):
 
         # Server is running by default
         self.__running = True
+        # Set when the socket is created and the server accepts: whoever
+        # announces itself before that would not be reachable yet.
+        self.__ready = threading.Event()
 
     # -----------------------------------------------------------------------
 
     def shutdown(self) -> None:
         """Request a graceful server shutdown (stop the next loop)."""
         self.__running = False
+        self.__ready.clear()
+
+    # -----------------------------------------------------------------------
+
+    def wait_ready(self, timeout: float = 5.) -> bool:
+        """Wait until this server is listening.
+
+        :param timeout: (float) Maximum waiting time, in seconds
+        :return: (bool) True if the server is listening
+
+        """
+        return self.__ready.wait(timeout)
 
 
     # -----------------------------------------------------------------------
@@ -104,6 +120,7 @@ class sppasCommServer(sppasCommunication):
         logging.info(f"Server starting on {self.host}:{self.port}")
         server_socket = self._create_socket(time_out=1)
         logging.info(" ... Socket successfully created.")
+        self.__ready.set()
 
         try:
             while self.__running:

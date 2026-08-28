@@ -165,9 +165,9 @@ def wx_is_running() -> bool:
         client.request(client.format_request(sppasCommKeys.PING,
                                              {"source": "swapp"}))
     except sppasCommServerError:
-        logging.info("The wx interface does not answer any more.")
+        # The address stays: it is the last one the interface announced,
+        # and a silence is not a reason to forget where to ask again.
         wapp_wxstate.running = False
-        wapp_wxstate.port = None
         return False
 
     wapp_wxstate.running = True

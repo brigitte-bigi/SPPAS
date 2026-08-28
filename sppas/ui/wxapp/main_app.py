@@ -219,6 +219,13 @@ class sppasApp(wx.App):
         :return: (wx.Window)
 
         """
+        # The announcement carries the port of this interface: it is only
+        # worth sending once this interface is able to answer on it.
+        if self.__comm_server.wait_ready() is False:
+            logging.error("The communication server of this interface is not "
+                          "listening: the swapp UI is not told about it.")
+            return
+
         try:
             client = sppasCommClient(self.settings.shost, self.settings.sport)
             request = client.format_request(
@@ -249,6 +256,7 @@ class sppasApp(wx.App):
             client = sppasCommClient(self.settings.shost, self.settings.sport)
             request = client.format_request(sppasCommKeys.PING, {"source": "wxapp"})
             client.request(request)
+            logging.debug("Sign of life sent to the swapp UI.")
         except sppasCommServerError:
             logging.debug("No communication server to sign to.")
 
