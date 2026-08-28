@@ -11,6 +11,7 @@
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
@@ -29,6 +30,18 @@
               s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
 
               s.onload = function () {
+                const themes = new window.Wexa.ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
@@ -43,6 +56,19 @@
             <script type="module">
               if (window.location.protocol !== 'file:') {
                 await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
+                const themes = new ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
                 const book = new Book("main-content");
                 book.fill_table(false);
@@ -60,30 +86,28 @@
             <nav class="nav-wexa top" aria-label="Accessibility">
                 <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
                 <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
+                <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.1</h1>
+    <h1>sppas 5.0.3</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
-    <h1>sppas 5.0.1</h1>
-    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
-        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
+    <h1>Table of Contents</h1>
     <ul>
-<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
-<li><a role="button" tabindex="0" href="sppasFiles.html"> &uarr; Prev. Class</a></li>
-<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
-<li><a role="button" tabindex="0" href="sppasDiagnosis.html"> &darr; Next Class</a></li>
-<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-module" href="sppas.src.analysis.html" class="wexa-link" data-target="_self"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-class" href="sppasFiles.html" class="wexa-link" data-target="_self"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" id="nav-index" href="index.html" class="wexa-link" data-target="_self"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" id="nav-next-class" href="sppasDiagnosis.html" class="wexa-link" data-target="_self"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" id="nav-next-module" aria-disabled="true"> &rdsh; Next Module</a></li>
     </ul>
-    <h2>Table of Contents</h2>
     <ul id="toc"></ul>
     <hr>
-    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
-</nav>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://github.com/brigitte-bigi/ClammingPy">ClammingPy</a></small></p>
+</aside>
     <main id="main-content">
-    <section id="#sppas.src.annotations">    <h1>Module sppas.src.annotations</h1>
+    <section id="#sppas.src.annotations" class="chapter nonumber">    <h1>Module sppas.src.annotations</h1>
 <section id="#sppasBaseAnnotation">
 <h2>Class sppasBaseAnnotation</h2>
 
@@ -637,6 +661,7 @@ output was given.</p>
 <ul>
 <li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) The required and optional input(s)</li>
 <li><strong>output</strong>: (<em>str</em>) The output name with or without extension</li>
+<li><strong>kwargs</strong>: The results an annotation estimated on all its inputs</li>
 </ul>
 
 <h5>Returns</h5>
@@ -652,7 +677,7 @@ output was given.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on a given input.</span>
 
 <span class="sd">        The input is a list of files the annotation needs: audio, video,</span>
@@ -664,6 +689,7 @@ View Source
 
 <span class="sd">        :param input_files: (list of str) The required and optional input(s)</span>
 <span class="sd">        :param output: (str) The output name with or without extension</span>
+<span class="sd">        :param kwargs: The results an annotation estimated on all its inputs</span>
 <span class="sd">        :returns: (sppasTranscription OR list of created file names)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -685,6 +711,7 @@ output file, and call the run method.</p>
 
 <ul>
 <li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) the required input(s) for a run</li>
+<li><strong>kwargs</strong>: The results an annotation estimated on all its inputs</li>
 </ul>
 
 <h5>Returns</h5>
@@ -700,13 +727,14 @@ output file, and call the run method.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_for_batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_for_batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a file.</span>
 
 <span class="sd">        This method is called by &#39;batch_processing&#39;. It fixes the name of the</span>
 <span class="sd">        output file, and call the run method.</span>
 
 <span class="sd">        :param input_files: (list of str) the required input(s) for a run</span>
+<span class="sd">        :param kwargs: The results an annotation estimated on all its inputs</span>
 <span class="sd">        :returns: created output file name or None</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -718,7 +746,7 @@ View Source
     <span class="k">else</span><span class="p">:</span>
         <span class="n">out_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_out_name</span><span class="p">(</span><span class="n">input_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="n">out_name</span><span class="p">)</span>
+        <span class="n">new_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_files</span><span class="p">,</span> <span class="n">out_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">new_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
@@ -747,6 +775,7 @@ all checked files of a workspace in a single process.</p>
 <ul>
 <li><strong>file_names</strong>: (<em>list</em>) List of inputs</li>
 <li><strong>progress</strong>: ProcessProgressTerminal() or ProcessProgressDialog()</li>
+<li><strong>kwargs</strong>: The results an annotation estimated on all its inputs</li>
 </ul>
 
 <h5>Returns</h5>
@@ -762,7 +791,7 @@ all checked files of a workspace in a single process.</p>
     <summary>
 View Source
     </summary>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform the annotation on a bunch of files.</span>
 
 <span class="sd">        Can be used by an annotation manager to launch all the annotations on</span>
@@ -775,6 +804,7 @@ View Source
 
 <span class="sd">        :param file_names: (list) List of inputs</span>
 <span class="sd">        :param progress: ProcessProgressTerminal() or ProcessProgressDialog()</span>
+<span class="sd">        :param kwargs: The results an annotation estimated on all its inputs</span>
 <span class="sd">        :return: (list of str) List of created files</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -796,7 +826,7 @@ View Source
             <span class="k">if</span> <span class="n">progress</span><span class="p">:</span>
                 <span class="n">progress</span><span class="o">.</span><span class="n">set_fraction</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">total</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
                 <span class="n">progress</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{!s:s}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">))</span>
-            <span class="n">out_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_for_batch_processing</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="n">out_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_for_batch_processing</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">out_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">out_names</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">info</span><span class="p">(</span><span class="mi">1306</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>

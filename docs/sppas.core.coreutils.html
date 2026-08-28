@@ -11,6 +11,7 @@
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
@@ -29,6 +30,18 @@
               s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
 
               s.onload = function () {
+                const themes = new window.Wexa.ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
@@ -43,6 +56,19 @@
             <script type="module">
               if (window.location.protocol !== 'file:') {
                 await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
+                const themes = new ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
                 const book = new Book("main-content");
                 book.fill_table(false);
@@ -60,30 +86,28 @@
             <nav class="nav-wexa top" aria-label="Accessibility">
                 <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
                 <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
+                <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.1</h1>
+    <h1>sppas 5.0.3</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
-    <h1>sppas 5.0.1</h1>
-    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
-        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
+    <h1>Table of Contents</h1>
     <ul>
-<li><a role="button" tabindex="0" href="sppas.core.config.html"> &crarr; Prev. Module</a></li>
-<li><a role="button" tabindex="0" href="sppasLogSetup.html"> &uarr; Prev. Class</a></li>
-<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
-<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
-<li><a role="button" tabindex="0" href="sppas.core.preinstall.html"> &rdsh; Next Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-module" href="sppas.core.config.html" class="wexa-link" data-target="_self"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-class" href="sppasLogSetup.html" class="wexa-link" data-target="_self"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" id="nav-index" href="index.html" class="wexa-link" data-target="_self"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" id="nav-next-class" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" id="nav-next-module" href="sppas.core.preinstall.html" class="wexa-link" data-target="_self"> &rdsh; Next Module</a></li>
     </ul>
-    <h2>Table of Contents</h2>
     <ul id="toc"></ul>
     <hr>
-    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
-</nav>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://github.com/brigitte-bigi/ClammingPy">ClammingPy</a></small></p>
+</aside>
     <main id="main-content">
-    <section id="#sppas.core.coreutils">
+    <section id="#sppas.core.coreutils" class="chapter nonumber">
     <h1>sppas.core.coreutils module</h1>
 <h2>List of classes</h2>
 
@@ -94,7 +118,7 @@
                 <h3>sppasPythonError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasPythonError.html">Read me →</a>
+                <a role="button" id="card-link-sppasPythonError" class="wexa-link" data-target="_self" href="sppasPythonError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -103,7 +127,7 @@
                 <h3>sppasError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasError.html">Read me →</a>
+                <a role="button" id="card-link-sppasError" class="wexa-link" data-target="_self" href="sppasError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -112,7 +136,7 @@
                 <h3>sppasTypeError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasTypeError.html">Read me →</a>
+                <a role="button" id="card-link-sppasTypeError" class="wexa-link" data-target="_self" href="sppasTypeError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -121,7 +145,7 @@
                 <h3>sppasIndexError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasIndexError.html">Read me →</a>
+                <a role="button" id="card-link-sppasIndexError" class="wexa-link" data-target="_self" href="sppasIndexError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -130,7 +154,7 @@
                 <h3>sppasValueError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasValueError.html">Read me →</a>
+                <a role="button" id="card-link-sppasValueError" class="wexa-link" data-target="_self" href="sppasValueError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -139,7 +163,7 @@
                 <h3>sppasKeyError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasKeyError.html">Read me →</a>
+                <a role="button" id="card-link-sppasKeyError" class="wexa-link" data-target="_self" href="sppasKeyError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -148,7 +172,7 @@
                 <h3>sppasOSError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasOSError.html">Read me →</a>
+                <a role="button" id="card-link-sppasOSError" class="wexa-link" data-target="_self" href="sppasOSError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -157,7 +181,7 @@
                 <h3>sppasSystemOSError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasSystemOSError.html">Read me →</a>
+                <a role="button" id="card-link-sppasSystemOSError" class="wexa-link" data-target="_self" href="sppasSystemOSError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -166,7 +190,7 @@
                 <h3>sppasInstallationError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasInstallationError.html">Read me →</a>
+                <a role="button" id="card-link-sppasInstallationError" class="wexa-link" data-target="_self" href="sppasInstallationError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -175,7 +199,7 @@
                 <h3>sppasPermissionError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasPermissionError.html">Read me →</a>
+                <a role="button" id="card-link-sppasPermissionError" class="wexa-link" data-target="_self" href="sppasPermissionError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -184,7 +208,7 @@
                 <h3>sppasEnableFeatureError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasEnableFeatureError.html">Read me →</a>
+                <a role="button" id="card-link-sppasEnableFeatureError" class="wexa-link" data-target="_self" href="sppasEnableFeatureError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -193,7 +217,7 @@
                 <h3>sppasPackageFeatureError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasPackageFeatureError.html">Read me →</a>
+                <a role="button" id="card-link-sppasPackageFeatureError" class="wexa-link" data-target="_self" href="sppasPackageFeatureError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -202,7 +226,7 @@
                 <h3>sppasPythonFeatureError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasPythonFeatureError.html">Read me →</a>
+                <a role="button" id="card-link-sppasPythonFeatureError" class="wexa-link" data-target="_self" href="sppasPythonFeatureError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -211,7 +235,7 @@
                 <h3>sppasPackageUpdateFeatureError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasPackageUpdateFeatureError.html">Read me →</a>
+                <a role="button" id="card-link-sppasPackageUpdateFeatureError" class="wexa-link" data-target="_self" href="sppasPackageUpdateFeatureError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -220,7 +244,7 @@
                 <h3>sppasIOError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasIOError.html">Read me →</a>
+                <a role="button" id="card-link-sppasIOError" class="wexa-link" data-target="_self" href="sppasIOError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -229,7 +253,7 @@
                 <h3>NegativeValueError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="NegativeValueError.html">Read me →</a>
+                <a role="button" id="card-link-NegativeValueError" class="wexa-link" data-target="_self" href="NegativeValueError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -238,7 +262,7 @@
                 <h3>RangeBoundsException</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="RangeBoundsException.html">Read me →</a>
+                <a role="button" id="card-link-RangeBoundsException" class="wexa-link" data-target="_self" href="RangeBoundsException.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -247,7 +271,7 @@
                 <h3>IntervalRangeException</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="IntervalRangeException.html">Read me →</a>
+                <a role="button" id="card-link-IntervalRangeException" class="wexa-link" data-target="_self" href="IntervalRangeException.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -256,7 +280,7 @@
                 <h3>IndexRangeException</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="IndexRangeException.html">Read me →</a>
+                <a role="button" id="card-link-IndexRangeException" class="wexa-link" data-target="_self" href="IndexRangeException.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -265,7 +289,7 @@
                 <h3>LanguageNotFoundError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="LanguageNotFoundError.html">Read me →</a>
+                <a role="button" id="card-link-LanguageNotFoundError" class="wexa-link" data-target="_self" href="LanguageNotFoundError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -274,7 +298,7 @@
                 <h3>IOExtensionError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="IOExtensionError.html">Read me →</a>
+                <a role="button" id="card-link-IOExtensionError" class="wexa-link" data-target="_self" href="IOExtensionError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -283,7 +307,7 @@
                 <h3>NoDirectoryError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="NoDirectoryError.html">Read me →</a>
+                <a role="button" id="card-link-NoDirectoryError" class="wexa-link" data-target="_self" href="NoDirectoryError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -292,7 +316,7 @@
                 <h3>sppasOpenError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasOpenError.html">Read me →</a>
+                <a role="button" id="card-link-sppasOpenError" class="wexa-link" data-target="_self" href="sppasOpenError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -301,7 +325,7 @@
                 <h3>sppasReadError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasReadError.html">Read me →</a>
+                <a role="button" id="card-link-sppasReadError" class="wexa-link" data-target="_self" href="sppasReadError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -310,7 +334,7 @@
                 <h3>sppasWriteError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasWriteError.html">Read me →</a>
+                <a role="button" id="card-link-sppasWriteError" class="wexa-link" data-target="_self" href="sppasWriteError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -319,7 +343,7 @@
                 <h3>sppasExtensionReadError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasExtensionReadError.html">Read me →</a>
+                <a role="button" id="card-link-sppasExtensionReadError" class="wexa-link" data-target="_self" href="sppasExtensionReadError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -328,7 +352,7 @@
                 <h3>sppasExtensionWriteError</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasExtensionWriteError.html">Read me →</a>
+                <a role="button" id="card-link-sppasExtensionWriteError" class="wexa-link" data-target="_self" href="sppasExtensionWriteError.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -337,7 +361,7 @@
                 <h3>sppasUnicode</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasUnicode.html">Read me →</a>
+                <a role="button" id="card-link-sppasUnicode" class="wexa-link" data-target="_self" href="sppasUnicode.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -346,7 +370,7 @@
                 <h3>ISO639</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="ISO639.html">Read me →</a>
+                <a role="button" id="card-link-ISO639" class="wexa-link" data-target="_self" href="ISO639.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -355,7 +379,7 @@
                 <h3>LanguageInfo</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="LanguageInfo.html">Read me →</a>
+                <a role="button" id="card-link-LanguageInfo" class="wexa-link" data-target="_self" href="LanguageInfo.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -364,7 +388,7 @@
                 <h3>sppasLogFile</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasLogFile.html">Read me →</a>
+                <a role="button" id="card-link-sppasLogFile" class="wexa-link" data-target="_self" href="sppasLogFile.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -373,7 +397,7 @@
                 <h3>sppasTrash</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasTrash.html">Read me →</a>
+                <a role="button" id="card-link-sppasTrash" class="wexa-link" data-target="_self" href="sppasTrash.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -382,7 +406,7 @@
                 <h3>sppasBaseProgress</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasBaseProgress.html">Read me →</a>
+                <a role="button" id="card-link-sppasBaseProgress" class="wexa-link" data-target="_self" href="sppasBaseProgress.html">Read me →</a>
             </div>
         </article>
         </section>

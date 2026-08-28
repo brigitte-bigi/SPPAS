@@ -1,0 +1,150 @@
+/*
+:filename: statics/clamming_theme.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Theme of the ClammingPy documentations.
+
+.. _This file is part of ClammingPy: https://github.com/brigitte-bigi/ClammingPy
+..
+    -------------------------------------------------------------------------
+
+    Copyright (C) 2023-2026 Brigitte Bigi
+    Laboratoire Parole et Langage, Aix-en-Provence, France
+
+    Use of this software is governed by the GNU Public License, version 3.
+
+    ClammingPy is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ClammingPy is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with ClammingPy. If not, see <http://www.gnu.org/licenses/>.
+
+    This banner notice must not be removed.
+
+    -------------------------------------------------------------------------
+
+    This file is the theme the pages open with: it is the one loaded by
+    <link id="wexa-theme">, and 'ThemeManager' replaces it as a whole when the
+    reader asks for the high-contrast theme. It defines colors only. The sizes,
+    the layout and the classes of the documentation pages are in 'clamming.css',
+    which is linked apart.
+
+*/
+
+/* =======================================================================
+                           VARIABLE RE-DEFINITIONS
+  ======================================================================== */
+
+:root:not(.dark) {
+    --bg-color: transparent; /*rgb(249, 250, 251);*/
+    --body-bg-color: linear-gradient(160deg,
+    rgb(226 230 250) 0%,
+    rgb(231 230 236) 55%,
+    rgb(242 235 214) 100%);
+
+    --bg-color-alt: rgb(235, 235, 240);
+    --fg-color: rgb(17, 17, 20);
+    --fg-color-alt: rgb(28, 28, 32);
+
+    --header-bg-color: linear-gradient(323deg, rgb(10, 40, 90) 0%, rgb(0, 0, 50) 100%);
+    --header-fg-color: rgb(220, 230, 255);
+    --footer-bg-color: linear-gradient(to bottom,
+        rgb(226 230 250) 0%,
+        rgb(231 230 236) 30%,
+        rgb(200, 200, 250) 40%,
+    rgb(197 209 239) 80%,
+    rgb(191 230 236) 100%);
+    --footer-fg-color: rgb(20, 10, 50);
+    /* The first shade of the gradient below: the bar is painted by the image,
+       but the hamburger button only takes a background-color. */
+    --nav-bg-color: rgb(0, 0, 50);
+    --nav-bg-image: linear-gradient(180deg,
+        rgb(0, 0, 50) 0%,
+        rgb(10, 10, 60) 20%,
+        rgb(10, 40, 90) 40%,
+        rgb(70, 70, 140) 60%,
+        rgb(20, 100, 110) 100%);
+    --nav-fg-color: rgb(220, 230, 255);
+
+}
+
+
+/* ── Dark mode ────────────────────────────────────────────── */
+
+@media screen {
+    .dark {
+        --bg-color: transparent;
+        --body-bg-color: linear-gradient(160deg,
+        rgb(6, 14, 40) 0%,
+        rgb(14, 38, 72) 45%,
+        rgb(16, 52, 62) 100%);
+
+        --bg-color-alt: rgb(25, 25, 45);
+        --fg-color: rgb(226, 232, 240);
+        --fg-color-alt: rgb(250, 250, 255);
+
+        --header-bg-color: linear-gradient(323deg, rgb(15, 45, 95) 0%, rgb(10, 25, 65) 70%, rgb(6, 14, 40) 100%);
+        --header-fg-color: rgb(220, 232, 255);
+        --footer-bg-color: linear-gradient(to bottom,
+        var(--bg-color) 0%,
+        rgb(12, 22, 55) 30%,
+        rgb(15, 45, 95) 50%,
+        rgb(30, 75, 130) 70%,
+        rgb(25, 100, 130) 100%);
+        --footer-fg-color: rgb(232, 240, 255);
+        --nav-bg-color: rgb(6, 14, 40);
+        --nav-bg-image: linear-gradient(180deg,
+        rgb(6, 14, 40) 0%,
+        rgb(12, 22, 55) 20%,
+        rgb(15, 45, 95) 40%,
+        rgb(35, 70, 130) 60%,
+        rgb(25, 100, 130) 100%);
+        --nav-fg-color: rgb(220, 232, 255);
+    }
+}
+
+/* =======================================================================
+                              DECORATION RULES
+
+  They are in the 'theme' layer, as the built-in themes of Whakerexa do, so
+  that the contrast mode of the accessibility layer keeps the last word.
+
+  ======================================================================== */
+
+@layer theme {
+        /* Methods of a class (H4) */
+        @media screen {
+            .dark {
+                h4 {
+                    color: rgb(239 206 196); /* Name.function in code.css */
+                }
+            }
+
+        :root:not(.dark) {
+            h4 {
+                color: rgb(149 82 61); /* Name.function in code.css */
+            }
+        }
+}
+
+
+        /* 'layout.css' makes the background of all the children of a card transparent,
+           so the colors of the button of the footer are restored here. */
+
+        .card .card-footer a[role=button] {
+            background-color: var(--buttons-bg-color);
+            color: var(--buttons-fg-color);
+        }
+
+        .card .card-footer a[role=button]:hover {
+            background-color: var(--buttons-bg-color-hover);
+        }
+
+}

@@ -91,6 +91,12 @@ opts_export.theme = 'light'
 opts_export.favicon = 'icons/sppas.ico'   # relative path to statics
 opts_export.icon = 'images/sppas-logo-v5.png'   # relative path to statics
 opts_export.readme = True
+# New in ClammingPy 3.1
+# ... the table of contents is either a collapsible aside or a fixed panel
+opts_export.aside_toc = True
+# ... the theme is a file of the statics folder. It defines the colors of the
+# pages, and the reader can switch it for the high-contrast one of Whakerexa.
+opts_export.css_theme = 'clamming_theme.css'
 
 # For a local use:
 opts_export.wexa_statics = "/".join(("..", "sppas", "ui", 'swapp', 'whakerexa', 'wexa_statics'))

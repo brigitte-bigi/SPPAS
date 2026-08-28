@@ -11,6 +11,7 @@
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
@@ -29,6 +30,18 @@
               s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
 
               s.onload = function () {
+                const themes = new window.Wexa.ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
@@ -43,6 +56,19 @@
             <script type="module">
               if (window.location.protocol !== 'file:') {
                 await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
+                const themes = new ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
                 const book = new Book("main-content");
                 book.fill_table(false);
@@ -60,30 +86,28 @@
             <nav class="nav-wexa top" aria-label="Accessibility">
                 <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
                 <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
+                <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.1</h1>
+    <h1>sppas 5.0.3</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
-    <h1>sppas 5.0.1</h1>
-    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
-        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
+    <h1>Table of Contents</h1>
     <ul>
-<li><a role="button" tabindex="0" href="sppas.src.imgdata.html"> &crarr; Prev. Module</a></li>
-<li><a role="button" tabindex="0" href="sppasCoordsVideoReader.html"> &uarr; Prev. Class</a></li>
-<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
-<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
-<li><a role="button" tabindex="0" href="sppas.src.wkps.html"> &rdsh; Next Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-module" href="sppas.src.imgdata.html" class="wexa-link" data-target="_self"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-class" href="sppasCoordsVideoReader.html" class="wexa-link" data-target="_self"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" id="nav-index" href="index.html" class="wexa-link" data-target="_self"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" id="nav-next-class" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" id="nav-next-module" href="sppas.src.wkps.html" class="wexa-link" data-target="_self"> &rdsh; Next Module</a></li>
     </ul>
-    <h2>Table of Contents</h2>
     <ul id="toc"></ul>
     <hr>
-    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
-</nav>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://github.com/brigitte-bigi/ClammingPy">ClammingPy</a></small></p>
+</aside>
     <main id="main-content">
-    <section id="#sppas.src.videodata">    <h1>Module sppas.src.videodata</h1>
+    <section id="#sppas.src.videodata" class="chapter nonumber">    <h1>Module sppas.src.videodata</h1>
 <section id="#sppasSightsVideoBuffer">
 <h2>Class sppasSightsVideoBuffer</h2>
 

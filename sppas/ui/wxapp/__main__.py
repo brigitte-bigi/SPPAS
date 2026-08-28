@@ -235,7 +235,7 @@ def handle_error(launcher: SPPASLauncher):
     try:
         print(launcher.error_message)
         print(f"* * * * *  SPPAS exited with error number: {launcher.status:04d}  * * * * * ")
-        url = f"https://sppas.org/book_08_annexes.html#error-{launcher.status:04d}"
+        url = f"https://sppas.org/book_annexes.html#error-{launcher.status:04d}"
         if not webbrowser.open(url):
             print(f"Visit the following URL for error details: {url}")
     except Exception as e:

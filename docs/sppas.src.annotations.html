@@ -11,6 +11,7 @@
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
@@ -29,6 +30,18 @@
               s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
 
               s.onload = function () {
+                const themes = new window.Wexa.ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
@@ -43,6 +56,19 @@
             <script type="module">
               if (window.location.protocol !== 'file:') {
                 await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
+                const themes = new ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
                 const book = new Book("main-content");
                 book.fill_table(false);
@@ -60,30 +86,28 @@
             <nav class="nav-wexa top" aria-label="Accessibility">
                 <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
                 <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
+                <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.1</h1>
+    <h1>sppas 5.0.3</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
-    <h1>sppas 5.0.1</h1>
-    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
-        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
+    <h1>Table of Contents</h1>
     <ul>
-<li><a role="button" tabindex="0" href="sppas.src.analysis.html"> &crarr; Prev. Module</a></li>
-<li><a role="button" tabindex="0" href="SingleFilterTier.html"> &uarr; Prev. Class</a></li>
-<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
-<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
-<li><a role="button" tabindex="0" aria-disabled="true"> &rdsh; Next Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-module" href="sppas.src.analysis.html" class="wexa-link" data-target="_self"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-class" href="SingleFilterTier.html" class="wexa-link" data-target="_self"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" id="nav-index" href="index.html" class="wexa-link" data-target="_self"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" id="nav-next-class" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" id="nav-next-module" aria-disabled="true"> &rdsh; Next Module</a></li>
     </ul>
-    <h2>Table of Contents</h2>
     <ul id="toc"></ul>
     <hr>
-    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
-</nav>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://github.com/brigitte-bigi/ClammingPy">ClammingPy</a></small></p>
+</aside>
     <main id="main-content">
-    <section id="#sppas.src.annotations">
+    <section id="#sppas.src.annotations" class="chapter nonumber">
     <h1>sppas.src.annotations module</h1>
 <h2>List of classes</h2>
 
@@ -94,7 +118,7 @@
                 <h3>sppasFindTier</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasFindTier.html">Read me →</a>
+                <a role="button" id="card-link-sppasFindTier" class="wexa-link" data-target="_self" href="sppasFindTier.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -103,7 +127,7 @@
                 <h3>sppasParam</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasParam.html">Read me →</a>
+                <a role="button" id="card-link-sppasParam" class="wexa-link" data-target="_self" href="sppasParam.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -112,7 +136,7 @@
                 <h3>sppasFiles</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasFiles.html">Read me →</a>
+                <a role="button" id="card-link-sppasFiles" class="wexa-link" data-target="_self" href="sppasFiles.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -121,7 +145,7 @@
                 <h3>sppasBaseAnnotation</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasBaseAnnotation.html">Read me →</a>
+                <a role="button" id="card-link-sppasBaseAnnotation" class="wexa-link" data-target="_self" href="sppasBaseAnnotation.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -130,7 +154,7 @@
                 <h3>sppasDiagnosis</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasDiagnosis.html">Read me →</a>
+                <a role="button" id="card-link-sppasDiagnosis" class="wexa-link" data-target="_self" href="sppasDiagnosis.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -139,7 +163,7 @@
                 <h3>sppasAnnReport</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasAnnReport.html">Read me →</a>
+                <a role="button" id="card-link-sppasAnnReport" class="wexa-link" data-target="_self" href="sppasAnnReport.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -148,7 +172,7 @@
                 <h3>sppasMomel</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasMomel.html">Read me →</a>
+                <a role="button" id="card-link-sppasMomel" class="wexa-link" data-target="_self" href="sppasMomel.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -157,7 +181,7 @@
                 <h3>sppasIntsint</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasIntsint.html">Read me →</a>
+                <a role="button" id="card-link-sppasIntsint" class="wexa-link" data-target="_self" href="sppasIntsint.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -166,7 +190,7 @@
                 <h3>sppasFillIPUs</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasFillIPUs.html">Read me →</a>
+                <a role="button" id="card-link-sppasFillIPUs" class="wexa-link" data-target="_self" href="sppasFillIPUs.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -175,7 +199,7 @@
                 <h3>sppasSearchIPUs</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasSearchIPUs.html">Read me →</a>
+                <a role="button" id="card-link-sppasSearchIPUs" class="wexa-link" data-target="_self" href="sppasSearchIPUs.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -184,7 +208,7 @@
                 <h3>sppasTextNorm</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasTextNorm.html">Read me →</a>
+                <a role="button" id="card-link-sppasTextNorm" class="wexa-link" data-target="_self" href="sppasTextNorm.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -193,7 +217,7 @@
                 <h3>sppasPhon</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasPhon.html">Read me →</a>
+                <a role="button" id="card-link-sppasPhon" class="wexa-link" data-target="_self" href="sppasPhon.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -202,7 +226,7 @@
                 <h3>sppasAlign</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasAlign.html">Read me →</a>
+                <a role="button" id="card-link-sppasAlign" class="wexa-link" data-target="_self" href="sppasAlign.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -211,7 +235,7 @@
                 <h3>sppasSyll</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasSyll.html">Read me →</a>
+                <a role="button" id="card-link-sppasSyll" class="wexa-link" data-target="_self" href="sppasSyll.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -220,7 +244,7 @@
                 <h3>sppasTGA</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasTGA.html">Read me →</a>
+                <a role="button" id="card-link-sppasTGA" class="wexa-link" data-target="_self" href="sppasTGA.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -229,7 +253,7 @@
                 <h3>sppasIVA</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasIVA.html">Read me →</a>
+                <a role="button" id="card-link-sppasIVA" class="wexa-link" data-target="_self" href="sppasIVA.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -238,7 +262,7 @@
                 <h3>sppasSelfRepet</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasSelfRepet.html">Read me →</a>
+                <a role="button" id="card-link-sppasSelfRepet" class="wexa-link" data-target="_self" href="sppasSelfRepet.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -247,7 +271,7 @@
                 <h3>sppasActivity</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasActivity.html">Read me →</a>
+                <a role="button" id="card-link-sppasActivity" class="wexa-link" data-target="_self" href="sppasActivity.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -256,7 +280,7 @@
                 <h3>sppasRMS</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasRMS.html">Read me →</a>
+                <a role="button" id="card-link-sppasRMS" class="wexa-link" data-target="_self" href="sppasRMS.html">Read me →</a>
             </div>
         </article>
         <article class="card">
@@ -265,106 +289,115 @@
                 <h3>sppasFormants</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasFormants.html">Read me →</a>
+                <a role="button" id="card-link-sppasFormants" class="wexa-link" data-target="_self" href="sppasFormants.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>21</span></div>
             <div class="card-body">
-                <h3>sppasOtherRepet</h3>
+                <h3>sppasVowelFilter</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasOtherRepet.html">Read me →</a>
+                <a role="button" id="card-link-sppasVowelFilter" class="wexa-link" data-target="_self" href="sppasVowelFilter.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>22</span></div>
             <div class="card-body">
-                <h3>sppasOverActivity</h3>
+                <h3>sppasOtherRepet</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasOverActivity.html">Read me →</a>
+                <a role="button" id="card-link-sppasOtherRepet" class="wexa-link" data-target="_self" href="sppasOtherRepet.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>23</span></div>
             <div class="card-body">
-                <h3>sppasStopWords</h3>
+                <h3>sppasOverActivity</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasStopWords.html">Read me →</a>
+                <a role="button" id="card-link-sppasOverActivity" class="wexa-link" data-target="_self" href="sppasOverActivity.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>24</span></div>
             <div class="card-body">
-                <h3>sppasLexMetric</h3>
+                <h3>sppasStopWords</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasLexMetric.html">Read me →</a>
+                <a role="button" id="card-link-sppasStopWords" class="wexa-link" data-target="_self" href="sppasStopWords.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>25</span></div>
             <div class="card-body">
-                <h3>sppasReOcc</h3>
+                <h3>sppasLexMetric</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasReOcc.html">Read me →</a>
+                <a role="button" id="card-link-sppasLexMetric" class="wexa-link" data-target="_self" href="sppasLexMetric.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>26</span></div>
             <div class="card-body">
-                <h3>sppasAnnotationsManager</h3>
+                <h3>sppasReOcc</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasAnnotationsManager.html">Read me →</a>
+                <a role="button" id="card-link-sppasReOcc" class="wexa-link" data-target="_self" href="sppasReOcc.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>27</span></div>
             <div class="card-body">
-                <h3>sppasLexRep</h3>
+                <h3>sppasAnnotationsManager</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasLexRep.html">Read me →</a>
+                <a role="button" id="card-link-sppasAnnotationsManager" class="wexa-link" data-target="_self" href="sppasAnnotationsManager.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>28</span></div>
             <div class="card-body">
-                <h3>sppasHandPose</h3>
+                <h3>sppasLexRep</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasHandPose.html">Read me →</a>
+                <a role="button" id="card-link-sppasLexRep" class="wexa-link" data-target="_self" href="sppasLexRep.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>29</span></div>
             <div class="card-body">
-                <h3>sppasFaceDetection</h3>
+                <h3>sppasHandPose</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasFaceDetection.html">Read me →</a>
+                <a role="button" id="card-link-sppasHandPose" class="wexa-link" data-target="_self" href="sppasHandPose.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>30</span></div>
             <div class="card-body">
-                <h3>sppasFaceSights</h3>
+                <h3>sppasFaceDetection</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="sppasFaceSights.html">Read me →</a>
+                <a role="button" id="card-link-sppasFaceDetection" class="wexa-link" data-target="_self" href="sppasFaceDetection.html">Read me →</a>
             </div>
         </article>
         <article class="card">
             <div class="card-header"><span>31</span></div>
             <div class="card-body">
+                <h3>sppasFaceSights</h3>
+            </div>
+            <div class="card-footer">
+                <a role="button" id="card-link-sppasFaceSights" class="wexa-link" data-target="_self" href="sppasFaceSights.html">Read me →</a>
+            </div>
+        </article>
+        <article class="card">
+            <div class="card-header"><span>32</span></div>
+            <div class="card-body">
                 <h3>ImageFaceLandmark</h3>
             </div>
             <div class="card-footer">
-                <a role="button" href="ImageFaceLandmark.html">Read me →</a>
+                <a role="button" id="card-link-ImageFaceLandmark" class="wexa-link" data-target="_self" href="ImageFaceLandmark.html">Read me →</a>
             </div>
         </article>
         </section>

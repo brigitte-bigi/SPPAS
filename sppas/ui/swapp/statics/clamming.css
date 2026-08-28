@@ -4,7 +4,7 @@
 :contact: contact@sppas.org
 :summary: Style to be used for ClammingPy documentations.
 
-.. _This file is part of ClammingPy: https://clamming.sf.net
+.. _This file is part of ClammingPy: https://github.com/brigitte-bigi/ClammingPy
 ..
     -------------------------------------------------------------------------
 
@@ -38,41 +38,26 @@
 
 :root {
     --toc-width: 18rem;
-    --header-height: 33vh;
+    --header-height: 32vh;
     --header-slidein: animDisabled;
-}
-
-:root:not(.dark) {
-    --nav-bg-color: rgb(30, 30, 60);
-    --nav-fg-color: rgb(230, 230, 230);
-    --footer-bg-color: rgb(30, 30, 60);
 }
 
 /* too small titles ... make them bigger */
 h4 {
     font-size: calc(1.3 * var(--font-size));
     letter-spacing: calc(1.4*var(--letter-spacing));
-    color: var(--h4-color);
     font-weight: var(--font-weight-semibold);
 }
 
 h5 {
     font-size: calc(1.1 * var(--font-size));
     letter-spacing: calc(1.2*var(--letter-spacing));
-    color: var(--h5-color);
 }
 
 /* functions */
 h4 {
     margin-top: calc(2 * var(--typography-spacing-vertical));
-    color: #0066BB;  /* Name.function in code.css */
 }
-
-article, details {
-    margin: 0;
-    margin-left: 1.5rem;
-}
-
 
 /* =======================================================================
                               OTHER DEFINITIONS
@@ -95,21 +80,40 @@ article, details {
     text-align: center;
 }
 
-/* 'layout.css' makes the background of all the children of a card transparent,
-   so the colors of the button of the footer are restored here. */
-
-.card .card-footer a[role=button] {
-    background-color: var(--buttons-bg-color);
-    color: var(--buttons-fg-color);
-}
-
-.card .card-footer a[role=button]:hover {
-    background-color: var(--buttons-bg-color-hover);
-}
-
 /* =======================================================================
                               BOOK NAVIGATION
   ======================================================================== */
 
 /* The layout of 'nav.book-toc', of its titles and of its browsing buttons is
    given by 'extras/book.css', and the printed layout by 'print.css'. */
+
+/* The top nav stands over the content, so it starts where the content starts:
+   the table of contents is no longer under it, and needs nothing pushing it
+   down. 'book.css' pushes it by '--nav-min-height' and pulls it back up by a
+   vertical spacing, which is the gap between the two navigations. */
+
+nav.nav-wexa.top {
+    left: var(--toc-width);
+}
+
+body:has(nav.nav-wexa.top) nav.book-toc {
+    top: 0;
+    margin-top: 0;
+}
+
+/* A table of contents that is set aside leaves the content the width of the
+   band its button stands in, and the top nav starts where the content does. */
+
+body:has(aside.book-toc-aside) nav.nav-wexa.top {
+    left: var(--toc-aside-width);
+}
+
+/* Under the breakpoint of 'book.css', the content takes the whole width back,
+   and so does the top nav. */
+
+@media (max-width: 1023.98px) {
+    nav.nav-wexa.top,
+    body:has(aside.book-toc-aside) nav.nav-wexa.top {
+        left: 0;
+    }
+}

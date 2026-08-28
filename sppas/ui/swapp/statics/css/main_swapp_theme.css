@@ -49,7 +49,7 @@
     --fg-color: rgb(17, 17, 20);
     --fg-color-alt: rgb(28, 28, 32);
 
-    --header-bg-color: linear-gradient(323deg, rgb(15, 45, 95) 0%, rgb(10, 25, 65) 70%, rgb(6, 14, 40) 100%);
+    --header-bg-color: linear-gradient(323deg, rgb(10, 40, 90) 0%, rgb(0, 0, 50) 100%);
     --header-fg-color: rgb(220, 230, 255);
     --footer-bg-color: linear-gradient(to bottom,
         rgb(226 230 250) 0%,
@@ -97,7 +97,6 @@
 
     --card-bg-color: rgb(238, 233, 242);
     --card-fg-color: rgb(10, 40, 90);
-
 
     --img-bg-color: rgba(248, 250, 255, 0.4);
 

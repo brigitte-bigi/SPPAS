@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+        <head>
+            
+            <title>sppas doc</title>
+
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+            <meta name="description" content="Python Class Documentation of sppasVowelFilter. SPPAS integration of the filtering of erroneous formant values." />
+
+            <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/code.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/extras/book.css" type="text/css" />
+            <link rel="stylesheet" href="../sppas/ui/swapp/statics/clamming.css" type="text/css" />
+
+            <!-- Whakerexa JS loader: bundle on file://, ES6 modules on http(s) -->
+            <script>
+            (function () {
+              const usingFile = (window.location.protocol === 'file:');
+              if (usingFile === false) {
+                return;
+              }
+              const s = document.createElement('script');
+              s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
+
+              s.onload = function () {
+                const themes = new window.Wexa.ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const book = new window.Wexa.Book("main-content");
+                  book.fill_table(false);
+                });
+              };
+
+              document.head.appendChild(s);
+            })();
+            </script>
+
+            <!-- The Book extra is not part of the 'wexa.js' API: it is imported apart -->
+            <script type="module">
+              if (window.location.protocol !== 'file:') {
+                await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
+                const themes = new ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
+                const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
+                const book = new Book("main-content");
+                book.fill_table(false);
+              }
+            </script>
+
+       </head>
+       
+       <body>
+        <header>
+
+            <a role="button" class="skip" href="#main-content" aria-label="Go to main content">
+                Go to main content
+            </a>
+            <nav class="nav-wexa top" aria-label="Accessibility">
+                <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
+                <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
+                <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
+            </nav>
+        
+    <h1>sppas 5.0.3</h1>
+        <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
+        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    </header>
+    <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
+    <h1>Table of Contents</h1>
+    <ul>
+<li><a role="button" tabindex="0" id="nav-prev-module" href="sppas.src.analysis.html" class="wexa-link" data-target="_self"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-class" href="sppasFormants.html" class="wexa-link" data-target="_self"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" id="nav-index" href="index.html" class="wexa-link" data-target="_self"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" id="nav-next-class" href="sppasOtherRepet.html" class="wexa-link" data-target="_self"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" id="nav-next-module" aria-disabled="true"> &rdsh; Next Module</a></li>
+    </ul>
+    <ul id="toc"></ul>
+    <hr>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://github.com/brigitte-bigi/ClammingPy">ClammingPy</a></small></p>
+</aside>
+    <main id="main-content">
+    <section id="#sppas.src.annotations" class="chapter nonumber">    <h1>Module sppas.src.annotations</h1>
+<section id="#sppasVowelFilter">
+<h2>Class sppasVowelFilter</h2>
+
+<section>
+<h3 id="#description_sppasVowelFilter">Description</h3>
+    <article class="docstring">
+<p><em>SPPAS integration of the filtering of erroneous formant values.</em></p>
+
+<p>Erroneous F1/F2 values are identified with the Mahalanobis distance of
+the tokens to the expected values of their vowel class, as proposed by
+Lancien et al. (2023). Each pair of tiers created by the Formants
+annotation for a method is filtered with its own distributions.</p>
+
+<p>Such distributions can't be estimated on a file independently of the
+others: they require all the tokens of a corpus. They are then estimated
+by 'batch_processing' on all its files, and given to 'run'.</p>
+
+    </article>
+</section>
+<section>
+<h3 id="#constructor_sppasVowelFilter">Constructor</h3>
+<h4>__init__</h4>
+
+    <article class="docstring">
+<p><em>Create a new sppasVowelFilter instance.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>log</strong>: (sppasLog) Human-readable logs.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new sppasVowelFilter instance.</span>
+
+<span class="sd">    :param log: (sppasLog) Human-readable logs.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">sppasVowelFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;vowelfilter.json&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__filter</span> <span class="o">=</span> <span class="n">VowelFilterEstimator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;threshold&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#public_fct_sppasVowelFilter">Public functions</h3>
+<h4>fix_options</h4>
+
+    <article class="docstring">
+<p><em>Fix all options.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>options</strong>: (sppasOption)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fix_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fix all options.</span>
+
+<span class="sd">        :param options: (sppasOption)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;threshold&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;min_occ&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_min_occ</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;coda&#39;</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_coda</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="s1">&#39;pattern&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AnnotationOptionError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_threshold</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;threshold&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_min_occ</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_min_occ</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_occ&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_coda</h4>
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coda</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;coda&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_threshold</h4>
+
+    <article class="docstring">
+<p><em>Set the maximum distance of a token to the profile of its class.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>float</em>) Number of standard deviations</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>TypeError</em>: Given value is not a number.</li>
+<li><em>ValueError</em>: Given value is not a positive number.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the maximum distance of a token to the profile of its class.</span>
+
+<span class="sd">        :param value: (float) Number of standard deviations</span>
+<span class="sd">        :raises: TypeError: Given value is not a number.</span>
+<span class="sd">        :raises: ValueError: Given value is not a positive number.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__filter</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_min_occ</h4>
+
+    <article class="docstring">
+<p><em>Set the number of occurrences a vowel class requires.</em></p>
+
+<p>A class with less occurrences has no estimated distribution, so that
+none of its tokens is discarded.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>int</em>) Number of occurrences, at least 2</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>TypeError</em>: Given value is not an integer.</li>
+<li><em>ValueError</em>: Given value is lower than the lowest accepted one.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_min_occ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the number of occurrences a vowel class requires.</span>
+
+<span class="sd">        A class with less occurrences has no estimated distribution, so that</span>
+<span class="sd">        none of its tokens is discarded.</span>
+
+<span class="sd">        :param value: (int) Number of occurrences, at least 2</span>
+<span class="sd">        :raises: TypeError: Given value is not an integer.</span>
+<span class="sd">        :raises: ValueError: Given value is lower than the lowest accepted one.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_occ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">VowelProfiles</span><span class="o">.</span><span class="n">check_min_tokens</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_coda</h4>
+
+    <article class="docstring">
+<p><em>Set whether the syllable position is part of the vowel class.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Add the position of the vowel to its class</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_coda</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set whether the syllable position is part of the vowel class.</span>
+
+<span class="sd">        :param value: (bool) Add the position of the vowel to its class</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;coda&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>convert</h4>
+
+    <article class="docstring">
+<p><em>Discard the erroneous formant values of a pair of tiers.</em></p>
+
+<p>A value is discarded by assigning it a zero, like the Formants
+annotation is doing. No value is discarded if no distributions are
+given: they are estimated on all the files of a corpus.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier_f1</strong>: (sppasTier) Tier with the F1 values of a method</li>
+<li><strong>tier_f2</strong>: (sppasTier) Tier with the F2 values of a method</li>
+<li><strong>syll_tier</strong>: (sppasTier) Tier with time-aligned syllables, or None</li>
+<li><strong>profiles</strong>: (VowelProfiles) Estimated distributions, or None</li>
+<li><strong>file_id</strong>: (<em>str</em>) Identifier of the file the tiers come from</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTier, sppasTier, sppasTier) Filtered F1, F2 and distances</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_f1</span><span class="p">,</span> <span class="n">tier_f2</span><span class="p">,</span> <span class="n">syll_tier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">profiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard the erroneous formant values of a pair of tiers.</span>
+
+<span class="sd">        A value is discarded by assigning it a zero, like the Formants</span>
+<span class="sd">        annotation is doing. No value is discarded if no distributions are</span>
+<span class="sd">        given: they are estimated on all the files of a corpus.</span>
+
+<span class="sd">        :param tier_f1: (sppasTier) Tier with the F1 values of a method</span>
+<span class="sd">        :param tier_f2: (sppasTier) Tier with the F2 values of a method</span>
+<span class="sd">        :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None</span>
+<span class="sd">        :param profiles: (VowelProfiles) Estimated distributions, or None</span>
+<span class="sd">        :param file_id: (str) Identifier of the file the tiers come from</span>
+<span class="sd">        :return: (sppasTier, sppasTier, sppasTier) Filtered F1, F2 and distances</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filter</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">profiles</span><span class="p">,</span> <span class="n">tier_f1</span><span class="p">,</span> <span class="n">tier_f2</span><span class="p">,</span> <span class="n">syll_tier</span><span class="p">,</span> <span class="n">file_id</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_inputs</h4>
+
+    <article class="docstring">
+<p><em>Return the filename with formants and the one with syllables.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em>) The inputs of a file root</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>NoTierInputError</em>: No file with formant values</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>str</em>, <em>str</em>) Formants filename and syllables filename or None</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the filename with formants and the one with syllables.</span>
+
+<span class="sd">        :param input_files: (list) The inputs of a file root</span>
+<span class="sd">        :raises: NoTierInputError: No file with formant values</span>
+<span class="sd">        :return: (str, str) Formants filename and syllables filename or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">_patterns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_patterns</span><span class="p">()</span>
+    <span class="n">_formants_filename</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_syll_filename</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
+        <span class="n">_fn</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_formants_filename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">_fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">_patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">_formants_filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">elif</span> <span class="n">_syll_filename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">_patterns</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">_fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">_patterns</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="n">_syll_filename</span> <span class="o">=</span> <span class="n">filename</span>
+    <span class="k">if</span> <span class="n">_formants_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No file with formant values, i.e. with pattern &#39;</span><span class="si">{:s}</span><span class="s2">&#39;.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">raise</span> <span class="n">NoTierInputError</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;coda&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">_formants_filename</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_formants_filename</span><span class="p">,</span> <span class="n">_syll_filename</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>run</h4>
+
+    <article class="docstring">
+<p><em>Run the automatic annotation process on an input.</em></p>
+
+<p>Input file is a tuple with 2 files: the file with the formant values
+and the optional one with the time-aligned syllables.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>input_files</strong>: (<em>list</em> of <em>str</em>) (formants, time-aligned syllables)</li>
+<li><strong>output</strong>: (<em>str</em>) the output name</li>
+<li><strong>kwargs</strong>: (VowelProfiles) profiles=the estimated distributions</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTranscription)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_files</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the automatic annotation process on an input.</span>
+
+<span class="sd">        Input file is a tuple with 2 files: the file with the formant values</span>
+<span class="sd">        and the optional one with the time-aligned syllables.</span>
+
+<span class="sd">        :param input_files: (list of str) (formants, time-aligned syllables)</span>
+<span class="sd">        :param output: (str) the output name</span>
+<span class="sd">        :param kwargs: (VowelProfiles) profiles=the estimated distributions</span>
+<span class="sd">        :return: (sppasTranscription)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">_profiles</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;profiles&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_profiles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;No estimated distributions: no value can be discarded.&#39;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+    <span class="n">_formants_filename</span><span class="p">,</span> <span class="n">_syll_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+    <span class="n">_pairs</span><span class="p">,</span> <span class="n">_syll_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_tiers</span><span class="p">(</span><span class="n">_formants_filename</span><span class="p">,</span> <span class="n">_syll_filename</span><span class="p">)</span>
+    <span class="n">_trs_output</span> <span class="o">=</span> <span class="n">sppasTranscription</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">_trs_output</span><span class="o">.</span><span class="n">set_meta</span><span class="p">(</span><span class="s1">&#39;annotation_result_of&#39;</span><span class="p">,</span> <span class="n">_formants_filename</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__append_filtered</span><span class="p">(</span><span class="n">_trs_output</span><span class="p">,</span> <span class="n">_pairs</span><span class="p">,</span> <span class="n">_syll_tier</span><span class="p">,</span> <span class="n">_profiles</span><span class="p">,</span> <span class="n">_formants_filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_out_file_ext</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">_parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">_output_file</span><span class="p">)</span>
+        <span class="n">_parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">_trs_output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_output_file</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_trs_output</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>batch_processing</h4>
+
+    <article class="docstring">
+<p><em>Filter the erroneous formant values of a bunch of files.</em></p>
+
+<p>The feature distributions are estimated on the tokens of all the
+given files, then each file is annotated with these distributions.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>file_names</strong>: (<em>list</em>) List of inputs</li>
+<li><strong>progress</strong>: ProcessProgressTerminal() or ProcessProgressDialog()</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em> of <em>str</em>) List of created files</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">batch_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the erroneous formant values of a bunch of files.</span>
+
+<span class="sd">        The feature distributions are estimated on the tokens of all the</span>
+<span class="sd">        given files, then each file is annotated with these distributions.</span>
+
+<span class="sd">        :param file_names: (list) List of inputs</span>
+<span class="sd">        :param progress: ProcessProgressTerminal() or ProcessProgressDialog()</span>
+<span class="sd">        :return: (list of str) List of created files</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">_profiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collect_profiles</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">sppasVowelFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">batch_processing</span><span class="p">(</span><span class="n">file_names</span><span class="p">,</span> <span class="n">progress</span><span class="p">,</span> <span class="n">profiles</span><span class="o">=</span><span class="n">_profiles</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_output_pattern</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation uses in an output filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_output_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation uses in an output filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outputpattern&#39;</span><span class="p">,</span> <span class="s1">&#39;-vfilter&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_patterns</h4>
+
+    <article class="docstring">
+<p><em>Pattern this annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_input_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pattern this annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern1&#39;</span><span class="p">,</span> <span class="s1">&#39;-formants&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inputpattern2&#39;</span><span class="p">,</span> <span class="s1">&#39;-syll&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_input_extensions</h4>
+
+    <article class="docstring">
+<p><em>Extensions that the annotation expects for its input filename.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_input_extensions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extensions that the annotation expects for its input filename.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">),</span> <span class="n">sppasFiles</span><span class="o">.</span><span class="n">get_informat_extensions</span><span class="p">(</span><span class="s1">&#39;ANNOT_ANNOT&#39;</span><span class="p">)]</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+<section>
+<h3 id="#protected_fct_sppasVowelFilter">Protected functions</h3>
+<h4>__collect_profiles</h4>
+
+    <article class="docstring">
+<p><em>Return the estimated feature distributions of all the given files.</em></p>
+
+<p>The vowels of each file are added to the distributions, then these
+latter are estimated by VowelProfiles.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>file_names</strong>: (<em>list</em>) List of inputs</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(VowelProfiles) The estimated distributions</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__collect_profiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VowelProfiles</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the estimated feature distributions of all the given files.</span>
+
+<span class="sd">        The vowels of each file are added to the distributions, then these</span>
+<span class="sd">        latter are estimated by VowelProfiles.</span>
+
+<span class="sd">        :param file_names: (list) List of inputs</span>
+<span class="sd">        :return: (VowelProfiles) The estimated distributions</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">_profiles</span> <span class="o">=</span> <span class="n">VowelProfiles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;min_occ&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">input_files</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fix_inputs</span><span class="p">(</span><span class="n">input_files</span><span class="p">)</span>
+            <span class="n">_formants_filename</span><span class="p">,</span> <span class="n">_syll_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">(</span><span class="n">_inputs</span><span class="p">)</span>
+            <span class="n">_pairs</span><span class="p">,</span> <span class="n">_syll_tier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_tiers</span><span class="p">(</span><span class="n">_formants_filename</span><span class="p">,</span> <span class="n">_syll_filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">tier_f1</span><span class="p">,</span> <span class="n">tier_f2</span> <span class="ow">in</span> <span class="n">_pairs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__filter</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">_profiles</span><span class="p">,</span> <span class="n">tier_f1</span><span class="p">,</span> <span class="n">tier_f2</span><span class="p">,</span> <span class="n">_syll_tier</span><span class="p">,</span> <span class="n">_formants_filename</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__print_profiles</span><span class="p">(</span><span class="n">_profiles</span><span class="o">.</span><span class="n">estimate</span><span class="p">(),</span> <span class="n">_profiles</span><span class="o">.</span><span class="n">get_class_names</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">_profiles</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__print_profiles</h4>
+
+    <article class="docstring">
+<p><em>Print the number of estimated distributions in the user log.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>nb_profiles</strong>: (<em>int</em>) Number of estimated distributions</li>
+<li><strong>class_names</strong>: (<em>tuple</em>) Names of the collected vowel classes</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__print_profiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_profiles</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">class_names</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the number of estimated distributions in the user log.</span>
+
+<span class="sd">        :param nb_profiles: (int) Number of estimated distributions</span>
+<span class="sd">        :param class_names: (tuple) Names of the collected vowel classes</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Estimated </span><span class="si">{:d}</span><span class="s1"> distributions of </span><span class="si">{:d}</span><span class="s1"> vowel classes.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nb_profiles</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_names</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_newline</span><span class="p">()</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__append_filtered</h4>
+
+    <article class="docstring">
+<p><em>Add the filtered tiers of each pair of tiers to the result.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>trs_output</strong>: (sppasTranscription) The result the tiers are added to</li>
+<li><strong>pairs</strong>: (<em>list</em>) List of (F1 tier, F2 tier)</li>
+<li><strong>syll_tier</strong>: (sppasTier) Tier with time-aligned syllables, or None</li>
+<li><strong>profiles</strong>: (VowelProfiles) Estimated distributions, or None</li>
+<li><strong>file_id</strong>: (<em>str</em>) Identifier of the file the tiers come from</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__append_filtered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trs_output</span><span class="p">,</span> <span class="n">pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">syll_tier</span><span class="p">:</span> <span class="n">sppasTier</span><span class="p">,</span> <span class="n">profiles</span><span class="p">:</span> <span class="n">VowelProfiles</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the filtered tiers of each pair of tiers to the result.</span>
+
+<span class="sd">        :param trs_output: (sppasTranscription) The result the tiers are added to</span>
+<span class="sd">        :param pairs: (list) List of (F1 tier, F2 tier)</span>
+<span class="sd">        :param syll_tier: (sppasTier) Tier with time-aligned syllables, or None</span>
+<span class="sd">        :param profiles: (VowelProfiles) Estimated distributions, or None</span>
+<span class="sd">        :param file_id: (str) Identifier of the file the tiers come from</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">tier_f1</span><span class="p">,</span> <span class="n">tier_f2</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">filtered_tier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tier_f1</span><span class="p">,</span> <span class="n">tier_f2</span><span class="p">,</span> <span class="n">syll_tier</span><span class="p">,</span> <span class="n">profiles</span><span class="p">,</span> <span class="n">file_id</span><span class="p">):</span>
+            <span class="n">trs_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filtered_tier</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__print_filtered</span><span class="p">(</span><span class="n">tier_f1</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__print_filtered</h4>
+
+    <article class="docstring">
+<p><em>Print the result of the last filtered pair of tiers in the user log.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>tier_f1</strong>: (sppasTier) The filtered tier with the F1 values</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__print_filtered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tier_f1</span><span class="p">:</span> <span class="n">sppasTier</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the result of the last filtered pair of tiers in the user log.</span>
+
+<span class="sd">        :param tier_f1: (sppasTier) The filtered tier with the F1 values</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logfile</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1">: filtered </span><span class="si">{:d}</span><span class="s1"> formant values among </span><span class="si">{:d}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tier_f1</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filter</span><span class="o">.</span><span class="n">get_nb_filtered</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filter</span><span class="o">.</span><span class="n">get_nb_values</span><span class="p">()),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">annots</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__read_tiers</h4>
+
+    <article class="docstring">
+<p><em>Return the pairs of tiers with formant values and the syllables.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>formants_filename</strong>: (<em>str</em>) Name of a file with formant values</li>
+<li><strong>syll_filename</strong>: (<em>str</em>) Name of a file with syllables, or None</li>
+</ul>
+
+<h5>Raises</h5>
+
+<ul>
+<li><em>NoTierInputError</em>: A tier with formant values is missing</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em>, sppasTier) Pairs of F1/F2 tiers and syllables tier</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">__read_tiers</span><span class="p">(</span><span class="n">formants_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">syll_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the pairs of tiers with formant values and the syllables.</span>
+
+<span class="sd">        :param formants_filename: (str) Name of a file with formant values</span>
+<span class="sd">        :param syll_filename: (str) Name of a file with syllables, or None</span>
+<span class="sd">        :raises: NoTierInputError: A tier with formant values is missing</span>
+<span class="sd">        :return: (list, sppasTier) Pairs of F1/F2 tiers and syllables tier</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">_parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">formants_filename</span><span class="p">)</span>
+    <span class="n">_trs_input</span> <span class="o">=</span> <span class="n">_parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">_pairs</span> <span class="o">=</span> <span class="n">sppasVowelFilter</span><span class="o">.</span><span class="n">__get_formant_pairs</span><span class="p">(</span><span class="n">_trs_input</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_pairs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;No tier with formant values found in </span><span class="si">{:s}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">formants_filename</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">NoTierInputError</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_pairs</span><span class="p">,</span> <span class="n">sppasVowelFilter</span><span class="o">.</span><span class="n">__read_syll_tier</span><span class="p">(</span><span class="n">syll_filename</span><span class="p">))</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__get_formant_pairs</h4>
+
+    <article class="docstring">
+<p><em>Return the pairs of F1/F2 tiers to be filtered, one of each method.</em></p>
+
+<p>The F1 and F2 tiers are storing the values of all the methods as the
+alternative tags of a label: they are the candidate values of the
+formant, not the value of a given method. The tier of a method is
+then required to filter it, and the F1 and F2 tiers are used only if
+the Formants annotation enabled one method, i.e. if it didn't create
+a tier for each of them.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>trs</strong>: (sppasTranscription) The read formant values</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(<em>list</em>) List of (F1 tier, F2 tier)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">__get_formant_pairs</span><span class="p">(</span><span class="n">trs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the pairs of F1/F2 tiers to be filtered, one of each method.</span>
+
+<span class="sd">        The F1 and F2 tiers are storing the values of all the methods as the</span>
+<span class="sd">        alternative tags of a label: they are the candidate values of the</span>
+<span class="sd">        formant, not the value of a given method. The tier of a method is</span>
+<span class="sd">        then required to filter it, and the F1 and F2 tiers are used only if</span>
+<span class="sd">        the Formants annotation enabled one method, i.e. if it didn&#39;t create</span>
+<span class="sd">        a tier for each of them.</span>
+
+<span class="sd">        :param trs: (sppasTranscription) The read formant values</span>
+<span class="sd">        :return: (list) List of (F1 tier, F2 tier)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">_pairs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">trs</span><span class="p">:</span>
+        <span class="n">_name</span> <span class="o">=</span> <span class="n">tier</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;F1-&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">_tier_f2</span> <span class="o">=</span> <span class="n">trs</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;F2-&#39;</span> <span class="o">+</span> <span class="n">_name</span><span class="p">[</span><span class="mi">3</span><span class="p">:],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_tier_f2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tier</span><span class="p">,</span> <span class="n">_tier_f2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_pairs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">_tier_f1</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">formants</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="s1">&#39;F1&#39;</span><span class="p">)</span>
+        <span class="n">_tier_f2</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">formants</span><span class="p">(</span><span class="n">trs</span><span class="p">,</span> <span class="s1">&#39;F2&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_tier_f1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">_tier_f2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">_tier_f1</span><span class="p">,</span> <span class="n">_tier_f2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">_pairs</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>__read_syll_tier</h4>
+
+    <article class="docstring">
+<p><em>Return the tier with time-aligned syllables of a file.</em></p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>syll_filename</strong>: (<em>str</em>) Name of a file with syllables, or None</li>
+</ul>
+
+<h5>Returns</h5>
+
+<ul>
+<li>(sppasTier|None)</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">__read_syll_tier</span><span class="p">(</span><span class="n">syll_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sppasTier</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the tier with time-aligned syllables of a file.</span>
+
+<span class="sd">        :param syll_filename: (str) Name of a file with syllables, or None</span>
+<span class="sd">        :return: (sppasTier|None)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">syll_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">_parser</span> <span class="o">=</span> <span class="n">sppasTrsRW</span><span class="p">(</span><span class="n">syll_filename</span><span class="p">)</span>
+    <span class="n">_trs_syll</span> <span class="o">=</span> <span class="n">_parser</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">_syll_tier</span> <span class="o">=</span> <span class="n">sppasFindTier</span><span class="o">.</span><span class="n">aligned_syllables</span><span class="p">(</span><span class="n">_trs_syll</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_syll_tier</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;No tier with time-aligned syllables in </span><span class="si">{:s}</span><span class="s1">. The position of the vowels is ignored.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">syll_filename</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">_syll_tier</span>
+</code></pre></div>
+
+    </details>
+
+
+</section>
+</section>    </section>    </main>
+    
+            <footer>
+                <p class="copyright">Copyright (C) 2011-2026  Brigitte Bigi, CNRS</p>
+            </footer>
+        
+</body>
+</html>

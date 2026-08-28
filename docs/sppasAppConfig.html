@@ -11,6 +11,7 @@
 
             <link rel="logo icon" href="../sppas/ui/swapp/statics/icons/sppas.ico" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/wexa.css" type="text/css" media="screen" />
+            <link rel="stylesheet" id="wexa-theme" href="../sppas/ui/swapp/statics/clamming_theme.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/print.css" type="text/css" media="print" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/layout.css" type="text/css" />
             <link rel="stylesheet" href="../sppas/ui/swapp/whakerexa/wexa_statics/css/menu.css" type="text/css" />
@@ -29,6 +30,18 @@
               s.src = '../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.bundle.js';
 
               s.onload = function () {
+                const themes = new window.Wexa.ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 window.Wexa.onload.addLoadFunction(function () {
                   const book = new window.Wexa.Book("main-content");
                   book.fill_table(false);
@@ -43,6 +56,19 @@
             <script type="module">
               if (window.location.protocol !== 'file:') {
                 await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/wexa.js');
+                const { ThemeManager } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/theme_manager.js');
+                const themes = new ThemeManager();
+                themes.register('clamming_theme', '../sppas/ui/swapp/statics/clamming_theme.css');
+                themes.register('highcontrast', '../sppas/ui/swapp/whakerexa/wexa_statics/css/themes/wexa_theme_highcontrast.css');
+                themes.setDefault('clamming_theme');
+                window.themes = themes;
+
+                window.Wexa.onload.addLoadFunction(function () {
+                  const wexaLinks = [];
+                  document.querySelectorAll('a.wexa-link[id]').forEach(function (a) { wexaLinks.push(a.id); });
+                  window.Wexa.links.handleLinksWithParameters(wexaLinks);
+                });
+
                 const { Book } = await import('../sppas/ui/swapp/whakerexa/wexa_statics/js/extras/book.js');
                 const book = new Book("main-content");
                 book.fill_table(false);
@@ -60,30 +86,28 @@
             <nav class="nav-wexa top" aria-label="Accessibility">
                 <button id="btn-contrast" class="menuitem accessibility print-off" aria-label="Contrast" aria-pressed="false" onclick="window.Wexa.accessibility.switchContrastScheme()"></button>
                 <button id="btn-color" class="menuitem accessibility print-off" aria-label="Color" aria-pressed="false" onclick="window.Wexa.accessibility.switchColorScheme()"></button>
+                <button id="btn-css-theme" class="menuitem print-off" type="button" aria-label="Switch CSS theme" title="Switch CSS theme" onclick="window.themes && window.themes.next()"></button>
             </nav>
         
-    <h1>sppas 5.0.1</h1>
+    <h1>sppas 5.0.3</h1>
         <p><img class="small-logo" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt="Software logo"/></p>
         <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
     </header>
-    <nav id="nav-book" class="book-toc" aria-label="Table of contents">
-    <h1>sppas 5.0.1</h1>
-    <img class="small-logo center" src="../sppas/ui/swapp/statics/images/sppas-logo-v5.png" alt=""/>
-        <p><a class="external-link" href="https://sppas.org/">https://sppas.org/</a></p>
+    <aside id="nav-book" class="book-toc-aside" aria-label="Table of contents">
+    <h1>Table of Contents</h1>
     <ul>
-<li><a role="button" tabindex="0" aria-disabled="true"> &crarr; Prev. Module</a></li>
-<li><a role="button" tabindex="0" href="sppasLogSetup.html"> &uarr; Prev. Class</a></li>
-<li><a role="button" tabindex="0" href="index.html"> &#8962; Index</a></li>
-<li><a role="button" tabindex="0" aria-disabled="true"> &darr; Next Class</a></li>
-<li><a role="button" tabindex="0" href="sppas.core.coreutils.html"> &rdsh; Next Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-module" aria-disabled="true"> &crarr; Prev. Module</a></li>
+<li><a role="button" tabindex="0" id="nav-prev-class" href="sppasLogSetup.html" class="wexa-link" data-target="_self"> &uarr; Prev. Class</a></li>
+<li><a role="button" tabindex="0" id="nav-index" href="index.html" class="wexa-link" data-target="_self"> &#8962; Index</a></li>
+<li><a role="button" tabindex="0" id="nav-next-class" aria-disabled="true"> &darr; Next Class</a></li>
+<li><a role="button" tabindex="0" id="nav-next-module" href="sppas.core.coreutils.html" class="wexa-link" data-target="_self"> &rdsh; Next Module</a></li>
     </ul>
-    <h2>Table of Contents</h2>
     <ul id="toc"></ul>
     <hr>
-    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://clamming.sf.net">ClammingPy</a></small></p>
-</nav>
+    <p><small>Automatically created</small></p><p><small>by <a class="external-link" href="https://github.com/brigitte-bigi/ClammingPy">ClammingPy</a></small></p>
+</aside>
     <main id="main-content">
-    <section id="#sppas.core.config">    <h1>Module sppas.core.config</h1>
+    <section id="#sppas.core.config" class="chapter nonumber">    <h1>Module sppas.core.config</h1>
 <section id="#sppasAppConfig">
 <h2>Class sppasAppConfig</h2>
 
@@ -99,6 +123,7 @@ the SPPAS API.</p>
 
 <ul>
 <li>log_level</li>
+<li>interoperability</li>
 <li>features dictionary</li>
 </ul>
 
@@ -137,6 +162,7 @@ View Source
     <span class="nb">super</span><span class="p">(</span><span class="n">sppasAppConfig</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__update_info</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span> <span class="o">=</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_LOG_LEVEL</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span> <span class="o">=</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_INTEROPERABILITY</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </code></pre></div>
@@ -197,6 +223,62 @@ View Source
     <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="mi">50</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span> <span class="o">=</span> <span class="n">value</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>get_interoperability</h4>
+
+    <article class="docstring">
+<p><em>Return True if a file is written without loss of information.</em></p>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_interoperability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if a file is written without loss of information.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span>
+</code></pre></div>
+
+    </details>
+
+
+<h4>set_interoperability</h4>
+
+    <article class="docstring">
+<p><em>Set whether a file is written without loss of information.</em></p>
+
+<p>When it is False, what a format can't hold is lost: it's the choice
+of the user, the default is to preserve it.</p>
+
+<h5>Parameters</h5>
+
+<ul>
+<li><strong>value</strong>: (<em>bool</em>) Preserve what the destination format can't hold.</li>
+</ul>
+
+    </article>
+
+
+    <details>
+    <summary>
+View Source
+    </summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_interoperability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set whether a file is written without loss of information.</span>
+
+<span class="sd">        When it is False, what a format can&#39;t hold is lost: it&#39;s the choice</span>
+<span class="sd">        of the user, the default is to preserve it.</span>
+
+<span class="sd">        :param value: (bool) Preserve what the destination format can&#39;t hold.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
     </details>
@@ -293,6 +375,7 @@ View Source
                 <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;log_level&#39;</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_LOG_LEVEL</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;interoperability&#39;</span><span class="p">,</span> <span class="n">sppasAppConfig</span><span class="o">.</span><span class="n">DEFAULT_INTEROPERABILITY</span><span class="p">)</span>
                 <span class="n">deps</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">deps</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">deps</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -319,6 +402,7 @@ View Source
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg_filename</span><span class="p">(),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">d</span><span class="p">[</span><span class="s1">&#39;log_level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__log_level</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;interoperability&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interoperability</span>
         <span class="n">d</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__feat_ids</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__hide</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
