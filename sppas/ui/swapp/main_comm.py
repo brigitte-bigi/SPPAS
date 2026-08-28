@@ -183,3 +183,10 @@ class sppasWappCommServer(sppasCommServer):
             logging.debug(f"Event {sppasCommKeys.name_of(key)} pushed to the interlocutor.")
         except sppasCommServerError as e:
             logging.info(f"Event {sppasCommKeys.name_of(key)} not pushed: {e}")
+            # An interlocutor which does not answer any more is gone: it
+            # crashed, or it was killed. Un-register it, so that the state
+            # it left behind does not outlive it.
+            if self.__interlocutor is not None:
+                self.__interlocutor = None
+                wapp_wxstate.running = False
+                logging.info("Interlocutor un-registered: it does not answer.")

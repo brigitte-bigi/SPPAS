@@ -328,7 +328,7 @@ class TraceView(swappBaseView):
         # keyboard operation and the checked-state announcement come from
         # the radio inputs themselves, not from JavaScript.
         _toggle = TagNode(self._htree.body_main.identifier, None, "section")
-        _toggle.set_attribute("class", "toggle-group")
+        _toggle.set_attribute("class", "toggle-group center")
         _toggle.set_attribute("role", "radiogroup")
         _toggle.set_attribute("aria-label", MSG_VIEW_LABEL)
         self._htree.body_main.append_child(_toggle)

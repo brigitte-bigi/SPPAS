@@ -161,6 +161,11 @@ class DashboardController:
             return str(e)
         finally:
             self.__wx_running = False
+            # The process this dashboard launched is over, whatever the exit
+            # path: a crash sends no BYE, so the shared state would keep
+            # saying that wx is running and the launch button would stay
+            # disabled until the web server itself is restarted.
+            wapp_wxstate.running = False
 
         return ""
 
