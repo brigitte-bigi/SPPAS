@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Gallery • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, gallery"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/button.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/code.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/dialog.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/togglegroup.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/toggleselect.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/sortatable.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa &gt; Gallery</p>
+</header>
+
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Gallery</h1>
+
+        <p>Every component of the framework, on one page, so that a palette is
+            judged on all of them at once. Read it in the three themes and in the
+            two modes: six passes tell what twenty pages would.</p>
+
+        <p>Nothing is explained here — each component has its own page for that.
+            What is not shown: the book, the bibliography, the slides and the
+            keypiano, which ask for a document of their own.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Headings</h1>
+        <h2>Second level</h2>
+        <h3>Third level</h3>
+        <h4>Fourth level</h4>
+        <h5>Fifth level</h5>
+        <h6>Sixth level</h6>
+
+        <h2>Text</h2>
+
+        <p>A paragraph of running text, with <strong>a strong emphasis</strong>,
+            <em>an emphasis</em>, <b>a bold word</b>, <i>an italic one</i>,
+            <u>an underlined one</u>, <s>a struck one</s>, and
+            <small>something smaller</small>. It holds <mark>a marked passage</mark>,
+            an <ins>inserted</ins> and a <del>deleted</del> one, the
+            <abbr title="World Wide Web Consortium">W3C</abbr> as an abbreviation,
+            <kbd>Ctrl</kbd> + <kbd>S</kbd> as keys, a formula with H<sub>2</sub>O
+            and E = mc<sup>2</sup>, a <code>span of code</code>, and a
+            <cite>title of a work</cite>.</p>
+
+        <p>A second paragraph, to see two of them one after the other, and to
+            judge the space they leave between themselves. It carries
+            <a href="#main-content">a link to this page</a> and
+            <a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">a link
+            that leaves the document</a>.</p>
+
+        <blockquote>
+            <p>A quotation, laid out as the theme lays one out.</p>
+            <footer>Someone, <cite>somewhere</cite></footer>
+        </blockquote>
+
+        <hr>
+
+        <h2>Lists</h2>
+
+        <ul>
+            <li>First item of an unordered list
+                <ul>
+                    <li>Second level
+                        <ul>
+                            <li>Third level</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>Second item</li>
+        </ul>
+
+        <ol>
+            <li>First item of an ordered list</li>
+            <li>Second item
+                <ol>
+                    <li>Nested first</li>
+                    <li>Nested second</li>
+                </ol>
+            </li>
+        </ol>
+
+        <dl>
+            <dt>A term</dt>
+            <dd>What is said about it.</dd>
+            <dt>Another term</dt>
+            <dd>What is said about that one.</dd>
+        </dl>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Buttons</h1>
+
+        <p>
+            <button type="button">Button</button>
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+            <button type="button" disabled>Disabled</button>
+            <button type="button" class="cta-button">Call to action</button>
+        </p>
+
+        <h2>Toggle group</h2>
+
+        <div class="toggle-group" role="group" aria-label="Toggle group">
+            <button type="button" aria-pressed="true">One</button>
+            <button type="button" aria-pressed="false">Two</button>
+            <button type="button" aria-pressed="false">Three</button>
+        </div>
+
+        <h2>Switches</h2>
+
+        <p>
+            <label class="switch">
+                <input type="checkbox" aria-label="Square toggle">
+                <span class="switch-slider switch-no-text"></span>
+            </label>
+            <label class="switch">
+                <input type="checkbox" aria-label="Round toggle" checked>
+                <span class="switch-slider switch-no-text round"></span>
+            </label>
+        </p>
+
+        <h2>Progress</h2>
+
+        <progress value="35" max="100">35%</progress>
+
+        <h2>Dialog</h2>
+
+        <p><button type="button" onclick="document.getElementById('gallery-dialog').showModal()">Open the dialog</button></p>
+
+        <dialog id="gallery-dialog">
+            <h2>A dialog</h2>
+            <p>What a dialog holds, and the button that closes it.</p>
+            <button type="button" onclick="document.getElementById('gallery-dialog').close()">Close</button>
+        </dialog>
+
+        <h2>Details</h2>
+
+        <details>
+            <summary>What a summary looks like</summary>
+            <p>What it opens on.</p>
+        </details>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Forms</h1>
+
+        <form>
+            <fieldset>
+                <legend>A set of fields</legend>
+
+                <label for="gallery-text">A text</label>
+                <input type="text" id="gallery-text" placeholder="Type here">
+
+                <label for="gallery-mail">An address</label>
+                <input type="email" id="gallery-mail" placeholder="name@example.org">
+
+                <label for="gallery-number">A number</label>
+                <input type="number" id="gallery-number" value="3">
+
+                <label for="gallery-range">A range</label>
+                <input type="range" id="gallery-range" min="0" max="10" value="4">
+
+                <label for="gallery-select">A choice</label>
+                <select id="gallery-select">
+                    <optgroup label="First group">
+                        <option>One</option>
+                        <option>Two</option>
+                    </optgroup>
+                    <optgroup label="Second group">
+                        <option>Three</option>
+                    </optgroup>
+                </select>
+
+                <label for="gallery-area">A text at length</label>
+                <textarea id="gallery-area" rows="3">And what it holds.</textarea>
+
+                <p>
+                    <label><input type="checkbox" checked> A checkbox</label>
+                    <label><input type="checkbox"> Another one</label>
+                </p>
+
+                <p>
+                    <label><input type="radio" name="gallery-radio" checked> A radio</label>
+                    <label><input type="radio" name="gallery-radio"> Another one</label>
+                </p>
+
+                <label for="gallery-file">A file</label>
+                <input type="file" id="gallery-file">
+            </fieldset>
+        </form>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Tables</h1>
+
+        <table>
+            <caption>A table, with a head and a foot</caption>
+            <thead>
+            <tr><th>Name</th><th>Kind</th><th>Year</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>The first row</td><td>What it is</td><td>2023</td></tr>
+            <tr><td>The second one</td><td>What it is</td><td>2024</td></tr>
+            <tr><td>The third one</td><td>What it is</td><td>2025</td></tr>
+            <tr><td>The fourth one</td><td>What it is</td><td>2026</td></tr>
+            </tbody>
+            <tfoot>
+            <tr><td>Four rows</td><td></td><td></td></tr>
+            </tfoot>
+        </table>
+
+        <h2>Sorted on a column</h2>
+
+        <table id="gallery-table">
+            <caption>A table the reader sorts</caption>
+            <thead>
+            <tr>
+                <th><button class="sortatable" data-sort="name">Name</button></th>
+                <th><button class="sortatable" data-sort="kind">Kind</button></th>
+                <th><button class="sortatable" data-sort="year">Year</button></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>Delta</td><td>Third</td><td>1998</td></tr>
+            <tr><td>Alpha</td><td>First</td><td>2011</td></tr>
+            <tr><td>Charlie</td><td>Second</td><td>1974</td></tr>
+            <tr><td>Bravo</td><td>Fourth</td><td>2026</td></tr>
+            </tbody>
+        </table>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Cards</h1>
+
+        <div class="cards-panel">
+            <article class="card">
+                <div class="card-header">
+                    <h2>A card</h2>
+                </div>
+                <div class="card-body">
+                    <p>What it holds, which is a paragraph long enough to fold on
+                        two lines.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#main-content">A link out of it</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2>A second one</h2>
+                </div>
+                <div class="card-body">
+                    <p>To see two of them side by side, and the space between.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#main-content">A link out of it</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2>A third one</h2>
+                </div>
+                <div class="card-body">
+                    <p>And a third, so the row wraps on a narrow screen.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#main-content">A link out of it</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="full-cards-panel">
+            <article class="card full-card">
+                <div class="card-header">
+                    <h2>A card of the full width</h2>
+                </div>
+                <div class="card-body">
+                    <p>Which takes the width its panel leaves it.</p>
+                </div>
+            </article>
+        </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Panels</h1>
+
+        <h2>A grid</h2>
+
+        <div class="grid-panel">
+            <div class="grid-item"><p>First</p></div>
+            <div class="grid-item"><p>Second</p></div>
+            <div class="grid-item"><p>Third</p></div>
+            <div class="grid-item"><p>Fourth</p></div>
+        </div>
+
+        <h2>A flex row</h2>
+
+        <div class="flex-panel">
+            <div class="flex-item width_30"><p>Three tenths of it.</p></div>
+            <div class="flex-item width_30 flex-border-left"><p>Three tenths more,
+                with the border its class draws.</p></div>
+            <div class="flex-item width_40 flex-border-left"><p>And four tenths,
+                which closes the row.</p></div>
+        </div>
+
+        <h2>A wrapping row</h2>
+
+        <div class="wrap-panel">
+            <div class="wrap-item"><p>One</p></div>
+            <div class="wrap-item"><p>Two</p></div>
+            <div class="wrap-item"><p>Three</p></div>
+            <div class="wrap-item"><p>Four</p></div>
+            <div class="wrap-item"><p>Five</p></div>
+        </div>
+
+        <h2>Steps</h2>
+
+        <ol class="enumerate-cards">
+            <li class="enumerate-cards-item">The first step, and what it asks for.</li>
+            <li class="enumerate-cards-item">The second one, a little longer, so that
+                it folds on two lines and shows the space it keeps.</li>
+            <li class="enumerate-cards-item">The third, which ends it.</li>
+        </ol>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Code</h1>
+
+        <pre><code>function whatItLooksLike(name) {
+    const greeting = "Hello, " + name;
+    return greeting;
+}</code></pre>
+
+        <h2>On a dark ground</h2>
+
+        <pre class="dark"><code>&lt;link rel="stylesheet" href="wexa_statics/css/wexa.css"&gt;
+&lt;link rel="stylesheet" id="wexa-theme" href="wexa_statics/css/themes/wexa_theme.css"&gt;</code></pre>
+
+        <h2>Icons</h2>
+
+        <p>Asked for by name, on the element that already carries the meaning.</p>
+
+        <p>
+            <button type="button" data-icon="back" aria-label="Back"></button>
+            <button type="button" data-icon="first" aria-label="First"></button>
+            <button type="button" data-icon="next" aria-label="Next"></button>
+            <button type="button" data-icon="nothing-like-a-name" aria-label="A name no set carries"></button>
+        </p>
+
+        <h2>Figure</h2>
+
+        <figure>
+            <img src="../wexa_statics/logos/whakerexa-128.webp" alt="The logo of Whakerexa" width="128">
+            <figcaption>What a caption looks like under an image.</figcaption>
+        </figure>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script>
+    /**
+     * Start what this page has of its own: the table the reader sorts.
+     *
+     * @param {Object} wexa - The framework and the extras the loader was asked for.
+     * @returns {void}
+     */
+    function bootPage(wexa) {
+        const sortatable = new wexa.SortaTable("gallery-table");
+        sortatable.attachSortListeners();
+    }
+</script>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"
+        data-extras="js/extras/sortatable.js"></script>
+
+</body>
+</html>

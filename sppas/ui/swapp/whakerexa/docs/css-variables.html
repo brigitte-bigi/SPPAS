@@ -136,6 +136,57 @@
     <!-- ============================================================ -->
     <section class="panel-item">
 
+        <h2>The theme contract</h2>
+
+        <p>A theme is loaded after <code>wexa.css</code>, and whatever it leaves
+            undefined keeps the value <code>wexa.css</code> gives it. A theme is free
+            to leave a whole group of variables alone: the default palette holds on
+            its own. But a theme that defines one variable of a group answers for the
+            group entire, in the two modes — a ground without the text laid on it, or
+            a button without the color it takes under the pointer, leaves a page
+            half dressed, and it is only seen in the mode nobody opened.</p>
+
+        <p>Run <code>python3 scripts/check_themes.py</code> from the root of the
+            repository: it reads every theme of
+            <code>wexa_statics/css/themes/</code> and names the groups it leaves
+            incomplete. It exits with an error when one is, so it belongs with the
+            bundle rebuild, before a commit.</p>
+
+        <table role="grid">
+            <caption>The groups, and what each one holds</caption>
+            <thead>
+            <tr><th>Group</th><th>Variables</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>grounds</td><td><code>--body-bg-color</code>, <code>--bg-color</code>, <code>--bg-color-alt</code></td></tr>
+            <tr><td>text</td><td><code>--fg-color</code>, <code>--fg-color-alt</code></td></tr>
+            <tr><td>header</td><td><code>--header-bg-color</code>, <code>--header-fg-color</code></td></tr>
+            <tr><td>nav</td><td><code>--nav-bg-color</code>, <code>--nav-fg-color</code></td></tr>
+            <tr><td>footer</td><td><code>--footer-bg-color</code>, <code>--footer-fg-color</code></td></tr>
+            <tr><td>buttons</td><td><code>--buttons-bg-color</code>, <code>--buttons-bg-color-hover</code>, <code>--buttons-fg-color</code></td></tr>
+            <tr><td>accents</td><td><code>--a-color</code>, <code>--li-color</code></td></tr>
+            <tr><td>borders</td><td><code>--border-color</code>, <code>--border-color-alt</code></td></tr>
+            <tr><td>headings</td><td><code>--h1-color</code> to <code>--h6-color</code></td></tr>
+            <tr><td>blockquote</td><td><code>--blockquote-border-color</code>, <code>--blockquote-footer-color</code></td></tr>
+            <tr><td>table</td><td><code>--table-border-color</code>, <code>--table-cell-bg-color</code>, <code>--table-row-stripped-bg-color</code>, <code>--table-head-bg-color</code>, <code>--table-head-fg-color</code>, <code>--table-caption-bg-color</code>, <code>--table-caption-fg-color</code></td></tr>
+            <tr><td>card</td><td><code>--card-bg-color</code>, <code>--card-fg-color</code></td></tr>
+            <tr><td>progress</td><td><code>--progress-bg-color</code>, <code>--progress-fg-color</code></td></tr>
+            <tr><td>mark</td><td><code>--mark-bg-color</code>, <code>--mark-fg-color</code></td></tr>
+            <tr><td>switch</td><td><code>--switch-bg-color</code>, <code>--switch-slider-on-color</code>, <code>--switch-slider-off-color</code></td></tr>
+            <tr><td>custom pair</td><td><code>--custom-color1</code>, <code>--custom-color2</code>, which a component draws with and which contrast each other</td></tr>
+            </tbody>
+        </table>
+
+        <p>What no group holds is read the same way in the two modes, and a theme
+            gives it a value or does not: <code>--img-bg-color</code>, which keeps a
+            light ground for an image whatever the mode, the sizes, and the colors of
+            a state — <code>--error-color</code> and the ones beside it.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
         <h2>@layer base</h2>
 
         <p>Structural and typographic defaults. In contrast mode, font and spacing values are overridden by <code>@layer accessibility</code> — reflected in the "Contrast" column. An unlayered custom rule wins over both.</p>
@@ -511,44 +562,8 @@
     </p>
 </footer>
 
-<script>
-    window.addEventListener('load', () => {
-        Wexa.links.handleLinksWithParameters(['btn-back']);
-    });
-</script>
-
-<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                    t.setDefault('wexa_theme');
-                    window.themes = t;
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-<script type="module">
-    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
-    const themes = new ThemeManager();
-    themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-    themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-    window.themes = themes;
-</script>
-
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
 </body>
 </html>

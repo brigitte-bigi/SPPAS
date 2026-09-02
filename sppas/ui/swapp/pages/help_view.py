@@ -57,6 +57,9 @@ BODY_SCRIPT = (
     "const Book = (await import(window.WEXA_JS_PATH + '/extras/book.js')).Book;"
     "const book = new Book('main-content');"
     "book.fill_table();"
+    # The Journal button opens a named tab: without this, its data-href is
+    # never followed -- see append_trace_link_button().
+    "window.Wexa.links.handleLinksWithParameters(['link-trace_button']);"
 )
 
 # ---------------------------------------------------------------------------

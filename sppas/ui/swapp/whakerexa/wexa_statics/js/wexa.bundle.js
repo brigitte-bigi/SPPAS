@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-08-26 11:46:20
+// Bundle automatically generated on 2026-09-01 15:59:14
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -361,6 +361,127 @@ class BaseManager {
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
 window.Wexa.BaseManager = BaseManager;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- keyboard.js ---------------
+'use strict';
+class KeyboardController {
+    // CONSTANTS
+    static RESERVED_KEYS = ['Enter', ' '];
+    static INTERACTIVE_TAGS = ['input', 'select', 'textarea', 'button', 'summary'];
+    // FIELDS
+    #shortcuts;
+    #boundHandler;
+    #listening;
+    // CONSTRUCTOR
+    constructor() {
+        this.#shortcuts = new Map();
+        this.#boundHandler = this.#onKeyDown.bind(this);
+        this.#listening = false;
+    }
+    // GETTERS
+    get shortcuts() {
+        const said = [];
+        this.#shortcuts.forEach(shortcut => {
+            if (said.includes(shortcut) === false) {
+                said.push(shortcut);
+            }
+        });
+        return said.map(shortcut => ({keys: [...shortcut.keys], label: shortcut.label}));
+    }
+    // PUBLIC METHODS
+    register({keys, action, detail = {}, label = '', preventsDefault = false}) {
+        if (Array.isArray(keys) === false || keys.length === 0) {
+            console.warn('KeyboardController: a shortcut without a key is not declared.');
+            return;
+        }
+        if (typeof action !== 'function' && typeof action !== 'string') {
+            console.warn(`KeyboardController: the keys "${keys.join(', ')}" do nothing, and are not declared.`);
+            return;
+        }
+        const answered = keys.filter(key => KeyboardController.RESERVED_KEYS.includes(key) === false);
+        if (answered.length !== keys.length) {
+            console.warn('KeyboardController: Enter and space operate what holds the focus, and are not declared.');
+        }
+        if (answered.length === 0) {
+            return;
+        }
+        const shortcut = {keys: answered, action: action, detail: detail,
+                          label: label, preventsDefault: preventsDefault};
+        answered.forEach(key => {
+            if (this.#shortcuts.has(key) === true) {
+                console.warn(`KeyboardController: the key "${key}" was already answered, and its answer is replaced.`);
+            }
+            this.#shortcuts.set(key, shortcut);
+        });
+    }
+    // -----------------------------------------------------------------------
+    forget(keys) {
+        keys.forEach(key => this.#shortcuts.delete(key));
+    }
+    // -----------------------------------------------------------------------
+    init() {
+        if (this.#listening === true) {
+            return;
+        }
+        document.body.addEventListener('keydown', this.#boundHandler, false);
+        this.#listening = true;
+    }
+    // -----------------------------------------------------------------------
+    destroy() {
+        document.body.removeEventListener('keydown', this.#boundHandler, false);
+        this.#listening = false;
+    }
+    // -----------------------------------------------------------------------
+    static isInteractiveTarget(target) {
+        if (target instanceof HTMLElement === false) {
+            return true;
+        }
+        const tag = target.tagName.toLowerCase();
+        if (KeyboardController.INTERACTIVE_TAGS.includes(tag) === true) {
+            return true;
+        }
+        if (tag === 'a' && target.hasAttribute('href') === true) {
+            return true;
+        }
+        if ((tag === 'video' || tag === 'audio') && target.hasAttribute('controls') === true) {
+            return true;
+        }
+        if (target.isContentEditable === true) {
+            return true;
+        }
+        const reachable = target.getAttribute('tabindex');
+        if (reachable !== null) {
+            const rank = parseInt(reachable, 10);
+            if (Number.isNaN(rank) === false && rank >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // PRIVATE METHODS
+    #onKeyDown(event) {
+        const shortcut = this.#shortcuts.get(event.key);
+        if (shortcut === undefined) {
+            return;
+        }
+        if (KeyboardController.isInteractiveTarget(event.target) === true) {
+            return;
+        }
+        if (shortcut.preventsDefault === true) {
+            event.preventDefault();
+        }
+        if (typeof shortcut.action === 'function') {
+            shortcut.action(event);
+            return;
+        }
+        document.dispatchEvent(new CustomEvent(shortcut.action, {detail: shortcut.detail}));
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.KeyboardController = KeyboardController;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
@@ -1020,121 +1141,65 @@ window.Wexa.OverviewView = OverviewView;
 
 // ---------------- extras/slides/keyboard_controller.js ---------------
 'use strict';
-class KeyboardController {
+class SlidesKeyboard {
+    // CONSTANTS
     static SHORTCUTS = [
-        { keys: ['ArrowRight', 'ArrowDown', 'PageDown'], label: 'Next slide' },
-        { keys: ['ArrowLeft', 'ArrowUp', 'PageUp'],      label: 'Previous slide' },
-        { keys: ['Home'],                                 label: 'First slide' },
-        { keys: ['End'],                                  label: 'Last slide' },
-        { keys: ['h', 'H', '?'],                          label: 'Help' },
-        { keys: ['f', 'F'],                               label: 'Fullscreen' },
-        { keys: ['o', 'O'],                               label: 'Overview mode' },
-        { keys: ['d', 'D'],                               label: 'Handout mode' },
-        { keys: ['m', 'M'],                               label: 'Memo mode' },
-        { keys: ['Escape', 's', 'S'],                     label: 'Presentation mode' },
-        { keys: ['a', 'A'],                               label: 'Accessibility controls' },
-        { keys: ['n', 'N'],                               label: 'Navigation controls' },
-        { keys: ['b', 'B'],                               label: 'Progress bar' },
-        { keys: ['l', 'L'],                               label: 'Logo' },
+        { keys: ['ArrowRight', 'ArrowDown', 'PageDown'], label: 'Next slide',
+          event: 'slides:navigate', detail: { action: 'next' }, scrolls: true },
+        { keys: ['ArrowLeft', 'ArrowUp', 'PageUp'],      label: 'Previous slide',
+          event: 'slides:navigate', detail: { action: 'prev' }, scrolls: true },
+        { keys: ['Home'],                                 label: 'First slide',
+          event: 'slides:navigate', detail: { action: 'goStart' }, scrolls: true },
+        { keys: ['End'],                                  label: 'Last slide',
+          event: 'slides:navigate', detail: { action: 'goEnd' }, scrolls: true },
+        { keys: ['h', 'H', '?'],                          label: 'Help',
+          event: 'slides:help', detail: { action: 'toggle' } },
+        { keys: ['f', 'F'],                               label: 'Fullscreen',
+          event: 'slides:fullscreen', detail: {} },
+        { keys: ['o', 'O'],                               label: 'Overview mode',
+          event: 'slides:viewmode', detail: { action: 'toggle', mode: 'overview' } },
+        { keys: ['d', 'D'],                               label: 'Handout mode',
+          event: 'slides:viewmode', detail: { action: 'toggle', mode: 'handout' } },
+        { keys: ['m', 'M'],                               label: 'Memo mode',
+          event: 'slides:viewmode', detail: { action: 'toggle', mode: 'note' } },
+        { keys: ['Escape', 's', 'S'],                     label: 'Presentation mode',
+          event: 'slides:viewmode', detail: { mode: 'presentation' } },
+        { keys: ['a', 'A'],                               label: 'Accessibility controls',
+          event: 'slides:visibility', detail: { name: 'accessibility', action: 'toggle' } },
+        { keys: ['n', 'N'],                               label: 'Navigation controls',
+          event: 'slides:visibility', detail: { name: 'controls', action: 'toggle' } },
+        { keys: ['b', 'B'],                               label: 'Progress bar',
+          event: 'slides:visibility', detail: { name: 'progress', action: 'toggle' } },
+        { keys: ['l', 'L'],                               label: 'Logo',
+          event: 'slides:visibility', detail: { name: 'logo', action: 'toggle' } },
     ];
-    static SLIDE_KEYS = new Set(KeyboardController.SHORTCUTS.flatMap(s => s.keys));
+    // FIELDS
+    #keyboard;
+    // CONSTRUCTOR
     constructor() {
-        this._boundHandler = this._onKeyDown.bind(this);
+        this.#keyboard = new KeyboardController();
+        SlidesKeyboard.SHORTCUTS.forEach(shortcut => {
+            this.#keyboard.register({
+                keys: shortcut.keys,
+                action: shortcut.event,
+                detail: shortcut.detail,
+                label: shortcut.label,
+                preventsDefault: shortcut.scrolls === true
+            });
+        });
     }
+    // PUBLIC METHODS
     init() {
-        document.body.addEventListener('keydown', this._boundHandler, false);
+        this.#keyboard.init();
     }
+    // -----------------------------------------------------------------------
     destroy() {
-        document.body.removeEventListener('keydown', this._boundHandler, false);
-    }
-    // -----------------------------------------------------------------------
-    // Private
-    // -----------------------------------------------------------------------
-    _onKeyDown(event) {
-        const key = event.key;
-        if (!KeyboardController.SLIDE_KEYS.has(key)) return;
-        if (key === 'Enter' || key === ' ')            return;
-        if (this._isInteractiveTarget(event.target))   return;
-        switch (key) {
-            case 'h': case 'H': case '?':
-                this._emit('slides:help', { action: 'toggle' });
-                return;
-            case 'Escape':
-            case 's': case 'S':
-                this._emit('slides:viewmode', { mode: 'presentation' });
-                return;
-            case 'o': case 'O':
-                this._emit('slides:viewmode', { action: 'toggle', mode: 'overview' });
-                return;
-            case 'd': case 'D':
-                this._emit('slides:viewmode', { action: 'toggle', mode: 'handout' });
-                return;
-            case 'm': case 'M':
-                this._emit('slides:viewmode', { action: 'toggle', mode: 'note' });
-                return;
-            case 'f': case 'F':
-                this._emit('slides:fullscreen', {});
-                return;
-            case 'a': case 'A':
-                this._emit('slides:visibility', { name: 'accessibility', action: 'toggle' });
-                return;
-            case 'n': case 'N':
-                this._emit('slides:visibility', { name: 'controls', action: 'toggle' });
-                return;
-            case 'b': case 'B':
-                this._emit('slides:visibility', { name: 'progress', action: 'toggle' });
-                return;
-            case 'l': case 'L':
-                this._emit('slides:visibility', { name: 'logo', action: 'toggle' });
-                return;
-            case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
-                event.preventDefault();
-                this._emit('slides:navigate', { action: 'prev' });
-                return;
-            case 'ArrowRight': case 'ArrowDown': case 'PageDown':
-                event.preventDefault();
-                this._emit('slides:navigate', { action: 'next' });
-                return;
-            case 'Home':
-                event.preventDefault();
-                this._emit('slides:navigate', { action: 'goStart' });
-                return;
-            case 'End':
-                event.preventDefault();
-                this._emit('slides:navigate', { action: 'goEnd' });
-                return;
-        }
-    }
-    _emit(type, detail) {
-        document.dispatchEvent(new CustomEvent(type, { detail }));
-    }
-    _isInteractiveTarget(target) {
-        if (!(target instanceof HTMLElement)) {
-            return true;
-        }
-        const tag = target.tagName.toLowerCase();
-        if (['input', 'select', 'textarea', 'button', 'summary'].includes(tag)) {
-            return true;
-        }
-        if (tag === 'a' && target.hasAttribute('href')) {
-            return true;
-        }
-        if ((tag === 'video' || tag === 'audio') && target.hasAttribute('controls')) {
-            return true;
-        }
-        const tab = target.getAttribute('tabindex');
-        if (tab !== null) {
-            const n = parseInt(tab, 10);
-            if (!Number.isNaN(n) && n >= 0) {
-                return true;
-            }
-        }
-        return false;
+        this.#keyboard.destroy();
     }
 }
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.KeyboardController = KeyboardController;
+window.Wexa.SlidesKeyboard = SlidesKeyboard;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
@@ -1375,7 +1440,7 @@ class HelpDialog {
         div.appendChild(h2);
         const table = document.createElement('table');
         table.setAttribute('role', 'presentation');
-        for (const { keys, label } of KeyboardController.SHORTCUTS) {
+        for (const { keys, label } of SlidesKeyboard.SHORTCUTS) {
             const tr = document.createElement('tr');
             const tdKeys = document.createElement('td');
             tdKeys.textContent = keys.map(k => this._keyLabel(k)).join(' / ');
@@ -1483,7 +1548,7 @@ class SlidesAssembler {
         });
         // ── 5. CONTROLLERS ───────────────────────────────────────────────────
         this._helpDialog = new HelpDialog();
-        this._keyboard = new KeyboardController();
+        this._keyboard = new SlidesKeyboard();
         this._touch    = new TouchController();
         const c = config.controls;
         const v = config.controlsView;
@@ -2035,6 +2100,10 @@ class OnLoadManager {
     static #listenerRegistered = false;
     // PUBLIC STATIC METHODS
     static addLoadFunction(func) {
+        if (document.readyState === 'complete') {
+            func();
+            return;
+        }
         OnLoadManager.#functions.push(func);
         OnLoadManager.#registerListener();
     }
@@ -2053,64 +2122,6 @@ class OnLoadManager {
 // ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
 if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
 window.Wexa.OnLoadManager = OnLoadManager;
-// ---- END AUTO-GENERATED EXPORTS ----
-
-
-// ---------------- svgicons.js ---------------
-class SVGIconsManager {
-    // -----------------------------------------------------------------------
-    // PRIVATE FIELDS
-    // -----------------------------------------------------------------------
-    static #cache = new Map();
-    static #base = null;
-    // -----------------------------------------------------------------------
-    // PUBLIC STATIC METHODS
-    // -----------------------------------------------------------------------
-    static init(metaUrl) {
-        const base = metaUrl !== null ? metaUrl : (document.currentScript && document.currentScript.src);
-        SVGIconsManager.#base = new URL('../icons/mono-svg/', base).href;
-        WexaLogger.debug('SVGIconsManager: base URL set to ' + SVGIconsManager.#base);
-    }
-    // -----------------------------------------------------------------------
-    static register(name, svgContent) {
-        SVGIconsManager.#cache.set(name, svgContent);
-    }
-    static async inject(element, name) {
-        if (element === null || element === undefined) {
-            return;
-        }
-        if (element.querySelector('svg') !== null) {
-            return;
-        }
-        element.insertAdjacentHTML('afterbegin', await SVGIconsManager.get(name));
-    }
-    // -----------------------------------------------------------------------
-    static async get(name) {
-        if (SVGIconsManager.#cache.has(name)) {
-            return SVGIconsManager.#cache.get(name);
-        }
-        if (SVGIconsManager.#base === null) {
-            WexaLogger.error('SVGIconsManager: call init() before get().');
-            return '';
-        }
-        try {
-            const response = await fetch(SVGIconsManager.#base + name + '.svg');
-            if (response.ok === false) {
-                WexaLogger.warn(`SVGIconsManager: icon "${name}" not found (HTTP ${response.status}).`);
-                return '';
-            }
-            const content = await response.text();
-            SVGIconsManager.#cache.set(name, content);
-            return content;
-        } catch (error) {
-            WexaLogger.error(`SVGIconsManager: failed to fetch icon "${name}".`, error);
-            return '';
-        }
-    }
-}
-// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
-if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
-window.Wexa.SVGIconsManager = SVGIconsManager;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
@@ -2326,8 +2337,8 @@ class AccessibilityManager extends BaseManager {
     }
     // -----------------------------------------------------------------------
     async #injectButtonIcons() {
-        await SVGIconsManager.inject(document.getElementById('btn-contrast'), 'contrast');
-        await SVGIconsManager.inject(document.getElementById('btn-color'), 'color');
+        await icons.inject(document.getElementById('btn-contrast'), 'contrast');
+        await icons.inject(document.getElementById('btn-color'), 'color');
     }
     // -----------------------------------------------------------------------
     #updateUrl() {
@@ -2909,7 +2920,7 @@ class ToggleSelector {
                 label.insertBefore(holder, label.firstChild);
             }
             holder.replaceChildren();
-            SVGIconsManager.inject(holder,
+            icons.inject(holder,
                 checkbox.checked === true ? ToggleSelector.ICONS.CHECKED : ToggleSelector.ICONS.UNCHECKED);
         });
     }
@@ -2947,7 +2958,7 @@ class ToggleSelector {
         // inject() leaves an element that already holds an SVG untouched: what
         // is drawn has to go before the new state can be drawn.
         button.replaceChildren();
-        SVGIconsManager.inject(button, name);
+        icons.inject(button, name);
     }
     // ----------------------------------------------------------------------
     setupCheckboxListeners() {
@@ -3078,7 +3089,7 @@ window.Wexa.LinkController = LinkController;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- extras/theme_manager.js ---------------
+// ---------------- customize/theme_manager.js ---------------
 class ThemeManager extends BaseManager {
     // -----------------------------------------------------------------------
     // FIELDS
@@ -3180,7 +3191,7 @@ class ThemeManager extends BaseManager {
     // PRIVATE METHODS
     // -----------------------------------------------------------------------
     async #injectButtonIcon() {
-        await SVGIconsManager.inject(document.getElementById('btn-css-theme'), 'theme');
+        await icons.inject(document.getElementById('btn-css-theme'), 'theme');
     }
     // -----------------------------------------------------------------------
     #applyLink(path) {
@@ -3220,6 +3231,758 @@ window.Wexa.ThemeManager = ThemeManager;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
+// ---------------- customize/icon_set.js ---------------
+'use strict';
+const IconForm = {
+    LINE: 'line',
+    IMAGE: 'image'
+};
+class IconSet {
+    #name;
+    #base;
+    #files = new Map();
+    constructor(name, base, files) {
+        this.#name = name;
+        this.#base = base;
+        const given = Array.isArray(files) === true ? files : [];
+        for (const file of given) {
+            this.#files.set(IconSet.nameOf(file), file);
+        }
+    }
+    // -----------------------------------------------------------------------
+    static nameOf(file) {
+        const dot = file.lastIndexOf('.');
+        return dot === -1 ? file : file.substring(0, dot);
+    }
+    // -----------------------------------------------------------------------
+    get name() {
+        return this.#name;
+    }
+    get base() {
+        return this.#base;
+    }
+    get names() {
+        return Array.from(this.#files.keys());
+    }
+    // -----------------------------------------------------------------------
+    carries(name) {
+        if (typeof name !== 'string' || name === '') {
+            return false;
+        }
+        return this.#files.has(name);
+    }
+    // -----------------------------------------------------------------------
+    addressOf(name) {
+        return this.#base + this.#files.get(name);
+    }
+    // -----------------------------------------------------------------------
+    formOf(name) {
+        const file = this.#files.get(name);
+        if (file === undefined) {
+            return IconForm.IMAGE;
+        }
+        return file.toLowerCase().endsWith('.svg') === true
+            ? IconForm.LINE
+            : IconForm.IMAGE;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconSet = IconSet;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_sets.js ---------------
+'use strict';
+class IconSets {
+    #declared = new Map();
+    #reference = null;
+    #fallback = '';
+    // -----------------------------------------------------------------------
+    declare(set) {
+        if (set === null || set === undefined) {
+            return;
+        }
+        if (this.#declared.has(set.name) === true) {
+            WexaLogger.warn('IconSets: the set "' + set.name
+                + '" is declared twice. The first one is kept.');
+            return;
+        }
+        this.#declared.set(set.name, set);
+    }
+    // -----------------------------------------------------------------------
+    reference(set) {
+        if (set === null || set === undefined) {
+            return;
+        }
+        this.#reference = set;
+    }
+    // -----------------------------------------------------------------------
+    fallback(name) {
+        if (this.#declared.has(name) === false) {
+            WexaLogger.warn('IconSets: the set "' + name
+                + '" answers for the others, and was never declared.');
+            return;
+        }
+        this.#fallback = name;
+    }
+    // -----------------------------------------------------------------------
+    setFor(name, inForce) {
+        const chosen = this.#declared.get(inForce);
+        if (chosen !== undefined && chosen.carries(name) === true) {
+            return chosen;
+        }
+        if (this.#fallback !== '' && this.#fallback !== inForce) {
+            const answering = this.#declared.get(this.#fallback);
+            if (answering !== undefined && answering.carries(name) === true) {
+                return answering;
+            }
+        }
+        if (this.#reference !== null && this.#reference.carries(name) === true) {
+            return this.#reference;
+        }
+        return null;
+    }
+    // -----------------------------------------------------------------------
+    names() {
+        const names = Array.from(this.#declared.keys());
+        if (this.#reference !== null) {
+            names.push(this.#reference.name);
+        }
+        return names;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconSets = IconSets;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_choice.js ---------------
+'use strict';
+class IconChoice {
+    static get PARAMETER_NAME() {
+        return 'wexa_icons';
+    }
+    #sets;
+    #inForce;
+    constructor(sets, named = '', search = null) {
+        this.#sets = sets;
+        this.#inForce = this.#firstDeclared([
+            this.#inAddress(search),
+            named
+        ]);
+    }
+    // -----------------------------------------------------------------------
+    inForce() {
+        return this.#inForce;
+    }
+    // -----------------------------------------------------------------------
+    put(name) {
+        if (this.#isDeclared(name) === false) {
+            return false;
+        }
+        if (name === this.#inForce) {
+            return false;
+        }
+        this.#inForce = name;
+        this.#sayInAddress(name);
+        return true;
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE
+    // -----------------------------------------------------------------------
+    #isDeclared(name) {
+        if (typeof name !== 'string' || name === '') {
+            return false;
+        }
+        return this.#sets.names().includes(name);
+    }
+    // -----------------------------------------------------------------------
+    #firstDeclared(names) {
+        for (const name of names) {
+            if (this.#isDeclared(name) === true) {
+                return name;
+            }
+        }
+        const declared = this.#sets.names();
+        return declared.length === 0 ? '' : declared[declared.length - 1];
+    }
+    // -----------------------------------------------------------------------
+    #inAddress(search) {
+        const query = search !== null ? search : window.location.search;
+        const asked = new URLSearchParams(query.substring(query.indexOf('?') + 1));
+        return asked.get(IconChoice.PARAMETER_NAME) || '';
+    }
+    // -----------------------------------------------------------------------
+    #sayInAddress(name) {
+        if (typeof window === 'undefined' || window.history === undefined) {
+            return;
+        }
+        const address = new URL(window.location.href);
+        address.searchParams.set(IconChoice.PARAMETER_NAME, name);
+        window.history.replaceState(null, '', address.href);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconChoice = IconChoice;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_errors.js ---------------
+'use strict';
+class IconError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'IconError';
+    }
+}
+class NoSetAtAll extends IconError {
+    constructor() {
+        super('No set of icons was declared, not even the reference one.');
+        this.name = 'NoSetAtAll';
+    }
+}
+class UnreadableContent extends IconError {
+    constructor(address) {
+        super('The content at "' + address + '" cannot be read.');
+        this.name = 'UnreadableContent';
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconError = IconError;
+window.Wexa.NoSetAtAll = NoSetAtAll;
+window.Wexa.UnreadableContent = UnreadableContent;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_content.js ---------------
+'use strict';
+class IconContent {
+    #name;
+    #form;
+    #source;
+    constructor(name, form, source) {
+        this.#name = name;
+        this.#form = form;
+        this.#source = source;
+    }
+    get name() {
+        return this.#name;
+    }
+    get form() {
+        return this.#form;
+    }
+    get source() {
+        return this.#source;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconContent = IconContent;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_reader.js ---------------
+'use strict';
+class IconReader {
+    static #gathered = new Map();
+    #read = new Map();
+    // -----------------------------------------------------------------------
+    static gather(setName, name, markup) {
+        IconReader.#gathered.set(setName + '/' + name, markup);
+    }
+    // -----------------------------------------------------------------------
+    gather(setName, name, markup) {
+        this.#read.set(setName + '/' + name, markup);
+    }
+    // -----------------------------------------------------------------------
+    address(set, name) {
+        return new IconContent(name, IconForm.IMAGE, set.addressOf(name));
+    }
+    // -----------------------------------------------------------------------
+    async read(set, name) {
+        const form = set.formOf(name);
+        const address = set.addressOf(name);
+        if (form === IconForm.IMAGE) {
+            return new IconContent(name, form, address);
+        }
+        const key = set.name + '/' + name;
+        if (this.#read.has(key) === true) {
+            return new IconContent(name, form, this.#read.get(key));
+        }
+        if (IconReader.#gathered.has(key) === true) {
+            return new IconContent(name, form, IconReader.#gathered.get(key));
+        }
+        const markup = await this.#markupAt(address);
+        this.#read.set(key, markup);
+        return new IconContent(name, form, markup);
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE
+    // -----------------------------------------------------------------------
+    async #markupAt(address) {
+        let answer = null;
+        try {
+            answer = await fetch(address);
+        } catch (error) {
+            throw new UnreadableContent(address);
+        }
+        if (answer.ok === false) {
+            throw new UnreadableContent(address);
+        }
+        return await answer.text();
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconReader = IconReader;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_demand.js ---------------
+'use strict';
+const DemandKind = {
+    PLACE: 'place',
+    SURFACE: 'surface'
+};
+const ATTRIBUTE = {
+    place: 'data-icon',
+    surface: 'data-ground'
+};
+class IconDemand {
+    #element;
+    #name;
+    #kind;
+    constructor(element, name, kind) {
+        this.#element = element;
+        this.#name = name;
+        this.#kind = kind;
+    }
+    // -----------------------------------------------------------------------
+    static of(element) {
+        if (element === null || element === undefined) {
+            return null;
+        }
+        for (const kind of Object.keys(ATTRIBUTE)) {
+            const name = element.getAttribute(ATTRIBUTE[kind]);
+            if (name !== null && name !== '') {
+                return new IconDemand(element, name, kind);
+            }
+        }
+        return null;
+    }
+    // -----------------------------------------------------------------------
+    static get SELECTOR() {
+        return '[' + ATTRIBUTE.place + '], [' + ATTRIBUTE.surface + ']';
+    }
+    // -----------------------------------------------------------------------
+    get element() {
+        return this.#element;
+    }
+    get name() {
+        return this.#name;
+    }
+    get kind() {
+        return this.#kind;
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconDemand = IconDemand;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_placer.js ---------------
+'use strict';
+const MARK = 'data-icon-placed';
+class IconPlacer {
+    place(demand, content) {
+        if (demand === null || content === null) {
+            return;
+        }
+        this.clear(demand);
+        if (demand.kind === DemandKind.SURFACE) {
+            this.#cover(demand, content);
+            return;
+        }
+        if (content.form === IconForm.LINE) {
+            this.#writeIn(demand, content);
+        } else {
+            this.#putImageIn(demand, content);
+        }
+    }
+    // -----------------------------------------------------------------------
+    clear(demand) {
+        if (demand === null) {
+            return;
+        }
+        const element = demand.element;
+        if (demand.kind === DemandKind.SURFACE) {
+            element.style.removeProperty('background-image');
+            element.style.removeProperty('background-repeat');
+            element.style.removeProperty('background-position');
+            return;
+        }
+        const placed = element.querySelector('[' + MARK + ']');
+        if (placed !== null) {
+            placed.remove();
+        }
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE
+    // -----------------------------------------------------------------------
+    #writeIn(demand, content) {
+        const holder = document.createElement('span');
+        holder.setAttribute(MARK, content.name);
+        holder.setAttribute('aria-hidden', 'true');
+        holder.innerHTML = content.source;
+        const drawing = holder.querySelector('svg');
+        if (drawing !== null) {
+            drawing.setAttribute(MARK, content.name);
+            drawing.setAttribute('aria-hidden', 'true');
+            demand.element.insertAdjacentElement('afterbegin', drawing);
+            return;
+        }
+        demand.element.insertAdjacentElement('afterbegin', holder);
+    }
+    // -----------------------------------------------------------------------
+    #putImageIn(demand, content) {
+        const image = document.createElement('img');
+        image.setAttribute(MARK, content.name);
+        image.setAttribute('src', content.source);
+        image.setAttribute('alt', '');
+        image.setAttribute('loading', 'lazy');
+        image.setAttribute('decoding', 'async');
+        const room = this.#roomOf(demand.element);
+        image.setAttribute('width', room.width);
+        image.setAttribute('height', room.height);
+        demand.element.insertAdjacentElement('afterbegin', image);
+    }
+    // -----------------------------------------------------------------------
+    #cover(demand, content) {
+        const element = demand.element;
+        element.style.backgroundImage = 'url("' + content.source + '")';
+        // A ground covers: it is laid from the corner and repeated. The
+        // framework asks for no repetition on every element, which would leave
+        // one drawing at the top of the surface.
+        element.style.backgroundRepeat = 'repeat';
+        element.style.backgroundPosition = '0 0';
+    }
+    // -----------------------------------------------------------------------
+    #roomOf(element) {
+        const style = window.getComputedStyle(element);
+        const width = parseInt(style.getPropertyValue('--icon-width'), 10);
+        const height = parseInt(style.getPropertyValue('--icon-height'), 10);
+        const size = parseInt(style.fontSize, 10) || 16;
+        return {
+            width: String(Number.isNaN(width) === true ? size : width),
+            height: String(Number.isNaN(height) === true ? size : height)
+        };
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconPlacer = IconPlacer;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_watcher.js ---------------
+'use strict';
+class IconWatcher {
+    #observer = null;
+    #watched = new Map();
+    #onView = null;
+    watch(demands, onView) {
+        this.#onView = typeof onView === 'function' ? onView : null;
+        if (this.#onView === null || Array.isArray(demands) === false) {
+            return;
+        }
+        if (typeof IntersectionObserver === 'undefined') {
+            demands.forEach(demand => this.#onView(demand));
+            return;
+        }
+        if (this.#observer === null) {
+            this.#observer = new IntersectionObserver(
+                entries => this.#seen(entries),
+                { rootMargin: '200px' });
+        }
+        for (const demand of demands) {
+            this.#watched.set(demand.element, demand);
+            this.#observer.observe(demand.element);
+        }
+    }
+    // -----------------------------------------------------------------------
+    stop() {
+        if (this.#observer !== null) {
+            this.#observer.disconnect();
+        }
+        this.#watched.clear();
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE
+    // -----------------------------------------------------------------------
+    #seen(entries) {
+        for (const entry of entries) {
+            if (entry.isIntersecting === false) {
+                continue;
+            }
+            const demand = this.#watched.get(entry.target);
+            if (demand === undefined) {
+                continue;
+            }
+            this.#observer.unobserve(entry.target);
+            this.#watched.delete(entry.target);
+            this.#onView(demand);
+        }
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconWatcher = IconWatcher;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_register.js ---------------
+'use strict';
+class IconRegister {
+    #held = new Set();
+    hold(demand) {
+        if (demand === null || demand === undefined) {
+            return;
+        }
+        this.#held.add(demand);
+    }
+    // -----------------------------------------------------------------------
+    held() {
+        const standing = [];
+        for (const demand of this.#held) {
+            if (demand.element.isConnected === true) {
+                standing.push(demand);
+            } else {
+                this.#held.delete(demand);
+            }
+        }
+        return standing;
+    }
+    // -----------------------------------------------------------------------
+    clear() {
+        this.#held.clear();
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconRegister = IconRegister;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icon_reference.js ---------------
+'use strict';
+const REFERENCE_BASE = 'icons/mono-svg/';
+const REFERENCE_FILES = [
+    'anonymous.svg',
+    'audio.svg',
+    'back.svg',
+    'backward.svg',
+    'bell.svg',
+    'book-open.svg',
+    'cadenas.svg',
+    'cancel.svg',
+    'checked.svg',
+    'color.svg',
+    'compas.svg',
+    'congrats.svg',
+    'content.svg',
+    'contrast.svg',
+    'cuedspeech.svg',
+    'dashboard.svg',
+    'discovery.svg',
+    'download.svg',
+    'error.svg',
+    'feedback.svg',
+    'first.svg',
+    'games.svg',
+    'goto.svg',
+    'half-checked.svg',
+    'heart-svgrepo-com.svg',
+    'help.svg',
+    'house.svg',
+    'info-square.svg',
+    'install.svg',
+    'lang.svg',
+    'last.svg',
+    'light-bulb.svg',
+    'like.svg',
+    'logout.svg',
+    'menu.svg',
+    'misty-moon-svgrepo-com.svg',
+    'next.svg',
+    'parameters.svg',
+    'pathway.svg',
+    'pin.svg',
+    'readings.svg',
+    'redo.svg',
+    'researchinfo.svg',
+    'scrolltop.svg',
+    'settings.svg',
+    'smiley_neutral.svg',
+    'smiley_sad.svg',
+    'smiley_smile.svg',
+    'sun-svgrepo-com.svg',
+    'switch_contrast.svg',
+    'switch_theme.svg',
+    'theme.svg',
+    'unchecked.svg',
+    'user.svg',
+    'valid.svg',
+    'video.svg',
+];
+// ---------------- customize/icon_manager.js ---------------
+'use strict';
+class IconManager {
+    #sets;
+    #choice;
+    #reader = new IconReader();
+    #placer = new IconPlacer();
+    #watcher;
+    #register = new IconRegister();
+    constructor(sets, named = '', watcher = null) {
+        this.#sets = sets;
+        this.#choice = new IconChoice(sets, named);
+        this.#watcher = watcher !== null ? watcher : new IconWatcher();
+    }
+    // -----------------------------------------------------------------------
+    inForce() {
+        return this.#choice.inForce();
+    }
+    names() {
+        return this.#sets.names();
+    }
+    // -----------------------------------------------------------------------
+    declare(set) {
+        this.#sets.declare(set);
+    }
+    gather(setName, name, markup) {
+        this.#reader.gather(setName, name, markup);
+    }
+    // -----------------------------------------------------------------------
+    reference(set) {
+        this.#sets.reference(set);
+    }
+    fallback(name) {
+        this.#sets.fallback(name);
+    }
+    // -----------------------------------------------------------------------
+    async get(name) {
+        const set = this.#sets.setFor(name, this.#choice.inForce());
+        if (set === null) {
+            WexaLogger.warn('IconManager: no set carries the name "' + name + '".');
+            return '';
+        }
+        try {
+            const content = await this.#reader.read(set, name);
+            return content.source;
+        } catch (error) {
+            this.#say(error);
+            return '';
+        }
+    }
+    // -----------------------------------------------------------------------
+    async inject(element, name) {
+        if (element === null || element === undefined) {
+            return;
+        }
+        if (element.querySelector('svg') !== null) {
+            return;
+        }
+        const markup = await this.get(name);
+        if (markup === '') {
+            return;
+        }
+        element.insertAdjacentHTML('afterbegin', markup);
+    }
+    // -----------------------------------------------------------------------
+    async run(root = document) {
+        try {
+            const demands = [];
+            for (const element of root.querySelectorAll(IconDemand.SELECTOR)) {
+                const demand = IconDemand.of(element);
+                if (demand !== null) {
+                    demands.push(demand);
+                }
+            }
+            this.#watcher.watch(demands, demand => this.#answer(demand));
+        } catch (error) {
+            this.#say(error);
+        }
+    }
+    // -----------------------------------------------------------------------
+    async show(name) {
+        try {
+            if (this.#choice.put(name) === false) {
+                return;
+            }
+            for (const demand of this.#register.held()) {
+                await this.#answer(demand);
+            }
+        } catch (error) {
+            this.#say(error);
+        }
+    }
+    // -----------------------------------------------------------------------
+    // PRIVATE
+    // -----------------------------------------------------------------------
+    async #answer(demand) {
+        const set = this.#sets.setFor(demand.name, this.#choice.inForce());
+        if (set === null) {
+            this.#placer.clear(demand);
+            this.#register.hold(demand);
+            WexaLogger.warn('IconManager: no set carries the name "'
+                + demand.name + '".');
+            return;
+        }
+        try {
+            // A ground is laid on a surface: it is never written into the page,
+            // so it is never read. Its address is what answers.
+            const content = demand.kind === DemandKind.SURFACE
+                ? this.#reader.address(set, demand.name)
+                : await this.#reader.read(set, demand.name);
+            this.#placer.place(demand, content);
+        } catch (error) {
+            this.#placer.clear(demand);
+            this.#say(error);
+        }
+        this.#register.hold(demand);
+    }
+    // -----------------------------------------------------------------------
+    #say(error) {
+        if (error instanceof IconError) {
+            WexaLogger.error('IconManager: ' + error.message);
+            return;
+        }
+        WexaLogger.error('IconManager: ', error);
+    }
+}
+// ---- AUTO-GENERATED EXPORTS (Whakerexa bundle) ----
+if (typeof window.Wexa !== 'object') { window.Wexa = {}; }
+window.Wexa.IconManager = IconManager;
+// ---- END AUTO-GENERATED EXPORTS ----
+
+
+// ---------------- customize/icons.js ---------------
+'use strict';
+// Where this file stands, so that a document finds the icons wherever it is
+// read from. The build writes null here, the bundle being a classic script:
+// there the drawings are gathered in, and no address is ever asked for.
+const here = null;
+const referenceBase = here === null
+    ? 'icons/mono-svg/'
+    : new URL('../../icons/mono-svg/', here).href;
+const sets = new IconSets();
+sets.reference(new IconSet('mono-svg', referenceBase, REFERENCE_FILES));
+const icons = new IconManager(sets);
 // ---------------- extras/book.js ---------------
 'use strict';
 class Book {
@@ -5219,7 +5982,7 @@ class BibliographyControls {
         apply.type = 'button';
         apply.className = 'flex-item';
         apply.setAttribute('aria-label', this.#texts.text('apply'));
-        SVGIconsManager.inject(apply, 'valid');
+        icons.inject(apply, 'valid');
         apply.addEventListener('click', () => this.#applyColumns());
         group.appendChild(details);
         group.appendChild(apply);
@@ -5622,7 +6385,7 @@ class KeyPiano {
         button.classList.add(CSS_CONTROL);
         button.setAttribute('aria-label', label);
         button.addEventListener('click', onClick);
-        button.innerHTML = await SVGIconsManager.get(iconName);
+        button.innerHTML = await icons.get(iconName);
         return button;
     }
     // ------------------------------------------------------------------
@@ -5644,66 +6407,65 @@ window.Wexa.KeyPiano = KeyPiano;
 // ---- END AUTO-GENERATED EXPORTS ----
 
 
-// ---------------- SVG icons (pre-registered for file:// mode) ---------------
-SVGIconsManager.register('anonymous', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n  <line x1=\"8\" y1=\"8\" x2=\"24\" y2=\"24\" />\n</svg>");
-SVGIconsManager.register('audio', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polygon points=\"7 12 12 12 17 7 17 25 12 20 7 20 7 12\"/>\n  <path d=\"M21 11.333a6.7 7 0 0 1 0 9\"/>\n</svg>\n\n\n");
-SVGIconsManager.register('back', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n</svg>");
-SVGIconsManager.register('backward', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polyline points=\"20 24 12 16 20 8\" />\n</svg>");
-SVGIconsManager.register('bell', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M24 11a8 8 0 0 0-16 0c0 9-4 8-4 11h24c0-3-4-1-4-11\" />\n  <path d=\"M18 28a3 3 0 0 1-5 0\" />\n</svg>");
-SVGIconsManager.register('book-open', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z\"/>\n  <path d=\"M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z\"/>\n</svg>\n");
-SVGIconsManager.register('cadenas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <rect x=\"7\" y=\"15\" width=\"19\" height=\"13\" rx=\"3\" />\n  <path d=\"M11 15V9a5 5 0 0 1 11 0v5\" />\n</svg>");
-SVGIconsManager.register('cancel', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n\t<circle cx=\"16\" cy=\"16\" r=\"10\" />\n\t<line x1=\"10\" y1=\"22\" x2=\"22\" y2=\"10\" />\n</svg>");
-SVGIconsManager.register('checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z M11 17L14 20L21 12\" />\n</svg>\n");
-SVGIconsManager.register('color', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n\t<polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>");
-SVGIconsManager.register('compas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n\n  <!-- Compass ticks -->\n  <line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"4\"/>\n  <line x1=\"16\" y1=\"28\" x2=\"16\" y2=\"30\"/>\n  <line x1=\"2\" y1=\"16\" x2=\"4\" y2=\"16\"/>\n  <line x1=\"28\" y1=\"16\" x2=\"30\" y2=\"16\"/>\n\n  <!-- Needle (angled ~30\u00b0) -->\n  <polygon points=\"18 8 22 18 14 24 10 14\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"1\"/>\n</svg>\n\n");
-SVGIconsManager.register('congrats', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <circle cx=\"16\" cy=\"11\" r=\"8\" />\n  <path d=\"M11 19l-3 8 8-4 8 4-3-8\" />\n</svg>");
-SVGIconsManager.register('content', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <circle cx=\"7\" cy=\"16\" r=\"2\" />\n  <circle cx=\"16\" cy=\"16\" r=\"2\" />\n  <circle cx=\"25\" cy=\"16\" r=\"2\" />\n</svg>");
-SVGIconsManager.register('contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n\tviewBox=\"0 0 32 32\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n</svg>");
-SVGIconsManager.register('cuedspeech', "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" id=\"Calque_1\" x=\"0px\" y=\"0px\" width=\"119.055px\" height=\"119.055px\" viewBox=\"-5.838 29.144 90.205 90.205\" enable-background=\"new 0 0 119.055 119.055\" xml:space=\"preserve\"><polygon points=\"-0.024,97.39 0.231,98.014 0.231,97.18 \" />\n<path d=\"M21.312,117.349c1.022,0,1.726-0.25,2.149-0.764l0.173-0.209c3.688-4.487,11.127-12.775,19.522-17.867  C49.166,94.864,53.823,91.098,57,87.317c1.407-1.416,2.341-2.569,2.998-3.419c3.947-5.104,15.603-22.875,16.603-26.323  c0.372-1.286,0.154-2.516-0.628-3.557c-0.599-0.796-1.479-1.386-2.255-1.679c1.443-1.975,2.707-3.799,3.654-5.352  c1.11-1.82,1.227-3.79,0.32-5.404c-0.478-0.849-1.204-1.502-2.016-1.853c0.651-0.855,1.994-2.895,1.796-4.972  c-0.107-1.124-0.655-2.102-1.584-2.829c-0.665-0.521-1.428-0.785-2.269-0.785c-1.618,0-3.419,0.991-5.414,3.01  c-0.229,0.266-0.479,0.544-0.753,0.844l-0.389,0.428l-0.003-0.002c-2.369,2.549-5.944,6.138-9.527,9.642  c-0.193-0.716-0.689-1.3-1.426-1.667c-0.99-0.493-2.333-1.059-3.946-1.059c-2.112,0-4.143,0.932-6.208,2.849  c-1.342,1.244-8.23,6.507-11.541,9.037l-1.378,1.054l-4.207,3.465c-0.169,0.15-0.333,0.298-0.562,0.508l-2.755,2.711  c-4.447,4.745-6.033,8.552-7.568,12.232c-0.81,1.944-1.576,3.78-2.75,5.737c-0.764,1.274-1.683,2.636-2.733,4.047  c-0.304,0.241-0.533,0.545-0.686,0.907c-3.574,4.637-7.668,8.742-9.809,10.794l-0.581,0.553L0.231,97.18v0.834l0.124,0.302  C6.716,113.853,17.896,117.349,21.312,117.349z M3.192,98.035c0.164-0.153,0.348-0.328,0.545-0.52  c2.21-2.117,6.473-6.392,10.182-11.23l0.144-0.236l0.04-0.106l0.144-0.09l0.143-0.19c1.151-1.536,2.159-3.023,2.995-4.419  c1.27-2.116,2.106-4.125,2.917-6.068c1.516-3.638,2.949-7.074,7.098-11.494l2.659-2.61c0.151-0.139,0.305-0.277,0.521-0.469  l5.386-4.35c3.598-2.749,10.296-7.866,11.727-9.193c1.572-1.459,3.036-2.168,4.474-2.168c1.075,0,2.022,0.4,2.807,0.791  c0.065,0.033,0.097,0.058,0.104,0.058c0.229,1.019-2.395,3.946-7.8,8.702c-1.838,1.618-2.432,2.152-2.685,2.641l-0.35,0.716  l0.765,1.233l0.718-0.001c0.607,0,1.008-0.001,9.979-8.63c4.211-4.05,9.896-9.652,13.225-13.233l0.023-0.013  c0.012-0.016,0.023-0.032,0.035-0.048l0.357-0.391c0.286-0.313,0.553-0.609,0.737-0.829c1.377-1.391,2.668-2.188,3.541-2.188  c0.264,0,0.484,0.077,0.695,0.242c0.379,0.297,0.575,0.633,0.617,1.059c0.123,1.257-1.072,2.958-1.491,3.444  c-1.112,1.256-6.668,7.529-6.804,7.688c-0.841,0.983-2.757,2.939-4.976,5.205C51.038,62.18,49.746,63.989,50.247,65.427  c0.188,0.542,0.653,0.91,1.243,0.985l0.161,0.01c0.726,0,1.044-0.511,1.299-0.921c0.335-0.537,1.032-1.656,2.126-2.892  c2.408-2.717,6.164-6.695,9.798-10.542c1.771-1.876,3.493-3.699,4.976-5.289c1.562-1.673,2.67-2.938,3.403-3.774  c0.384-0.438,0.747-0.853,0.826-0.927c0.31-0.249,0.984,0.032,1.39,0.754c0.26,0.462,0.569,1.445-0.273,2.827  c-2.286,3.747-6.564,9.244-10.701,14.559c-1.354,1.739-2.695,3.464-3.957,5.112c-0.638,0.835-1.274,1.633-1.884,2.398  c-2.009,2.521-3.744,4.697-4.51,6.826l-0.615,1.712l1.817-0.003c0.705-0.001,0.705-0.001,4.302-4.63  c1.754-2.257,4.444-5.774,7.303-9.715l0.119-0.164c2.834-3.909,4.626-6.38,5.766-7.019c0.313,0.128,0.882,0.445,1.189,0.947  c0.218,0.354,0.258,0.729,0.126,1.182c-0.787,2.714-11.695,19.685-16.17,25.473c-0.618,0.798-1.497,1.884-2.826,3.218l-0.075,0.081  c-2.998,3.581-7.455,7.179-13.247,10.691c-8.719,5.288-16.38,13.816-20.17,18.429l-0.018,0.022c-0.071,0.01-0.179,0.02-0.333,0.02  c-2.373,0-12.278-2.851-18.254-16.638L3.192,98.035z\" />\n</svg>");
-SVGIconsManager.register('dashboard', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     stroke=\"currentColor\"\n     fill=\"none\"\n     stroke-width=\"2\"\n     stroke-linecap=\"round\"\n     stroke-linejoin=\"round\">\n  <rect x=\"5\" y=\"5\" width=\"8\" height=\"21\" rx=\"1\" />\n  <rect x=\"19\" y=\"5\" width=\"8\" height=\"8\" rx=\"1\" />\n  <rect x=\"19\" y=\"19\" width=\"8\" height=\"8\" rx=\"1\" />\n</svg>");
-SVGIconsManager.register('discovery', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"15\" cy=\"15\" r=\"8\" />\n  <line x1=\"23\" y1=\"23\" x2=\"28\" y2=\"28\" />\n</svg>");
-SVGIconsManager.register('download', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M16 5v16\"/>\n  <polyline points=\"10 15 16 21 22 15\"/>\n  <line x1=\"6\" y1=\"27\" x2=\"26\" y2=\"27\"/>\n</svg>\n");
-SVGIconsManager.register('error', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polygon points=\"16 3 29 27 3 27 16 3\" />\n  <line x1=\"16\" y1=\"12\" x2=\"16\" y2=\"17\" />\n  <circle cx=\"16\" cy=\"23\" r=\"1\" />\n</svg>");
-SVGIconsManager.register('feedback', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M28 20a3 3 0 0 1-3 3H9l-5 5V7a3 3 0 0 1 3-3h19a3 3 0 0 1 3 3z\" />\n</svg>\n");
-SVGIconsManager.register('first', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n    <line x1=\"4\" y1=\"4\" x2=\"4\" y2=\"28\" />\n</svg>\n");
-SVGIconsManager.register('games', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <rect x=\"5\" y=\"11\" width=\"21\" height=\"11\" rx=\"3\" />\n  <circle cx=\"11\" cy=\"16\" r=\"1\" />\n  <circle cx=\"13\" cy=\"16\" r=\"1\" />\n  <circle cx=\"19\" cy=\"13\" r=\"1\" />\n  <circle cx=\"19\" cy=\"19\" r=\"1\" />\n</svg>");
-SVGIconsManager.register('goto', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path d=\"M6 8 H18 V18\" />\n    <polyline points=\"12 18 18 24 24 18\" />\n</svg>\n");
-SVGIconsManager.register('half-checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" />\n  <circle cx=\"16\" cy=\"16\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\" />\n</svg>\n");
-SVGIconsManager.register('heart-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" fill=\"none\">\n  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16 8C14 5 10 4 7 7C4 9 3 14 6 17C7 19 13 25 15 26C16 27 16 27 16 27C16 27 16 27 16 27C16 27 16 27 17 26C19 25 25 19 26 17C29 14 28 9 25 7C22 4 18 5 16 8Z\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</svg>");
-SVGIconsManager.register('help', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\" />\n  <path d=\"M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5\" />\n  <circle cx=\"16\" cy=\"23\" r=\"1\" />\n</svg>");
-SVGIconsManager.register('house', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 16L16 5l12 11\" />\n  <path d=\"M7 16v9a1 1 0 0 0 1 1h5v-7h5v7h5a1 1 0 0 0 1-1v-9\" />\n</svg>");
-SVGIconsManager.register('info-square', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n  <path d=\"M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H5V5h14v14z\"/>\n  <path d=\"M11 7h2v2h-2zm0 4h2v6h-2z\"/>\n</svg>\n");
-SVGIconsManager.register('install', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n\t<path d=\"M28.36 14.65V11.38l-3.63-.59a9.64 9.64 0 0 0-1-2.41l2.12-3.03-2.16-2.16-2.98 2.14a8.94 8.94 0 0 0-2.42-1l-.63-3.63h-3.06l-.64 3.63a9.1 9.1 0 0 0-2.43 1L8.12 3.19 5.97 5.35l2.09 2.99a9.5 9.5 0 0 0-.22 2.48L4.06 11.4v3.27l3.6.64a9.6 9.6 0 0 0 1.02 2.45l-2.13 2.98 2.17 2.17 3.01-2.11a9 9 0 0 0 2.43 1l.6 3.63h3.06l.64-3.63a9.1 9.1 0 0 0 2.42-1l3 2.11 2.16-2.17-2.16-3a9.5 9.5 0 0 0 1-2.46l3.63-.62zM16 16.54a4.26 4.26 0 1 1 0-8.52 4.26 4.26 0 0 1 0 8.52zM29.54 23.36v4.92a1.23 1.23 0 0 1-1.23 1.23H3.69a1.23 1.23 0 0 1-1.23-1.23v-4.92H0v4.92a3.69 3.69 0 0 0 3.69 3.69h24.62a3.69 3.69 0 0 0 3.69-3.69v-4.92h-2.46z\"/>\n</svg>");
-SVGIconsManager.register('lang', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M28 20a3 3 0 0 1-3 3h-5l-5 5v-5H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h19a3 3 0 0 1 3 3z\" />\n  <line x1=\"11\" y1=\"12\" x2=\"21\" y2=\"12\" />\n  <line x1=\"13\" y1=\"17\" x2=\"19\" y2=\"17\" />\n</svg>");
-SVGIconsManager.register('last', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n    <line x1=\"28\" y1=\"4\" x2=\"28\" y2=\"28\" />\n</svg>\n");
-SVGIconsManager.register('light-bulb', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Bulb -->\n  <circle cx=\"16\" cy=\"12\" r=\"8\"/>\n  <!-- Filament -->\n  <polyline points=\"13 13 15 15 17 11 19 13\"/>\n  <!-- Neck -->\n  <line x1=\"12\" y1=\"20\" x2=\"20\" y2=\"20\"/>\n  <line x1=\"12\" y1=\"22\" x2=\"20\" y2=\"22\"/>\n  <!-- Base -->\n  <line x1=\"13\" y1=\"24\" x2=\"19\" y2=\"24\"/>\n  <line x1=\"14\" y1=\"26\" x2=\"18\" y2=\"26\"/>\n</svg>\n");
-SVGIconsManager.register('like', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <path d=\"M16 28c-4-4-8-8-8-13a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 5-4 9-8 13z\" />\n</svg>");
-SVGIconsManager.register('logout', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M21 23l7-7-7-7\" />\n  <path d=\"M28 16H12\" />\n  <path d=\"M16 4H8a3 3 0 0 0-3 3v19a3 3 0 0 0 3 3h8\" />\n</svg>");
-SVGIconsManager.register('menu', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <line x1=\"4\" y1=\"8\" x2=\"28\" y2=\"8\" />\n  <line x1=\"4\" y1=\"16\" x2=\"28\" y2=\"16\" />\n  <line x1=\"4\" y1=\"24\" x2=\"28\" y2=\"24\" />\n</svg>");
-SVGIconsManager.register('misty-moon-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:ns1=\"http://www.bohemiancoding.com/sketch/ns\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" version=\"1.1\">\n  <title>misty-moon</title>\n  <desc>Created with Sketch Beta.</desc>\n  <defs>\n\n</defs>\n  <g id=\"Page-1\" stroke=\"none\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\" ns1:type=\"MSPage\">\n    <g id=\"Icon-Set\" ns1:type=\"MSLayerGroup\" transform=\"translate(-516.000000, -828.000000)\" fill=\"#000000\">\n      <path d=\"M697,1131 C696,1129 696,1127 696,1125 C696,1114 702,1111 707,1108 C710,1106 715,1106 717,1107 C712,1109 707,1118 707,1126 C707,1128 707,1129 707,1131 L697,1131 L697,1131 Z M729,1131 L710,1131 C710,1129 709,1128 709,1126 C709,1117 715,1109 724,1106 C721,1105 717,1104 714,1104 C703,1104 693,1113 693,1125 C693,1127 694,1129 694,1131 L689,1131 C689,1131 688,1131 688,1132 C688,1133 689,1133 689,1133 L729,1133 C730,1133 731,1133 731,1132 C731,1131 730,1131 729,1131 L729,1131 Z M713,1136 L695,1136 C694,1136 693,1137 693,1137 C693,1138 694,1139 695,1139 L713,1139 C714,1139 715,1138 715,1137 C715,1137 714,1136 713,1136 L713,1136 Z M711,1141 L697,1141 C697,1141 696,1142 696,1143 C696,1143 697,1144 697,1144 L711,1144 C711,1144 712,1143 712,1143 C712,1142 711,1141 711,1141 L711,1141 Z\" id=\"misty-moon\" ns1:type=\"MSShapeGroup\">\n\n</path>\n    </g>\n  </g>\n</svg>");
-SVGIconsManager.register('next', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n</svg>");
-SVGIconsManager.register('parameters', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"5\" y1=\"9\" x2=\"27\" y2=\"9\" />\n  <circle cx=\"11\" cy=\"9\" r=\"2\" />\n  <line x1=\"5\" y1=\"23\" x2=\"27\" y2=\"23\" />\n  <circle cx=\"21\" cy=\"23\" r=\"2\" />\n</svg>");
-SVGIconsManager.register('pathway', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"5\" cy=\"16\" r=\"3\" />\n  <circle cx=\"16\" cy=\"5\" r=\"3\" />\n  <circle cx=\"27\" cy=\"21\" r=\"3\" />\n  <path d=\"M7 15L14 7L25 19\" />\n</svg>");
-SVGIconsManager.register('pin', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n\t viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"\n\t aria-label=\"Pushpin\">\n\t<path d=\"M9 3h6l-1 8H10L9 3z\"/>\n\t<path d=\"M7 13h10\"/>\n\t<path d=\"M12 13v9\"/>\n</svg>");
-SVGIconsManager.register('readings', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <path d=\"M5 25h21M5 20h13M5 15h21M5 9h13\" />\n</svg>");
-SVGIconsManager.register('redo', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M16 4a12 12 0 1 0 11.3 8h-2.6A9.5 9.5 0 1 1 16 6.5\n               c2.5 0 4.7 1 6.3 2.6L19 12h9V3l-2.7 2.7A12 12 0 0 0 16 4Z\"/>\n</svg>");
-SVGIconsManager.register('researchinfo', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n     viewBox=\"0 0 32 32\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <!-- Left brace { -->\n    <path d=\"M13 5\n             C10 5 10 8 10 10\n             C10 12 8 12 8 12\n             C10 12 10 14 10 16\n             C10 18 8 18 8 18\n             C10 18 10 20 10 22\n             C10 24 10 27 13 27\" />\n    <!-- Right brace } -->\n    <path d=\"M19 5\n             C22 5 22 8 22 10\n             C22 12 24 12 24 12\n             C22 12 22 14 22 16\n             C22 18 24 18 24 18\n             C22 18 22 20 22 22\n             C22 24 22 27 19 27\" />\n    <!-- Dot -->\n    <circle cx=\"16\" cy=\"16\" r=\"1.5\" />\n</svg>\n");
-SVGIconsManager.register('scrolltop', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- upward arrow -->\n  <polyline points=\"8 18 16 10 24 18\" />\n  <!-- top baseline -->\n  <line x1=\"8\" y1=\"22\" x2=\"24\" y2=\"22\" />\n</svg>");
-SVGIconsManager.register('settings', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"4\" />\n  <path d=\"M26 20a2 2 0 0 0 0 2l00a3 3 0 1 1-4 4l00a2 2 0 0 0-20 2 2 0 0 0-1 2V28a3 3 0 1 1-5 0v0a2 2 0 0 0-1-2 2 2 0 0 0-20l00a3 3 0 1 1-4-4l00a2 2 0 0 0 0-2 2 2 0 0 0-2-1H4a3 3 0 1 1 0-5h0a2 2 0 0 0 2-1 2 2 0 0 00-2l00a3 3 0 1 1 4-4l00a2 2 0 0 0 20h0A2 2 0 0 0 12 4V4a3 3 0 1 1 5 0v0a2 2 0 0 0 1 2h0a2 2 0 0 0 20l00a3 3 0 1 1 4 4l00a2 2 0 0 00 2v0A2 2 0 0 0 28 15H28a3 3 0 1 1 0 5h0a2 2 0 0 0-2 1z\" />\n</svg>");
-SVGIconsManager.register('smiley_neutral', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <line x1=\"11\" y1=\"21\" x2=\"21\" y2=\"21\"/>\n</svg>\n\n\n");
-SVGIconsManager.register('smiley_sad', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <path d=\"M11 21 Q16 16 21 21\" fill=\"none\"/>\n</svg>\n\n");
-SVGIconsManager.register('smiley_smile', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <path d=\"M11 21 Q16 26 21 21\" fill=\"none\"/>\n</svg>\n");
-SVGIconsManager.register('sun-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:ns1=\"http://www.bohemiancoding.com/sketch/ns\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" version=\"1.1\">\n  <title>sun</title>\n  <desc>Created with Sketch Beta.</desc>\n  <defs>\n\n</defs>\n  <g id=\"Page-1\" stroke=\"none\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\" ns1:type=\"MSPage\">\n    <g id=\"Icon-Set\" ns1:type=\"MSLayerGroup\" transform=\"translate(-206.000000, -831.000000)\" fill=\"#000000\">\n      <path d=\"M282,1129 C283,1123 288,1119 295,1119 C301,1119 306,1123 308,1129 L311,1129 C309,1122 303,1116 295,1116 C287,1116 280,1122 279,1129 L282,1129 L282,1129 Z M313,1132 L276,1132 C275,1132 275,1133 275,1133 C275,1134 275,1135 276,1135 L313,1135 C314,1135 315,1134 315,1133 C315,1133 314,1132 313,1132 L313,1132 Z M279,1119 C279,1120 280,1120 281,1119 C281,1119 281,1118 281,1117 L279,1115 C278,1115 277,1115 277,1115 C276,1116 276,1117 277,1117 L279,1119 L279,1119 Z M311,1119 L313,1117 C313,1117 313,1116 313,1115 C312,1115 311,1115 311,1115 L309,1117 C308,1118 308,1119 309,1119 C309,1120 310,1120 311,1119 L311,1119 Z M295,1113 C295,1113 296,1113 296,1112 L296,1109 C296,1109 295,1108 295,1108 C294,1108 293,1109 293,1109 L293,1112 C293,1113 294,1113 295,1113 L295,1113 Z\" id=\"sun\" ns1:type=\"MSShapeGroup\">\n\n</path>\n    </g>\n  </g>\n</svg>");
-SVGIconsManager.register('switch_contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-label=\"Contrast switcher icon\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <!-- text x=\"16\" y=\"20\" font-size=\"13\" text-anchor=\"middle\" fill=\"currentColor\" font-family=\"Commissioner, sans-serif\">A</text -->\n  <!-- Letter A drawn with three lines -->\n  <line x1=\"13\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"19\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"14\" y1=\"18\" x2=\"18\" y2=\"18\"/>\n  \n  <!-- Plus sign (top-left) -->\n  <line x1=\"5.5\" y1=\"5.5\" x2=\"5.5\" y2=\"8.5\"/>\n  <line x1=\"4\" y1=\"7\" x2=\"7\" y2=\"7\"/>\n\n  <!-- Minus sign (bottom-right) -->\n  <line x1=\"25\" y1=\"25\" x2=\"28\" y2=\"25\"/>\n</svg>");
-SVGIconsManager.register('switch_theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n    <polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>\n");
-SVGIconsManager.register('theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"\n     stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n    <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n    <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n    <line x1=\"16\" y1=\"3\"  x2=\"16\" y2=\"8\"/>\n    <line x1=\"16\" y1=\"24\" x2=\"16\" y2=\"29\"/>\n    <line x1=\"3\"  y1=\"16\" x2=\"8\"  y2=\"16\"/>\n    <line x1=\"24\" y1=\"16\" x2=\"29\" y2=\"16\"/>\n</svg>\n");
-SVGIconsManager.register('unchecked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" />\n</svg>\n");
-SVGIconsManager.register('user', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n</svg>");
-SVGIconsManager.register('valid', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polyline points=\"7 17 12 23 25 9\" />\n</svg>");
-SVGIconsManager.register('video', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <rect x=\"4\" y=\"8\" width=\"20\" height=\"16\" rx=\"3\" />\n  <polygon points=\"21 13 28 9 28 23 21 19\" />\n</svg>");
+// ------------- SVG icons (gathered in, for a document on a disk) ------------
+IconReader.gather('mono-svg', 'anonymous', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n  <line x1=\"8\" y1=\"8\" x2=\"24\" y2=\"24\" />\n</svg>");
+IconReader.gather('mono-svg', 'audio', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polygon points=\"7 12 12 12 17 7 17 25 12 20 7 20 7 12\"/>\n  <path d=\"M21 11.333a6.7 7 0 0 1 0 9\"/>\n</svg>\n\n\n");
+IconReader.gather('mono-svg', 'back', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n</svg>");
+IconReader.gather('mono-svg', 'backward', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polyline points=\"20 24 12 16 20 8\" />\n</svg>");
+IconReader.gather('mono-svg', 'bell', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M24 11a8 8 0 0 0-16 0c0 9-4 8-4 11h24c0-3-4-1-4-11\" />\n  <path d=\"M18 28a3 3 0 0 1-5 0\" />\n</svg>");
+IconReader.gather('mono-svg', 'book-open', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z\"/>\n  <path d=\"M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'cadenas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <rect x=\"7\" y=\"15\" width=\"19\" height=\"13\" rx=\"3\" />\n  <path d=\"M11 15V9a5 5 0 0 1 11 0v5\" />\n</svg>");
+IconReader.gather('mono-svg', 'cancel', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n\t<circle cx=\"16\" cy=\"16\" r=\"10\" />\n\t<line x1=\"10\" y1=\"22\" x2=\"22\" y2=\"10\" />\n</svg>");
+IconReader.gather('mono-svg', 'checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z M11 17L14 20L21 12\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'color', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t  fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n\t<polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>");
+IconReader.gather('mono-svg', 'compas', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n\n  <!-- Compass ticks -->\n  <line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"4\"/>\n  <line x1=\"16\" y1=\"28\" x2=\"16\" y2=\"30\"/>\n  <line x1=\"2\" y1=\"16\" x2=\"4\" y2=\"16\"/>\n  <line x1=\"28\" y1=\"16\" x2=\"30\" y2=\"16\"/>\n\n  <!-- Needle (angled ~30\u00b0) -->\n  <polygon points=\"18 8 22 18 14 24 10 14\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"1\"/>\n</svg>\n\n");
+IconReader.gather('mono-svg', 'congrats', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <circle cx=\"16\" cy=\"11\" r=\"8\" />\n  <path d=\"M11 19l-3 8 8-4 8 4-3-8\" />\n</svg>");
+IconReader.gather('mono-svg', 'content', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <circle cx=\"7\" cy=\"16\" r=\"2\" />\n  <circle cx=\"16\" cy=\"16\" r=\"2\" />\n  <circle cx=\"25\" cy=\"16\" r=\"2\" />\n</svg>");
+IconReader.gather('mono-svg', 'contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n\tviewBox=\"0 0 32 32\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n</svg>");
+IconReader.gather('mono-svg', 'cuedspeech', "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" id=\"Calque_1\" x=\"0px\" y=\"0px\" width=\"119.055px\" height=\"119.055px\" viewBox=\"-5.838 29.144 90.205 90.205\" enable-background=\"new 0 0 119.055 119.055\" xml:space=\"preserve\"><polygon points=\"-0.024,97.39 0.231,98.014 0.231,97.18 \" />\n<path d=\"M21.312,117.349c1.022,0,1.726-0.25,2.149-0.764l0.173-0.209c3.688-4.487,11.127-12.775,19.522-17.867  C49.166,94.864,53.823,91.098,57,87.317c1.407-1.416,2.341-2.569,2.998-3.419c3.947-5.104,15.603-22.875,16.603-26.323  c0.372-1.286,0.154-2.516-0.628-3.557c-0.599-0.796-1.479-1.386-2.255-1.679c1.443-1.975,2.707-3.799,3.654-5.352  c1.11-1.82,1.227-3.79,0.32-5.404c-0.478-0.849-1.204-1.502-2.016-1.853c0.651-0.855,1.994-2.895,1.796-4.972  c-0.107-1.124-0.655-2.102-1.584-2.829c-0.665-0.521-1.428-0.785-2.269-0.785c-1.618,0-3.419,0.991-5.414,3.01  c-0.229,0.266-0.479,0.544-0.753,0.844l-0.389,0.428l-0.003-0.002c-2.369,2.549-5.944,6.138-9.527,9.642  c-0.193-0.716-0.689-1.3-1.426-1.667c-0.99-0.493-2.333-1.059-3.946-1.059c-2.112,0-4.143,0.932-6.208,2.849  c-1.342,1.244-8.23,6.507-11.541,9.037l-1.378,1.054l-4.207,3.465c-0.169,0.15-0.333,0.298-0.562,0.508l-2.755,2.711  c-4.447,4.745-6.033,8.552-7.568,12.232c-0.81,1.944-1.576,3.78-2.75,5.737c-0.764,1.274-1.683,2.636-2.733,4.047  c-0.304,0.241-0.533,0.545-0.686,0.907c-3.574,4.637-7.668,8.742-9.809,10.794l-0.581,0.553L0.231,97.18v0.834l0.124,0.302  C6.716,113.853,17.896,117.349,21.312,117.349z M3.192,98.035c0.164-0.153,0.348-0.328,0.545-0.52  c2.21-2.117,6.473-6.392,10.182-11.23l0.144-0.236l0.04-0.106l0.144-0.09l0.143-0.19c1.151-1.536,2.159-3.023,2.995-4.419  c1.27-2.116,2.106-4.125,2.917-6.068c1.516-3.638,2.949-7.074,7.098-11.494l2.659-2.61c0.151-0.139,0.305-0.277,0.521-0.469  l5.386-4.35c3.598-2.749,10.296-7.866,11.727-9.193c1.572-1.459,3.036-2.168,4.474-2.168c1.075,0,2.022,0.4,2.807,0.791  c0.065,0.033,0.097,0.058,0.104,0.058c0.229,1.019-2.395,3.946-7.8,8.702c-1.838,1.618-2.432,2.152-2.685,2.641l-0.35,0.716  l0.765,1.233l0.718-0.001c0.607,0,1.008-0.001,9.979-8.63c4.211-4.05,9.896-9.652,13.225-13.233l0.023-0.013  c0.012-0.016,0.023-0.032,0.035-0.048l0.357-0.391c0.286-0.313,0.553-0.609,0.737-0.829c1.377-1.391,2.668-2.188,3.541-2.188  c0.264,0,0.484,0.077,0.695,0.242c0.379,0.297,0.575,0.633,0.617,1.059c0.123,1.257-1.072,2.958-1.491,3.444  c-1.112,1.256-6.668,7.529-6.804,7.688c-0.841,0.983-2.757,2.939-4.976,5.205C51.038,62.18,49.746,63.989,50.247,65.427  c0.188,0.542,0.653,0.91,1.243,0.985l0.161,0.01c0.726,0,1.044-0.511,1.299-0.921c0.335-0.537,1.032-1.656,2.126-2.892  c2.408-2.717,6.164-6.695,9.798-10.542c1.771-1.876,3.493-3.699,4.976-5.289c1.562-1.673,2.67-2.938,3.403-3.774  c0.384-0.438,0.747-0.853,0.826-0.927c0.31-0.249,0.984,0.032,1.39,0.754c0.26,0.462,0.569,1.445-0.273,2.827  c-2.286,3.747-6.564,9.244-10.701,14.559c-1.354,1.739-2.695,3.464-3.957,5.112c-0.638,0.835-1.274,1.633-1.884,2.398  c-2.009,2.521-3.744,4.697-4.51,6.826l-0.615,1.712l1.817-0.003c0.705-0.001,0.705-0.001,4.302-4.63  c1.754-2.257,4.444-5.774,7.303-9.715l0.119-0.164c2.834-3.909,4.626-6.38,5.766-7.019c0.313,0.128,0.882,0.445,1.189,0.947  c0.218,0.354,0.258,0.729,0.126,1.182c-0.787,2.714-11.695,19.685-16.17,25.473c-0.618,0.798-1.497,1.884-2.826,3.218l-0.075,0.081  c-2.998,3.581-7.455,7.179-13.247,10.691c-8.719,5.288-16.38,13.816-20.17,18.429l-0.018,0.022c-0.071,0.01-0.179,0.02-0.333,0.02  c-2.373,0-12.278-2.851-18.254-16.638L3.192,98.035z\" />\n</svg>");
+IconReader.gather('mono-svg', 'dashboard', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     stroke=\"currentColor\"\n     fill=\"none\"\n     stroke-width=\"2\"\n     stroke-linecap=\"round\"\n     stroke-linejoin=\"round\">\n  <rect x=\"5\" y=\"5\" width=\"8\" height=\"21\" rx=\"1\" />\n  <rect x=\"19\" y=\"5\" width=\"8\" height=\"8\" rx=\"1\" />\n  <rect x=\"19\" y=\"19\" width=\"8\" height=\"8\" rx=\"1\" />\n</svg>");
+IconReader.gather('mono-svg', 'discovery', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"15\" cy=\"15\" r=\"8\" />\n  <line x1=\"23\" y1=\"23\" x2=\"28\" y2=\"28\" />\n</svg>");
+IconReader.gather('mono-svg', 'download', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M16 5v16\"/>\n  <polyline points=\"10 15 16 21 22 15\"/>\n  <line x1=\"6\" y1=\"27\" x2=\"26\" y2=\"27\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'error', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polygon points=\"16 3 29 27 3 27 16 3\" />\n  <line x1=\"16\" y1=\"12\" x2=\"16\" y2=\"17\" />\n  <circle cx=\"16\" cy=\"23\" r=\"1\" />\n</svg>");
+IconReader.gather('mono-svg', 'feedback', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M28 20a3 3 0 0 1-3 3H9l-5 5V7a3 3 0 0 1 3-3h19a3 3 0 0 1 3 3z\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'first', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M20 28 L8 16 L20 4 Z\" />\n    <line x1=\"4\" y1=\"4\" x2=\"4\" y2=\"28\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'games', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <rect x=\"5\" y=\"11\" width=\"21\" height=\"11\" rx=\"3\" />\n  <circle cx=\"11\" cy=\"16\" r=\"1\" />\n  <circle cx=\"13\" cy=\"16\" r=\"1\" />\n  <circle cx=\"19\" cy=\"13\" r=\"1\" />\n  <circle cx=\"19\" cy=\"19\" r=\"1\" />\n</svg>");
+IconReader.gather('mono-svg', 'goto', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path d=\"M6 8 H18 V18\" />\n    <polyline points=\"12 18 18 24 24 18\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'half-checked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" />\n  <circle cx=\"16\" cy=\"16\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'heart-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" fill=\"none\">\n  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16 8C14 5 10 4 7 7C4 9 3 14 6 17C7 19 13 25 15 26C16 27 16 27 16 27C16 27 16 27 16 27C16 27 16 27 17 26C19 25 25 19 26 17C29 14 28 9 25 7C22 4 18 5 16 8Z\" stroke=\"#000000\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</svg>");
+IconReader.gather('mono-svg', 'help', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\" />\n  <path d=\"M12 12a4 4 0 0 1 8 0c0 3-4 3-4 5\" />\n  <circle cx=\"16\" cy=\"23\" r=\"1\" />\n</svg>");
+IconReader.gather('mono-svg', 'house', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 16L16 5l12 11\" />\n  <path d=\"M7 16v9a1 1 0 0 0 1 1h5v-7h5v7h5a1 1 0 0 0 1-1v-9\" />\n</svg>");
+IconReader.gather('mono-svg', 'info-square', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n  <path d=\"M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H5V5h14v14z\"/>\n  <path d=\"M11 7h2v2h-2zm0 4h2v6h-2z\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'install', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n\t<path d=\"M28.36 14.65V11.38l-3.63-.59a9.64 9.64 0 0 0-1-2.41l2.12-3.03-2.16-2.16-2.98 2.14a8.94 8.94 0 0 0-2.42-1l-.63-3.63h-3.06l-.64 3.63a9.1 9.1 0 0 0-2.43 1L8.12 3.19 5.97 5.35l2.09 2.99a9.5 9.5 0 0 0-.22 2.48L4.06 11.4v3.27l3.6.64a9.6 9.6 0 0 0 1.02 2.45l-2.13 2.98 2.17 2.17 3.01-2.11a9 9 0 0 0 2.43 1l.6 3.63h3.06l.64-3.63a9.1 9.1 0 0 0 2.42-1l3 2.11 2.16-2.17-2.16-3a9.5 9.5 0 0 0 1-2.46l3.63-.62zM16 16.54a4.26 4.26 0 1 1 0-8.52 4.26 4.26 0 0 1 0 8.52zM29.54 23.36v4.92a1.23 1.23 0 0 1-1.23 1.23H3.69a1.23 1.23 0 0 1-1.23-1.23v-4.92H0v4.92a3.69 3.69 0 0 0 3.69 3.69h24.62a3.69 3.69 0 0 0 3.69-3.69v-4.92h-2.46z\"/>\n</svg>");
+IconReader.gather('mono-svg', 'lang', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M28 20a3 3 0 0 1-3 3h-5l-5 5v-5H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h19a3 3 0 0 1 3 3z\" />\n  <line x1=\"11\" y1=\"12\" x2=\"21\" y2=\"12\" />\n  <line x1=\"13\" y1=\"17\" x2=\"19\" y2=\"17\" />\n</svg>");
+IconReader.gather('mono-svg', 'last', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n    <line x1=\"28\" y1=\"4\" x2=\"28\" y2=\"28\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'light-bulb', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- Bulb -->\n  <circle cx=\"16\" cy=\"12\" r=\"8\"/>\n  <!-- Filament -->\n  <polyline points=\"13 13 15 15 17 11 19 13\"/>\n  <!-- Neck -->\n  <line x1=\"12\" y1=\"20\" x2=\"20\" y2=\"20\"/>\n  <line x1=\"12\" y1=\"22\" x2=\"20\" y2=\"22\"/>\n  <!-- Base -->\n  <line x1=\"13\" y1=\"24\" x2=\"19\" y2=\"24\"/>\n  <line x1=\"14\" y1=\"26\" x2=\"18\" y2=\"26\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'like', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <path d=\"M16 28c-4-4-8-8-8-13a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 5-4 9-8 13z\" />\n</svg>");
+IconReader.gather('mono-svg', 'logout', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <path d=\"M21 23l7-7-7-7\" />\n  <path d=\"M28 16H12\" />\n  <path d=\"M16 4H8a3 3 0 0 0-3 3v19a3 3 0 0 0 3 3h8\" />\n</svg>");
+IconReader.gather('mono-svg', 'menu', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <line x1=\"4\" y1=\"8\" x2=\"28\" y2=\"8\" />\n  <line x1=\"4\" y1=\"16\" x2=\"28\" y2=\"16\" />\n  <line x1=\"4\" y1=\"24\" x2=\"28\" y2=\"24\" />\n</svg>");
+IconReader.gather('mono-svg', 'misty-moon-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:ns1=\"http://www.bohemiancoding.com/sketch/ns\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" version=\"1.1\">\n  <title>misty-moon</title>\n  <desc>Created with Sketch Beta.</desc>\n  <defs>\n\n</defs>\n  <g id=\"Page-1\" stroke=\"none\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\" ns1:type=\"MSPage\">\n    <g id=\"Icon-Set\" ns1:type=\"MSLayerGroup\" transform=\"translate(-516.000000, -828.000000)\" fill=\"#000000\">\n      <path d=\"M697,1131 C696,1129 696,1127 696,1125 C696,1114 702,1111 707,1108 C710,1106 715,1106 717,1107 C712,1109 707,1118 707,1126 C707,1128 707,1129 707,1131 L697,1131 L697,1131 Z M729,1131 L710,1131 C710,1129 709,1128 709,1126 C709,1117 715,1109 724,1106 C721,1105 717,1104 714,1104 C703,1104 693,1113 693,1125 C693,1127 694,1129 694,1131 L689,1131 C689,1131 688,1131 688,1132 C688,1133 689,1133 689,1133 L729,1133 C730,1133 731,1133 731,1132 C731,1131 730,1131 729,1131 L729,1131 Z M713,1136 L695,1136 C694,1136 693,1137 693,1137 C693,1138 694,1139 695,1139 L713,1139 C714,1139 715,1138 715,1137 C715,1137 714,1136 713,1136 L713,1136 Z M711,1141 L697,1141 C697,1141 696,1142 696,1143 C696,1143 697,1144 697,1144 L711,1144 C711,1144 712,1143 712,1143 C712,1142 711,1141 711,1141 L711,1141 Z\" id=\"misty-moon\" ns1:type=\"MSShapeGroup\">\n\n</path>\n    </g>\n  </g>\n</svg>");
+IconReader.gather('mono-svg', 'next', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n</svg>");
+IconReader.gather('mono-svg', 'parameters', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"5\" y1=\"9\" x2=\"27\" y2=\"9\" />\n  <circle cx=\"11\" cy=\"9\" r=\"2\" />\n  <line x1=\"5\" y1=\"23\" x2=\"27\" y2=\"23\" />\n  <circle cx=\"21\" cy=\"23\" r=\"2\" />\n</svg>");
+IconReader.gather('mono-svg', 'pathway', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"5\" cy=\"16\" r=\"3\" />\n  <circle cx=\"16\" cy=\"5\" r=\"3\" />\n  <circle cx=\"27\" cy=\"21\" r=\"3\" />\n  <path d=\"M7 15L14 7L25 19\" />\n</svg>");
+IconReader.gather('mono-svg', 'pin', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n\t viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"\n\t aria-label=\"Pushpin\">\n\t<path d=\"M9 3h6l-1 8H10L9 3z\"/>\n\t<path d=\"M7 13h10\"/>\n\t<path d=\"M12 13v9\"/>\n</svg>");
+IconReader.gather('mono-svg', 'readings', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <path d=\"M5 25h21M5 20h13M5 15h21M5 9h13\" />\n</svg>");
+IconReader.gather('mono-svg', 'redo', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n    <path d=\"M16 4a12 12 0 1 0 11.3 8h-2.6A9.5 9.5 0 1 1 16 6.5\n               c2.5 0 4.7 1 6.3 2.6L19 12h9V3l-2.7 2.7A12 12 0 0 0 16 4Z\"/>\n</svg>");
+IconReader.gather('mono-svg', 'researchinfo', "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" stroke=\"currentColor\"\n     viewBox=\"0 0 32 32\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <!-- Left brace { -->\n    <path d=\"M13 5\n             C10 5 10 8 10 10\n             C10 12 8 12 8 12\n             C10 12 10 14 10 16\n             C10 18 8 18 8 18\n             C10 18 10 20 10 22\n             C10 24 10 27 13 27\" />\n    <!-- Right brace } -->\n    <path d=\"M19 5\n             C22 5 22 8 22 10\n             C22 12 24 12 24 12\n             C22 12 22 14 22 16\n             C22 18 24 18 24 18\n             C22 18 22 20 22 22\n             C22 24 22 27 19 27\" />\n    <!-- Dot -->\n    <circle cx=\"16\" cy=\"16\" r=\"1.5\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'scrolltop', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" \n\t fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <!-- upward arrow -->\n  <polyline points=\"8 18 16 10 24 18\" />\n  <!-- top baseline -->\n  <line x1=\"8\" y1=\"22\" x2=\"24\" y2=\"22\" />\n</svg>");
+IconReader.gather('mono-svg', 'settings', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"4\" />\n  <path d=\"M26 20a2 2 0 0 0 0 2l00a3 3 0 1 1-4 4l00a2 2 0 0 0-20 2 2 0 0 0-1 2V28a3 3 0 1 1-5 0v0a2 2 0 0 0-1-2 2 2 0 0 0-20l00a3 3 0 1 1-4-4l00a2 2 0 0 0 0-2 2 2 0 0 0-2-1H4a3 3 0 1 1 0-5h0a2 2 0 0 0 2-1 2 2 0 0 00-2l00a3 3 0 1 1 4-4l00a2 2 0 0 0 20h0A2 2 0 0 0 12 4V4a3 3 0 1 1 5 0v0a2 2 0 0 0 1 2h0a2 2 0 0 0 20l00a3 3 0 1 1 4 4l00a2 2 0 0 00 2v0A2 2 0 0 0 28 15H28a3 3 0 1 1 0 5h0a2 2 0 0 0-2 1z\" />\n</svg>");
+IconReader.gather('mono-svg', 'smiley_neutral', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <line x1=\"11\" y1=\"21\" x2=\"21\" y2=\"21\"/>\n</svg>\n\n\n");
+IconReader.gather('mono-svg', 'smiley_sad', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <path d=\"M11 21 Q16 16 21 21\" fill=\"none\"/>\n</svg>\n\n");
+IconReader.gather('mono-svg', 'smiley_smile', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <circle cx=\"11\" cy=\"12\" r=\"1\"/>\n  <circle cx=\"21\" cy=\"12\" r=\"1\"/>\n  <path d=\"M11 21 Q16 26 21 21\" fill=\"none\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'sun-svgrepo-com', "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:ns1=\"http://www.bohemiancoding.com/sketch/ns\" width=\"800px\" height=\"800px\" viewBox=\"0 0 32 32\" version=\"1.1\">\n  <title>sun</title>\n  <desc>Created with Sketch Beta.</desc>\n  <defs>\n\n</defs>\n  <g id=\"Page-1\" stroke=\"none\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\" ns1:type=\"MSPage\">\n    <g id=\"Icon-Set\" ns1:type=\"MSLayerGroup\" transform=\"translate(-206.000000, -831.000000)\" fill=\"#000000\">\n      <path d=\"M282,1129 C283,1123 288,1119 295,1119 C301,1119 306,1123 308,1129 L311,1129 C309,1122 303,1116 295,1116 C287,1116 280,1122 279,1129 L282,1129 L282,1129 Z M313,1132 L276,1132 C275,1132 275,1133 275,1133 C275,1134 275,1135 276,1135 L313,1135 C314,1135 315,1134 315,1133 C315,1133 314,1132 313,1132 L313,1132 Z M279,1119 C279,1120 280,1120 281,1119 C281,1119 281,1118 281,1117 L279,1115 C278,1115 277,1115 277,1115 C276,1116 276,1117 277,1117 L279,1119 L279,1119 Z M311,1119 L313,1117 C313,1117 313,1116 313,1115 C312,1115 311,1115 311,1115 L309,1117 C308,1118 308,1119 309,1119 C309,1120 310,1120 311,1119 L311,1119 Z M295,1113 C295,1113 296,1113 296,1112 L296,1109 C296,1109 295,1108 295,1108 C294,1108 293,1109 293,1109 L293,1112 C293,1113 294,1113 295,1113 L295,1113 Z\" id=\"sun\" ns1:type=\"MSShapeGroup\">\n\n</path>\n    </g>\n  </g>\n</svg>");
+IconReader.gather('mono-svg', 'switch_contrast', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-label=\"Contrast switcher icon\">\n  <path d=\"M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z\"/>\n  <!-- text x=\"16\" y=\"20\" font-size=\"13\" text-anchor=\"middle\" fill=\"currentColor\" font-family=\"Commissioner, sans-serif\">A</text -->\n  <!-- Letter A drawn with three lines -->\n  <line x1=\"13\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"19\" y1=\"20\" x2=\"16\" y2=\"12\"/>\n  <line x1=\"14\" y1=\"18\" x2=\"18\" y2=\"18\"/>\n  \n  <!-- Plus sign (top-left) -->\n  <line x1=\"5.5\" y1=\"5.5\" x2=\"5.5\" y2=\"8.5\"/>\n  <line x1=\"4\" y1=\"7\" x2=\"7\" y2=\"7\"/>\n\n  <!-- Minus sign (bottom-right) -->\n  <line x1=\"25\" y1=\"25\" x2=\"28\" y2=\"25\"/>\n</svg>");
+IconReader.gather('mono-svg', 'switch_theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n  <!-- Outer circle -->\n  <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n  <!-- Diagonal half fill -->\n  <clipPath id=\"cut\">\n    <polygon points=\"0,32 32,0 32,32\"/>\n  </clipPath>\n  <circle cx=\"16\" cy=\"16\" r=\"13\" fill=\"currentColor\" clip-path=\"url(#cut)\" stroke=\"none\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'theme', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"\n     fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"\n     stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n    <circle cx=\"16\" cy=\"16\" r=\"13\"/>\n    <circle cx=\"16\" cy=\"16\" r=\"5\" fill=\"currentColor\" stroke=\"none\"/>\n    <line x1=\"16\" y1=\"3\"  x2=\"16\" y2=\"8\"/>\n    <line x1=\"16\" y1=\"24\" x2=\"16\" y2=\"29\"/>\n    <line x1=\"3\"  y1=\"16\" x2=\"8\"  y2=\"16\"/>\n    <line x1=\"24\" y1=\"16\" x2=\"29\" y2=\"16\"/>\n</svg>\n");
+IconReader.gather('mono-svg', 'unchecked', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M10 27H22C24 27 25 27 25 26C26 26 26 26 26 25C27 25 27 24 27 22V10C27 8 27 7 26 7C26 6 26 6 25 6C25 5 24 5 22 5H10C8 5 7 5 7 6C6 6 6 6 6 7C5 7 5 8 5 10V22C5 24 5 25 6 25C6 26 6 26 7 26C7 27 8 27 10 27Z\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'user', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <circle cx=\"16\" cy=\"11\" r=\"5\" />\n  <path d=\"M5 27c0-5 5-8 11-8s11 3 11 8\" />\n</svg>");
+IconReader.gather('mono-svg', 'valid', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <polyline points=\"7 17 12 23 25 9\" />\n</svg>");
+IconReader.gather('mono-svg', 'video', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\">\n  <rect x=\"4\" y=\"8\" width=\"20\" height=\"16\" rx=\"3\" />\n  <polygon points=\"21 13 28 9 28 23 21 19\" />\n</svg>");
 
 // ---------------- wexa.js ---------------
-SVGIconsManager.init(null);
 // --- Debug -------------------------------------------------------
 console.debug('Imports OK:', {
     OnLoadManager,
@@ -5716,7 +6478,8 @@ console.debug('Imports OK:', {
     ProgressBar,
     BaseManager,
     RequestManager,
-    SVGIconsManager
+    IconManager,
+    KeyboardController
 });
 // ----- Exports (framework public API) -----
 // ---------------------------------------------------------------------------
@@ -5739,8 +6502,9 @@ window.Wexa = Object.assign(window.Wexa || {}, {
     // Note: OnLoadManager is not instantiated because it is a scheduler /
     // dispatcher whose methods are static or utility-like.
     onload: OnLoadManager,
-    // SVGIconsManager is a static class — no instance needed.
-    icons: SVGIconsManager,
+    // What answers a name with a drawing. A page brings its own sets to it,
+    // and the components of the framework ask it for what they draw.
+    icons,
     accessibility: new AccessibilityManager(),
     dialog: new DialogManager(),
     links: new LinkController(),
@@ -5757,7 +6521,8 @@ window.Wexa = Object.assign(window.Wexa || {}, {
     ToggleSelector,
     BaseManager,
     RequestManager,
-    SVGIconsManager
+    IconManager,
+    KeyboardController
 });
 // Make every [data-href] element without a real href focusable via Tab.
 OnLoadManager.addLoadFunction(() => LinkController.initFocusable());
@@ -5860,7 +6625,7 @@ class SlidesInitializer {
         window.Wexa = window.Wexa || {};
         await this.#injectBoilerplate();
         if (this.#themesAttr !== '') {
-            const { ThemeManager } = await import(new URL('../theme_manager.js', this.#base).href);
+            const { ThemeManager } = await import(new URL('../../customize/theme_manager.js', this.#base).href);
             this.#registerThemes(ThemeManager);
         }
         const { SlidesPagination } = await import(new URL('slides_pagination.js', this.#base).href);

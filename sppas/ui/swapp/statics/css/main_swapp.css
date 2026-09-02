@@ -418,10 +418,12 @@ dialog {
     filter: brightness(1.4);
 }
 
+/* layout.css takes the bottom margin off the last child of a card: what
+   keeps the label off the border is its own padding. */
 .link-button-text {
     display: inline-block;
     margin: auto;
-    padding: var(--typography-spacing-horizontal);
+    padding: var(--typography-spacing-vertical) var(--typography-spacing-horizontal);
     text-align: center;
     text-decoration: none;
     width: 100%;

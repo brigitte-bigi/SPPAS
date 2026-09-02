@@ -78,17 +78,58 @@ JS_INIT = (
 
 JS_WEXA_ONLOAD = """
         window.Wexa.onload.addLoadFunction(() => {
-            const {MenuManager} = window.Wexa;
+            const {MenuManager, KeyboardController} = window.Wexa;
             window.menu = new MenuManager();
             window.menu.initSideMenu();
             window.menu.initMobileToggle();
+
+            // The keys answer by clicking the button that already carries the
+            // action: a page without its document has a button without href,
+            // and the key does nothing there either.
+            window.keyboard = new KeyboardController();
+            window.keyboard.register({
+                keys: ['h', 'H', '?'],
+                label: 'Help',
+                action: () => document.getElementById('link-help_button').click()
+            });
+            window.keyboard.register({
+                keys: ['j', 'J'],
+                label: 'Journal',
+                action: () => document.getElementById('link-trace_button').click()
+            });
+            // Not 'd': the slides of Whakerexa answer it, and a page of SPPAS
+            // may hold slides one day. 'q' as in quitting the page -- leaving
+            // SPPAS itself never has a key, the browser owning ctrl+q.
+            window.keyboard.register({
+                keys: ['q', 'Q'],
+                label: 'Dashboard',
+                action: () => document.getElementById('link-home_button').click()
+            });
+
+            // What changes the look of the page is written with punctuation.
+            window.keyboard.register({
+                keys: ['+'],
+                label: 'Contrast',
+                action: () => document.getElementById('btn-contrast').click()
+            });
+            window.keyboard.register({
+                keys: ['*'],
+                label: 'Color',
+                action: () => document.getElementById('btn-color').click()
+            });
+            window.keyboard.register({
+                keys: ['>'],
+                label: 'Theme',
+                action: () => document.getElementById('btn-css-theme').click()
+            });
+            window.keyboard.init();
         });
 """
 
 # The ThemeManager is an extra: it is imported by the pages needing it. The
 # theme of SPPAS is registered like any other, and declared as the default.
 JS_WEXA_THEMES = (
-    f"const ThemeManager = (await import(window.WEXA_JS_PATH + '/extras/theme_manager.js')).ThemeManager;"
+    f"const ThemeManager = (await import(window.WEXA_JS_PATH + '/customize/theme_manager.js')).ThemeManager;"
     f"window.themes = new ThemeManager();"
     f"window.themes.register('swapp', '{wapp_settings.css}main_swapp_theme.css');"
     f"window.themes.register('wexa_theme', '{wapp_settings.wexa_statics}css/themes/wexa_theme.css');"
@@ -359,7 +400,8 @@ class swappBaseView:
         css_theme_button.add_attribute("id", "btn-css-theme")
         css_theme_button.add_attribute("class", "menuitem")
         css_theme_button.add_attribute("aria-label", MSG_THEME)
-        css_theme_button.add_attribute("title", MSG_THEME)
+        css_theme_button.add_attribute("aria-keyshortcuts", ">")
+        css_theme_button.add_attribute("title", MSG_THEME + " (>)")
         css_theme_button.add_attribute("onclick", "window.themes && window.themes.next()")
         parent.append_child(css_theme_button)
 
@@ -370,7 +412,9 @@ class swappBaseView:
                                    value=contrast_image)
         contrast_button.add_attribute("id", "btn-contrast")
         contrast_button.add_attribute("class", "menuitem accessibility")
-        contrast_button.add_attribute("aria-label", "contrast")
+        contrast_button.add_attribute("aria-label", MSG_CONTRAST)
+        contrast_button.add_attribute("aria-keyshortcuts", "+")
+        contrast_button.add_attribute("title", MSG_CONTRAST + " (+)")
         contrast_button.add_attribute("aria-pressed", "false")
         contrast_button.add_attribute("onclick", "window.Wexa.accessibility.switchContrastScheme();")
         parent.append_child(contrast_button)
@@ -382,7 +426,9 @@ class swappBaseView:
                                 value=theme_image)
         theme_button.add_attribute("id", "btn-color")
         theme_button.add_attribute("class", "menuitem accessibility")
-        theme_button.add_attribute("aria-label", "color")
+        theme_button.add_attribute("aria-label", MSG_COLOR)
+        theme_button.add_attribute("aria-keyshortcuts", "*")
+        theme_button.add_attribute("title", MSG_COLOR + " (*)")
         theme_button.add_attribute("aria-pressed", "false")
         theme_button.add_attribute("onclick", "window.Wexa.accessibility.switchColorScheme();")
         parent.append_child(theme_button)
@@ -426,9 +472,12 @@ class swappBaseView:
         svg_home = sppasImagesAccess.get_wexa_svg_icon("dashboard")
         home_image = svg_home + "<span>" + MSG_DASHBOARD + "</span>"
         _button = HTMLNode(parent.identifier, "link-home_button", "a", value=home_image)
+        _button.add_attribute("id", "link-home_button")
         _button.add_attribute("href", "index.html")
         _button.add_attribute("role", "button")
         _button.add_attribute("aria-label", MSG_DASHBOARD)
+        _button.add_attribute("aria-keyshortcuts", "q")
+        _button.add_attribute("title", MSG_DASHBOARD + " (q)")
         _button.add_attribute("class", "menuitem menu-svg-button")
         if len(home_target) > 0:
             _button.add_attribute("data-named-target", home_target)
@@ -457,8 +506,12 @@ class swappBaseView:
         svg_help = sppasImagesAccess.get_wexa_svg_icon("help")
         help_image = svg_help + "<span>" + MSG_HELP + "</span>"
         _button = HTMLNode(parent.identifier, "link-help_button", "a", value=help_image)
+        _button.add_attribute("id", "link-help_button")
         _button.add_attribute("role", "button")
         _button.add_attribute("aria-label", MSG_HELP)
+        _button.add_attribute("aria-keyshortcuts", "h")
+        # What the label does not say: the key doing the same thing.
+        _button.add_attribute("title", MSG_HELP + " (h)")
         _button.add_attribute("class", "menuitem menu-svg-button")
         if len(page) > 0:
             _button.add_attribute("href", page)
@@ -487,7 +540,9 @@ class swappBaseView:
         trace_image = svg_trace + "<span>" + MSG_JOURNAL + "</span>"
         _button = HTMLNode(parent.identifier, None, "button", value=trace_image)
         _button.add_attribute("id", "link-trace_button")
-        _button.add_attribute("aria-label", "Journal")
+        _button.add_attribute("aria-label", MSG_JOURNAL)
+        _button.add_attribute("aria-keyshortcuts", "j")
+        _button.add_attribute("title", MSG_JOURNAL + " (j)")
         _button.add_attribute("type", "button")
         _button.add_attribute("data-href", "journal.html")
         _button.add_attribute("data-target", "sppas_infos")

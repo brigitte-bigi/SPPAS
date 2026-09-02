@@ -212,6 +212,45 @@
         onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;</code></pre>
         </article>
 
+        <h2>Keyboard shortcuts, without stealing the letters</h2>
+
+        <p>
+            A page that answers keys has one thing to get right: standing back when the person
+            is typing. <code>KeyboardController</code> holds that rule, so no component writes
+            it again. It listens once, answers the keys the page declared, and gives every key
+            back as soon as the focus is on a field, a control, a link, a media with its own
+            commands, or anything the page made reachable with the tab key. Enter and space are
+            never answered: they operate whatever holds the focus.
+        </p>
+
+        <article class="card-doc" aria-label="KeyboardController — one shortcut">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>
+                    A shortcut is its keys and what they do — a function, or the name of a
+                    <code>CustomEvent</code> dispatched on the document for a component whose
+                    work is done elsewhere. A key that would scroll the page says so.
+                </p>
+            </div>
+            <pre class="dark"><code>const keyboard = new Wexa.KeyboardController();
+
+keyboard.register({keys: ['h', 'H', '?'], label: 'Help',
+                   action: () =&gt; document.getElementById('btn-help').click()});
+
+keyboard.register({keys: ['ArrowRight'], label: 'Next',
+                   action: 'page:navigate', detail: {action: 'next'},
+                   preventsDefault: true});
+
+keyboard.init();</code></pre>
+        </article>
+
+        <p>
+            What was declared is read back with <code>keyboard.shortcuts</code>, which gives the
+            keys and their labels: a help dialog written from it says what the page answers, and
+            nothing else. <code>forget(keys)</code> gives keys back, <code>destroy()</code> gives
+            them all back. The slides of the framework are the first user of this class: their
+            own file holds nothing but their fourteen shortcuts and the events each of them says.
+        </p>
+
         <h2>Reusing a named tab</h2>
 
         <article class="card-doc" aria-label="Named tab links">
@@ -280,44 +319,8 @@
     })();
 </script>
 
-<script>
-    window.addEventListener('load', () => {
-        Wexa.links.handleLinksWithParameters(['btn-back']);
-    });
-</script>
-
-<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                    t.setDefault('wexa_theme');
-                    window.themes = t;
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-<script type="module">
-    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
-    const themes = new ThemeManager();
-    themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-    themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-    window.themes = themes;
-</script>
-
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
 </body>
 </html>

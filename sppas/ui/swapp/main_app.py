@@ -174,10 +174,10 @@ class sppasWebApp:
 
             # Redirections
             # ------------
-            if page_name.startswith("textcueing_") is True and page_name.endswith(".html") is True:
-                page_name = "textcueing.html"
+            # None
 
             # An unknown response for yet
+            # ---------------------------
             if page_name not in self._pages:
                 # Browse through the known bakeries to find which one is able to bake the response.
                 for web_app in WEB_APPLICATIONS:
@@ -189,6 +189,7 @@ class sppasWebApp:
                         logging.info(f"Application {web_app.name} disabled: {e}.")
 
             # Still unknown: ask the single provider of the generic pages.
+            # ------------------------------------------------------------
             if page_name not in self._pages:
                 _bakery = swappPagesData(WEB_PAGES)
                 if _bakery.is_page(page_name) is True:

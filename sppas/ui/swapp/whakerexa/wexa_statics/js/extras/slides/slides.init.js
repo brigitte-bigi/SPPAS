@@ -299,7 +299,7 @@ export default class SlidesInitializer {
         await this.#injectBoilerplate();
 
         if (this.#themesAttr !== '') {
-            const { ThemeManager } = await import(new URL('../theme_manager.js', this.#base).href);
+            const { ThemeManager } = await import(new URL('../../customize/theme_manager.js', this.#base).href);
             this.#registerThemes(ThemeManager);
         }
 
@@ -453,7 +453,7 @@ export default class SlidesInitializer {
      * @private
      * @param {string}   id        - Button element id.
      * @param {string}   className - CSS class string.
-     * @param {string}   iconName  - Icon name passed to SVGIconsManager.get().
+     * @param {string}   iconName  - Icon name passed to Wexa.icons.get().
      * @param {string}   ariaLabel - Accessible label.
      * @param {Function} onClick   - Click event handler.
      * @param {Object}   [extras]  - Optional attributes: ariaPressed, title.

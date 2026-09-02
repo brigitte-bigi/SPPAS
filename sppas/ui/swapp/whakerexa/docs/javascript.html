@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JavaScript — Whakerexa</title>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+</head>
+<body>
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa &gt; Getting started &gt; JavaScript</p>
+</header>
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8" />
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>JavaScript</h1>
+
+        <h2>Overview</h2>
+
+        <p>The JavaScript of Whakerexa is a set of ES6 modules, one class per file, with no
+            dependency and no build step. A single module gathers them: <code>wexa.js</code>
+            imports the classes of the framework, exports them, and puts them under the global
+            <code>Wexa</code>. A page loads that one file and has the whole API.</p>
+
+        <p>Each component has its own page in this documentation, with a living demonstration.
+            This page describes what holds them together: how the API is loaded, what it
+            contains, when the code runs, and the conventions a new module follows.</p>
+
+        <h2>One entry, two ways to load it</h2>
+
+        <p>ES6 modules are refused by a browser on <code>file://</code>. Whakerexa therefore
+            ships the same code twice: the modules, and <code>wexa.bundle.js</code>, a single
+            file that defines <code>window.Wexa</code> without any <code>import</code>. Both
+            give the same names to a page.</p>
+
+        <article class="card-doc" aria-label="Loading the framework">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>Over http, the modules. This is the form to use, and the only one under
+                    which the unit tests run.</p>
+            </div>
+            <pre class="dark"><code>&lt;script type="module" src="wexa_statics/js/wexa.js"&gt;&lt;/script&gt;</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="Loading the bundle">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>From the disk, the bundle. It is generated from the sources and is never
+                    edited by hand; see <a id="nav-bundle" data-href="wexa.bundle.html" data-target="_self">Bundle</a>.</p>
+            </div>
+            <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.bundle.js"&gt;&lt;/script&gt;</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="Loading whichever suits the protocol">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>A page that has to work both ways chooses on the protocol. Every page of this
+                    documentation ends with these lines.</p>
+            </div>
+            <pre class="dark"><code>&lt;script&gt;
+    const usingFile = (window.location.protocol === 'file:');
+    const loader = document.createElement('script');
+    if (usingFile === true) {
+        loader.src = 'wexa_statics/js/wexa.bundle.js';
+    } else {
+        loader.type = 'module';
+        loader.src = 'wexa_statics/js/wexa.js';
+    }
+    document.head.appendChild(loader);
+&lt;/script&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>What <code>Wexa</code> holds</h2>
+
+        <p>The namespace makes a difference the framework maintains everywhere: a service that
+            must exist exactly once is already built and answers under a lowercase name; a
+            component a page may own several of is exposed as a class, under its own name.</p>
+
+        <h3>Services, already built</h3>
+
+        <table>
+            <caption>The six singletons of <code>Wexa</code></caption>
+            <thead>
+            <tr><th>Name</th><th>Class</th><th>Answers for</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>Wexa.logger</code></td>
+                <td><code>WexaLogger</code></td>
+                <td>The messages of the framework, filtered by level.</td>
+            </tr>
+            <tr>
+                <td><code>Wexa.onload</code></td>
+                <td><code>OnLoadManager</code></td>
+                <td>The code that waits for the page to be there, in the order it was given.</td>
+            </tr>
+            <tr>
+                <td><code>Wexa.icons</code></td>
+                <td><code>SVGIconsManager</code></td>
+                <td>The monochrome SVG icons, fetched once and cached.</td>
+            </tr>
+            <tr>
+                <td><code>Wexa.accessibility</code></td>
+                <td><code>AccessibilityManager</code></td>
+                <td>Color mode and contrast mode, and the parameters that carry them.</td>
+            </tr>
+            <tr>
+                <td><code>Wexa.dialog</code></td>
+                <td><code>DialogManager</code></td>
+                <td>Opening and closing dialogs and video popups.</td>
+            </tr>
+            <tr>
+                <td><code>Wexa.links</code></td>
+                <td><code>LinkController</code></td>
+                <td>Elements navigating through <code>data-href</code>, with or without parameters.</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <article class="card-doc" aria-label="Calling a service">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>A service is called, never instantiated.</p>
+            </div>
+            <pre class="dark"><code>Wexa.accessibility.switchColorScheme();
+Wexa.dialog.open('dlg-about', true);
+Wexa.logger.info('Page ready.');</code></pre>
+        </article>
+
+        <h3>Components, to be built</h3>
+
+        <table>
+            <caption>The classes exported by <code>wexa.js</code></caption>
+            <thead>
+            <tr><th>Class</th><th>What it does</th><th>Page</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>MenuManager</code></td>
+                <td>A navigation bar, its submenus, its side and mobile states.</td>
+                <td><a id="nav-menu" data-href="menu.html" data-target="_self">Menus</a></td>
+            </tr>
+            <tr>
+                <td><code>ProgressBar</code></td>
+                <td>A progress bar, driven by a page or by a request.</td>
+                <td><a id="nav-progressbar" data-href="progressbar.html" data-target="_self">Progress bar</a></td>
+            </tr>
+            <tr>
+                <td><code>ToggleSelector</code></td>
+                <td>A group of checkboxes with a button that checks or clears them.</td>
+                <td><a id="nav-switch" data-href="switch.html" data-target="_self">Switch</a></td>
+            </tr>
+            <tr>
+                <td><code>KeyboardController</code></td>
+                <td>The keys a page answers, and the guard that gives back the others.</td>
+                <td><a id="nav-accessibility" data-href="accessibility.html" data-target="_self">Accessibility</a></td>
+            </tr>
+            <tr>
+                <td><code>RequestManager</code></td>
+                <td>Requests to the server that serves the page, with a JSON answer or not.</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td><code>BaseManager</code></td>
+                <td>What a manager talking to a server inherits: the form it submits, the
+                    result it shows.</td>
+                <td>&mdash;</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>The classes behind the services are exported too, under their own name. A page that
+            owns several navigation bars builds them itself, and a page that needs a second
+            dialog manager is not forbidden one.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Code that waits for the page</h2>
+
+        <p>A component looking for an element it decorates cannot run before that element
+            exists. <code>Wexa.onload</code> holds the functions that wait, and runs them in the
+            order they were given, once the document is loaded. The framework uses it for
+            itself: <code>wexa.js</code> registers there what makes every <code>data-href</code>
+            element reachable with the Tab key.</p>
+
+        <article class="card-doc" aria-label="Registering a function that waits for the page">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>Registering is enough; nothing else has to be listened to.</p>
+            </div>
+            <pre class="dark"><code>Wexa.onload.addLoadFunction(() => {
+    const menu = new Wexa.MenuManager();
+    menu.registerSubmenu('appmenu-framework', 'submenu-toggle-framework');
+    menu.initMobileToggle();
+});</code></pre>
+        </article>
+
+        <h2>Saying what happened</h2>
+
+        <p>A module never writes into the console directly: it says it to the logger, which
+            prefixes the message and drops it if it is below the level of the page. The level
+            is a number, and the default is 20 &mdash; information, warnings and errors are
+            shown, debug messages are not.</p>
+
+        <table>
+            <caption>The levels of <code>Wexa.logger</code></caption>
+            <thead>
+            <tr><th>Level</th><th>Method</th><th>For</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>10</td><td><code>debug()</code></td><td>What is followed while a component is being written.</td></tr>
+            <tr><td>20</td><td><code>info()</code></td><td>What a page does and succeeds at.</td></tr>
+            <tr><td>30</td><td><code>warn()</code></td><td>What is odd but has an answer.</td></tr>
+            <tr><td>40</td><td><code>error()</code></td><td>What failed, with the exception if there is one.</td></tr>
+            <tr><td>50</td><td><code>critical()</code></td><td>What stops the component from working at all.</td></tr>
+            </tbody>
+        </table>
+
+        <article class="card-doc" aria-label="Setting the log level">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>A page asking to see everything lowers the level; 0 silences nothing, it
+                    shows all of it.</p>
+            </div>
+            <pre class="dark"><code>Wexa.logger.setLogLevel(10);
+Wexa.logger.debug('Slides: 57 pages laid out.');</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Extras</h2>
+
+        <p>The extras are not in <code>Wexa</code>: a page that does not display a bibliography
+            has no reason to download the parser of one. They live in
+            <code>js/extras/</code> and are imported by the page that needs them. The bundle
+            carries them all, so on <code>file://</code> they are found under
+            <code>Wexa</code> as well.</p>
+
+        <article class="card-doc" aria-label="Importing an extra">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>Five extras are available: the table of contents, the sortable table, the
+                    theme switcher, the piano keyboard and the slides.</p>
+            </div>
+            <pre class="dark"><code>&lt;script type="module"&gt;
+    import { Book } from '../wexa_statics/js/extras/book.js';
+    import { SortaTable } from '../wexa_statics/js/extras/sortatable.js';
+    import { ThemeManager } from '../wexa_statics/js/customize/theme_manager.js';
+
+    const themes = new ThemeManager();
+    themes.register('wexa_theme', '../wexa_statics/css/themes/wexa_theme.css');
+    themes.register('aurora',     '../wexa_statics/css/themes/wexa_theme_aurora.css');
+&lt;/script&gt;</code></pre>
+        </article>
+
+        <h2>Components speak through events</h2>
+
+        <p>A component that has something to announce dispatches a <code>CustomEvent</code> on
+            the document rather than calling what listens: what is announced does not have to
+            know who hears it. The name carries its domain first, then what happened &mdash;
+            <code>slides:navigate</code>, <code>slides:viewmode</code>,
+            <code>wexa:slides:ready</code>. This is also what a keyboard shortcut may be given
+            instead of a function.</p>
+
+        <article class="card-doc" aria-label="Answering a key with an event">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>The shortcut says the name of the event; whoever navigates listens for it.</p>
+            </div>
+            <pre class="dark"><code>const keyboard = new Wexa.KeyboardController();
+keyboard.register({keys: ['ArrowRight'], action: 'page:next',
+                   label: 'Next page', preventsDefault: true});
+keyboard.init();
+
+document.addEventListener('page:next', () => book.nextPage());</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Conventions of a module</h2>
+
+        <p>A new file of the framework is written like the ones already there. What follows is
+            what they all do.</p>
+
+        <ul>
+            <li>One class per file, and the file is named after it. The class is exported by
+                name; only a class a page owns a single one of is a default export.</li>
+            <li>The banner of the license opens the file, then a JSDoc block describes the
+                class, what it is for, and an <code>@example</code> of its use. Every public
+                method is documented with its parameters and what it returns.</li>
+            <li>The state of an instance is held in private fields, written with
+                <code>#</code>. A member written with a leading underscore is internal too, but
+                a class inheriting it may use it.</li>
+            <li>What a class knows before existing is a static constant in capitals, at the top
+                of the class: the tags it treats as interactive, the selector it looks for, the
+                identifier it defaults to.</li>
+            <li>Nothing is kept in <code>localStorage</code>. What has to survive a page carries
+                itself in the URL, the way the color and contrast modes do with
+                <code>wexa_color</code> and <code>wexa_contrast</code>.</li>
+            <li>A threshold decided in JavaScript counts in font sizes, not in pixels: the text
+                grows in contrast mode, and a number of pixels does not follow it.</li>
+            <li>A class name is unique in the whole framework. The bundle concatenates every
+                file into one scope, where two classes of the same name are one bug.</li>
+        </ul>
+
+        <h2>Tests</h2>
+
+        <p>The unit tests are in <code>js/tests/</code>, one file per tested class, and they run
+            in a browser: <code>tests.html</code> puts the classes on the global object, imports
+            the test files, and every assertion writes in the console, green or red. The page
+            has to be served, since it loads modules.</p>
+
+        <article class="card-doc" aria-label="Running the unit tests">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>From the root of the repository, then open
+                    <code>http://localhost:8000/wexa_statics/js/tests/tests.html</code>.</p>
+            </div>
+            <pre class="dark"><code>python3 -m http.server 8000</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="Writing a test">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>A test file builds a <code>UnitTest</code>, adds its functions, and launches
+                    them at the end of the file.</p>
+            </div>
+            <pre class="dark"><code>const keyboard_tests = new UnitTest('KeyboardController');
+
+keyboard_tests.add_test(function test_declared_key() {
+    const controller = new KeyboardController();
+    controller.register({keys: ['n'], action: 'page:next'});
+    UnitTest.assert_values_equals(controller.shortcuts.length, 1);
+});
+
+keyboard_tests.launch_unit_test();</code></pre>
+        </article>
+
+        <h2>Building the bundle</h2>
+
+        <p>The bundle is generated from the sources: the script reads the files in the order it
+            declares, removes the <code>import</code> and <code>export</code> lines, and writes
+            one file. A source that changes leaves the bundle behind until it is built again,
+            and a page opened from the disk keeps showing the old behaviour.</p>
+
+        <article class="card-doc" aria-label="Generating wexa.bundle.js">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>A new module is added to the list of the script, before the files that use
+                    it.</p>
+            </div>
+            <pre class="dark"><code>python3 scripts/build_bundle_js.py</code></pre>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back,nav-bundle,nav-menu,nav-progressbar,nav-switch,nav-accessibility"></script>
+</body>
+</html>

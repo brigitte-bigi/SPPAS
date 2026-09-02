@@ -83,7 +83,7 @@
     &lt;meta charset="utf-8" /&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
     &lt;link rel="stylesheet" href="wexa_statics/css/wexa.css"&gt;
-    &lt;script src="wexa_statics/js/wexa.bundle.js"&gt;&lt;/script&gt;
+    &lt;script src="wexa_statics/js/wexa.loader.js" data-base="wexa_statics/"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -147,20 +147,32 @@
         </article>
 
         <h2>With a local server (recommended)</h2>
-        <p>ES6 modules are blocked on <code>file://</code>. Serve the files over HTTP:</p>
+        <p>A browser refuses ES6 modules on <code>file://</code>, where the loader falls back on
+            the bundle. Served over HTTP, a page loads the modules, and only the ones it asks
+            for:</p>
 
         <article class="card-doc" aria-label="Local server setup">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>Then open <code>http://localhost:8000/</code> and replace the bundle with the module loader.</p>
+                <p>Then open <code>http://localhost:8000/</code>. Nothing to change in the page: the loader
+                    reads the protocol and takes the modules from there.</p>
             </div>
             <pre class="dark"><code>python -m http.server 8000</code></pre>
         </article>
 
-        <article class="card-doc" aria-label="ES6 module loader">
+        <article class="card-doc" aria-label="What the loader is asked">
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
-                <p>Module loader — use instead of <code>wexa.bundle.js</code> when serving over HTTP.</p>
+                <p>The loader takes what a page has to say on its own tag: where
+                    <code>wexa_statics/</code> stands, the theme to apply when the address names
+                    none, the identifiers whose address carries the theme, and the files to load
+                    besides <code>wexa.js</code>. A page that has something of its own to start
+                    declares a function <code>bootPage</code>: the loader calls it once everything
+                    is there, and hands it the framework and those files.</p>
             </div>
-            <pre class="dark"><code>&lt;script type="module" src="wexa_statics/js/wexa.js"&gt;&lt;/script&gt;</code></pre>
+            <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"
+        data-default="wexa_theme"
+        data-links="btn-back"
+        data-extras="js/extras/sortatable.js"&gt;&lt;/script&gt;</code></pre>
         </article>
 
     </section>
@@ -203,44 +215,8 @@
     })();
 </script>
 
-<script>
-    window.addEventListener('load', () => {
-        Wexa.links.handleLinksWithParameters(['btn-back']);
-    });
-</script>
-
-<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                    t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                    t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                    t.setDefault('wexa_theme');
-                    window.themes = t;
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-<script type="module">
-    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
-    const themes = new ThemeManager();
-    themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-    themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-    window.themes = themes;
-</script>
-
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
 </body>
 </html>

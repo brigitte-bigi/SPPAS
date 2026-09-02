@@ -646,8 +646,8 @@ This banner notice must not be removed.
         --header-bg-color: linear-gradient(155deg, rgb(8, 22, 68) 0%, rgb(14, 48, 105) 50%, rgb(22, 48, 118) 100%);
         --nav-bg-color: rgb(212, 224, 246);
         --footer-bg-color: rgb(224, 228, 237);
-        --buttons-bg-color: rgb(29, 74, 106);
-        --buttons-bg-color-hover: rgb(64, 98, 121);
+        --buttons-bg-color: rgb(28 103 163);
+        --buttons-bg-color-hover: rgb(41 128 193);
         --progress-bg-color: rgb(183, 184, 209);
         --mark-bg-color: rgba(255, 250, 100, 0.5);
         --inputs-bg-color: rgb(255, 255, 255);
@@ -671,10 +671,10 @@ This banner notice must not be removed.
         /* Table colors */
         --table-border-color: rgba(70, 105, 165, 0.15);
         --table-cell-bg-color: rgb(255, 255, 255);
-        --table-row-stripped-bg-color: rgb(242, 238, 252);
-        --table-head-bg-color: rgb(220, 216, 248);
+        --table-row-stripped-bg-color: rgb(238 245 252);
+        --table-head-bg-color: rgb(201 218 225);
         --table-head-fg-color: rgb(18, 22, 38);
-        --table-caption-bg-color: rgb(220, 216, 248);
+        --table-caption-bg-color: rgb(216 228 248);
         --table-caption-fg-color: rgb(45, 55, 80);
 
         /* Other colors */
@@ -734,8 +734,8 @@ This banner notice must not be removed.
             --header-bg-color: linear-gradient(155deg, rgb(4, 8, 28) 0%, rgb(10, 22, 68) 55%, rgb(18, 48, 90) 100%);
             --nav-bg-color: rgba(4, 8, 28, 0.85);
             --footer-bg-color: rgb(12, 18, 35);
-            --buttons-bg-color:       rgb(30, 112, 178);
-            --buttons-bg-color-hover: rgb(42, 135, 205);
+            --buttons-bg-color: rgb(25 89 140);
+            --buttons-bg-color-hover: rgb(36 112 170);
             --progress-bg-color: rgb(7, 9, 13);
             --inputs-bg-color: rgb(18, 24, 42);
 
@@ -954,12 +954,20 @@ This banner notice must not be removed.
        here would have to be taken back everywhere a container carries one, and
        that is what every 'background-color: transparent' of this framework used
        to do. */
+    /* What every element gets, and what it does not: the properties below are
+       not inherited, so each element has to be given them. */
     * {
         margin: 0;
         padding: 0;
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
+    }
 
+    /* What is written is given to the body, and inherited from there. Given to
+       every element instead, it would be given again to each one: a span in a
+       heading would be written at the size of a paragraph, and nothing inside
+       anything would follow what holds it. */
+    body {
         color: var(--fg-color);
 
         font-size: var(--font-size);
@@ -968,6 +976,33 @@ This banner notice must not be removed.
         line-height: var(--line-height);
         letter-spacing: var(--letter-spacing);
         word-spacing: var(--word-spacing);
+    }
+
+    /* An element that changes the palette takes the color it has just changed.
+       The page is written in the color of the body, and inherited from there:
+       an element that redefines --fg-color for what it holds would otherwise
+       keep the color computed before, and a dark block would be written in the
+       ink of a light page. */
+    .light,
+    .dark,
+    .contrast {
+        color: var(--fg-color);
+    }
+
+    /* A form control is not given the font of the page by a browser: it asks
+       for it. */
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+        word-spacing: inherit;
     }
 
     *, *:before, *:after {
@@ -1686,6 +1721,24 @@ This banner notice must not be removed.
         max-width: 95%;
     }
 
+    /* An icon takes the room its place declared, and that room is declared
+       before the drawing arrives: nothing moves when it does, and nothing
+       moves when the set of icons changes. The two dimensions are given, an
+       icon being not always square, and both are counted on the font size, so
+       that an icon grows with the text it stands beside. */
+    :root {
+        --icon-width:  calc(var(--font-size) * 1);
+        --icon-height: calc(var(--font-size) * 1);
+    }
+
+    [data-icon] > svg,
+    [data-icon] > img {
+        width: var(--icon-width);
+        height: var(--icon-height);
+        object-fit: contain;
+        vertical-align: middle;
+    }
+
     /* An image is drawn for a page that is not the one it is read on, and
        cannot answer for its own edges: it is laid on a ground of its own, in
        every mode. Which ground it is belongs to the themes: the framework has
@@ -1835,8 +1888,6 @@ This banner notice must not be removed.
     }
 
     /* Form: any type of inputs: input, select, textarea... */
-
-    /* input/select/textarea width: 80% → @layer theme */
 
     input, select, textarea {
         margin-bottom: var(--typography-spacing-vertical);
@@ -2209,6 +2260,17 @@ This banner notice must not be removed.
         margin-top: var(--typography-spacing-vertical);
     }
 
+    /* A reset is the secondary of the pair: it takes the alternate ground of
+       the page rather than the one of a button, so that the button which acts
+       is the one that is seen first. A theme that wants another pair writes
+       it, as the high contrast one does. */
+    button[type=reset],
+    input[type=reset] {
+        background-color: var(--bg-color-alt);
+        color: var(--fg-color);
+        border-color: var(--border-color);
+    }
+
     /* Actions inside a summary are floated right. A link is not a button:
        it is named here by its own role, next to the button ones, and the
        plain links of the summary text are left where they are. */
@@ -2422,11 +2484,16 @@ This banner notice must not be removed.
         height: calc(1.5 * var(--font-size));
     }
 
+    /* A field takes the whole width it is given, and a form reads as one
+       column. The three themes wrote this, each on its own, which said the
+       eight tenths of before were nobody's choice. A range and a file carry
+       their own width, and are left alone. */
     button[type=submit],
-    input:not([type=checkbox],[type=radio]),
+    button[type=reset],
+    input:not([type=checkbox],[type=radio],[type=range],[type=file]),
     select,
     textarea {
-        width: 80%;
+        width: 100%;
     }
 
     /* ── Group: inline form group ────────────────────────────────────────── */

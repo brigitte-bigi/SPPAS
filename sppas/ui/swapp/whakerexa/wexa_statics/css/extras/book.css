@@ -239,18 +239,25 @@ aside.book-toc-aside {
 
 /* Whatever the panel inherited is dropped. The margin is the one declaration
    the two containers cannot share: the fixed panel centres what it holds --
-   a title, a logo -- while the folded one lines its entries up on the edge. */
+   a title, a logo -- while the folded one lines its entries up on the edge.
+
+   The size is written on the panel and not on what it holds: given to every
+   descendant, it would be given again to the title, which asks for one of its
+   own further down and would never get it. */
+
+nav.book-toc,
+aside.book-toc-aside {
+    font-size: calc(0.8 * var(--font-size));
+}
 
 nav.book-toc * {
     margin: auto;
     padding: 0;
-    font-size: calc(0.8 * var(--font-size));
 }
 
 aside.book-toc-aside *:not([role=button]) {
     margin: 0;
     padding: 0;
-    font-size: calc(0.8 * var(--font-size));
     background-color: transparent;
 }
 
@@ -264,13 +271,16 @@ aside.book-toc-aside *:not([role=button]) {
     margin-bottom: calc(var(--font-size) * 2);
 }
 
+/* The title of a panel is written larger than what the panel holds, and the
+   panel is already written smaller than the page: the size is counted on the
+   page, so that a title stays a title. */
 :is(nav.book-toc, aside.book-toc-aside) h1 {
-    font-size: calc(1.5 * var(--font-size));
+    font-size: calc(1.2 * var(--font-size));
     font-weight: var(--font-weight-black);
 }
 
 :is(nav.book-toc, aside.book-toc-aside) h2 {
-    font-size: calc(1.5 * var(--font-size));
+    font-size: calc(1.2 * var(--font-size));
     font-weight: var(--font-weight-bold);
 }
 

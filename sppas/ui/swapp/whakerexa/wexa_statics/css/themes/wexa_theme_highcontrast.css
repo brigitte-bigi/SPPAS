@@ -94,6 +94,7 @@
     --li-color:              rgb(0, 0, 139);
 
     --buttons-bg-color:      rgb(0, 0, 0);
+    --buttons-bg-color-hover: rgb(45, 45, 45);
     --buttons-fg-color:      rgb(255, 255, 255);
 
     --header-bg-color:       rgb(20, 20, 20);
@@ -117,6 +118,7 @@
     --blockquote-footer-color: rgb(51, 51, 51);
 
     --table-border-color:             rgb(0, 0, 0);
+    --table-cell-bg-color:            rgb(255, 255, 255);
     --table-head-bg-color:            rgb(0, 0, 0);
     --table-head-fg-color:            rgb(255, 255, 255);
     --table-caption-bg-color:         rgb(240, 240, 240);
@@ -153,6 +155,7 @@
         --li-color:              orange;
 
         --buttons-bg-color:      rgb(255, 255, 255);
+        --buttons-bg-color-hover: rgb(215, 215, 215);
         --buttons-fg-color:      rgb(0, 0, 0);
 
         --header-bg-color:       rgb(26, 26, 26);
@@ -176,6 +179,7 @@
         --blockquote-footer-color: rgb(204, 204, 204);
 
         --table-border-color:             rgb(255, 255, 255);
+        --table-cell-bg-color:            rgb(0, 0, 0);
         --table-head-bg-color:            rgb(255, 255, 255);
         --table-head-fg-color:            rgb(0, 0, 0);
         --table-caption-bg-color:         rgb(26, 26, 26);
@@ -224,10 +228,6 @@
         border: var(--border-width) solid var(--border-color);
         box-shadow: 3px 3px 0 var(--border-color);
         border-radius: 0;
-    }
-
-    article.card * {
-        background-color: transparent;
     }
 
     article.card > footer {

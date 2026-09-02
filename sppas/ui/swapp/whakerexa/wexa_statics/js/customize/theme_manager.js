@@ -1,9 +1,9 @@
 import { BaseManager } from '../transport/base_manager.js';
 import { OnLoadManager } from '../dom-loader.js';
-import { SVGIconsManager } from '../svgicons.js';
+import { icons } from './icons.js';
 
 /**
-:filename: statics.js.extras.theme_manager.js
+:filename: statics.js.customize.theme_manager.js
 :author: Brigitte Bigi
 :contact: contact@sppas.org
 :summary: A class to manage CSS theme switching for Whakerexa.
@@ -40,7 +40,7 @@ Architecture:
     propagated across internal navigation through setUrlWithParameters().
 
 Usage:
-  import { ThemeManager } from './extras/theme_manager.js';
+  import { ThemeManager } from './customize/theme_manager.js';
   const themes = new ThemeManager();
   themes.register('aurora', 'css/extras/wexa_theme_aurora.css');
   themes.activate('aurora');   // apply a named theme
@@ -253,7 +253,7 @@ export class ThemeManager extends BaseManager {
      * @returns {Promise<void>}
      */
     async #injectButtonIcon() {
-        await SVGIconsManager.inject(document.getElementById('btn-css-theme'), 'theme');
+        await icons.inject(document.getElementById('btn-css-theme'), 'theme');
     }
 
     // -----------------------------------------------------------------------

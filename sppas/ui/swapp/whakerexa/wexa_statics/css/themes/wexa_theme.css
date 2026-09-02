@@ -51,8 +51,34 @@
 
     /* A deep blue, and a cream on it: the pair reads on a light page, where
        the nav is the one dark band. */
-    --nav-bg-color: rgb(20, 40, 70);
-    --nav-fg-color: rgb(240, 230, 210);
+    --nav-bg-color: rgb(8, 22, 68);
+    --nav-fg-color: rgb(240, 230, 220);
+
+    /* The two grounds layout.css swaps from one section to the next. */
+    --panel-bg-color:     rgb(248, 249, 252);
+    --panel-bg-color-alt: rgb(237, 239, 245);
+
+    /* A card carries a ground of its own, and not the transparency the rest
+       of the theme is built on: laid on a veiled section, it would be the
+       color of what it sits on. */
+    --card-bg-color: rgb(250, 251, 254);
+    --card-fg-color: rgb(18, 22, 38);
+
+    /* The two accents of the text. */
+    --a-color:  rgb(8, 92, 148);
+    --li-color: rgb(50, 121, 142);
+
+    /* The header, as the framework draws it: the one dark band of a light
+       page, written in the pale blue it is built on. */
+    --header-bg-color: linear-gradient(155deg,
+        rgb(8, 22, 68) 0%,
+        rgb(14, 48, 105) 50%,
+        rgb(22, 48, 118) 100%);
+    --header-fg-color: rgb(220, 222, 230);
+
+    /* The text of the page. */
+    --fg-color:     rgb(18, 22, 38);
+    --fg-color-alt: rgb(45, 55, 80);
 
 }
 
@@ -64,11 +90,49 @@
 :root.dark {
 
     --bg-color: transparent;
+    /* The content is laid straight on this ground, both --bg-color and
+       --bg-color-alt being transparent: it is what a dark mode is read on, so
+       it is dark, and the navy and the teal are only what tint it. */
     --body-bg-color: linear-gradient(160deg,
-        rgb(10, 26, 58) 0%,
-        rgb(14, 38, 72) 45%,
-        rgb(16, 52, 62) 100%);
+        rgb(6, 10, 24) 0%,
+        rgb(8, 20, 40) 45%,
+        rgb(8, 30, 36) 100%);
     --img-bg-color: rgba(150, 170, 210, 0.5);
+
+    /* Transparent as in light mode: what a section holds is read on the ground
+       html carries, and not on a band of its own. */
+    --bg-color-alt: transparent;
+
+    /* The dark band of a light page becomes the light band of a dark one: the
+       cream stays, and the deep blue gives way to the navy of the header. */
+    --nav-bg-color: rgb(8, 16, 34);
+    --nav-fg-color: rgb(246, 238, 222);
+
+    /* The header answers the page it opens: the navy of the ground, and the
+       cream everything is written in here. */
+    --header-bg-color: linear-gradient(160deg,
+        rgb(8, 16, 34) 0%,
+        rgb(10, 28, 52) 55%,
+        rgb(12, 40, 48) 100%);
+    --header-fg-color: rgb(246, 238, 222);
+
+    --panel-bg-color:     rgb(13, 24, 44);
+    --panel-bg-color-alt: rgb(20, 33, 55);
+
+    --card-bg-color: rgb(26, 36, 54);
+    --card-fg-color: rgb(244, 236, 220);
+
+    /* A link is read: on this ground the blue of the framework holds 6.5:1,
+       which is above what a text asks for and below what is comfortable.
+       This one holds 10.5:1. The teal of the list marks holds 7.5:1. */
+    --a-color:  rgb(130, 205, 240);
+    --li-color: rgb(62, 182, 180);
+
+    /* Cream on night blue: the warm answer to a cold ground, which is what
+       the page was missing. Brighter than the framework writes it, too — on a
+       ground this dark, a text is read, not deciphered. */
+    --fg-color:     rgb(246, 238, 222);
+    --fg-color-alt: rgb(216, 204, 182);
 }
 
 
@@ -98,11 +162,11 @@
        ====================================================================== */
 
     :root:not(.contrast) {
-        --border-radius: 5px;
+        --border-radius: 6px;
     }
 
     .contrast {
-        --border-radius: 5px;
+        --border-radius: 6px;
     }
 
     /* ======================================================================
@@ -155,80 +219,4 @@
         color: var(--a-color);
     }
 
-    /* ======================================================================
-       Reset button — secondary style
-       ====================================================================== */
-
-    button[type=reset],
-    input[type=reset] {
-        background-color: var(--bg-color-alt);
-        color: var(--fg-color);
-        border-color: var(--border-color);
-    }
-
-    /* ======================================================================
-       Forms — full-width inputs
-       ====================================================================== */
-
-    button[type=submit],
-    button[type=reset],
-    input:not([type=checkbox],[type=radio],[type=range],[type=file]),
-    select,
-    textarea {
-        width: 100%;
-    }
-
-    /* ======================================================================
-       Layout — grid panel top-aligned
-       ====================================================================== */
-
-    .grid-panel {
-        align-items: start;
-    }
-
-}
-
-
-/* =========================================================================
-   Side nav decoration — unlayered (beat @layer theme from menu.css layer-less rules)
-   ========================================================================= */
-
-/* ── Active item: tinted pill ─────────────────────────────────────────── */
-
-:root:not(.dark) nav.nav-wexa.side :is([role="menuitem"], .menuitem)[aria-current] {
-    background-color: rgba(8, 92, 148, 0.12);
-    border-radius: var(--border-radius);
-}
-
-.dark nav.nav-wexa.side :is([role="menuitem"], .menuitem)[aria-current] {
-    background-color: rgba(72, 162, 218, 0.18);
-    border-radius: var(--border-radius);
-}
-
-/* ── Hover: light tint ────────────────────────────────────────────────── */
-
-:root:not(.dark) nav.nav-wexa.side :is([role="menuitem"], .menuitem):hover,
-:root:not(.dark) nav.nav-wexa.side :is([role="menuitem"], .menuitem):focus-visible {
-    background-color: rgba(8, 92, 148, 0.07);
-    border-radius: var(--border-radius);
-}
-
-.dark nav.nav-wexa.side :is([role="menuitem"], .menuitem):hover,
-.dark nav.nav-wexa.side :is([role="menuitem"], .menuitem):focus-visible {
-    background-color: rgba(72, 162, 218, 0.10);
-    border-radius: var(--border-radius);
-}
-
-
-/* ======================================================================
-    Panel-item alternating backgrounds — explicit semi-transparent values
-    so nested elements (transparent via --bg-color) don't accumulate.
-    ====================================================================== */
-
-main > .panel-item:nth-child(odd) {
-    background-color: rgba(255, 255, 255, 0.35);
-}
-
-main > .panel-item:nth-child(even) {
-    background-color: rgba(230, 230, 230, 0.25);
 }

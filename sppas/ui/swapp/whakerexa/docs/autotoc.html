@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
     <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
     <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
     <link rel="stylesheet" href="../wexa_statics/css/extras/book.css" type="text/css" media="all" />
+
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
 
     <style>
         :root {
@@ -63,7 +64,7 @@
 
         <aside class="book-toc-aside" aria-label="Table of contents">
             <h1>Table of Contents</h1>
-            <p><a href="index.html">Whakerexa</a></p>
+            <p><a href="../index.html">Whakerexa</a></p>
             <ul id="toc"></ul>
         </aside>
 
@@ -172,47 +173,20 @@ book.fill_table(false);</code></pre>
 </script>
 
 <script>
-    window.addEventListener('load', () => {
-        Wexa.links.handleLinksWithParameters(['btn-back']);
-    });
+    /**
+     * Start what this page has of its own.
+     *
+     * @param {Object} wexa - The framework and what data-extras asked for.
+     * @returns {void}
+     */
+    function bootPage(wexa) {
+        bootBookDemo(wexa.Book);
+    }
 </script>
 
-<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                    window.themes = t;
-                }
-                if (window.Wexa && window.Wexa.Book) {
-                    bootBookDemo(window.Wexa.Book);
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-<script type="module">
-    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
-    import { Book } from '../wexa_statics/js/extras/book.js';
-    const themes = new ThemeManager();
-        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-    window.themes = themes;
-    bootBookDemo(Book);
-</script>
-
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"
+        data-extras="js/extras/book.js"></script>
 </body>
 </html>

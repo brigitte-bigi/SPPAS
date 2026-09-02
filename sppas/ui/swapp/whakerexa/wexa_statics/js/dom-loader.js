@@ -44,9 +44,18 @@ export class OnLoadManager {
      * Registers the window 'load' listener on first use, so callers never need
      * to wire it themselves nor depend on another script's load order.
      *
+     * A function given after the page is loaded is called straight away: a
+     * module loaded on a promise is built after that event, and a listener
+     * added then would never be called.
+     *
      * @param func the function to call during the onload event.
      */
     static addLoadFunction(func) {
+        if (document.readyState === 'complete') {
+            func();
+            return;
+        }
+
         OnLoadManager.#functions.push(func);
         OnLoadManager.#registerListener();
     }

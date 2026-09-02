@@ -1,5 +1,5 @@
 import { WexaLogger } from '../../logger.js';
-import { SVGIconsManager } from '../../svgicons.js';
+import { icons } from '../../customize/icons.js';
 
 /**
  :filename: wexa_statics.js.extras.keypiano.keypiano.js
@@ -466,7 +466,7 @@ export class KeyPiano {
     /**
      * Build one icon-only, accessible control button, its icon inlined as SVG.
      *
-     * @param {string} iconName - Icon name passed to SVGIconsManager.get().
+     * @param {string} iconName - Icon name passed to icons.get().
      * @param {string} label - Accessible name of the button (visually hidden).
      * @param {Function} onClick - Listener invoked on click.
      * @returns {Promise<HTMLButtonElement>} The created button, not yet attached to the DOM.
@@ -478,7 +478,7 @@ export class KeyPiano {
         button.classList.add(CSS_CONTROL);
         button.setAttribute('aria-label', label);
         button.addEventListener('click', onClick);
-        button.innerHTML = await SVGIconsManager.get(iconName);
+        button.innerHTML = await icons.get(iconName);
 
         return button;
     }

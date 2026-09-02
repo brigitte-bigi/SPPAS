@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Icons • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, icons"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa &gt; Customize &gt; Icons</p>
+</header>
+
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <polyline points="20 24 12 16 20 8"/>
+        </svg>
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch CSS theme" title="Switch CSS theme"
+            onclick="window.themes && window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            aria-label="contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            aria-label="color" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Icons</h1>
+
+        <p>An icon is asked for by a name. Which drawing answers depends on the set in
+            force: the one your application declared, or the one Whakerexa carries when
+            yours says nothing of that name.</p>
+
+        <p>A set holds line drawings, images, or grounds — the textures laid on a plain
+            background. It carries part of the names, or all of them, and it says which
+            ones it carries.</p>
+
+        <p>What this is for, what it deliberately does not do, and why:
+            <a href="icons-design.html">icons-design.html</a>.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>What it looks like</h2>
+
+        <p>These are asked for by name, on this page, from the set Whakerexa carries.
+            Each button says what it stands for, and holds nothing else.</p>
+
+        <article class="card-doc" aria-label="Icons of the reference set">
+            <div class="card-view">
+                <button type="button" data-icon="back" aria-label="Back"></button>
+                <button type="button" data-icon="first" aria-label="First"></button>
+                <button type="button" data-icon="next" aria-label="Next"></button>
+                <button type="button" data-icon="last" aria-label="Last"></button>
+                <button type="button" data-icon="contrast" aria-label="Contrast"></button>
+                <button type="button" data-icon="color" aria-label="Color"></button>
+            </div>
+            <pre class="dark"><code>&lt;button type="button" data-icon="back" aria-label="Back"&gt;&lt;/button&gt;</code></pre>
+        </article>
+
+        <p>Larger, by giving the room another value. The drawing does not change:</p>
+
+        <article class="card-doc" aria-label="An icon of another size">
+            <div class="card-view">
+                <button type="button" data-icon="book-open" aria-label="Open the book"
+                        style="--icon-width: calc(var(--font-size) * 3); --icon-height: calc(var(--font-size) * 3)"></button>
+            </div>
+            <pre class="dark"><code>#that-button {
+    --icon-width:  calc(var(--font-size) * 3);
+    --icon-height: calc(var(--font-size) * 3);
+}</code></pre>
+        </article>
+
+        <p>And a name no set carries: the room stays empty, the console says the name,
+            and the page holds.</p>
+
+        <article class="card-doc" aria-label="A name no set carries">
+            <div class="card-view">
+                <button type="button" data-icon="nothing-like-a-name"
+                        aria-label="A name no set carries">Nothing is drawn</button>
+            </div>
+            <pre class="dark"><code>&lt;button type="button" data-icon="nothing-like-a-name"&gt;…&lt;/button&gt;</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Grounds</h2>
+
+        <p>A ground covers a surface. It is asked for by name, in the same sets, and it
+            designates nothing: nothing is said of it to whoever does not see it.</p>
+
+        <article class="card-doc" aria-label="Three grounds">
+            <div class="card-view">
+                <p data-ground="diagonals" style="padding: 1rem; min-width: 8rem">diagonals</p>
+                <p data-ground="dots" style="padding: 1rem; min-width: 8rem">dots</p>
+                <p data-ground="grid" style="padding: 1rem; min-width: 8rem">grid</p>
+            </div>
+            <pre class="dark"><code>&lt;section data-ground="diagonals"&gt;…&lt;/section&gt;</code></pre>
+        </article>
+
+        <p>This page shows itself with the set <code>grounds</code>, which carries these
+            three and nothing else: the icons above it are answered by the reference set,
+            name by name. A ground declared in a set that is not in force is never looked
+            at — only the set in force and the reference one are.</p>
+
+        <p>These three are drawn in a grey that holds on a light page as on a dark one. A
+            ground cannot take the color of what surrounds it: it is laid as an image, and
+            an image is a document of its own, where <code>currentColor</code> means
+            nothing. A set that draws for one mode only draws two grounds, and the page
+            names the one it wants.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Declare a set</h2>
+
+        <p>A set is declared where a page already says what it loads, on the tag of the
+            loader. Each set is a name, a path, a form, and the names it carries:</p>
+
+        <pre class="dark"><code>&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"
+        data-icons="refine:icons/refine/:home.png,back.png,next.png
+                    colored:icons/colored/:home.png"
+        data-icons-fallback="refine"
+        data-icons-default="colored"&gt;&lt;/script&gt;</code></pre>
+
+        <table>
+            <caption>What a set says about itself</caption>
+            <thead>
+            <tr><th>Field</th><th>What it is</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>name</td><td>How the set is named, and what the reader chooses</td></tr>
+            <tr><td>path</td><td>Where its files stand, written from <code>data-base</code></td></tr>
+            <tr><td>files</td><td>What the set carries, separated by commas. Each file answers to the name it bears without its extension: <code>home.webp</code> answers to <code>home</code></td></tr>
+            </tbody>
+        </table>
+
+        <table>
+            <caption>What the page says of the sets together</caption>
+            <thead>
+            <tr><th>Attribute</th><th>What it does</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><code>data-icons</code></td><td>The sets, one per line</td></tr>
+            <tr><td><code>data-icons-default</code></td><td>The one to show when the address names none</td></tr>
+            <tr><td><code>data-icons-fallback</code></td><td>The one that answers what the others leave unanswered</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Why the files are written.</strong> They are what lets a missing name
+            fall back to the set of Whakerexa with no request at all. On a document opened
+            from a disk a request is never answered, and on a served one it would cost a
+            round trip for every name your set does not carry.</p>
+
+        <p><strong>One set, several formats.</strong> A set is not held to one of them: you
+            bring the files you have. An <code>.svg</code> is drawn as a line and takes the
+            color of what surrounds it; anything else — <code>.webp</code>,
+            <code>.png</code>, <code>.jpg</code>, <code>.ico</code> — is an image and keeps
+            its own colors. Nothing else is read in the file, and nothing is converted.</p>
+
+        <p><code>data-icons-default</code> names the set to show when the address names
+            none. Without it, the set of Whakerexa is the one in force.</p>
+
+        <p><strong>Which set answers for the others.</strong> Your sets are rarely all
+            complete: one of them is, and the others draw a few names differently.
+            <code>data-icons-fallback</code> names the complete one, and a name that the
+            shown set does not carry is taken from it. Above, a page shown with
+            <code>colored</code> draws <code>home</code> in colors and takes
+            <code>back</code> and <code>next</code> from <code>refine</code>.</p>
+
+        <p>A name goes down a chain of two, and no more: the set shown, the set that
+            answers for the others, then the set of Whakerexa. What none of the three
+            carries is not drawn.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Ask for an icon</h2>
+
+        <p>The attribute goes on the element that already carries the meaning — a
+            button, a link, a heading — and never on an element written for the icon
+            alone. What the icon stands for is said by that element, and the drawing is
+            put inside it:</p>
+
+        <pre class="dark"><code>&lt;button type="button" data-icon="home" aria-label="Home"&gt;&lt;/button&gt;
+
+&lt;a href="index.html" data-icon="back"&gt;Back to the index&lt;/a&gt;</code></pre>
+
+        <p>A surface asks for a ground the same way, on the section it covers:</p>
+
+        <pre class="dark"><code>&lt;section data-ground="paper"&gt;…&lt;/section&gt;</code></pre>
+
+        <p>The room the icon takes is declared once, and holds for every set: were it to
+            come from the drawing, changing the set in force would move what surrounds it.
+            An icon is not always square — a set of flags is not a set of arrows — so the
+            room is declared in both dimensions. They are variables, written in a
+            stylesheet and not on the element; their default suits a text:</p>
+
+        <pre class="dark"><code>#menu-button {
+    --icon-width:  calc(var(--font-size) * 1.6);
+    --icon-height: calc(var(--font-size) * 1.6);
+}</code></pre>
+
+        <p>A drawing whose proportions are not those of the room is held inside it, and
+            never stretched to it. And an image is given that room as its
+            <code>width</code> and its <code>height</code>, so that nothing waits for the
+            file to know how much space it will take — which is what the RGESN asks, and
+            what keeps the page from moving under the reader.</p>
+
+        <table>
+            <caption>What is written on the element</caption>
+            <thead>
+            <tr><th>Attribute</th><th>What it does</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><code>data-icon</code></td><td>The name of the drawing to put inside this element. On the element that carries the meaning, never on one written for the icon</td></tr>
+            <tr><td><code>data-ground</code></td><td>The name of the ground to lay on this surface</td></tr>
+            <tr><td><code>--icon-width</code></td><td>The width the icon takes, counted on the font size. Written in a stylesheet. Its default is <code>calc(var(--font-size) * 1)</code></td></tr>
+            <tr><td><code>--icon-height</code></td><td>The height, the same way and with the same default</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Accessibility.</strong> An icon says nothing to a screen reader: what it
+            stands for is written on what holds it — the text of a link, the
+            <code>aria-label</code> of a button that holds nothing else. That is why the
+            attribute goes on that element: an element written for the icon alone would
+            carry a drawing that names nothing. A ground stands for nothing and is never
+            announced.</p>
+
+        <p>A line drawing holds in dark mode and in high contrast, since it takes the color
+            of what surrounds it. An image keeps the colors it was drawn with: read it in
+            the three themes before you bring it.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Change the set</h2>
+
+        <p>The set in force is read in the address, as the theme is, so a choice holds from
+            one page of a document to the next:</p>
+
+        <pre class="dark"><code>index.html?wexa_icons=child</code></pre>
+
+        <p>From a page, the reader changes it without the page being loaded again. Only
+            what is on the screen is asked for again:</p>
+
+        <pre class="dark"><code>&lt;button type="button" onclick="Wexa.icons.show('child')"&gt;Child&lt;/button&gt;</code></pre>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>The JavaScript API</h2>
+
+        <table>
+            <thead>
+            <tr><th>Call</th><th>What it does</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><code>Wexa.icons.show(name)</code></td><td>Shows the document with that set, and asks again for what is in view. A set that was never declared changes nothing</td></tr>
+            <tr><td><code>Wexa.icons.inForce()</code></td><td>The name of the set the document is shown with</td></tr>
+            <tr><td><code>Wexa.icons.names()</code></td><td>The names of the sets that were declared, the reference one last</td></tr>
+            </tbody>
+        </table>
+
+        <p>A name no set carries draws nothing, keeps the room, says the name in the
+            console, and breaks no page.</p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>A document read from a disk</h2>
+
+        <p>A document opened without a server cannot go and get a file: a browser refuses
+            to read one there. The drawings of Whakerexa are gathered into the bundle when
+            it is built; the drawings of your sets are gathered the same way, by a script
+            that reads your folders and writes one file:</p>
+
+        <pre class="dark"><code>python3 scripts/build_icons.py icons/child/ icons/adult/</code></pre>
+
+        <p>The name of a set is the name of its folder, so that what you declare on the
+            loader and what the script writes say the same thing. Add the file it produced
+            to the page, anywhere, and the loader pours it in before answering the first
+            demand:</p>
+
+        <pre class="dark"><code>&lt;script src="wexa_icons.js"&gt;&lt;/script&gt;</code></pre>
+
+        <p>Only line drawings are gathered, and only they need it: they are written into
+            the page. An image is never read — its address is what answers, and a document
+            read from a disk finds it beside itself. Grounds are in that case too.</p>
+
+        <p>Without that step, your line drawings answer on a served document and the set
+            of Whakerexa answers on a local one.</p>
+
+    </section>
+
+</main>
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"
+        data-icons="grounds:icons/grounds/:diagonals.svg,dots.svg,grid.svg"
+        data-icons-default="grounds"></script>
+
+</body>
+</html>

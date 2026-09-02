@@ -1,5 +1,5 @@
-import { SVGIconsManager } from './svgicons.js';
 import { OnLoadManager } from './dom-loader.js';
+import { icons } from './customize/icons.js';
 /**
  :filename: statics.js.toggleselect.js
  :author: Brigitte Bigi
@@ -152,7 +152,7 @@ export class ToggleSelector {
             }
 
             holder.replaceChildren();
-            SVGIconsManager.inject(holder,
+            icons.inject(holder,
                 checkbox.checked === true ? ToggleSelector.ICONS.CHECKED : ToggleSelector.ICONS.UNCHECKED);
         });
     }
@@ -217,7 +217,7 @@ export class ToggleSelector {
         // inject() leaves an element that already holds an SVG untouched: what
         // is drawn has to go before the new state can be drawn.
         button.replaceChildren();
-        SVGIconsManager.inject(button, name);
+        icons.inject(button, name);
     }
 
     // ----------------------------------------------------------------------

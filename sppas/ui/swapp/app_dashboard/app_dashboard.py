@@ -54,7 +54,7 @@ from .dashboardmaker import DashboardResponseRecipe
 # ---------------------------------------------------------------------------
 
 
-MSG_HELP_TITLE = f"SPPAS {sg.__release__} » " + _("Dashboard")
+MSG_HELP_TITLE = f"SPPAS {sg.__release__} » " + _("Dashboard") + " » " + _("Help")
 
 # ---------------------------------------------------------------------------
 

@@ -32,10 +32,10 @@
 'use strict';
 
 import { SortaTable } from '../sortatable.js';
-import { SVGIconsManager } from '../../svgicons.js';
 import { ToggleSelector } from '../../toggleselect.js';
 import { BibliographyTable } from './bibtable.js';
 import { Labels } from './labels.js';
+import { icons } from '../../customize/icons.js';
 
 /**
  * Sort and search a bibliography.
@@ -380,7 +380,7 @@ export class BibliographyControls {
         apply.type = 'button';
         apply.className = 'flex-item';
         apply.setAttribute('aria-label', this.#texts.text('apply'));
-        SVGIconsManager.inject(apply, 'valid');
+        icons.inject(apply, 'valid');
         apply.addEventListener('click', () => this.#applyColumns());
 
         group.appendChild(details);

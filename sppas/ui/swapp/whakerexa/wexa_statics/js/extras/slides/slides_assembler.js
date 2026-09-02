@@ -42,7 +42,7 @@ import OverviewView        from './overview_view.js';
 import SlidesFocusController    from './focus.js';
 import SlidesFullscreenController from './fullscreen.js';
 import SlidesVisibilityManager  from './visibility_manager.js';
-import KeyboardController  from './keyboard_controller.js';
+import SlidesKeyboard      from './keyboard_controller.js';
 import TouchController     from './touch_controller.js';
 import ButtonsController   from './buttons_controller.js';
 import HelpDialog          from './help_dialog.js';
@@ -108,7 +108,7 @@ export default class SlidesAssembler {
 
         // ── 5. CONTROLLERS ───────────────────────────────────────────────────
         this._helpDialog = new HelpDialog();
-        this._keyboard = new KeyboardController();
+        this._keyboard = new SlidesKeyboard();
         this._touch    = new TouchController();
 
         const c = config.controls;

@@ -166,11 +166,11 @@ lc.handleLinks(['link-blank']);</code></pre>
         <h3>Open in same page</h3>
         <article class="card-doc" aria-label="LinkController — open in same page">
             <div class="card-view">
-                <a id="link-self" role="button" data-href="./index.html" data-target="_self">
+                <a id="link-self" role="button" data-href="../index.html" data-target="_self">
                     Open index (_self)
                 </a>
             </div>
-            <pre class="dark"><code>&lt;a id="link-self" role="button" data-href="./index.html" data-target="_self"&gt;
+            <pre class="dark"><code>&lt;a id="link-self" role="button" data-href="../index.html" data-target="_self"&gt;
     Open index (_self)
 &lt;/a&gt;
 
@@ -212,11 +212,11 @@ lc.handleLinks(['link-iframe']);</code></pre>
 
         <article class="card-doc" aria-label="LinkController — handleLinksWithParameters">
             <div class="card-view">
-                <a id="link-params" role="button" data-href="./index.html" data-target="_blank">
+                <a id="link-params" role="button" data-href="../index.html" data-target="_blank">
                     Open index with accessibility params
                 </a>
             </div>
-            <pre class="dark"><code>&lt;a id="link-params" role="button" data-href="./index.html" data-target="_blank"&gt;
+            <pre class="dark"><code>&lt;a id="link-params" role="button" data-href="../index.html" data-target="_blank"&gt;
     Open index with accessibility params
 &lt;/a&gt;
 
@@ -248,49 +248,20 @@ lc.handleLinksWithParameters(['link-params']);</code></pre>
 </script>
 
 <script>
-    window.addEventListener('load', () => {
-        Wexa.links.handleLinksWithParameters(['btn-back']);
-    });
+    /**
+     * Start what this page has of its own.
+     *
+     * @param {Object} wexa - The framework and what data-extras asked for.
+     * @returns {void}
+     */
+    function bootPage(wexa) {
+        bootLinkDemos(wexa.LinkController);
+    }
 </script>
 
-<!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-<script>
-    (function () {
-        const usingFile = (window.location.protocol === 'file:');
-        const s = document.createElement('script');
-        if (usingFile) {
-            s.src = '../wexa_statics/js/wexa.bundle.js';
-            s.addEventListener('load', function () {
-                if (window.Wexa && window.Wexa.ThemeManager) {
-                    const t = new window.Wexa.ThemeManager();
-                        t.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-                        t.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-                    t.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                    window.themes = t;
-                }
-                if (window.Wexa && window.Wexa.LinkController) {
-                    bootLinkDemos(window.Wexa.LinkController);
-                }
-            });
-        } else {
-            s.type = 'module';
-            s.src = '../wexa_statics/js/wexa.js';
-        }
-        document.head.appendChild(s);
-    })();
-</script>
-<script type="module">
-    import { ThemeManager } from '../wexa_statics/js/extras/theme_manager.js';
-    import { LinkController } from '../wexa_statics/js/links.js';
-
-    const themes = new ThemeManager();
-        themes.register('wexa_theme',   '../wexa_statics/css/themes/wexa_theme.css');
-        themes.register('aurora',       '../wexa_statics/css/themes/wexa_theme_aurora.css');
-    themes.register('highcontrast', '../wexa_statics/css/themes/wexa_theme_highcontrast.css');
-    window.themes = themes;
-
-    bootLinkDemos(LinkController);
-</script>
-
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"
+        data-extras="js/links.js"></script>
 </body>
 </html>

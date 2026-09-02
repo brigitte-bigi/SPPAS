@@ -33,7 +33,7 @@
 'use strict';
 
 import { DialogManager } from '../../dialog.js';
-import KeyboardController from './keyboard_controller.js';
+import SlidesKeyboard from './keyboard_controller.js';
 
 const DIALOG_ID = 'slides-help-dialog';
 
@@ -81,7 +81,7 @@ export default class HelpDialog {
 
         const table = document.createElement('table');
         table.setAttribute('role', 'presentation');
-        for (const { keys, label } of KeyboardController.SHORTCUTS) {
+        for (const { keys, label } of SlidesKeyboard.SHORTCUTS) {
             const tr = document.createElement('tr');
 
             const tdKeys = document.createElement('td');

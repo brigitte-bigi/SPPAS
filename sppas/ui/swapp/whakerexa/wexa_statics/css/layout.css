@@ -252,7 +252,9 @@ This banner notice must not be removed.
         grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
         gap: var(--typography-spacing-horizontal);
         justify-content: space-evenly;
-        align-items: center;
+        /* Top-aligned: two items of unequal height read as two columns, and
+           not as two blocks floating at half height. */
+        align-items: start;
     }
 
     .grid-item {
@@ -602,25 +604,14 @@ This banner notice must not be removed.
     /* Enumerate cards colors                                               */
     /* ------------------------------------------------------------------ */
 
+    /* An enumerate card is a card, and carries the pair of a card, the grounds
+       of the page answering for it when a theme names none. Drawn with those
+       grounds alone, it holds nothing in a theme that leaves them transparent:
+       a gradient from transparent to transparent shows no card at all. */
     li.enumerate-cards-item {
-        background: linear-gradient(
-            120deg,
-            var(--bg-color-alt) 0%,
-            var(--bg-color) 50%,
-            var(--bg-color-alt) 100%
-        );
-        color: var(--fg-color-alt);
+        background: var(--card-bg-color, var(--bg-color-alt));
+        color: var(--card-fg-color, var(--fg-color));
         box-shadow: 0.3rem 0.3rem 0.6rem var(--shadow-color);
-    }
-
-    main > .panel-item:nth-child(2n) li.enumerate-cards-item {
-        background: linear-gradient(
-            120deg,
-            var(--bg-color) 0%,
-            var(--bg-color-alt) 50%,
-            var(--bg-color) 100%
-        );
-        color: var(--fg-color);
     }
 
     li.enumerate-cards-item::before {

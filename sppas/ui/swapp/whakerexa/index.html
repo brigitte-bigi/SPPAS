@@ -27,10 +27,10 @@
             --appmenu-align:    left top;
             --card-max-width:  18rem;
         }
-        :root:not(.dark) {
-            --nav-item-min-height: 2.5rem;
-            --nav-item-height:     2.5rem;
-            --nav-item-max-height: 2.5rem;
+        :root {
+            --nav-item-min-height: calc(var(--font-size) * 2.5);
+            --nav-item-height:     calc(var(--font-size) * 2.5);
+            --nav-item-max-height: calc(var(--font-size) * 2.5);
         }
         .card-header > svg {
             height: 2rem;
@@ -47,41 +47,12 @@
         }
     </style>
 
-    <!-- Whakerexa JS loader: ES6 modules on http(s), bundle on file:// -->
-    <script>
-        (function () {
-            const usingFile = (window.location.protocol === 'file:');
-            const s = document.createElement('script');
-            if (usingFile) {
-                s.src = 'wexa_statics/js/wexa.bundle.js';
-                s.addEventListener('load', function () {
-                    if (window.Wexa && window.Wexa.ThemeManager) {
-                        const t = new window.Wexa.ThemeManager();
-                        t.register('wexa_theme',   'wexa_statics/css/themes/wexa_theme.css');
-                        t.register('aurora',       'wexa_statics/css/themes/wexa_theme_aurora.css');
-                        t.register('highcontrast', 'wexa_statics/css/themes/wexa_theme_highcontrast.css');
-                        t.setDefault('wexa_theme');
-                        window.themes = t;
-                    }
-                });
-            } else {
-                s.type = 'module';
-                s.src = 'wexa_statics/js/wexa.js';
-            }
-            document.head.appendChild(s);
-        })();
-    </script>
-    <script type="module">
-        import { ThemeManager } from './wexa_statics/js/extras/theme_manager.js';
-        const themes = new ThemeManager();
-        themes.register('wexa_theme',   'wexa_statics/css/themes/wexa_theme.css');
-        themes.register('aurora',       'wexa_statics/css/themes/wexa_theme_aurora.css');
-        themes.register('highcontrast', 'wexa_statics/css/themes/wexa_theme_highcontrast.css');
-        themes.setDefault('wexa_theme');
-        window.themes = themes;
-    </script>
+    <script src="wexa_statics/js/wexa.loader.js"
+            data-base="wexa_statics/"
+            data-default="wexa_theme"
+            data-links="nav-wexa,nav-quickstart,nav-architecture,nav-javascript,nav-themes,nav-cssvariables,nav-colors,nav-accessibility,nav-icons,nav-gallery,nav-containers,nav-typography,nav-code,nav-tables,nav-inputs,nav-button,nav-switch,nav-progressbar,nav-menu,nav-menu-side,nav-menu-bottom,nav-accordion,nav-dialog,nav-links,nav-autotoc,nav-book,nav-sortatable,nav-bibliography,nav-publications,nav-keypiano,nav-slides,nav-bundle,card-nav-wexa,card-nav-cssvariables,card-nav-architecture,card-nav-accessibility,card-nav-bundle,card-nav-slides,start-quickstart,cta-quickstart,cta-browsedocs"></script>
 
-    <script>
+<script>
         (function () {
             function initMenu() {
                 if (!window.Wexa || !window.Wexa.MenuManager) return false;
@@ -237,6 +208,7 @@
             <a class="menuitem" id="nav-wexa"          data-href="docs/wexa.html"           data-target="_self">Wexa CSS</a>
             <a class="menuitem" id="nav-quickstart"    data-href="docs/quick-start.html"    data-target="_self">Quick start</a>
             <a class="menuitem" id="nav-architecture"  data-href="docs/architecture.html"   data-target="_self">Architecture</a>
+            <a class="menuitem" id="nav-javascript"    data-href="docs/javascript.html"     data-target="_self">JavaScript</a>
             <a class="menuitem" id="nav-accessibility" data-href="docs/accessibility.html"  data-target="_self">Accessibility</a>
             </section>
             <section>
@@ -244,6 +216,8 @@
             <a class="menuitem" id="nav-cssvariables"  data-href="docs/css-variables.html"  data-target="_self">CSS Variables</a>
             <a class="menuitem" id="nav-colors"        data-href="docs/colors.html"         data-target="_self">Colors</a>
             <a class="menuitem" id="nav-themes"        data-href="docs/themes.html"         data-target="_self">Themes</a>
+            <a class="menuitem" id="nav-icons"         data-href="docs/icons.html"          data-target="_self">Icons</a>
+            <a class="menuitem" id="nav-gallery"       data-href="docs/gallery.html"        data-target="_self">Gallery</a>
             </section>
         </nav>
     </aside>
@@ -530,26 +504,6 @@
         </p>
     </section>
 </footer>
-
-<script>
-    window.addEventListener('load', () => {
-        Wexa.links.handleLinksWithParameters([
-            'nav-wexa', 'nav-quickstart', 'nav-architecture', 'nav-themes',
-            'nav-cssvariables', 'nav-colors', 'nav-accessibility',
-            'nav-containers',
-            'nav-typography', 'nav-code', 'nav-tables',
-            'nav-inputs', 'nav-button', 'nav-switch', 'nav-progressbar',
-            'nav-menu', 'nav-menu-side', 'nav-menu-bottom',
-            'nav-accordion', 'nav-dialog', 'nav-links', 'nav-autotoc', 'nav-book', 'nav-sortatable',
-            'nav-bibliography', 'nav-publications',
-            'nav-keypiano', 'nav-slides', 'nav-bundle',
-            'card-nav-wexa', 'card-nav-cssvariables', 'card-nav-architecture',
-            'card-nav-accessibility', 'card-nav-bundle', 'card-nav-slides',
-            'start-quickstart',
-            'cta-quickstart', 'cta-browsedocs'
-        ]);
-    });
-</script>
 
 </body>
 </html>

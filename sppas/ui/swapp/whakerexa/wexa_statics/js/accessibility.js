@@ -1,6 +1,6 @@
 import { BaseManager } from './transport/base_manager.js';
 import { OnLoadManager } from './dom-loader.js';
-import { SVGIconsManager } from './svgicons.js';
+import { icons } from './customize/icons.js';
 
 /**
 :filename: statics.js.accessibility.js
@@ -421,8 +421,8 @@ export class AccessibilityManager extends BaseManager {
      * @returns {Promise<void>}
      */
     async #injectButtonIcons() {
-        await SVGIconsManager.inject(document.getElementById('btn-contrast'), 'contrast');
-        await SVGIconsManager.inject(document.getElementById('btn-color'), 'color');
+        await icons.inject(document.getElementById('btn-contrast'), 'contrast');
+        await icons.inject(document.getElementById('btn-color'), 'color');
     }
 
     // -----------------------------------------------------------------------
