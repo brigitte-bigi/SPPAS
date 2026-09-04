@@ -89,6 +89,9 @@
     --buttons-bg-color-hover: rgb(20, 75, 140);
     --buttons-fg-color: rgb(235, 240, 255);
 
+    --dialog-fg-color: rgb(10, 40, 90);
+    --dialog-bg-color: rgb(235, 240, 255);
+
     --border-color: rgb(204, 213, 224);
     --a-color: rgb(0, 70, 100);
     --link-color: rgb(42, 111, 190);
@@ -144,6 +147,9 @@
         --buttons-bg-color: rgb(205, 222, 250);
         --buttons-bg-color-hover: rgb(228, 238, 255);
         --buttons-fg-color: rgb(8, 25, 60);
+
+        --dialog-bg-color: rgb(10, 40, 90);
+        --dialog-fg-color: rgb(235, 240, 255);
 
         --border-color: rgb(100, 120, 170);
         --a-color: rgb(120, 180, 240);
