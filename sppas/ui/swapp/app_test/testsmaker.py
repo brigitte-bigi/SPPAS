@@ -226,7 +226,7 @@ class TestsResponseRecipe(swappBaseResponse):
         home_button.add_attribute("data-href", "/")
         home_button.add_attribute("data-target", "_self")
         home_button.add_attribute("class", "menuitem")
-        home_button.set_icon(sppasImagesAccess.get_image_filename("home"))
+        home_button.set_icon(sppasImagesAccess.get_logo_filename("sppas-logo-v5"))
         home_button.set_text(None, "Home")
         self._htree.body_header.append_child(home_button)
 

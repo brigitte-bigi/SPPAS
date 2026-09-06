@@ -153,8 +153,8 @@ class sppasPathSettings:
             src=os.path.join(sppas_dir, "src"),
             ui=os.path.join(sppas_dir, "ui"),
             plugins=os.path.join(sppas_dir, "plugins"),
-            icons=os.path.join(sppas_dir, "ui", "swapp", "statics", "icons"),
-            images=os.path.join(sppas_dir, "ui", "swapp", "statics", "images"),
+            icons=os.path.join(sppas_dir, "ui", "wxapp", "icons"),
+            images=os.path.join(sppas_dir, "ui", "wxapp", "images"),
 
             ext_dir=ext_dir,
             logs=os.path.join(ext_dir, "logs"),

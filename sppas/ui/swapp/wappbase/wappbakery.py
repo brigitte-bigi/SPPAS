@@ -62,7 +62,7 @@ class swappWebData(WebSiteData):
     @staticmethod
     def icon() -> str:
         """Return the page icon name."""
-        return sppasImagesAccess.get_image_filename("sppas-logo-v5")
+        return sppasImagesAccess.get_logo_filename("sppas-logo-v5")
 
     @staticmethod
     def description() -> str:

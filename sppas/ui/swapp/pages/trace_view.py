@@ -203,7 +203,7 @@ class TraceView(swappBaseView):
         _button.add_attribute("id", "close-tab_button")
         _button.add_attribute("aria-label", MSG_CLOSE)
         _button.add_attribute("type", "button")
-        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("class", "menuitem")
         _button.add_attribute("onclick", go_home + " window.close()")
         parent.append_child(_button)
         return _button

@@ -256,7 +256,7 @@ class DashboardView(swappBaseView):
         # ----------------------------------------------------
         # Named "Desktop", not "SPPAS": SPPAS 5 is the whole product, this
         # card launches one specific component of it -- the wx interface.
-        icon = sppasImagesAccess.get_image_filename("sppas_logo_v3")
+        icon = sppasImagesAccess.get_logo_filename("sppas_logo_v3")
         apps.create_app_card(
             "desktop",
             MSG_DESKTOP,

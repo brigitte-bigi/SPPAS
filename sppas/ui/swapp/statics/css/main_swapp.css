@@ -334,12 +334,6 @@ dialog {
    Not present in wexa.css or layout.css.
    ============================================================ */
 
-/* ── Navigation: image and SVG buttons ─────────────────────
-
-.menu-svg-button {
-    color: var(--nav-fg-color);
-}*/
-
 /* ── Footer ──────────────────────────────────────────────── */
 
 .footer-button {
@@ -396,8 +390,6 @@ dialog {
 /* A card of the framework, except that this one is clicked, its content
    fills it up to its edges, and its border says where the link leads. */
 .link-button {
-    --icon-width: 80%;
-    --icon-height: auto;
     cursor: pointer;
     padding: 0;
     border: calc(var(--border-width)*1.5) solid var(--border-color);
@@ -412,18 +404,14 @@ dialog {
 
 /* The drawing is a block centred by its own margins: a width in percent
    and margins in length can't be centred by the inline flow. */
-/* The drawing the icon manager writes into the card: not an icon standing
-   beside a word, but the picture of the card. Its size is given by the two
-   variables, never by an attribute. */
-.link-button > img,
-.link-button > svg {
+.link-button-icon {
     display: block;
+    width: 80%;
     margin: var(--typography-spacing-vertical) auto;
     filter: brightness(0.9);
 }
 
-.dark .link-button > img,
-.dark .link-button > svg {
+.dark .link-button-icon {
     filter: brightness(1.4);
 }
 
@@ -592,11 +580,12 @@ section.actions-panel {
     column-gap: 1rem;
 }
 
-.actions-panel button img,
-.actions-panel button svg {
-    max-height: calc(var(--action-height) * 0.7);
-    height: calc(var(--action-height) * 0.7);
-    padding: 0.3rem;
+/* The room an icon takes is declared by the two variables, on the element
+   that asks for it: a height alone leaves the width to the framework, and
+   the drawing is then held in a box as wide as one letter. */
+.actions-panel button {
+    --icon-width: calc(var(--action-height) * 0.7);
+    --icon-height: calc(var(--action-height) * 0.7);
 }
 
 /* ── Logos ───────────────────────────────────────────────── */

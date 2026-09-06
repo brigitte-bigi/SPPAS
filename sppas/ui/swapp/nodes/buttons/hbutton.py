@@ -161,17 +161,3 @@ class LinkButtonNode(HTMLNode):
         _img.set_attribute('alt', "")
         self.append_child(_img)
         return _img
-
-
-# ---------------------------------------------------------------------------
-
-
-class MenuLinkButtonNode(LinkButtonNode):
-
-    def __init__(self, parent_id, identifier: str, target_page: str):
-        """Create a menu button to redirect to target page.
-
-        """
-        super(MenuLinkButtonNode, self).__init__(parent_id, identifier, target_page)
-        self.add_attribute("role", "menuitem")
-        self.add_attribute("class", "menu-png-button")

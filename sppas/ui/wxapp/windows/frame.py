@@ -611,8 +611,8 @@ class sppasImageFrame(wx.TopLevelWindow):
 
 class TestPanel(wx.Panel):
 
-    img1 = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "trbg1.png")
-    img2 = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "bg2.png")
+    img1 = os.path.join(paths.images, "trbg1.png")
+    img2 = os.path.join(paths.images, "bg2.png")
 
     def __init__(self, parent):
         super(TestPanel, self).__init__(

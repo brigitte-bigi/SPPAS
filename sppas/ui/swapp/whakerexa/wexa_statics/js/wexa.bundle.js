@@ -1,4 +1,4 @@
-// Bundle automatically generated on 2026-09-06 10:07:07
+// Bundle automatically generated on 2026-09-06 13:31:02
 
 // ---------------- logger.js ---------------
 class WexaLogger {
@@ -4003,6 +4003,7 @@ const REFERENCE_FILES = [
     'moon.svg',
     'move.svg',
     'next.svg',
+    'no.svg',
     'open.svg',
     'page.svg',
     'parameters.svg',
@@ -4057,6 +4058,7 @@ const REFERENCE_FILES = [
     'warning.svg',
     'wifi-off.svg',
     'wifi.svg',
+    'yes.svg',
     'zoom-in.svg',
     'zoom-out.svg',
 ];
@@ -6819,6 +6821,7 @@ IconReader.gather('mono-svg', 'misty-moon', "<svg xmlns=\"http://www.w3.org/2000
 IconReader.gather('mono-svg', 'moon', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M28 17.1A12 12 0 1 1 14.9 4 9.3 9.3 0 0 0 28 17.1z\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'move', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"16\" y1=\"4\" x2=\"16\" y2=\"28\" />\n  <line x1=\"4\" y1=\"16\" x2=\"28\" y2=\"16\" />\n  <polyline points=\"12 8 16 4 20 8\" />\n  <polyline points=\"12 24 16 28 20 24\" />\n  <polyline points=\"8 12 4 16 8 20\" />\n  <polyline points=\"24 12 28 16 24 20\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'next', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path d=\"M12 4 L24 16 L12 28 Z\" />\n</svg>");
+IconReader.gather('mono-svg', 'no', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"currentColor\">\n  <path d=\"M4 21Q16 5 28 21Q16 13 4 21Z\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'open', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 25V8a2 2 0 0 1 2-2h6l3 4h9a2 2 0 0 1 2 2v3\" />\n  <path d=\"M4 25l4-10h22l-4 10H4z\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'page', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <rect x=\"5\" y=\"2\" width=\"22\" height=\"28\" rx=\"2\" />\n  <line x1=\"10\" y1=\"10\" x2=\"22\" y2=\"10\" />\n  <line x1=\"10\" y1=\"16\" x2=\"22\" y2=\"16\" />\n  <line x1=\"10\" y1=\"22\" x2=\"18\" y2=\"22\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'parameters', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <line x1=\"5\" y1=\"9\" x2=\"27\" y2=\"9\" />\n  <circle cx=\"11\" cy=\"9\" r=\"2\" />\n  <line x1=\"5\" y1=\"23\" x2=\"27\" y2=\"23\" />\n  <circle cx=\"21\" cy=\"23\" r=\"2\" />\n</svg>");
@@ -6873,6 +6876,7 @@ IconReader.gather('mono-svg', 'volume-mute', "<svg xmlns=\"http://www.w3.org/200
 IconReader.gather('mono-svg', 'warning', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M16 5L29 27H3L16 5z\" />\n  <line x1=\"16\" y1=\"13\" x2=\"16\" y2=\"19\" />\n  <line x1=\"16\" y1=\"22.5\" x2=\"16\" y2=\"23.5\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'wifi-off', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 12a18 18 0 0 1 24 0\" />\n  <path d=\"M9 18a11 11 0 0 1 14 0\" />\n  <path d=\"M13.5 23.5a4 4 0 0 1 5 0\" />\n  <circle cx=\"16\" cy=\"27\" r=\"1.3\" fill=\"currentColor\" stroke=\"none\" />\n  <line x1=\"5\" y1=\"5\" x2=\"27\" y2=\"27\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'wifi', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <path d=\"M4 12a18 18 0 0 1 24 0\" />\n  <path d=\"M9 18a11 11 0 0 1 14 0\" />\n  <path d=\"M13.5 23.5a4 4 0 0 1 5 0\" />\n  <circle cx=\"16\" cy=\"27\" r=\"1.3\" fill=\"currentColor\" stroke=\"none\" />\n</svg>\n");
+IconReader.gather('mono-svg', 'yes', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"currentColor\">\n  <path d=\"M4.5 15.5L12.8 27L28 5.5L24.6 3.6L12.4 21.6L8 13.9Z\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'zoom-in', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"14\" cy=\"14\" r=\"8\" />\n  <line x1=\"19.7\" y1=\"19.7\" x2=\"27\" y2=\"27\" />\n  <line x1=\"14\" y1=\"10.5\" x2=\"14\" y2=\"17.5\" />\n  <line x1=\"10.5\" y1=\"14\" x2=\"17.5\" y2=\"14\" />\n</svg>\n");
 IconReader.gather('mono-svg', 'zoom-out', "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n  <circle cx=\"14\" cy=\"14\" r=\"8\" />\n  <line x1=\"19.7\" y1=\"19.7\" x2=\"27\" y2=\"27\" />\n  <line x1=\"10.5\" y1=\"14\" x2=\"17.5\" y2=\"14\" />\n</svg>\n");
 

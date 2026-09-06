@@ -134,6 +134,7 @@ export const REFERENCE_FILES = [
     'moon.svg',
     'move.svg',
     'next.svg',
+    'no.svg',
     'open.svg',
     'page.svg',
     'parameters.svg',
@@ -188,6 +189,7 @@ export const REFERENCE_FILES = [
     'warning.svg',
     'wifi-off.svg',
     'wifi.svg',
+    'yes.svg',
     'zoom-in.svg',
     'zoom-out.svg',
 ];

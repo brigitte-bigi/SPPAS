@@ -414,8 +414,8 @@ class swappBaseView:
         """
         _button = sppasHTMLButton(parent.identifier, identifier="link-sppas_button")
         _button.add_attribute("data-href", sg.__url__)
-        _button.add_attribute("class", "menuitem menu-png-button")
-        ic = _button.set_icon("sppas-logo-v5")
+        _button.add_attribute("class", "menuitem")
+        ic = _button.set_icon(sppasImagesAccess.get_logo_filename("sppas-logo-v5"))
         ic.add_attribute("alt", "")
         _button.set_text(None, MSG_WEB)
         parent.append_child(_button)
@@ -440,14 +440,14 @@ class swappBaseView:
         """
         _button = HTMLNode(parent.identifier, "link-home_button", "a",
                            value="<span>" + MSG_DASHBOARD + "</span>")
-        _button.add_attribute("data-icon", "house")
+        _button.add_attribute("data-icon", "dashboard")
         _button.add_attribute("id", "link-home_button")
         _button.add_attribute("href", "index.html")
         _button.add_attribute("role", "button")
         _button.add_attribute("aria-label", MSG_DASHBOARD)
         _button.add_attribute("aria-keyshortcuts", "q")
         _button.add_attribute("title", MSG_DASHBOARD + " (q)")
-        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("class", "menuitem")
         if len(home_target) > 0:
             _button.add_attribute("data-named-target", home_target)
 
@@ -481,7 +481,7 @@ class swappBaseView:
         _button.add_attribute("aria-keyshortcuts", "h")
         # What the label does not say: the key doing the same thing.
         _button.add_attribute("title", MSG_HELP + " (h)")
-        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("class", "menuitem")
         if len(page) > 0:
             _button.add_attribute("href", page)
         else:
@@ -507,7 +507,7 @@ class swappBaseView:
         """
         _button = HTMLNode(parent.identifier, None, "button",
                            value="<span>" + MSG_JOURNAL + "</span>")
-        _button.add_attribute("data-icon", "readings")
+        _button.add_attribute("data-icon", "info-square")
         _button.add_attribute("id", "link-trace_button")
         _button.add_attribute("aria-label", MSG_JOURNAL)
         _button.add_attribute("aria-keyshortcuts", "j")
@@ -515,7 +515,7 @@ class swappBaseView:
         _button.add_attribute("type", "button")
         _button.add_attribute("data-href", "journal.html")
         _button.add_attribute("data-target", "sppas_infos")
-        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("class", "menuitem")
         parent.append_child(_button)
         return _button
 
@@ -540,7 +540,7 @@ class swappBaseView:
         _button.add_attribute("aria-label", "Feedback")
         _button.add_attribute("type", "button")
         _button.add_attribute("data-href", "feedback.html")
-        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("class", "menuitem")
         parent.append_child(_button)
         return _button
 
@@ -560,7 +560,7 @@ class swappBaseView:
         _button.add_attribute("aria-label", "Pin Menu")
         _button.add_attribute("type", "button")
         _button.add_attribute("aria-pressed", "false")
-        _button.add_attribute("class", "menuitem menu-svg-button")
+        _button.add_attribute("class", "menuitem")
         parent.append_child(_button)
         # WAI-ARIA Authoring Practices 1.2: Use aria-controls only when the controlled
         # element is not adjacent or the relationship is not otherwise apparent to the user.

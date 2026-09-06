@@ -159,9 +159,6 @@ class sppasWebAppSettings:
         """
         # The 'dict' of the class contains the user preferences.
         self.__dict__ = dict(
-            # The current theme of icons -- it must be a folder of statics/iconsOui je vois
-            icons_theme="Refine",
-
             # The current color scheme: one of 'light' or 'dark'
             accessibility_color_scheme="light",
 
@@ -196,21 +193,15 @@ class sppasWebAppSettings:
         self.__js = self.__statics + "js/"
         self.__icons = self.__statics + "icons/"
         self.__images = self.__statics + "images/"
+        self.__logos = self.__statics + "logos/"
 
     # -----------------------------------------------------------------------
     # Getters
     # -----------------------------------------------------------------------
 
     @staticmethod
-    def default_icons_theme():
-        """The full theme: the one with all icons used to fall back."""
-        return "Refine"
-
-    # -----------------------------------------------------------------------
-
-    @staticmethod
     def default_colors_scheme():
-        """The full theme: the one with all icons used to fall back."""
+        """The color scheme a page is shown with when none was chosen."""
         return "light"
 
     # -----------------------------------------------------------------------
@@ -243,6 +234,10 @@ class sppasWebAppSettings:
     @property
     def images(self):
         return self.__images
+
+    @property
+    def logos(self):
+        return self.__logos
 
     @property
     def js(self):

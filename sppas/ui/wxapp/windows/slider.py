@@ -368,7 +368,7 @@ class sppasSlider(sppasImageDCWindow):
 
 class TestPanel(wx.Panel):
 
-    img = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "bg1.png")
+    img = os.path.join(paths.images, "bg1.png")
 
     def __init__(self, parent):
         super(TestPanel, self).__init__(

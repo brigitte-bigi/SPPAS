@@ -42,6 +42,7 @@ from __future__ import annotations
 
 from sppas.ui import _
 from sppas.ui.swapp.panels import BaseLinksNode
+from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
 
 # ---------------------------------------------------------------------------
 
@@ -70,7 +71,7 @@ class LinksNode(BaseLinksNode):
     def __init__(self, parent_id):
         super(LinksNode, self).__init__(parent_id, LinksNode.ID)
 
-        self.link_button("web", "sppas-logo-v5", MSG_HOME, link="https://sppas.org/")
+        self.link_button("web", sppasImagesAccess.get_logo_filename("sppas-logo-v5"), MSG_HOME, link="https://sppas.org/")
         self.link_button("docu", "link_docweb", MSG_DOC, link="https://sppas.org/book.html")
         self.link_button("res", "link_resources", MSG_RSC, link="https://sppas.org/resources.html")
         self.link_button("tuto", "link_tutovideo", MSG_TUTOS, link="https://sppas.org/tutorials.html")

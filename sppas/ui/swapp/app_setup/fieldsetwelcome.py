@@ -95,10 +95,10 @@ class SetupHomeFieldset(SetupBaseFieldset):
 
         # -- Logos
         logos = f"""
-         <img class="flex-item small-logo" src="{wapp_settings.images}logos/LPL_horiz.jpg" alt="LPL">
-         <img class="flex-item small-logo" src="{wapp_settings.images}logos/cnrs.png" alt="CNRS">
-         <img class="flex-item small-logo" src="{wapp_settings.images}logos/logo_AMU_bleu.png" alt="AMU">
-         <img class="flex-item small-logo" src="{wapp_settings.images}logos/GPLv3.png" alt="GPLv3">
+         <img class="flex-item small-logo" src="{wapp_settings.logos}LPL_horiz.jpg" alt="LPL">
+         <img class="flex-item small-logo" src="{wapp_settings.logos}cnrs.png" alt="CNRS">
+         <img class="flex-item small-logo" src="{wapp_settings.logos}logo_AMU_bleu.png" alt="AMU">
+         <img class="flex-item small-logo" src="{wapp_settings.logos}GPLv3.png" alt="GPLv3">
          <div class="flex-item small-logo">
              <img alt="Download count" src="https://img.shields.io/sourceforge/dm/sppas.svg" >
              <img alt="SourceForge"

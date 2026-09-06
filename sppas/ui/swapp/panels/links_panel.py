@@ -79,11 +79,11 @@ class BaseLinksNode(HTMLNode):
         if link.startswith("http://") is True or link.startswith("https://") is True:
             link_node.add_attribute("target", "_blank")
             link_node.add_attribute("rel", "noopener")
-        # - content. The drawing is asked for by its name: the icon manager
-        #   of Whakerexa writes it first, before the label. A name the set
-        #   of SPPAS does not carry falls back on the one of the framework,
-        #   instead of a broken image.
-        link_node.add_attribute("data-icon", icon_name)
+        # - content. The illustration of the card is a content image: it is
+        #   unique, it carries its meaning by itself, and no set of icons has
+        #   a variant of it to propose. The server says which file answers
+        #   the name, and the label follows the image.
+        link_node.set_icon(icon_name, attributes={"class": "link-button-icon", "alt": text})
         link_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
         self.append_child(link_node)
@@ -122,8 +122,8 @@ class BaseLinksNode(HTMLNode):
         button_node.add_attribute("class", "card")
         button_node.add_attribute("class", "link-button")
 
-        # content
-        button_node.add_attribute("data-icon", icon_name)
+        # content: an illustration, read as an image, then the label
+        button_node.set_icon(icon_name, attributes={"class": "link-button-icon", "alt": text})
         button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
         self.append_child(button_node)

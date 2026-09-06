@@ -42,7 +42,6 @@ from .inputs.hcheckbox import sppasHTMLCheckboxNode
 from .buttons.hbutton import sppasHTMLButton
 from .buttons.hbutton import sppasHTMLLink
 from .buttons.hbutton import LinkButtonNode
-from .buttons.hbutton import MenuLinkButtonNode
 from .dialogs.hdialog import sppasHTMLModalDialog
 from .dialogs.hmessages import swappConfirmDialog
 from .dialogs.hmessages import swappInformationDialog
@@ -61,7 +60,6 @@ __all__ = (
     "sppasHTMLButton",
     "sppasHTMLLink",
     "LinkButtonNode",
-    "MenuLinkButtonNode",
     "sppasHTMLModalDialog",
     "swappConfirmDialog",
     "swappInformationDialog",

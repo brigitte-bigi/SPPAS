@@ -966,8 +966,8 @@ class sppasImageDCWindow(sppasDCWindow):
 class TestPanel(wx.Panel):
 
     img1 = os.path.join(paths.samples, "faces", "BrigitteBigi_Aix2020.png")
-    img2 = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "trbg1.png")
-    img3 = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "bg1.png")
+    img2 = os.path.join(paths.images, "trbg1.png")
+    img3 = os.path.join(paths.images, "bg1.png")
 
     def __init__(self, parent):
         super(TestPanel, self).__init__(
@@ -1058,18 +1058,18 @@ class TestPanel(wx.Panel):
         wi1.SetBackgroundColour(wx.Colour(28, 200, 166))
         wi1.SetBorderColour(wx.Colour(128, 100, 66))
 
-        img = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "bg6.png")
+        img = os.path.join(paths.images, "bg6.png")
         wi2 = sppasImageDCWindow(self, image=img, pos=(110, 420), size=(50, 110), name="wi2")
         wi2.Enable(True)
         wi2.SetBorderColour(wx.Colour(128, 100, 66))
 
-        img = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "trbg1.png")
+        img = os.path.join(paths.images, "trbg1.png")
         wi3 = sppasImageDCWindow(self, image=img, pos=(210, 420), size=(50, 110), name="wi3")
         wi3.Enable(True)
         wi3.SetBackgroundColour(wx.Colour(28, 200, 166))
         wi3.SetBorderColour(wx.Colour(128, 100, 66))
 
-        img = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "trbg1.png")
+        img = os.path.join(paths.images, "trbg1.png")
         wi4 = sppasImageDCWindow(self, pos=(310, 420), size=(50, 110), name="wi4")
         wi4.Enable(True)
         wi4.SetBackgroundImage(img)

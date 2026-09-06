@@ -39,7 +39,6 @@
 """
 
 from whakerpy.htmlmaker import HTMLNode
-from whakerpy.htmlmaker import HTMLImage
 
 from sppas.ui import _
 from ..buttons.hbutton import sppasHTMLButton
@@ -104,22 +103,6 @@ class sppasHTMLModalDialog(HTMLNode):
     # Customize the header
     # -----------------------------------------------------------------------
 
-    def set_icon(self, icon, attributes=dict()):
-        """Set an icon at the top-right of the header from its filename.
-
-        :param icon: (str) Name of an icon in the app.
-        :param attributes: (dict).
-
-        """
-        node = HTMLImage(self.header_node.identifier, None, src=icon)
-        if len(attributes) > 0:
-            for key in attributes:
-                node.set_attribute(key, attributes[key])
-        self.header_node.append_child(node)
-        return node
-
-    # -----------------------------------------------------------------------
-
     def set_title(self, text, attributes=dict()):
         """Set a title text in the header from its filename.
 
@@ -143,8 +126,8 @@ class sppasHTMLModalDialog(HTMLNode):
         :return: (sppasHTMLButton)
         :raises: ValueError if name is unknown
 
-        <button onclick="whatever();" id="df3ea8c9" name="df3ea8c9">
-            <img src="/statics/icons/Refine/ok.png" alt="" class="button-icon" />
+        <button onclick="whatever();" id="df3ea8c9" name="df3ea8c9"
+                data-icon="valid">
             <span class="button_text">Okay</span>
         </button>
 
@@ -157,24 +140,24 @@ class sppasHTMLModalDialog(HTMLNode):
 
         button_node = sppasHTMLButton(self.action_node.identifier, None, attributes)
         if name == "cancel":
-            button_node.set_icon("cancel")
+            button_node.add_attribute("data-icon", "cancel")
             button_node.set_text("cancel_action_button", MSG_ACTION_CANCEL)
         elif name == "close":
-            button_node.set_icon("close")
+            button_node.add_attribute("data-icon", "close")
             button_node.set_text("close_action_button", MSG_ACTION_CLOSE)
         elif name == "okay":
-            button_node.set_icon("ok")
+            button_node.add_attribute("data-icon", "valid")
             button_node.set_text("ok_action_button", MSG_ACTION_OK)
         elif name == "yes":
             attributes["type"] = "submit"
-            button_node.set_icon("yes")
+            button_node.add_attribute("data-icon", "yes")
             button_node.set_text("yes_action_button", MSG_ACTION_YES)
         elif name == "no":
-            button_node.set_icon("no")
+            button_node.add_attribute("data-icon", "no")
             button_node.set_text("no_action_button", MSG_ACTION_NO)
         elif name == "save":
             attributes["type"] = "submit"
-            button_node.set_icon("save")
+            button_node.add_attribute("data-icon", "save")
             button_node.set_text("save_action_button", MSG_ACTION_SAVE)
         else:
             raise ValueError("Unknown action '{:s}".format(name))

@@ -79,11 +79,9 @@ class swappBaseMessageDialog(sppasHTMLModalDialog):
             if title is None:
                 title = MSG_HEADER_QUESTION
         else:
-            style = "information"
             if title is None:
                 title = MSG_HEADER_INFO
         self.set_title(title)
-        self.set_icon(style)
 
         # Fill-in the content
         txt = HTMLNode(self.content_node.identifier, None, "p", value=message)

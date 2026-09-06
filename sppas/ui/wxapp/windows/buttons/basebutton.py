@@ -476,13 +476,13 @@ class TestPanelBaseButton(wx.Panel):
 
         # ----
 
-        img = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "bg6.png")
+        img = os.path.join(paths.images, "bg6.png")
         wi2 = BaseCheckButton(self, pos=(10, 300), size=(50, 110), name="wi2")
         wi2.Enable(True)
         wi2.SetBackgroundImage(img)
         wi2.SetBorderColour(wx.Colour(128, 100, 66))
 
-        img = os.path.join(paths.sppas, "ui", "swapp", "statics", "images", "trbg1.png")
+        img = os.path.join(paths.images, "trbg1.png")
         wi3 = BaseCheckButton(self, pos=(110, 300), size=(100, 100), name="wi3")
         wi3.Check(True)
         wi3.Enable(False)

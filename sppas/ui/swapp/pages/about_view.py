@@ -47,6 +47,7 @@ from sppas.core.config import sg
 from sppas.core.config import cfg
 from sppas.ui import _
 from sppas.ui.swapp.panels import BaseLinksNode
+from sppas.ui.swapp.wappcore.wapputils import sppasImagesAccess
 from sppas.ui.swapp.wappbase.wappview import swappBaseView
 
 # ---------------------------------------------------------------------------
@@ -176,7 +177,7 @@ class AboutView(swappBaseView):
         # Then the cards of the places SPPAS is living in, the same panel
         # as the one of the dashboard.
         _links = BaseLinksNode(self._htree.body_main.identifier, "about_links_section")
-        _links.link_button("web", "sppas-logo-v5", MSG_CARD_WEB,
+        _links.link_button("web", sppasImagesAccess.get_logo_filename("sppas-logo-v5"), MSG_CARD_WEB,
                            link="https://sppas.org/")
         _links.link_button("download", "badge-sourceforge", MSG_CARD_DOWNLOAD,
                            link="https://sourceforge.net/projects/sppas/files/")
