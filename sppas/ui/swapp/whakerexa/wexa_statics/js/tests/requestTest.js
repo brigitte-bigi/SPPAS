@@ -11,20 +11,18 @@
     Copyright (C) 2024 Brigitte Bigi
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
-    Use of this software is governed by the GNU Public License, version 3.
-
-    Whakerexa is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Whakerexa is distributed in the hope that it will be useful,
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with Whakerexa. If not, see <https://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
     This banner notice must not be removed.
 
@@ -44,7 +42,7 @@ request_manager_tests.add_test(() => {
     UnitTest.assert_values_equals(null, request_manager.status, "status_getter_test");
     UnitTest.assert_values_equals(url.port, request_manager.port, "port_getter_test");
     UnitTest.assert_values_equals(url.protocol, request_manager.protocol, "protocol_getter_test");
-    UnitTest.assert_values_equals(url.origin + '/', request_manager.request_url, "url_getter_test");
+    UnitTest.assert_values_equals(url.origin + '/', request_manager.requestUrl, "url_getter_test");
 });
 
 // -----------------------------------------------------------------------
@@ -54,7 +52,7 @@ request_manager_tests.add_test(async () => {
     const request_manager = new RequestManager();
 
     // test unknown event
-    request_manager.send_post_request({"event_unknown": 1})
+    request_manager.sendPostRequest({"event_unknown": 1})
         .then(response => {
             // the server return an empty json because it doesn't understand the event send
             UnitTest.assert_object_equals({}, response, "json_response_empty_test");
@@ -69,7 +67,7 @@ request_manager_tests.add_test(() => {
     const url = new URL(window.location.href);
 
     // test get request with this html page
-    request_manager.send_get_request(url.pathname.substring(1) + '?' + url.searchParams)
+    request_manager.sendGetRequest(url.pathname.substring(1) + '?' + url.searchParams)
         .then(response => {
             // check the status of the response is ok
             UnitTest.assert_values_equals(200, request_manager.status, "correct_status_get_request_test");
@@ -89,7 +87,7 @@ request_manager_tests.add_test(() => {
     const request_manager = new RequestManager();
 
     // test get request with wrong path
-    request_manager.send_get_request("/unknown.txt")
+    request_manager.sendGetRequest("/unknown.txt")
         .then(response => {
             UnitTest.assert_values_equals(404, request_manager.status, "wrong_status_get_request_test");
         });

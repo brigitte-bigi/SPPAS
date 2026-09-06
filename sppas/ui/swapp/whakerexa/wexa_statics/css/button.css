@@ -257,6 +257,11 @@ This banner notice must not be removed.
         border: var(--border-width) solid var(--buttons-fg-color);
         height: var(--text-reveal-height);
         width: var(--text-reveal-width);
+        /* The room a drawing takes here is the room the button has, less what
+           keeps it off the border: an icon follows the size of the button and
+           not the size of the text, as it does everywhere else. */
+        --icon-width:  calc(var(--text-reveal-width) * 0.9);
+        --icon-height: calc(var(--text-reveal-height) * 0.9);
         align-items: center;
         overflow: hidden;
         justify-content: center;
@@ -274,6 +279,12 @@ This banner notice must not be removed.
         max-height: 100%;
         padding: 0.2rem;
         margin: 0;
+    }
+
+    /* The drawing keeps the room the button gave it: a flexible item is
+       squeezed when the button is closed, and would grow back on hover. */
+    .text-reveal-button > svg {
+        flex: none;
     }
 
     .text-reveal-button > span {

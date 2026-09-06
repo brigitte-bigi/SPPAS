@@ -39,13 +39,7 @@
 <header id="header-content">
     <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
     <button id="menu-button" aria-controls="nav-content" aria-expanded="false"
-            aria-label="Toggle navigation menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-            <line x1="3" y1="6"  x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
+            aria-label="Toggle navigation menu" data-icon="menu">
     </button>
     <input type="checkbox" id="mobile" role="button"
            aria-label="Menu" aria-haspopup="true" aria-expanded="false">
@@ -53,11 +47,11 @@
 
     <nav id="header-nav-content" aria-label="Accessibility navigation">
         <button id="btn-contrast" class="menuitem accessibility print-off"
-                aria-pressed="false" aria-label="Switch contrast scheme"
+                type="button" aria-pressed="false" aria-label="Switch contrast" title="Switch contrast"
                 onclick="Wexa.accessibility.switchContrastScheme()">
         </button>
         <button id="btn-color" class="menuitem accessibility print-off"
-                aria-pressed="false" aria-label="Switch color scheme"
+                type="button" aria-pressed="false" aria-label="Switch light and dark" title="Switch light and dark"
                 onclick="Wexa.accessibility.switchColorScheme()">
         </button>
     </nav>
@@ -71,77 +65,35 @@
             aria-controls="nav-content"
             aria-pressed="true"
             title="Pin menu"
-            class="menuitem menu-pin">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-             viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-             aria-label="Pushpin">
-            <path d="M9 3h6l-1 8H10L9 3z"/>
-            <path d="M7 13h10"/>
-            <path d="M12 13v9"/>
-        </svg>
+            class="menuitem menu-pin" data-icon="pin">
     </button>
 
-    <a class="menuitem" href="../index.html" aria-current="page">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" aria-hidden="true">
-            <path d="M4 16 L16 4 L28 16"/>
-            <path d="M8 13 L8 28 L24 28 L24 13"/>
-        </svg>
+    <a class="menuitem" href="../index.html" aria-current="page" data-icon="house">
         <span>Home</span>
     </a>
 
     <button class="menuitem" id="submenu-toggle-get"
-            aria-haspopup="true" aria-controls="appmenu-get">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M16 5v16"/>
-            <polyline points="10 15 16 21 22 15"/>
-            <line x1="6" y1="27" x2="26" y2="27"/>
-        </svg>
+            aria-haspopup="true" aria-controls="appmenu-get" data-icon="download">
         <span>Get SPPAS</span>
     </button>
 
     <button class="menuitem" id="submenu-toggle-discover"
-            aria-haspopup="true" aria-controls="appmenu-discover">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="16" cy="16" r="13"/>
-            <line x1="16" y1="2" x2="16" y2="4"/>
-            <line x1="16" y1="28" x2="16" y2="30"/>
-            <line x1="2" y1="16" x2="4" y2="16"/>
-            <line x1="28" y1="16" x2="30" y2="16"/>
-            <polygon points="18 8 22 18 14 24 10 14"/>
-            <circle cx="16" cy="16" r="1"/>
-        </svg>
+            aria-haspopup="true" aria-controls="appmenu-discover" data-icon="compas">
         <span>Discover</span>
     </button>
 
     <button class="menuitem" id="submenu-toggle-book"
-            aria-haspopup="true" aria-controls="appmenu-book">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z"/>
-            <path d="M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z"/>
-        </svg>
+            aria-haspopup="true" aria-controls="appmenu-book" data-icon="book-open">
         <span>Book</span>
     </button>
 
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
         <span>Theme</span>
     </button>
 
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8"/>
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
         <span>Back</span>
     </a>
 

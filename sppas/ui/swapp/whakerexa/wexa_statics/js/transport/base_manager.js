@@ -169,7 +169,7 @@ export class BaseManager {
         let respInfo = "";
 
         try {
-            response = await this._requestManager.send_post_request(
+            response = await this._requestManager.sendPostRequest(
                 events,
                 'application/json',
                 this._uri

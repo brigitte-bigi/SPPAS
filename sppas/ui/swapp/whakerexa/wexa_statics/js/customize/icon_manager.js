@@ -102,6 +102,23 @@ export class IconManager {
     // -----------------------------------------------------------------------
 
     /**
+     * Say the names a set answers, the sets behind it included.
+     *
+     * What the set carries, and what the sets behind it answer for it: a page
+     * that lays out the drawings it can ask for reads them here. Asked for
+     * nothing, it answers for the set in force.
+     *
+     * @param {string} [named] - The set to read, the set in force when none.
+     * @returns {string[]} The names, in the order the chain gives them.
+     */
+    carried(named = '') {
+        const asked = named !== '' ? named : this.#choice.inForce();
+        return this.#sets.namesFor(asked);
+    }
+
+    // -----------------------------------------------------------------------
+
+    /**
      * Hold a set the page brings.
      *
      * @param {IconSet} set - The set to hold.

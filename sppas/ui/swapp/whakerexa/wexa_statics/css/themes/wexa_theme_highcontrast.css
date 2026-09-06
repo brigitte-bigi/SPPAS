@@ -107,6 +107,11 @@
     --card-bg-color:         rgb(240, 240, 240);
     --card-fg-color:         rgb(0, 0, 0);
 
+    /* The ground steps away from the page, the text does not: a dialog is
+       read here as everything else, in pure black on near white. */
+    --dialog-bg-color:       rgb(240, 240, 240);
+    --dialog-fg-color:       rgb(0, 0, 0);
+
     --h1-color:              rgb(0, 0, 0);
     --h2-color:              rgb(0, 0, 0);
     --h3-color:              rgb(0, 0, 0);
@@ -167,6 +172,9 @@
 
         --card-bg-color:         rgb(26, 26, 26);
         --card-fg-color:         rgb(255, 255, 255);
+
+        --dialog-bg-color:       rgb(26, 26, 26);
+        --dialog-fg-color:       rgb(255, 255, 255);
 
         --h1-color:              rgb(255, 255, 255);
         --h2-color:              rgb(255, 255, 255);

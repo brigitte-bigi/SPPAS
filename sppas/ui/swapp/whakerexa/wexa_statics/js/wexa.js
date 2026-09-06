@@ -48,6 +48,7 @@
 import { OnLoadManager } from './dom-loader.js';
 import { WexaLogger } from './logger.js';
 import { AccessibilityManager } from './accessibility.js';
+import { AccessibilityNav } from './accessibility_nav.js';
 import { MenuManager } from './menu.js';
 import { DialogManager } from './dialog.js';
 import { LinkController } from './links.js';
@@ -78,6 +79,7 @@ console.debug('Imports OK:', {
     BaseManager,
     RequestManager,
     IconManager,
+    AccessibilityNav,
     KeyboardController
 });
 
@@ -96,6 +98,7 @@ export {
     IconSet,
     IconSets,
     IconManager,
+    AccessibilityNav,
     KeyboardController
 };
 
@@ -146,6 +149,7 @@ window.Wexa = Object.assign(window.Wexa || {}, {
     BaseManager,
     RequestManager,
     IconManager,
+    AccessibilityNav,
     KeyboardController
 });
 

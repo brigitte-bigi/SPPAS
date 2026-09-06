@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>Poster • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, poster, print"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="screen" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="doc.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+
+    <style>
+        :root {
+            --header-height:   2rem;
+            --header-bg-color: transparent;
+            --header-fg-color: var(--fg-color-alt);
+            --header-slidein:  none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<header id="header-content">
+    <a class="skip" href="#main-content" aria-label="skip to main content">Skip to main content</a>
+    <p>Whakerexa &gt; Extras &gt; Poster</p>
+</header>
+
+<nav class="nav-wexa top" aria-label="Page navigation">
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
+    </a>
+    <button id="btn-css-theme" class="menuitem" type="button"
+            aria-label="Switch theme" title="Switch theme"
+            onclick="window.themes &amp;&amp; window.themes.next()">
+    </button>
+    <button id="btn-contrast" class="menuitem accessibility"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
+            onclick="Wexa.accessibility.switchContrastScheme()"></button>
+    <button id="btn-color" class="menuitem accessibility"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
+            onclick="Wexa.accessibility.switchColorScheme()"></button>
+</nav>
+
+<main id="main-content">
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h1>Poster</h1>
+        <p>
+            <code>poster.css</code> lays out one page of a fixed size, printed whole:
+            a conference poster. It is not <code>print.css</code>, which cuts a normal
+            document into paper pages, and it is not <code>slides.css</code>, which
+            follows the viewport. Here the page has one size, decided by the author,
+            and everything is placed inside it.
+            <strong>The stylesheet asks for no JavaScript.</strong> A poster read
+            on a screen before it is printed can be given the accessibility
+            controls, which are the one thing here that needs any
+            (<a href="#accessibility-controls-section">below</a>).
+        </p>
+        <p>
+            The default canvas is A0 portrait, 841 by 1189 millimetres. It is not a
+            list of formats to pick from: the export being vector PDF, a poster laid
+            out at A0 is printed at A1, A2 or A3 from the print dialog alone, with
+            nothing to change in the page.
+        </p>
+
+        <h2>Loading order</h2>
+        <p>
+            After <code>wexa.css</code>, and after <code>layout.css</code> if the card
+            and panel utilities are wanted — the file builds on both, and after
+            <code>menu.css</code> if the accessibility controls are wanted, the
+            buttons of the bar being sized by it. Before a theme and before the
+            page's own stylesheet, which have the last word.
+        </p>
+        <pre class="dark"><code>&lt;link rel="stylesheet" href="wexa_statics/css/wexa.css"&gt;
+&lt;link rel="stylesheet" href="wexa_statics/css/layout.css"&gt;
+&lt;link rel="stylesheet" href="wexa_statics/css/menu.css"&gt;
+&lt;link rel="stylesheet" href="wexa_statics/css/extras/poster.css"&gt;
+&lt;link rel="stylesheet" href="your_theme.css"&gt;
+&lt;link rel="stylesheet" href="your_poster_page.css"&gt;</code></pre>
+        <p>
+            A theme is loaded as a plain <code>&lt;link&gt;</code>: what is printed
+            is decided before printing, and the poster on the wall does not change.
+            A poster that is also read on a screen — checked before printing, put
+            online beside the paper one — is loaded through
+            <code>wexa.loader.js</code> instead, and then the theme is one of the
+            three things its reader can change.
+        </p>
+
+        <h2>What it looks like</h2>
+
+        <p>
+            The stylesheet does not add to a page: it replaces it. The canvas is the
+            body itself, so a poster is a document of its own — this page cannot be its
+            own example, and shows one instead:
+            <a href="poster-demo.html">poster-demo.html</a>.
+        </p>
+
+        <p>
+            Open it, then print it: what you see is what comes out, at the size
+            <code>@page</code> is given.
+        </p>
+
+        <h2>HTML structure</h2>
+        <p>
+            The canvas is the body itself. Its three bands are the page's own
+            <code>header</code>, <code>main</code> and <code>footer</code>; nothing
+            else is required.
+        </p>
+        <pre class="dark"><code>&lt;body class="poster-canvas"&gt;
+
+    &lt;header&gt; … title, authors, logos … &lt;/header&gt;
+
+    &lt;main class="grid-panel poster-columns"&gt;
+        &lt;div class="grid-item"&gt;
+            &lt;section class="card"&gt;
+                &lt;h2 class="card-header"&gt;A title&lt;/h2&gt;
+                …
+            &lt;/section&gt;
+        &lt;/div&gt;
+        &lt;div class="grid-item"&gt; … &lt;/div&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt; … references, funding … &lt;/footer&gt;
+
+&lt;/body&gt;</code></pre>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>What the file provides</h2>
+
+        <table>
+            <caption>Classes</caption>
+            <thead>
+            <tr><th scope="col">Class</th><th scope="col">On</th><th scope="col">What it does</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row"><code>poster-canvas</code></th>
+                <td><code>body</code></td>
+                <td>The page itself: one fixed-size ground, its three bands stacked and
+                    centred in it, the leftover height split above the first and below
+                    the last. Required.</td>
+            </tr>
+            <tr>
+                <th scope="row"><code>poster-columns</code></th>
+                <td><code>main</code>, with <code>grid-panel</code></td>
+                <td>Columns of equal height: each one reaches the full height of the
+                    row, and its own slack falls between its cards, so every column
+                    starts on one horizon and ends on another.</td>
+            </tr>
+            <tr>
+                <th scope="row"><code>poster-ribbon</code></th>
+                <td>A heading</td>
+                <td>A title band with no card under it — a heading that groups several
+                    cards. Same look as <code>card-header</code>.</td>
+            </tr>
+            <tr>
+                <th scope="row"><code>poster-note</code></th>
+                <td><code>aside</code></td>
+                <td>A footnote line under a block. Undoes the floated side-note
+                    <code>wexa.css</code> makes of every <code>aside</code>.</td>
+            </tr>
+            <tr>
+                <th scope="row"><code>poster-table-note</code></th>
+                <td><code>p</code></td>
+                <td>The line of units or conventions under a table, smaller again.</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Cards come from <code>layout.css</code> unchanged —
+            <code>card</code>, <code>card-header</code>, <code>card-body</code>,
+            <code>card-footer</code> — resized here for a full-width print column.
+            Figures and their captions are plain <code>figure</code> and
+            <code>figcaption</code>, restyled inside the canvas.
+        </p>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>Variables</h2>
+        <p>
+            Every measurement the file draws with is declared once and read by the
+            rules. A poster is tuned by redefining these in its own stylesheet, never
+            by overriding a rule of <code>poster.css</code>.
+        </p>
+
+        <table>
+            <caption>Measurements of the canvas</caption>
+            <thead>
+            <tr><th scope="col">Variable</th><th scope="col">Default</th><th scope="col">What it sets</th></tr>
+            </thead>
+            <tbody>
+            <tr><th scope="row"><code>--poster-width</code></th><td><code>841mm</code></td><td>Width of the page. Set both for any other format, landscape included.</td></tr>
+            <tr><th scope="row"><code>--poster-height</code></th><td><code>1189mm</code></td><td>Height of the page.</td></tr>
+            <tr><th scope="row"><code>--poster-padding</code></th><td><code>8mm 22mm 5mm</code></td><td>Margins of the canvas: top, inline, bottom.</td></tr>
+            <tr><th scope="row"><code>--poster-header-gap</code></th><td><code>10mm</code></td><td>Between the header and main.</td></tr>
+            <tr><th scope="row"><code>--poster-footer-gap</code></th><td><code>10mm</code></td><td>Between main and the footer. Apart from the one above: a header of title, authors and logos does not call for the same air under it as a footer of references calls for above it.</td></tr>
+            <tr><th scope="row"><code>--poster-card-gap</code></th><td><code>10mm</code></td><td>Between two cards, and under a ribbon.</td></tr>
+            <tr><th scope="row"><code>--poster-card-padding</code></th><td><code>7mm</code></td><td>Ground of a card. Feeds <code>--card-padding</code>, which <code>layout.css</code> uses for the card's padding <em>and</em> for the bleed of its title band, so one number keeps the two in step.</td></tr>
+            <tr><th scope="row"><code>--poster-card-header-gap</code></th><td><code>5mm</code></td><td>Under a title band. Without it a table or a figure sits flush against it, neither carrying a margin of its own.</td></tr>
+            <tr><th scope="row"><code>--poster-figure-gap</code></th><td><code>3mm</code></td><td>Above and below a figure.</td></tr>
+            <tr><th scope="row"><code>--poster-caption-gap</code></th><td><code>1.5mm</code></td><td>Between a block and the caption or note under it.</td></tr>
+            <tr><th scope="row"><code>--poster-border-radius</code></th><td><code>5mm</code></td><td>Corners. Feeds <code>--border-radius</code> and <code>--card-border-radius</code>, both stated in px elsewhere and invisible at this size.</td></tr>
+            </tbody>
+        </table>
+
+        <table>
+            <caption>Type scale, as ratios of <code>--font-size</code></caption>
+            <thead>
+            <tr><th scope="col">Variable</th><th scope="col">Default</th><th scope="col">What it sizes</th></tr>
+            </thead>
+            <tbody>
+            <tr><th scope="row"><code>--poster-title-scale</code></th><td><code>1.18</code></td><td>A card title and a ribbon.</td></tr>
+            <tr><th scope="row"><code>--poster-caption-scale</code></th><td><code>0.78</code></td><td>A figure caption.</td></tr>
+            <tr><th scope="row"><code>--poster-note-scale</code></th><td><code>0.74</code></td><td>A <code>poster-note</code>.</td></tr>
+            <tr><th scope="row"><code>--poster-table-note-scale</code></th><td><code>0.65</code></td><td>A <code>poster-table-note</code>.</td></tr>
+            </tbody>
+        </table>
+
+        <p>
+            The file also restates four variables of Whakerexa itself, as
+            <code>print.css</code> does for the same reason — the framework's own
+            defaults are read against a screen or an A4 page:
+            <code>--font-size</code> (<code>28pt</code>), the two
+            <code>--typography-spacing-*</code>, and <code>--size-divisor</code>,
+            pinned to <code>1</code> so headings scale from the type alone and not
+            from the width of a viewport.
+        </p>
+        <p>
+            A poster in another format sets its own <code>--font-size</code>: the
+            canvas changes size, the type does not follow it on its own.
+        </p>
+
+        <h3>Tuning a poster</h3>
+        <pre class="dark"><code>/* your_poster_page.css */
+:root {
+    --poster-width:  594mm;   /* A1 portrait */
+    --poster-height: 841mm;
+    --font-size:     20pt;
+
+    --poster-header-gap: 14mm;
+    --poster-card-gap: 14mm;
+}</code></pre>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2 id="accessibility-controls-section">Accessibility controls</h2>
+        <p>
+            A poster is drawn for a wall, at one size, in one set of colors. Read on
+            a screen instead, it is read by someone who may need another theme, the
+            contrast mode, or the dark mode — and a poster that cannot be changed
+            leaves them with nothing.
+        </p>
+        <p>
+            <code>poster.js</code> builds the bar the presentations use, out of
+            sight, and the <kbd>a</kbd> key brings it in and out. Nothing of the
+            poster moves when it appears: the bar is fixed to the window, above the
+            page. It is a <code>nav.nav-wexa</code>, which <code>print.css</code>
+            hides, so a page that loads <code>print.css</code> does not print it.
+        </p>
+        <pre class="dark"><code>&lt;script&gt;
+    window.bootPage = function (wexa) {
+        const poster = new wexa.Poster();
+        poster.init();
+    };
+&lt;/script&gt;
+
+&lt;script src="wexa_statics/js/wexa.loader.js"
+        data-base="wexa_statics/"
+        data-extras="js/extras/poster.js"&gt;&lt;/script&gt;</code></pre>
+        <p>
+            The three buttons are carried unless they are turned off, one by one. A
+            poster whose colors are the ones its author chose, and are not to be
+            traded for another theme, says so:
+        </p>
+        <pre class="dark"><code>const poster = new wexa.Poster({theme: false, contrast: true, color: true});</code></pre>
+        <table>
+            <caption>What each of the three is for</caption>
+            <thead>
+                <tr><th>Asked for</th><th>The button</th><th>What it changes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>theme</code></td><td>Theme</td>
+                    <td>The next theme of those the page declared.</td></tr>
+                <tr><td><code>contrast</code></td><td>Contrast</td>
+                    <td>The contrast mode, on and off.</td></tr>
+                <tr><td><code>color</code></td><td>Mode</td>
+                    <td>The light mode and the dark mode.</td></tr>
+            </tbody>
+        </table>
+        <p>
+            <code>show()</code>, <code>hide()</code> and <code>toggle()</code> do
+            from the page what the key does; <code>destroy()</code> gives the key
+            back to the browser. A page that already carries a bar under the name
+            <code>accessibility-controls</code> keeps its own: nothing is built over
+            it.
+        </p>
+
+        <h2>Printing</h2>
+        <p>
+            The file carries an <code>@page</code> rule of the canvas's size, with no
+            margin. Chromium honours it when printing or exporting to PDF.
+            <strong>Firefox ignores <code>@page</code> entirely</strong> — the same
+            limitation already noted in <code>print.css</code>. Printing from Firefox
+            means picking the paper size by hand in the print dialog, to match
+            <code>--poster-width</code> and <code>--poster-height</code>; exporting
+            from a Chromium-based browser avoids the step.
+        </p>
+        <p>
+            If the content is taller than the canvas, the page overflows onto a second
+            printed sheet rather than shrinking to fit. This is deliberate: the bands
+            cannot be squeezed into each other, so an overflow is seen instead of
+            being silently absorbed.
+        </p>
+
+        <h2>Colors</h2>
+        <p>
+            None are written in this file. Cards, ribbons and the page ground read
+            <code>--header-bg-color</code>, <code>--header-fg-color</code>,
+            <code>--bg-color</code>, <code>--bg-color-alt</code> and the
+            <code>--border-*</code> variables, so the loaded theme decides the
+            palette — see <a href="css-variables.html">CSS variables</a>.
+        </p>
+
+    </section>
+
+</main>
+
+<!-- ---------------------------------------------------------------- -->
+
+<footer>
+    <p class="center">This site respects your privacy.</p>
+    <p class="center">We do not collect any information and do not use cookies.</p>
+    <hr>
+    <p>Copyright @ 2023-2026 Brigitte Bigi, CNRS<br>
+        Laboratoire Parole et Langage, Aix-en-Provence, France</p>
+    <p><a href="https://www.gnu.org/licenses/fdl-1.3.en.html" class="external-link">
+        This document is under the terms of the GNU Free Documentation License, v1.3.</a>
+    </p>
+</footer>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-links="btn-back"></script>
+</body>
+</html>

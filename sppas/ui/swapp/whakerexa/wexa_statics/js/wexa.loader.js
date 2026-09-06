@@ -38,6 +38,10 @@
  *  data-base    where wexa_statics/ stands, seen from the page. Required.
  *  data-links   the identifiers whose address carries the theme, if any.
  *  data-default the theme to apply when the address names none, if any.
+ *  data-themes  the themes the page brings, one per line, written
+ *               "name:path". They are registered before those of the
+ *               repository, so that a page whose default is its own theme
+ *               cycles through the others.
  *  data-themes-base  where the themes stand, when they are not under
  *               css/themes/ of the base: a page served with the minified
  *               stylesheets asks for the minified themes.
@@ -51,6 +55,11 @@
  *  data-extras  the files to load besides wexa.js, written from the base and
  *               separated by commas. Ignored on file://, where the bundle
  *               already holds them.
+ *
+ *  Whatever a page writes of its own -- data-icons, data-themes-base,
+ *  data-extras -- is read from data-base only when it is relative. A path
+ *  that begins with '/' or an address on another host is taken as it is: a
+ *  set of icons a page brings has no reason to stand under wexa_statics/.
  *
  *  A page that has something of its own to start declares a function named
  *  bootPage: it is called once everything is loaded, and receives what the
@@ -74,12 +83,36 @@
     }
 
     const base = tag.getAttribute('data-base');
+
+    /**
+     * Give the place a page wrote, read from the base when it is relative.
+     *
+     * data-base says where wexa_statics stands. What a page brings of its own
+     * -- a set of icons, a folder of themes, an extra -- has no reason to
+     * stand there: an address that begins at the root of the site, or on
+     * another host, is taken as it is written. Only a relative path is read
+     * from the base.
+     *
+     * @param {String} path - What the page wrote.
+     * @returns {String} The place to ask for.
+     */
+    function placeOf(path) {
+        if (path.startsWith('/') === true) {
+            return path;
+        }
+        if (/^[a-z][a-z0-9+.-]*:\/\//i.test(path) === true) {
+            return path;
+        }
+        return base + path;
+    }
+
     const links = (tag.getAttribute('data-links') || '')
         .split(',')
         .map(name => name.trim())
         .filter(name => name.length > 0);
     const defaultTheme = tag.getAttribute('data-default') || '';
-    const themesBase = tag.getAttribute('data-themes-base') || (base + 'css/themes/');
+    const themesBase = placeOf(tag.getAttribute('data-themes-base') || 'css/themes/');
+    const pageThemes = tag.getAttribute('data-themes') || '';
     const iconSets = tag.getAttribute('data-icons') || '';
     const iconsDefault = tag.getAttribute('data-icons-default') || '';
     const iconsFallback = tag.getAttribute('data-icons-fallback') || '';
@@ -88,8 +121,7 @@
         .map(name => name.trim())
         .filter(name => name.length > 0);
 
-    // The themes of the repository. A document that brings its own registers
-    // them itself, as it does today.
+    // The themes of the repository. A document brings its own on its tag.
     const THEMES = [
         ['wexa_theme',   'wexa_theme.css'],
         ['aurora',       'wexa_theme_aurora.css'],
@@ -99,7 +131,17 @@
     // -----------------------------------------------------------------------
 
     /**
-     * Register the themes of the repository, and hold them for the page.
+     * Register the themes, and hold them for the page.
+     *
+     * What the page brings is registered first, and the themes of the
+     * repository after it: next() walks the list from the one in force and
+     * comes back to the default when it runs out, so a page whose default is
+     * its own theme would have nothing to cycle through if that theme closed
+     * the list.
+     *
+     * Everything is registered here, before the manager reads the address:
+     * a page that declared its theme afterwards would already have been told
+     * that the name written in the address is unknown.
      *
      * @param {Function} ThemeManager - The class that switches a theme.
      * @returns {void}
@@ -110,7 +152,27 @@
         }
 
         const themes = new ThemeManager();
+
+        for (const declared of pageThemes.split('\n')) {
+            const said = declared.trim();
+            if (said === '') {
+                continue;
+            }
+
+            // The name is what stands before the first colon, the place all
+            // that follows: the colon of a https:// address is kept.
+            const first = said.indexOf(':');
+            if (first === -1) {
+                console.error('wexa.loader: a theme is written "name:path": ' + said);
+                continue;
+            }
+
+            themes.register(said.slice(0, first).trim(),
+                            placeOf(said.slice(first + 1).trim()));
+        }
+
         THEMES.forEach(theme => themes.register(theme[0], themesBase + theme[1]));
+
         if (defaultTheme !== '') {
             themes.setDefault(defaultTheme);
         }
@@ -161,17 +223,23 @@
                 continue;
             }
 
-            const parts = said.split(':');
-            if (parts.length < 3) {
+            // The name is what stands before the first colon, the files what
+            // stands after the last one: the place between the two keeps the
+            // colon of a https:// address.
+            const first = said.indexOf(':');
+            const last = said.lastIndexOf(':');
+            if (first === -1 || last === first) {
                 console.error('wexa.loader: a set of icons is written'
                     + ' "name:path:file,file": ' + said);
                 continue;
             }
 
-            // The path is written from data-base, as the page says it is.
-            icons.declare(new namespace.IconSet(parts[0].trim(),
-                base + parts[1].trim(),
-                parts[2].split(',').map(file => file.trim())));
+            // The place is read from data-base when it is relative, and taken
+            // as it is when the page wrote it whole.
+            icons.declare(new namespace.IconSet(
+                said.slice(0, first).trim(),
+                placeOf(said.slice(first + 1, last).trim()),
+                said.slice(last + 1).split(',').map(file => file.trim())));
         }
 
         // What a build gathered into the document, if anything did. It is left
@@ -275,7 +343,7 @@
      * @returns {String} The address, resolved against the document.
      */
     function addressOf(path) {
-        return new URL(base + path, document.baseURI).href;
+        return new URL(placeOf(path), document.baseURI).href;
     }
 
     // -----------------------------------------------------------------------

@@ -62,7 +62,6 @@ BODY_SCRIPT = f"""
         setupManager.handleSetupManagerOnLoad();
 
         window.Wexa.links.handleLinks(['link-sppas_button']);
-        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------

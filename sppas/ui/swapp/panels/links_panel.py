@@ -71,11 +71,19 @@ class BaseLinksNode(HTMLNode):
         link_node.add_attribute("class", "card")
         link_node.add_attribute("class", "link-button")
         # - link, followed by the browser and by goToLink() of Whakerexa,
-        #   which carries the accessibility parameters over to the page
+        #   which carries the accessibility parameters over to the page.
+        #   A page of the internet is opened in a tab of its own: this page
+        #   stays where it is, and one comes back to it by closing that tab.
         link_node.add_attribute("href", link)
         link_node.add_attribute("title", link)
-        # - content
-        link_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
+        if link.startswith("http://") is True or link.startswith("https://") is True:
+            link_node.add_attribute("target", "_blank")
+            link_node.add_attribute("rel", "noopener")
+        # - content. The drawing is asked for by its name: the icon manager
+        #   of Whakerexa writes it first, before the label. A name the set
+        #   of SPPAS does not carry falls back on the one of the framework,
+        #   instead of a broken image.
+        link_node.add_attribute("data-icon", icon_name)
         link_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
         self.append_child(link_node)
@@ -115,7 +123,7 @@ class BaseLinksNode(HTMLNode):
         button_node.add_attribute("class", "link-button")
 
         # content
-        button_node.set_icon(icon_name, attributes={"class": "link-button-icon"})
+        button_node.add_attribute("data-icon", icon_name)
         button_node.set_text(ident+"_text", text, attributes={"class": "link-button-text"})
 
         self.append_child(button_node)

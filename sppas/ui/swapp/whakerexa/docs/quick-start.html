@@ -29,20 +29,17 @@
     <p>Whakerexa &gt; Getting started &gt; Quick start</p>
 </header>
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8" />
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -113,35 +110,21 @@
             <div class="card-view" style="flex-direction: column; align-items: flex-start;">
                 <nav class="nav-wexa top" aria-label="Accessibility example" style="position: static; width: auto;">
                     <button id="btn-contrast-ex" class="menuitem accessibility"
-                            aria-label="contrast" aria-pressed="false"
-                            onclick="Wexa.accessibility.switchContrastScheme()">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-                             fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" aria-hidden="true">
-                            <path d="M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z"/>
-                            <circle cx="16" cy="16" r="5" fill="currentColor" stroke="none"/>
-                        </svg>
+                            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
+                            onclick="Wexa.accessibility.switchContrastScheme()" data-icon="contrast">
                     </button>
                     <button id="btn-color-ex" class="menuitem accessibility"
-                            aria-label="color" aria-pressed="false"
-                            onclick="Wexa.accessibility.switchColorScheme()">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-                             fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <circle cx="16" cy="16" r="13"/>
-                            <clipPath id="cut-color-ex">
-                                <polygon points="0,32 32,0 32,32"/>
-                            </clipPath>
-                            <circle cx="16" cy="16" r="13" fill="currentColor" clip-path="url(#cut-color-ex)" stroke="none"/>
-                        </svg>
+                            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
+                            onclick="Wexa.accessibility.switchColorScheme()" data-icon="color">
                     </button>
                 </nav>
             </div>
             <pre class="dark"><code>&lt;nav class="nav-wexa top" aria-label="Accessibility"&gt;
     &lt;button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"&gt;&lt;/button&gt;
     &lt;button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;
 &lt;/nav&gt;</code></pre>
         </article>
@@ -190,30 +173,6 @@
     </p>
 </footer>
 
-<script>
-    (function () {
-        function injectIcons() {
-            if (!window.Wexa || !window.Wexa.icons) {
-                return false;
-            }
-            Wexa.icons.injectIcon(document.getElementById('btn-contrast-ex'), 'contrast');
-            Wexa.icons.injectIcon(document.getElementById('btn-color-ex'),    'color');
-            return true;
-        }
-        function start() {
-            const t = setInterval(function () {
-                if (injectIcons()) {
-                    clearInterval(t);
-                }
-            }, 20);
-        }
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', start, { once: true });
-        } else {
-            start();
-        }
-    })();
-</script>
 
 <script src="../wexa_statics/js/wexa.loader.js"
         data-base="../wexa_statics/"

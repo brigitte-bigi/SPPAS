@@ -52,6 +52,28 @@ from sppas.ui.swapp.wappcore.wappsg import wapp_settings
 CSS_MIME_TYPE = "text/css"
 JS_MIME_TYPE = "application/javascript"
 
+# The icons of SPPAS, declared to the loader of Whakerexa: one set, written
+# "name:base:file1,file2,...". A name the set does not carry is answered by
+# the reference set of the framework.
+ICON_SET_NAME = "refine"
+ICON_SET_FILES = (
+    "link_about.png,link_publis.png,link_configuration.png,link_feedback.png,"
+    "link_docweb.png,link_resources.png,link_tutovideo.png,link_question.png,"
+    "link_sppas_award.png,link_github.png,badge-sourceforge.png,"
+    # The logo of SPPAS is the drawing of the card leading to its site.
+    "sppas-logo-v5.png"
+)
+# The loader reads an absolute path as it is, and only prefixes a relative
+# one with data-base: the set says where it stands, from the root served.
+ICON_SET_PATH = "/" + wapp_settings.images
+ICON_SET = f"{ICON_SET_NAME}:{ICON_SET_PATH}:{ICON_SET_FILES}"
+
+# The theme of SPPAS, declared to the loader: it is registered before the
+# manager reads the address, so that ?wexa_theme=swapp is answered, and it
+# stands before the themes of the repository in the cycle of the button.
+THEME_NAME = "swapp"
+THEME_SET = f"{THEME_NAME}:/{wapp_settings.css}main_swapp_theme.css"
+
 # ---------------------------------------------------------------------------
 
 
@@ -104,5 +126,21 @@ class swappHeadNode(HTMLHeadNode):
         print_css.add_attribute("media", "print")
         self.append_child(print_css)
 
-        # Add the javascript, from Whakerexa
-        self.script(src=wapp_settings.wexa_statics + "js/wexa.js", script_type="module")
+        # Add the javascript, from Whakerexa. The loader chooses by itself
+        # between the modules and the bundle, and declares the icon sets: a
+        # name of an icon then answers, whatever the way the page is served.
+        # The files are listed so that a name the set does not carry falls
+        # back on the one of Whakerexa without any request.
+        loader = HTMLNode(self.identifier, None, "script")
+        loader.add_attribute("src", "/" + wapp_settings.wexa_statics + "js/wexa.loader.js")
+        loader.add_attribute("data-base", "/" + wapp_settings.wexa_statics)
+        # The Journal button is a button with a data-href: the loader hands
+        # it to handleLinksWithParameters() once the framework is there. A
+        # page cannot do it itself any more -- its own script runs first.
+        loader.add_attribute("data-links", "link-trace_button")
+        loader.add_attribute("data-icons", ICON_SET)
+        loader.add_attribute("data-icons-default", ICON_SET_NAME)
+        loader.add_attribute("data-icons-fallback", ICON_SET_NAME)
+        loader.add_attribute("data-themes", THEME_SET)
+        loader.add_attribute("data-default", THEME_NAME)
+        self.append_child(loader)

@@ -75,7 +75,7 @@ class sppasImagesAccess:
 
         # Priority: SVG, then PNG
         for ext in (".png", ".svg"):
-            img_name = img_path + "/" + name + ext
+            img_name = img_path + name + ext
             if os.path.exists(img_name):
                 return img_name
 
@@ -96,20 +96,20 @@ class sppasImagesAccess:
         default_theme = wapp_settings.default_icons_theme()
         icon_path = wapp_settings.icons
 
-        icon_name = icon_path + "/" + wapp_settings.icons_theme + "/" + name + ".png"
+        icon_name = icon_path + wapp_settings.icons_theme + "/" + name + ".png"
 
         # instead, find the icon in the default set
         if os.path.exists(icon_name) is False:
-            icon_name = icon_path + "/" + default_theme + "/" + name + ".png"
+            icon_name = icon_path + default_theme + "/" + name + ".png"
 
         # instead, use the given default icon
         if os.path.exists(icon_name) is False:
             logging.warning("Missing icon {:s} in the SPPAS Package.".format(icon_name))
-            icon_name = icon_path + "/" + default_theme + "/" + default + ".png"
+            icon_name = icon_path + default_theme + "/" + default + ".png"
 
         # instead, use the default icon
         if os.path.exists(icon_name) is False:
-            icon_name = icon_path + "/" + default_theme + "/default.png"
+            icon_name = icon_path + default_theme + "/default.png"
 
         if os.path.exists(icon_name) is False:
             logging.error("Missing default icon in the SPPAS Package.")

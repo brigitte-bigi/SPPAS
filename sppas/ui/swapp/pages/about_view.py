@@ -88,7 +88,6 @@ MSG_CARD_SOURCE = _("Source code")
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("About")
 
 BODY_SCRIPT = """
-        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------

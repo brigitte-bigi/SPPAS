@@ -12,20 +12,18 @@ This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
 Copyright (C) 2023-2026 Brigitte Bigi, CNRS
 Laboratoire Parole et Langage, Aix-en-Provence, France
 
-Use of this software is governed by the GNU Public License, version 3.
-
-Whakerpy is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Whakerpy is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Whakerpy. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 This banner notice must not be removed.
 
@@ -121,7 +119,7 @@ export class RequestManager {
      * @returns {string} The url of the localhost address.
      *
      */
-    get request_url() {
+    get requestUrl() {
         return this.#url;
     }
 
@@ -151,12 +149,12 @@ export class RequestManager {
      * @returns {Promise<*>} - The server data response.
      *
      */
-    async send_get_request(uri = "", is_json_response = false) {
-        const complete_url = this.request_url + uri;
-        let request_response_data = null;
+    async sendGetRequest(uri = "", is_json_response = false) {
+        const completeUrl = this.requestUrl + uri;
+        let requestResponseData = null;
 
         // send request to the server
-        await fetch(complete_url)
+        await fetch(completeUrl)
             // then gets content of the server response
             .then(async response =>  {
                 // get the status response and check if there is an error
@@ -167,13 +165,13 @@ export class RequestManager {
                     const text = await response.text();
 
                     if (text.trim() === '') {
-                        request_response_data = {};   // JSON vide → objet vide
+                        requestResponseData = {};   // JSON vide → objet vide
                     } else {
                         try {
-                            request_response_data = JSON.parse(text);
+                            requestResponseData = JSON.parse(text);
                         } catch (error) {
                             console.error('Failed to parse JSON response', error);
-                            request_response_data = {
+                            requestResponseData = {
                                 status: response.status,
                                 error: 'Failed to parse JSON.',
                                 raw: text
@@ -181,16 +179,16 @@ export class RequestManager {
                         }
                     }
                 } else {
-                    request_response_data = await response.text();
+                    requestResponseData = await response.text();
                 }
             })
             // handle error
             .catch(error => {
                 this.#status = error.status;
-                request_response_data = error;
+                requestResponseData = error;
             });
 
-        return request_response_data;
+        return requestResponseData;
     }
 
     // ----------------------------------------------------------------------
@@ -201,30 +199,30 @@ export class RequestManager {
      * Manages both JSON and Blob responses, and opens HTML error pages (like
      * 500 errors) in a new tab if encountered.
      *
-     * @param {Object} post_parameters - Data to be sent in the POST request, in JSON format.
+     * @param {Object} postParameters - Data to be sent in the POST request, in JSON format.
      * @param {string} [accept_type="application/json"] - Expected MIME type of the server's response, defaults to JSON.
      * @param {string} [uri=""] - Additional path to append to the base request URL.
      * @returns {Promise<*>} - Returns the parsed response data (JSON or Blob), or an error object.
      * @throws {Error} - Throws an error if there is a network or if an HTML error page is received.
      *
      */
-    async send_post_request(post_parameters, accept_type = "application/json", uri = "") {
-		const complete_url = this.request_url + uri;
-        let request_response_data = null;
+    async sendPostRequest(postParameters, accept_type = "application/json", uri = "") {
+		const completeUrl = this.requestUrl + uri;
+        let requestResponseData = null;
 
         // build request header and body depending on parameter passed to the method
-        post_parameters = JSON.stringify(post_parameters);
-        let request_header = {
+        postParameters = JSON.stringify(postParameters);
+        let requestHeader = {
             'Accept': accept_type,
             'Content-Type': "application/json; charset=utf-8",
-            'Content-Length': post_parameters.length.toString()
+            'Content-Length': postParameters.length.toString()
         }
 
         // send request to the server
-        await fetch(complete_url, {
+        await fetch(completeUrl, {
             method: "POST",
-            headers: request_header,
-            body: post_parameters
+            headers: requestHeader,
+            body: postParameters
         })
             // then gets content of the server response
             .then(async response =>  {
@@ -233,17 +231,17 @@ export class RequestManager {
                 if (accept_type.includes("application/json")) {
                     const text = await response.text();
                     if (text.trim() === '') {
-                        request_response_data = {};
+                        requestResponseData = {};
                     } else {
                         try {
-                            request_response_data = JSON.parse(text);
+                            requestResponseData = JSON.parse(text);
                         } catch (error) {
                             if (!response.headers.get('Content-Type')?.includes('application/json')) {
                                 // No backend available: ignore silently
                                 return {};
                             } else {
                                 console.error("Failed to parse JSON response: " + error);
-                                request_response_data = {
+                                requestResponseData = {
                                     status: response.status,
                                     error: "Failed to parse JSON. See error details in the newly opened tab.",
                                     html: text
@@ -258,7 +256,7 @@ export class RequestManager {
                 else if (accept_type.includes("text/html")) {
                     // If response is HTML, treat it as a failed request (500 error or other)
                     const responseText = await response.text();
-                    request_response_data = {
+                    requestResponseData = {
                         status: response.status,
                         error: "Received HTML instead of JSON. See error details in the newly opened tab.",
                         html: responseText
@@ -267,17 +265,17 @@ export class RequestManager {
                     this.openErrorTab(responseText);
                 }
                 else {
-                    request_response_data = await response.blob();
+                    requestResponseData = await response.blob();
                 }
             })
             // handle error
             .catch(error => {
                 this.#status = error.status;
-                request_response_data = error;
+                requestResponseData = error;
             })
         ;
 
-        return request_response_data;
+        return requestResponseData;
     }
 
     // ----------------------------------------------------------------------
@@ -314,9 +312,9 @@ export class RequestManager {
      * @returns {Promise<*>} The server response.
      *
      */
-    async upload_file(input, accept_type = "application/json", token = "", uri = "") {
-        let response_data = null;
-        const complete_url = this.request_url + uri;
+    async uploadFile(input, accept_type = "application/json", token = "", uri = "") {
+        let responseData = null;
+        const completeUrl = this.requestUrl + uri;
         this.#status = 400;
 
         // Exit the function if no file is selected
@@ -347,7 +345,7 @@ export class RequestManager {
         data.append('file', sanitizedFile);
 
         // Send request to the back-end and wait for the response (response in json)
-        await fetch(complete_url, {
+        await fetch(completeUrl, {
             method: 'POST',
             headers: {
                 'Accept': accept_type,
@@ -362,19 +360,19 @@ export class RequestManager {
             // Check if the status is not 200 and there is no error in the response
             if (response.status !== 200 && !response.error) {
                 // Return a JSON object with statusText to indicate the error
-                response_data = { "error": response.statusText };
+                responseData = { "error": response.statusText };
             } else {
                 // If status is 200 or there is an error, return the JSON response
-                response_data = await response.json();
+                responseData = await response.json();
             }
         })
         // handle error
         .catch(error => {
             console.error(" ... server error: ", error);
             this.#status = error.status;
-            response_data = error;
+            responseData = error;
         })
 
-        return response_data;
+        return responseData;
     }
 }

@@ -63,6 +63,8 @@ MSG_COLOR = _("Color")
 MSG_THEME = _("Theme")
 MSG_PIN = _("Pin menu")
 MSG_EXIT = _("Exit")
+# The long version of the message is in the "po" files.
+MSG_EXIT_TIP = _("Stops SPPAS and saves its settings.")
 MSG_DASHBOARD = _("Dashboard")
 MSG_HELP = _("Help")
 MSG_JOURNAL = _("Journal")
@@ -76,66 +78,37 @@ JS_INIT = (
     f"window.WEXA_LOG_LEVEL = {cfg.log_level};"
 )
 
-JS_WEXA_ONLOAD = """
-        window.Wexa.onload.addLoadFunction(() => {
-            const {MenuManager, KeyboardController} = window.Wexa;
-            window.menu = new MenuManager();
-            window.menu.initSideMenu();
-            window.menu.initMobileToggle();
+# What the page starts once the loader has everything ready: the loader
+# calls bootPage() after it has registered the themes and the icons, and
+# hands over the namespace of the framework.
+JS_BOOT_PAGE = (
+    "window.bootPage = function (wexa) {"
+    "    window.menu = new wexa.MenuManager();"
+    "    window.menu.initSideMenu();"
+    "    window.menu.initMobileToggle();"
 
-            // The keys answer by clicking the button that already carries the
-            // action: a page without its document has a button without href,
-            // and the key does nothing there either.
-            window.keyboard = new KeyboardController();
-            window.keyboard.register({
-                keys: ['h', 'H', '?'],
-                label: 'Help',
-                action: () => document.getElementById('link-help_button').click()
-            });
-            window.keyboard.register({
-                keys: ['j', 'J'],
-                label: 'Journal',
-                action: () => document.getElementById('link-trace_button').click()
-            });
-            // Not 'd': the slides of Whakerexa answer it, and a page of SPPAS
-            // may hold slides one day. 'q' as in quitting the page -- leaving
-            // SPPAS itself never has a key, the browser owning ctrl+q.
-            window.keyboard.register({
-                keys: ['q', 'Q'],
-                label: 'Dashboard',
-                action: () => document.getElementById('link-home_button').click()
-            });
-
-            // What changes the look of the page is written with punctuation.
-            window.keyboard.register({
-                keys: ['+'],
-                label: 'Contrast',
-                action: () => document.getElementById('btn-contrast').click()
-            });
-            window.keyboard.register({
-                keys: ['*'],
-                label: 'Color',
-                action: () => document.getElementById('btn-color').click()
-            });
-            window.keyboard.register({
-                keys: ['>'],
-                label: 'Theme',
-                action: () => document.getElementById('btn-css-theme').click()
-            });
-            window.keyboard.init();
-        });
-"""
-
-# The ThemeManager is an extra: it is imported by the pages needing it. The
-# theme of SPPAS is registered like any other, and declared as the default.
-JS_WEXA_THEMES = (
-    f"const ThemeManager = (await import(window.WEXA_JS_PATH + '/customize/theme_manager.js')).ThemeManager;"
-    f"window.themes = new ThemeManager();"
-    f"window.themes.register('swapp', '{wapp_settings.css}main_swapp_theme.css');"
-    f"window.themes.register('wexa_theme', '{wapp_settings.wexa_statics}css/themes/wexa_theme.css');"
-    f"window.themes.register('aurora', '{wapp_settings.wexa_statics}css/themes/wexa_theme_aurora.css');"
-    f"window.themes.register('highcontrast', '{wapp_settings.wexa_statics}css/themes/wexa_theme_highcontrast.css');"
-    f"window.themes.setDefault('swapp');"
+    # The keys answer by clicking the button that already carries the action:
+    # a page without its document has a button without href, and the key does
+    # nothing there either.
+    "    window.keyboard = new wexa.KeyboardController();"
+    "    window.keyboard.register({keys: ['h', 'H', '?'], label: 'Help',"
+    "        action: () => document.getElementById('link-help_button').click()});"
+    "    window.keyboard.register({keys: ['j', 'J'], label: 'Journal',"
+    "        action: () => document.getElementById('link-trace_button').click()});"
+    # Not 'd': the slides of Whakerexa answer it, and a page of SPPAS may hold
+    # slides one day. 'q' as in quitting the page -- leaving SPPAS itself never
+    # has a key, the browser owning ctrl+q.
+    "    window.keyboard.register({keys: ['q', 'Q'], label: 'Dashboard',"
+    "        action: () => document.getElementById('link-home_button').click()});"
+    # What changes the look of the page is written with punctuation.
+    "    window.keyboard.register({keys: ['+'], label: 'Contrast',"
+    "        action: () => document.getElementById('btn-contrast').click()});"
+    "    window.keyboard.register({keys: ['*'], label: 'Color',"
+    "        action: () => document.getElementById('btn-color').click()});"
+    "    window.keyboard.register({keys: ['>'], label: 'Theme',"
+    "        action: () => document.getElementById('btn-css-theme').click()});"
+    "    window.keyboard.init();"
+    "};"
 )
 
 # ---------------------------------------------------------------------------
@@ -249,14 +222,11 @@ class swappBaseView:
         script.add_attribute("type", "module")
         self._htree.head.append_child(script)
 
-        # JS local script for the Menu -- same for all apps sharing this head.
+        # What the page starts once the loader is done -- the same for all
+        # apps sharing this head. Not a module: the loader looks for the
+        # function on the window.
         script = HTMLNode(self._htree.head.identifier, None, "script",
-                          value=JS_WEXA_ONLOAD, attributes={'type': "module"})
-        self._htree.head.append_child(script)
-
-        # JS local script for the CSS themes -- same for all apps.
-        script = HTMLNode(self._htree.head.identifier, None, "script",
-                          value=JS_WEXA_THEMES, attributes={'type': "module"})
+                          value=JS_BOOT_PAGE)
         self._htree.head.append_child(script)
 
         # Application JS
@@ -361,10 +331,10 @@ class swappBaseView:
 
         """
         # The 'menu' button for a responsive #nav-content must be outside 'nav'.
-        # It carries the inline "menu" SVG icon, styled by menu.css
-        # (#menu-button > svg); without it the button would render empty.
-        svg_menu = sppasImagesAccess.get_wexa_svg_icon("menu")
-        menu_button = HTMLNode(parent.identifier, None, "button", value=svg_menu)
+        # The drawing is asked for by its name: the icon manager of Whakerexa
+        # writes it into the button, first, before anything else it holds.
+        menu_button = HTMLNode(parent.identifier, None, "button")
+        menu_button.add_attribute("data-icon", "menu")
         menu_button.add_attribute("id", "menu-button")
         menu_button.add_attribute("name", "menu-button")
         menu_button.add_attribute("aria-label", "Menu")
@@ -392,12 +362,13 @@ class swappBaseView:
         :param parent: (HTMLNode) the parent HTML node to append the buttons in
 
         """
-        # CSS theme. The ThemeManager injects the icon before the label: the
-        # side menu of SPPAS shows the name of an item, the top nav of the
-        # documentation does not.
+        # These three buttons are drawn by Whakerexa itself -- the theme by
+        # its ThemeManager, the two others by its AccessibilityManager. No
+        # data-icon here: it would write a second drawing.
         css_theme_button = HTMLNode(parent.identifier, None, "button",
                                     value="<span>" + MSG_THEME + "</span>")
         css_theme_button.add_attribute("id", "btn-css-theme")
+        css_theme_button.add_attribute("type", "button")
         css_theme_button.add_attribute("class", "menuitem")
         css_theme_button.add_attribute("aria-label", MSG_THEME)
         css_theme_button.add_attribute("aria-keyshortcuts", ">")
@@ -406,12 +377,11 @@ class swappBaseView:
         parent.append_child(css_theme_button)
 
         # contrast
-        svg_contrast = sppasImagesAccess.get_wexa_svg_icon("contrast")
-        contrast_image = svg_contrast + "<span>" + MSG_CONTRAST + "</span>"
         contrast_button = HTMLNode(parent.identifier, None, "button",
-                                   value=contrast_image)
+                                   value="<span>" + MSG_CONTRAST + "</span>")
         contrast_button.add_attribute("id", "btn-contrast")
         contrast_button.add_attribute("class", "menuitem accessibility")
+        contrast_button.add_attribute("type", "button")
         contrast_button.add_attribute("aria-label", MSG_CONTRAST)
         contrast_button.add_attribute("aria-keyshortcuts", "+")
         contrast_button.add_attribute("title", MSG_CONTRAST + " (+)")
@@ -420,12 +390,11 @@ class swappBaseView:
         parent.append_child(contrast_button)
 
         # color scheme
-        svg_theme = sppasImagesAccess.get_wexa_svg_icon("color")
-        theme_image = svg_theme + "<span>" + MSG_COLOR + "</span>"
         theme_button = HTMLNode(parent.identifier, None, "button",
-                                value=theme_image)
+                                value="<span>" + MSG_COLOR + "</span>")
         theme_button.add_attribute("id", "btn-color")
         theme_button.add_attribute("class", "menuitem accessibility")
+        theme_button.add_attribute("type", "button")
         theme_button.add_attribute("aria-label", MSG_COLOR)
         theme_button.add_attribute("aria-keyshortcuts", "*")
         theme_button.add_attribute("title", MSG_COLOR + " (*)")
@@ -469,9 +438,9 @@ class swappBaseView:
         :return: (HTMLNode) the home link button node
 
         """
-        svg_home = sppasImagesAccess.get_wexa_svg_icon("dashboard")
-        home_image = svg_home + "<span>" + MSG_DASHBOARD + "</span>"
-        _button = HTMLNode(parent.identifier, "link-home_button", "a", value=home_image)
+        _button = HTMLNode(parent.identifier, "link-home_button", "a",
+                           value="<span>" + MSG_DASHBOARD + "</span>")
+        _button.add_attribute("data-icon", "house")
         _button.add_attribute("id", "link-home_button")
         _button.add_attribute("href", "index.html")
         _button.add_attribute("role", "button")
@@ -503,9 +472,9 @@ class swappBaseView:
         :return: (HTMLNode) the help link button node
 
         """
-        svg_help = sppasImagesAccess.get_wexa_svg_icon("help")
-        help_image = svg_help + "<span>" + MSG_HELP + "</span>"
-        _button = HTMLNode(parent.identifier, "link-help_button", "a", value=help_image)
+        _button = HTMLNode(parent.identifier, "link-help_button", "a",
+                           value="<span>" + MSG_HELP + "</span>")
+        _button.add_attribute("data-icon", "help")
         _button.add_attribute("id", "link-help_button")
         _button.add_attribute("role", "button")
         _button.add_attribute("aria-label", MSG_HELP)
@@ -529,16 +498,16 @@ class swappBaseView:
 
         The page opens in its named tab: whatever the app the button is
         clicked from, the single "sppas_infos" tab is reused and reloaded.
-        The button must be registered with handleLinksWithParameters() in
-        the body script of the page.
+        The loader registers it with handleLinksWithParameters(), through
+        its data-links attribute -- see wapphead.py.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the trace link button node
 
         """
-        svg_trace = sppasImagesAccess.get_wexa_svg_icon("info-square")
-        trace_image = svg_trace + "<span>" + MSG_JOURNAL + "</span>"
-        _button = HTMLNode(parent.identifier, None, "button", value=trace_image)
+        _button = HTMLNode(parent.identifier, None, "button",
+                           value="<span>" + MSG_JOURNAL + "</span>")
+        _button.add_attribute("data-icon", "readings")
         _button.add_attribute("id", "link-trace_button")
         _button.add_attribute("aria-label", MSG_JOURNAL)
         _button.add_attribute("aria-keyshortcuts", "j")
@@ -557,16 +526,16 @@ class swappBaseView:
         """Create and append the button opening the Feedback page.
 
         The page opens in a new tab: the user sends a feedback without
-        leaving the current app. The button must be registered with
-        handleLinksWithParameters() in the body script of the page.
+        leaving the current app. The loader registers it, through its
+        data-links attribute -- see wapphead.py.
 
         :param parent: (HTMLNode) the parent HTML node to append the button in
         :return: (HTMLNode) the feedback link button node
 
         """
-        svg_feedback = sppasImagesAccess.get_wexa_svg_icon("feedback")
-        feedback_image = svg_feedback + "<span>" + MSG_FEEDBACK + "</span>"
-        _button = HTMLNode(parent.identifier, None, "button", value=feedback_image)
+        _button = HTMLNode(parent.identifier, None, "button",
+                           value="<span>" + MSG_FEEDBACK + "</span>")
+        _button.add_attribute("data-icon", "feedback")
         _button.add_attribute("id", "link-feedback_button")
         _button.add_attribute("aria-label", "Feedback")
         _button.add_attribute("type", "button")
@@ -584,9 +553,9 @@ class swappBaseView:
         :param parent: (HTMLNode) the parent HTML node to append the buttons in
 
         """
-        svg_pin = sppasImagesAccess.get_wexa_svg_icon("pin")
-        pin_image = svg_pin + "<span>" + MSG_PIN + "</span>"
-        _button = HTMLNode(parent.identifier, None, "button", value=pin_image)
+        _button = HTMLNode(parent.identifier, None, "button",
+                           value="<span>" + MSG_PIN + "</span>")
+        _button.add_attribute("data-icon", "pin")
         _button.add_attribute("id", "pin-menu")
         _button.add_attribute("aria-label", "Pin Menu")
         _button.add_attribute("type", "button")
@@ -602,16 +571,20 @@ class swappBaseView:
 
     @staticmethod
     def append_exit_button(parent: HTMLNode) -> None:
-        """Create and append the pin button of a collapsible menu.
+        """Create and append the button leaving SPPAS.
+
+        The label says one word: what the word does is written in the tip,
+        because leaving is the one action that cannot be undone.
 
         :param parent: (HTMLNode) the parent HTML node to append the buttons in
 
         """
-        svg_exit = sppasImagesAccess.get_wexa_svg_icon("logout")
-        exit_value = svg_exit + "<span>" + MSG_EXIT + "</span>"
-        exit_button = HTMLNode(parent.identifier, None, "button", value=exit_value)
+        exit_button = HTMLNode(parent.identifier, None, "button",
+                               value="<span>" + MSG_EXIT + "</span>")
+        exit_button.add_attribute("data-icon", "logout")
         exit_button.add_attribute("id", "exit-menu")
-        exit_button.add_attribute("aria-label", "Exit")
+        exit_button.add_attribute("aria-label", MSG_EXIT)
+        exit_button.add_attribute("title", MSG_EXIT_TIP)
         exit_button.add_attribute("type", "button")
         exit_button.add_attribute("aria-pressed", "false")
         exit_button.add_attribute("class", "menuitem menu-exit")

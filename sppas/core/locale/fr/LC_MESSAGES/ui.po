@@ -236,6 +236,9 @@ msgstr "Contraste"
 msgid "Theme"
 msgstr "Thème"
 
+msgid "Stops SPPAS and saves its settings."
+msgstr "Arrête SPPAS et enregistre les préférences."
+
 msgid "Pin menu"
 msgstr "Epingler"
 

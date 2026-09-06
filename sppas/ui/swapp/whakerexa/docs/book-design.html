@@ -39,20 +39,17 @@
     </header>
 
     <nav class="nav-wexa top" aria-label="Page navigation">
-        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                <polyline points="20 24 12 16 20 8"/>
-            </svg>
+        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
         </a>
         <button id="btn-css-theme" class="menuitem" type="button"
-                aria-label="Switch CSS theme" title="Switch CSS theme"
+                aria-label="Switch theme" title="Switch theme"
                 onclick="window.themes && window.themes.next()">
         </button>
         <button id="btn-contrast" class="menuitem accessibility"
-                aria-label="contrast" aria-pressed="false"
+                type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
                 onclick="Wexa.accessibility.switchContrastScheme()"></button>
         <button id="btn-color" class="menuitem accessibility"
-                aria-label="color" aria-pressed="false"
+                type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
                 onclick="Wexa.accessibility.switchColorScheme()"></button>
     </nav>
 
@@ -350,7 +347,7 @@
                     <tr><td>constructor</td><td>(id_headings, id_toc)</td><td>pre: none. post: a document whose place for the table is missing is left alone; a table standing in a panel gets what opens it, in the navigation of the page. Never raises</td></tr>
                     <tr><td>set_html_tags</td><td>(tags: String): void</td><td>pre: the tags are those of headings. post: the levels taken by the table are those tags, h1 to h4 having been taken until then</td></tr>
                     <tr><td>del_html_tags</td><td>(tags: String): void</td><td>post: those levels are no longer taken</td></tr>
-                    <tr><td>fill_table</td><td>(only_numerate_headings: Boolean): void</td><td>pre: none. post: one entry per title of the levels taken, in the order of the document, each saying its level and whether its chapter is numbered, and leading to an anchor written before its title. Nothing is produced when there is no place for the table</td></tr>
+                    <tr><td>fillTable</td><td>(only_numerate_headings: Boolean): void</td><td>pre: none. post: one entry per title of the levels taken, in the order of the document, each saying its level and whether its chapter is numbered, and leading to an anchor written before its title. Nothing is produced when there is no place for the table</td></tr>
                     </tbody>
                 </table>
             </section>

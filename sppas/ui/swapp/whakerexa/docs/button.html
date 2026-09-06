@@ -39,20 +39,17 @@
 </header>
 
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8"/>
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -148,35 +145,17 @@
 
         <article class="card-doc" aria-label="Text-reveal button — example">
             <div class="card-view">
-                <button class="text-reveal-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%" aria-hidden="true">
-                        <path d="M16 5v16"/>
-                        <polyline points="10 15 16 21 22 15"/>
-                        <line x1="6" y1="27" x2="26" y2="27"/>
-                    </svg>
+                <button class="text-reveal-button" data-icon="download">
                     <span>Download</span>
                 </button>
-                <button class="text-reveal-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%" aria-hidden="true">
-                        <path d="M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z"/>
-                        <path d="M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z"/>
-                    </svg>
+                <button class="text-reveal-button" data-icon="book-open">
                     <span>Open book</span>
                 </button>
-                <button class="text-reveal-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%" aria-hidden="true">
-                        <circle cx="16" cy="11" r="5"/>
-                        <path d="M5 27c0-5 5-8 11-8s11 3 11 8"/>
-                    </svg>
+                <button class="text-reveal-button" data-icon="user">
                     <span>Profile</span>
                 </button>
             </div>
-            <pre class="dark"><code>&lt;button class="text-reveal-button"&gt;
-    &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-         fill="none" stroke="currentColor" stroke-width="2"
-         width="100%" height="100%" aria-hidden="true"&gt;
-        &lt;!-- icon paths --&gt;
-    &lt;/svg&gt;
+            <pre class="dark"><code>&lt;button class="text-reveal-button" data-icon="download"&gt;
     &lt;span&gt;Label&lt;/span&gt;
 &lt;/button&gt;</code></pre>
         </article>
@@ -190,39 +169,50 @@
 
         <article class="card-doc" aria-label="Text-reveal button — custom size example">
             <div class="card-view">
-                <button class="text-reveal-button"
+                <button class="text-reveal-button" data-icon="download"
                         style="--text-reveal-height: calc(var(--font-size) * 3); --text-reveal-width: calc(var(--font-size) * 3);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%" aria-hidden="true">
-                        <path d="M16 5v16"/>
-                        <polyline points="10 15 16 21 22 15"/>
-                        <line x1="6" y1="27" x2="26" y2="27"/>
-                    </svg>
                     <span>Download</span>
                 </button>
-                <button class="text-reveal-button"
+                <button class="text-reveal-button" data-icon="book-open"
                         style="--text-reveal-height: calc(var(--font-size) * 3); --text-reveal-width: calc(var(--font-size) * 3);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%" aria-hidden="true">
-                        <path d="M4 6h10a4 4 0 0 1 4 4v16a4 4 0 0 0-4-4H4z"/>
-                        <path d="M28 6H18a4 4 0 0 0-4 4v16a4 4 0 0 1 4-4h10z"/>
-                    </svg>
                     <span>Open book</span>
                 </button>
-                <button class="text-reveal-button"
+                <button class="text-reveal-button" data-icon="user"
                         style="--text-reveal-height: calc(var(--font-size) * 3); --text-reveal-width: calc(var(--font-size) * 3);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="100%" height="100%" aria-hidden="true">
-                        <circle cx="16" cy="11" r="5"/>
-                        <path d="M5 27c0-5 5-8 11-8s11 3 11 8"/>
-                    </svg>
                     <span>Profile</span>
                 </button>
             </div>
-            <pre class="dark"><code>&lt;button class="text-reveal-button"
+            <pre class="dark"><code>&lt;button class="text-reveal-button" data-icon="download"
         style="--text-reveal-height: calc(var(--font-size) * 3);
                --text-reveal-width:  calc(var(--font-size) * 3);"&gt;
-    &lt;svg ... width="100%" height="100%" aria-hidden="true"&gt;
-        &lt;!-- icon paths --&gt;
-    &lt;/svg&gt;
     &lt;span&gt;Label&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </article>
+
+        <p>
+            A drawing of your own is written inside the button, and needs no
+            <code>data-icon</code>: the component dresses what it holds, whether the drawing
+            comes from a set or from the page itself.
+        </p>
+
+        <article class="card-doc" aria-label="Text-reveal button — a drawing of its own">
+            <div class="card-view">
+                <button class="text-reveal-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" width="100%" height="100%" aria-hidden="true">
+                        <polygon points="18 3 8 18 15 18 14 29 24 14 17 14 18 3" />
+                    </svg>
+                    <span>Boost</span>
+                </button>
+            </div>
+            <pre class="dark"><code>&lt;button class="text-reveal-button"&gt;
+    &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+         stroke-linejoin="round" width="100%" height="100%" aria-hidden="true"&gt;
+        &lt;polygon points="18 3 8 18 15 18 14 29 24 14 17 14 18 3" /&gt;
+    &lt;/svg&gt;
+    &lt;span&gt;Boost&lt;/span&gt;
 &lt;/button&gt;</code></pre>
         </article>
 

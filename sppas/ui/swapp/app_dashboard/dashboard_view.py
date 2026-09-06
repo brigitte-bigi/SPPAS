@@ -77,10 +77,6 @@ BODY_SCRIPT = f"""
         const dashboardManager = new DashboardManager();
         dashboardManager.handleDashboardManagerOnLoad();
 
-        // The cards of the links are 'a' elements: the browser follows them,
-        // and goToLink() of Whakerexa carries the parameters over. Only the
-        // Journal button, which is a button with a data-href, is registered.
-        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------

@@ -69,7 +69,6 @@ MSG_CITATION = """
 MSG_HEADER = f"SPPAS {sg.__release__} » " + _("How to cite")
 
 BODY_SCRIPT = """
-        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------

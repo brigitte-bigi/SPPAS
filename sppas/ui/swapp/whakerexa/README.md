@@ -280,9 +280,14 @@ Version 3.0 introduces architectural changes in CSS and JavaScript. Previous CSS
 - New `KeyboardController` in `keyboard.js`, used by extra slides.
 - New page `docs/javascript.html`: the JavaScript API, and the conventions a module follows.
 - New page `docs/gallery.html`: an all-in-one page to demonstrate themes, accessibility and JS features.
+- New `AccessibilityNav` builds the bar of three buttons, and `NAV_WORDING` says what 
+  each one is called. 
+- New : Bring your own icons. Declare sets of them, the reader chooses, and what you do not draw is still shown.
 - New `wexa.loader.js`: one tag loads Whakerexa, the bundle on `file://` and the modules over HTTP.
-- Bring your own icons: declare sets of them, the reader chooses, and what you do not draw is still shown. 
-  See `docs/icons.html`.
+- Icons. Extended and cleaned icon set in mono-svg: the same grid of 32, the same stroke of 2, rounded 
+  caps and joins, and the color of the text it stands beside. Now 151 icons available.
+- Dialogs. New `--dialog-bg-color` and `--dialog-fg-color` variables.
 - Breaking change. `ThemeManager` moves to `js/customize/theme_manager.js`, and `SVGIconsManager` is removed: 
   `Wexa.icons` is now the manager of the sets, with the same `get()` and `inject()`.
-
+- Breaking change. The JavaScript API is camelCase throughout: `fillTable`, `addHtmlTags`, 
+  `deleteHtmlTags`, `sendPostRequest`, `sendGetRequest`, `requestUrl`.

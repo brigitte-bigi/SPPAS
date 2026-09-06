@@ -29,20 +29,17 @@
     <p>Whakerexa &gt; Getting started &gt; Colors</p>
 </header>
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8" />
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -178,6 +175,12 @@
                 <td></td>
             </tr>
             <tr>
+                <th scope="row">dialog-bg-color</th>
+                <td><code>var(--bg-color)</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
                 <th scope="row">selection-bg-color</th>
                 <td><code>rgb(174, 194, 255)</code></td>
                 <td><code>rgb(114, 114, 205)</code></td>
@@ -232,6 +235,12 @@
             <tr>
                 <th scope="row">mark-fg-color</th>
                 <td><code>rgb(20, 25, 30)</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">dialog-fg-color</th>
+                <td><code>var(--fg-color)</code></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -379,6 +388,18 @@
                 <td><code>rgb(80, 25, 40)</code></td>
                 <td></td>
                 <td><code>rgb(200, 180, 200)</code></td>
+            </tr>
+            <tr>
+                <th scope="row">blockquote-bg-color</th>
+                <td>unset &mdash; the quote keeps its gradient, from <code>--bg-color-alt</code> to <code>--bg-color</code>. Set it and the quote carries that one flat color instead.</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">blockquote-fg-color</th>
+                <td>unset &mdash; the quote inherits <code>--fg-color</code>, like the text around it.</td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <th scope="row">li-color</th>

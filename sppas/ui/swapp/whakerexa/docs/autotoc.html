@@ -43,20 +43,17 @@
     </header>
 
     <nav class="nav-wexa top" aria-label="Page navigation">
-        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                <polyline points="20 24 12 16 20 8"/>
-            </svg>
+        <a class="menuitem" id="btn-back" data-href="book.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
         </a>
         <button id="btn-css-theme" class="menuitem" type="button"
-                aria-label="Switch CSS theme" title="Switch CSS theme"
+                aria-label="Switch theme" title="Switch theme"
                 onclick="window.themes && window.themes.next()">
         </button>
         <button id="btn-contrast" class="menuitem accessibility"
-                aria-label="contrast" aria-pressed="false"
+                type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
                 onclick="Wexa.accessibility.switchContrastScheme()"></button>
         <button id="btn-color" class="menuitem accessibility"
-                aria-label="color" aria-pressed="false"
+                type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
                 onclick="Wexa.accessibility.switchColorScheme()"></button>
     </nav>
 
@@ -105,18 +102,18 @@
                 <article class="card-doc" aria-label="JavaScript — Book API">
                     <div class="card-view" style="flex-direction: column; align-items: flex-start; width: 100%;">
                         <p>Instantiate <code>Book</code> with the id of the content container,
-                            then call <code>fill_table()</code>.</p>
+                            then call <code>fillTable()</code>.</p>
                     </div>
                     <pre class="dark"><code>const book = new Book("main-content");
 
 // optionally adjust which headings are tracked:
-book.add_html_tags("h5", "h6");    // include h5, h6
-book.delete_html_tags("h4");       // exclude h4
+book.addHtmlTags("h5", "h6");    // include h5, h6
+book.deleteHtmlTags("h4");       // exclude h4
 
 // fill the ToC — numbered headings only (default):
-book.fill_table();
+book.fillTable();
 // or include all headings:
-book.fill_table(false);</code></pre>
+book.fillTable(false);</code></pre>
                 </article>
 
             </section>
@@ -168,7 +165,7 @@ book.fill_table(false);</code></pre>
 <script>
     function bootBookDemo(Book) {
         const book = new Book("main-content");
-        book.fill_table();
+        book.fillTable();
     }
 </script>
 

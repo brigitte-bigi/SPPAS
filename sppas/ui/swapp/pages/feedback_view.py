@@ -81,7 +81,6 @@ BODY_SCRIPT = f"""
         const feedbackManager = new FeedbackManager();
         feedbackManager.handleFeedbackManagerOnLoad();
 
-        window.Wexa.links.handleLinksWithParameters(['link-trace_button']);
 """
 
 # ---------------------------------------------------------------------------

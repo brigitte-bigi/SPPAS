@@ -149,6 +149,9 @@ nav#nav-content.nav-wexa.side {
 
 #nav-content [role='menuitem'],
 #nav-content .menuitem {
+    /* The size of a drawing is set by these two, never by an attribute. */
+    --icon-width: calc(var(--font-size) * 1.6);
+    --icon-height: calc(var(--font-size) * 1.6);
     color: var(--nav-fg-color);
     background: var(--nav-item-bg-color);
     border-radius: 0.5rem;
@@ -345,14 +348,14 @@ dialog {
     padding: 0;
     margin: 0;
     margin-bottom: 1rem;
+    /* The size of a drawing is given by these two, never by a height on the
+       svg: the icon manager writes both of them. */
+    --icon-width: calc(var(--action-height) * 1.5);
+    --icon-height: calc(var(--action-height) * 1.5);
 }
 
 .footer-button:hover {
     background-color: transparent;
-}
-
-.footer-button svg {
-    height: calc(var(--action-height) * 1.5);
 }
 
 #splash {
@@ -393,6 +396,8 @@ dialog {
 /* A card of the framework, except that this one is clicked, its content
    fills it up to its edges, and its border says where the link leads. */
 .link-button {
+    --icon-width: 80%;
+    --icon-height: auto;
     cursor: pointer;
     padding: 0;
     border: calc(var(--border-width)*1.5) solid var(--border-color);
@@ -407,14 +412,18 @@ dialog {
 
 /* The drawing is a block centred by its own margins: a width in percent
    and margins in length can't be centred by the inline flow. */
-.link-button-icon {
+/* The drawing the icon manager writes into the card: not an icon standing
+   beside a word, but the picture of the card. Its size is given by the two
+   variables, never by an attribute. */
+.link-button > img,
+.link-button > svg {
     display: block;
-    width: 80%;
     margin: var(--typography-spacing-vertical) auto;
     filter: brightness(0.9);
 }
 
-.dark .link-button-icon {
+.dark .link-button > img,
+.dark .link-button > svg {
     filter: brightness(1.4);
 }
 

@@ -399,80 +399,34 @@ export default class SlidesInitializer {
     /**
      * Build the accessibility controls nav element.
      *
-     * Includes the theme-switcher button only when data-themes is set,
-     * because ThemeManager is not loaded otherwise.
+     * The bar itself belongs to the framework: what it commands is the
+     * accessibility of a document, whatever the shape that document takes.
+     * The theme button is asked for only when data-themes is set, ThemeManager
+     * not being loaded otherwise.
      *
      * @async
      * @private
      * @returns {Promise<HTMLElement>}
      */
     async #buildAccessibilityNav() {
-        const nav = document.createElement('nav');
-        nav.id = 'accessibility-controls';
-        nav.className = 'nav-wexa controls-hidden';
-        nav.setAttribute('aria-label', 'Accessibility controls');
+        // The bundle holds the class in the namespace, and there is nothing to
+        // import: an import there would be given a null base and would raise.
+        const NavClass = (window.Wexa !== undefined && window.Wexa.AccessibilityNav)
+            ? window.Wexa.AccessibilityNav
+            : (await import(new URL('../../accessibility_nav.js', this.#base).href))
+                .AccessibilityNav;
 
-        nav.appendChild(await this.#buildIconButton(
-            'btn-color',
-            'menuitem accessibility',
-            'color',
-            'color',
-            () => {
-                if (window.Wexa !== null
-                        && window.Wexa !== undefined
-                        && window.Wexa.accessibility !== null
-                        && window.Wexa.accessibility !== undefined) {
-                    window.Wexa.accessibility.switchColorScheme();
-                }
-            },
-            { ariaPressed: 'false' }
-        ));
+        const bar = new NavClass({
+            theme: this.#themesAttr !== '',
+            contrast: true,
+            color: true
+        });
 
-        if (this.#themesAttr !== '') {
-            nav.appendChild(await this.#buildIconButton(
-                'btn-css-theme',
-                'menuitem',
-                'theme',
-                'Switch theme',
-                () => {
-                    if (window.themes !== null && window.themes !== undefined) {
-                        window.themes.next();
-                    }
-                },
-                { title: 'Switch theme' }
-            ));
-        }
-
-        return nav;
-    }
-
-    /**
-     * Build a nav icon button with an inline SVG.
-     *
-     * @async
-     * @private
-     * @param {string}   id        - Button element id.
-     * @param {string}   className - CSS class string.
-     * @param {string}   iconName  - Icon name passed to Wexa.icons.get().
-     * @param {string}   ariaLabel - Accessible label.
-     * @param {Function} onClick   - Click event handler.
-     * @param {Object}   [extras]  - Optional attributes: ariaPressed, title.
-     * @returns {Promise<HTMLButtonElement>}
-     */
-    async #buildIconButton(id, className, iconName, ariaLabel, onClick, extras = {}) {
-        const btn = document.createElement('button');
-        btn.id = id;
-        btn.className = className;
-        btn.setAttribute('aria-label', ariaLabel);
-        if (extras.ariaPressed !== undefined) {
-            btn.setAttribute('aria-pressed', extras.ariaPressed);
-        }
-        if (extras.title !== undefined) {
-            btn.title = extras.title;
-        }
-        btn.innerHTML = await window.Wexa.icons.get(iconName);
-        btn.addEventListener('click', onClick);
-        return btn;
+        return await bar.build({
+            id: 'accessibility-controls',
+            className: 'nav-wexa controls-hidden',
+            label: 'Accessibility controls'
+        });
     }
 
     /**

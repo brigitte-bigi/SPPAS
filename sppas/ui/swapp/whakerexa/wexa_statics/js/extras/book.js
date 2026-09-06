@@ -33,10 +33,10 @@
 'use strict';
 export class Book {
     // FIELDS
-    #toc_element;
-    #headings_container;
-    #html_tags;
-    #toggle_button;
+    #tocElement;
+    #headingsContainer;
+    #htmlTags;
+    #toggleButton;
 
 
     // CONSTRUCTOR
@@ -47,13 +47,13 @@ export class Book {
      * @param id_toc {string} Optional parameter, the id of the html nav of our table of contents
      */
     constructor(id_headings, id_toc = "toc") {
-        this.#toc_element = document.getElementById(id_toc);
-        this.#headings_container = document.getElementById(id_headings);
-        this.#html_tags = "h1, h2, h3, h4";
-        const container = this.#toc_element?.closest('nav, aside');
+        this.#tocElement = document.getElementById(id_toc);
+        this.#headingsContainer = document.getElementById(id_headings);
+        this.#htmlTags = "h1, h2, h3, h4";
+        const container = this.#tocElement?.closest('nav, aside');
         if (container instanceof HTMLElement) {
             if (container.classList.contains('book-toc-aside')) {
-                this.#setup_aside(container);
+                this.#setupAside(container);
             } else {
                 container.setAttribute('tabindex', '-1');
             }
@@ -67,8 +67,8 @@ export class Book {
      *
      * @returns {HTMLElement}
      */
-    get dom_toc() {
-        return this.#toc_element;
+    get domToc() {
+        return this.#tocElement;
     }
 
     /**
@@ -77,7 +77,7 @@ export class Book {
      * @returns {HTMLElement}
      */
     get headings() {
-        return this.#headings_container;
+        return this.#headingsContainer;
     }
 
     /**
@@ -85,8 +85,8 @@ export class Book {
      *
      * @returns {string} the html tags (format: <tag1>, <tag2>, ...)
      */
-    get html_tags() {
-        return this.#html_tags;
+    get htmlTags() {
+        return this.#htmlTags;
     }
 
 
@@ -96,8 +96,8 @@ export class Book {
      *
      * @param id_headings {string} The id of the html element
      */
-    set_headings(id_headings) {
-        this.#headings_container =  document.getElementById(id_headings);
+    setHeadings(id_headings) {
+        this.#headingsContainer =  document.getElementById(id_headings);
     }
 
     /**
@@ -106,9 +106,9 @@ export class Book {
      *
      * @param tags {string} (0, n) the html tags that the book has to detect
      */
-    add_html_tags(...tags) {
+    addHtmlTags(...tags) {
         tags.forEach(current => {
-            this.#html_tags += ", " + current
+            this.#htmlTags += ", " + current
         });
     }
 
@@ -117,9 +117,9 @@ export class Book {
      *
      * @param tags {string} (0, n) the html tags to delete
      */
-    delete_html_tags(...tags) {
+    deleteHtmlTags(...tags) {
         tags.forEach(current => {
-            this.#html_tags = this.#html_tags.replace(", " + current, "");
+            this.#htmlTags = this.#htmlTags.replace(", " + current, "");
         });
     }
 
@@ -129,9 +129,9 @@ export class Book {
      *
      * @param only_numerate_headings (bool) if we search only numerate headings or not, true by default.
      */
-    fill_table(only_numerate_headings = true) {
-        if (!(this.#toc_element instanceof HTMLElement)) return;
-        const headings = this.#get_headings(only_numerate_headings);
+    fillTable(only_numerate_headings = true) {
+        if (!(this.#tocElement instanceof HTMLElement)) return;
+        const headings = this.#getHeadings(only_numerate_headings);
 
         headings.forEach((heading, index) => {
             /* Add the anchor right before the heading */
@@ -145,10 +145,10 @@ export class Book {
             link.textContent = heading.textContent;
 
             let item = document.createElement('li');
-            item.setAttribute('class', this.#class_of(heading));
+            item.setAttribute('class', this.#classOf(heading));
 
             item.appendChild(link);
-            this.#toc_element.appendChild(item);
+            this.#tocElement.appendChild(item);
             heading.parentNode.insertBefore(anchor, heading);
         });
     }
@@ -167,7 +167,7 @@ export class Book {
      *
      * @returns {string} The classes of the entry.
      */
-    #class_of(heading) {
+    #classOf(heading) {
         const level = heading.tagName.toLowerCase();
 
         if (heading.closest('.chapter.nonumber') === null) {
@@ -182,7 +182,7 @@ export class Book {
      *
      * @param aside {HTMLElement} The aside.book-toc-aside element
      */
-    #setup_aside(aside) {
+    #setupAside(aside) {
         if (!aside.id) aside.id = 'book-toc-aside';
 
         // A panel that is set aside is out of reach: 'inert' says it once, for
@@ -193,20 +193,20 @@ export class Book {
         const titleEl = aside.querySelector('h1, h2');
         const label = titleEl?.textContent?.trim() || 'Table of contents';
 
-        this.#toggle_button = document.createElement('button');
-        this.#toggle_button.className = 'book-toc-toggle';
-        this.#toggle_button.setAttribute('aria-controls', aside.id);
-        this.#toggle_button.setAttribute('aria-expanded', 'false');
-        this.#toggle_button.setAttribute('aria-label', label);
-        this.#toggle_button.textContent = label;
-        this.#toggle_button.addEventListener('click', () => {
+        this.#toggleButton = document.createElement('button');
+        this.#toggleButton.className = 'book-toc-toggle';
+        this.#toggleButton.setAttribute('aria-controls', aside.id);
+        this.#toggleButton.setAttribute('aria-expanded', 'false');
+        this.#toggleButton.setAttribute('aria-label', label);
+        this.#toggleButton.textContent = label;
+        this.#toggleButton.addEventListener('click', () => {
             const isOpen = aside.classList.toggle('open');
-            this.#toggle_button.setAttribute('aria-expanded', String(isOpen));
+            this.#toggleButton.setAttribute('aria-expanded', String(isOpen));
             aside.inert = !isOpen;
             if (isOpen) {
                 aside.querySelector('a[href], button')?.focus();
             } else {
-                this.#toggle_button.focus();
+                this.#toggleButton.focus();
             }
         });
 
@@ -243,23 +243,23 @@ export class Book {
     #placeToggleButton() {
         const bar = document.querySelector('nav');
         if (bar !== null) {
-            bar.appendChild(this.#toggle_button);
+            bar.appendChild(this.#toggleButton);
             return;
         }
 
         const header = document.querySelector('header');
         if (header !== null) {
-            header.appendChild(this.#toggle_button);
+            header.appendChild(this.#toggleButton);
             return;
         }
 
         const main = document.querySelector('main');
         if (main !== null) {
-            main.prepend(this.#toggle_button);
+            main.prepend(this.#toggleButton);
             return;
         }
 
-        document.body.prepend(this.#toggle_button);
+        document.body.prepend(this.#toggleButton);
     }
 
     /**
@@ -269,9 +269,9 @@ export class Book {
      *
      * @returns {Array[HTMLElement]} the headings array
      */
-    #get_headings(only_numerate_headings) {
-        if (!(this.#headings_container instanceof HTMLElement)) return [];
-        const titles = Array.from(this.#headings_container.querySelectorAll(this.#html_tags));
+    #getHeadings(only_numerate_headings) {
+        if (!(this.#headingsContainer instanceof HTMLElement)) return [];
+        const titles = Array.from(this.#headingsContainer.querySelectorAll(this.#htmlTags));
         let headings = [];
 
         titles.forEach(current => {

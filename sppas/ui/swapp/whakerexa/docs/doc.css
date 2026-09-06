@@ -60,3 +60,17 @@ This banner notice must not be removed.
     background-color: var(--bg-color);
     border-left: calc(var(--border-width) * 2) solid var(--border-color);
 }
+
+
+/* The panel of every drawing the page can ask for: a cell is read as a whole,
+   the name under a drawing large enough to be told from its neighbour. */
+#icons-carried .wrap-item {
+    width: calc(var(--font-size) * 7);
+    text-align: center;
+}
+
+#icons-carried span[data-icon] {
+    --icon-width:  calc(var(--font-size) * 2.5);
+    --icon-height: calc(var(--font-size) * 2.5);
+    display: block;
+}

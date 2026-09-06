@@ -123,9 +123,9 @@ class SetupActionsNode(HTMLNode):
     # -----------------------------------------------------------------------
 
     def __create_button_svg(self, ident, text, svg_name):
-        _svg = sppasImagesAccess.get_wexa_svg_icon(svg_name)
         _button = HTMLNode(self.identifier, ident, "button",
-                           value=_svg + "<span>" + text + "</span>")
+                           value="<span>" + text + "</span>")
+        _button.set_attribute("data-icon", svg_name)
         _button.set_attribute("name", ident)
         _button.set_attribute("id", ident)
         return _button

@@ -118,6 +118,9 @@
     --card-bg-color: rgb(240, 236, 255);
     --card-fg-color: rgb(28, 18, 60);
 
+    --dialog-bg-color: rgb(238, 235, 246);
+    --dialog-fg-color: rgb(44, 35, 74);
+
 }
 
 
@@ -177,6 +180,9 @@
         /* What is written on a violet ground is written in cream. */
         --card-bg-color: rgb(30, 0, 70);
         --card-fg-color: rgb(240, 230, 210);
+
+        --dialog-bg-color: rgb(31, 28, 46);
+        --dialog-fg-color: rgb(212, 206, 223);
 
         /* The titles walk from the cream of the frames down to the plum of the
            accents, which is what ties the two axes together. */

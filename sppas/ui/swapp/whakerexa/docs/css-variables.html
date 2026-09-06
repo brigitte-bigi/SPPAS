@@ -29,20 +29,17 @@
     <p>Whakerexa &gt; Getting started &gt; CSS Variables</p>
 </header>
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8" />
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -167,9 +164,10 @@
             <tr><td>accents</td><td><code>--a-color</code>, <code>--li-color</code></td></tr>
             <tr><td>borders</td><td><code>--border-color</code>, <code>--border-color-alt</code></td></tr>
             <tr><td>headings</td><td><code>--h1-color</code> to <code>--h6-color</code></td></tr>
-            <tr><td>blockquote</td><td><code>--blockquote-border-color</code>, <code>--blockquote-footer-color</code></td></tr>
+            <tr><td>blockquote</td><td><code>--blockquote-border-color</code>, <code>--blockquote-footer-color</code>, <code>--blockquote-bg-color</code>, <code>--blockquote-fg-color</code></td></tr>
             <tr><td>table</td><td><code>--table-border-color</code>, <code>--table-cell-bg-color</code>, <code>--table-row-stripped-bg-color</code>, <code>--table-head-bg-color</code>, <code>--table-head-fg-color</code>, <code>--table-caption-bg-color</code>, <code>--table-caption-fg-color</code></td></tr>
             <tr><td>card</td><td><code>--card-bg-color</code>, <code>--card-fg-color</code></td></tr>
+            <tr><td>dialog</td><td><code>--dialog-bg-color</code>, <code>--dialog-fg-color</code></td></tr>
             <tr><td>progress</td><td><code>--progress-bg-color</code>, <code>--progress-fg-color</code></td></tr>
             <tr><td>mark</td><td><code>--mark-bg-color</code>, <code>--mark-fg-color</code></td></tr>
             <tr><td>switch</td><td><code>--switch-bg-color</code>, <code>--switch-slider-on-color</code>, <code>--switch-slider-off-color</code></td></tr>

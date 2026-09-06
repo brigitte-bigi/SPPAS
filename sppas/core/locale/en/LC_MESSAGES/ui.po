@@ -293,6 +293,9 @@ msgstr "Display the name of the file"
 msgid "Dashboard"
 msgstr ""
 
+msgid "Stops SPPAS and saves its settings."
+msgstr ""
+
 msgid "Theme"
 msgstr ""
 

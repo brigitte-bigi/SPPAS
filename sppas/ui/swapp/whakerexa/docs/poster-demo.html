@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <title>A poster • Whakerexa</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="web, css, html5, framework, accessibility, disability, poster"/>
+
+    <link rel="icon" href="../wexa_statics/icons/whakerexa.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../wexa_statics/css/wexa.css" type="text/css" media="all" />
+    <link rel="stylesheet" id="wexa-theme" href="../wexa_statics/css/themes/wexa_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../wexa_statics/css/layout.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/menu.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../wexa_statics/css/extras/poster.css" type="text/css" media="all" />
+
+</head>
+
+<body class="poster-canvas">
+
+<header>
+    <h1>What a document owes to whoever reads it</h1>
+    <p>Brigitte Bigi</p>
+    <p>Laboratoire Parole et Langage, CNRS &amp; Aix-Marseille Université</p>
+</header>
+
+<main class="grid-panel poster-columns">
+
+    <div class="grid-item">
+
+        <section class="card">
+            <h2 class="card-header">The question</h2>
+            <div class="card-body">
+                <p>A page is read on a screen that is not the one it was drawn on, at a
+                    size its author did not choose, by someone who may not see it at
+                    all. What does it owe them?</p>
+                <p class="poster-ribbon">Nothing is asked of the internet.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="card-header">What is measured</h2>
+            <div class="card-body">
+                <table>
+                    <caption>Weight of a page, in kilobytes</caption>
+                    <thead>
+                    <tr><th>What is loaded</th><th>Before</th><th>After</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr><td>Stylesheets</td><td>313</td><td>171</td></tr>
+                    <tr><td>Fonts</td><td>420</td><td>0</td></tr>
+                    <tr><td>Icons, of fifty</td><td>50</td><td>5</td></tr>
+                    </tbody>
+                </table>
+                <p class="poster-table-note">Measured on a page of eight screens, served
+                    over HTTP.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="grid-item">
+
+        <section class="card">
+            <h2 class="card-header">What is done</h2>
+            <div class="card-body">
+                <ul>
+                    <li>An icon is loaded when it comes into view, and not before.</li>
+                    <li>A page downloads only the character blocks it shows.</li>
+                    <li>What is drawn as a line takes the colour of the text around it.</li>
+                </ul>
+                <aside class="poster-note">A drawing that is never seen is never sent.</aside>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="card-header">What is read aloud</h2>
+            <div class="card-body">
+                <p>What an icon stands for is written on what holds it. A ground stands
+                    for nothing, and is never announced.</p>
+                <p>Every colour pair is measured: nothing is shown that cannot be
+                    read.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="grid-item">
+
+        <section class="card">
+            <h2 class="card-header">Read anywhere</h2>
+            <div class="card-body">
+                <p>The same document opens from a disk, with no server and no network:
+                    what it will need is gathered into it beforehand.</p>
+                <p>It prints as it reads.</p>
+            </div>
+        </section>
+
+        <section class="card poster-card">
+            <h2 class="card-header">In one line</h2>
+            <div class="card-body">
+                <p>A page that respects its reader weighs less, says more, and asks
+                    nothing.</p>
+            </div>
+        </section>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>Whakerexa — <a href="https://github.com/brigitte-bigi/Whakerexa" class="external-link">github.com/brigitte-bigi/Whakerexa</a></p>
+    <p>This poster is one HTML page. Print it to PDF at the size of your choice.</p>
+</footer>
+
+<script>
+    /* The three accessibility buttons, out of sight until the "a" key
+       is pressed. Each of them is asked for on its own: a poster whose
+       theme is chosen by whoever wrote it says theme: false. */
+    window.bootPage = function (wexa) {
+        const poster = new wexa.Poster({theme: true, contrast: true, color: true});
+        poster.init();
+    };
+</script>
+
+<script src="../wexa_statics/js/wexa.loader.js"
+        data-base="../wexa_statics/"
+        data-extras="js/extras/poster.js"></script>
+
+</body>
+</html>

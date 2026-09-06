@@ -36,20 +36,17 @@
 </header>
 
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8"/>
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -116,6 +113,20 @@
             </div>
             <pre class="dark"><code>&lt;button type="button" data-icon="nothing-like-a-name"&gt;…&lt;/button&gt;</code></pre>
         </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
+
+        <h2>The drawings of the framework</h2>
+
+        <p>The reference set, the one a name falls back to when no other carries it.
+            The page writes this panel itself, from <code>Wexa.icons.carried()</code>:
+            it says what the set carries when the page is read, and not what it carried
+            when this documentation was written.</p>
+
+        <div class="wrap-panel" id="icons-carried"></div>
 
     </section>
 
@@ -225,7 +236,7 @@
             alone. What the icon stands for is said by that element, and the drawing is
             put inside it:</p>
 
-        <pre class="dark"><code>&lt;button type="button" data-icon="home" aria-label="Home"&gt;&lt;/button&gt;
+        <pre class="dark"><code>&lt;button type="button" data-icon="house" aria-label="Home"&gt;&lt;/button&gt;
 
 &lt;a href="index.html" data-icon="back"&gt;Back to the index&lt;/a&gt;</code></pre>
 
@@ -354,6 +365,47 @@
         This document is under the terms of the GNU Free Documentation License, v1.3.</a>
     </p>
 </footer>
+
+<script>
+    /**
+     * Lay out the drawings this page can ask for, one cell per name.
+     *
+     * The cells are written after the framework has answered the page, so the
+     * panel is handed to it once it is filled.
+     *
+     * @param {Object} wexa - The framework the loader was asked for.
+     * @returns {void}
+     */
+    function bootPage(wexa) {
+        const panel = document.getElementById("icons-carried");
+        if (panel === null) {
+            return;
+        }
+
+        // The sets, the reference one last: this page declares grounds of its
+        // own, and it is the drawings of the framework that are laid out here.
+        const declared = wexa.icons.names();
+        const reference = declared[declared.length - 1];
+
+        for (const name of wexa.icons.carried(reference)) {
+            const cell = document.createElement("figure");
+            cell.className = "wrap-item";
+
+            const drawing = document.createElement("span");
+            drawing.setAttribute("data-icon", name);
+            drawing.setAttribute("aria-hidden", "true");
+
+            const label = document.createElement("figcaption");
+            label.textContent = name;
+
+            cell.appendChild(drawing);
+            cell.appendChild(label);
+            panel.appendChild(cell);
+        }
+
+        wexa.icons.run(panel);
+    }
+</script>
 
 <script src="../wexa_statics/js/wexa.loader.js"
         data-base="../wexa_statics/"

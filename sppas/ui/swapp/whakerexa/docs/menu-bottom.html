@@ -69,24 +69,19 @@
 
     <!-- Compact top bar for accessibility controls + submenu toggle -->
     <nav class="nav-wexa top mini-top" aria-label="Accessibility navigation">
-        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" aria-hidden="true">
-                <polyline points="20 24 12 16 20 8"/>
-            </svg>
+        <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
             <span>Back</span>
         </a>
         <button id="btn-contrast" class="menuitem accessibility print-off"
-                aria-pressed="false" aria-label="Switch contrast scheme"
+                type="button" aria-pressed="false" aria-label="Switch contrast" title="Switch contrast"
                 onclick="Wexa.accessibility.switchContrastScheme()">
         </button>
         <button id="btn-color" class="menuitem accessibility print-off"
-                aria-pressed="false" aria-label="Switch color scheme"
+                type="button" aria-pressed="false" aria-label="Switch light and dark" title="Switch light and dark"
                 onclick="Wexa.accessibility.switchColorScheme()">
         </button>
         <button id="btn-css-theme" class="menuitem" type="button"
-                aria-label="Switch CSS theme" title="Switch CSS theme"
+                aria-label="Switch theme" title="Switch theme"
                 onclick="window.themes && window.themes.next()">
             <span>Theme</span>
         </button>
@@ -112,37 +107,15 @@
 
     <button id="submenu-toggle-menu" class="menuitem"
             aria-haspopup="true" aria-controls="appmenu-menu"
-            aria-label="Main menu">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" aria-hidden="true">
-            <line x1="3" y1="6"  x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
+            aria-label="Main menu" data-icon="menu">
         <span>Menu</span>
     </button>
 
-    <button class="menuitem" aria-label="Applications">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="4" y="4" width="6" height="6" rx="1"/>
-            <rect x="14" y="4" width="6" height="6" rx="1"/>
-            <rect x="4" y="14" width="6" height="6" rx="1"/>
-            <rect x="14" y="14" width="6" height="6" rx="1"/>
-        </svg>
+    <button class="menuitem" aria-label="Applications" data-icon="grid-view">
         <span>Apps</span>
     </button>
 
-    <button class="menuitem" aria-label="Help">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4"/>
-            <circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>
-        </svg>
+    <button class="menuitem" aria-label="Help" data-icon="help">
         <span>Help</span>
     </button>
 

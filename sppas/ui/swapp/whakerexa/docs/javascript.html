@@ -29,20 +29,17 @@
     <p>Whakerexa &gt; Getting started &gt; JavaScript</p>
 </header>
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8" />
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -136,8 +133,8 @@
             </tr>
             <tr>
                 <td><code>Wexa.icons</code></td>
-                <td><code>SVGIconsManager</code></td>
-                <td>The monochrome SVG icons, fetched once and cached.</td>
+                <td><code>IconManager</code></td>
+                <td>The sets of icons, the one in force, and the drawing a name is answered with.</td>
             </tr>
             <tr>
                 <td><code>Wexa.accessibility</code></td>
@@ -188,6 +185,11 @@ Wexa.logger.info('Page ready.');</code></pre>
                 <td><code>ToggleSelector</code></td>
                 <td>A group of checkboxes with a button that checks or clears them.</td>
                 <td><a id="nav-switch" data-href="switch.html" data-target="_self">Switch</a></td>
+            </tr>
+            <tr>
+                <td><code>AccessibilityNav</code></td>
+                <td>The bar that switches the theme, the contrast and the color mode.</td>
+                <td><a id="nav-accessibility-nav" data-href="accessibility.html" data-target="_self">Accessibility</a></td>
             </tr>
             <tr>
                 <td><code>KeyboardController</code></td>

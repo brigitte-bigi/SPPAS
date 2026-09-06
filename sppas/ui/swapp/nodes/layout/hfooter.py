@@ -88,8 +88,8 @@ class SwappFooter(HTMLFooterNode):
         """Append the scroll button.
 
         """
-        svg_scroll = sppasImagesAccess.get_wexa_svg_icon("scrolltop")
-        back_top = HTMLNode(self.identifier, None, "a", value=svg_scroll)
+        back_top = HTMLNode(self.identifier, None, "a")
+        back_top.add_attribute("data-icon", "scrolltop")
         back_top.add_attribute("href", "#header-content")
         back_top.add_attribute("role", "button")
         back_top.add_attribute("class", "footer-button")

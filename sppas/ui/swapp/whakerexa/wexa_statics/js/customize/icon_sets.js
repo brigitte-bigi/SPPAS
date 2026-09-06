@@ -155,6 +155,42 @@ export class IconSets {
     // -----------------------------------------------------------------------
 
     /**
+     * Say the names a document shows under a set.
+     *
+     * The same chain as setFor(), walked whole instead of being asked one
+     * name: what the set in force carries, then what the set answering for
+     * the others adds to it, then what the reference set adds to both. A name
+     * carried twice is said once, by the first set of the chain that carries
+     * it.
+     *
+     * @param {string} inForce - The name of the set the document is shown with.
+     * @returns {string[]} The names, in the order the chain gives them.
+     */
+    namesFor(inForce) {
+        const names = [];
+        const chain = [
+            this.#declared.get(inForce),
+            this.#declared.get(this.#fallback),
+            this.#reference
+        ];
+
+        for (const set of chain) {
+            if (set === undefined || set === null) {
+                continue;
+            }
+            for (const name of set.names) {
+                if (names.includes(name) === false) {
+                    names.push(name);
+                }
+            }
+        }
+
+        return names;
+    }
+
+    // -----------------------------------------------------------------------
+
+    /**
      * Say the names of the sets, the reference one last.
      *
      * @returns {string[]} The names, in the order they were declared.

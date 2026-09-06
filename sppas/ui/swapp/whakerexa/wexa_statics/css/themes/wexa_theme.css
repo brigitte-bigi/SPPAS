@@ -64,6 +64,12 @@
     --card-bg-color: rgb(250, 251, 254);
     --card-fg-color: rgb(18, 22, 38);
 
+    /* A dialog is raised above the page: its ground is the pale one of the
+       theme, a shade below the card laid flat on it, and its text a shade
+       above the one of the page. */
+    --dialog-bg-color: rgb(233, 235, 242);
+    --dialog-fg-color: rgb(35, 38, 53);
+
     /* The two accents of the text. */
     --a-color:  rgb(8, 92, 148);
     --li-color: rgb(50, 121, 142);
@@ -121,6 +127,9 @@
 
     --card-bg-color: rgb(26, 36, 54);
     --card-fg-color: rgb(244, 236, 220);
+
+    --dialog-bg-color: rgb(22, 34, 54);
+    --dialog-fg-color: rgb(229, 221, 206);
 
     /* A link is read: on this ground the blue of the framework holds 6.5:1,
        which is above what a text asks for and below what is comfortable.

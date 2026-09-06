@@ -29,20 +29,17 @@
     <p>Whakerexa &gt; Getting started &gt; Accessibility</p>
 </header>
 <nav class="nav-wexa top" aria-label="Page navigation">
-    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <polyline points="20 24 12 16 20 8" />
-        </svg>
+    <a class="menuitem" id="btn-back" data-href="../index.html" data-target="_self" aria-label="Back" title="Back" data-icon="chevron-left">
     </a>
     <button id="btn-css-theme" class="menuitem" type="button"
-            aria-label="Switch CSS theme" title="Switch CSS theme"
+            aria-label="Switch theme" title="Switch theme"
             onclick="window.themes && window.themes.next()">
     </button>
     <button id="btn-contrast" class="menuitem accessibility"
-            aria-label="contrast" aria-pressed="false"
+            type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
             onclick="Wexa.accessibility.switchContrastScheme()"></button>
     <button id="btn-color" class="menuitem accessibility"
-            aria-label="color" aria-pressed="false"
+            type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
             onclick="Wexa.accessibility.switchColorScheme()"></button>
 </nav>
 
@@ -86,16 +83,8 @@
         <article class="card-doc" aria-label="Light / Dark mode demo">
             <div class="card-view" style="flex-direction: column; align-items: center; gap: 0.5rem;">
                 <button id="btn-color-demo" class="menuitem accessibility"
-                        aria-label="Switch color scheme" aria-pressed="false"
-                        onclick="Wexa.accessibility.switchColorScheme()">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-                         fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="16" cy="16" r="13"/>
-                        <clipPath id="cut-color">
-                            <polygon points="0,32 32,0 32,32"/>
-                        </clipPath>
-                        <circle cx="16" cy="16" r="13" fill="currentColor" clip-path="url(#cut-color)" stroke="none"/>
-                    </svg>
+                        type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
+                        onclick="Wexa.accessibility.switchColorScheme()" data-icon="color">
                 </button>
                 <p><strong>Light / Dark mode</strong></p>
                 <p>
@@ -105,21 +94,15 @@
                 </p>
             </div>
             <pre class="dark"><code>&lt;button id="btn-color" class="menuitem accessibility"
-        aria-label="Switch color scheme" aria-pressed="false"
+        type="button" aria-label="Switch light and dark" title="Switch light and dark" aria-pressed="false"
         onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;</code></pre>
         </article>
 
         <article class="card-doc" aria-label="High contrast mode demo">
             <div class="card-view" style="flex-direction: column; align-items: center; gap: 0.5rem;">
                 <button id="btn-contrast-demo" class="menuitem accessibility"
-                        aria-label="Switch contrast scheme" aria-pressed="false"
-                        onclick="Wexa.accessibility.switchContrastScheme()">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-                         fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" aria-hidden="true">
-                        <path d="M2 16s4-8 14-8 14 8 14 8-4 8-14 8S2 16 2 16z"/>
-                        <circle cx="16" cy="16" r="5" fill="currentColor" stroke="none"/>
-                    </svg>
+                        type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
+                        onclick="Wexa.accessibility.switchContrastScheme()" data-icon="contrast">
                 </button>
                 <p><strong>High contrast mode</strong></p>
                 <p>
@@ -130,7 +113,7 @@
                 </p>
             </div>
             <pre class="dark"><code>&lt;button id="btn-contrast" class="menuitem accessibility"
-        aria-label="Switch contrast scheme" aria-pressed="false"
+        type="button" aria-label="Switch contrast" title="Switch contrast" aria-pressed="false"
         onclick="Wexa.accessibility.switchContrastScheme()"&gt;&lt;/button&gt;</code></pre>
         </article>
 
@@ -204,13 +187,55 @@
                 </p>
             </div>
             <pre class="dark"><code>&lt;button id="btn-contrast" class="menuitem accessibility"
-        aria-pressed="false" aria-label="Switch contrast scheme"
+        type="button" aria-pressed="false" aria-label="Switch contrast" title="Switch contrast"
         onclick="Wexa.accessibility.switchContrastScheme()"&gt;&lt;/button&gt;
 
 &lt;button id="btn-color" class="menuitem accessibility"
-        aria-pressed="false" aria-label="Switch color scheme"
+        type="button" aria-pressed="false" aria-label="Switch light and dark" title="Switch light and dark"
         onclick="Wexa.accessibility.switchColorScheme()"&gt;&lt;/button&gt;</code></pre>
         </article>
+
+        <h2>The bar, written by the framework</h2>
+
+        <p>
+            A page that does not want to write the three buttons itself asks
+            <code>AccessibilityNav</code> for them. It builds a <code>nav</code> holding the
+            theme, the contrast and the color mode &mdash; and only those a document says it
+            offers: a document with a single theme has nothing to cycle, and says so.
+        </p>
+
+        <article class="card-doc" aria-label="AccessibilityNav — the bar it builds">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>The bar is built, then added where it belongs. The buttons carry the
+                    identifiers the framework answers to, so what is written by hand and what
+                    is built here behave the same.</p>
+            </div>
+            <pre class="dark"><code>const bar = new Wexa.AccessibilityNav({ theme: true, contrast: true, color: true });
+document.getElementById('header-nav-content').appendChild(await bar.build());</code></pre>
+        </article>
+
+        <article class="card-doc" aria-label="AccessibilityNav — the wording it proposes">
+            <div class="card-view" style="flex-direction: column; align-items: flex-start;">
+                <p>
+                    The wording is proposed, never imposed. <code>NAV_WORDING</code> carries what
+                    a button is called when the page says nothing &mdash; <em>Switch theme</em>,
+                    <em>Switch contrast</em>, <em>Switch light and dark</em>, each one written as
+                    the label and as the title. A page names the ones it wants to name, in its own
+                    language, and what it leaves out keeps the proposal.
+                </p>
+            </div>
+            <pre class="dark"><code>await bar.build({
+    wording: {
+        contrast: { label: 'Contraste élevé', title: 'Contraste élevé' },
+        color:    { label: 'Clair ou sombre', title: 'Clair ou sombre' }
+    }
+});</code></pre>
+        </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="panel-item">
 
         <h2>Keyboard shortcuts, without stealing the letters</h2>
 
@@ -294,30 +319,6 @@ keyboard.init();</code></pre>
     </p>
 </footer>
 
-<script>
-    (function () {
-        function injectIcons() {
-            if (!window.Wexa || !window.Wexa.icons) {
-                return false;
-            }
-            Wexa.icons.injectIcon(document.getElementById('btn-color-demo'),    'color');
-            Wexa.icons.injectIcon(document.getElementById('btn-contrast-demo'), 'contrast');
-            return true;
-        }
-        function start() {
-            const t = setInterval(function () {
-                if (injectIcons()) {
-                    clearInterval(t);
-                }
-            }, 20);
-        }
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', start, { once: true });
-        } else {
-            start();
-        }
-    })();
-</script>
 
 <script src="../wexa_statics/js/wexa.loader.js"
         data-base="../wexa_statics/"

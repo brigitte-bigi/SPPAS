@@ -11,20 +11,18 @@
     Copyright (C) 2026 Brigitte Bigi
     Laboratoire Parole et Langage, Aix-en-Provence, France
 
-    Use of this software is governed by the GNU Public License, version 3.
-
-    Whakerexa is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Whakerexa is distributed in the hope that it will be useful,
+    This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with Whakerexa. If not, see <https://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
     This banner notice must not be removed.
 
@@ -83,7 +81,7 @@ book_tests.add_test(() => {
             </section>
         </section>`);
 
-    new Book('levels-content', 'levels-toc').fill_table(false);
+    new Book('levels-content', 'levels-toc').fillTable(false);
     const items = written.list.querySelectorAll('li');
 
     UnitTest.assert_values_equals('h1', items[0].getAttribute('class'), "book_entry_h1_test");
@@ -105,7 +103,7 @@ book_tests.add_test(() => {
             <section class="ssection"><h2>A section of the foreword</h2></section>
         </section>`);
 
-    new Book('nonumber-content', 'nonumber-toc').fill_table(false);
+    new Book('nonumber-content', 'nonumber-toc').fillTable(false);
     const items = written.list.querySelectorAll('li');
 
     UnitTest.assert_values_equals('h1', items[0].getAttribute('class'), "book_numbered_entry_test");
@@ -125,7 +123,7 @@ book_tests.add_test(() => {
 book_tests.add_test(() => {
     const written = write_book('text', '<section class="chapter"><h1>A chapter</h1></section>');
 
-    new Book('text-content', 'text-toc').fill_table(false);
+    new Book('text-content', 'text-toc').fillTable(false);
 
     UnitTest.assert_values_equals('A chapter', written.entries()[0], "book_entry_text_test");
 
@@ -139,7 +137,7 @@ book_tests.add_test(() => {
 book_tests.add_test(() => {
     const written = write_book('links', '<section class="chapter"><h1>A chapter</h1></section>');
 
-    new Book('links-content', 'links-toc').fill_table(false);
+    new Book('links-content', 'links-toc').fillTable(false);
     const link = written.list.querySelector('a');
 
     UnitTest.assert_values_equals('#toc0', link.getAttribute('href'), "book_link_target_test");

@@ -651,6 +651,7 @@ This banner notice must not be removed.
         --progress-bg-color: rgb(183, 184, 209);
         --mark-bg-color: rgba(255, 250, 100, 0.5);
         --inputs-bg-color: rgb(255, 255, 255);
+        --dialog-bg-color: var(--bg-color);
         --code-bg-color: rgba(200, 195, 255, 0.35);
 
         /* Foreground colors */
@@ -666,6 +667,7 @@ This banner notice must not be removed.
         --h4-color: rgb(42, 55, 95);
         --h5-color: rgb(55, 75, 118);
         --h6-color: rgb(60, 80, 125);
+        --dialog-fg-color: var(--fg-color);
         --dialog-icon-color: rgb(255, 255, 255);
 
         /* Table colors */
@@ -1376,8 +1378,9 @@ This banner notice must not be removed.
         margin-bottom: calc(1.5*var(--typography-spacing-vertical));
         margin-left: calc(2*var(--typography-spacing-horizontal));
         margin-right: calc(2*var(--typography-spacing-horizontal));
-        border: var(--border-color) solid var(--blockquote-border-width);
+        border: var(--blockquote-border-color, var(--border-color)) solid var(--blockquote-border-width);
         border-radius: var(--border-radius);
+        color: var(--blockquote-fg-color, inherit);
     }
 
     blockquote > cite {
@@ -2076,6 +2079,8 @@ This banner notice must not be removed.
 
 
     dialog {
+        background-color: var(--dialog-bg-color);
+        color: var(--dialog-fg-color);
         padding-left: var(--typography-spacing-horizontal);
         padding-right: var(--typography-spacing-horizontal);
         padding-top: var(--typography-spacing-vertical);
@@ -2238,7 +2243,13 @@ This banner notice must not be removed.
     /* ── Blockquote ────────────────────────────────────────────────────── */
 
     blockquote {
-        background-image: linear-gradient(to right, var(--bg-color-alt), var(--bg-color));
+        /* Both stops read the same variable: set --blockquote-bg-color and
+           the two ends match, so the quote carries one flat colour; leave
+           it unset and each stop falls back to its own end of the original
+           --bg-color-alt to --bg-color gradient. */
+        background-image: linear-gradient(to right,
+            var(--blockquote-bg-color, var(--bg-color-alt)),
+            var(--blockquote-bg-color, var(--bg-color)));
     }
 
     /* ── Buttons / interactive elements ───────────────────────────────── */

@@ -147,7 +147,7 @@ export class BibtexSource {
         }
 
         const manager = new RequestManager();
-        const answer = await manager.send_get_request(wanted.pathname.substring(1) + wanted.search);
+        const answer = await manager.sendGetRequest(wanted.pathname.substring(1) + wanted.search);
 
         if (manager.status !== 200) {
             console.error(`BibtexSource: "${this.#address}" answered ${manager.status}.`);

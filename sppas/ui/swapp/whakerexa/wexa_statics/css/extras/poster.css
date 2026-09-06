@@ -1,0 +1,411 @@
+/*
+:filename: wexa_statics/css/extras/poster.css
+:author: Brigitte Bigi
+:contact: contact@sppas.org
+:summary: Poster stylesheet for Whakerexa — a single, fixed-size printable
+          canvas, as opposed to the paginated multi-page flow that
+          print.css produces from a normal document, and as opposed to the
+          interactive, viewport-responsive "slides" extras.
+
+-------------------------------------------------------------------------
+
+This file is part of Whakerexa: https://github.com/brigitte-bigi/Whakerexa
+
+Copyright (C) 2023-2026 Brigitte Bigi, CNRS
+Laboratoire Parole et Langage, Aix-en-Provence, France
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This banner notice must not be removed.
+
+-------------------------------------------------------------------------
+
+Load AFTER wexa.css (and layout.css, if its flex-panel / width_ / card
+utilities are wanted too), and BEFORE a theme and the page's own stylesheet:
+
+  <link rel="stylesheet" href="wexa_statics/css/wexa.css">
+  <link rel="stylesheet" href="wexa_statics/css/layout.css">
+  <link rel="stylesheet" href="wexa_statics/css/extras/poster.css">
+  <link rel="stylesheet" href="your_theme.css">          (colors only)
+  <link rel="stylesheet" href="your_poster_page.css">    (this poster's own rules)
+
+Markup — the canvas is the body itself:
+
+  <body class="poster-canvas">
+      <header>…</header>
+      <main>…</main>
+      <footer>…</footer>
+  </body>
+
+Every measurement this file draws with is declared once, as a variable, in
+the first :root block below, and read by the rules that follow. A page
+tunes a poster by redefining those variables in its own stylesheet, never
+by overriding a rule written here.
+
+This file carries no color of its own: ribbons, cards and the page ground
+read the same --header-bg-color / --bg-color / --bg-color-alt / --border-*
+variables as the rest of Whakerexa, so whichever theme is loaded (a
+<link>, not the ThemeManager — a poster does not switch themes at
+runtime) decides the palette.
+
+PRINTING NOTE — @page is unreliable across browsers:
+Chromium honors the @page size below when printing or exporting to PDF.
+Firefox ignores @page entirely (confirmed — the same limitation already
+noted in print.css). Someone printing from Firefox must pick the paper
+size by hand in the print dialog (match --poster-width / --poster-height),
+or export from a Chromium-based browser instead. The result being vector
+PDF, one canvas prints at any paper size: a poster laid out here at A0
+prints at A1 or A3 from the print dialog alone, with nothing to change in
+the page — which is why this file offers one format and no preset list.
+*/
+
+/* =========================================================================
+   The poster's measurements. This block is the whole tuning surface of the
+   file: a page redefines what it needs, and every rule below follows.
+   ========================================================================= */
+
+:root {
+    /* Canvas — A0 portrait. A page sets these two for any other format,
+       landscape included. */
+    --poster-width:  841mm;
+    --poster-height: 1189mm;
+
+    /* Margins of the canvas, as a padding shorthand: top, inline, bottom.
+       The foot is tighter than the head, a poster being read from above. */
+    --poster-padding: 8mm 22mm 5mm;
+
+    /* Vertical rhythm. The two bands are spaced on their own: a header of
+       title, authors and logos does not call for the same air under it as
+       a footer of references calls for above it. --poster-card-gap
+       separates two cards, and sets how far a ribbon stands from what
+       follows it. */
+    --poster-header-gap: 10mm;
+    --poster-footer-gap: 10mm;
+    --poster-card-gap: 10mm;
+
+    /* Inside a card: the ground its content stands on, and the air under
+       its title band. --poster-card-padding feeds layout.css's own
+       --card-padding, which that file uses for the card's padding AND for
+       the header band's bleed, so one number keeps the two in step. */
+    --poster-card-padding: 7mm;
+    --poster-card-header-gap: 5mm;
+
+    /* Figures, and the caption line under a figure, a note or a table. */
+    --poster-figure-gap: 3mm;
+    --poster-caption-gap: 1.5mm;
+
+    /* Type scale, as ratios of --font-size. */
+    --poster-title-scale: 1.18;
+    --poster-caption-scale: 0.78;
+    --poster-note-scale: 0.74;
+    --poster-table-note-scale: 0.65;
+
+    /* Corners. layout.css and the themes state radii in px, read against a
+       12-18pt screen or A4 type; at a poster's size they collapse to a
+       barely visible bevel. */
+    --poster-border-radius: 5mm;
+}
+
+@page {
+    size: var(--poster-width) var(--poster-height);
+    margin: 0;
+}
+
+/* =========================================================================
+   Base reset — a poster is one static canvas, not the responsive app
+   shell wexa.css builds (viewport-driven --size-divisor, a centered
+   reading column, body>header/body>footer as 40vh/20vh app bands…).
+   Unlayered, like print.css, so it outranks wexa.css's @layer rules
+   regardless of link order.
+   ========================================================================= */
+
+:root {
+    --font-size: 28pt;
+    --line-height: 1.3;
+    /* wexa.css uses this pair for margins below headings/lists/paragraphs
+       and for blockquote padding, at a 1.2 / 0.8 ratio to --font-size —
+       tuned for a screen or an A4 page, where --font-size is 12-18pt. On
+       a poster --font-size is inflated for legibility at a distance;
+       keeping that same ratio would compound into oversized gaps between
+       every single list and paragraph. A smaller ratio keeps spacing
+       proportionate instead of scaling 1:1 with the bigger type. */
+    --typography-spacing-vertical: calc(0.5 * var(--font-size));
+    --typography-spacing-horizontal: calc(0.6 * var(--font-size));
+    /* wexa.css scales headings and spacing by --size-divisor, a value its
+       own @media queries set from the *viewport* width (down to 0.8 on a
+       wide screen). A poster's canvas is wide by nature without being a
+       "wide screen" a reader sits close to: pin it to 1 so h1..h6 and
+       spacing scale from --font-size alone, like print.css already does
+       for the same reason. */
+    --size-divisor: 1;
+
+    /* The two radii Whakerexa draws with, both taken from the poster's. */
+    --card-border-radius: var(--poster-border-radius);
+    --border-radius: var(--poster-border-radius);
+}
+
+html, body {
+    width: var(--poster-width);
+    height: var(--poster-height);
+    margin: 0;
+    max-width: none;
+    overflow: visible;
+    background: var(--body-bg-color, rgb(255, 255, 255));
+}
+
+body {
+    background: var(--bg-color);
+}
+
+body > header, body > footer {
+    min-height: 0;
+    max-width: none;
+    animation: none;
+    /* wexa.css pads the two bands apart from the content they sit against
+       (header padding-bottom, footer padding-top, both
+       --typography-spacing-vertical) — the breathing room an app shell
+       needs between a sticky band and a scrolling page. A poster has no
+       scroll and no sticky band: its vertical rhythm is set by
+       --poster-header-gap and --poster-footer-gap below, and these
+       paddings only add to it. */
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-inline: 0;
+}
+
+body > header > *, body > footer > * {
+    /* Same reasoning, one level down: wexa.css gives every child of the
+       two bands its own padding-top, so a header of three rows carries
+       three of them. */
+    padding-top: 0;
+}
+
+/* =========================================================================
+   Structural utilities — colors are read from theme variables, never
+   set here.
+   ========================================================================= */
+
+.poster-canvas {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: var(--poster-padding);
+    display: flex;
+    flex-direction: column;
+    /* No row-gap: a flex container spaces every one of its rows by the
+       same amount, and the two gaps of a poster are set apart from each
+       other (see the two rules under this one). */
+    row-gap: 0;
+    /* The three bands are laid from the top, one after the other, and the
+       leftover height stays at the bottom. Split evenly above and below, the
+       whole poster floated in the middle of its own page; given to main, the
+       footer was pushed to the bottom edge and a gulf opened under the
+       columns. A poster is written from the top, like anything else.
+
+       This used to be CSS Grid (grid-auto-rows: auto; align-content:
+       center). Grid's "auto" rows are only sized to content when there is
+       enough room: once total content exceeds the fixed page height,
+       Chromium and Firefox both shrink the auto rows to force everything
+       to fit the container instead of letting it overflow — so header's
+       track can end up far smaller than header's actual content, which
+       then spills straight over main below it. Flex with flex-shrink: 0
+       on every child (below) can't be shrunk that way: the page still
+       overflows once content is too tall for it (an honest 2nd printed
+       page), but header/main/footer can never bleed into each other. */
+    justify-content: flex-start;
+}
+
+
+.poster-canvas > * {
+    flex-shrink: 0;
+    /* No vertical auto margin on a band, whatever else it is: an auto
+       margin on a flex item swallows the container's free space before
+       justify-content ever sees it, and the centred slack above the first
+       band and below the last resurfaces as gaps between them. Any
+       centring utility co-applied here brings one (.grid-panel and
+       .cards-panel in layout.css both carry margin: auto), and so do
+       wexa.css's own body > header / body > footer. */
+    margin-block: 0;
+}
+
+/* The two gaps, carried by the bands themselves so that each can be set on
+   its own. The rule above zeroes margin-block to stop an auto margin from
+   swallowing the canvas's free space before justify-content sees it; these
+   two restate a real value on the only children that need one. */
+.poster-canvas > header { margin-bottom: var(--poster-header-gap); }
+.poster-canvas > footer { margin-top: var(--poster-footer-gap); }
+
+/* layout.css already ships a card component (.card / .card-header /
+   .card-body / .card-footer, wexa_statics/css/layout.css ~line 306) that
+   does this same job — background from --bg-color-alt (or --card-bg-color),
+   a header band that bleeds to the card's edges via :has(), margin
+   collapsing on first/last child. Reused here instead of a hand-rolled
+   .poster-card, with only the parts tuned for a small UI tile (rem-based
+   max-width, a fixed header height band) overridden for a full-width
+   print column. */
+.poster-canvas .card {
+    max-width: none;
+    margin: 0 0 var(--poster-card-gap) 0;
+    /* The card's own padding is NOT restated here: layout.css computes it
+       from --card-padding, and so does the header band's bleed (a negative
+       horizontal margin of exactly that value, plus a matching extra
+       width). Overriding "padding" directly leaves the two out of step —
+       the band no longer reaches the card's edges, and the padding-top
+       that layout.css zeroes out under a header comes back, opening a gap
+       above the band. Setting the variable keeps every one of those
+       measurements derived from a single number. */
+    --card-padding: var(--poster-card-padding);
+}
+
+.poster-canvas .card-header {
+    /* layout.css's .card-header sizes/positions the band (bleeds to the
+       card's edges via .card:has(> .card-header)) but sets no color of its
+       own — same "colors read from theme variables" rule as everywhere
+       else in this file. */
+    background: var(--header-bg-color);
+    color: var(--header-fg-color);
+    min-height: 0;
+    max-height: none;
+    font-size: calc(var(--font-size) * var(--poster-title-scale));
+    font-weight: var(--font-weight-black);
+    line-height: 1.2;
+    letter-spacing: normal;
+    /* Horizontal padding matched to the card's, so the title sits on the
+       same left edge as the text under it rather than a few millimetres
+       inside. */
+    padding: 0.25em var(--card-padding);
+    /* layout.css zeroes the band's vertical margins (margin: 0 -x) to make
+       it bleed. Nothing then separates it from the first block below, and
+       a <table> or a <figure> — neither of which carries a margin-top of
+       its own — ends up flush against it. */
+    margin-bottom: var(--poster-card-header-gap);
+}
+
+/* Standalone ribbon heading (no card underneath it — e.g. a section title
+   that groups several cards, like "Results"): same look as .card-header,
+   without a card to bleed into. */
+.poster-ribbon {
+    background: var(--header-bg-color);
+    color: var(--header-fg-color);
+    font-size: calc(var(--font-size) * var(--poster-title-scale));
+    font-weight: var(--font-weight-black);
+    line-height: 1.2;
+    letter-spacing: normal;
+    padding: 0.25em var(--poster-card-padding);
+    border-radius: var(--border-radius);
+    margin: 0 0 var(--poster-card-gap) 0;
+}
+
+/* Poster body columns: opt-in modifier on .grid-panel / .grid-item
+   (layout.css), for a poster's multi-column body where every column
+   should read as the same height. Grid rows already sync height across
+   items in the same row — .grid-panel's own align-items: start only
+   keeps each item top-aligned within that row instead of filling it;
+   stretch here so a shorter column's .grid-item actually reaches the
+   row's full height. Turning that item into a flex column then spreads
+   its slack between its cards, instead of leaving it as one gap
+   wherever its content happens to run out — the margin-bottom on .card
+   still sets the minimum gap between them.
+   For the same reason as .poster-canvas above, the column's own children
+   are barred from shrinking, so an overflowing column spills honestly
+   instead of squashing its cards. */
+.poster-columns.grid-panel {
+    align-items: stretch;
+}
+
+.poster-columns > .grid-item {
+    display: flex;
+    flex-direction: column;
+    /* space-between, not center: the columns of a poster are read as one
+       band, so their first cards must start on one horizon and their last
+       ones end on another. Centering each column's slack would push the
+       shorter column's first card down by half the difference, breaking
+       both horizons at once. The slack falls between the cards instead. */
+    justify-content: space-between;
+}
+
+.poster-columns > .grid-item > * {
+    flex-shrink: 0;
+}
+
+/* =========================================================================
+   Small reusable content helpers, common to any poster (colorless).
+   ========================================================================= */
+
+.poster-canvas figure {
+    margin: var(--poster-figure-gap) 0;
+    text-align: center;
+}
+
+.poster-canvas figure img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: calc(var(--border-radius) / 2);
+}
+
+.poster-canvas figcaption {
+    /* wexa.css styles figcaption like a table caption bar (a solid
+       background) — right for an image with an overlay caption, wrong
+       for a plain caption line under a poster figure. */
+    background: transparent;
+    font-size: calc(var(--font-size) * var(--poster-caption-scale));
+    font-style: italic;
+    color: var(--li-color);
+    margin-top: var(--poster-caption-gap);
+}
+
+.poster-note {
+    /* wexa.css floats every <aside> right at 35% width — built for a
+       pull-quote / side note, wrong for a plain footnote-style line. */
+    float: none;
+    width: auto;
+    font-size: calc(var(--font-size) * var(--poster-note-scale));
+    color: var(--li-color);
+    margin-top: var(--poster-caption-gap);
+}
+
+.poster-table-note {
+    font-size: calc(var(--font-size) * var(--poster-table-note-scale));
+    color: var(--li-color);
+    margin-top: var(--poster-caption-gap);
+}
+
+
+/* =========================================================================
+   Accessibility controls — the bar of the presentations, built by poster.js
+
+   Same bar, same rules as slides.css: built out of sight, brought in by
+   the "a" key, fixed to the window so that it is not left behind on a
+   page far larger than the window it is read through.
+   ========================================================================= */
+
+#accessibility-controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    gap: calc(var(--font-size) * 0.5);
+    z-index: 2000;
+}
+
+#accessibility-controls button {
+    width: calc(var(--nav-min-height) * 0.65);
+    height: calc(var(--nav-min-height) * 0.65);
+    padding: calc(var(--font-size) * 0.2);
+}
+
+#accessibility-controls.controls-hidden {
+    display: none;
+}

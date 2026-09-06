@@ -197,9 +197,9 @@ class TraceView(swappBaseView):
         """
         go_home = ("window.open(window.Wexa.accessibility.setUrlWithParameters('index.html'), "
                    f"'{home_target}');")
-        svg_close = sppasImagesAccess.get_wexa_svg_icon("cancel")
-        close_image = svg_close + "<span>" + MSG_CLOSE + "</span>"
-        _button = HTMLNode(parent.identifier, None, "button", value=close_image)
+        _button = HTMLNode(parent.identifier, None, "button",
+                           value="<span>" + MSG_CLOSE + "</span>")
+        _button.add_attribute("data-icon", "cancel")
         _button.add_attribute("id", "close-tab_button")
         _button.add_attribute("aria-label", MSG_CLOSE)
         _button.add_attribute("type", "button")
