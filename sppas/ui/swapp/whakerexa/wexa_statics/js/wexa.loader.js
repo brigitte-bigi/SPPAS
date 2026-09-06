@@ -56,10 +56,12 @@
  *               separated by commas. Ignored on file://, where the bundle
  *               already holds them.
  *
- *  Whatever a page writes of its own -- data-icons, data-themes-base,
- *  data-extras -- is read from data-base only when it is relative. A path
- *  that begins with '/' or an address on another host is taken as it is: a
- *  set of icons a page brings has no reason to stand under wexa_statics/.
+ *  A path is read from data-base only when it is written bare, as the files
+ *  of the framework are: "js/extras/book.js". One written "./" or "../" is
+ *  read from the page, one written "/" from the root of the site, one
+ *  carrying a scheme from its host. What a page brings of its own -- a theme,
+ *  a set of icons -- has no reason to stand under wexa_statics/, nor to be
+ *  written as if it did.
  *
  *  A page that has something of its own to start declares a function named
  *  bootPage: it is called once everything is loaded, and receives what the
@@ -85,18 +87,29 @@
     const base = tag.getAttribute('data-base');
 
     /**
-     * Give the place a page wrote, read from the base when it is relative.
+     * Give the place a page wrote, as the page meant it.
      *
-     * data-base says where wexa_statics stands. What a page brings of its own
-     * -- a set of icons, a folder of themes, an extra -- has no reason to
-     * stand there: an address that begins at the root of the site, or on
-     * another host, is taken as it is written. Only a relative path is read
-     * from the base.
+     * A path is read from data-base only when it is written bare, as the
+     * files of the framework are: 'js/extras/book.js' stands under
+     * wexa_statics, wherever that is. Everything else is taken as it is
+     * written, because it already says where it is:
+     *
+     * - './' and '../' say it from the page, which is where a reader who
+     *   writes them means it;
+     * - '/' says it from the root of the site;
+     * - a scheme says it on another host.
+     *
+     * What a page brings of its own -- a theme, a set of icons -- has no
+     * reason to stand under wexa_statics, and no reason to be written as if
+     * it did.
      *
      * @param {String} path - What the page wrote.
      * @returns {String} The place to ask for.
      */
     function placeOf(path) {
+        if (path.startsWith('./') === true || path.startsWith('../') === true) {
+            return path;
+        }
         if (path.startsWith('/') === true) {
             return path;
         }
