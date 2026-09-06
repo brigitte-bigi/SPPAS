@@ -39,12 +39,8 @@
 
 """
 
-import os
 import copy
-import logging
 import wx
-
-from sppas.core.config import paths
 
 from sppas.ui import _
 from ..imgtools import sppasImagesAccess
@@ -53,9 +49,7 @@ from ..windows import sppasDialog
 from ..windows import sppasPanel
 from ..windows import BitmapButton
 from ..windows import sppasStaticText
-from ..windows import sppasStaticLine
 from ..windows.book import sppasNotebook
-from ..windows import sppasRadioBoxPanel
 
 # ---------------------------------------------------------------------------
 # Messages used in this view
@@ -69,9 +63,6 @@ MSG_FONT_COLORS = _("Fonts and Colors")
 MSG_HEADER = _("Top panel")
 MSG_CONTENT = _("Main panel")
 MSG_ACTIONS = _("Bottom panel")
-MSG_THEME = _("Icons")
-MSG_FADE_IN = _("Fade in dialog windows delta value: ")
-MSG_FADE_OUT = _("Fade out dialog windows delta value: ")
 MSG_SPLASH = _("Duration of the splash window, in seconds: ")
 
 # ----------------------------------------------------------------------------
@@ -133,18 +124,12 @@ class sppasSettingsDialog(sppasDialog):
         notebook = sppasNotebook(self, name="content")
         il = wx.ImageList(s, s)
         ftc = sppasImagesAccess().get_bmp_image("font_color", height=s)
-        fti = sppasImagesAccess().get_bmp_image("iconset", height=s)
         idx1 = il.Add(ftc)
-        idx2 = il.Add(fti)
         notebook.AssignImageList(il)
 
         page1 = FontAndColorsPanel(notebook)
         notebook.AddPage(page1, MSG_FONT_COLORS)
         notebook.SetPageImage(0, idx1)
-
-        page2 = ThemePanel(notebook)
-        notebook.AddPage(page2, MSG_THEME)
-        notebook.SetPageImage(1, idx2)
 
         self.SetContent(notebook)
 
@@ -337,108 +322,6 @@ class FontAndColorsPanel(sppasPanel):
 
 # ---------------------------------------------------------------------------
 
-
-class ThemePanel(sppasPanel):
-    """Settings for icons theme.
-
-    """
-
-    def __init__(self, parent):
-        super(ThemePanel, self).__init__(
-            parent=parent,
-            style=wx.BORDER_NONE
-        )
-        self._themes = self.list_of_themes()
-        current_theme = wx.GetApp().settings.icons_theme
-        if current_theme not in self._themes:
-            wx.GetApp().settings.icons_theme = self._themes[0]
-
-        logging.debug("List of available icon themes: {}".format(self._themes))
-        self._create_content()
-        # self.Bind(wx.EVT_BUTTON, self._process_event)
-
-    # -----------------------------------------------------------------------
-
-    def _create_content(self):
-        """"""
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-
-        # At left, the list of icons themes
-        rb = sppasRadioBoxPanel(self,
-            choices=self._themes,
-            style=wx.RA_SPECIFY_COLS)
-        current_theme = wx.GetApp().settings.icons_theme
-        if current_theme not in self._themes:
-            current_theme = self._themes[0]
-        rb.SetSelection(self._themes.index(current_theme))
-        self.Bind(wx.EVT_RADIOBOX, self._process_rb_event, rb)
-
-        # At right, the fade in and fade out values
-        fp = sppasPanel(self)
-        s = wx.BoxSizer(wx.VERTICAL)
-        fade_in = self.__create_spin_panel(fp, 3, 85, wx.GetApp().settings.fade_in_delta, "fade_in_delta", MSG_FADE_IN)
-        fade_out = self.__create_spin_panel(fp, -85, -3, wx.GetApp().settings.fade_out_delta,"fade_out_delta", MSG_FADE_OUT)
-        self.Bind(wx.EVT_SPINCTRL, self._process_spin_event)
-        s.Add(fade_in, 1, wx.EXPAND)
-        s.Add(fade_out, 1, wx.EXPAND)
-        fp.SetSizer(s)
-
-        sizer.Add(rb, 1, wx.EXPAND | wx.ALL, border=sppasPanel.fix_size(2))
-        sizer.Add(self.VertLine(), 0, wx.EXPAND | wx.ALL, border=sppasPanel.fix_size(2))
-        sizer.Add(fp, 1, wx.EXPAND | wx.ALL, border=sppasPanel.fix_size(2))
-        self.SetSizerAndFit(sizer)
-
-    # -----------------------------------------------------------------------
-
-    def __create_spin_panel(self, parent, min_value, max_value, init_value, spin_name, msg):
-        p = sppasPanel(parent)
-        s = wx.BoxSizer(wx.HORIZONTAL)
-        text = sppasStaticText(p, label=msg)
-        spin = wx.SpinCtrl(p, value="",
-                           min=min_value, max=max_value, initial=init_value,
-                           style=wx.SP_BORDER | wx.SP_ARROW_KEYS | wx.ALIGN_RIGHT,
-                           name=spin_name)
-        s.Add(text, 1, wx.EXPAND)
-        s.Add(spin, 0, wx.ALL, p.fix_size(4))
-        p.SetSizer(s)
-        return p
-
-    # ------------------------------------------------------------------------
-
-    def VertLine(self):
-        """Return a vertical static line."""
-        line = sppasStaticLine(self, orient=wx.LI_VERTICAL)
-        line.SetMinSize(wx.Size(1, -1))
-        line.SetSize(wx.Size(1, -1))
-        line.SetPenStyle(wx.PENSTYLE_SOLID)
-        line.SetDepth(1)
-        return line
-
-    # -----------------------------------------------------------------------
-
-    def list_of_themes(self):
-        """Return the theme names from the icons' folder of the package."""
-        themes = list()
-        for f in os.listdir(paths.icons):
-            if os.path.isdir(os.path.join(paths.icons, f)) is True:
-                themes.append(f)
-        return themes
-
-    # -----------------------------------------------------------------------
-
-    def _process_rb_event(self, event):
-        """Set the icons theme to match the checked radiobox."""
-        cur_idx = event.GetEventObject().GetSelection()
-        wx.GetApp().settings.icons_theme = self._themes[cur_idx]
-        logging.debug("Icons theme set to: {:s}".format(wx.GetApp().settings.icons_theme))
-
-    # -----------------------------------------------------------------------
-
-    def _process_spin_event(self, event):
-        """Set the fade in or fade out value."""
-        spinstrl = event.GetEventObject()
-        name = spinstrl.GetName()
-        wx.GetApp().settings.set(name, spinstrl.GetValue())
 
 # ---------------------------------------------------------------------------
 

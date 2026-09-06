@@ -145,7 +145,7 @@ class sppasMainWindow(sppasDialog):
     def Show(self, show=True):
         """Override to fade the window in."""
         if show is True:
-            self.FadeIn(wx.GetApp().settings.fade_in_delta)
+            self.FadeIn()
         sppasDialog.Show(self, show)
 
     # ------------------------------------------------------------------------

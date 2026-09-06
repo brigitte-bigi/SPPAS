@@ -233,11 +233,7 @@ class sppasTextEditDialog(sppasDialog):
             self.save_all()
             wx.EndBusyCursor()
 
-        try:
-            delta = wx.GetApp().settings.fade_out_delta
-        except AttributeError:
-            delta = -10
-        self.DestroyFadeOut(delta)
+        self.DestroyFadeOut()
 
 # ----------------------------------------------------------------------------
 

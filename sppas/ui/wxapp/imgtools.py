@@ -96,23 +96,15 @@ class sppasImagesAccess:
         :param default: (str) Default icon if name is missing.
 
         """
-        th = wx.GetApp().settings.icons_theme
-        default_theme = wx.GetApp().settings.GetDefaultIconsTheme()
-
-        # fix the icon file name with the current theme
-        icon_name = os.path.join(paths.icons, th, name + ".png")
-
-        # instead, find the icon in the default set
-        if os.path.exists(icon_name) is False:
-            icon_name = os.path.join(paths.icons, default_theme, name + ".png")
+        icon_name = os.path.join(paths.icons, name + ".png")
 
         # instead, use the given default icon
         if os.path.exists(icon_name) is False:
-            icon_name = os.path.join(paths.icons, default_theme, default + ".png")
+            icon_name = os.path.join(paths.icons, default + ".png")
 
         # instead, use the default icon
         if os.path.exists(icon_name) is False:
-            icon_name = os.path.join(paths.icons, default_theme, "default.png")
+            icon_name = os.path.join(paths.icons, "default.png")
 
         if os.path.exists(icon_name) is False:
             raise OSError("SPPAS Package corrupted: Missing default image {:s}."

@@ -76,12 +76,6 @@ class WxAppSettings(object):
 
     # -----------------------------------------------------------------------
 
-    def GetDefaultIconsTheme(self):
-        """The full theme: the one with all icons used to fall back."""
-        return "Refine"
-
-    # -----------------------------------------------------------------------
-
     def load(self):
         """Load the dictionary of settings from a dump file.
 
@@ -134,9 +128,6 @@ class WxAppSettings(object):
             frame_size=self.__frame_size(),
             frame_pos=wx.Point(10, 10),
 
-            # The current theme of icons -- a folder name of etc/icons
-            icons_theme="Refine",
-
             # Foreground colors
             fg_color=wx.Colour(20, 20, 20),
             header_fg_color=wx.Colour(240, 240, 230),
@@ -157,14 +148,8 @@ class WxAppSettings(object):
             header_height=font_height * 5,
             action_height=font_height * 3,
 
-            # Value to apply to the opacity when starting/closing dialogs
-            fade_in_delta=5,
-            fade_out_delta=-5,
-
             # Editor
             editor_timeline_zoom=100,
-            editor_nb_prev_play_frames=3,
-            editor_nb_next_play_frames=5,
 
             # Host and Port to communicate with the swapp
             shost = "127.0.0.1",

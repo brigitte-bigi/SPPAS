@@ -136,17 +136,12 @@ class sppasDialog(wx.Dialog):
     # Fade-in at start-up and Fade-out at close
     # -----------------------------------------------------------------------
 
-    def FadeIn(self, delta=None):
+    def FadeIn(self, delta=5):
         """Fade-in opacity.
 
         :param delta: (int)
 
         """
-        if delta is None:
-            try:
-                delta = wx.GetApp().settings.fade_in_delta
-            except AttributeError:
-                delta = 5
         self.delta = int(delta)
         self.SetTransparent(self.opacity_in)
         self.timer1 = wx.Timer(self, -1)
@@ -155,17 +150,12 @@ class sppasDialog(wx.Dialog):
 
     # -----------------------------------------------------------------------
 
-    def DestroyFadeOut(self, delta=None):
+    def DestroyFadeOut(self, delta=-5):
         """Destroy with a fade-out opacity.
 
         :param delta: (int)
 
         """
-        if delta is None:
-            try:
-                delta = wx.GetApp().settings.fade_out_delta
-            except AttributeError:
-                delta = -5
         self.delta = int(delta)
         self.timer2 = wx.Timer(self, -1)
         self.timer2.Start(5)  # call the cycle out every 5 milliseconds

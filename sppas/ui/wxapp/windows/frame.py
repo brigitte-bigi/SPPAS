@@ -113,26 +113,16 @@ class sppasFrame(wx.Frame):
     # Fade-in at start-up and Fade-out at close
     # -----------------------------------------------------------------------
 
-    def FadeIn(self, delta=None):
+    def FadeIn(self, delta=5):
         """Fade-in opacity."""
-        if delta is None:
-            try:
-                delta = wx.GetApp().settings.fade_in_delta
-            except AttributeError:
-                delta = -5
         self.delta = delta
         self.SetTransparent(self.opacity_in)
         self.timer1 = wx.Timer(self, -1)
         self.timer1.Start(5)
         self.Bind(wx.EVT_TIMER, self.__alpha_cycle_in, self.timer1)
 
-    def DestroyFadeOut(self, delta=None):
+    def DestroyFadeOut(self, delta=-5):
         """Destroy with a fade-out opacity."""
-        if delta is None:
-            try:
-                delta = wx.GetApp().settings.fade_out_delta
-            except AttributeError:
-                delta = -5
         self.delta = int(delta)
         self.timer2 = wx.Timer(self, -1)
         self.timer2.Start(5)
@@ -291,26 +281,16 @@ class sppasTopFrame(wx.TopLevelWindow):
     # Fade-in at start-up and Fade-out at close
     # -----------------------------------------------------------------------
 
-    def FadeIn(self, delta=None):
+    def FadeIn(self, delta=5):
         """Fade-in opacity."""
-        if delta is None:
-            try:
-                delta = wx.GetApp().settings.fade_in_delta
-            except AttributeError:
-                delta = -5
         self.delta = int(delta)
         self.SetTransparent(self.opacity_in)
         self.timer1 = wx.Timer(self, -1)
         self.timer1.Start(1)
         self.Bind(wx.EVT_TIMER, self.__alpha_cycle_in, self.timer1)
 
-    def DestroyFadeOut(self, delta=None):
+    def DestroyFadeOut(self, delta=-5):
         """Destroy with a fade-out opacity."""
-        if delta is None:
-            try:
-                delta = wx.GetApp().settings.fade_out_delta
-            except AttributeError:
-                delta = -5
         self.delta = int(delta)
         self.timer2 = wx.Timer(self, -1)
         self.timer2.Start(5)   # call the cycle out every 5 milliseconds
